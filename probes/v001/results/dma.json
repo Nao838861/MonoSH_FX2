@@ -1,0 +1,32 @@
+[
+  {
+    "case": "normal224_full14k",
+    "master_clocks": 119174,
+    "ms": 5.548842515939641,
+    "start_line": 226,
+    "end_line": 51,
+    "valid_bytes": 6051,
+    "requested_bytes": 14336,
+    "lost_bytes": 8285
+  },
+  {
+    "case": "target192_full12k",
+    "master_clocks": 101950,
+    "ms": 4.746878467619165,
+    "start_line": 210,
+    "end_line": 22,
+    "valid_bytes": 11296,
+    "requested_bytes": 12288,
+    "lost_bytes": 992
+  },
+  {
+    "case": "target192_10k",
+    "master_clocks": 84830,
+    "ms": 3.9497567475049906,
+    "start_line": 210,
+    "end_line": 10,
+    "valid_bytes": 10240,
+    "requested_bytes": 10240,
+    "lost_bytes": 0
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "ARM9/casfx": {
+    "commit": "d0827fb5f4ba8d5fb26b4de3fa1e3a79a6fbc1ed",
+    "files": {
+      "gsu/casfx.inc": {
+        "path": ".cache\\casfx\\gsu\\casfx.inc",
+        "sha256": "7d2746058db14658b8bcc6bb9f140602cfb08106b7e74e0d80daf2cf11a94567"
+      },
+      "LICENSE": {
+        "path": ".cache\\casfx\\LICENSE",
+        "sha256": "b161610f79dd507e2989674857cb9f24e9a858d6a4dabc1b700523b67a402dda"
+      },
+      "gsu/affine.asm": {
+        "path": ".cache\\casfx\\gsu\\affine.asm",
+        "sha256": "964327fe72780c311fa326227bc8225adeb2afe26706f443ac7c0985ef61fa5b"
+      },
+      "header.asm": {
+        "path": ".cache\\casfx\\header.asm",
+        "sha256": "5089c2b319cfae475716fd3ad0a1bf0005a67051048b339134dbf666e1b1324f"
+      },
+      "snes_regs.asm": {
+        "path": ".cache\\casfx\\snes_regs.asm",
+        "sha256": "73b4e1c50863ecb2b1b40b45510fa8e2c7d62762fb0c5bd8ff5aeacbca165001"
+      }
+    }
+  },
+  "SourMesen/Mesen2": {
+    "commit": "b9fa69ddc6d0a331fb103fdb5eef6904305703c2",
+    "files": {
+      "Core/Debugger/LuaApi.cpp": {
+        "path": ".cache\\Mesen2\\Core\\Debugger\\LuaApi.cpp",
+        "sha256": "fd1292483bd2e7fa1f5a13c392afadcae2d9ff418cab216c964d623f97e10e24"
+      },
+      "Core/SNES/Coprocessors/GSU/Gsu.cpp": {
+        "path": ".cache\\Mesen2\\Core\\SNES\\Coprocessors\\GSU\\Gsu.cpp",
+        "sha256": "3fc206a1343837224a8368f84dcdcbb7a2da4b15d718b356ded4f572171e3060"
+      },
+      "Core/SNES/Coprocessors/GSU/Gsu.Instructions.cpp": {
+        "path": ".cache\\Mesen2\\Core\\SNES\\Coprocessors\\GSU\\Gsu.Instructions.cpp",
+        "sha256": "38ef83a9108de19f21610c685fef4f9e806cd1ca8e09a680a24c2dee0f6629e5"
+      },
+      "Core/SNES/Coprocessors/GSU/GsuTypes.h": {
+        "path": ".cache\\Mesen2\\Core\\SNES\\Coprocessors\\GSU\\GsuTypes.h",
+        "sha256": "32d337f3c168ab8390f0fd7f635c2e37a01896c0562be44d29bb4cf1e3bc5b55"
+      },
+      "Core/SNES/SnesConsole.cpp": {
+        "path": ".cache\\Mesen2\\Core\\SNES\\SnesConsole.cpp",
+        "sha256": "cdfa45011f3dfd39fa5a8686e7f827cb8ea660d5a1b79ecb20da9d0c2606c706"
+      },
+      "Core/Shared/MemoryType.h": {
+        "path": ".cache\\Mesen2\\Core\\Shared\\MemoryType.h",
+        "sha256": "0c080e8adb4f0b7ee1b0e4b2717492ae274230f0a17136e3d739e52474688f09"
+      }
+    }
+  }
+}

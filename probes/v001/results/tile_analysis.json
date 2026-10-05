@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "scene": "mixed30",
+      "framebuffer_sha256": "2c5ad093704c9c5f61a9c00fde7db8647316997a7beab75b87e917da4d706c01",
+      "nonzero_tiles": 259,
+      "nonzero_bytes": 4144,
+      "rectangle_tiles": 274,
+      "rectangle_bytes": 4384
+    },
+    {
+      "scene": "near_heavy30",
+      "framebuffer_sha256": "bf217fe1ca3b083f7c2f3d21bd355d31d525bc649a53f799fb62b74ad86b41f2",
+      "nonzero_tiles": 296,
+      "nonzero_bytes": 4736,
+      "rectangle_tiles": 312,
+      "rectangle_bytes": 4992
+    }
+  ],
+  "transition": {
+    "actual_changed": {
+      "tiles": 102,
+      "bytes": 1632,
+      "contiguous_intervals": 20
+    },
+    "nonzero_union": {
+      "tiles": 305,
+      "bytes": 4880,
+      "contiguous_intervals": 33
+    },
+    "rectangle_union": {
+      "tiles": 320,
+      "bytes": 5120,
+      "contiguous_intervals": 31
+    }
+  },
+  "scope": "offline analysis of two artificial GSU scenes, excludes scan/setup/DMA time",
+  "selection_code_sha256": "e2c06ccddfe4f2907ccd34d1b11de9d70b4f4efe0518e13889f608d4ee2f29ec"
+}

@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-04T17:25:10.415381+00:00",
+  "emulator_sha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+  "ca65": "ca65 V2.19 - Git cc3c40c",
+  "master_hz": 21477272,
+  "gsu_clock_percent": 100,
+  "fast_multiply": false,
+  "inputs": {
+    "probes/v001/cpu.s": "6b0ca87ad9dba10755cf0af621d40a1f0bb344477dff95ccfd827a26fb215a53",
+    "probes/v001/dma_measure.lua": "1e634cf39cb3e5a07bb6d3779912bda8c71d82d854c7dd049b0e43c25c24ecc9",
+    "probes/v001/gsu.s": "79bcd08ee42850ef3ba22d2b1b8f394b10ac52ff00307429601676f5ef901308",
+    "probes/v001/measure.lua": "918f5af0b1aad184e4f3b56abf60e92c48a52da2311ca21b99b4e55ca6acdcbe",
+    "probes/v001/rom.cfg": "00d50b68a27a7d870148c71e86c14630762133efebb5977a89f457296ba329c3",
+    "probes/v001/sources.lock.json": "6ffb07f5cb91e667ce4d7d212fc588210be59864e859f6c2a594382772a26cba",
+    "tools/bootstrap_probe.py": "51cbc157fbc985eb5b261ccb762a0712e747ebf93d4654c6d68f10b16d8e9e80",
+    "tools/run_dma_probe.py": "813b52cd70096601445b58f94ce1555ffb903fcfee3f7e41655dd2a234d65f5e",
+    "tools/run_nes_baseline.py": "865a465fbe4daff5070ed6f6eec18f828da89d472f845e1bb163eed59a8b228e",
+    "tools/run_probe.py": "2ae2da1ddbbfc04e1fed62252ce501c3646db001cd32f87a9b50d3cf9506cb2e",
+    "tools/run_scene_probe.py": "e2c06ccddfe4f2907ccd34d1b11de9d70b4f4efe0518e13889f608d4ee2f29ec",
+    "tools/verify_probe.py": "18fd35205863e37e6c02004b50009404aa5d81fc044abfc288f63311e1a7d13f"
+  },
+  "external_inputs": {
+    "png/Tree0/Tree0_00.png": "bee81068a4d21b44929b01572036ba075062f950ab72633706fe976cc55491fe",
+    "src/gen/sprite_Tree0.s": "2eda816de9c656577ff5bb7ce8629b8b08134d59ef1256d2f99751cd345a9494"
+  },
+  "artifacts": {
+    "scalers.json": "2c9ee86985f4a71e1c2b4e6e621e7c335766ab6ae6bd10f2bd29b9ba635efc86",
+    "dma.json": "5ed9590f8c7cdc7d57e1a3cfebdd8abcffe7708a5de890454746c96d35f51d5e",
+    "nes_baseline.json": "fbb9c8fb644dc85d54a66de98ab4eb532969d6eeb50a28aba359cac9b9445921",
+    "scenes.json": "85bf33694d6c8a95e5d53640e859a214890139d56fde998d4e66353d8cb53c9e",
+    "mixed30.png": "2e0bc20851a3bf4749194e2eeb7d5425171008d628192a2de003c5de85d2a248",
+    "near_heavy30.png": "29180d7814a4a57d4600fce2244d3d03a5616e081f74ac9980670d09a6d934e9",
+    "dma192_ppu.png": "996070029128356713e05ba2172764187a5d7b658613c2d3b11bae4d8f5178b3"
+  }
+}

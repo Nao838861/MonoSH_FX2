@@ -1,0 +1,146 @@
+{
+  "0": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bush0\\Bush0_00.png",
+    "sha256": "a72df57d9629dd800c5ea1a149ae60d2eb7a448b2aeb21a4902efe0ed74280e9",
+    "width": 56,
+    "height": 30
+  },
+  "1": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bush1\\Bush1_00.png",
+    "sha256": "3a2437fbd1db086da9a76c99032561495964ac36d6708b9d896c6fcbb6cb00dc",
+    "width": 67,
+    "height": 31
+  },
+  "2": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\FlyStone\\FlyStone_00.png",
+    "sha256": "33051e57d284384d4fcc2a61af9d1a6903a317950ad57731b8467d418fdcd3c1",
+    "width": 35,
+    "height": 26
+  },
+  "3": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em0\\Em0_00.png",
+    "sha256": "048e06e7e5f54c9002dac85cc30055d9c142ac4d7f9a4ba085fbeebdd2511f88",
+    "width": 55,
+    "height": 30
+  },
+  "4": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Tree0\\Tree0_00.png",
+    "sha256": "bee81068a4d21b44929b01572036ba075062f950ab72633706fe976cc55491fe",
+    "width": 34,
+    "height": 79
+  },
+  "5": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bom0\\Bom0_base_0.png",
+    "sha256": "9ed76728c02282b56557ebfbc886c6d80d02ca81853360269292e381c78d6e57",
+    "width": 128,
+    "height": 95
+  },
+  "6": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\EnemyBullet0\\EnemyBullet0_base_0.png",
+    "sha256": "c58231eb3142302f7713a6b0bf88b1fcb1ea163b9fb3d37e5d97ecdb7bfd4fa3",
+    "width": 82,
+    "height": 128
+  },
+  "7": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\EnemyBullet0\\EnemyBullet0_base_1.png",
+    "sha256": "90e09e199abc032685caec5916803bfeb7f527c8db234e96fccb39b634275ea0",
+    "width": 100,
+    "height": 128
+  },
+  "8": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\EnemyBullet0\\EnemyBullet0_base_2.png",
+    "sha256": "342419cb1420682134e9a9634e055a48604fa6d0600accfad004fe696b763191",
+    "width": 128,
+    "height": 120
+  },
+  "11": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\clo\\c00.png",
+    "sha256": "955806f17f8d668acb1e3be7f7fb9cb25de1d6f9766820cd49632ff85cf705f0",
+    "width": 14,
+    "height": 15
+  },
+  "12": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\open\\o10.png",
+    "sha256": "b8244ba9c6cedcd2b6d0c1ef1c1d0509e2df86249e7ffc0069da0df79b8c0d64",
+    "width": 16,
+    "height": 16
+  },
+  "13": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\BossBody\\BossBody_Base.png",
+    "sha256": "573bcbf794f05241bf1746a8cb36fe1270306c1ff1e45caa216cc5c1380c795f",
+    "width": 128,
+    "height": 86
+  },
+  "14": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\BossFace\\BossFace_Base.png",
+    "sha256": "f3f72ad22f883e7d808054bff966b5c0cf39abc645d15ede2b06844aa527b093",
+    "width": 84,
+    "height": 128
+  },
+  "31": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\BossBullet\\BossBullet_Base.png",
+    "sha256": "e6102369e18d47063f8f70a27a8d144c3af8870898b26be37bcde3ac7bd2799f",
+    "width": 128,
+    "height": 125
+  },
+  "37": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\EnemyBullet0\\EnemyBullet0_base_3.png",
+    "sha256": "0576052e8841264de827a1b5de9de3152f1754cfcc1776ee1827525289d02398",
+    "width": 128,
+    "height": 88
+  },
+  "39": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bom0\\Bom0_base_1.png",
+    "sha256": "8a01b6480a30149e99e7b5fe5de7bca772265caf8c741e12d560c139470ec467",
+    "width": 128,
+    "height": 94
+  },
+  "40": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bom0\\Bom0_base_2.png",
+    "sha256": "21b21dc4db0f455a334d93bb4377d4f177a32db27e3c7d023d0bba328cc87ea4",
+    "width": 128,
+    "height": 84
+  },
+  "41": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Bom0\\Bom0_base_3.png",
+    "sha256": "d664dffb5c1cd9c12b201b9de8689b427b8ab443ff0affbcd6ce62283440c7dd",
+    "width": 128,
+    "height": 88
+  },
+  "42": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Stage1\\Stage1.png",
+    "sha256": "c1cb6d41d88f695363c86ad1ae3d1e1d330fe417ad5ddb10054fface618e3a7b",
+    "width": 44,
+    "height": 19
+  },
+  "32": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\Em1_01.png",
+    "sha256": "d4a948a26ef25ba826f49cf7e4ce41247b1bd96f7eb9259d27813625e2e18e63",
+    "width": 120,
+    "height": 128
+  },
+  "33": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\Em1_02.png",
+    "sha256": "c3fa1b1bca7a72fd6316c2c5e7803144b605cf4c60e878f96ffdcb6d20b235d7",
+    "width": 128,
+    "height": 127
+  },
+  "34": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\Em1_03.png",
+    "sha256": "19e7afb9941750de325d4295f698a258a6be04e4b4c232dc734399585f254912",
+    "width": 128,
+    "height": 127
+  },
+  "35": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\Em1_04.png",
+    "sha256": "86ea2822c6a7e1a8b26f7445fd60e3a2072f02576c391116c26c5241ad8bc2b3",
+    "width": 128,
+    "height": 122
+  },
+  "36": {
+    "path": "D:\\HomeBrew\\MonoSH\\png\\Em1\\Em1_05.png",
+    "sha256": "eb9634230bf8273aea55f18b3742338173c15d7b58b44885eab74afe75c11f6a",
+    "width": 119,
+    "height": 128
+  }
+}

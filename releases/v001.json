@@ -1,0 +1,69 @@
+{
+  "romSha256": "953d5aa44ed2c6c985b9ba10695ac99525880df766d15ecdc72a6e6dca9c4675",
+  "romBytes": 2097152,
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true
+  },
+  "display": [
+    256,
+    180
+  ],
+  "framebuffer": [
+    256,
+    192
+  ],
+  "format": "2bpp",
+  "sourceSha256": {
+    "monosh_player.c": "0d1e8bcecb8849756bb507075f74a448d6b99da55f50c07dfbea1b0d23ad8e37",
+    "monosh_player.h": "294f780634965215255e138ccae794a1e7699a6161f51672fbf971473b66b44e",
+    "monosh_stage.c": "f3ac07e536a64b864681f528afe09379a50b72cf064fda135858a3317c8576d5",
+    "monosh_stage.h": "93f5120e9163d07e0baf897052e0884fbbc0350c97a356243f62c108de88d07b",
+    "monosh_enemy.c": "9ce73236e87720ca1a0433b4365d2193be320489aa17783e1c03fdae9301cce3",
+    "monosh_enemy.h": "7bcfc0d548e113c0e4c3793045043fd0d9e067356a0fc0073f83a24217b762e7",
+    "monosh_combat.c": "a8e39e89140218f82121bcb76036d426ded4b8ba9633a169767ddfa5358240b5",
+    "monosh_combat.h": "885d80c6c8c700fe8a1b6de0d1fadaa0dfd6c9ac9f9d4f8c15de3841fb289a8d",
+    "monosh_boss.c": "bf5648509d3762ac9b15a4c3858a47ecf3aaa74f9b982eac18cb3fb43c739b49",
+    "monosh_boss.h": "eb3b85d81c919c215d17f4885ea3eb29855a934b0dad1f9b76793e122f5a586a",
+    "monosh_projection.c": "9a45cfa3f854f2ff60532e9c2a68b69fcefa84a43363a9447661a4a72c5ceca7",
+    "monosh_projection.h": "ae96c81830c50c7abbb8d6d8771f8c1bc36e9201e0ba33bb5751712c02c85407",
+    "monosh_draw.c": "e0b22277db02bb73a3a29b5bd1a303e3bdf7322d6e028efd6fa1c6d97e91a3b7",
+    "monosh_draw.h": "8f01d082c4cef9abebd83585c119e9eabc05b2d145753be5f69a3930a376833e",
+    "monosh_stage_data.c": "0cc08441d2da4981e3e4e24d03c2d3a22ab00af4325a7e5f0d28409ff8014d3f",
+    "monosh_stage_data.h": "0b9533fd27733b5067f4e5b97a7689e8a57faa4b02b320421c0dc6e17504d471",
+    "monosh_enemy_data.c": "a134c83d2d02550f64ef695025bd89c8765deb6b636d0fb966c41f80159a6101",
+    "monosh_enemy_data.h": "ef7b880fc1130a0a8f807ebdc643c7142de3bebfe12f5dac31231013983f2438",
+    "monosh_boss_data.c": "023b1a708847dfa86ab84c91efb2f26d3956c896cc874666d0f5f9efc42b91d8",
+    "monosh_boss_data.h": "c55f48799a0dd0dd8e77549847f603c921bdd1433355bec998f2263f28c7fba9",
+    "mode3_sprite.h": "eaedbf3296c6e22e4e359acabb4296fa15f1acd47503772ac02fb240dcd636af",
+    "monosh_assets.h": "f66385457a903ddf0b34aba85ded4a3ca7d158d59091509d8c0ee7fb5b255965",
+    "monosh_runtime.h": "2c60753fcf23f577a0e6d7a2f3ca9b794a729a11e1721f6120f994cd271baf3a",
+    "monosh_ground_camera_table.inc": "1aee7362828e1c24d0e65a4065f4bdfe42c553f29962a0362357ead1eaa2b902",
+    "monosh_projection_data.asm": "179812758dff4f164e0ff7327670090fd3060203b8bdd7de750b3f582248ee65",
+    "monosh_enemy_fast.asm": "d0c8b8781f71c031ea0649a64a6eb3e777cdd17a0ee81db3e4f589af88a5e057",
+    "monosh_combat_fast.asm": "1b19bc14b871546ad4f76198c67515b19c21f509a45e87f0fafdcc7273c2546f",
+    "monosh_stage_fast.asm": "60d10ca7eaa590a0507a9809a4133e4e2b7c356c872a6bc66ab2106f2763efdb",
+    "monosh_boss_fast.asm": "9d03b5caee612c8784cd47edbc8d315383743f980c8385eb4db5f537015d0064",
+    "monosh_boss_prepare.asm": "ba83de0b3b3232290446dc6a2e808b0f39d37675ad74afe09cfce1aa9dd750f5",
+    "monosh_runtime_fast.asm": "c849fd9dcd7f37f375b09f4225669e596d344e7c369dd97d3d0e0b83a8b5f0b0",
+    "monosh_far_background.c": "180cdd1bf3d6e3edc868e153ecdb5d613c814e280067b16aa3094881d6676839",
+    "monosh_far_background.h": "841daa466b357fdcd81ad47a80032d71f3db4c1f84fddd31a610e591bf6c1b95",
+    "monosh_far_background_fast.asm": "6496af8a8164c350ab8d3483c690cda348e34cdb24a56c4955998c728f870458"
+  },
+  "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
+  "scenarioFrames": {
+    "play": 360,
+    "controls": 720,
+    "pause": 360,
+    "stumble": 800,
+    "boss": 2600,
+    "stress": 360,
+    "packed": 360,
+    "display": 720,
+    "long": 18000,
+    "profile": 2400
+  },
+  "equivalenceMatchedUpdates": 5632,
+  "bossEquivalenceMatchedUpdates": 2847
+}
