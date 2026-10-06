@@ -39,3 +39,19 @@ genericの画素ループは `$82D7` から7byte。行ループを含め `$8270.
 削減効果は未測定。前回のボス戦で必要だったGSU全体の約28.1%短縮を、この変更だけで達成できるとはまだ言えない。原画読み出し・PLOT/RAM待ち・clear/DMA範囲作成も含めて再計測する。
 
 確認に使った一次実装：Mesen2 [CACHE命令](https://github.com/SourMesen/Mesen2/blob/b9fa69ddc6d0a331fb103fdb5eef6904305703c2/Core/SNES/Coprocessors/GSU/Gsu.Instructions.cpp)、[命令キャッシュの読出しと充填](https://github.com/SourMesen/Mesen2/blob/b9fa69ddc6d0a331fb103fdb5eef6904305703c2/Core/SNES/Coprocessors/GSU/Gsu.cpp)。
+
+## CPUによるコマンド分類とキャッシュ保持の設計案
+
+ユーザーの提案を `submit.s / packet.s / gsu_draw.inc` と照合した。**CPU側で完全画面内を判定し、コマンドに印を付けることは可能。** 以下は設計案であり、現行ROMにはまだ実装していない。
+
+CPUは描画要求のcenterX・bottomY・投影後width/heightを持つ。FB座標で `left=centerX-floor(width/2)`、`top=bottomY-height-20` と計算し、正の寸法かつ `left>=0, top>=0, left+width<=256, top+height<=192` なら完全画面内。`fx_submit` は現在も画面外の大まかな除外を行っているが、完全画面内の判定結果をコマンドには保存していない。
+
+ソート後に生成する10byteのpacketの末尾2byteは、現在はZ/priorityをコピーしているがGSUでは読み飛ばしている。ゲームの元のFxDrawとソートキーを保存したまま、この**転送packetだけの末尾を制御wordへ置き換え、INSIDEフラグを設ける**案ならコマンドを拡張せずに分類できる。既存のpacket照合ツールには新形式の識別と検証が必要。
+
+GSUはINSIDEなら座標補正を省き、skipX=skipY=0として共通のdirty範囲更新・UV設定・描画へ進む。INSIDEでない場合は従来のclip処理を通す。完全に画面外とCPUが正確に判定できた要求は転送から除外できる。これは「clipなしの画素ループをもう一つ作る」変更ではなく、描画前の処理を分ける変更になる。
+
+**INSIDEとCLIPPEDの切替自体にはキャッシュ無効化の効果はない。** 同じCBR範囲内の分岐はキャッシュを保持する。さらに範囲外の命令を実行しても、それだけでは無効にならない。任意のclip補正を範囲外で実行し、CACHEやプログラムbankの切替をせずに同じ描画ループへ戻れば、クリッピング状態が変わっても描画ループのキャッシュは保持できる。
+
+現在もCPUが各spriteの512byteを送っているわけではない。GSUが異なるCBRを指定するCACHE命令を実行して有効フラグを消し、その後実行した命令を含む16byte lineをROMから自動充填している。512byte全部を毎回一括転送する意味での「送り直し」ではないが、spriteごとの再充填は発生している。
+
+したがってCPU側の分類とキャッシュ保持は別々に実装・比較する。分類だけを追加して現在のUV・描画選択・packed入口のCACHEを残した場合、再充填は解消しない。共通の頻出処理を固定CBRに収める配置変更が必要であり、512byteへ収める寸法確認と特殊倍率経路の扱いを含めて評価する。同じ種類のコマンドをまとめ直すと、奥から手前への透明合成順序が変わるため、キャッシュ目的で描画順を変えない。
