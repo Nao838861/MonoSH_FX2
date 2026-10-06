@@ -1,0 +1,192 @@
+{
+  "romSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886",
+  "baselineRomSha256": "1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc",
+  "changedRomBytes": 3429,
+  "gsuAndCpuCodeAndRuntimeDataIdentical": true,
+  "changedRegions": [
+    "BOOT OBJ palette initialization and static palette",
+    "header checksum",
+    "static OBJ CHR"
+  ],
+  "baselineTimingComparison": {
+    "play": {
+      "records": 1365,
+      "baselineRecords": 1365,
+      "allRecordsIdentical": false,
+      "changedStartupRecords": 1,
+      "latestChangedStartupField": 22,
+      "maxStartupTimingDifferenceMs": 0.0009300000000003195,
+      "allNonTimingFieldsIdentical": true,
+      "allRecordsAfterField27Identical": true
+    },
+    "display": {
+      "records": 2812,
+      "baselineRecords": 2812,
+      "allRecordsIdentical": false,
+      "changedStartupRecords": 9,
+      "latestChangedStartupField": 27,
+      "maxStartupTimingDifferenceMs": 0.006979999999999542,
+      "allNonTimingFieldsIdentical": true,
+      "allRecordsAfterField27Identical": true
+    }
+  },
+  "frozenUpstreamHashesChecked": 34,
+  "scenarioFrames": {
+    "play": 360,
+    "display": 720,
+    "objects": 360,
+    "fullTransferObjects": 360
+  },
+  "objAtlasBytes": 15104,
+  "objBytesPerImage": 68,
+  "objPaletteBytesAtBoot": 32,
+  "originalAlphaMasksPreserved": 18,
+  "fullTransfer": {
+    "stage": 529,
+    "objMaxCount": 12,
+    "maxDmaSpanCount": 1,
+    "doneSeen": false,
+    "logic": 338,
+    "enemyPaths": {},
+    "deathImage": true,
+    "interval1": 335,
+    "deaths": 1,
+    "interval3plus": 0,
+    "dyingSeen": false,
+    "dmaMaxMs": 4.8347853489028,
+    "respawns": 0,
+    "reflected": 0,
+    "packed_double": 337,
+    "maxBytes": 12288,
+    "bossSeen": false,
+    "enemyTypes": {},
+    "checked": 336,
+    "fields": 360,
+    "stumbleMax": 0,
+    "rendered": 336,
+    "stumbles": 0,
+    "maxCommands": 1,
+    "interval2": 0,
+    "lateDmaStarts": 0,
+    "minBytes": 12288,
+    "loopSeen": false,
+    "em1States": {},
+    "cpuMaxMs": 8.2820574233078,
+    "maxDmaStartLine": 206,
+    "gsuMaxMs": 5.1933038795616,
+    "enemyShotsMax": 0,
+    "romSha256": "48eefbfeca52beed550b3188631be181d49a80efbd1bf039ea645d60bd05f769",
+    "dmaBytesPerImage": 12288,
+    "objBytesPerImage": 68,
+    "latestCompletionScanline": 20,
+    "objPrefetchScanline": 22,
+    "firstVisibleScanline": 23,
+    "framebufferDmaMaxMs": 4.83479,
+    "objDmaMaxMs": 0.071517,
+    "objDmaMeanMs": 0.07090981305637982,
+    "ppuChecks": {
+      "screens": 66,
+      "checkedObjectPixels": 15649,
+      "secondChrTableSeen": true,
+      "flips": [
+        0,
+        64,
+        128,
+        192
+      ],
+      "opaquePaletteIndices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "objPaletteRgb5": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          4,
+          14
+        ],
+        [
+          31,
+          20,
+          2
+        ],
+        [
+          31,
+          3,
+          3
+        ],
+        [
+          8,
+          20,
+          31
+        ],
+        [
+          31,
+          31,
+          31
+        ],
+        [
+          2,
+          10,
+          25
+        ],
+        [
+          31,
+          12,
+          0
+        ],
+        [
+          31,
+          28,
+          2
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "defaultRomSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886"
+  }
+}

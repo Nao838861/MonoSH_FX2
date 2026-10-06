@@ -1,4 +1,5 @@
 """自機全poseと自弾の縮小絵を、起動時だけ転送する4bpp OBJへ変換する。"""
+import json
 import struct
 from PIL import Image
 from build_ground import GAME
@@ -17,9 +18,13 @@ def build():
     bullet_tiles=[0]*17
     slot=0
     def pixels(asset):
-        im=Image.open(assets/f'{asset:02d}.png').convert('RGBA')
-        return [[0 if a<128 else (3 if r+g+b>=384 else 1)
-                 for r,g,b,a in [im.getpixel((x,y)) for x in range(im.width)]]
+        im=Image.open(assets/'obj_color'/f'{asset:02d}.png')
+        assert im.mode=='P' and im.info.get('transparency')==0
+        assert all(0<=c<16 for c in im.getdata())
+        legacy=Image.open(assets/f'{asset:02d}.png').convert('RGBA')
+        assert im.size==legacy.size
+        assert [c!=0 for c in im.getdata()]==[p[3]>=128 for p in legacy.getdata()]
+        return [[im.getpixel((x,y)) for x in range(im.width)]
                 for y in range(im.height)]
     def block(pix):
         nonlocal slot
@@ -52,6 +57,9 @@ def build():
         bullet_tiles[size]=block(pix)
     (assets/'obj_tiles.bin').write_bytes(struct.pack('<264H',*player_tiles))
     (assets/'obj_bullets.bin').write_bytes(struct.pack('<17H',*bullet_tiles))
+    palette=json.loads((assets/'obj_color/palette.json').read_text())['rgb5']
+    assert len(palette)==16 and all(len(p)==3 and all(0<=c<32 for c in p) for p in palette)
+    (assets/'obj_palette.bin').write_bytes(struct.pack('<16H',*[r|(g<<5)|(b<<10) for r,g,b in palette]))
     (assets/'ppu.bin').write_bytes(vram)
     print(f'OBJ atlas: {slot} blocks, {slot*128} bytes, VRAM C000-FFFF')
 

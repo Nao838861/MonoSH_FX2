@@ -38,16 +38,16 @@ def reference(draw,meta):
         if not is_obj(d):continue
         x,bottom,w,h,asset,flags,_,_=d
         if flags&128 and meta['logic']&1:continue
-        image=Image.open(GAME/'assets'/f'{asset:02d}.png').convert('RGBA')
+        image=Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png')
         du=image.width*256//w;dv=image.height*256//h
         for dy in range(h):
             sy=((image.height*256-1-dy*dv) if flags&32 else dy*dv)>>8
             for dx in range(w):
                 sx=((image.width*256-1-dx*du) if flags&16 else dx*du)>>8
-                r,g,b,a=image.getpixel((sx,sy))
-                if a<128:continue
+                color=image.getpixel((sx,sy))
+                if color==0:continue
                 px=x-w//2+dx;py=bottom-h-7+dy
-                if 0<=px<256 and 23<=py<203:out[px,py]=131 if r+g+b>=384 else 129
+                if 0<=px<256 and 23<=py<203:out[px,py]=128+color
     return out
 
 def verify(directory):
@@ -76,22 +76,32 @@ def verify(directory):
         assert sizes==set(range(1,17))
         views=sorted(directory.glob('objview[0-9]*_oam.bin'))
         assert views,'missing final PPU OBJ captures'
-        pixels=0;bank1=False;view_flips=set()
+        pixels=0;bank1=False;view_flips=set();colors=set()
+        planned=json.loads((GAME/'assets/obj_color/palette.json').read_text())['rgb5']
+        planned_words=[r|(g<<5)|(b<<10) for r,g,b in planned]
+        assert (GAME/'assets/obj_palette.bin').read_bytes()==struct.pack('<16H',*planned_words)
         for path in views:
             oam=path.read_bytes()
+            cgram=path.with_name(path.name.replace('_oam.bin','_cgram.bin')).read_bytes()
+            palette=struct.unpack('<256H',cgram)
+            assert list(palette[128:144])==planned_words,'PPU OBJ palette differs from requested colors'
             screen=Image.open(path.with_name(path.name.replace('_oam.bin','.png'))).convert('RGB')
             for (x,y),color in object_pixels(vram,oam).items():
                 if 23<=y<203:
-                    expected=(255,255,255) if color==131 else (0,0,0)
+                    word=palette[color]
+                    expected=tuple(((word>>s)&31)*8+(((word>>s)&31)>>2) for s in (0,5,10))
                     assert screen.getpixel((x,y+6))==expected,f'final PPU OBJ pixel differs: {path.name} {(x,y)}'
                     pixels+=1
+                    colors.add(color-128)
             for i in range(16):
                 if oam[i*4+1]!=240:
                     bank1|=bool(oam[i*4+3]&1)
                     view_flips.add(oam[i*4+3]&192)
         assert bank1 and view_flips=={0,64,128,192}
+        assert colors==set(range(1,9)),f'player/bullet colors missing in actual PPU captures: {colors}'
         (directory/'objects_ppu.json').write_text(json.dumps({'screens':len(views),'checkedObjectPixels':pixels,
-                    'secondChrTableSeen':bank1,'flips':sorted(view_flips)},indent=2)+'\n')
+                    'secondChrTableSeen':bank1,'flips':sorted(view_flips),'opaquePaletteIndices':sorted(colors),
+                    'objPaletteRgb5':planned},indent=2)+'\n')
         print(f'objects: final PPU {len(views)} screens/{pixels} OBJ pixels match, second CHR table and all flips checked')
     print(f'{directory.name}: {len(samples)} OBJ scenes match, max {max_count} OBJ, {len(poses)} poses/{len(flips)} flips/{len(sizes)} bullet sizes')
 

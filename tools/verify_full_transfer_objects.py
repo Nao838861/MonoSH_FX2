@@ -1,4 +1,5 @@
 """全12KiB転送と最大12 OBJを同時検証し、最後に既定ROMを戻す。"""
+import argparse
 import gzip
 import hashlib
 import json
@@ -13,13 +14,18 @@ def run(name,*args):
     subprocess.run([sys.executable,'-X','utf8',str(Path(__file__).with_name(name)),*args],check=True)
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',default='full_transfer_objects',help='results配下の保存先')
+    args=parser.parse_args()
+    result_root=(GAME/'results').resolve()
+    target=(result_root/args.output).resolve()
+    assert target.is_relative_to(result_root) and target!=result_root
     release=ROOT/'releases/MonoSHFX2_v001.sfc'
     default_hash=hashlib.sha256(release.read_bytes()).hexdigest()
     try:
         run('build_game.py','--full-transfer')
         run('test_game.py','--scenario','objects','--frames','360')
-        src=BUILD/'objects';target=GAME/'results/full_transfer_objects';target.mkdir(exist_ok=True)
-        assert target.resolve().parent==(GAME/'results').resolve()
+        src=BUILD/'objects';target.mkdir(parents=True,exist_ok=True)
         for old in target.iterdir():
             if old.is_file():old.unlink()
         records=[json.loads(x) for x in (src/'trace.jsonl').read_text().splitlines()]

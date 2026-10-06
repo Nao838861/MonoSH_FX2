@@ -106,7 +106,7 @@ next_color:
   inx
   cpx #128
   bne palette_loop
-  ; 空の紫。OBJは白黒を保存し、絵柄は起動時のVRAM全転送に含まれる。
+  ; 空の紫。カラーOBJの絵柄・CGRAMは起動時だけ転送する。
   stz $2121
   lda f:$7e0000+_fx_sky_color
   sta $2122
@@ -116,20 +116,10 @@ next_color:
   sta $2121
   ldx #0
 obj_palette:
-  txa
-  cmp #3
-  beq obj_white
-  stz $2122
-  stz $2122
-  bra obj_palette_next
-obj_white:
-  lda #$ff
+  lda f:obj_palette_data,x
   sta $2122
-  lda #$7f
-  sta $2122
-obj_palette_next:
   inx
-  cpx #16
+  cpx #32
   bne obj_palette
   lda #$63                  ; size選択3=small16、大32、CHR byte base C000。
   sta $2101
@@ -186,6 +176,8 @@ clear_high_oam:
   pha
   plb
   jml $7f0000 + game_started
+
+obj_palette_data: .incbin "assets/obj_palette.bin"
 
 .segment "CODE"
 .a8
