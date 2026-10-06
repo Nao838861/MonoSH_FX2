@@ -1,0 +1,5 @@
+objects: 85 scenes, UV/clip packets and all 49,152 pixels match
+objects: final PPU 66 screens/15649 OBJ pixels match, second CHR table and all flips checked
+objects: 85 OBJ scenes match, max 12 OBJ, 17 poses/4 flips/16 bullet sizes
+Mesen exit 0
+last records: [{"joinedMs": 7.26228, "cpuMs": 7.25241, "gsuMs": 3.25498, "field": 359}, {"objMs": 0.071145, "objBytes": 68, "field": 359}, {"dmaStartLine": 206, "spans": 10, "deadline": 220, "field": 359}, {"field": 360, "logic": 338, "x": 128, "y": 119, "player": 1, "stage": 529, "enemies": 0, "shots": 0, "enemyShots": 0, "boss": 0, "hp": 16, "commands": 1, "cpuPC": 12769, "ppuLine": 225, "gsuGO": 0}]

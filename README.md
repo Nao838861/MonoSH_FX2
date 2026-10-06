@@ -2,7 +2,7 @@
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
-NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fps（配色前版の実測）。全場面60fpsには未達。** 詳細は [検証結果](game/v001/RESULTS.md)。
+NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fps（配色前版の実測）。全場面60fpsには未達。** 最新ROMは押しっぱなし射撃で誤ポーズになる入力取得を修正し、約5分継続・16通りの方向と射撃、Startでのポーズを検証した。詳細は [検証結果](game/v001/RESULTS.md)。
 
 地面は同一消失点からの直線式へ直した。追加の指定RGBに近い緑四色を使い、暗い1/2の列と明るい4/3の列が奥へ続き、横に1/4・2/3が隣接する配色にした。空は紫。自機17poseは赤い服・青い脚・肌色、弾16サイズは黄・橙・白のカラーOBJ。静的CHRとパレットを起動時だけ設定し、毎画像の追加転送はOAM 68bytes。全12KiB転送と最大12 OBJの同時検査、C/nativeの状態一致、三カメラと反転・画面端の最終PPU画素照合を含む [検証結果](game/v001/RESULTS.md) を保存した。
 
@@ -23,6 +23,7 @@ python -m pip install -r requirements.txt
 ```powershell
 python -X utf8 tools/build_game.py
 python -X utf8 tools/verify_game.py --equivalence
+python -X utf8 tools/verify_game_inputs.py
 python -X utf8 tools/verify_full_transfer_objects.py
 ```
 

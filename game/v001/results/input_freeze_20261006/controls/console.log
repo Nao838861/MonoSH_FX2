@@ -1,0 +1,4 @@
+controls: 3 scenes, UV/clip packets and all 49,152 pixels match
+controls: 3 OBJ scenes match, max 6 OBJ, 3 poses/2 flips/0 bullet sizes
+Mesen exit 0
+last records: [{"joinedMs": 6.9615, "cpuMs": 6.95461, "gsuMs": 4.96693, "field": 719}, {"objMs": 0.070772, "objBytes": 68, "field": 719}, {"dmaStartLine": 206, "spans": 16, "deadline": 220, "field": 719}, {"field": 720, "logic": 695, "x": 105, "y": 191, "player": 0, "stage": 951, "enemies": 1, "shots": 0, "enemyShots": 0, "boss": 0, "hp": 16, "commands": 8, "cpuPC": 12769, "ppuLine": 225, "gsuGO": 0}]

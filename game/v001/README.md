@@ -2,11 +2,13 @@
 
 Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮描画、自機・自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を担当する。
 
-**表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fpsで、全場面60fpsには未達。** これらは配色前版の実測。最新は自機を赤・青・肌色、弾を黄・橙・白のカラーOBJへ変更した。起動時のパレットと静的CHRだけを変更し、play/displayの28field以降の計測は前版と全項目一致した。60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、ゲーム時間も遅くなる。通常進行の表示間隔は約95%が1field、残りが2field。指定RGBの四色・縦列の配色、直線パース・紫の空、OBJ化とDMA、CPU/GSU時間は [RESULTS.md](RESULTS.md)。
+**表示256×180、内部FBは256×192。入力修正後の序盤59.35fps、通常進行57.05fpsは以前の長時間実測。全場面60fpsには未達。** 現在はJOY1取得の前後でbusyを確認し、押しっぱなしで誤Startが混入するポーズ停止を修正した。約5分継続と8方向×Y/A、Startでのポーズ・解除を検証した。自機は赤・青・肌色、弾は黄・橙・白のカラーOBJ。60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、ゲーム時間も遅くなる。配色前版の通常進行は約95%が1field、残りが2fieldだった。指定RGBの四色・縦列の配色、直線パース・紫の空、OBJ化とDMA、CPU/GSU時間は [RESULTS.md](RESULTS.md)。
 
 ## 遊ぶ
 
 [../../play.cmd](../../play.cmd) を実行する。この環境では既存の `D:\HomeBrew\Mesen\Mesen.exe` を使い、プロジェクト内 `.cache/mesen_runtime` に専用設定を作る。通常のMesen設定を変更せず、オーバークロックなしでROMを開く。別の場所なら環境変数 `MONOSH_FX2_MESEN` にMesenのパスを指定する。
+
+更新後はROMを開き直してリセットし、起動から確認する。旧ステートからの再開はWRAMの旧コードも復元する。
 
 ROM単体は [../../releases/MonoSHFX2_v001.sfc](../../releases/MonoSHFX2_v001.sfc)。GSU/Super FX対応のMesenで開き、Port 1をSNESコントローラにしても遊べる。ROMにLua、元のNES ROM、MSX本体は必要ない。
 
@@ -29,6 +31,8 @@ Python 3.10以上、Pillow、PATH上のcc65/ca65/ld65を使用する。ca65用GS
 ```powershell
 python -X utf8 tools/build_game.py
 python -X utf8 tools/verify_game.py --equivalence
+python -X utf8 tools/test_game.py --scenario held --held-fire y --frames 900
+python -X utf8 tools/verify_game_inputs.py
 python -X utf8 tools/test_game.py --scenario play --frames 360
 python -X utf8 tools/test_game.py --scenario pause --frames 360
 python -X utf8 tools/test_game.py --scenario controls --frames 720

@@ -1,0 +1,148 @@
+{
+  "deathImage": true,
+  "interval3plus": 0,
+  "fields": 360,
+  "checked": 336,
+  "gsuMaxMs": 5.1951663134871,
+  "rendered": 336,
+  "packed_double": 337,
+  "em1States": {},
+  "reflected": 0,
+  "objMaxCount": 12,
+  "dyingSeen": false,
+  "maxBytes": 12288,
+  "stumbleMax": 0,
+  "lateDmaStarts": 0,
+  "enemyShotsMax": 0,
+  "maxCommands": 1,
+  "enemyPaths": {},
+  "maxDmaStartLine": 206,
+  "maxDmaSpanCount": 1,
+  "enemyTypes": {},
+  "logic": 338,
+  "interval1": 335,
+  "deaths": 1,
+  "stage": 529,
+  "bossSeen": false,
+  "loopSeen": false,
+  "respawns": 0,
+  "stumbles": 0,
+  "minBytes": 12288,
+  "interval2": 0,
+  "cpuMaxMs": 8.2868997515141,
+  "dmaMaxMs": 4.8347853489028,
+  "doneSeen": false,
+  "romSha256": "a6ffdac5ad4a9a23343298e61b8714e2a053ac89b09bdbda9abfbc5a1a01a85b",
+  "dmaBytesPerImage": 12288,
+  "objBytesPerImage": 68,
+  "latestCompletionScanline": 20,
+  "objPrefetchScanline": 22,
+  "firstVisibleScanline": 23,
+  "framebufferDmaMaxMs": 4.83479,
+  "objDmaMaxMs": 0.071517,
+  "objDmaMeanMs": 0.07089763798219585,
+  "ppuChecks": {
+    "screens": 66,
+    "checkedObjectPixels": 15649,
+    "secondChrTableSeen": true,
+    "flips": [
+      0,
+      64,
+      128,
+      192
+    ],
+    "opaquePaletteIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "objPaletteRgb5": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        4,
+        14
+      ],
+      [
+        31,
+        20,
+        2
+      ],
+      [
+        31,
+        3,
+        3
+      ],
+      [
+        8,
+        20,
+        31
+      ],
+      [
+        31,
+        31,
+        31
+      ],
+      [
+        2,
+        10,
+        25
+      ],
+      [
+        31,
+        12,
+        0
+      ],
+      [
+        31,
+        28,
+        2
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "defaultRomSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6"
+}

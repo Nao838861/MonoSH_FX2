@@ -1,0 +1,30 @@
+{
+  "romSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886",
+  "scenario": "held",
+  "heldDirection": "up-left",
+  "heldFire": "y",
+  "physicalTurboUsed": false,
+  "physicalButtons": {
+    "down": false,
+    "x": false,
+    "y": true,
+    "select": false,
+    "left": true,
+    "start": false,
+    "b": false,
+    "up": true,
+    "a": false,
+    "right": false,
+    "l": false,
+    "r": false
+  },
+  "firstFalsePauseField": 226,
+  "lastLogicUpdate": 204,
+  "cachedJoy1": 4736,
+  "expectedJoy1": 18944,
+  "paused": true,
+  "gsuRunningAtCapture": false,
+  "fieldRateHz": 60.0988,
+  "secondsToFalsePause": 3.760474418790392,
+  "failure": "...OT\\GPT\\projects\\monosh_fx2\\build\\game_v001\\held\\test.lua:482: unexpected pause without Start: cached JOY1=4736 field=226"
+}

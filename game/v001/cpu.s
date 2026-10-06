@@ -210,9 +210,21 @@ wait_initial_vblank:
 
 _fx_read_input:
   php
-  rep #$30
+  ; Auto joypadがshift途中のJOY1を読むと、Y+左上($4a00)が
+  ; Startを含む$1280に見え、押していないポーズが発生する。
+  ; 読み取り前後にbusyを確認し、開始境界をまたいだ結果も捨てる。
+  sep #$20
+wait_auto_joy:
+  lda f:$004212
+  and #1
+  bne wait_auto_joy
+  rep #$20
   lda f:$004218
   sta _fx_buttons
+  sep #$20
+  lda f:$004212
+  and #1
+  bne wait_auto_joy
   plp
   rts
 

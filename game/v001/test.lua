@@ -2,6 +2,8 @@ local labels = LABELS
 local output = OUTDIR
 local maxframe = MAXFRAME
 local scenario = SCENARIO
+local held_direction = HELD_DIRECTION
+local held_fire = HELD_FIRE
 local gsu_uv = GSU_UV
 local gsu_clip = GSU_CLIP
 local report = assert(io.open(output..'/trace.jsonl','w'))
@@ -14,6 +16,7 @@ local profile={}
 local native_profile={}
 local failed=false
 local previous_field,previous_boss,previous_player=0,0,0
+local last_logic,last_logic_field=-1,0
 local stats={fields=0,rendered=0,checked=0,deaths=0,respawns=0,bossSeen=false,dyingSeen=false,doneSeen=false,loopSeen=false,
              enemyTypes={},enemyPaths={},em1States={},stumbles=0,reflected=0,maxCommands=0,minBytes=65535,maxBytes=0,
              interval1=0,interval2=0,interval3plus=0,cpuMaxMs=0,gsuMaxMs=0,dmaMaxMs=0}
@@ -59,6 +62,11 @@ local function guard(fn)
     local ok,err=pcall(fn,...)
     if not ok then
       failed=true
+      local state=io.open(output..'/failure_state.json','w')
+      state:write(encoded(emu.getState()));state:close()
+      dump('failure_wram.bin',emu.memType.snesMemory,0x7e0000,65536)
+      local input=io.open(output..'/failure_input.json','w')
+      input:write(encoded(emu.getInput(0)));input:close()
       local q=io.open(output..'/debugram.bin','wb'); local t={}
       for k=0,32767 do t[#t+1]=string.char(emu.read(k,emu.memType.gsuWorkRam)) end
       q:write(table.concat(t)); q:close()
@@ -374,7 +382,12 @@ emu.addMemoryCallback(guard(function(a,v)
   end
 end),emu.callbackType.write,0x7E1DF0,0x7E1DF0)
 emu.addEventCallback(guard(function()
-  if scenario=='play' then
+  if scenario=='held' then
+    local input={}
+    for direction in held_direction:gmatch('[^-]+') do if direction~='none' then input[direction]=true end end
+    if held_fire~='none' then input[held_fire]=true end
+    emu.setInput(input,0)
+  elseif scenario=='play' then
     emu.setInput({a=true,up=field>150 and field<180,right=field>180 and field<210,left=field>240 and field<275},0)
   elseif scenario=='long' or scenario=='profile' then
     if read('_monosh_boss_state')==1 then
@@ -413,6 +426,34 @@ emu.addEventCallback(guard(function()
     if field==240 then assert(read('_monosh_runtime_frame_counter',2)>stats.pauseLogic,'pause did not resume') end
   end
   if field%30==0 then trace() end
+  if scenario=='held' then
+    if rendered>0 then
+      local logic=read('_monosh_runtime_frame_counter',2)
+      if logic~=last_logic then last_logic=logic;last_logic_field=field end
+      stats.maxLogicGap=math.max(stats.maxLogicGap or 0,field-last_logic_field)
+      assert(read('_monosh_runtime_paused')==0,'unexpected pause without Start: cached JOY1='..read('_fx_buttons',2)..' field='..field)
+      assert(field-last_logic_field<=90,'logic frozen while frames continue')
+      if field>=60 then
+        local bits={right=0x100,left=0x200,down=0x400,up=0x800,a=0x80,y=0x4000}
+        local expected=bits[held_fire] or 0
+        for direction in held_direction:gmatch('[^-]+') do expected=expected|(bits[direction] or 0) end
+        assert(read('_fx_buttons',2)==expected,'held buttons were sampled mid-shift: '..read('_fx_buttons',2)..' expected '..expected)
+        stats.heldSamplesChecked=(stats.heldSamplesChecked or 0)+1
+      end
+    end
+    local gap=field-previous_field
+    stats.maxPresentationGap=math.max(stats.maxPresentationGap or 0,rendered>0 and gap or 0)
+    if gap>90 and field>120 then
+      local f=assert(io.open(output..'/freeze_state.json','w'))
+      f:write(encoded(emu.getState()));f:close()
+      dump('freeze_wram.bin',emu.memType.snesMemory,0x7e0000,65536)
+      dump('freeze_gsu.bin',emu.memType.gsuWorkRam,0,32768)
+      dump('freeze_registers.bin',emu.memType.snesMemory,0x3000,128)
+      screenshot('freeze')
+      trace()
+      assert(false,'presentation frozen: '..gap..' fields without a new image; rendered='..rendered..' field='..field)
+    end
+  end
   if field==120 or field==240 or field==maxframe then
     local f=assert(io.open(output..'/field'..field..'.rgb','wb'));local rgb={}
     for _,v in ipairs(emu.getScreenBuffer()) do rgb[#rgb+1]=string.char((v>>16)&255,(v>>8)&255,v&255) end

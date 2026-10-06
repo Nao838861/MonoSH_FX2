@@ -1,5 +1,5 @@
 {
-  "romSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886",
+  "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -55,11 +55,17 @@
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "scenarioFrames": {
     "play": 360,
-    "display": 720,
+    "controls": 720,
+    "pause": 360,
     "objects": 360,
+    "display": 720,
+    "profile": 2400,
+    "heldUpLeftYLong": 18000,
+    "heldDirectionsY": 7200,
+    "heldDirectionsA": 7200,
     "fullTransferObjects": 360
   },
-  "verificationKind": "自機・自弾のカラーOBJ化。play/display/objects/全12KiB＋OBJを検証。GSU・CPU本体・実行時データは前版とbyte一致。play/display計4,177レコードのうち起動直後10件だけ0.01ms未満の位相差、残り4,167件一致。",
+  "verificationKind": "JOY1自動取得のbusy確認を前後に追加。誤Startによるポーズを修正。左上＋Yを約5分、8方向×Y/A、通常操作・ポーズ・カラーOBJ・画面・profile・全DMAを検証。",
   "comprehensiveVerificationReferenceRomSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
   "groundPalette": {
     "requestedRgb": [
@@ -139,7 +145,7 @@
       ]
     ]
   },
-  "verificationResults": "game/v001/results/obj_color_20261006/summary.json",
+  "verificationResults": "game/v001/results/input_freeze_20261006/summary.json",
   "paletteCorrectionReferenceRomSha256": "1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc",
   "objColor": {
     "rgb5": [
@@ -228,5 +234,19 @@
     "objAtlasBytes": 15104,
     "objBytesPerImage": 68,
     "objPaletteBytesAtBoot": 32
+  },
+  "inputReadFix": {
+    "priorRomSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886",
+    "registers": [
+      "HVBJOY $4212 bit0",
+      "JOY1 $4218/$4219"
+    ],
+    "busyCheckedBeforeAndAfter": true,
+    "firstFalsePauseFieldBefore": 226,
+    "beforeExpectedJoy1": 18944,
+    "beforeCachedJoy1": 4736,
+    "holdTurboUsed": false,
+    "afterLongFields": 18000,
+    "afterLongLogicUpdates": 14430
   }
 }

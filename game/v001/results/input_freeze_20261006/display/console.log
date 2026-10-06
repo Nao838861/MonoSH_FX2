@@ -1,0 +1,5 @@
+display: 3 scenes, UV/clip packets and all 49,152 pixels match
+display: 3 OBJ scenes match, max 6 OBJ, 1 poses/1 flips/0 bullet sizes
+3 camera heights: BG2/BG3/BG4 final RGB matches
+Mesen exit 0
+last records: [{"joinedMs": 8.12897, "cpuMs": 8.12021, "gsuMs": 7.01821, "field": 719}, {"objMs": 0.070772, "objBytes": 68, "field": 719}, {"dmaStartLine": 206, "spans": 19, "deadline": 220, "field": 719}, {"field": 720, "logic": 698, "x": 128, "y": 201, "player": 0, "stage": 761, "enemies": 6, "shots": 0, "enemyShots": 0, "boss": 0, "hp": 16, "commands": 5, "cpuPC": 12769, "ppuLine": 225, "gsuGO": 0}]

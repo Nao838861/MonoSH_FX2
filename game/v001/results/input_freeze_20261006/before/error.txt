@@ -1,0 +1,1 @@
+...OT\GPT\projects\monosh_fx2\build\game_v001\held\test.lua:482: unexpected pause without Start: cached JOY1=4736 field=226

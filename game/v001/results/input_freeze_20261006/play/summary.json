@@ -1,0 +1,52 @@
+{
+  "dmaMaxMs": 4.8346922272065,
+  "stage": 595,
+  "enemyPaths": {
+    "0": true
+  },
+  "doneSeen": false,
+  "interval2": 3,
+  "packed_quarter": 84,
+  "cpuMaxMs": 9.6175156695878,
+  "interval3plus": 4,
+  "enemyShotsMax": 0,
+  "deaths": 0,
+  "maxCommands": 9,
+  "maxBytes": 12288,
+  "enemyTypes": {
+    "5": true
+  },
+  "em1States": {},
+  "maxDmaStartLine": 206,
+  "dyingSeen": false,
+  "checked": 338,
+  "fields": 360,
+  "loopSeen": false,
+  "respawns": 0,
+  "bossSeen": false,
+  "rendered": 338,
+  "interval1": 330,
+  "logic": 339,
+  "maxDmaSpanCount": 24,
+  "lateDmaStarts": 0,
+  "stumbles": 0,
+  "packed_double": 125,
+  "packed_one": 338,
+  "minBytes": 416,
+  "stumbleMax": 0,
+  "gsuMaxMs": 9.0980828477658,
+  "packed_half": 30,
+  "objMaxCount": 9,
+  "reflected": 0,
+  "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+  "presentationIntervals": {
+    "oneField": 337,
+    "twoFields": 0,
+    "threeOrMoreFields": 0
+  },
+  "intervalBasis": "DMA開始field。完了時刻のfield跨ぎを除く",
+  "framesPerSecondIncludingBoot": 56.426095555555555,
+  "cpuMeanMs": 7.14634775147929,
+  "joinedMeanMs": 7.178348698224852,
+  "gsuMeanMs": 3.1504861834319526
+}
