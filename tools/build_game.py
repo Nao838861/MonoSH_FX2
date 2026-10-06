@@ -223,6 +223,41 @@ def pack_assets():
                     raw[base+160+x//4]=sum(raw[base+x+i]<<((3-i)*2) for i in range(min(4,image.width-x)))
         if raw!=path.read_bytes():path.write_bytes(raw)
 
+def build_scaled(enabled):
+    # 原画行の後のpaddingだけを利用。既存raw/packed/flip領域へは書かない。
+    images=[Image.open(GAME/'assets'/f'{i:02d}.png').convert('RGBA') for i in range(44)]
+    banks={b:bytearray((GAME/'assets'/f'bank{b:02x}.bin').read_bytes()) for b in range(0x44,0x5a)}
+    holes=[]
+    for asset,image in enumerate(images):
+        start=(asset&1)*32768+image.height*256;end=(1+(asset&1))*32768
+        if start<end:
+            bank=0x44+asset//2
+            banks[bank][start:end]=bytes(end-start)
+            holes.append([bank,start,end])
+    table=bytearray(65536)
+    used=0
+    if enabled:
+        for asset,limit in [(13,96),(14,96),(31,96),(0,96),(1,96),(4,128)]:
+            image=images[asset];source=banks[0x44+asset//2];sourcebase=(asset&1)*32768
+            for width in range(1,limit+1):
+                stride=(width+3)//4;size=stride*image.height;du=image.width*256//width
+                hole=next((h for h in holes if h[2]-h[1]>=size),None)
+                assert hole is not None, (asset,width,size)
+                bank,offset,_=hole;hole[1]+=size
+                data=bytearray(size)
+                for y in range(image.height):
+                    for x in range(width):
+                        color=source[sourcebase+y*256+((x*du)>>8)]
+                        data[y*stride+x//4]|=color<<((x&3)*2)
+                banks[bank][offset:offset+size]=data
+                struct.pack_into('<BBH',table,asset*1024+width*4,bank,stride,offset)
+                used+=size
+    for bank,data in banks.items():
+        path=GAME/'assets'/f'bank{bank:02x}.bin'
+        if data!=path.read_bytes():path.write_bytes(data)
+    (GAME/'assets/scaled5f.bin').write_bytes(table)
+    print(f'Horizontal Q8.8 packed scaling: {used} bytes in original ROM padding')
+
 def prepare_logic():
     reference = '--reference-logic' in sys.argv
     enemy_impl=(GAME/'enemy_impl.inc').read_text(encoding='utf-8')
@@ -310,6 +345,13 @@ def main():
         gsu_uv=True
     cpu_clip_commands=gsu_clip and config.get('cpuClipCommands',False) and '--no-cpu-clip-commands' not in sys.argv
     stable_cache=gsu_clip and config.get('stableGsuCache',False) and '--no-stable-gsu-cache' not in sys.argv
+    scaled=stable_cache and config.get('scaledRows',True) and '--no-scaled-rows' not in sys.argv
+    bucket_sort='--bucket-sort' in sys.argv
+    fast_obj=config.get('fastObj',True) and '--no-fast-obj' not in sys.argv
+    scaled_clip=scaled and config.get('scaledClip',True) and '--no-scaled-clip' not in sys.argv
+    fast_uv=scaled and config.get('fastUv',True) and '--no-fast-uv' not in sys.argv
+    descriptor_dma=config.get('descriptorDma',True) and '--no-descriptor-dma' not in sys.argv
+    dma_admission=9216 if '--legacy-dma-admission' in sys.argv else config.get('dmaAdmissionBytes',9984)
     lock=json.loads((ROOT/'probes/v001/sources.lock.json').read_text(encoding='utf-8'))['ARM9/casfx']
     from bootstrap_probe import fetch
     fetch('ARM9/casfx',lock['commit'],'gsu/casfx.inc',lock['files']['gsu/casfx.inc']['sha256'])
@@ -319,6 +361,7 @@ def main():
     from build_objects import build as build_objects
     build_objects()
     pack_assets()
+    build_scaled(scaled)
     scale=bytearray(65536)
     dimensions=[Image.open(GAME/'assets'/f'{i:02d}.png').size for i in range(44)]
     for axis in range(2):
@@ -345,6 +388,13 @@ def main():
              *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
              *(['-D','FX_CPU_CLIP_COMMANDS=1'] if cpu_clip_commands else []),
              *(['-D','FX_STABLE_GSU_CACHE=1'] if stable_cache else []),
+             *(['-D','FX_SCALED_ROWS=1'] if scaled else []),
+             *(['-D','FX_BUCKET_SORT=1'] if bucket_sort else []),
+             *(['-D','FX_FAST_OBJ=1'] if fast_obj else []),
+             *(['-D','FX_SCALED_CLIP=1'] if scaled_clip else []),
+             *(['-D','FX_FAST_UV=1'] if fast_uv else []),
+             *(['-D','FX_DESCRIPTOR_DMA=1'] if descriptor_dma else []),
+             '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
              '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
     run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
@@ -357,7 +407,7 @@ def main():
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
     (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
-        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache})+'\n')
+        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledClip':scaled_clip,'fastUv':fast_uv,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()

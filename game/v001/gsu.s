@@ -11,6 +11,9 @@
 ;       128..159: 4画素/byteのpacked 2bpp。左の画素が下位2bit。
 ;       160..191: 同じ4画素を逆のbit順で格納。左右反転用。
 ; この配置はtools/build_game.pyのexport_assets/pack_assetsと対応する。
+; 原画行の後のpaddingには横方向だけQ8.8で縮小済みのpacked行を置く。
+; 対象は草2種・木・ボス胴/顔/弾。縦方向のV/DVは実行時に計算する。
+; 原画を置換せず、対応幅の608段階を追加する。メタ表はROM bank5F。
 ;
 ; 描画ループ直前のレジスタ契約（packet/clip/UV準備中は役割が変わる）:
 ;   R0  演算・packed画素展開の作業値
@@ -28,14 +31,15 @@
 ; GSUはジャンプ/分岐の直後の命令も実行する（delay slot）。
 ; LOOP直後のPLOTや行末のINCを移動すると、画素数や座標が変わる。
 ; CACHEは命令キャッシュを使うための指定であり、画素データの圧縮ではない。
-; stableGsuCache: 共通準備+genericを504byteへ配置。clip補正はcache外から戻る。
+; stableGsuCache: 共通準備+scaled+genericを485byteへ配置。clip補正はcache外。
 ; generic/packed間や異なるpacked経路へ切替時にCBRを変更。同じ経路なら保持。
 ; cpuClipCommands: packet末尾bit15=INSIDE。GSUは座標補正だけを省く。
 ;
 ; 最適化の評価: 内側のループは短くしてあるが、描画全体の最速は未証明。
-; genericはclip/反転/端数を含む任意倍率を受け持つ。整数比だけpackedへ分岐。
-; 原画の透明余白を各行ごとに省く経路、同色区間、8画素単位の直接合成は
-; 比較候補。ただし区間管理やbit演算が増えるため、実ゲームでの計測が必要。
+; genericは未収録幅・左右反転等の任意倍率を受け持つ。整数比はpackedへ。
+; その他の対応幅はscaled_renderで4画素ずつ展開し、clipの先頭端数も描く。
+; scaled/genericと共通準備を同じ512byte枠に置き、clipでCBRを変えない。
+; 最後のDMA区間生成だけ別cacheへ移る。比較結果はRENDER_ITERATIONS参照。
 ; probes/v001の最速経路には同色区間もあるが、このゲームの選択器にはない。
 .segment "GSU"
 .export render_entry, render_stop
@@ -100,13 +104,24 @@ clear_done:
   iwt r11,#$0006
   stw (r11)
   .ifdef FX_STABLE_GSU_CACHE
-  ; 初回はdispatchへ。generic/packed切替時だけ同じ入口でCBRを設定し直す。
+  ; 初回はdispatchへ。scaled/genericを含む共通のCBRを維持する。
   iwt r11,#.loword(dispatch)
   .align 16,$01           ; GSUのNOPで埋める。0はSTOPなので使わない。
 hot_cache:
   cache
   jmp (r11)
   nop
+  .ifdef FX_SCALED_ROWS
+scaled_render:
+  .include "gsu_scaled_draw.inc"
+  .ifdef FX_SCALED_CLIP
+  .include "gsu_scaled_head.inc"
+  .endif
+  .ifdef FX_FAST_UV
+generic_render:
+  .include "gsu_generic.inc"
+  .endif
+  .else
 generic_render:
   ; 任意倍率の最近傍サンプリング。U/Vの整数部で原画画素を選ぶ。
   ; 6行の画素loop。MERGE r14はWITH+MERGEへ展開され、実命令は7つ。
@@ -132,6 +147,7 @@ pixel:
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
+  .endif
 .endif
 .export generic
 dispatch:
@@ -209,12 +225,24 @@ dispatch_nonzero:
   .endif
   .ifdef FX_GSU_UV
     ; DU/DVはROM表から取得し、clipで飛ばす原画位置と反転を設定する。
+    .ifdef FX_FAST_UV
+    .include "gsu_uv_fast.inc"
+    .else
     .include "gsu_uv.inc"
+    .endif
   .endif
   .ifndef FX_STABLE_GSU_CACHE
 .export gsu_selector_cache
 gsu_selector_cache:
   cache
+  .endif
+  .ifdef FX_SCALED_ROWS
+  iwt r11,#.loword(selector)
+  jmp (r11)
+  nop
+hot_cache_end:
+  .assert hot_cache_end-hot_cache <= 512, error, "GSU common path exceeds cache"
+selector:
   .endif
   ; packedでもgenericと同じ原画画素を選ぶため、開始位置とDUを検査する。
   ; U0 & $03ff == 0: 小数部0かつ原画Xが4画素境界。正方向の候補。
@@ -269,13 +297,37 @@ positive_steps:
   beq packed_quarter_jump
   nop
   .ifdef FX_STABLE_GSU_CACHE
+  .ifndef FX_SCALED_ROWS
 hot_cache_end:
   .assert hot_cache_end-hot_cache <= 512, error, "GSU common path exceeds cache"
+  .endif
 generic:
+  .ifdef FX_SCALED_ROWS
+  iwt r11,#.loword(scaled_select)
+  jmp (r11)
+  nop
+generic_fallback:
+  .ifdef FX_FAST_UV
   iwt r11,#.loword(generic_render)
   iwt r8,#.loword(hot_cache)
   jmp (r8)
   nop
+  .else
+  iwt r11,#.loword(generic_render)
+  jmp (r11)
+  nop
+generic_render:
+.export generic_cache
+generic_cache:
+  cache
+  .include "gsu_generic.inc"
+  .endif
+  .else
+  iwt r11,#.loword(generic_render)
+  iwt r8,#.loword(hot_cache)
+  jmp (r8)
+  nop
+  .endif
   .else
 generic:
   ; 任意倍率の最近傍サンプリング。U/Vの整数部で原画画素を選ぶ。
@@ -513,11 +565,28 @@ double_next_row:
 clip_edges:
   .include "gsu_clip_edges.inc"
   .endif
+  .ifdef FX_SCALED_ROWS
+  .include "gsu_scaled.inc"
+  .endif
+  .ifdef FX_FAST_UV
+uv_slow:
+  .include "gsu_uv.inc"
+  iwt r8,#.loword(uv_fast_done)
+  jmp (r8)
+  nop
+  .endif
 finished:
   rpix                       ; 件数0でも含め、最後の画素cacheをflushする。
   .if .defined(FX_GSU_CLIP) .and .not .defined(FX_FULL_TRANSFER)
+  ; 描画を終えた後にだけcacheを切り替える。区間表生成もROM直読みを避ける。
+  .align 16,$01
+dma_cache:
+  .export dma_cache, dma_cache_end
+  cache
   ; 既定の部分転送。今回と前回の範囲を結び、消えたspriteの跡も転送する。
   .include "gsu_dma.inc"
+dma_cache_end:
+  .assert dma_cache_end-dma_cache <= 512, error, "DMA planner cache overflow"
   .endif
   ; CPUへの完了値として元の描画件数をR0へ戻す。STOPでCPUへ所有権を返す。
   iwt r11,#$0000
@@ -532,3 +601,7 @@ render_stop:
 .endrepeat
 .segment "SCALE5E"
 .incbin "assets/scale5e.bin"
+  .ifdef FX_SCALED_ROWS
+.segment "SPAN5F"
+.incbin "assets/scaled5f.bin"
+  .endif

@@ -3,6 +3,7 @@
 .macpack longbranch
 .export _fx_build_packet
 .export packet_done
+.export initialized, sorted
 .import _fx_draw, _fx_draw_count, _fx_packet, _fx_packet_count
 .import _fx_asset_width, _fx_asset_height, _fx_asset_bank
 .import _monosh_runtime_frame_counter
@@ -12,9 +13,15 @@
 dp: .res 2
 pp: .res 2
 steps: .res 2
+packet_work: .res 32 ; ??????????routine????scratch?DP????
 .segment "BSS"
 order: .res 128
 keys: .res 128
+.ifdef FX_BUCKET_SORT
+bucket_heads: .res 512
+bucket_links: .res 128
+.export bucket_heads, bucket_links, order, keys
+.endif
 .segment "CODE"
 .a8
 .i8
@@ -25,20 +32,23 @@ _fx_build_packet:
   jsr fx_reset_next_bounds
   lda _fx_draw_count
   and #$ff
-  sta $0140
+  sta packet_work+0
   asl
   asl
   clc
-  adc $0140
+  adc packet_work+0
   asl
-  sta $0142                ; total draw bytes
-  lda $0140
+  sta packet_work+2                ; total draw bytes
+  lda packet_work+0
   asl
-  sta $0148                ; ソートする2byte indexの総量
+  sta packet_work+8                ; ソートする2byte indexの総量
   ldy #0
   ldx #0
+.ifdef FX_BUCKET_SORT
+  stz $0162                ; priorityが混在する時は元の安定insertion sort。
+.endif
 initialize_order:
-  cpx $0142
+  cpx packet_work+2
   bcs initialized
   jsr fx_is_obj
   bne omit_obj
@@ -47,6 +57,9 @@ initialize_order:
   lda _fx_draw+8,x
   eor #$00ff               ; priority昇順、同priorityならZ降順
   sta keys,y
+.ifdef FX_BUCKET_SORT
+  jsr bucket_record
+.endif
   iny
   iny
 omit_obj:
@@ -56,23 +69,36 @@ omit_obj:
   tax
   bra initialize_order
 initialized:
-  sty $0148                ; FXへ送る分だけをソート。論理draw自体は保存。
+  sty packet_work+8                ; FXへ送る分だけをソート。論理draw自体は保存。
+.ifdef FX_BUCKET_SORT
+  cpy #24                  ; 12体以上で比較・移動の二乗費用を避ける。
+  bcc insertion_sort
+  lda $0162
+  bne insertion_sort
+  lda $0166
+  sec
+  sbc $0164
+  cmp #129                 ; 広く散った少数commandはinsertionの方が安い。
+  bcs insertion_sort
+  jmp bucket_sort
+insertion_sort:
+.endif
   lda #2
-  sta $0144
+  sta packet_work+4
 sort:
-  lda $0144
-  cmp $0148
+  lda packet_work+4
+  cmp packet_work+8
   bcs sorted
   tay
   lda order,y
-  sta $015a
+  sta packet_work+26
   lda keys,y
-  sta $0158
+  sta packet_work+24
   dey
   dey
 compare:
   lda keys,y
-  cmp $0158
+  cmp packet_work+24
   bcc insert
   beq insert
   sta keys+2,y
@@ -84,12 +110,12 @@ compare:
 insert:
   iny
   iny
-  lda $015a
+  lda packet_work+26
   sta order,y
-  lda $0158
+  lda packet_work+24
   sta keys,y
-  inc $0144
-  inc $0144
+  inc packet_work+4
+  inc packet_work+4
   bra sort
 sorted:
   lda #_fx_draw
@@ -97,10 +123,10 @@ sorted:
   lda #_fx_packet
   sta pp
   stz _fx_packet_count
-  stz $0144
+  stz packet_work+4
 next:
-  lda $0144
-  cmp $0148
+  lda packet_work+4
+  cmp packet_work+8
   bcc fast_compile
 packet_done:
   plp
@@ -109,7 +135,7 @@ packet_done:
 .ifdef FX_GSU_UV
 .ifdef FX_GSU_CLIP
 fast_compile:
-  ldy $0144
+  ldy packet_work+4
   lda order,y
   tax
   lda _fx_draw+7,x
@@ -133,12 +159,15 @@ fast_compile:
   sta _fx_packet+4,y
   lda _fx_draw+6,x
   sta _fx_packet+6,y
+  .ifndef FX_CPU_CLIP_COMMANDS
   lda _fx_draw+8,x
   sta _fx_packet+8,y
+  .endif
   .ifdef FX_CPU_CLIP_COMMANDS
   ; 転送packetの末尾wordだけを制御値にする。元FxDraw・ソートキーは保存。
   ; $8000=INSIDE、0=GSUでclip。FB座標はleft=center-width/2、top=bottom-height-20。
-  stz $017c
+  lda #0
+  sta _fx_packet+8,y
   lda _fx_draw+4,x
   and #$ff
   beq command_classified
@@ -154,26 +183,24 @@ fast_compile:
   adc $0160
   cmp #257
   bcs command_classified
+  lda _fx_draw+2,x
+  sec
+  sbc #20
+  cmp #193                 ; bottom-20 <=192、負数もunsigned比較で除外。
+  bcs command_classified
+  sta $0162
   lda _fx_draw+5,x
   and #$ff
   beq command_classified
-  sta $0162
-  lda _fx_draw+2,x
+  sta $0170
+  lda $0162
   sec
-  sbc $0162
-  sec
-  sbc #20
+  sbc $0170
   cmp #192
   bcs command_classified
-  clc
-  adc $0162
-  cmp #193
-  bcs command_classified
   lda #$8000
-  sta $017c
-command_classified:
-  lda $017c
   sta _fx_packet+8,y
+command_classified:
   .endif
   inc _fx_packet_count
   lda pp
@@ -181,12 +208,12 @@ command_classified:
   adc #10
   sta pp
 skip:
-  inc $0144
-  inc $0144
+  inc packet_work+4
+  inc packet_work+4
   jmp next
 .else
 fast_compile:
-  ldy $0144
+  ldy packet_work+4
   lda order,y
   tax
   lda _fx_draw+7,x
@@ -314,13 +341,13 @@ gsu_y_positive:
   adc #20
   sta pp
 skip:
-  inc $0144
-  inc $0144
+  inc packet_work+4
+  inc packet_work+4
   jmp next
 .endif
 .else
 fast_compile:
-  ldy $0144
+  ldy packet_work+4
   lda order,y
   tax
   clc
@@ -654,8 +681,8 @@ y_positive:
   adc #20
   sta pp
 skip:
-  inc $0144
-  inc $0144
+  inc packet_work+4
+  inc packet_work+4
   jmp next
 ; X*duを最大8段のshift/addで作る。画面外px分の反復加算を避ける。
 clip_product:
@@ -676,4 +703,8 @@ product_shift:
   bne product_loop
   lda $0176
   rts
+.endif
+
+.ifdef FX_BUCKET_SORT
+.include "packet_bucket.inc"
 .endif

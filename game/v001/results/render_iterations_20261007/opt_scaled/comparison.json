@@ -1,0 +1,1357 @@
+{
+  "romSha256": "010516ff0bc0002243892106d525a501911bc5b167cb9dbd9102baff372ac448",
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "unroll4": false
+  },
+  "scenes": [
+    {
+      "scene": "boss_profile/draw00001",
+      "gsuMedianMs": 1.7609312765606,
+      "packetMedianMs": 1.5308741259132,
+      "cacheCallsMedian": 4.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "1f170aaae38cbec03e4e357b36f22c069b521df2424bd42095d0cabd9927c738"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw00300",
+      "gsuMedianMs": 1.61109846725415,
+      "packetMedianMs": 2.4114328858898,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "ddffa2257a248ca6ce92303a2e652e5dc7976e8296e9eef930a84f54fa116128"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw00600",
+      "gsuMedianMs": 4.8973631287996,
+      "packetMedianMs": 3.97173346782585,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "be1cc59b073ca5bf97326a87e04e12c2ff7e6ab29568866879220f3a46d3957f"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw00900",
+      "gsuMedianMs": 6.4701885788847,
+      "packetMedianMs": 3.99636415649065,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "370f95a87278106d848002e4d1c68ba6ef0c429e70294f3d1d45289df4cdcd5a"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw01200",
+      "gsuMedianMs": 9.7829929238685,
+      "packetMedianMs": 4.3313228979919,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "a190437fd7144f29c3a606a1e678c41d1afad1603fb0f2df53af6c7f598e8c11"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw01500",
+      "gsuMedianMs": 6.2799409533948,
+      "packetMedianMs": 4.5307430105648,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "b19336044f209fc2b136f07b2b9281da0ff97654321acc2d9435b132c9bd344c"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw01800",
+      "gsuMedianMs": 10.373011991467,
+      "packetMedianMs": 5.1271409143582005,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "d96cbf9acf920e0160f0109a25fce7e71e5ef53d2d8b716092328d6816ca2b71"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw02100",
+      "gsuMedianMs": 7.0112256342426,
+      "packetMedianMs": 5.484448862965451,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "4464d82f2576848b0afe2fb63e61120c2a38121af06fd76a7c6be76ff10f5d3c"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw02400",
+      "gsuMedianMs": 3.33794720297815,
+      "packetMedianMs": 3.5036107006514,
+      "cacheCallsMedian": 10.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "78a8cac1d9ebb408cc4f8f9da55ea3e8fc18163b174673f4c0730091def83920"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw02700",
+      "gsuMedianMs": 3.9359747364563,
+      "packetMedianMs": 4.27628797549335,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "c9df302868cb5ea929676e09dfa36db0d559efc83d428480992a9de1a0bc6103"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw03000",
+      "gsuMedianMs": 12.349240629816,
+      "packetMedianMs": 5.20527001753295,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "bb2edff63e069c89820fa25cd59822c359e4d53e07609240945d56169108fb07"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw03300",
+      "gsuMedianMs": 4.0194117763187,
+      "packetMedianMs": 3.83233028850215,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "e7f76f81c89f58aefb64ab619dbcec8f8743eed6c7256b57cbd9a47d0e364d01"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw03600",
+      "gsuMedianMs": 8.0635939238466,
+      "packetMedianMs": 4.308694325797051,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "3f8973187bc0a2338c55c02a09ac2675739fd118ff05b290a5bc29971bf82a69"
+      ],
+      "samples": 6
+    },
+    {
+      "scene": "boss_profile/draw03900",
+      "gsuMedianMs": 8.0606140295658,
+      "packetMedianMs": 5.1743070535215,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "86a7744e0da2aa68f5bee55625f43800bd04cff5bb43acd10c7fbd9d4bcc4953"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04200",
+      "gsuMedianMs": 1.3778286180852,
+      "packetMedianMs": 2.42041912958035,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "5d8651bea4f01011396c0fadd924c518a45646c8fe07556999d6db401858865b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04500",
+      "gsuMedianMs": 8.6638563780353,
+      "packetMedianMs": 4.3540445918829995,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "07e9f591b9f586180c0232caf5bac3ced751f1434d42d2ef2170e6eed8dc2add"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04800",
+      "gsuMedianMs": 6.5014774688331,
+      "packetMedianMs": 5.4373292846503,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "768e12ac9c5139a3d8651e99add7f982a8d3e9808678f2838889b3adff3428b7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05100",
+      "gsuMedianMs": 2.539149292331,
+      "packetMedianMs": 4.2447662813042495,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "aa050364dec36b1f9518ab4f06a25d8ad88ac7e21cc6e81253317ece09227024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05400",
+      "gsuMedianMs": 7.51827327046,
+      "packetMedianMs": 5.4124657917449,
+      "cacheCallsMedian": 17.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "a2dd6fee5d1a8d5bc3979816ec336589f64a9f819fcc0a112cd21b1690914039"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05700",
+      "gsuMedianMs": 0.95375241324876,
+      "packetMedianMs": 1.7825820709446,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "89a83a866a3b88754c877d1a5a55183a9f00ddc8e322d1acd0706ecd39e4e024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06000",
+      "gsuMedianMs": 1.7144635501194,
+      "packetMedianMs": 2.20018631788995,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "a3d0bcb46da119f92f8355727b2cfabf1e2dabff30f9a684a6db9124cf9ad6e3"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06300",
+      "gsuMedianMs": 6.8910055243515,
+      "packetMedianMs": 3.7832551545652997,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "9e2c1319a86711661adc82cde5dcd032911bbe68878ff0b75c94e51573afee8a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06600",
+      "gsuMedianMs": 6.3785568297501,
+      "packetMedianMs": 3.5992466827258003,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "fdc2ba681320e1eccfc11a8020e304e6f940f4983ee9433c9ba0d02915d511ed"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06900",
+      "gsuMedianMs": 3.9136255293503,
+      "packetMedianMs": 3.31266466243945,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "6408d6ed86d78d1821d6ad12a2ba0668b2cd5a5d35eba2beb892ebb3f297b308"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07200",
+      "gsuMedianMs": 7.0446563232053,
+      "packetMedianMs": 5.4851938365357,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "0e1fa9eeea70fa94d4bd829bd30a96fc785844e5ac2d8e0447a74d3ce5212f89"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07500",
+      "gsuMedianMs": 6.7667811815206,
+      "packetMedianMs": 5.4473398669999,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 12.0,
+      "framebufferHashes": [
+        "b603ff374ead404cf41964dc8f9946921d2bfd4dca06a5efe396de1171de0b7d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07800",
+      "gsuMedianMs": 1.9506201718729,
+      "packetMedianMs": 2.8884022142104504,
+      "cacheCallsMedian": 7.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "99112055184fb1bd7852d6e73fd7bc16ca1bbb27193290906dfb4dc0d748c282"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08100",
+      "gsuMedianMs": 11.526137956441,
+      "packetMedianMs": 5.335314466381,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "3ede894cb653a81187695bce4a8a077a474fd2e364800714ce40d6e9db5ec2ef"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08400",
+      "gsuMedianMs": 9.0985484562471,
+      "packetMedianMs": 4.28052501267385,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "f89b2b2a5d6217a19fbcb69de8104662263196688db1e4ff45d0f20eb2cba2d8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08700",
+      "gsuMedianMs": 5.0583705416591,
+      "packetMedianMs": 4.032029766163999,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "1657e5359750c3a1be570b1fe316d0478f05d3f1ecae798d1257d9e037179b52"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09000",
+      "gsuMedianMs": 2.6270561736146,
+      "packetMedianMs": 3.7002837231842003,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "b57e34e8a0e1e1da70d1920fc97456dc5a5685ab181d1b27311a3c9bfef5be07"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09300",
+      "gsuMedianMs": 3.1826202135914,
+      "packetMedianMs": 2.88607417180355,
+      "cacheCallsMedian": 7.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "60b60176540bbd130b859902fcd54077911f20cfcf2240dd17645a10b0287a72"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09600",
+      "gsuMedianMs": 5.365765261063,
+      "packetMedianMs": 4.74212926110915,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "a09d203e37a984ad53980747afded992e978fec2320155a02313a0a92c8df348"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09900",
+      "gsuMedianMs": 10.918891375031,
+      "packetMedianMs": 3.6932064742673,
+      "cacheCallsMedian": 10.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "da1b20269cc8709d2e8e9bea8c3130d0eebf5f62674b9f70bfefbd519a4754c6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10200",
+      "gsuMedianMs": 0.95375241324876,
+      "packetMedianMs": 2.00411858638285,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "89a83a866a3b88754c877d1a5a55183a9f00ddc8e322d1acd0706ecd39e4e024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10500",
+      "gsuMedianMs": 9.93366382844155,
+      "packetMedianMs": 5.9597420007532005,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "573692724b464ff211a4b42cb5600607cc3cbc782cf82e1290d83f3cd994ec81"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10800",
+      "gsuMedianMs": 9.6846564126021,
+      "packetMedianMs": 3.24617577129905,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "2b44644d34ee3d7911b24a63348aba96451103c43830e43ebee4c125272da113"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11100",
+      "gsuMedianMs": 1.1310561229564,
+      "packetMedianMs": 2.43075563786685,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "99d0920434d394f19034e90ceb373f504933c58e91529aaddd58cdb10e3f33ed"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11400",
+      "gsuMedianMs": 2.5927873893854,
+      "packetMedianMs": 3.1209736506573,
+      "cacheCallsMedian": 8.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "c2a205734a6332249e779a468ad39cde2c0a96308757af6b0b47c40d5c9b5b1c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11700",
+      "gsuMedianMs": 4.9176636585876,
+      "packetMedianMs": 3.36453344726465,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "213ac5b07e12ec438d0b4b99c0733fe1928efe11382c30104ff749c0fb34f58f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12000",
+      "gsuMedianMs": 7.0380446827698,
+      "packetMedianMs": 4.15997897684585,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "b1890ca23e1e09d2e6ae112c3be29aa196c6befd50ca0c9b46a26786c9aadd3d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12300",
+      "gsuMedianMs": 3.244453019918,
+      "packetMedianMs": 3.14532497423325,
+      "cacheCallsMedian": 8.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "815a0b21fe26ded85ad67155fbab8d96d9556627c84455ffa24dd98b94fddae0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12600",
+      "gsuMedianMs": 7.0297568518013,
+      "packetMedianMs": 5.4873821963981495,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "d375f9cb8b2162df201f87eb6779299d245f28671daa9dec3b1b90b767e36823"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12900",
+      "gsuMedianMs": 4.8901927581864,
+      "packetMedianMs": 4.822865771779551,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "1141b87a1a1ea31d1867ca984dc913c9981c19a9b610f52eb22a08ddc7cbd3e1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13200",
+      "gsuMedianMs": 2.61653342193555,
+      "packetMedianMs": 3.4644064665196,
+      "cacheCallsMedian": 10.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "04ba2d93b64143e80e5720dabc946d3f42042957948969fef937d5cdcbc9c5ba"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13500",
+      "gsuMedianMs": 6.5145145063116,
+      "packetMedianMs": 4.771043547802551,
+      "cacheCallsMedian": 14.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "83227eac338d6568dfb04735af6545953b158543f4108e75211a4169c15add40"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13800",
+      "gsuMedianMs": 6.3561145009478,
+      "packetMedianMs": 3.33324455731625,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "e79443dfb064534cae88fea74b334ca6e8dc7a3682d75c08091ac669606bc2cd"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14100",
+      "gsuMedianMs": 6.3967155605237,
+      "packetMedianMs": 3.7764572707372004,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "749baee0e6046681ffc761c21f7b5348b9a2a1acf1246bb0e4fd0e52a979dea6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14400",
+      "gsuMedianMs": 4.1059218321582,
+      "packetMedianMs": 3.9719197112184,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "69a04bed6d9d70a2080afd290d3f34723c6ceda763bb0052e59a0fa45d0613fc"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14700",
+      "gsuMedianMs": 2.3414519311391,
+      "packetMedianMs": 2.41967415601015,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "38c32dae401ea41c98c061cd633b3bf7cd3ffa9058703ec4566fd814ed710374"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15000",
+      "gsuMedianMs": 5.9750605197904,
+      "packetMedianMs": 4.831479528685,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "0cfb6dc99589dea8209c3921096aab54ac1a60456225e3cee271ef1c01605e31"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15300",
+      "gsuMedianMs": 9.1322585102987,
+      "packetMedianMs": 3.6441779011785,
+      "cacheCallsMedian": 10.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "1ddc6a2600a347178e8dce2473529c8c37cae96334f4acc87dc95c7792be80f5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15600",
+      "gsuMedianMs": 0.95431114342641,
+      "packetMedianMs": 2.0052360467381503,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "f42fb7c0530c4680f3cb3aa4536ac0447f3075422b23947e9a1701775fa2dc24"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15900",
+      "gsuMedianMs": 6.3760425439506,
+      "packetMedianMs": 3.9134392859577,
+      "cacheCallsMedian": 14.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "fcbf2a974e953cc1353b53f7a2d457c0cb5af870366836e6024ce083f3fa96b6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16200",
+      "gsuMedianMs": 12.50587132295,
+      "packetMedianMs": 3.90715357145915,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "f56a606f9e6456b8f56589c2cb4d620e076e85c137d4ad0d70d5fe81f7c9d5d1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16500",
+      "gsuMedianMs": 1.3512889346468,
+      "packetMedianMs": 2.2065185932366003,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "39138ab4206ac15c2ae0ad403b76fa043873f66ef278b229a0dfc85d7350cf8f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16800",
+      "gsuMedianMs": 3.2167958761243,
+      "packetMedianMs": 3.97727420875425,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "eb877f2e730dc3eaa28fe0f820226f0aa85153f53ea64a0a1f2aab28dde77206"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw17100",
+      "gsuMedianMs": 2.3232932003655,
+      "packetMedianMs": 3.0825609509439,
+      "cacheCallsMedian": 8.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "f26258cde42b90be07e7c8f1d91a3b15a6a7d8a270ef0aa70bc0cdd4ba4a0958"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00001",
+      "gsuMedianMs": 1.7609312765606,
+      "packetMedianMs": 1.53129317354645,
+      "cacheCallsMedian": 4.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "1f170aaae38cbec03e4e357b36f22c069b521df2424bd42095d0cabd9927c738"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00300",
+      "gsuMedianMs": 1.61109846725415,
+      "packetMedianMs": 2.4128762721821,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "ddffa2257a248ca6ce92303a2e652e5dc7976e8296e9eef930a84f54fa116128"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00600",
+      "gsuMedianMs": 4.8973631287996,
+      "packetMedianMs": 3.97191971121845,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "be1cc59b073ca5bf97326a87e04e12c2ff7e6ab29568866879220f3a46d3957f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00900",
+      "gsuMedianMs": 6.4701885788847,
+      "packetMedianMs": 3.9962710347944,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "370f95a87278106d848002e4d1c68ba6ef0c429e70294f3d1d45289df4cdcd5a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01200",
+      "gsuMedianMs": 9.7829929238685,
+      "packetMedianMs": 4.333185331917351,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "a190437fd7144f29c3a606a1e678c41d1afad1603fb0f2df53af6c7f598e8c11"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01500",
+      "gsuMedianMs": 6.2799409533948,
+      "packetMedianMs": 4.532791687882851,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "b19336044f209fc2b136f07b2b9281da0ff97654321acc2d9435b132c9bd344c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01800",
+      "gsuMedianMs": 10.373011991467,
+      "packetMedianMs": 5.1271409143582005,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "d96cbf9acf920e0160f0109a25fce7e71e5ef53d2d8b716092328d6816ca2b71"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02100",
+      "gsuMedianMs": 7.0112256342426,
+      "packetMedianMs": 5.489756799653151,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "4464d82f2576848b0afe2fb63e61120c2a38121af06fd76a7c6be76ff10f5d3c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02400",
+      "gsuMedianMs": 3.33794720297815,
+      "packetMedianMs": 3.5017017058777498,
+      "cacheCallsMedian": 10.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "78a8cac1d9ebb408cc4f8f9da55ea3e8fc18163b174673f4c0730091def83920"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02700",
+      "gsuMedianMs": 3.9359747364563,
+      "packetMedianMs": 4.27470490665665,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "c9df302868cb5ea929676e09dfa36db0d559efc83d428480992a9de1a0bc6103"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03000",
+      "gsuMedianMs": 12.349240629816,
+      "packetMedianMs": 5.205363139229201,
+      "cacheCallsMedian": 15.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "bb2edff63e069c89820fa25cd59822c359e4d53e07609240945d56169108fb07"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03300",
+      "gsuMedianMs": 4.0194117763187,
+      "packetMedianMs": 3.831585314932,
+      "cacheCallsMedian": 11.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "e7f76f81c89f58aefb64ab619dbcec8f8743eed6c7256b57cbd9a47d0e364d01"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03600",
+      "gsuMedianMs": 8.06452514080935,
+      "packetMedianMs": 4.3081821564675,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 9.0,
+      "framebufferHashes": [
+        "3f8973187bc0a2338c55c02a09ac2675739fd118ff05b290a5bc29971bf82a69"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03900",
+      "gsuMedianMs": 8.0606140295658,
+      "packetMedianMs": 5.1754245138768,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "86a7744e0da2aa68f5bee55625f43800bd04cff5bb43acd10c7fbd9d4bcc4953"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04200",
+      "gsuMedianMs": 1.3778286180852,
+      "packetMedianMs": 2.4202794470358997,
+      "cacheCallsMedian": 5.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "5d8651bea4f01011396c0fadd924c518a45646c8fe07556999d6db401858865b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04500",
+      "gsuMedianMs": 8.6638563780353,
+      "packetMedianMs": 4.35190279286865,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "07e9f591b9f586180c0232caf5bac3ced751f1434d42d2ef2170e6eed8dc2add"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04800",
+      "gsuMedianMs": 6.5014774688331,
+      "packetMedianMs": 5.43765521058725,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "768e12ac9c5139a3d8651e99add7f982a8d3e9808678f2838889b3adff3428b7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05100",
+      "gsuMedianMs": 2.54008050929375,
+      "packetMedianMs": 3.79740965239905,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "aa050364dec36b1f9518ab4f06a25d8ad88ac7e21cc6e81253317ece09227024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05400",
+      "gsuMedianMs": 7.51827327046,
+      "packetMedianMs": 4.962827681280951,
+      "cacheCallsMedian": 17.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "a2dd6fee5d1a8d5bc3979816ec336589f64a9f819fcc0a112cd21b1690914039"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05700",
+      "gsuMedianMs": 13.826802584611,
+      "packetMedianMs": 3.5809482694077497,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "aaa2b1b17be1f329bb7c27b0fffe5ce06e2540afc5c3fa589d543ade37bfd58e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06000",
+      "gsuMedianMs": 8.8130373354679,
+      "packetMedianMs": 5.3172022964555,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "5da36a95a6663446f68feb829875d9b0c02baff4ee6073059779a177de37fceb"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06300",
+      "gsuMedianMs": 10.346006699547,
+      "packetMedianMs": 3.2210794741529503,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "b8fc7c94ff747c5af2472370c102ac814127d6f9224008850b815519fee9876c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06600",
+      "gsuMedianMs": 3.982256219505,
+      "packetMedianMs": 5.40636632063885,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "c764650d7d74628f263d457a86f49518f277dd1a8c0bb04f806fee50d486baaf"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06900",
+      "gsuMedianMs": 11.873016275065,
+      "packetMedianMs": 4.9496509612579995,
+      "cacheCallsMedian": 17.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "86fb4ab6c1afe23c082dcbf100b23c8b16ec099ff0f7da819e4739e60d358d84"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07200",
+      "gsuMedianMs": 3.0683598922619,
+      "packetMedianMs": 3.9967366432757503,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "16207616132551d594007489e53d5eb30fb7149a10da8d3847e640bc622f7a8f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07500",
+      "gsuMedianMs": 4.3108826856595,
+      "packetMedianMs": 3.12870275144815,
+      "cacheCallsMedian": 13.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "88ec1018bb715c1a373b93637f88708067c8922f4e18de0053af4b7ef953884c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07800",
+      "gsuMedianMs": 4.0857144240665,
+      "packetMedianMs": 3.7312001263475,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "22a5f6ed925b7780416f6ed5004ee2e726d3d14d1704453b0d797ea1148a34bc"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08100",
+      "gsuMedianMs": 9.93366382844155,
+      "packetMedianMs": 5.299043565681901,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "573692724b464ff211a4b42cb5600607cc3cbc782cf82e1290d83f3cd994ec81"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08400",
+      "gsuMedianMs": 12.279771844394,
+      "packetMedianMs": 4.58824565801465,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "7bd791f60f1b8778e1877f57539ffc2b6ff62efb33779921c725096f9149b6d9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08700",
+      "gsuMedianMs": 3.5406731357688,
+      "packetMedianMs": 5.4775578574411,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 12.0,
+      "framebufferHashes": [
+        "e5ab1abefd91a82b14876f1a61c5ba1046b33a587708d992d5feea7affba35e2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09000",
+      "gsuMedianMs": 6.4635769384492,
+      "packetMedianMs": 4.9630604855216,
+      "cacheCallsMedian": 17.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "3edb86a6fa011710968df829d0597c5c679a16c6b6b2cb1ec8c3c0d26bfece50"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09300",
+      "gsuMedianMs": 3.4615196939351,
+      "packetMedianMs": 3.7345525074134,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "e9097f62ba6e49e81606a7ca54285a4a447d9a7e33b45cb588b05b10212400f9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09600",
+      "gsuMedianMs": 9.9478183262753,
+      "packetMedianMs": 5.29150070828365,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "600f4be129602747150729ea678c6282c29a254d432768554021685e65f5d018"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09900",
+      "gsuMedianMs": 4.9359155110575,
+      "packetMedianMs": 3.7342731423246,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "1152716ea7596f593327a9f2fb071db84f334290d0aad138453e94d466fc10b9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10200",
+      "gsuMedianMs": 9.93366382844155,
+      "packetMedianMs": 5.2951790152865,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "573692724b464ff211a4b42cb5600607cc3cbc782cf82e1290d83f3cd994ec81"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10500",
+      "gsuMedianMs": 7.5155727412681,
+      "packetMedianMs": 3.7326435126397497,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "f40785e7ec769e9269e3e4bedda3c5375fab190535db3e9d796d8ee84e71c5e0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10800",
+      "gsuMedianMs": 9.9482839347567,
+      "packetMedianMs": 5.2976933010859,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "8e81a0b6085d921155f7fbe5bc093dfe1bb37048cadb892d8fabb158ecf62a58"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11100",
+      "gsuMedianMs": 12.279771844394,
+      "packetMedianMs": 4.5985356054530495,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "7bd791f60f1b8778e1877f57539ffc2b6ff62efb33779921c725096f9149b6d9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11400",
+      "gsuMedianMs": 4.4143408902211,
+      "packetMedianMs": 3.73348160790625,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "d9b7ffd383401d00e9c0f0e578c0f558e5bc57d104791f951e9dd74cb8b14546"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11700",
+      "gsuMedianMs": 9.9478183262753,
+      "packetMedianMs": 5.2981589095673,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "600f4be129602747150729ea678c6282c29a254d432768554021685e65f5d018"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12000",
+      "gsuMedianMs": 6.189240421223,
+      "packetMedianMs": 3.73399377723575,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "b42c609b526330a82a8941e93bcd53ccc961070114f46d3d5b177bfa8f0e50fe"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12300",
+      "gsuMedianMs": 9.93366382844155,
+      "packetMedianMs": 5.29848483550425,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "573692724b464ff211a4b42cb5600607cc3cbc782cf82e1290d83f3cd994ec81"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12600",
+      "gsuMedianMs": 12.631585612921,
+      "packetMedianMs": 3.7233313430123003,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "eb52c31818f64d09b6584b338789c85ec1cbd6f5b8df908bd342a9aa4c2c911f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12900",
+      "gsuMedianMs": 9.951077585645,
+      "packetMedianMs": 5.3142224021747495,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "86d48178d1845b4fa87b0f23a3fa806d868da411ef9d983b1b517398c650e996"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13200",
+      "gsuMedianMs": 13.058827955431,
+      "packetMedianMs": 3.28421598422745,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "f33e3d50f17fb0c35e3c61b1b9b440fadd1e78bb70fe0a640f063b591dc33b60"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13500",
+      "gsuMedianMs": 4.9629208029772,
+      "packetMedianMs": 5.31734197899995,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "a6c293b940d9f9bd77b17e69de3393797570e207ce72eb5937076cf96411ac66"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13800",
+      "gsuMedianMs": 10.2739305066305,
+      "packetMedianMs": 4.59616100219805,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "efe917d0c2adf87a21476491bc180f357d29d2f3087b16cf1755b1dfeadb1b62"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw14100",
+      "gsuMedianMs": 9.11372729274,
+      "packetMedianMs": 3.73380753384325,
+      "cacheCallsMedian": 12.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "f8da24a16394fde4465b132ad324b9b86158619749765b776cae0765d41c4e95"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw14400",
+      "gsuMedianMs": 9.9359918708484,
+      "packetMedianMs": 5.29857795720055,
+      "cacheCallsMedian": 18.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "b1c1a9a5669cb939aaf2bf9fe02729473761b1619f4bf82802418273f4501ebf"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_worst_19ms",
+      "gsuMedianMs": 12.279771844394,
+      "packetMedianMs": 2.9334265543594,
+      "cacheCallsMedian": 16.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "7bd791f60f1b8778e1877f57539ffc2b6ff62efb33779921c725096f9149b6d9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "inside64",
+      "gsuMedianMs": 15.485951847143,
+      "packetMedianMs": 43.486295652446,
+      "cacheCallsMedian": 66.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "935439d116b7185d8903cdd20d5cc3da47ec06f7bb214ccb525a8a1344c92918"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "clipped64",
+      "gsuMedianMs": 8.8229082352731,
+      "packetMedianMs": 41.5703167515875,
+      "cacheCallsMedian": 66.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "ce7d764d881a30b42ede81c2ed34c94338a0c70e1abeacde919bc290c943da9e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_0_20_13_19",
+      "gsuMedianMs": 0.68463071101395,
+      "packetMedianMs": 0.36350054140954,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_256_212_13_19",
+      "gsuMedianMs": 0.87897569113992,
+      "packetMedianMs": 0.36806350452701997,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "0f27018eeb4f80741dcabc81477211d32ff439f2d41de128dd8a371c03f5489f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_249_212_14_19",
+      "gsuMedianMs": 0.93661802113416,
+      "packetMedianMs": 0.39115768520322,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "8fefbcaa3036343023eb1039b78de249f6d2e95c53534d3eabd431743b855232"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_7_39_14_19",
+      "gsuMedianMs": 0.93717675131181,
+      "packetMedianMs": 0.392414828102935,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 3.0,
+      "framebufferHashes": [
+        "683335de97e72f7dc7c6cb87260ed67d1d6f2725c2d8219d4caeec88d4d8ec8a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_-300_100_13_19",
+      "gsuMedianMs": 0.67652912343802,
+      "packetMedianMs": 0.36373334565022997,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_600_100_13_19",
+      "gsuMedianMs": 0.67559790647527,
+      "packetMedianMs": 0.360986255610115,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_-100_13_19",
+      "gsuMedianMs": 0.68323388556982,
+      "packetMedianMs": 0.37253334594821996,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_500_13_19",
+      "gsuMedianMs": 0.68230266860707,
+      "packetMedianMs": 0.37253334594821996,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_100_0_19",
+      "gsuMedianMs": 0.67373547254977,
+      "packetMedianMs": 0.350323821386625,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_100_13_0",
+      "gsuMedianMs": 0.68044023468157,
+      "packetMedianMs": 0.379238108080025,
+      "cacheCallsMedian": 2.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_0_100_255_255",
+      "gsuMedianMs": 6.3151409545868,
+      "packetMedianMs": 0.37095027711154505,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "dee4f7dd5610421390d7bc894687524abc58e73f5d571a18f54f54f228691b49"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_212_255_192",
+      "gsuMedianMs": 26.950070753865,
+      "packetMedianMs": 0.4009354633121,
+      "cacheCallsMedian": 3.0,
+      "cacheInvalidationsMedian": 2.0,
+      "framebufferHashes": [
+        "bb2afb96d40a7f3f9142cd77f28f9259fbe746c8ad172f798e173a6623d90d3b"
+      ],
+      "samples": 4
+    }
+  ],
+  "imagesVerified": 771
+}

@@ -295,7 +295,7 @@ emu.addMemoryCallback(guard(function(a,v)
   local deadline=emu.read(0x7e1d10,emu.memType.snesMemory)
   assert(line>=203 and line<=deadline+3,'DMA start outside admitted blank window')
   if deadline==220 then
-    assert(read('fx_dma_bytes',2)+count*128<=9216,'large DMA admitted late')
+    assert(read('fx_dma_bytes',2)+count*128<=DMA_ADMISSION_BYTES,'large DMA admitted late')
   end
   stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
   stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)

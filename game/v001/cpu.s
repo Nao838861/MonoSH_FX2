@@ -9,6 +9,10 @@
 .import _fx_ground_far_xptr
 .import _fx_sky_color, fx_latch_obj, fx_upload_obj
 .import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
+.import fx_read_gsu_spans
+.ifndef FX_DMA_ADMISSION_BYTES
+FX_DMA_ADMISSION_BYTES = 9984
+.endif
 .importzp c_sp
 .export __STARTUP__ : absolute = 1
 .export _fx_present, _fx_read_input, _fx_send_ground
@@ -290,7 +294,8 @@ _fx_present:
   rep #$30
   jsr fx_plan_dma
   ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
-  ; bytes+区間数*128が9KiB以下だけ220行目まで許可。全FBは203行目。
+  ; bytes+区間数*128が9.75KiB以下だけ220行目まで許可。全FBは203行目。
+  ; 設定費用をbyte換算し、翌22行のOBJ準備より前に転送を終える。
   lda #203
   sta f:$7e1d10
   lda fx_dma_count
@@ -299,7 +304,7 @@ _fx_present:
   .endrepeat
   clc
   adc fx_dma_bytes
-  cmp #9217
+  cmp #(FX_DMA_ADMISSION_BYTES+1)
   bcs :+
   lda #220
   sta f:$7e1d10
@@ -400,6 +405,9 @@ render_finished:
   rep #$30
   lda f:$700008
   sta fx_dma_count
+  .ifdef FX_DESCRIPTOR_DMA
+  jsr fx_read_gsu_spans
+  .else
   asl
   asl
   sta f:$7e1d12
@@ -414,6 +422,7 @@ copy_gsu_dma:
   inx
   bra copy_gsu_dma
 gsu_dma_copied:
+  .endif
   lda f:$70000a
   sta fx_dma_bytes
   lda #203
@@ -424,7 +433,7 @@ gsu_dma_copied:
   .endrepeat
   clc
   adc fx_dma_bytes
-  cmp #9217
+  cmp #(FX_DMA_ADMISSION_BYTES+1)
   bcs :+
   lda #220
   sta f:$7e1d10

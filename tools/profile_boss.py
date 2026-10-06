@@ -9,6 +9,21 @@ import sys
 
 from build_game import BUILD, GAME
 from run_probe import MESEN_EXE, lua, prepare_runtime
+from analyze_boss_profile import physical_frame
+
+
+def presentation_intervals(summary, timings):
+    # 完了callbackのfieldは、転送が225行をまたぐだけでも0/2と揺れる。
+    # 実際の提示間隔はDMA開始の物理fieldで数える。元の値は履歴として残す。
+    if 'legacyCompletionIntervals' not in summary:
+        summary['legacyCompletionIntervals'] = {str(n):summary['interval'+str(n)] for n in (1,2)}
+        summary['legacyCompletionIntervals']['3plus'] = summary['interval3plus']
+    gaps = [physical_frame(b['dmaStart'])-physical_frame(a['dmaStart'])
+            for a,b in zip(timings,timings[1:])]
+    assert all(n >= 1 for n in gaps)
+    summary.update(interval1=gaps.count(1), interval2=gaps.count(2),
+                   interval3plus=sum(n >= 3 for n in gaps),
+                   intervalSource='DMA start physical field; completion callback counts are legacy')
 
 
 def main():
@@ -64,6 +79,7 @@ def main():
                        'GSU_UV': str(config['gsuUv']).lower(),
                        'GSU_CLIP': str(config['gsuClip']).lower(),
                        'CPU_CLIP_COMMANDS': str(config.get('cpuClipCommands',False)).lower(),
+                       'DMA_ADMISSION_BYTES': str(config.get('dmaAdmissionBytes',9216)),
                        'DISPLAY_CODE': (GAME / 'display.lua').read_text(encoding='utf-8')}.items():
         script = script.replace(key, value)
     script = script.replace('report:close();emu.stop(0);return', 'boss_report:close();report:close();emu.stop(0);return')
@@ -89,6 +105,7 @@ def main():
     summary = json.loads((output / 'summary.json').read_text())
     timings = [json.loads(line) for line in (output / 'timings.jsonl').read_text().splitlines()]
     assert len(timings) == summary['rendered']
+    presentation_intervals(summary, timings)
     # test.luaの旧cpuMaxMsはCPU/GSU合流の最大。CPU終了の観測から別々に保存する。
     summary['joinedMaxMs'] = summary.pop('cpuMaxMs')
     summary['cpuMaxMs'] = max(((row['cpuEnd']['clock'] - row['start']['clock']) & 0xffffffff) / 21477.272

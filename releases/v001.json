@@ -1,12 +1,19 @@
 {
-  "romSha256": "e301b0bca97df4bd4039307fdb39cb5b12c6bbb7ccd10f7828370fa8718f77aa",
+  "romSha256": "4c9308d79d3cdf1108267a9678289721e081912ffc3436b98758a32e4eec418b",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
     "gsuUv": true,
     "gsuClip": true,
     "cpuClipCommands": true,
-    "stableGsuCache": true
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "scaledClip": true,
+    "fastUv": true,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false
   },
   "display": [
     256,
@@ -56,15 +63,19 @@
   "hardwareObjects": "自機17poseと自弾16サイズ・反射弾。最大16枠、毎frame OAM 68bytes",
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "scenarioFrames": {
+    "objects": 360,
     "packed": 360,
     "controls": 720,
     "pause": 360,
     "display": 720,
     "held": 1800,
     "boss": 2600,
-    "naturalProfile": 18000
+    "stumble": 800,
+    "stress": 360,
+    "naturalProfile": 18000,
+    "bossLongNoFire": 18000
   },
-  "verificationKind": "JOY1自動取得のbusy確認を前後に追加。誤Startによるポーズを修正。左上＋Yを約5分、8方向×Y/A、通常操作・ポーズ・カラーOBJ・画面・profile・全DMAを検証。",
+  "verificationKind": "同じ122標本の全FB/OBJ、自然入力18,000field、押しっぱなし・表示・ボス・操作を更新ROMで再検証。",
   "comprehensiveVerificationReferenceRomSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
   "groundPalette": {
     "requestedRgb": [
@@ -248,18 +259,13 @@
     "afterLongFields": 18000,
     "afterLongLogicUpdates": 14430
   },
-  "previousRomSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
-  "optimizationMeasurement": "game/v001/results/command_cache_20261007",
-  "replayScenes": 122,
-  "replayImagesVerified": 2890,
+  "previousRomSha256": "e301b0bca97df4bd4039307fdb39cb5b12c6bbb7ccd10f7828370fa8718f77aa",
+  "optimizationMeasurement": "game/v001/results/render_iterations_20261007",
+  "replayScenes": 242,
+  "replayImagesVerified": 1194,
   "sampledScenePixelMatch": true,
   "playerRecordingBaseRomSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
   "playerImageSource": "game/v001/assets/player_recording/source.json",
-  "playerImageValidation": "game/v001/results/player_recording_20261007/integrated/summary.json",
-  "playerImageScenarioFrames": {
-    "objects": 360,
-    "display": 720,
-    "play": 360,
-    "held": 900
-  }
+  "playerImageValidation": "game/v001/results/render_iterations_20261007/objects_ppu.json",
+  "fullTransferValidation": "game/v001/results/render_iterations_20261007/full_transfer_objects/summary.json"
 }

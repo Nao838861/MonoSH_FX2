@@ -5,6 +5,11 @@
 ; DU/DVは原画寸法*256/投影寸法。ROM $5eの表を読むので実行時の除算なし。
 ; table: DU=$0000+asset*512+width*2、DV=$5800+asset*512+height*2。
 ; clip後の幅に合わせて倍率を変えると絵が歪むので、元寸法で表を引く。
+  .ifdef FX_SCALED_ROWS
+  iwt r8,#$001a
+  from r3
+  stw (r8)                 ; 元幅。横clipのないspan経路だけに使う。
+  .endif
   .ifndef FX_STABLE_GSU_CACHE
 .export gsu_uv_cache
 gsu_uv_cache:
@@ -33,9 +38,8 @@ gsu_uv_cache:
   move r11,r0              ; meta
   ibt r8,#63
   and r8
-  .repeat 9
-    add r0
-  .endrepeat
+  swap                     ; asset<64なのでbitは重ならない。*256の後に*2。
+  add r0
   move r12,r0              ; asset*512
   ibt r0,#$5e
   romb

@@ -20,6 +20,31 @@ fx_dma_desc: .res 128       ; VRAM word address、byte length。最大32本。
 .segment "CODE"
 .a16
 .i16
+.export fx_read_gsu_spans
+; GSU STOP後、cart RAMの区間表をWRAM portへDMAで取得する。
+; mode0/CH0はground/OBJ DMAと時間を分けて使用する。
+fx_read_gsu_spans:
+  lda fx_dma_count
+  beq read_spans_done      ; DMA length=0は64KiBなので必ず除外。
+  asl
+  asl
+  sta f:$004305
+  lda #$8000
+  sta f:$004300
+  lda #$0600
+  sta f:$004302
+  lda #fx_dma_desc
+  sta f:$002181
+  sep #$20
+  lda #$70
+  sta f:$004304
+  lda #0
+  sta f:$002183
+  lda #1
+  sta f:$00420b
+  rep #$20
+read_spans_done:
+  rts
 .if .defined(FX_FULL_TRANSFER) .or .defined(FX_GSU_CLIP)
 fx_plan_dma:
   lda #1

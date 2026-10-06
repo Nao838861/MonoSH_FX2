@@ -3,5 +3,11 @@
   "gsuUv": true,
   "gsuClip": true,
   "cpuClipCommands": true,
-  "stableGsuCache": true
+  "stableGsuCache": true,
+  "scaledRows": true,
+  "scaledClip": true,
+  "fastUv": true,
+  "fastObj": true,
+  "descriptorDma": true,
+  "dmaAdmissionBytes": 9984
 }

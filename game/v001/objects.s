@@ -3,8 +3,16 @@
 .macpack longbranch
 .export fx_is_obj, fx_build_obj, fx_latch_obj, fx_upload_obj
 .export fx_obj_upload_done
+.export fx_obj_build_done
 .export fx_obj_next, fx_obj_present, fx_obj_count, fx_obj_present_count, fx_obj_overflow
 .import _fx_draw, _fx_draw_count, _monosh_runtime_frame_counter
+.ifdef FX_FAST_OBJ
+.segment "ZEROPAGE"
+obj_tp: .res 2
+obj_layout: .res 2
+obj_xy: .res 2
+obj_attr: .res 2
+.endif
 .segment "BSS"
 fx_obj_next: .res 68
 fx_obj_present: .res 68
@@ -144,6 +152,21 @@ next_record:
   clc
   adc #player_tiles
   sta tile_pointer
+.ifdef FX_FAST_OBJ
+  ; 全体が画面内なら6個すべてを出す。各partのclip/flip/attribute再計算を省く。
+  lda left
+  cmp #225
+  bcs player_slow
+  lda top
+  cmp #177
+  bcs player_slow
+  lda fx_obj_count
+  cmp #11
+  bcs player_slow
+  jsr player_fast
+  jmp next_record
+player_slow:
+.endif
   stz part
 player_part:
   lda part
@@ -210,6 +233,7 @@ single_bullet:
   jsr emit
   jmp next_record
 done:
+fx_obj_build_done:
   plp
   rts
 emit:
@@ -284,6 +308,67 @@ emit:
   inc fx_obj_count
 invisible:
   rts
+
+.ifdef FX_FAST_OBJ
+player_fast:
+  lda tile_pointer
+  sta obj_tp
+  lda top
+  xba
+  and #$ff00
+  ora left
+  sta obj_xy
+  lda flags
+  and #$30
+  lsr
+  lsr
+  sta work
+  asl
+  clc
+  adc work
+  adc #player_offsets
+  sta obj_layout
+  lda flags
+  and #$30
+  asl
+  asl
+  ora #$30
+  xba
+  sta obj_attr
+  lda fx_obj_count
+  asl
+  asl
+  tax
+  ldy #0
+player_fast_part:
+  lda (obj_layout),y
+  clc
+  adc obj_xy
+  sta fx_obj_next,x
+  lda (obj_tp),y
+  ora obj_attr
+  sta fx_obj_next+2,x
+  inx
+  inx
+  inx
+  inx
+  iny
+  iny
+  cpy #12
+  bcc player_fast_part
+  lda fx_obj_count
+  clc
+  adc #6
+  sta fx_obj_count
+  rts
+.segment "RODATA"
+player_offsets:
+  .word $0000,$0010,$1000,$1010,$2000,$2010
+  .word $0010,$0000,$1010,$1000,$2010,$2000
+  .word $2000,$2010,$1000,$1010,$0000,$0010
+  .word $2010,$2000,$1010,$1000,$0010,$0000
+.segment "CODE"
+.endif
 
 ; FXが描く世代を、CPUが次世代の表を書き換える前に固定する。
 fx_latch_obj:

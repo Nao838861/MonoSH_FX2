@@ -39,6 +39,7 @@ def main():
     script=script.replace('GSU_UV','true' if json.loads((BUILD/'build_mode.json').read_text())['gsuUv'] else 'false')
     script=script.replace('GSU_CLIP','true' if json.loads((BUILD/'build_mode.json').read_text())['gsuClip'] else 'false')
     script=script.replace('CPU_CLIP_COMMANDS','true' if json.loads((BUILD/'build_mode.json').read_text()).get('cpuClipCommands') else 'false')
+    script=script.replace('DMA_ADMISSION_BYTES',str(json.loads((BUILD/'build_mode.json').read_text()).get('dmaAdmissionBytes',9216)))
     script=script.replace('DISPLAY_CODE',(GAME/'display.lua').read_text(encoding='utf-8'))
     path=output/'test.lua'; path.write_text(script,encoding='utf-8')
     mesen=prepare_runtime(MESEN_EXE)

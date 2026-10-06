@@ -1,12 +1,12 @@
 # MonoSH Super FX2 開発プロジェクト
 
-最新ROMは [CPUコマンド分類とGSUキャッシュ保持](game/v001/RESULTS_20261007_COMMAND_CACHE.md) を実装。通常入力約5分で道中59.84fps・ボス平均48.83fps、道中の提示遅延は0.429%。全場面60fpsは未達。下記の59.35／57.05fpsは以前の版の履歴。
+最新ROMは [反復最適化](game/v001/RESULTS_20261007_RENDER_ITERATIONS.md) で、通常入力約5分の道中・ボス戦・撃破後すべて提示遅延0回、**60.10fps**を達成。横縮小済みpacked行、485byteの共通GSUキャッシュ、CPUのOBJ準備、DMA取得を改善した。表示256×180・内部FB256×192・2bppを維持。任意のプレイ・実機での保証はまだない。
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 
-NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fps（配色前版の実測）。全場面60fpsには未達。** 最新ROMは押しっぱなし射撃で誤ポーズになる入力取得を修正し、約5分継続・16通りの方向と射撃、Startでのポーズを検証した。詳細は [検証結果](game/v001/RESULTS.md)。
+NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。** 押しっぱなし射撃で誤ポーズになる入力取得も修正済み。通常操作、押しっぱなし、Startでのポーズ・解除を検証した。詳細は [検証結果](game/v001/RESULTS.md)。
 
 地面は同一消失点からの直線式へ直した。追加の指定RGBに近い緑四色を使い、暗い1/2の列と明るい4/3の列が奥へ続き、横に1/4・2/3が隣接する配色にした。空は紫。自機17poseは赤い服・青い脚・肌色、弾16サイズは黄・橙・白のカラーOBJ。静的CHRとパレットを起動時だけ設定し、毎画像の追加転送はOAM 68bytes。全12KiB転送と最大12 OBJの同時検査、C/nativeの状態一致、三カメラと反転・画面端の最終PPU画素照合を含む [検証結果](game/v001/RESULTS.md) を保存した。
 
@@ -26,14 +26,13 @@ python -m pip install -r requirements.txt
 
 ```powershell
 python -X utf8 tools/build_game.py
-python -X utf8 tools/verify_game.py --equivalence
-python -X utf8 tools/verify_game_inputs.py
+python -X utf8 tools/verify_render_release.py
 python -X utf8 tools/verify_full_transfer_objects.py
 ```
 
 通常のゲームROMのビルドには、元のNES/MSXプロジェクトは不要。固定したソース・画像・表を同梱し、casfxだけ固定commitとhashを検査して取得する。
 
-192行・上下16行黒帯の全12KiB転送は最初のプローブで992bytes欠けた。現在はGSUが前後の矩形を32列のtile区間にまとめ、CPUがSTOP後に部分転送する。転送量と区間数が大きい場合は全12KiB一本へ戻す。実ゲームHDMA併用の最大量テストを通すため、表示は180行にして上下を切った。内部FBは256×192・2bppで、座標・当たり判定は縮めていない。192行と全場面60fpsは改善目標。
+192行・上下16行黒帯の全12KiB転送は最初のプローブで992bytes欠けた。現在はGSUが前後の矩形を32列のtile区間にまとめ、CPUがSTOP後に部分転送する。転送量と区間数が大きい場合は全12KiB一本へ戻す。実ゲームHDMA併用の最大量テストを通すため、表示は180行にして上下を切った。内部FBは256×192・2bppで、座標・当たり判定は縮めていない。192行表示と実機・より広い入力での60Hz検証は残る。
 
 - [設計書](DESIGN.md) — メモリ所有権、CPU と GSU の並行動作、転送量、地面、移植手順、未決事項。
 - [実行可能な移植版 v001](game/v001/README.md) — ゲームROM、操作、元の60Hz更新の移植、描画・転送の実装。

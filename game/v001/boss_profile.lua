@@ -15,7 +15,7 @@ emu.addMemoryCallback(guard(function(a,v)
       enemyShots=read('_monosh_enemy_bullet_count'),shots=read('_monosh_player_bullet_count'),
       previousDma=previous_dma,commands=read('_fx_packet_count',2),
       stageFrame=read('_monosh_stage_frame_counter',2),enemies=read('_monosh_enemy_active_count_value'),
-      groundObjects=read('_monosh_stage_object_count')}
+      groundObjects=read('_monosh_stage_object_count'),cpuSections={}}
   elseif v==2 then probe.joined=stamp()
   elseif v==3 then
     probe.dmaStart=stamp()
@@ -31,10 +31,27 @@ emu.addMemoryCallback(guard(function(a,v)
       dump('worst_gsu_oam.bin',emu.memType.snesSpriteRam,0,544)
       local f=assert(io.open(output..'/worst_gsu.json','w'));f:write(encoded(probe));f:close()
     end
+    if probe.boss==0 and work>(stats.roadWorstGsuClocks or 0) then
+      stats.roadWorstGsuClocks=work
+      dump('worst_road_frame.bin',emu.memType.gsuWorkRam,0x2000,12288)
+      dump('worst_road_packet.bin',emu.memType.gsuWorkRam,0,1312)
+      local f=assert(io.open(output..'/worst_road.json','w'));f:write(encoded(probe));f:close()
+    end
     boss_report:write(encoded(probe)..'\n');boss_report:flush()
     previous_dma={start=probe.dmaStart,finish=probe.dmaEnd,bytes=probe.bytes}
   end
 end),emu.callbackType.write,0x7e1df0,0x7e1df0)
+-- 呼出入口のstamp差でCPU側の重い区間を絞る。ROMや計算量は変更しない。
+for _,name in ipairs({'_fx_frame','_monosh_player_update','_monosh_combat_fast_frame',
+  '_monosh_combat_render','_monosh_enemy_frame','_monosh_stage_frame','_monosh_boss_frame',
+  '_fx_build_packet','_fx_build_ground'}) do
+  if labels[name] then
+    emu.addMemoryCallback(guard(function()
+      if probe then probe.cpuSections[name]=stamp() end
+    end),emu.callbackType.exec,0x7f0000+labels[name],0x7f0000+labels[name],
+    emu.cpuType.snes,emu.memType.snesMemory)
+  end
+end
 emu.addMemoryCallback(guard(function() if probe then probe.cpuEnd=stamp() end end),
   emu.callbackType.exec,0x7f0000+labels.cpu_frame_return,0x7f0000+labels.cpu_frame_return,
   emu.cpuType.snes,emu.memType.snesMemory)

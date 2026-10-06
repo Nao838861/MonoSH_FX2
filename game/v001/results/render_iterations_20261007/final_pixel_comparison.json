@@ -1,0 +1,8 @@
+{
+  "baselineRomSha256": "e301b0bca97df4bd4039307fdb39cb5b12c6bbb7ccd10f7828370fa8718f77aa",
+  "finalRomSha256": "4c9308d79d3cdf1108267a9678289721e081912ffc3436b98758a32e4eec418b",
+  "baselineScenesCompared": 122,
+  "allBaselineFramebufferHashesMatch": true,
+  "finalScenes": 242,
+  "finalImagesVerified": 1194
+}

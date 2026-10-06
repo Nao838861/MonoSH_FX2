@@ -1,10 +1,10 @@
 # MonoSH FX2：実行可能な移植版 v001
 
-最新ROMはCPUのクリッピング要否指定とGSUの命令cache保持を実装済み。通常入力約5分で道中59.84fps・ボス平均48.83fps、道中の提示遅延は0.429%。全場面60fpsは未達。[変更前後の計測](RESULTS_20261007_COMMAND_CACHE.md)。下記の59.35／57.05fpsは以前の版の履歴。
+最新ROMは [反復最適化](RESULTS_20261007_RENDER_ITERATIONS.md) により、通常入力約5分の道中・ボス戦・撃破後で提示遅延0回、**60.10fps**を達成。横縮小済みpacked行とGSUキャッシュ配置、CPUのOBJ準備、DMA取得を改善した。表示256×180・内部FB256×192は維持。任意の入力や実機での全条件保証はまだない。
 
 Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮描画、自機・自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を担当する。
 
-**表示256×180、内部FBは256×192。入力修正後の序盤59.35fps、通常進行57.05fpsは以前の長時間実測。全場面60fpsには未達。** 現在はJOY1取得の前後でbusyを確認し、押しっぱなしで誤Startが混入するポーズ停止を修正した。約5分継続と8方向×Y/A、Startでのポーズ・解除を検証した。自機は赤・青・肌色、弾は黄・橙・白のカラーOBJ。60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、ゲーム時間も遅くなる。配色前版の通常進行は約95%が1field、残りが2fieldだった。指定RGBの四色・縦列の配色、直線パース・紫の空、OBJ化とDMA、CPU/GSU時間は [RESULTS.md](RESULTS.md)。
+JOY1取得の前後でbusyを確認し、押しっぱなしで誤Startが混入するポーズ停止を修正済み。自機と弾はカラーOBJ。60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、その時だけゲーム時間も遅くなる。指定RGBの四色・縦列の配色、直線パース・紫の空、OBJ化とDMA、CPU/GSU時間は [RESULTS.md](RESULTS.md)。
 
 ## 遊ぶ
 
@@ -32,7 +32,7 @@ Python 3.10以上、Pillow、PATH上のcc65/ca65/ld65を使用する。ca65用GS
 
 ```powershell
 python -X utf8 tools/build_game.py
-python -X utf8 tools/verify_game.py --equivalence
+python -X utf8 tools/verify_render_release.py
 python -X utf8 tools/test_game.py --scenario held --held-fire y --frames 900
 python -X utf8 tools/verify_game_inputs.py
 python -X utf8 tools/test_game.py --scenario play --frames 360

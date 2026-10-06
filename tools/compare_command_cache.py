@@ -112,7 +112,8 @@ def run_variant(name, flags, cases):
     for key,value in {'LABELS':lua(labels),'OUTDIR':lua(output.as_posix()),'MAXFRAME':str(len(cases)*6+100),
                        'SCENARIO':lua('replay'),'HELD_DIRECTION':lua('none'),'HELD_FIRE':lua('none'),
                        'GSU_UV':str(config['gsuUv']).lower(),'GSU_CLIP':str(config['gsuClip']).lower(),
-                       'CPU_CLIP_COMMANDS':str(config['cpuClipCommands']).lower()}.items():
+                       'CPU_CLIP_COMMANDS':str(config['cpuClipCommands']).lower(),
+                       'DMA_ADMISSION_BYTES':str(config.get('dmaAdmissionBytes',9216))}.items():
         script=script.replace(key,value)
     path=output/'test.lua';path.write_text(script,encoding='utf-8')
     mesen=prepare_runtime(MESEN_EXE)
