@@ -1,8 +1,8 @@
 # MonoSH FX2 v001：地面の直線パース・配色と自機OBJ化
 
-2026年10月6日。地面の境界を同一消失点からの直線へ変更し、参考画像の黄緑四色と紫の空を指定した。自機・自弾・反射弾をSNESのOBJへ移した。**表示256×180、内部FB256×192。通常進行平均57.05fps、序盤59.35fps。全12KiB＋OAM 68bytesのDMAは黒帯内に収まる。全場面60fps・192行表示は未達。** [ROM](../../releases/MonoSHFX2_v001.sfc)、[起動・操作](README.md)。
+2026年10月6日。地面の境界を同一消失点からの直線へ変更し、自機・自弾・反射弾をSNESのOBJへ移した。その後の指摘に合わせて、地面を指定RGBの四色へ直し、暗い二色と明るい二色がそれぞれ同じ縦列を保つ配置に修正した。**表示256×180、内部FB256×192。配色前版の通常進行は平均57.05fps、序盤59.35fps。配色修正で処理・転送量は増えていない。全場面60fps・192行表示は未達。** [ROM](../../releases/MonoSHFX2_v001.sfc)、[起動・操作](README.md)。
 
-依頼原文と三巡の設計検討は [DESIGN_LOG.md](DESIGN_LOG.md)。前の55.11fps版は [RESULTS_20261005.md](RESULTS_20261005.md)、初版は [RESULTS_INITIAL.md](RESULTS_INITIAL.md) に保存した。
+依頼原文と三巡の設計検討は [DESIGN_LOG.md](DESIGN_LOG.md)。配色前版の全試験は [RESULTS_20261006_GROUND_OBJ.md](RESULTS_20261006_GROUND_OBJ.md)、55.11fps版は [RESULTS_20261005.md](RESULTS_20261005.md)、初版は [RESULTS_INITIAL.md](RESULTS_INITIAL.md) に保存した。
 
 ## 地面のパースと色
 
@@ -12,17 +12,20 @@
 
 通常BGは81本のsource行から選ぶため、実画面には行選択と整数画素による階段が残る。65カメラ×5横位相の158,269境界を独立に調べ、理想直線との差は最大3.486px、解析上の上限4px未満だった。[投影検査](results/ground_projection.json)。ピクセル単位で完全な直線にするには地面も毎行別画像にする等の追加設計が必要。
 
-|用途|表示RGB|SNES RGB5|
-|---|---|---|
-|地面・暗い黄緑|`#63B542`|12,22,8|
-|地面・明るい黄緑|`#ADEF6B`|21,29,13|
-|別の奥行き帯・暗色|`#7BCE52`|15,25,10|
-|別の奥行き帯・明色|`#CEFF8C`|25,31,17|
-|空・紫|`#C673FF`|24,14,31|
+|暗い順|指定RGB|実際の表示RGB（最も近いRGB5）|SNES RGB5|
+|---|---|---|---|
+|1|114,193,112|115,189,115（`#73BD73`）|14,23,14|
+|2|129,208,127|132,206,123（`#84CE7B`）|16,25,15|
+|3|145,223,145|148,222,148（`#94DE94`）|18,27,18|
+|4|160,241,162|156,239,165（`#9CEFA5`）|19,29,20|
 
-奥行き帯ごとに2色のペアを入れ替える14相の地面アニメーションを維持する。BG2はFBの一対一表示、BG3だけH/Vを行別投影、BG4は独立した遠景H/V。FX層は地面の圧縮に巻き込まれない。地上物の0〜3pxの沈み込み・当たり判定も保存する。
+SNESの5bit成分では指定8bit RGBと完全一致できないため、各成分の展開値との差が最小になる色を選ぶ。空は従来の紫 `#C673FF`（RGB5 24,14,31）。
 
-[低い視点](results/display/display00238.png)、[中間](results/display/display00478.png)、[高い視点](results/display/display00718.png)。三カメラそれぞれの最終RGB全61,184画素が、OBJ・BG・CGRAM・HDMAを別実装で合成した結果と一致した。
+奥行き方向に `1 4` → `2 3` → `1 4` と並ぶ。片方の縦列は暗い1/2、もう片方は明るい4/3で、最暗1と最明4が横に隣接する。以前は同じ列に暗色と明色を交互に配置していたため、違和感の原因になっていた。14相の地面アニメーションと行別パースを維持する。BG2はFBの一対一表示、BG3だけH/Vを行別投影、BG4は独立した遠景H/V。地上物の0〜3pxの沈み込み・当たり判定も保存する。
+
+[修正後・低い視点](results/palette_20261006/display/display00238.png)、[中間](results/palette_20261006/display/display00478.png)、[高い視点](results/palette_20261006/display/display00718.png)。三カメラそれぞれの最終RGB全61,184画素が、OBJ・BG・CGRAM・HDMAを別実装で合成した結果と一致した。暗い／明るい列の対応と横の色ペアも検査した。全65カメラ×14位相、62,790地面行でもこの配置を確認した。
+
+配色修正版はplay360field・display720fieldを検証し、前版の計測ログ計4,177レコードと全項目一致した。ROMの49,932変更bytesは地面色定数8bytes、色HDMAの色値、checksumだけで、CPU/GSUコード・画像・投影・HDMA構造は同一だった。[今回の検査](results/palette_20261006/summary.json)。以下の長時間・C/native・全転送の数値は配色前版の実測として残す。
 
 ## 自機・自弾をハードウェアOBJへ
 
@@ -69,9 +72,9 @@ CPUが65816でゲーム更新・投影・判定・OBJ準備・描画順の安定
 
 同一入力・同一論理更新でC参照版／65816版を比較し、通常5,315更新・ボス2,624更新の全状態・有効なdraw矩形が全byte一致した。[通常比較](results/equivalence/summary.json)、[ボス比較](results/equivalence_boss/summary.json)。NES実機との全frame一致を意味しない。固定原本34ファイルのhashも一致する。
 
-自己評価：地面の曲線化は解消し、黄緑四色・紫の空、OBJとFXの位置・前後関係を最終画素まで確認した。DMAは最大量でも成立した。CPU費用は増えたが通常の平均fpsは改善した。残るのは81行の地面量子化、全場面60fps、192行表示、音、実機確認。次はカメラ／横位相が不変なHDMA表の再利用とOBJ準備の短縮を計測して進める。
+自己評価：地面の曲線化は解消し、指定の緑四色・紫の空、OBJとFXの位置・前後関係を最終画素まで確認した。DMAは最大量でも成立した。CPU費用は増えたが通常の平均fpsは改善した。残るのは81行の地面量子化、全場面60fps、192行表示、音、実機確認。次はカメラ／横位相が不変なHDMA表の再利用とOBJ準備の短縮を計測して進める。
 
-ROM SHA256: `7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d`、2MiB。[manifest](../../releases/v001.json)。測定はMesen 2.1.1、NTSC、GSU速度100%、追加走査線0。保存済みログ・状態・draw・packet・FB・OAM・VRAM/CGRAM・RGB/PNGは [results/](results/)。再実行はプロジェクトルートで：
+配色修正版ROM SHA256: `1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc`、2MiB。[manifest](../../releases/v001.json)。長時間・全転送・C/nativeの基準ROMは `7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d`。測定はMesen 2.1.1、NTSC、GSU速度100%、追加走査線0。保存済みログ・状態・draw・packet・FB・OAM・VRAM/CGRAM・RGB/PNGは [results/](results/)。全試験の再実行はプロジェクトルートで：
 
 ```powershell
 python -X utf8 tools/verify_game.py --equivalence

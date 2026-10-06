@@ -190,7 +190,7 @@ const unsigned char fx_ground_width[81] = {
 40,41,42,42,43,43,44,45,45,46,47,47,48,49,49,50,51,
 };
 const unsigned int fx_ground_greens[4] = {
-8908,14261,11055,18425,
+15086,16176,19314,21427,
 };
 const unsigned int fx_sky_color[1] = {
 32216,

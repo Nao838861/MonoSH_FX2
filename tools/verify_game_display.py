@@ -68,7 +68,16 @@ def verify(directory):
         image=Image.open(base.with_suffix('.png')).convert('RGB')
         greens={image.getpixel((x,y)) for y in range(image.height) for x in range(image.width)
                 if image.getpixel((x,y))[1]>max(image.getpixel((x,y))[0],image.getpixel((x,y))[2])}
-        assert greens=={rgb(r+(g<<5)+(b<<10)) for r,g,b in [(12,22,8),(21,29,13),(15,25,10),(25,31,17)]},greens
+        # ユーザー指定の四つのRGBに最も近いRGB5。明度順。
+        words=[r+(g<<5)+(b<<10) for r,g,b in [(14,23,14),(16,25,15),(18,27,18),(19,29,20)]]
+        assert greens=={rgb(word) for word in words},greens
+        pairs=set()
+        for y in range(104+meta['offset']+1,203):
+            bright=struct.unpack('<BBH',c1[y-1])[2]
+            dark=struct.unpack('<BBH',c3[y-1])[2]
+            assert bright in words[2:] and dark in words[:2],'depth column brightness group switched'
+            pairs.add((dark,bright))
+        assert pairs=={(words[0],words[3]),(words[1],words[2])},pairs
         assert palette[0]==24+(14<<5)+(31<<10),'purple sky'
         expected=Image.new('RGB',image.size)
         for y in range(224):

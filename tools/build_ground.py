@@ -30,8 +30,10 @@ def build():
             edge=(boundary(p0)+boundary(p1))/2 if phase&1 else boundary(p0)
             if 0<edge<=80:edges.append(math.ceil(edge))
         bands.extend(initial^(sum(e<=y for e in edges)%2) for y in range(81))
-    # Two different green pairs per depth band, four colors in total (SNES BGR555).
-    green=[(12,22,8),(21,29,13),(15,25,10),(25,31,17)]
+    # 指定RGBを明度順で保存し、RGB5の展開値で最も近い色を選ぶ。
+    requested=[(114,193,112),(129,208,127),(145,223,145),(160,241,162)]
+    green=[tuple(min(range(32),key=lambda v:abs(v*8+(v>>2)-c)) for c in color)
+           for color in requested]
     colors=[r+(g<<5)+(b<<10) for r,g,b in green]
     # UV division is performed by the SNES divider; discard the large C lookup rows.
     tables=re.sub(r'const unsigned int fx_steps_\d+\[\d+\] = \{.*?\};\n','',tables,flags=re.S)
@@ -83,8 +85,10 @@ def build():
         hr.extend(bytes(2))
         for phase in range(14):
             states=[bands[phase*81+frame_rows[0]]]*horizon+[bands[phase*81+r] for r in frame_rows]
-            palette+=palette_table([colors[2] if state else colors[1] for state in states],65)
-            palette+=palette_table([colors[3] if state else colors[0] for state in states],67)
+            # 同じ縦列の明度グループを維持する。横は最暗/最明、次の帯は中間二色。
+            # pixel index 1（CGRAM65）は明るい列、index 3（67）は暗い列。
+            palette+=palette_table([colors[2] if state else colors[3] for state in states],65)
+            palette+=palette_table([colors[1] if state else colors[0] for state in states],67)
     for name,value in [('ground_scroll.bin',scrolls),('ground_rows.bin',rows),
             ('ground_scroll_offsets.bin',struct.pack('<65H',*so)),('ground_row_offsets.bin',struct.pack('<65H',*ro))]:
         (assets/name).write_bytes(value)

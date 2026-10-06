@@ -1,5 +1,5 @@
 {
-  "romSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
+  "romSha256": "1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -55,17 +55,86 @@
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "scenarioFrames": {
     "play": 360,
-    "controls": 720,
-    "pause": 360,
-    "stumble": 800,
-    "boss": 2600,
-    "stress": 360,
-    "packed": 360,
-    "objects": 360,
-    "display": 720,
-    "long": 18000,
-    "profile": 2400
+    "display": 720
   },
-  "equivalenceMatchedUpdates": 5315,
-  "bossEquivalenceMatchedUpdates": 2624
+  "verificationKind": "地面パレット変更。今回play/display検証、全コードとHDMA構造が前版と同一",
+  "comprehensiveVerificationReferenceRomSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
+  "groundPalette": {
+    "requestedRgb": [
+      [
+        114,
+        193,
+        112
+      ],
+      [
+        129,
+        208,
+        127
+      ],
+      [
+        145,
+        223,
+        145
+      ],
+      [
+        160,
+        241,
+        162
+      ]
+    ],
+    "rgb5": [
+      [
+        14,
+        23,
+        14
+      ],
+      [
+        16,
+        25,
+        15
+      ],
+      [
+        18,
+        27,
+        18
+      ],
+      [
+        19,
+        29,
+        20
+      ]
+    ],
+    "displayRgb": [
+      [
+        115,
+        189,
+        115
+      ],
+      [
+        132,
+        206,
+        123
+      ],
+      [
+        148,
+        222,
+        148
+      ],
+      [
+        156,
+        239,
+        165
+      ]
+    ],
+    "colorRankPattern": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        3
+      ]
+    ]
+  }
 }
