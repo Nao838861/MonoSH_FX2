@@ -1509,4 +1509,3 @@ tosumul0ax (lmul.o):
 udiv16 (udiv.o):
     umod.o                    runtime/umod.s:8
     shelp.o                   runtime/shelp.s:11
-

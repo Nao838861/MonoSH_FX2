@@ -43,7 +43,7 @@ def main():
     for filename in ['game.lbl','game.map','build_mode.json']:
         if filename=='game.map':
             # ld65のmapは行末を空白で埋める。記録では空白を除いてdiff可能にする。
-            (target/filename).write_text('\n'.join(line.rstrip() for line in (BUILD/filename).read_text().splitlines())+'\n')
+            (target/filename).write_text('\n'.join(line.rstrip() for line in (BUILD/filename).read_text().splitlines()).rstrip()+'\n')
         else:
             shutil.copy2(BUILD/filename,target/filename)
     manifest=json.loads((ROOT/'releases/v001.json').read_text(encoding='utf-8'))
