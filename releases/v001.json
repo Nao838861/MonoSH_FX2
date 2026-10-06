@@ -1,5 +1,5 @@
 {
-  "romSha256": "953d5aa44ed2c6c985b9ba10695ac99525880df766d15ecdc72a6e6dca9c4675",
+  "romSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -51,6 +51,7 @@
     "monosh_far_background.h": "841daa466b357fdcd81ad47a80032d71f3db4c1f84fddd31a610e591bf6c1b95",
     "monosh_far_background_fast.asm": "6496af8a8164c350ab8d3483c690cda348e34cdb24a56c4955998c728f870458"
   },
+  "hardwareObjects": "自機17poseと自弾16サイズ・反射弾。最大16枠、毎frame OAM 68bytes",
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "scenarioFrames": {
     "play": 360,
@@ -60,10 +61,11 @@
     "boss": 2600,
     "stress": 360,
     "packed": 360,
+    "objects": 360,
     "display": 720,
     "long": 18000,
     "profile": 2400
   },
-  "equivalenceMatchedUpdates": 5632,
-  "bossEquivalenceMatchedUpdates": 2847
+  "equivalenceMatchedUpdates": 5315,
+  "bossEquivalenceMatchedUpdates": 2624
 }

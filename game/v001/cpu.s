@@ -7,6 +7,7 @@
 .import ground_empty
 .import fx_upload_ground
 .import _fx_ground_far_xptr
+.import _fx_sky_color, fx_latch_obj, fx_upload_obj
 .import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
 .importzp c_sp
 .export __STARTUP__ : absolute = 1
@@ -52,9 +53,9 @@ reset:
   sta $2108                 ; BG2 map=$8000
   lda #$51
   sta $2109                 ; BG3 map=$a000
-  lda #$60
-  sta $210a                 ; BG4 map=$c000
-  lda #$0e
+  lda #$58
+  sta $210a                 ; BG4 map=$b000、OBJ CHR=$c000〜$ffff。
+  lda #$1e
   sta $212c
   stz $212d
   stz $2133
@@ -105,6 +106,51 @@ next_color:
   inx
   cpx #128
   bne palette_loop
+  ; 空の紫。OBJは白黒を保存し、絵柄は起動時のVRAM全転送に含まれる。
+  stz $2121
+  lda f:$7e0000+_fx_sky_color
+  sta $2122
+  lda f:$7e0001+_fx_sky_color
+  sta $2122
+  lda #128
+  sta $2121
+  ldx #0
+obj_palette:
+  txa
+  cmp #3
+  beq obj_white
+  stz $2122
+  stz $2122
+  bra obj_palette_next
+obj_white:
+  lda #$ff
+  sta $2122
+  lda #$7f
+  sta $2122
+obj_palette_next:
+  inx
+  cpx #16
+  bne obj_palette
+  lda #$63                  ; size選択3=small16、大32、CHR byte base C000。
+  sta $2101
+  stz $2102
+  stz $2103
+  ldx #0
+hide_objects:
+  stz $2104
+  lda #240
+  sta $2104
+  stz $2104
+  stz $2104
+  inx
+  cpx #128
+  bne hide_objects
+  ldx #0
+clear_high_oam:
+  stz $2104
+  inx
+  cpx #32
+  bne clear_high_oam
   ; HDMA1は上下22行黒帯。224行のうち180行だけ表示。
   lda #$00
   sta $4310
@@ -160,6 +206,10 @@ game_started:
   lda #0
   sta f:$7e1dff
   jsr _fx_send_ground
+wait_initial_vblank:
+  lda f:$004212
+  and #$80
+  beq wait_initial_vblank   ; 新規HDMAは次field先頭で初期化させる。
   lda #$be
   sta f:$00420c
   plp
@@ -321,6 +371,7 @@ copy_clear:
   bra copy_clear
   .endif
 start_render:
+  jsr fx_latch_obj
   lda #.loword(render_entry_address)
   ; entryはGSU segment先頭$8000。
   lda #$8000
@@ -399,6 +450,7 @@ wait_hblank:
   sta f:$002114
   lda #$be
   sta f:$00420c
+  jsr fx_upload_obj
   rep #$20
   lda #$1801
   sta f:$004300
@@ -443,7 +495,9 @@ dma_finished:
 render_entry_address = $8000
 
 blank_table:
-  .byte 22,$80,127,$0f,53,$0f,22,$80,1,$80,0
+  ; 22行目は輝度0でOBJ評価/CHR fetchを再開し、23行目のOBJを用意する。
+  ; 全FB+OAM DMAは20行目までに終える。表示範囲23..202は180行のまま。
+  .byte 21,$80,1,$00,127,$0f,53,$0f,22,$80,1,$80,0
 
 
 .segment "GFX"

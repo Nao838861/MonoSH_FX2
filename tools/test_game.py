@@ -13,7 +13,7 @@ from build_game import BUILD, GAME
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--frames',type=int,default=360)
-    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','long','profile','controls','stumble','display','equivalence','equivalence_boss'])
+    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','objects','long','profile','controls','stumble','display','equivalence','equivalence_boss'])
     parser.add_argument('--timeout',type=int,default=60)
     args=parser.parse_args()
     rom=BUILD/'MonoSHFX2_v001.sfc'
@@ -40,6 +40,8 @@ def main():
     mesen=prepare_runtime(MESEN_EXE)
     settings=mesen.parent/'settings.json'
     config=json.loads(settings.read_text()); config['Snes']['Port1']={'Type':'SnesController'}
+    # ホスト負荷によるPPU frame skipを無効化し、動的OBJと同じ世代のRGBを観測する。
+    config['Snes']['DisableFrameSkipping']=True
     settings.write_text(json.dumps(config))
     result=subprocess.run([str(mesen),'--testRunner',f'--timeout={args.timeout}','--doNotSaveSettings',
             '--enableStdout',str(BUILD/'MonoSHFX2_v001.sfc'),str(path)],
@@ -59,6 +61,7 @@ def main():
     summary['romSha256']=rom_sha
     summary_path.write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
     subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_pixels.py')),args.scenario],check=True)
+    subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_objects.py')),args.scenario],check=True)
     if args.scenario=='display':
         subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_display.py')),args.scenario],check=True)
 

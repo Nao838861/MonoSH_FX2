@@ -6,6 +6,7 @@ import struct
 import sys
 from PIL import Image
 from build_game import BUILD, GAME
+from verify_game_objects import object_pixels
 
 def hdma(raw, size, lines=224):
     result=[];position=0;last=bytes(size)
@@ -20,7 +21,7 @@ def hdma(raw, size, lines=224):
     return result+[last]*(lines-len(result))
 
 def pixel(vram, layer, x, y):
-    mapbase,chrbase,width=[(0x8000,0,32),(0xa000,0x4000,64),(0xc000,0x6000,32)][layer]
+    mapbase,chrbase,width=[(0x8000,0,32),(0xa000,0x4000,64),(0xb000,0x6000,32)][layer]
     x%=width*8;y%=256
     tx,ty=x//8,y//8
     address=mapbase+(tx//32)*0x800+(ty*32+tx%32)*2
@@ -54,22 +55,21 @@ def verify(directory):
     for path in samples:
         base=path.with_suffix('');meta=json.loads(path.read_text());offsets.append(meta['offset'])
         data=lambda name:Path(str(base)+'_'+name+'.bin').read_bytes()
-        vram=data('vram');cgram=data('cgram');palette=list(struct.unpack('<128H',cgram))
+        vram=data('vram');cgram=data('cgram');palette=list(struct.unpack('<256H',cgram))
+        objects=object_pixels(vram,data('oam'))
         v,h,far=[hdma(data(name),2) for name in ('v','h','far')]
         # VRAM一致だけでなく、原本の地上物と同じ投影・横移動を要求する。
         for physical in range(104+meta['offset'],205):
-            row=depths[meta['offset']*81:(meta['offset']+1)*81]
-            distance=min(range(81),key=lambda d:abs(207-row[d]-(physical+7)))
-            source=207-distance
-            z=min(range(111),key=lambda z:abs(tree[z*4+2]-12-source))
-            width=max(1,(32*scales[z]+128)//256)
+            span=100-meta['offset']
+            source=127+((physical-104-meta['offset'])*80+span//2)//span
             assert struct.unpack('<H',v[physical])[0]==(source-physical)&65535
-            assert struct.unpack('<H',h[physical])[0]==128+width//2
+            assert struct.unpack('<H',h[physical])[0]==128+32*(source-127)*51//(64*80)
         c1,c3=[hdma(data(name),4) for name in ('c1','c3')]
         image=Image.open(base.with_suffix('.png')).convert('RGB')
         greens={image.getpixel((x,y)) for y in range(image.height) for x in range(image.width)
                 if image.getpixel((x,y))[1]>max(image.getpixel((x,y))[0],image.getpixel((x,y))[2])}
-        assert greens=={(33,115,24),(82,214,49),(41,156,33),(132,255,74)},greens
+        assert greens=={rgb(r+(g<<5)+(b<<10)) for r,g,b in [(12,22,8),(21,29,13),(15,25,10),(25,31,17)]},greens
+        assert palette[0]==24+(14<<5)+(31<<10),'purple sky'
         expected=Image.new('RGB',image.size)
         for y in range(224):
             line=max(0,y-1)  # HDMA first data is used by scanline 1.
@@ -79,8 +79,9 @@ def verify(directory):
                 palette[address]=color
             for x in range(256):
                 color=(0,0,0)
-                if 21<=y<201:
-                    index=pixel(vram,0,x,y-13)
+                if 23<=y<203:
+                    index=objects.get((x,y))
+                    if index is None:index=pixel(vram,0,x,y-13)
                     if index is None:index=pixel(vram,1,x+ho,y+vo)
                     if index is None:index=pixel(vram,2,x+fo,y+meta['farY'])
                     color=rgb(palette[index or 0])

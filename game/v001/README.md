@@ -1,8 +1,8 @@
 # MonoSH FX2：実行可能な移植版 v001
 
-Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮スプライト、通常BGとHDMAが地面・遠景を担当する。
+Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮描画、自機・自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を担当する。
 
-**表示256×180、通常進行平均55.11fps。序盤は起動を含め59.55fpsで、全場面60fpsには未達。** 60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、ゲーム時間も遅くなる。通常進行の表示間隔は約91%が1field、残りが2field。地面・遠景・FX層の表示修正、CPU更新の高速化、GSU側のUV・clip・範囲管理を含む検証は [RESULTS.md](RESULTS.md)。
+**表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fpsで、全場面60fpsには未達。** 60Hzの時間刻みを1回ずつ処理し、遅れた時は次の表示枠を待つため、ゲーム時間も遅くなる。通常進行の表示間隔は約95%が1field、残りが2field。地面の直線パース・黄緑四色・紫の空、OBJ化とDMA、CPU/GSU時間は [RESULTS.md](RESULTS.md)。
 
 ## 遊ぶ
 
@@ -35,12 +35,16 @@ python -X utf8 tools/test_game.py --scenario controls --frames 720
 python -X utf8 tools/test_game.py --scenario stumble --frames 800
 python -X utf8 tools/test_game.py --scenario boss --frames 2600
 python -X utf8 tools/test_game.py --scenario stress --frames 360
+python -X utf8 tools/test_game.py --scenario objects --frames 360
+python -X utf8 tools/verify_full_transfer_objects.py
 python -X utf8 tools/test_game.py --scenario long --frames 18000 --timeout 360
 ```
 
 テストは専用Mesenを非対話モードで実行する。`long` は通常のパッド入力だけで進め、死亡・復帰・自然なボス到達・撃破・周回を要求する。`boss` はステージ終端と無敵をテスト側から設定し、通常ボス射撃の後に自弾を命中位置へ置く。HPは書き換えず、16回の頭部命中と胴反射・爆発・周回を確認する。`stress` は上下左右をclipした20本の木をテスト側から投入し、全12KiB転送とRAM guardを検査する。これらの状態書換えはLua検証専用で、製品ROMにデバッグショートカットを組み込んでいない。
 
 `--equivalence` はC参照版と65816版を同一入力・更新回数で比較し、通常ステージとボス出現・撃破・次周を別々に確認する。`display` は低・中・高カメラの最終RGB、地上物と同じ投影表、緑四色を検査する。`packed` は7種の高速経路・clip・反転を実行したことも要求する。
+
+`objects` は全17pose・四反転・16弾サイズ・四辺clip・点滅を検査し、OAM/CHRの独立復号と最終PPUのRGBを照合する。`verify_full_transfer_objects.py` は全12KiBと最大12 OBJを同時検証して記録し、最後に既定ROMを復元する。動的画素の照合ではMesenのホスト負荷によるframe skipを無効にする。ゲームの処理落ち判定とは別の設定。
 
 VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip、flip、透明合成の全画素を照合する。`build/game_v001/` は自動生成物。保存済み測定・画像は [results/](results/)。Mesenのテスト用メモリアクセスAPIを使った検証であり、実機確認はまだ行っていない。
 
@@ -57,6 +61,7 @@ VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip
 |[boss_render.s](boss_render.s) / [boss_collision.s](boss_collision.s)|ボスの履歴投影、描画、頭部命中・胴反射の判定|
 |[player.s](player.s) / [enemy_update.s](enemy_update.s) / [enemy_bullet.s](enemy_bullet.s)|通常移動、敵経路・開き状態、敵弾・DDAの65816更新|
 |[submit.s](submit.s) / [packet.s](packet.s)|65816の描画リスト、安定ソート、10byte/体の送信情報|
+|[objects.s](objects.s) / [../../tools/build_objects.py](../../tools/build_objects.py)|自機17poseを16×16の6 OBJへ分割、自弾16サイズを事前生成、OAM世代固定と68bytes転送|
 |[stage.s](stage.s) / [projection.s](projection.s)|地形の投影と、描画矩形を共用する自弾判定。更新はstage_update.s|
 |[gsu.s](gsu.s) / [gsu_draw.inc](gsu_draw.inc) / [gsu_clip.inc](gsu_clip.inc) / [gsu_uv.inc](gsu_uv.inc)|生の描画情報、clip、ROM比率表によるQ8.8 UV、最近傍拡縮|
 |[gsu_clear.inc](gsu_clear.inc) / [gsu_dma.inc](gsu_dma.inc)|前回の描画tile消去、前後の和集合からDMA区間生成|
@@ -65,6 +70,8 @@ VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip
 |[cpu.s](cpu.s) / [rom.cfg](rom.cfg)|起動・WRAM配置・CPU/GSU並行処理・HDMA・DMA|
 
 GSU動作中、CPUのコード・定数・作業領域はWRAMだけを使う。GSUへ渡したリストはSTOPまで固定し、CPUは次フレームを準備する。GSU RAMをCPUが読む／DMAするのはSTOP後。地面の可変HDMA表は3組で、表示中・描画中・次フレーム準備が同じ表を書かない。
+
+OBJ CHRはVRAM C000–FFFFへ起動時だけ転送し、遠景mapはB000へ移動した。OBJはpriority 3でFXの手前に置き、自機と弾をFX packetから除く。CPUが次世代のdrawを準備する前にOAMを固定し、対応するFBと同じ黒帯で転送する。22行目は輝度0でOBJ評価・CHR読み出しを再開し、23〜202行の180行を表示する。
 
 既定設定は [config.json](config.json) のGSU UV・clip・部分転送。FX2は前回描いたtileだけを消し、今回の範囲との和集合を作る。CPUがSTOP後にDMA区間を受け取り、64byte以内の隙間をまとめた区間を送る。bytes+区間数×64が12,000以上なら全12KiB一本に戻す。bytes+区間数×128が9,216以下の時だけ、220行目まで転送開始を許す。転送は上下の黒帯内で完了させる。
 

@@ -29,10 +29,11 @@ if scenario=='display' then
     if not selected[field] then return end
     local prefix=string.format('display%05d',field)
     dump(prefix..'_vram.bin',emu.memType.snesVideoRam,0,65536)
-    dump(prefix..'_cgram.bin',emu.memType.snesCgRam,0,256)
+    dump(prefix..'_cgram.bin',emu.memType.snesCgRam,0,512)
+    dump(prefix..'_oam.bin',emu.memType.snesSpriteRam,0,544)
     local meta={}
     for _,r in ipairs({{'v',0x1d04,500,0x7f0000},{'c1',0x1d06,128,0x7e0000},
-        {'c3',0x1d08,128,0x7e0000},{'far',0x1d0c,10,0x7e0000},{'h',0x1d0e,210,0x7e0000}}) do
+        {'c3',0x1d08,128,0x7e0000},{'far',0x1d0c,10,0x7e0000},{'h',0x1d0e,270,0x7e0000}}) do
       local p=emu.read(0x7e0000+r[2],emu.memType.snesMemory)+256*emu.read(0x7e0000+r[2]+1,emu.memType.snesMemory)
       dump(prefix..'_'..r[1]..'.bin',emu.memType.snesMemory,r[4]+p,r[3])
     end

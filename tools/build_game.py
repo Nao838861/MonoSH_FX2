@@ -206,6 +206,7 @@ def export_ppu(dest):
             struct.pack_into('<H',vram,0xc000+(ty*32+tx)*2,far_tiles[raw])
     for raw,index in far_tiles.items(): vram[0x6000+index*16:0x6010+index*16]=raw
     (dest/'ppu.bin').write_bytes(vram)
+    (dest/'far_map.bin').write_bytes(vram[0xc000:0xc800])
     print(f'BG ground {len(tiles)} tiles, far {len(far_tiles)} tiles')
 
 def pack_assets():
@@ -313,6 +314,8 @@ def main():
     if '--import-assets' in sys.argv or not (GAME/'asset_tables.c').exists(): export_assets()
     from build_ground import build as build_ground
     build_ground()
+    from build_objects import build as build_objects
+    build_objects()
     pack_assets()
     scale=bytearray(65536)
     dimensions=[Image.open(GAME/'assets'/f'{i:02d}.png').size for i in range(44)]
@@ -332,7 +335,7 @@ def main():
              *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit']:
+    for name in ['cpu','gsu','ground','packet','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit']:
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),

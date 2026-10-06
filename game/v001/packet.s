@@ -7,6 +7,7 @@
 .import _fx_asset_width, _fx_asset_height, _fx_asset_bank
 .import _monosh_runtime_frame_counter
 .import fx_reset_next_bounds, fx_add_next_bounds
+.import fx_is_obj, fx_build_obj
 .segment "ZEROPAGE"
 dp: .res 2
 pp: .res 2
@@ -20,6 +21,7 @@ keys: .res 128
 _fx_build_packet:
   php
   rep #$30
+  jsr fx_build_obj
   jsr fx_reset_next_bounds
   lda _fx_draw_count
   and #$ff
@@ -36,21 +38,25 @@ _fx_build_packet:
   ldy #0
   ldx #0
 initialize_order:
-  cpy $0148
+  cpx $0142
   bcs initialized
+  jsr fx_is_obj
+  bne omit_obj
   txa
   sta order,y
   lda _fx_draw+8,x
   eor #$00ff               ; priority昇順、同priorityならZ降順
   sta keys,y
+  iny
+  iny
+omit_obj:
   txa
   clc
   adc #10
   tax
-  iny
-  iny
   bra initialize_order
 initialized:
+  sty $0148                ; FXへ送る分だけをソート。論理draw自体は保存。
   lda #2
   sta $0144
 sort:

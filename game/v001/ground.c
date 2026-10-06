@@ -1,7 +1,7 @@
 #include "port.h"
 /* Ordinary BG3 + HDMAで横の市松と奥行きの帯を合成する。 */
 unsigned char fx_ground_color1[3][150], fx_ground_color3[3][150];
-unsigned char fx_ground_horizontal[3][210];
+unsigned char fx_ground_horizontal[3][270];
 unsigned char *fx_ground_hptr;
 unsigned char fx_ground_world_phase;
 unsigned int fx_ground_palette_record;

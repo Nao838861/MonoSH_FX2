@@ -1,4 +1,4 @@
-"""地形と共通のカメラ距離表から、通常BGの投影用データを生成する。"""
+"""地形と共通のカメラ位置から、通常BGの直線投影と四色の表を生成する。"""
 import math
 import re
 import struct
@@ -17,16 +17,9 @@ def array(name, values, ctype='unsigned char'):
 def build():
     assets=GAME/'assets'
     tables=(GAME/'asset_tables.c').read_text()
-    distances=numbers(tables,'fx_ground_depth_rows')
-    geometry=numbers((GAME/'upstream/monosh_stage_data.c').read_text(),'stage_tree0_geometry')
-    source=(GAME/'upstream/monosh_projection.c').read_text()
-    scales=[int(x) for x in re.search(r'full_scale\[111\] = \{(.*?)\}',source,re.S)[1].replace('\n','').split(',')]
-    # Reference camera 16 maps the source bottom 219 to 207: source Y=bottom-12.
-    # Match the lateral world displacement to the same projection used by trees.
-    width=[]
-    for y in range(127,208):
-        z=min(range(111),key=lambda z:abs(geometry[z*4+2]-12-y))
-        width.append(max(1,(32*scales[z]+128)//256))
+    # 地面の境界は消失点からの一次式。幅を整数化してから倍数を
+    # 作ると外側ほど丸め誤差が拡大するため、境界位置で量子化する。
+    width=[d*51//80 for d in range(81)]
     bands=[]
     for phase in range(14):
         p0=(phase//2)*2/7;p1=p0+2/7
@@ -38,7 +31,7 @@ def build():
             if 0<edge<=80:edges.append(math.ceil(edge))
         bands.extend(initial^(sum(e<=y for e in edges)%2) for y in range(81))
     # Two different green pairs per depth band, four colors in total (SNES BGR555).
-    green=[(4,14,3),(10,26,6),(5,19,4),(16,31,9)]
+    green=[(12,22,8),(21,29,13),(15,25,10),(25,31,17)]
     colors=[r+(g<<5)+(b<<10) for r,g,b in green]
     # UV division is performed by the SNES divider; discard the large C lookup rows.
     tables=re.sub(r'const unsigned int fx_steps_\d+\[\d+\] = \{.*?\};\n','',tables,flags=re.S)
@@ -47,9 +40,14 @@ def build():
             ('fx_ground_light',[colors[1]]*81,'unsigned int'),
             ('fx_ground_dark',[colors[0]]*81,'unsigned int')]:
         tables=re.sub(r'const '+ctype+' '+name+r'\[\d+\] = \{.*?\};\n',array(name,values,ctype),tables,flags=re.S)
-    for name,values,ctype in [('fx_ground_width',width,'unsigned char'),('fx_ground_greens',colors,'unsigned int')]:
+    for name,values,ctype in [('fx_ground_width',width,'unsigned char'),('fx_ground_greens',colors,'unsigned int'),
+                             ('fx_sky_color',[24+(14<<5)+(31<<10)],'unsigned int')]:
         tables=re.sub(r'const '+ctype+' '+name+r'\[\d+\] = \{.*?\};\n','',tables,flags=re.S)
         tables+=array(name,values,ctype)
+    # 現在は色HDMAを事前生成する。初期C方式の未使用配列をWRAMへ置かない。
+    for name,ctype in [('fx_ground_bands','unsigned char'),('fx_ground_light','unsigned int'),
+                       ('fx_ground_dark','unsigned int'),('fx_ground_steps','unsigned int')]:
+        tables=re.sub(r'const '+ctype+' '+name+r'\[\d+\] = \{.*?\};\n','',tables,flags=re.S)
     (GAME/'asset_tables.c').write_text(tables)
     scrolls=bytearray();rows=bytearray();so=[];ro=[];palette=bytearray();hr=bytearray();hro=[]
     def palette_table(values, address):
@@ -70,9 +68,9 @@ def build():
         count=205-horizon;scrolls.append(count|128)
         frame_rows=[]
         for physical in range(horizon,205):
-            logical=physical+7
-            d=min(range(81),key=lambda d:abs(207-distances[offset*81+d]-logical))
-            source_y=207-d;rows.append(source_y-127)
+            span=204-horizon
+            source_y=127+((physical-horizon)*80+span//2)//span
+            rows.append(source_y-127)
             frame_rows.append(source_y-127)
             scrolls.extend(struct.pack('<h',source_y-physical))
         scrolls.append(0)
@@ -80,7 +78,7 @@ def build():
         start=0
         while start<len(frame_rows):
             end=start+1
-            while end<len(frame_rows) and width[frame_rows[end]]==width[frame_rows[start]] and end-start<127:end+=1
+            while end<len(frame_rows) and frame_rows[end]==frame_rows[start] and end-start<127:end+=1
             hr.extend(bytes((end-start,frame_rows[start])));start=end
         hr.extend(bytes(2))
         for phase in range(14):
@@ -90,7 +88,7 @@ def build():
     for name,value in [('ground_scroll.bin',scrolls),('ground_rows.bin',rows),
             ('ground_scroll_offsets.bin',struct.pack('<65H',*so)),('ground_row_offsets.bin',struct.pack('<65H',*ro))]:
         (assets/name).write_bytes(value)
-    (assets/'ground_horizontal.bin').write_bytes(bytes(128+(phase*w)//64 for phase in range(128) for w in width))
+    (assets/'ground_horizontal.bin').write_bytes(bytes(128+phase*d*51//(64*80) for phase in range(128) for d in range(81)))
     (assets/'ground_horizontal_offsets.bin').write_bytes(struct.pack('<128H',*[phase*81 for phase in range(128)]))
     (assets/'ground_horizontal_runs.bin').write_bytes(hr)
     (assets/'ground_horizontal_run_offsets.bin').write_bytes(struct.pack('<65H',*hro))
@@ -105,7 +103,9 @@ def build():
             raw=bytearray()
             for yy in range(8):
                 y=ty*8+yy
-                pixels=[0 if not 127<=y<=207 else (1 if ((tx*8+x-256)//width[y-127])&1 else 3) for x in range(8)]
+                d=y-127
+                pixels=[0 if not 0<=d<=80 else (3 if d==0 else
+                        (1 if ((tx*8+x-256)*80//(d*51))&1 else 3)) for x in range(8)]
                 for p in range(2):raw.append(sum(((pixels[x]>>p)&1)<<(7-x) for x in range(8)))
             raw=bytes(raw)
             if raw not in tiles:tiles[raw]=len(tiles)

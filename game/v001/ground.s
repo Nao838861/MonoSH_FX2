@@ -224,7 +224,7 @@ fx_upload_ground:
 ground_empty: .byte 0
 color1_pointers: .word _fx_ground_color1, _fx_ground_color1+150, _fx_ground_color1+300
 color3_pointers: .word _fx_ground_color3, _fx_ground_color3+150, _fx_ground_color3+300
-horizontal_pointers: .word _fx_ground_horizontal, _fx_ground_horizontal+210, _fx_ground_horizontal+420
+horizontal_pointers: .word _fx_ground_horizontal, _fx_ground_horizontal+270, _fx_ground_horizontal+540
 far_pointers: .word _fx_ground_far_x, _fx_ground_far_x+10, _fx_ground_far_x+20
 ground_scroll_offsets: .incbin "assets/ground_scroll_offsets.bin"
 ground_horizontal_run_offsets: .incbin "assets/ground_horizontal_run_offsets.bin"

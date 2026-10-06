@@ -6,11 +6,17 @@ import sys
 from PIL import Image
 from build_game import BUILD, GAME
 
+def is_obj(d):
+    _,_,w,h,asset,_,_,priority=d
+    return priority==2 and ((asset in [9,*range(15,31)] and (w,h)==(32,48)) or
+                           (asset==10 and w==h and 1<=w<=16))
+
 def packet_reference(draw, meta):
     objects=[struct.unpack_from('<hh6B',draw,i*10) for i in range(meta['count'])]
     objects.sort(key=lambda d:(d[7],-d[6]))
     output=[]
     for center,bottom,w,h,asset,flags,z,priority in objects:
+        if is_obj((center,bottom,w,h,asset,flags,z,priority)): continue
         if flags&128 and meta['logic']&1: continue
         aw,ah=Image.open(GAME/'assets'/f'{asset:02d}.png').size
         du=aw*256//w;dv=ah*256//h
