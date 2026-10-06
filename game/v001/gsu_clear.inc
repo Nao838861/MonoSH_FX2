@@ -1,4 +1,8 @@
 ; 前回描いたtileだけ消す。32列の[min,max]はGSUが管理する。
+; $0700=初期化済みflag、$0580=直前の範囲（描画後は今回の範囲）、
+; $0800=前回の範囲を退避する領域。空はmin=$ff。
+; FBは列優先: 1tile=16bytes、1列=24tiles=384bytes。
+; 全画素PLOTで消すより、連続したtile領域へSTWで0を書く方を選んでいる。
   iwt r11,#$0700
   ldw (r11)
   ibt r8,#0
@@ -12,6 +16,7 @@
   iwt r13,#.loword(dirty_first_clear)
   ibt r0,#0
 dirty_first_clear:
+  ; 初回だけ12,288bytes全体を0へ。R12=6,144word、各回2bytes進める。
   stw (r1)
   inc r1
   loop
@@ -21,6 +26,7 @@ dirty_first_clear:
   iwt r13,#.loword(dirty_first_bounds)
   iwt r0,#$00ff
 dirty_first_bounds:
+  ; 今回の列を空にし、前回側は[0,23]にする。初回DMAも全FBを反映させる。
   stw (r6)
   iwt r10,#$0280
   from r6
@@ -45,7 +51,7 @@ dirty_column:
   add r10
   move r10,r0
   ldw (r6)
-  stw (r10)
+  stw (r10)                ; 直前の範囲を$0800へ保存。消去跡のDMAにも必要。
   move r11,r0
   and r8
   move r9,r0
@@ -57,6 +63,7 @@ dirty_column:
   and r8
   sub r9
   inc r0
+  ; (max-min+1)*16bytes / 2 = 消すword数。1列内は連続領域なので1loop。
   add r0
   add r0
   add r0
@@ -76,6 +83,7 @@ dirty_column_clear:
   loop
   inc r1
 dirty_column_done:
+  ; 今回の範囲を空へ戻す。描画中のgsu_clip.incが改めてmin/maxを更新する。
   iwt r0,#$00ff
   stw (r6)
   inc r6

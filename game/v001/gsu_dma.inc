@@ -1,5 +1,10 @@
 ; 前回・今回の和集合からVRAM DMAの区間を生成する。
 ; 64byte以内の隙間もまとめる。header8=count、headerA=bytes。
+; $0580=今回、$0800=前回。消去した前回領域も送らないとVRAMに残像が残る。
+; 出力は$0600から[offset words, length bytes]の4byte/区間。
+; offsetはFB先頭基準。列優先の配置なので、各tile列の縦範囲は連続している。
+; R5=列頭word offset、R12=区間数、R13=合計bytes、R14=前区間末尾word offset。
+; ここではVRAM転送を実行せず、CPUがGSU停止後に読むDMAリストを作る。
   ibt r5,#0
   iwt r6,#$0800
   ibt r7,#32
@@ -74,6 +79,7 @@ gsu_union_max:
   from r9
   sub r14
   ibt r3,#33
+  ; gap<33wordsなら併合。小さい空白も送り、DMA設定の回数を減らす。
   cmp r3
   bge gsu_dma_new
   nop
@@ -120,6 +126,8 @@ gsu_dma_next:
   jmp (r10)
   nop
 gsu_dma_columns_done:
+  ; bytes+区間数*64 >= 12000なら全転送へ切り替える（設定費用を含む目安）。
+  ; 64/12000は現在の選択基準であり、あらゆる場面で最良と実証した値ではない。
   move r0,r12
   .repeat 6
     add r0

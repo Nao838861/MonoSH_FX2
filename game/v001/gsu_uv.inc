@@ -1,5 +1,10 @@
 ; wireの生寸法・整数skipを、既存shaderのQ8.8レジスタへ変換する。
 ; scratch: $A bank/meta, $10 height, $12 base V, $14 skip Y。
+; 入口: R3/R4=clip前のwidth/height、R10=左で捨てた出力画素数、
+;       R7上位byte=原画ペアのbase V、下位byte=上で捨てた出力行数。
+; DU/DVは原画寸法*256/投影寸法。ROM $5eの表を読むので実行時の除算なし。
+; table: DU=$0000+asset*512+width*2、DV=$5800+asset*512+height*2。
+; clip後の幅に合わせて倍率を変えると絵が歪むので、元寸法で表を引く。
   cache
   iwt r8,#$000a
   stw (r8)                 ; r0はbank/meta。ROMBは下7bitだけを読む。
@@ -48,6 +53,8 @@
   inc r14
   getbh
   move r4,r0               ; DV
+  ; clipのskipはspriteごとにLMULTで投影。画素loop中の乗算を省く。
+  ; LMULTはR0*R6の32bit積を出し、低16bitはR4。DVをR13へ一時退避する。
   move r13,r4
   move r6,r3
   from r10
@@ -59,6 +66,8 @@
   and r8
   beq uv_u_done
   nop
+  ; 左右反転: DU=-DU、U0=原画width*256-1-skipX*abs(DU)。
+  ; -1で原画の右端を選び、小数部$ffを持つ。packed入口判定もこれに対応。
   ibt r0,#0
   to r3
   sub r3
@@ -86,6 +95,7 @@ uv_u_done:
   and r8
   beq uv_v_done
   nop
+  ; 上下反転も同じ規則。原画heightは$b02c+assetの表から読む。
   ibt r0,#0
   to r4
   sub r4
@@ -101,6 +111,7 @@ uv_u_done:
   to r7
   sub r7
 uv_v_done:
+  ; 後半原画のbase V=$8000を合成し、clip後heightと原画bankを復元する。
   iwt r8,#$0012
   ldw (r8)
   move r8,r0

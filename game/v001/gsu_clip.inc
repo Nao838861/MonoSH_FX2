@@ -1,4 +1,8 @@
-; CPUがソートした生の矩形をGSUでclipする。全FB転送時だけ使用。
+; CPUがソートした生の矩形をGSUでclipする。部分転送の既定構成でも使用。
+; 出力をX=[0,256)、Y=[0,192)へ制限。各辺の判定はspriteごとに1回だけ。
+; 左/上を切った量は原画UVの開始位置へ反映し、倍率はclip前の寸法を使う。
+; 原画のskipXはR10、skipYはR13→R7下位byteへ。幅R9・高さR6を減らす。
+; R0=bank/metaをscratchへ保存。描画しない場合もpacketは既に進めてある。
   iwt r8,#$000a
   stw (r8)
   ibt r8,#0
@@ -65,11 +69,15 @@ clip_y_ready:
   bra clip_done
   nop
 clip_empty:
+  ; 全画面外や非正の寸法は、R12=0の画素LOOPへ入れずに次spriteへ進む。
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
 clip_done:
-  ; 次回clear用の範囲。UVのskipXだけ一時保存する。
+  ; 今回のdirty範囲を32tile列の[minY,maxY]（8行単位、両端を含む）へ記録。
+  ; gsu_clear.incが次回clearに、gsu_dma.incが前回との和集合に使う。
+  ; $0580+column*2。min=$ffが空の列。透明画素単位の変更検査はしない。
+  ; UVのskipXだけ一時保存する。
   iwt r8,#$0018
   from r10
   stw (r8)
