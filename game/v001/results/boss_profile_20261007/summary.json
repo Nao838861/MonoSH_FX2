@@ -1,0 +1,380 @@
+{
+  "date": "2026-10-07",
+  "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+  "cases": {
+    "natural": {
+      "lateDmaStarts": 679,
+      "deaths": 26,
+      "rendered": 17139,
+      "interval1": 15806,
+      "em1States": {
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true,
+        "7": true,
+        "0": true
+      },
+      "loopSeen": true,
+      "deathImage": true,
+      "packed_half": 1097,
+      "maxDmaStartLine": 222,
+      "maxCommands": 16,
+      "maxBytes": 12288,
+      "packed_one": 17147,
+      "enemyShotsMax": 6,
+      "stumbleMax": 0,
+      "dmaMaxMs": 4.8346922272065,
+      "stumbles": 0,
+      "interval2": 1085,
+      "respawns": 26,
+      "dyingSeen": true,
+      "bossSeen": true,
+      "packed_quarter": 4662,
+      "fields": 18000,
+      "logic": 17141,
+      "checked": 581,
+      "bossImage": true,
+      "packed_mirror_quarter": 18,
+      "doneSeen": true,
+      "enemyImage": true,
+      "stage": 928,
+      "packed_double": 313,
+      "minBytes": 128,
+      "interval3plus": 247,
+      "reflected": 3,
+      "enemyTypes": {
+        "6": true,
+        "5": true,
+        "2": true
+      },
+      "enemyPaths": {
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true,
+        "7": true,
+        "8": true,
+        "0": true
+      },
+      "gsuMaxMs": 19.1294313356,
+      "maxDmaSpanCount": 32,
+      "objMaxCount": 12,
+      "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+      "mesenSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+      "scenario": "natural-profile",
+      "framesRequested": 18000,
+      "bossMeasurement": "timings.jsonl",
+      "bossFire": "a",
+      "buildMode": {
+        "fullFramebufferTransfer": false,
+        "gsuUv": true,
+        "gsuClip": true
+      },
+      "generatedLuaSha256": "b712501ea3be92ac6b7564624b61335748128614cb6828f2532bf4894c8a1274",
+      "joinedMaxMs": 19.137253558087,
+      "cpuMaxMs": 14.878705265733934
+    },
+    "linger": {
+      "stage": 3746,
+      "bossWorstGsuClocks": 410848,
+      "stumbleMax": 0,
+      "fields": 18000,
+      "checked": 497,
+      "respawns": 27,
+      "reflected": 0,
+      "rendered": 14631,
+      "bossImage": true,
+      "lateDmaStarts": 1764,
+      "em1States": {
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true,
+        "7": true,
+        "0": true
+      },
+      "minBytes": 128,
+      "interval1": 11050,
+      "enemyTypes": {
+        "6": true,
+        "5": true,
+        "2": true
+      },
+      "objMaxCount": 9,
+      "packed_half": 1076,
+      "packed_quarter": 3297,
+      "maxDmaSpanCount": 32,
+      "packed_one": 14633,
+      "dyingSeen": false,
+      "loopSeen": false,
+      "dmaMaxMs": 4.8346922272065,
+      "interval3plus": 117,
+      "doneSeen": false,
+      "enemyPaths": {
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
+        "5": true,
+        "6": true,
+        "7": true,
+        "8": true,
+        "0": true
+      },
+      "interval2": 3463,
+      "stumbles": 0,
+      "maxBytes": 12288,
+      "enemyShotsMax": 6,
+      "enemyImage": true,
+      "maxDmaStartLine": 222,
+      "deathImage": true,
+      "packed_double": 193,
+      "logic": 14633,
+      "maxCommands": 16,
+      "packed_mirror_quarter": 6,
+      "gsuMaxMs": 19.1294313356,
+      "bossSeen": true,
+      "deaths": 27,
+      "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+      "mesenSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+      "scenario": "natural-profile",
+      "framesRequested": 18000,
+      "bossFire": "none",
+      "bossMeasurement": "timings.jsonl",
+      "buildMode": {
+        "fullFramebufferTransfer": false,
+        "gsuUv": true,
+        "gsuClip": true
+      },
+      "generatedLuaSha256": "ed7b690a6ca27f82177520932ca854d571764be1755fda234202264fce4f75b6",
+      "joinedMaxMs": 19.137346679783,
+      "cpuMaxMs": 14.566933826605165
+    },
+    "serial": {
+      "maxBytes": 12288,
+      "rendered": 690,
+      "packed_double": 134,
+      "em1States": {},
+      "objMaxCount": 9,
+      "packed_half": 75,
+      "deaths": 0,
+      "packed_quarter": 181,
+      "dyingSeen": false,
+      "enemyShotsMax": 0,
+      "respawns": 0,
+      "bossSeen": false,
+      "stumbleMax": 0,
+      "loopSeen": false,
+      "fields": 720,
+      "lateDmaStarts": 36,
+      "gsuMaxMs": 11.261579217323,
+      "enemyPaths": {
+        "1": true,
+        "0": true
+      },
+      "stage": 948,
+      "checked": 690,
+      "logic": 692,
+      "minBytes": 512,
+      "maxDmaSpanCount": 30,
+      "enemyTypes": {
+        "5": true,
+        "2": true
+      },
+      "stumbles": 0,
+      "reflected": 0,
+      "dmaMaxMs": 4.8346922272065,
+      "maxCommands": 13,
+      "enemyImage": true,
+      "interval1": 652,
+      "interval2": 22,
+      "interval3plus": 15,
+      "doneSeen": false,
+      "packed_one": 691,
+      "maxDmaStartLine": 222,
+      "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+      "mesenSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+      "scenario": "natural-profile",
+      "framesRequested": 720,
+      "bossFire": "a",
+      "bossMeasurement": "timings.jsonl",
+      "buildMode": {
+        "fullFramebufferTransfer": false,
+        "gsuUv": true,
+        "gsuClip": true
+      },
+      "generatedLuaSha256": "9507bdfee6c1bf5e1246afba84b32ebab1825b6b4962d7f2df8ac1bd5d16cc9f",
+      "joinedMaxMs": 13.068140125059,
+      "cpuMaxMs": 13.05715176489826
+    }
+  },
+  "verifiedFields": 36720,
+  "verifiedFramebuffers": 1768,
+  "bossImages": 11371,
+  "verifiedClockStamps": 227910,
+  "worstSteady60Hz": {
+    "image": 5523,
+    "logic": 5523,
+    "boss": 1,
+    "hp": 16,
+    "player": 2,
+    "x": 194,
+    "y": 201,
+    "commands": 14,
+    "enemyShots": 4,
+    "shots": 0,
+    "dmaBytes": 3792,
+    "dmaSpans": 7,
+    "deadlineLine": 220,
+    "cpuMs": 7.757689151583125,
+    "gsuMs": 19.12943133559979,
+    "joinedMs": 19.135949854339042,
+    "dmaMs": 1.6855027025778693,
+    "previousDmaMs": 1.6992847136265723,
+    "preparationMs": 0.8429375946814847,
+    "postJoinMs": 0.2030984195758195,
+    "overlapBudgetMs": 14.846019550341403,
+    "deadlineMissMs": 4.283411785258389,
+    "dmaStartFrame": 5812,
+    "presentationIntervalFields": 2,
+    "bottleneck": "GSU",
+    "requiredGsu": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "requiredCpu": {
+      "timeReductionPercent": 0,
+      "speedIncreasePercent": 0
+    },
+    "simpleGsuVs16ms": {
+      "timeReductionPercent": 13.01746631357582,
+      "speedIncreasePercent": 14.96560948719241
+    },
+    "raw": {
+      "image": 5523,
+      "hp": 16,
+      "x": 194,
+      "y": 201,
+      "commands": 14,
+      "ready": {
+        "ppuFrame": 5812,
+        "line": 26,
+        "hclock": 612,
+        "clock": 2077047268,
+        "field": 5812
+      },
+      "shots": 0,
+      "dmaStart": {
+        "ppuFrame": 5812,
+        "line": 206,
+        "hclock": 14,
+        "clock": 2077292190,
+        "field": 5812
+      },
+      "player": 2,
+      "spans": 7,
+      "logic": 5523,
+      "dmaEnd": {
+        "ppuFrame": 5813,
+        "line": 232,
+        "hclock": 750,
+        "clock": 2077328390,
+        "field": 5813
+      },
+      "deadline": 220,
+      "enemyShots": 4,
+      "joined": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 482,
+        "clock": 2077043046,
+        "field": 5812
+      },
+      "start": {
+        "ppuFrame": 5811,
+        "line": 246,
+        "hclock": 54,
+        "clock": 2076632058,
+        "field": 5811
+      },
+      "bytes": 3792,
+      "previousDma": {
+        "finish": {
+          "ppuFrame": 5811,
+          "line": 232,
+          "hclock": 1046,
+          "clock": 2076613954,
+          "field": 5811
+        },
+        "start": {
+          "ppuFrame": 5810,
+          "line": 206,
+          "hclock": 14,
+          "clock": 2076577458,
+          "field": 5810
+        },
+        "bytes": 3824
+      },
+      "gsuEnd": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 342,
+        "clock": 2077042906,
+        "field": 5812
+      },
+      "boss": 1,
+      "cpuEnd": {
+        "ppuFrame": 5811,
+        "line": 106,
+        "hclock": 260,
+        "clock": 2076798672,
+        "field": 5811
+      }
+    },
+    "requiredBoth": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "withOneLineReserve": {
+      "overlapBudgetMs": 14.782510553481838,
+      "requiredGsu": {
+        "timeReductionPercent": 22.723732377911055,
+        "speedIncreasePercent": 29.405835811117264
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      }
+    },
+    "steady": {
+      "serialMs": 2.879602213912456,
+      "overlapBudgetMs": 13.759661841597016,
+      "requiredGsu": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      },
+      "requiredBoth": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "withOneLineReserve": {
+        "timeReductionPercent": 28.402718280239892,
+        "speedIncreasePercent": 39.67010701804485
+      }
+    }
+  },
+  "recommendedGsuTimeReductionPercent": 30,
+  "recommendedGsuSpeedIncreasePercent": 42.85714285714286,
+  "romUnchanged": true
+}

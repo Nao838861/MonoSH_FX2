@@ -1,0 +1,733 @@
+{
+  "measurement": {
+    "stage": 3746,
+    "bossWorstGsuClocks": 410848,
+    "stumbleMax": 0,
+    "fields": 18000,
+    "checked": 497,
+    "respawns": 27,
+    "reflected": 0,
+    "rendered": 14631,
+    "bossImage": true,
+    "lateDmaStarts": 1764,
+    "em1States": {
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": true,
+      "5": true,
+      "6": true,
+      "7": true,
+      "0": true
+    },
+    "minBytes": 128,
+    "interval1": 11050,
+    "enemyTypes": {
+      "6": true,
+      "5": true,
+      "2": true
+    },
+    "objMaxCount": 9,
+    "packed_half": 1076,
+    "packed_quarter": 3297,
+    "maxDmaSpanCount": 32,
+    "packed_one": 14633,
+    "dyingSeen": false,
+    "loopSeen": false,
+    "dmaMaxMs": 4.8346922272065,
+    "interval3plus": 117,
+    "doneSeen": false,
+    "enemyPaths": {
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": true,
+      "5": true,
+      "6": true,
+      "7": true,
+      "8": true,
+      "0": true
+    },
+    "interval2": 3463,
+    "stumbles": 0,
+    "maxBytes": 12288,
+    "enemyShotsMax": 6,
+    "enemyImage": true,
+    "maxDmaStartLine": 222,
+    "deathImage": true,
+    "packed_double": 193,
+    "logic": 14633,
+    "maxCommands": 16,
+    "packed_mirror_quarter": 6,
+    "gsuMaxMs": 19.1294313356,
+    "bossSeen": true,
+    "deaths": 27,
+    "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+    "mesenSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+    "scenario": "natural-profile",
+    "framesRequested": 18000,
+    "bossFire": "none",
+    "bossMeasurement": "timings.jsonl",
+    "joinedMaxMs": 19.137346679783,
+    "cpuMaxMs": 14.566933826605167
+  },
+  "masterHz": 21477272,
+  "fieldPeriodMs": 16.639264055509468,
+  "nativeFieldsPerSecond": 60.098811862348406,
+  "bossImages": 9565,
+  "activeBossImages": 9565,
+  "dyingBossImages": 0,
+  "cpuMs": {
+    "mean": 8.532050254592216,
+    "p95": 10.454772840796542,
+    "max": 10.812639519581445
+  },
+  "gsuMs": {
+    "mean": 11.427265155718995,
+    "p95": 18.95706307579473,
+    "max": 19.12943133559979
+  },
+  "intervals": {
+    "1": 6311,
+    "2": 3254
+  },
+  "worstWork": {
+    "image": 5523,
+    "logic": 5523,
+    "boss": 1,
+    "hp": 16,
+    "player": 2,
+    "x": 194,
+    "y": 201,
+    "commands": 14,
+    "enemyShots": 4,
+    "shots": 0,
+    "dmaBytes": 3792,
+    "dmaSpans": 7,
+    "deadlineLine": 220,
+    "cpuMs": 7.757689151583125,
+    "gsuMs": 19.12943133559979,
+    "joinedMs": 19.135949854339042,
+    "dmaMs": 1.6855027025778693,
+    "previousDmaMs": 1.6992847136265723,
+    "preparationMs": 0.8429375946814847,
+    "postJoinMs": 0.2030984195758195,
+    "overlapBudgetMs": 14.846019550341403,
+    "deadlineMissMs": 4.283411785258389,
+    "dmaStartFrame": 5812,
+    "presentationIntervalFields": 2,
+    "bottleneck": "GSU",
+    "requiredGsu": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "requiredCpu": {
+      "timeReductionPercent": 0,
+      "speedIncreasePercent": 0
+    },
+    "simpleGsuVs16ms": {
+      "timeReductionPercent": 13.01746631357582,
+      "speedIncreasePercent": 14.96560948719241
+    },
+    "raw": {
+      "image": 5523,
+      "hp": 16,
+      "x": 194,
+      "y": 201,
+      "commands": 14,
+      "ready": {
+        "ppuFrame": 5812,
+        "line": 26,
+        "hclock": 612,
+        "clock": 2077047268,
+        "field": 5812
+      },
+      "shots": 0,
+      "dmaStart": {
+        "ppuFrame": 5812,
+        "line": 206,
+        "hclock": 14,
+        "clock": 2077292190,
+        "field": 5812
+      },
+      "player": 2,
+      "spans": 7,
+      "logic": 5523,
+      "dmaEnd": {
+        "ppuFrame": 5813,
+        "line": 232,
+        "hclock": 750,
+        "clock": 2077328390,
+        "field": 5813
+      },
+      "deadline": 220,
+      "enemyShots": 4,
+      "joined": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 482,
+        "clock": 2077043046,
+        "field": 5812
+      },
+      "start": {
+        "ppuFrame": 5811,
+        "line": 246,
+        "hclock": 54,
+        "clock": 2076632058,
+        "field": 5811
+      },
+      "bytes": 3792,
+      "previousDma": {
+        "finish": {
+          "ppuFrame": 5811,
+          "line": 232,
+          "hclock": 1046,
+          "clock": 2076613954,
+          "field": 5811
+        },
+        "start": {
+          "ppuFrame": 5810,
+          "line": 206,
+          "hclock": 14,
+          "clock": 2076577458,
+          "field": 5810
+        },
+        "bytes": 3824
+      },
+      "gsuEnd": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 342,
+        "clock": 2077042906,
+        "field": 5812
+      },
+      "boss": 1,
+      "cpuEnd": {
+        "ppuFrame": 5811,
+        "line": 106,
+        "hclock": 260,
+        "clock": 2076798672,
+        "field": 5811
+      }
+    },
+    "requiredBoth": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "withOneLineReserve": {
+      "overlapBudgetMs": 14.782510553481838,
+      "requiredGsu": {
+        "timeReductionPercent": 22.723732377911055,
+        "speedIncreasePercent": 29.405835811117264
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      }
+    },
+    "steady": {
+      "serialMs": 2.879602213912456,
+      "overlapBudgetMs": 13.759661841597016,
+      "requiredGsu": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      },
+      "requiredBoth": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "withOneLineReserve": {
+        "timeReductionPercent": 28.402718280239892,
+        "speedIncreasePercent": 39.67010701804485
+      }
+    }
+  },
+  "worstRequiredReduction": {
+    "image": 5523,
+    "logic": 5523,
+    "boss": 1,
+    "hp": 16,
+    "player": 2,
+    "x": 194,
+    "y": 201,
+    "commands": 14,
+    "enemyShots": 4,
+    "shots": 0,
+    "dmaBytes": 3792,
+    "dmaSpans": 7,
+    "deadlineLine": 220,
+    "cpuMs": 7.757689151583125,
+    "gsuMs": 19.12943133559979,
+    "joinedMs": 19.135949854339042,
+    "dmaMs": 1.6855027025778693,
+    "previousDmaMs": 1.6992847136265723,
+    "preparationMs": 0.8429375946814847,
+    "postJoinMs": 0.2030984195758195,
+    "overlapBudgetMs": 14.846019550341403,
+    "deadlineMissMs": 4.283411785258389,
+    "dmaStartFrame": 5812,
+    "presentationIntervalFields": 2,
+    "bottleneck": "GSU",
+    "requiredGsu": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "requiredCpu": {
+      "timeReductionPercent": 0,
+      "speedIncreasePercent": 0
+    },
+    "simpleGsuVs16ms": {
+      "timeReductionPercent": 13.01746631357582,
+      "speedIncreasePercent": 14.96560948719241
+    },
+    "raw": {
+      "image": 5523,
+      "hp": 16,
+      "x": 194,
+      "y": 201,
+      "commands": 14,
+      "ready": {
+        "ppuFrame": 5812,
+        "line": 26,
+        "hclock": 612,
+        "clock": 2077047268,
+        "field": 5812
+      },
+      "shots": 0,
+      "dmaStart": {
+        "ppuFrame": 5812,
+        "line": 206,
+        "hclock": 14,
+        "clock": 2077292190,
+        "field": 5812
+      },
+      "player": 2,
+      "spans": 7,
+      "logic": 5523,
+      "dmaEnd": {
+        "ppuFrame": 5813,
+        "line": 232,
+        "hclock": 750,
+        "clock": 2077328390,
+        "field": 5813
+      },
+      "deadline": 220,
+      "enemyShots": 4,
+      "joined": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 482,
+        "clock": 2077043046,
+        "field": 5812
+      },
+      "start": {
+        "ppuFrame": 5811,
+        "line": 246,
+        "hclock": 54,
+        "clock": 2076632058,
+        "field": 5811
+      },
+      "bytes": 3792,
+      "previousDma": {
+        "finish": {
+          "ppuFrame": 5811,
+          "line": 232,
+          "hclock": 1046,
+          "clock": 2076613954,
+          "field": 5811
+        },
+        "start": {
+          "ppuFrame": 5810,
+          "line": 206,
+          "hclock": 14,
+          "clock": 2076577458,
+          "field": 5810
+        },
+        "bytes": 3824
+      },
+      "gsuEnd": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 342,
+        "clock": 2077042906,
+        "field": 5812
+      },
+      "boss": 1,
+      "cpuEnd": {
+        "ppuFrame": 5811,
+        "line": 106,
+        "hclock": 260,
+        "clock": 2076798672,
+        "field": 5811
+      }
+    },
+    "requiredBoth": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "withOneLineReserve": {
+      "overlapBudgetMs": 14.782510553481838,
+      "requiredGsu": {
+        "timeReductionPercent": 22.723732377911055,
+        "speedIncreasePercent": 29.405835811117264
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      }
+    },
+    "steady": {
+      "serialMs": 2.879602213912456,
+      "overlapBudgetMs": 13.759661841597016,
+      "requiredGsu": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      },
+      "requiredBoth": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "withOneLineReserve": {
+        "timeReductionPercent": 28.402718280239892,
+        "speedIncreasePercent": 39.67010701804485
+      }
+    }
+  },
+  "worstSteady60Hz": {
+    "image": 5523,
+    "logic": 5523,
+    "boss": 1,
+    "hp": 16,
+    "player": 2,
+    "x": 194,
+    "y": 201,
+    "commands": 14,
+    "enemyShots": 4,
+    "shots": 0,
+    "dmaBytes": 3792,
+    "dmaSpans": 7,
+    "deadlineLine": 220,
+    "cpuMs": 7.757689151583125,
+    "gsuMs": 19.12943133559979,
+    "joinedMs": 19.135949854339042,
+    "dmaMs": 1.6855027025778693,
+    "previousDmaMs": 1.6992847136265723,
+    "preparationMs": 0.8429375946814847,
+    "postJoinMs": 0.2030984195758195,
+    "overlapBudgetMs": 14.846019550341403,
+    "deadlineMissMs": 4.283411785258389,
+    "dmaStartFrame": 5812,
+    "presentationIntervalFields": 2,
+    "bottleneck": "GSU",
+    "requiredGsu": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "requiredCpu": {
+      "timeReductionPercent": 0,
+      "speedIncreasePercent": 0
+    },
+    "simpleGsuVs16ms": {
+      "timeReductionPercent": 13.01746631357582,
+      "speedIncreasePercent": 14.96560948719241
+    },
+    "raw": {
+      "image": 5523,
+      "hp": 16,
+      "x": 194,
+      "y": 201,
+      "commands": 14,
+      "ready": {
+        "ppuFrame": 5812,
+        "line": 26,
+        "hclock": 612,
+        "clock": 2077047268,
+        "field": 5812
+      },
+      "shots": 0,
+      "dmaStart": {
+        "ppuFrame": 5812,
+        "line": 206,
+        "hclock": 14,
+        "clock": 2077292190,
+        "field": 5812
+      },
+      "player": 2,
+      "spans": 7,
+      "logic": 5523,
+      "dmaEnd": {
+        "ppuFrame": 5813,
+        "line": 232,
+        "hclock": 750,
+        "clock": 2077328390,
+        "field": 5813
+      },
+      "deadline": 220,
+      "enemyShots": 4,
+      "joined": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 482,
+        "clock": 2077043046,
+        "field": 5812
+      },
+      "start": {
+        "ppuFrame": 5811,
+        "line": 246,
+        "hclock": 54,
+        "clock": 2076632058,
+        "field": 5811
+      },
+      "bytes": 3792,
+      "previousDma": {
+        "finish": {
+          "ppuFrame": 5811,
+          "line": 232,
+          "hclock": 1046,
+          "clock": 2076613954,
+          "field": 5811
+        },
+        "start": {
+          "ppuFrame": 5810,
+          "line": 206,
+          "hclock": 14,
+          "clock": 2076577458,
+          "field": 5810
+        },
+        "bytes": 3824
+      },
+      "gsuEnd": {
+        "ppuFrame": 5812,
+        "line": 23,
+        "hclock": 342,
+        "clock": 2077042906,
+        "field": 5812
+      },
+      "boss": 1,
+      "cpuEnd": {
+        "ppuFrame": 5811,
+        "line": 106,
+        "hclock": 260,
+        "clock": 2076798672,
+        "field": 5811
+      }
+    },
+    "requiredBoth": {
+      "timeReductionPercent": 22.39173611651998,
+      "speedIncreasePercent": 28.852257473686848
+    },
+    "withOneLineReserve": {
+      "overlapBudgetMs": 14.782510553481838,
+      "requiredGsu": {
+        "timeReductionPercent": 22.723732377911055,
+        "speedIncreasePercent": 29.405835811117264
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      }
+    },
+    "steady": {
+      "serialMs": 2.879602213912456,
+      "overlapBudgetMs": 13.759661841597016,
+      "requiredGsu": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      },
+      "requiredBoth": {
+        "timeReductionPercent": 28.070722018848816,
+        "speedIncreasePercent": 39.02544667027612
+      },
+      "withOneLineReserve": {
+        "timeReductionPercent": 28.402718280239892,
+        "speedIncreasePercent": 39.67010701804485
+      }
+    }
+  },
+  "worstAliveActiveBoss": {
+    "image": 8241,
+    "logic": 8241,
+    "boss": 1,
+    "hp": 16,
+    "player": 0,
+    "x": 195,
+    "y": 201,
+    "commands": 14,
+    "enemyShots": 4,
+    "shots": 0,
+    "dmaBytes": 3824,
+    "dmaSpans": 7,
+    "deadlineLine": 220,
+    "cpuMs": 7.9474711685916155,
+    "gsuMs": 19.07895937621873,
+    "joinedMs": 19.089389006201532,
+    "dmaMs": 1.698167253271272,
+    "previousDmaMs": 1.6544931777182874,
+    "preparationMs": 0.8425651078963846,
+    "postJoinMs": 0.20645080064172025,
+    "overlapBudgetMs": 14.886713731613586,
+    "deadlineMissMs": 4.192245644605143,
+    "dmaStartFrame": 9390,
+    "presentationIntervalFields": 2,
+    "bottleneck": "GSU",
+    "requiredGsu": {
+      "timeReductionPercent": 21.973135756191365,
+      "speedIncreasePercent": 28.160987845843
+    },
+    "requiredCpu": {
+      "timeReductionPercent": 0,
+      "speedIncreasePercent": 0
+    },
+    "simpleGsuVs16ms": {
+      "timeReductionPercent": 12.7873605294755,
+      "speedIncreasePercent": 14.662279008075751
+    },
+    "raw": {
+      "image": 8241,
+      "hp": 16,
+      "x": 195,
+      "y": 201,
+      "commands": 14,
+      "ready": {
+        "ppuFrame": 9390,
+        "line": 25,
+        "hclock": 18,
+        "clock": 3355700858,
+        "field": 9390
+      },
+      "shots": 0,
+      "dmaStart": {
+        "ppuFrame": 9390,
+        "line": 206,
+        "hclock": 52,
+        "clock": 3355947776,
+        "field": 9390
+      },
+      "player": 0,
+      "spans": 7,
+      "logic": 8241,
+      "dmaEnd": {
+        "ppuFrame": 9391,
+        "line": 232,
+        "hclock": 1060,
+        "clock": 3355984248,
+        "field": 9391
+      },
+      "deadline": 220,
+      "enemyShots": 4,
+      "joined": {
+        "ppuFrame": 9390,
+        "line": 21,
+        "hclock": 1264,
+        "clock": 3355696648,
+        "field": 9390
+      },
+      "start": {
+        "ppuFrame": 9389,
+        "line": 245,
+        "hclock": 472,
+        "clock": 3355286660,
+        "field": 9389
+      },
+      "bytes": 3824,
+      "previousDma": {
+        "finish": {
+          "ppuFrame": 9389,
+          "line": 232,
+          "hclock": 108,
+          "clock": 3355268564,
+          "field": 9389
+        },
+        "start": {
+          "ppuFrame": 9388,
+          "line": 206,
+          "hclock": 38,
+          "clock": 3355233030,
+          "field": 9388
+        },
+        "bytes": 3712
+      },
+      "gsuEnd": {
+        "ppuFrame": 9390,
+        "line": 21,
+        "hclock": 1040,
+        "clock": 3355696424,
+        "field": 9390
+      },
+      "boss": 1,
+      "cpuEnd": {
+        "ppuFrame": 9389,
+        "line": 108,
+        "hclock": 662,
+        "clock": 3355457350,
+        "field": 9389
+      }
+    },
+    "requiredBoth": {
+      "timeReductionPercent": 21.973135756191365,
+      "speedIncreasePercent": 28.160987845843
+    },
+    "withOneLineReserve": {
+      "overlapBudgetMs": 14.823204734754023,
+      "requiredGsu": {
+        "timeReductionPercent": 22.306010288849187,
+        "speedIncreasePercent": 28.710084746295106
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      }
+    },
+    "steady": {
+      "serialMs": 2.837790572284972,
+      "overlapBudgetMs": 13.801473483224498,
+      "requiredGsu": {
+        "timeReductionPercent": 27.661287960875036,
+        "speedIncreasePercent": 38.23856850798535
+      },
+      "requiredCpu": {
+        "timeReductionPercent": 0,
+        "speedIncreasePercent": 0
+      },
+      "requiredBoth": {
+        "timeReductionPercent": 27.661287960875036,
+        "speedIncreasePercent": 38.23856850798535
+      },
+      "withOneLineReserve": {
+        "timeReductionPercent": 27.99416249353286,
+        "speedIncreasePercent": 38.87762917974338
+      }
+    }
+  },
+  "maximumRequiredCpuReductionPercent": 0,
+  "maximumRequiredSteadyCpuReductionPercent": 0,
+  "admissionCalibration": {
+    "scenario": "boss_profile_serial",
+    "images": 690,
+    "meanMs": 0.1332367685635578,
+    "maxMs": 0.13428148602857942,
+    "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6"
+  },
+  "worst60FieldWindow": {
+    "images": 30,
+    "startPhysicalFrame": 5656,
+    "fps": 30.049405931174203
+  },
+  "limitations": [
+    "締切行末を上限にした局所推定。速度変更後のDMA位相やゲーム状態は再計測が必要。",
+    "CPUとGSUは並行実行。処理時間は加算しない。",
+    "現在のMesen・ROM・パッド入力で観測した最大。全入力や実機の最悪保証ではない。"
+  ]
+}
