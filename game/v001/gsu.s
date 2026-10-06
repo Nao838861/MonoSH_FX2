@@ -28,6 +28,9 @@
 ; GSUはジャンプ/分岐の直後の命令も実行する（delay slot）。
 ; LOOP直後のPLOTや行末のINCを移動すると、画素数や座標が変わる。
 ; CACHEは命令キャッシュを使うための指定であり、画素データの圧縮ではない。
+; stableGsuCache: 共通準備+genericを504byteへ配置。clip補正はcache外から戻る。
+; generic/packed間や異なるpacked経路へ切替時にCBRを変更。同じ経路なら保持。
+; cpuClipCommands: packet末尾bit15=INSIDE。GSUは座標補正だけを省く。
 ;
 ; 最適化の評価: 内側のループは短くしてあるが、描画全体の最速は未証明。
 ; genericはclip/反転/端数を含む任意倍率を受け持つ。整数比だけpackedへ分岐。
@@ -36,6 +39,9 @@
 ; probes/v001の最速経路には同色区間もあるが、このゲームの選択器にはない。
 .segment "GSU"
 .export render_entry, render_stop
+.ifdef FX_STABLE_GSU_CACHE
+.export hot_cache, hot_cache_end, generic_render, clip_edges
+.endif
 .export packed_one, packed_half, packed_quarter, packed_double
 .export packed_mirror_one, packed_mirror_half, packed_mirror_quarter
 .align 16
@@ -93,6 +99,41 @@ clear_done:
   iwt r0,#$0020
   iwt r11,#$0006
   stw (r11)
+  .ifdef FX_STABLE_GSU_CACHE
+  ; 初回はdispatchへ。generic/packed切替時だけ同じ入口でCBRを設定し直す。
+  iwt r11,#.loword(dispatch)
+  .align 16,$01           ; GSUのNOPで埋める。0はSTOPなので使わない。
+hot_cache:
+  cache
+  jmp (r11)
+  nop
+generic_render:
+  ; 任意倍率の最近傍サンプリング。U/Vの整数部で原画画素を選ぶ。
+  ; 6行の画素loop。MERGE r14はWITH+MERGEへ展開され、実命令は7つ。
+  ; clip/透明の分岐、乗算、bitの取り出しをここへ入れない。
+  iwt r13,#.loword(pixel)
+row:
+  move r1,r5                 ; 出力Xを行頭へ戻す。
+  move r8,r10                ; 原画Uを行頭へ戻す。
+  move r12,r9                ; 出力幅だけLOOPする。
+pixel:
+  merge r14                  ; (R7 & $ff00) | (R8 >> 8)。行pitchの乗算を省く。
+  with r8                    ; 以下のADDの入力・出力をR8へ指定するprefix。
+  add r3                     ; 次のUへ進める。現在のROM読出し待ちと重ねる。
+  getc                       ; 原画byteを直接COLORへ。0/1/3に変換済み。
+  loop                       ; R12を減らし、非0ならR13へ戻る。
+  plot                       ; delay slot。最終回も描き、透明でも出力Xは+1。
+  with r7
+  add r4                     ; 次の原画行へ。fractionを残して倍率を滑らかにする。
+  dec r6
+  bne row
+  inc r2                     ; delay slot。次の出力行へ進める。
+  rpix                       ; PLOTの画素cacheをRAMへflush。読んだ色は使わない。
+  iwt r11,#.loword(dispatch)
+  jmp (r11)
+  nop
+.endif
+.export generic
 dispatch:
   iwt r11,#$0004
   ldw (r11)
@@ -170,7 +211,11 @@ dispatch_nonzero:
     ; DU/DVはROM表から取得し、clipで飛ばす原画位置と反転を設定する。
     .include "gsu_uv.inc"
   .endif
+  .ifndef FX_STABLE_GSU_CACHE
+.export gsu_selector_cache
+gsu_selector_cache:
   cache
+  .endif
   ; packedでもgenericと同じ原画画素を選ぶため、開始位置とDUを検査する。
   ; U0 & $03ff == 0: 小数部0かつ原画Xが4画素境界。正方向の候補。
   ;             == $03ff: 4画素群の右端+小数部$ff。左右反転の候補。
@@ -223,6 +268,15 @@ positive_steps:
   cmp r0
   beq packed_quarter_jump
   nop
+  .ifdef FX_STABLE_GSU_CACHE
+hot_cache_end:
+  .assert hot_cache_end-hot_cache <= 512, error, "GSU common path exceeds cache"
+generic:
+  iwt r11,#.loword(generic_render)
+  iwt r8,#.loword(hot_cache)
+  jmp (r8)
+  nop
+  .else
 generic:
   ; 任意倍率の最近傍サンプリング。U/Vの整数部で原画画素を選ぶ。
   ; 6行の画素loop。MERGE r14はWITH+MERGEへ展開され、実命令は7つ。
@@ -248,6 +302,7 @@ pixel:
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
+  .endif
 mirror_one_check:
   ; 等倍は4出力画素/群、半分は2出力画素/群。余りが出る幅はgenericへ。
   ; 1/4は1出力画素/群なので、幅の剰余検査が不要。
@@ -308,6 +363,7 @@ packed_quarter_jump:
   ; shift=0/1/2 → 原画の4画素群から4/2/1画素を出力する。
   ; mirrorは組立時定数。反転の分岐を画素loopへ持ち込まない。
   .local packed_row, packed_pixels
+  .export .ident(.concat(.string(name), "_cache"))
 name:
   from r10
   .repeat 10
@@ -327,6 +383,7 @@ name:
     .endrepeat
     move r9,r0
   .endif
+.ident(.concat(.string(name), "_cache")):
   cache
   iwt r13,#.loword(packed_pixels)
 packed_row:
@@ -395,6 +452,8 @@ packed_double:
   to r10
   add r8
   iwt r8,#$ff00
+.export packed_double_cache
+packed_double_cache:
   cache
   iwt r13,#.loword(double_pixels)
 double_row:
@@ -450,6 +509,10 @@ double_next_row:
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
+  .ifdef FX_STABLE_GSU_CACHE
+clip_edges:
+  .include "gsu_clip_edges.inc"
+  .endif
 finished:
   rpix                       ; 件数0でも含め、最後の画素cacheをflushする。
   .if .defined(FX_GSU_CLIP) .and .not .defined(FX_FULL_TRANSFER)

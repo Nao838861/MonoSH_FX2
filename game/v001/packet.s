@@ -135,6 +135,46 @@ fast_compile:
   sta _fx_packet+6,y
   lda _fx_draw+8,x
   sta _fx_packet+8,y
+  .ifdef FX_CPU_CLIP_COMMANDS
+  ; 転送packetの末尾wordだけを制御値にする。元FxDraw・ソートキーは保存。
+  ; $8000=INSIDE、0=GSUでclip。FB座標はleft=center-width/2、top=bottom-height-20。
+  stz $017c
+  lda _fx_draw+4,x
+  and #$ff
+  beq command_classified
+  sta $0160
+  lsr
+  sta $0170
+  lda _fx_draw,x
+  sec
+  sbc $0170
+  cmp #256
+  bcs command_classified
+  clc
+  adc $0160
+  cmp #257
+  bcs command_classified
+  lda _fx_draw+5,x
+  and #$ff
+  beq command_classified
+  sta $0162
+  lda _fx_draw+2,x
+  sec
+  sbc $0162
+  sec
+  sbc #20
+  cmp #192
+  bcs command_classified
+  clc
+  adc $0162
+  cmp #193
+  bcs command_classified
+  lda #$8000
+  sta $017c
+command_classified:
+  lda $017c
+  sta _fx_packet+8,y
+  .endif
   inc _fx_packet_count
   lda pp
   clc

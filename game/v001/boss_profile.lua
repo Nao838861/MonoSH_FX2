@@ -13,7 +13,9 @@ emu.addMemoryCallback(guard(function(a,v)
       logic=read('_monosh_runtime_frame_counter',2),player=read('_monosh_player_state'),
       x=read('_monosh_player_x',2),y=read('_monosh_player_bottom',2),
       enemyShots=read('_monosh_enemy_bullet_count'),shots=read('_monosh_player_bullet_count'),
-      previousDma=previous_dma,commands=read('_fx_packet_count',2)}
+      previousDma=previous_dma,commands=read('_fx_packet_count',2),
+      stageFrame=read('_monosh_stage_frame_counter',2),enemies=read('_monosh_enemy_active_count_value'),
+      groundObjects=read('_monosh_stage_object_count')}
   elseif v==2 then probe.joined=stamp()
   elseif v==3 then
     probe.dmaStart=stamp()

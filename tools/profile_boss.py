@@ -18,11 +18,12 @@ def main():
     parser.add_argument('--boss-fire', choices=('a', 'none'), default='a',
                         help='noneは通常入力だけでボス戦を長く観測する。')
     parser.add_argument('--output', default='boss_profile')
+    parser.add_argument('--allow-unreleased', action='store_true', help='未公開の比較ビルドもハッシュ付きで計測する。')
     args = parser.parse_args()
     rom = BUILD / 'MonoSHFX2_v001.sfc'
     data = rom.read_bytes()
     digest = hashlib.sha256(data).hexdigest()
-    assert data == (GAME.parents[1] / 'releases/MonoSHFX2_v001.sfc').read_bytes()
+    assert args.allow_unreleased or data == (GAME.parents[1] / 'releases/MonoSHFX2_v001.sfc').read_bytes()
     labels = {m[2]: int(m[1], 16) for m in re.finditer(
         r'al ([0-9A-Fa-f]+) \.([^\s]+)', (BUILD / 'game.lbl').read_text())}
     start, end = labels['render_started'], labels['render_finished']
@@ -62,6 +63,7 @@ def main():
                        'HELD_DIRECTION': lua('none'), 'HELD_FIRE': lua('none'),
                        'GSU_UV': str(config['gsuUv']).lower(),
                        'GSU_CLIP': str(config['gsuClip']).lower(),
+                       'CPU_CLIP_COMMANDS': str(config.get('cpuClipCommands',False)).lower(),
                        'DISPLAY_CODE': (GAME / 'display.lua').read_text(encoding='utf-8')}.items():
         script = script.replace(key, value)
     script = script.replace('report:close();emu.stop(0);return', 'boss_report:close();report:close();emu.stop(0);return')
@@ -70,6 +72,7 @@ def main():
     mesen = prepare_runtime(MESEN_EXE)
     settings = mesen.parent / 'settings.json'
     settings_data = json.loads(settings.read_text())
+    settings_data['Debug']['ScriptWindow']['ScriptTimeout'] = 10
     settings_data['Snes'].update({'Port1': {'Type': 'SnesController'}, 'DisableFrameSkipping': True})
     settings.write_text(json.dumps(settings_data))
     result = subprocess.run([str(mesen), '--testRunner', f'--timeout={args.timeout}',

@@ -308,6 +308,8 @@ def main():
     gsu_clip=('--gsu-clip' in sys.argv or config['gsuClip']) and '--cpu-clip' not in sys.argv
     if gsu_clip:
         gsu_uv=True
+    cpu_clip_commands=gsu_clip and config.get('cpuClipCommands',False) and '--no-cpu-clip-commands' not in sys.argv
+    stable_cache=gsu_clip and config.get('stableGsuCache',False) and '--no-stable-gsu-cache' not in sys.argv
     lock=json.loads((ROOT/'probes/v001/sources.lock.json').read_text(encoding='utf-8'))['ARM9/casfx']
     from bootstrap_probe import fetch
     fetch('ARM9/casfx',lock['commit'],'gsu/casfx.inc',lock['files']['gsu/casfx.inc']['sha256'])
@@ -341,6 +343,8 @@ def main():
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
              *(['-D','FX_GSU_UV=1'] if gsu_uv else []),
              *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
+             *(['-D','FX_CPU_CLIP_COMMANDS=1'] if cpu_clip_commands else []),
+             *(['-D','FX_STABLE_GSU_CACHE=1'] if stable_cache else []),
              '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
     run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
@@ -352,7 +356,8 @@ def main():
     checksum=sum(data)&65535
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
-    (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip})+'\n')
+    (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
+        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()

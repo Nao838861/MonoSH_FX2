@@ -5,6 +5,18 @@
 ; R0=bank/metaをscratchへ保存。描画しない場合もpacketは既に進めてある。
   iwt r8,#$000a
   stw (r8)
+  .ifdef FX_CPU_CLIP_COMMANDS
+  ibt r8,#0
+  from r13
+  cmp r8
+  bmi clip_done            ; INSIDEなら座標補正・skip計算を省略。
+  nop
+  .endif
+  .ifdef FX_STABLE_GSU_CACHE
+  iwt r11,#.loword(clip_edges)
+  jmp (r11)                ; cache外のclipへ。同じCBRを維持する。
+  nop
+  .else
   ibt r8,#0
   from r1
   cmp r8
@@ -73,6 +85,7 @@ clip_empty:
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
+  .endif
 clip_done:
   ; 今回のdirty範囲を32tile列の[minY,maxY]（8行単位、両端を含む）へ記録。
   ; gsu_clear.incが次回clearに、gsu_dma.incが前回との和集合に使う。
@@ -137,5 +150,7 @@ clip_bounds_max_ready:
   iwt r8,#$0018
   to r10
   ldw (r8)
+  .ifndef FX_STABLE_GSU_CACHE
   iwt r8,#$000a
   ldw (r8)
+  .endif

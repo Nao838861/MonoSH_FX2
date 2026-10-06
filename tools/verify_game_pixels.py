@@ -18,15 +18,19 @@ def packet_reference(draw, meta):
     for center,bottom,w,h,asset,flags,z,priority in objects:
         if is_obj((center,bottom,w,h,asset,flags,z,priority)): continue
         if flags&128 and meta['logic']&1: continue
-        aw,ah=Image.open(GAME/'assets'/f'{asset:02d}.png').size
-        du=aw*256//w;dv=ah*256//h
         left=center-w//2;top=bottom-h-20
         sx=max(0,-left);sy=max(0,-top)
         width=min(256,left+w)-max(0,left);height=min(192,top+h)-max(0,top)
         if meta.get('gsuClip'):
-            output.append((center,bottom,w,h,asset,flags,z,priority))
+            if meta.get('cpuClipCommands'):
+                inside=w>0 and h>0 and left>=0 and top>=0 and left+w<=256 and top+h<=192
+                output.append((center,bottom,w,h,asset,flags,0,128 if inside else 0))
+            else:
+                output.append((center,bottom,w,h,asset,flags,z,priority))
             continue
         if width<=0 or height<=0: continue
+        aw,ah=Image.open(GAME/'assets'/f'{asset:02d}.png').size
+        du=aw*256//w;dv=ah*256//h
         if meta.get('gsuUv'):
             attr=asset|((flags&48)<<2)
             output.append((max(0,left),max(0,top),w,h,max(0,left),height,

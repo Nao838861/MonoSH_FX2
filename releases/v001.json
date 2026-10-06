@@ -1,10 +1,12 @@
 {
-  "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+  "romSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
     "gsuUv": true,
-    "gsuClip": true
+    "gsuClip": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true
   },
   "display": [
     256,
@@ -54,16 +56,13 @@
   "hardwareObjects": "自機17poseと自弾16サイズ・反射弾。最大16枠、毎frame OAM 68bytes",
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
   "scenarioFrames": {
-    "play": 360,
+    "packed": 360,
     "controls": 720,
     "pause": 360,
-    "objects": 360,
     "display": 720,
-    "profile": 2400,
-    "heldUpLeftYLong": 18000,
-    "heldDirectionsY": 7200,
-    "heldDirectionsA": 7200,
-    "fullTransferObjects": 360
+    "held": 1800,
+    "boss": 2600,
+    "naturalProfile": 18000
   },
   "verificationKind": "JOY1自動取得のbusy確認を前後に追加。誤Startによるポーズを修正。左上＋Yを約5分、8方向×Y/A、通常操作・ポーズ・カラーOBJ・画面・profile・全DMAを検証。",
   "comprehensiveVerificationReferenceRomSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
@@ -248,5 +247,10 @@
     "holdTurboUsed": false,
     "afterLongFields": 18000,
     "afterLongLogicUpdates": 14430
-  }
+  },
+  "previousRomSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+  "optimizationMeasurement": "game/v001/results/command_cache_20261007",
+  "replayScenes": 122,
+  "replayImagesVerified": 2890,
+  "sampledScenePixelMatch": true
 }

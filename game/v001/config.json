@@ -1,5 +1,7 @@
 {
   "fullFramebufferTransfer": false,
   "gsuUv": true,
-  "gsuClip": true
+  "gsuClip": true,
+  "cpuClipCommands": true,
+  "stableGsuCache": true
 }

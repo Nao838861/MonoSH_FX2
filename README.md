@@ -1,5 +1,7 @@
 # MonoSH Super FX2 開発プロジェクト
 
+最新ROMは [CPUコマンド分類とGSUキャッシュ保持](game/v001/RESULTS_20261007_COMMAND_CACHE.md) を実装。通常入力約5分で道中59.84fps・ボス平均48.83fps、道中の提示遅延は0.429%。全場面60fpsは未達。下記の59.35／57.05fpsは以前の版の履歴。
+
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
 NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。表示256×180、内部FBは256×192。通常進行57.05fps、序盤59.35fps（配色前版の実測）。全場面60fpsには未達。** 最新ROMは押しっぱなし射撃で誤ポーズになる入力取得を修正し、約5分継続・16通りの方向と射撃、Startでのポーズを検証した。詳細は [検証結果](game/v001/RESULTS.md)。

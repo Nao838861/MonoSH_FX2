@@ -6,6 +6,7 @@ local held_direction = HELD_DIRECTION
 local held_fire = HELD_FIRE
 local gsu_uv = GSU_UV
 local gsu_clip = GSU_CLIP
+local cpu_clip_commands = CPU_CLIP_COMMANDS
 local report = assert(io.open(output..'/trace.jsonl','w'))
 local field = 0
 local rendered = 0
@@ -276,7 +277,7 @@ emu.addMemoryCallback(guard(function(a,v)
     dump(string.format('draw%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels._fx_draw,640)
     dump(string.format('obj%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels.fx_obj_present,68)
     local f=assert(io.open(output..string.format('/meta%05d.json',rendered+1),'w'))
-    f:write(encoded({count=read('_fx_draw_count'),logic=read('_monosh_runtime_frame_counter',2),gsuUv=gsu_uv,gsuClip=gsu_clip}));f:close()
+    f:write(encoded({count=read('_fx_draw_count'),logic=read('_monosh_runtime_frame_counter',2),gsuUv=gsu_uv,gsuClip=gsu_clip,cpuClipCommands=cpu_clip_commands}));f:close()
   end
 end),emu.callbackType.write,0x7E1DF0,0x7E1DF0)
 emu.addMemoryCallback(guard(function(a,v)

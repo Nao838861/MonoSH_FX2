@@ -1,0 +1,324 @@
+{
+  "romSha256": "a9e07ed26d26d7e27ec50c8204fb206664445c5c46af8f3723549737d935f4f6",
+  "fields": 18000,
+  "nativeFps": 60.098811862348406,
+  "images": 17139,
+  "groups": {
+    "road": {
+      "images": 14793,
+      "intervalsMeasured": 14789,
+      "presentationIntervals": {
+        "1": 14668,
+        "2": 121
+      },
+      "slowImages": 121,
+      "slowImagePercent": 0.8181756711069038,
+      "repeatedFields": 121,
+      "repeatedFieldPercent": 0.8115358819584172,
+      "averageFps": 59.61108843945477,
+      "observedSeconds": 248.0914270676462,
+      "cpuMaxMs": 14.878705265733936,
+      "gsuMeanMs": 6.581348349977653,
+      "gsuP95Ms": 12.603928469127737,
+      "gsuMaxMs": 17.993439762740817,
+      "worstGsuScene": {
+        "enemyShots": 0,
+        "bytes": 6768,
+        "hp": 16,
+        "logic": 4879,
+        "shots": 3,
+        "boss": 0,
+        "image": 4878,
+        "start": {
+          "line": 3,
+          "field": 4984,
+          "clock": 1781116544,
+          "ppuFrame": 4984
+        },
+        "spans": 15,
+        "previousDma": {
+          "bytes": 5936,
+          "finish": {
+            "line": 253,
+            "field": 4984,
+            "clock": 1781100752,
+            "ppuFrame": 4984
+          },
+          "start": {
+            "line": 206,
+            "field": 4983,
+            "clock": 1781035822,
+            "ppuFrame": 4983
+          }
+        },
+        "dmaEnd": {
+          "line": 254,
+          "field": 4986,
+          "clock": 1781816136,
+          "ppuFrame": 4986
+        },
+        "commands": 9,
+        "deadline": 220,
+        "joined": {
+          "line": 24,
+          "field": 4985,
+          "clock": 1781503162,
+          "ppuFrame": 4985
+        },
+        "dmaStart": {
+          "line": 206,
+          "field": 4985,
+          "clock": 1781750544,
+          "ppuFrame": 4985
+        },
+        "x": 128,
+        "cpuEnd": {
+          "line": 155,
+          "field": 4984,
+          "clock": 1781324558,
+          "ppuFrame": 4984
+        },
+        "gsuEnd": {
+          "line": 24,
+          "field": 4985,
+          "clock": 1781502994,
+          "ppuFrame": 4985
+        },
+        "player": 0,
+        "ready": {
+          "line": 30,
+          "field": 4985,
+          "clock": 1781511212,
+          "ppuFrame": 4985
+        },
+        "y": 201,
+        "dmaField": 4985,
+        "cpuMs": 9.685308264476047,
+        "gsuMs": 17.993439762740817,
+        "group": "road"
+      },
+      "worst60FieldWindow": {
+        "images": 44,
+        "startPhysicalField": 4941,
+        "fps": 44.07246203238883
+      },
+      "alive": {
+        "images": 11136,
+        "slowImages": 54
+      }
+    },
+    "boss": {
+      "images": 1806,
+      "intervalsMeasured": 1803,
+      "presentationIntervals": {
+        "1": 1086,
+        "2": 717
+      },
+      "slowImages": 717,
+      "slowImagePercent": 39.767054908485854,
+      "repeatedFields": 717,
+      "repeatedFieldPercent": 28.452380952380953,
+      "averageFps": 42.999268963418324,
+      "observedSeconds": 41.93094541988386,
+      "cpuMaxMs": 13.573604692439524,
+      "gsuMeanMs": 12.286721270119118,
+      "gsuP95Ms": 19.12943133559979,
+      "gsuMaxMs": 19.12943133559979,
+      "worstGsuScene": {
+        "enemyShots": 4,
+        "bytes": 3792,
+        "hp": 1,
+        "logic": 10678,
+        "shots": 2,
+        "boss": 1,
+        "image": 10677,
+        "start": {
+          "line": 246,
+          "field": 11082,
+          "clock": 3960308280,
+          "ppuFrame": 11082
+        },
+        "spans": 7,
+        "previousDma": {
+          "bytes": 3824,
+          "finish": {
+            "line": 232,
+            "field": 11082,
+            "clock": 3960290190,
+            "ppuFrame": 11082
+          },
+          "start": {
+            "line": 206,
+            "field": 11081,
+            "clock": 3960253678,
+            "ppuFrame": 11081
+          }
+        },
+        "dmaEnd": {
+          "line": 232,
+          "field": 11084,
+          "clock": 3961004584,
+          "ppuFrame": 11084
+        },
+        "commands": 14,
+        "deadline": 220,
+        "joined": {
+          "line": 23,
+          "field": 11083,
+          "clock": 3960719246,
+          "ppuFrame": 11083
+        },
+        "dmaStart": {
+          "line": 206,
+          "field": 11083,
+          "clock": 3960968376,
+          "ppuFrame": 11083
+        },
+        "x": 195,
+        "cpuEnd": {
+          "line": 116,
+          "field": 11082,
+          "clock": 3960489550,
+          "ppuFrame": 11082
+        },
+        "gsuEnd": {
+          "line": 23,
+          "field": 11083,
+          "clock": 3960719128,
+          "ppuFrame": 11083
+        },
+        "player": 2,
+        "ready": {
+          "line": 26,
+          "field": 11083,
+          "clock": 3960723474,
+          "ppuFrame": 11083
+        },
+        "y": 201,
+        "dmaField": 11083,
+        "cpuMs": 8.440084941886473,
+        "gsuMs": 19.12943133559979,
+        "group": "boss"
+      },
+      "worst60FieldWindow": {
+        "images": 30,
+        "startPhysicalField": 10927,
+        "fps": 30.049405931174203
+      },
+      "alive": {
+        "images": 938,
+        "slowImages": 111
+      }
+    },
+    "transition": {
+      "images": 540,
+      "intervalsMeasured": 537,
+      "presentationIntervals": {
+        "1": 537
+      },
+      "slowImages": 0,
+      "slowImagePercent": 0.0,
+      "repeatedFields": 0,
+      "repeatedFieldPercent": 0.0,
+      "averageFps": 60.098811862348406,
+      "observedSeconds": 8.935284797808585,
+      "cpuMaxMs": 8.913701889141228,
+      "gsuMeanMs": 0.8545619415379783,
+      "gsuP95Ms": 0.8516910341313365,
+      "gsuMaxMs": 1.569659312411744,
+      "worstGsuScene": {
+        "enemyShots": 0,
+        "bytes": 2448,
+        "hp": 0,
+        "logic": 5514,
+        "shots": 3,
+        "boss": 3,
+        "image": 5513,
+        "start": {
+          "line": 237,
+          "field": 5726,
+          "clock": 2046244460,
+          "ppuFrame": 5726
+        },
+        "spans": 18,
+        "previousDma": {
+          "bytes": 2448,
+          "finish": {
+            "line": 229,
+            "field": 5726,
+            "clock": 2046233324,
+            "ppuFrame": 5726
+          },
+          "start": {
+            "line": 206,
+            "field": 5725,
+            "clock": 2046201410,
+            "ppuFrame": 5725
+          }
+        },
+        "dmaEnd": {
+          "line": 229,
+          "field": 5727,
+          "clock": 2046590662,
+          "ppuFrame": 5727
+        },
+        "commands": 1,
+        "deadline": 220,
+        "joined": {
+          "line": 48,
+          "field": 5726,
+          "clock": 2046344238,
+          "ppuFrame": 5726
+        },
+        "dmaStart": {
+          "line": 206,
+          "field": 5726,
+          "clock": 2046558752,
+          "ppuFrame": 5726
+        },
+        "x": 170,
+        "cpuEnd": {
+          "line": 48,
+          "field": 5726,
+          "clock": 2046344090,
+          "ppuFrame": 5726
+        },
+        "gsuEnd": {
+          "line": 0,
+          "field": 5726,
+          "clock": 2046278172,
+          "ppuFrame": 5726
+        },
+        "player": 0,
+        "ready": {
+          "line": 55,
+          "field": 5726,
+          "clock": 2046353726,
+          "ppuFrame": 5726
+        },
+        "y": 201,
+        "dmaField": 5726,
+        "cpuMs": 4.638857299940141,
+        "gsuMs": 1.569659312411744,
+        "group": "transition"
+      },
+      "worst60FieldWindow": {
+        "images": 60,
+        "startPhysicalField": 5726,
+        "fps": 60.098811862348406
+      },
+      "alive": {
+        "images": 537,
+        "slowImages": 0
+      }
+    }
+  },
+  "definitions": {
+    "road": "GSU開始時boss=0。起動・死亡・復帰も含む。",
+    "boss": "GSU開始時boss=1または2。撃破後boss=3はtransitionへ分離。",
+    "slowImages": "同じ区分の連続画像間でDMA開始の間隔が2field以上になった画像数。",
+    "averageFps": "区分が切り替わる境界を除外し、同区分内の提示間隔を時間加重して算出。",
+    "worstWindow": "区分をまたがない60field（約0.998秒）窓の新画像数。",
+    "limitation": "今回のMesenと入力で観測した頻度。任意のプレイや実機の保証ではない。"
+  }
+}

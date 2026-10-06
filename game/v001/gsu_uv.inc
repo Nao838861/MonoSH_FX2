@@ -5,9 +5,13 @@
 ; DU/DVは原画寸法*256/投影寸法。ROM $5eの表を読むので実行時の除算なし。
 ; table: DU=$0000+asset*512+width*2、DV=$5800+asset*512+height*2。
 ; clip後の幅に合わせて倍率を変えると絵が歪むので、元寸法で表を引く。
+  .ifndef FX_STABLE_GSU_CACHE
+.export gsu_uv_cache
+gsu_uv_cache:
   cache
   iwt r8,#$000a
   stw (r8)                 ; r0はbank/meta。ROMBは下7bitだけを読む。
+  .endif                   ; 安定cache構成ではclip入口が既にbank/metaを保存済み。
   iwt r8,#$0010
   from r6
   stw (r8)
