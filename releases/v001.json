@@ -1,5 +1,5 @@
 {
-  "romSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
+  "romSha256": "e301b0bca97df4bd4039307fdb39cb5b12c6bbb7ccd10f7828370fa8718f77aa",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -154,23 +154,23 @@
         0
       ],
       [
-        2,
-        4,
-        14
+        1,
+        0,
+        3
       ],
       [
-        31,
-        20,
-        2
+        22,
+        13,
+        13
       ],
       [
         31,
         3,
-        3
+        4
       ],
       [
-        8,
-        20,
+        12,
+        21,
         31
       ],
       [
@@ -179,9 +179,9 @@
         31
       ],
       [
-        2,
-        10,
-        25
+        0,
+        1,
+        18
       ],
       [
         31,
@@ -194,39 +194,39 @@
         2
       ],
       [
-        0,
-        0,
-        0
-      ],
-      [
-        0,
+        17,
         0,
         0
       ],
       [
-        0,
-        0,
-        0
-      ],
-      [
-        0,
+        27,
         0,
         0
       ],
       [
-        0,
-        0,
-        0
+        30,
+        15,
+        13
       ],
       [
-        0,
-        0,
-        0
+        31,
+        26,
+        23
       ],
       [
-        0,
-        0,
-        0
+        31,
+        31,
+        18
+      ],
+      [
+        10,
+        4,
+        5
+      ],
+      [
+        20,
+        24,
+        31
       ]
     ],
     "source": "game/v001/assets/obj_color/source.json",
@@ -252,5 +252,14 @@
   "optimizationMeasurement": "game/v001/results/command_cache_20261007",
   "replayScenes": 122,
   "replayImagesVerified": 2890,
-  "sampledScenePixelMatch": true
+  "sampledScenePixelMatch": true,
+  "playerRecordingBaseRomSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
+  "playerImageSource": "game/v001/assets/player_recording/source.json",
+  "playerImageValidation": "game/v001/results/player_recording_20261007/integrated/summary.json",
+  "playerImageScenarioFrames": {
+    "objects": 360,
+    "display": 720,
+    "play": 360,
+    "held": 900
+  }
 }

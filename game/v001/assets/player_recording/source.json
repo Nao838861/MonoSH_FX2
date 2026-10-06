@@ -1,0 +1,174 @@
+{
+  "videoName": "スペースハリアー録画１.mp4",
+  "videoSha256": "ad7892c75c4433e6563e83251c12529a56ef1305308ddeed342cdca8bdd234a4",
+  "videoSize": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "screenRect": [
+    480,
+    204,
+    960,
+    672
+  ],
+  "nativeScreenSize": [
+    320,
+    224
+  ],
+  "captures": [
+    {
+      "pose": 0,
+      "asset": 9,
+      "frame": 1741,
+      "seconds": 58.0,
+      "crop": [
+        144,
+        77,
+        184,
+        143
+      ],
+      "mirror": false,
+      "nativeSize": [
+        36,
+        61
+      ]
+    },
+    {
+      "pose": 1,
+      "asset": 28,
+      "frame": 2086,
+      "seconds": 69.5,
+      "crop": [
+        248,
+        90,
+        298,
+        157
+      ],
+      "mirror": true,
+      "nativeSize": [
+        30,
+        58
+      ]
+    },
+    {
+      "pose": 2,
+      "asset": 29,
+      "frame": 1816,
+      "seconds": 60.5,
+      "crop": [
+        11,
+        81,
+        61,
+        150
+      ],
+      "mirror": false,
+      "nativeSize": [
+        26,
+        60
+      ]
+    },
+    {
+      "pose": 3,
+      "asset": 30,
+      "frame": 1819,
+      "seconds": 60.6,
+      "crop": [
+        12,
+        57,
+        62,
+        125
+      ],
+      "mirror": false,
+      "nativeSize": [
+        26,
+        62
+      ]
+    },
+    {
+      "pose": 10,
+      "asset": 15,
+      "frame": 31,
+      "seconds": 1.0,
+      "crop": [
+        140,
+        162,
+        185,
+        221
+      ],
+      "mirror": false,
+      "nativeSize": [
+        30,
+        59
+      ]
+    },
+    {
+      "pose": 11,
+      "asset": 16,
+      "frame": 32,
+      "seconds": 1.0333333333333334,
+      "crop": [
+        140,
+        162,
+        185,
+        221
+      ],
+      "mirror": false,
+      "nativeSize": [
+        28,
+        59
+      ]
+    },
+    {
+      "pose": 12,
+      "asset": 17,
+      "frame": 34,
+      "seconds": 1.1,
+      "crop": [
+        140,
+        162,
+        185,
+        221
+      ],
+      "mirror": false,
+      "nativeSize": [
+        32,
+        58
+      ]
+    },
+    {
+      "pose": 13,
+      "asset": 18,
+      "frame": 36,
+      "seconds": 1.1666666666666667,
+      "crop": [
+        140,
+        162,
+        185,
+        221
+      ],
+      "mirror": false,
+      "nativeSize": [
+        32,
+        58
+      ]
+    }
+  ],
+  "scale": 0.75,
+  "destinationSize": [
+    32,
+    48
+  ],
+  "unrecordedPoses": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    14,
+    15,
+    16
+  ],
+  "note": "録画にない死亡・つまずきは既存の固定原画を維持。動画自体は同梱しない。"
+}

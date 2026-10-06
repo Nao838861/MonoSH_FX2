@@ -1,0 +1,328 @@
+{
+  "romSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a",
+  "scenarios": {
+    "objects": {
+      "reflected": 0,
+      "bossSeen": false,
+      "em1States": {},
+      "gsuMaxMs": 5.4406351048681,
+      "objMaxCount": 12,
+      "interval3plus": 0,
+      "logic": 338,
+      "loopSeen": false,
+      "minBytes": 3040,
+      "maxCommands": 1,
+      "enemyPaths": {},
+      "doneSeen": false,
+      "cpuMaxMs": 8.1413505402362,
+      "deathImage": true,
+      "enemyShotsMax": 0,
+      "dmaMaxMs": 4.8346922272065,
+      "rendered": 336,
+      "fields": 360,
+      "maxDmaStartLine": 206,
+      "deaths": 1,
+      "stage": 529,
+      "dyingSeen": false,
+      "maxBytes": 12288,
+      "maxDmaSpanCount": 10,
+      "packed_double": 337,
+      "checked": 336,
+      "interval2": 0,
+      "enemyTypes": {},
+      "interval1": 335,
+      "respawns": 0,
+      "stumbles": 0,
+      "lateDmaStarts": 0,
+      "stumbleMax": 0,
+      "romSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a"
+    },
+    "display": {
+      "enemyTypes": {
+        "5": true
+      },
+      "fields": 720,
+      "packed_double": 1394,
+      "interval2": 0,
+      "respawns": 1,
+      "stumbles": 39,
+      "objMaxCount": 6,
+      "cpuMaxMs": 8.5223113996973,
+      "enemyPaths": {
+        "0": true
+      },
+      "reflected": 0,
+      "logic": 698,
+      "em1States": {},
+      "interval1": 695,
+      "enemyShotsMax": 0,
+      "gsuMaxMs": 8.5158860026543,
+      "maxCommands": 5,
+      "deathImage": true,
+      "lateDmaStarts": 0,
+      "dyingSeen": false,
+      "maxBytes": 12288,
+      "stage": 761,
+      "checked": 696,
+      "enemyImage": true,
+      "loopSeen": false,
+      "dmaMaxMs": 4.8346922272065,
+      "bossSeen": false,
+      "maxDmaSpanCount": 19,
+      "doneSeen": false,
+      "maxDmaStartLine": 206,
+      "minBytes": 5536,
+      "stumbleMax": 39,
+      "interval3plus": 0,
+      "deaths": 1,
+      "rendered": 696,
+      "romSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a"
+    },
+    "play": {
+      "maxDmaStartLine": 206,
+      "logic": 339,
+      "bossSeen": false,
+      "cpuMaxMs": 9.6175156695878,
+      "em1States": {},
+      "packed_half": 30,
+      "packed_one": 338,
+      "loopSeen": false,
+      "maxDmaSpanCount": 24,
+      "packed_quarter": 84,
+      "stumbles": 0,
+      "rendered": 338,
+      "stage": 595,
+      "interval2": 3,
+      "packed_double": 125,
+      "respawns": 0,
+      "maxBytes": 12288,
+      "interval1": 330,
+      "maxCommands": 9,
+      "interval3plus": 4,
+      "gsuMaxMs": 9.0980828477658,
+      "enemyPaths": {
+        "0": true
+      },
+      "checked": 338,
+      "doneSeen": false,
+      "stumbleMax": 0,
+      "lateDmaStarts": 0,
+      "dmaMaxMs": 4.8346922272065,
+      "reflected": 0,
+      "minBytes": 416,
+      "enemyTypes": {
+        "5": true
+      },
+      "enemyShotsMax": 0,
+      "dyingSeen": false,
+      "deaths": 0,
+      "fields": 360,
+      "objMaxCount": 9,
+      "romSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a"
+    },
+    "held": {
+      "interval2": 9,
+      "enemyTypes": {
+        "5": true
+      },
+      "em1States": {},
+      "maxPresentationGap": 2,
+      "respawns": 1,
+      "reflected": 0,
+      "objMaxCount": 7,
+      "enemyPaths": {
+        "0": true
+      },
+      "maxDmaStartLine": 206,
+      "maxLogicGap": 1,
+      "gsuMaxMs": 11.415881868051,
+      "interval1": 858,
+      "rendered": 877,
+      "packed_one": 878,
+      "bossSeen": false,
+      "stumbleMax": 0,
+      "fields": 900,
+      "doneSeen": false,
+      "heldSamplesChecked": 841,
+      "deaths": 2,
+      "packed_half": 59,
+      "cpuMaxMs": 11.422865995272,
+      "packed_double": 123,
+      "dyingSeen": false,
+      "logic": 879,
+      "stage": 839,
+      "packed_quarter": 333,
+      "enemyImage": true,
+      "maxCommands": 12,
+      "maxBytes": 12288,
+      "dmaMaxMs": 4.8346922272065,
+      "minBytes": 160,
+      "loopSeen": false,
+      "stumbles": 0,
+      "interval3plus": 9,
+      "maxDmaSpanCount": 32,
+      "deathImage": true,
+      "lateDmaStarts": 0,
+      "enemyShotsMax": 0,
+      "checked": 39,
+      "romSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a",
+      "heldDirection": "up-left",
+      "heldFire": "y"
+    }
+  },
+  "fullTransfer": {
+    "rendered": 336,
+    "cpuMaxMs": 8.2868997515141,
+    "maxCommands": 1,
+    "fields": 360,
+    "minBytes": 12288,
+    "loopSeen": false,
+    "maxBytes": 12288,
+    "maxDmaStartLine": 206,
+    "enemyTypes": {},
+    "deaths": 1,
+    "objMaxCount": 12,
+    "stumbleMax": 0,
+    "em1States": {},
+    "maxDmaSpanCount": 1,
+    "reflected": 0,
+    "doneSeen": false,
+    "gsuMaxMs": 5.1951663134871,
+    "dyingSeen": false,
+    "bossSeen": false,
+    "packed_double": 337,
+    "checked": 336,
+    "deathImage": true,
+    "interval2": 0,
+    "interval3plus": 0,
+    "stumbles": 0,
+    "stage": 529,
+    "logic": 338,
+    "interval1": 335,
+    "dmaMaxMs": 4.8347853489028,
+    "respawns": 0,
+    "enemyPaths": {},
+    "enemyShotsMax": 0,
+    "lateDmaStarts": 0,
+    "romSha256": "a5e949d17dbe2b2d9ca69e57686601258022329df2e9044893598dc5980f03e5",
+    "dmaBytesPerImage": 12288,
+    "objBytesPerImage": 68,
+    "latestCompletionScanline": 20,
+    "objPrefetchScanline": 22,
+    "firstVisibleScanline": 23,
+    "framebufferDmaMaxMs": 4.83479,
+    "objDmaMaxMs": 0.071517,
+    "objDmaMeanMs": 0.07089763798219585,
+    "ppuChecks": {
+      "screens": 66,
+      "checkedObjectPixels": 15313,
+      "secondChrTableSeen": true,
+      "flips": [
+        0,
+        64,
+        128,
+        192
+      ],
+      "opaquePaletteIndices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "objPaletteRgb5": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          22,
+          13,
+          13
+        ],
+        [
+          31,
+          3,
+          4
+        ],
+        [
+          12,
+          21,
+          31
+        ],
+        [
+          31,
+          31,
+          31
+        ],
+        [
+          0,
+          1,
+          18
+        ],
+        [
+          31,
+          12,
+          0
+        ],
+        [
+          31,
+          28,
+          2
+        ],
+        [
+          17,
+          0,
+          0
+        ],
+        [
+          27,
+          0,
+          0
+        ],
+        [
+          30,
+          15,
+          13
+        ],
+        [
+          31,
+          26,
+          23
+        ],
+        [
+          31,
+          31,
+          18
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          20,
+          24,
+          31
+        ]
+      ]
+    },
+    "defaultRomSha256": "071f69723001628c931939ce3e6d841825bc859c10d4b154276a3536fc1d719a"
+  }
+}
