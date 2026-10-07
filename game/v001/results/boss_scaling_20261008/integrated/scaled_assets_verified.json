@@ -1,0 +1,18 @@
+{
+  "romSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
+  "sourcePixels": 249538,
+  "scaledAssetWidths": {
+    "13": 96,
+    "14": 96,
+    "31": 96
+  },
+  "scaledWidths": 288,
+  "scaledPixels": 1578384,
+  "packedBytes": 406800,
+  "romBytes": 2097152,
+  "transparentMarginRows": 16268,
+  "transparentMarginBytes": 32536,
+  "sourceProtected": true,
+  "allocationsDoNotOverlap": true,
+  "romMatchesAssets": true
+}

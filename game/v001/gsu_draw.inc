@@ -4,53 +4,15 @@
 ; 旧構成の末尾Z/priorityは読み飛ばす。元FxDrawの並びは変更しない。
 ; width/heightは投影後の元寸法。R3/R4に残し、clip後もUVの倍率を維持する。
 ; 出力X=centerX-floor(width/2)、Y=bottomY-height-20（FBの座標原点）。
-  to r1
-  ldw (r11)
-  inc r11
-  inc r11
-  to r2
-  ldw (r11)
-  inc r11
-  inc r11
-  ldw (r11)
-  ; little endianのwidth/heightを分離し、clipで減らす幅R9・高さR6にも複製。
-  move r4,r0
-  iwt r8,#$00ff
-  and r8
-  move r3,r0
-  move r9,r0
-  from r4
-  swap
-  and r8
-  move r4,r0
-  move r6,r0
-  inc r11
-  inc r11
-  from r3
-  lsr
-  move r8,r0
-  from r1
-  sub r8
-  move r1,r0
-  move r5,r0
-  from r2
-  sub r4
-  ibt r8,#20
-  sub r8
-  move r2,r0
-  ldw (r11)
-  move r8,r0                ; low=asset, high=flags
-  swap
-  ibt r12,#$30
-  and r12
-  add r0
-  add r0
-  move r13,r0              ; flip X/Yはmetaのbit6/7
-  ibt r12,#63
-  from r8
-  and r12
-  or r13
-  move r13,r0              ; assetを含むmeta
+  .ifdef FX_ROW_MARGINS
+  ; 1体につき1回の展開だけcache外へ。行・画素loopの居場所を確保する。
+  iwt r10,#.loword(draw_prefix)
+  jmp (r10)
+  nop
+draw_prefix_done:
+  .else
+  .include "gsu_draw_prefix.inc"
+  .endif
   ; ROM bank=$44+(asset/2)。metaのbit0でbank内の前半/後半を選ぶ。
   ; bankを下位byte、asset+flipを上位byteにまとめてUV準備へ渡す。
   from r8

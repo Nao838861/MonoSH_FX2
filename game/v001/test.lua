@@ -281,7 +281,7 @@ emu.addMemoryCallback(guard(function(a,v)
   if rendered==0 then
     for i=0,15 do emu.write(0x1ff0+i,0xa5,emu.memType.gsuWorkRam);emu.write(0x5000+i,0x5a,emu.memType.gsuWorkRam) end
   end
-  if rendered==0 or (rendered+1)%300==0 or (scenario=='packed' and rendered<8) or (scenario=='objects' and (rendered+1)%4==0) then
+  if rendered==0 or (rendered+1)%300==0 or (scenario=='packed' and rendered<8) or (scenario=='objects' and (rendered+1)%((labels.dma_probe_delay and rendered>300) and 32 or 4)==0) then
     dump(string.format('draw%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels._fx_draw,640)
     dump(string.format('obj%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels.fx_obj_present,136)
     local f=assert(io.open(output..string.format('/meta%05d.json',rendered+1),'w'))
@@ -301,9 +301,14 @@ emu.addMemoryCallback(guard(function(a,v)
   dma_start=s.masterClock
   local line=s['ppu.scanline'];local count=read('fx_dma_count',2)
   local deadline=emu.read(0x7e1d10,emu.memType.snesMemory)
-  assert(line>=203 and line<=deadline+3,'DMA start outside admitted blank window')
-  if deadline==220 then
-    assert(read('fx_dma_bytes',2)+count*128<=DMA_ADMISSION_BYTES,'large DMA admitted late')
+  -- 画像差し替え後はHDMAポインタ更新と可変長OAMに最大4行を要する。
+  -- 完了側でも21行以内を検査し、22行OBJ準備の余裕を独立に守る。
+  assert(line>=203 and line<=deadline+4,'DMA start outside admitted blank window')
+  local weight=read('fx_dma_bytes',2)+count*(labels.select_dma_deadline and 64 or 128)+(labels.select_dma_deadline and 768 or 0)
+  if deadline>203 then
+    local limit=deadline==220 and DMA_ADMISSION_BYTES or deadline==226 and 8960 or deadline==233 and 7680
+    if labels.dma_deadline_fine then limit=math.min(DMA_ADMISSION_BYTES,(279-deadline)*170-1) end
+    assert(limit and weight<=math.min(limit,DMA_ADMISSION_BYTES),'large DMA admitted late')
   end
   stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
   stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)
@@ -325,6 +330,7 @@ emu.addMemoryCallback(guard(function(a,v)
   rendered=rendered+1
   local s=emu.getState()
   assert(s['ppu.scanline']<23 or s['ppu.scanline']>=203,'DMA overlaps visible area')
+  assert(s['ppu.scanline']<=21 or s['ppu.scanline']>=203,'DMA missed OBJ preparation margin')
   local duration=elapsed(s.masterClock,dma_start)
   local bytes=read('fx_dma_bytes',2)
   stats.objMaxCount=math.max(stats.objMaxCount or 0,read('fx_obj_present_count',2))
@@ -389,7 +395,7 @@ emu.addMemoryCallback(guard(function(a,v)
     for i=0,1311 do b[#b+1]=string.char(emu.read(i,emu.memType.gsuWorkRam)) end
     f:write(table.concat(b));f:close()
   end
-  if rendered==1 or rendered%300==0 or (scenario=='packed' and rendered<=8) or (scenario=='objects' and rendered%4==0) then
+  if rendered==1 or rendered%300==0 or (scenario=='packed' and rendered<=8) or (scenario=='objects' and rendered%((labels.dma_probe_delay and rendered>300) and 32 or 4)==0) then
     dump(string.format('frame%05d.bin',rendered),emu.memType.gsuWorkRam,0x2000,12288)
     dump(string.format('packet%05d.bin',rendered),emu.memType.gsuWorkRam,0,1312)
     dump(string.format('oam%05d.bin',rendered),emu.memType.snesSpriteRam,0,544)

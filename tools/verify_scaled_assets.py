@@ -27,10 +27,34 @@ def verify():
                 assert banks[bank][base+y*256+128+x//4]==sum(v<<(2*i) for i,v in enumerate(values))
                 assert banks[bank][base+y*256+160+x//4]==sum(v<<(2*(3-i)) for i,v in enumerate(values))
     table=(GAME/'assets/scaled5f.bin').read_bytes()
+    mode=json.loads((BUILD/'build_mode.json').read_text())
+    limits={int(a):n for a,n in mode['scaledAssetWidths'].items()}
     used={b:[] for b in banks};scales=0;pixels=0;size=0
+    scale=(GAME/'assets/scale5e.bin').read_bytes()
+    margin_rows=0
+    if mode.get('rowMargins'):
+        for slot,asset,lo,hi in ((0,0,32,128),(1,1,32,128),(2,4,32,128),(3,36,32,52)):
+            image=images[asset];bank=0x44+asset//2
+            for width in range(256):
+                offset=struct.unpack_from('<H',scale,0xb058+slot*512+width*2)[0]
+                assert bool(offset)==(lo<=width<=hi),(asset,width)
+                if not offset:
+                    continue
+                end=offset+image.height*2
+                assert end<=65536
+                assert all(end<=left or offset>=right for left,right in protected[bank])
+                assert all(end<=left or offset>=right for left,right in used[bank])
+                used[bank].append((offset,end))
+                du=image.width*256//width
+                for y in range(image.height):
+                    nonzero=[x for x in range(width) if image.getpixel(((x*du)>>8,y))[3]>=128]
+                    expected=bytes((nonzero[0],nonzero[-1]+1)) if nonzero else bytes(2)
+                    assert banks[bank][offset+y*2:offset+y*2+2]==expected,(asset,width,y)
+                    margin_rows+=1
     for asset,image in enumerate(images):
         for width in range(256):
             bank,stride,offset=struct.unpack_from('<BBH',table,asset*1024+width*4)
+            assert bool(bank)==(1 <= width <= limits.get(asset,0)),(asset,width,bank)
             if not bank:
                 assert stride==offset==0
                 continue
@@ -48,10 +72,12 @@ def verify():
                     assert value==expected,(asset,width,x,y)
                     pixels+=1
     rom=(BUILD/'MonoSHFX2_v001.sfc').read_bytes()
+    assert rom[0x1e0000:0x1f0000]==scale
     for bank,data in banks.items():assert rom[(bank-0x40)*65536:(bank-0x3f)*65536]==data
     assert rom[0x1f0000:0x200000]==table
     result={'romSha256':hashlib.sha256(rom).hexdigest(),'sourcePixels':source_pixels,
-            'scaledWidths':scales,'scaledPixels':pixels,'packedBytes':size,'romBytes':len(rom),
+            'scaledAssetWidths':limits,'scaledWidths':scales,'scaledPixels':pixels,'packedBytes':size,'romBytes':len(rom),
+            'transparentMarginRows':margin_rows,'transparentMarginBytes':margin_rows*2,
             'sourceProtected':True,'allocationsDoNotOverlap':True,'romMatchesAssets':True}
     (BUILD/'scaled_assets_verified.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result))

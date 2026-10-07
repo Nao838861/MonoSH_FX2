@@ -1,0 +1,554 @@
+{
+  "romSha256": "f1805f31fad53e66cf2bf7e654067b38b928d5ab03a2be1956b6cc43856f9968",
+  "fields": 18000,
+  "nativeFps": 60.098811862348406,
+  "images": 17968,
+  "groups": {
+    "road": {
+      "images": 15622,
+      "intervalsMeasured": 15618,
+      "presentationIntervals": {
+        "1": 15609,
+        "2": 9
+      },
+      "slowImages": 9,
+      "slowImagePercent": 0.05762581636573185,
+      "repeatedFields": 9,
+      "repeatedFieldPercent": 0.05759262814359762,
+      "averageFps": 60.0641993771138,
+      "observedSeconds": 260.0217793954465,
+      "cpuMaxMs": 14.805046003980394,
+      "gsuMeanMs": 5.242706042208128,
+      "gsuP95Ms": 11.283090329162848,
+      "gsuMaxMs": 16.481143415234484,
+      "worstGsuScene": {
+        "commands": 9,
+        "joined": {
+          "clock": 1752881554,
+          "line": 0,
+          "field": 4905,
+          "ppuFrame": 4905,
+          "hclock": 1322
+        },
+        "enemyShots": 0,
+        "shots": 3,
+        "gsuEnd": {
+          "clock": 1752881220,
+          "line": 0,
+          "field": 4905,
+          "ppuFrame": 4905,
+          "hclock": 988
+        },
+        "hp": 16,
+        "admitted": {
+          "clock": 1753158406,
+          "line": 203,
+          "field": 4905,
+          "ppuFrame": 4905,
+          "hclock": 1282
+        },
+        "bytes": 6768,
+        "start": {
+          "clock": 1752527250,
+          "line": 3,
+          "field": 4904,
+          "ppuFrame": 4904,
+          "hclock": 294
+        },
+        "dmaStart": {
+          "clock": 1753161272,
+          "line": 206,
+          "field": 4905,
+          "ppuFrame": 4905,
+          "hclock": 56
+        },
+        "spans": 15,
+        "image": 4879,
+        "deadline": 220,
+        "dmaEnd": {
+          "clock": 1753226864,
+          "line": 254,
+          "field": 4906,
+          "ppuFrame": 4906,
+          "hclock": 180
+        },
+        "y": 201,
+        "logic": 4879,
+        "ready": {
+          "clock": 1752883354,
+          "line": 2,
+          "field": 4905,
+          "ppuFrame": 4905,
+          "hclock": 394
+        },
+        "boss": 0,
+        "previousDma": {
+          "start": {
+            "clock": 1752446518,
+            "line": 206,
+            "field": 4903,
+            "ppuFrame": 4903,
+            "hclock": 34
+          },
+          "bytes": 5936,
+          "finish": {
+            "clock": 1752511450,
+            "line": 253,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 862
+          }
+        },
+        "cpuEnd": {
+          "clock": 1752728722,
+          "line": 150,
+          "field": 4904,
+          "ppuFrame": 4904,
+          "hclock": 1258
+        },
+        "stageFrame": 3558,
+        "groundObjects": 5,
+        "x": 128,
+        "enemies": 3,
+        "player": 0,
+        "cpuSections": {
+          "_monosh_enemy_frame": {
+            "clock": 1752547866,
+            "line": 18,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 450
+          },
+          "_monosh_player_update": {
+            "clock": 1752529618,
+            "line": 4,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 1298
+          },
+          "_fx_build_ground": {
+            "clock": 1752702346,
+            "line": 131,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 798
+          },
+          "_monosh_stage_frame": {
+            "clock": 1752594574,
+            "line": 52,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 782
+          },
+          "_monosh_combat_fast_frame": {
+            "clock": 1752534462,
+            "line": 8,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 686
+          },
+          "_monosh_combat_render": {
+            "clock": 1752535078,
+            "line": 8,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 1302
+          },
+          "_fx_frame": {
+            "clock": 1752527408,
+            "line": 3,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 452
+          },
+          "_fx_build_packet": {
+            "clock": 1752637412,
+            "line": 83,
+            "field": 4904,
+            "ppuFrame": 4904,
+            "hclock": 1336
+          }
+        },
+        "dmaField": 4905,
+        "cpuMs": 9.380707195960454,
+        "gsuMs": 16.481143415234484,
+        "group": "road"
+      },
+      "worst60FieldWindow": {
+        "images": 54,
+        "startPhysicalField": 4847,
+        "fps": 54.08893067611356
+      },
+      "alive": {
+        "images": 11733,
+        "slowImages": 9
+      }
+    },
+    "boss": {
+      "images": 1806,
+      "intervalsMeasured": 1803,
+      "presentationIntervals": {
+        "1": 1803
+      },
+      "slowImages": 0,
+      "slowImagePercent": 0.0,
+      "repeatedFields": 0,
+      "repeatedFieldPercent": 0.0,
+      "averageFps": 60.098811862348406,
+      "observedSeconds": 30.000593092083577,
+      "cpuMaxMs": 13.538404691247566,
+      "gsuMeanMs": 7.53562958714872,
+      "gsuP95Ms": 11.459462821907737,
+      "gsuMaxMs": 12.93842160214761,
+      "worstGsuScene": {
+        "commands": 15,
+        "joined": {
+          "clock": 1947539050,
+          "line": 184,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 738
+        },
+        "enemyShots": 5,
+        "shots": 3,
+        "gsuEnd": {
+          "clock": 1947538922,
+          "line": 184,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 610
+        },
+        "hp": 0,
+        "admitted": {
+          "clock": 1947565486,
+          "line": 203,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 1258
+        },
+        "bytes": 2528,
+        "start": {
+          "clock": 1947261040,
+          "line": 242,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 984
+        },
+        "dmaStart": {
+          "clock": 1947568354,
+          "line": 206,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 34
+        },
+        "spans": 16,
+        "image": 5422,
+        "deadline": 220,
+        "dmaEnd": {
+          "clock": 1947599676,
+          "line": 228,
+          "field": 5450,
+          "ppuFrame": 5450,
+          "hclock": 1348
+        },
+        "y": 201,
+        "logic": 5422,
+        "ready": {
+          "clock": 1947541068,
+          "line": 186,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 28
+        },
+        "boss": 2,
+        "previousDma": {
+          "start": {
+            "clock": 1947210950,
+            "line": 205,
+            "field": 5448,
+            "ppuFrame": 5448,
+            "hclock": 1362
+          },
+          "bytes": 2544,
+          "finish": {
+            "clock": 1947242384,
+            "line": 229,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 60
+          }
+        },
+        "cpuEnd": {
+          "clock": 1947516460,
+          "line": 167,
+          "field": 5449,
+          "ppuFrame": 5449,
+          "hclock": 1336
+        },
+        "stageFrame": 3746,
+        "groundObjects": 0,
+        "x": 170,
+        "enemies": 0,
+        "player": 0,
+        "cpuSections": {
+          "_monosh_enemy_frame": {
+            "clock": 1947280774,
+            "line": 257,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 258
+          },
+          "_monosh_player_update": {
+            "clock": 1947263240,
+            "line": 244,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 456
+          },
+          "_monosh_combat_fast_frame": {
+            "clock": 1947268020,
+            "line": 247,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 1144
+          },
+          "_fx_build_ground": {
+            "clock": 1947490084,
+            "line": 148,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 876
+          },
+          "_monosh_boss_frame": {
+            "clock": 1947305476,
+            "line": 13,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 408
+          },
+          "_monosh_combat_render": {
+            "clock": 1947268576,
+            "line": 248,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 336
+          },
+          "_fx_frame": {
+            "clock": 1947261198,
+            "line": 242,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 1142
+          },
+          "_fx_build_packet": {
+            "clock": 1947391412,
+            "line": 76,
+            "field": 5449,
+            "ppuFrame": 5449,
+            "hclock": 412
+          }
+        },
+        "dmaField": 5449,
+        "cpuMs": 11.892571831282856,
+        "gsuMs": 12.93842160214761,
+        "group": "boss"
+      },
+      "worst60FieldWindow": {
+        "images": 60,
+        "startPhysicalField": 5094,
+        "fps": 60.098811862348406
+      },
+      "alive": {
+        "images": 938,
+        "slowImages": 0
+      }
+    },
+    "transition": {
+      "images": 540,
+      "intervalsMeasured": 537,
+      "presentationIntervals": {
+        "1": 537
+      },
+      "slowImages": 0,
+      "slowImagePercent": 0.0,
+      "repeatedFields": 0,
+      "repeatedFieldPercent": 0.0,
+      "averageFps": 60.098811862348406,
+      "observedSeconds": 8.935284797808585,
+      "cpuMaxMs": 8.327873297875074,
+      "gsuMeanMs": 0.5166788338785229,
+      "gsuP95Ms": 0.5142180068306627,
+      "gsuMaxMs": 1.0990222594377907,
+      "worstGsuScene": {
+        "commands": 1,
+        "joined": {
+          "clock": 1980218920,
+          "line": 39,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 716
+        },
+        "enemyShots": 0,
+        "shots": 3,
+        "gsuEnd": {
+          "clock": 1980155304,
+          "line": 254,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 1208
+        },
+        "hp": 0,
+        "admitted": {
+          "clock": 1980443166,
+          "line": 203,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 1266
+        },
+        "bytes": 2448,
+        "start": {
+          "clock": 1980131700,
+          "line": 237,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 792
+        },
+        "dmaStart": {
+          "clock": 1980446040,
+          "line": 206,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 48
+        },
+        "spans": 18,
+        "image": 5514,
+        "deadline": 220,
+        "dmaEnd": {
+          "clock": 1980477950,
+          "line": 229,
+          "field": 5542,
+          "ppuFrame": 5542,
+          "hclock": 586
+        },
+        "y": 201,
+        "logic": 5514,
+        "ready": {
+          "clock": 1980220906,
+          "line": 40,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 1338
+        },
+        "boss": 3,
+        "cpuEnd": {
+          "clock": 1980218732,
+          "line": 39,
+          "field": 5541,
+          "ppuFrame": 5541,
+          "hclock": 528
+        },
+        "player": 0,
+        "previousDma": {
+          "start": {
+            "clock": 1980088662,
+            "line": 206,
+            "field": 5540,
+            "ppuFrame": 5540,
+            "hclock": 38
+          },
+          "bytes": 2448,
+          "finish": {
+            "clock": 1980120524,
+            "line": 229,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 528
+          }
+        },
+        "groundObjects": 0,
+        "stageFrame": 3746,
+        "x": 170,
+        "enemies": 0,
+        "cpuSections": {
+          "_monosh_enemy_frame": {
+            "clock": 1980151434,
+            "line": 252,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 66
+          },
+          "_monosh_player_update": {
+            "clock": 1980133900,
+            "line": 239,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 264
+          },
+          "_monosh_combat_fast_frame": {
+            "clock": 1980138680,
+            "line": 242,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 952
+          },
+          "_fx_build_ground": {
+            "clock": 1980192414,
+            "line": 20,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 126
+          },
+          "_monosh_boss_frame": {
+            "clock": 1980153672,
+            "line": 253,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 940
+          },
+          "_monosh_combat_render": {
+            "clock": 1980139236,
+            "line": 243,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 144
+          },
+          "_fx_frame": {
+            "clock": 1980131858,
+            "line": 237,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 950
+          },
+          "_fx_build_packet": {
+            "clock": 1980162668,
+            "line": 260,
+            "field": 5541,
+            "ppuFrame": 5541,
+            "hclock": 388
+          }
+        },
+        "dmaField": 5541,
+        "cpuMs": 4.052283735103788,
+        "gsuMs": 1.0990222594377907,
+        "group": "transition"
+      },
+      "worst60FieldWindow": {
+        "images": 60,
+        "startPhysicalField": 5541,
+        "fps": 60.098811862348406
+      },
+      "alive": {
+        "images": 537,
+        "slowImages": 0
+      }
+    }
+  },
+  "definitions": {
+    "road": "GSU開始時boss=0。起動・死亡・復帰も含む。",
+    "boss": "GSU開始時boss=1または2。撃破後boss=3はtransitionへ分離。",
+    "slowImages": "同じ区分の連続画像間でDMA開始の間隔が2field以上になった画像数。",
+    "averageFps": "区分が切り替わる境界を除外し、同区分内の提示間隔を時間加重して算出。",
+    "worstWindow": "区分をまたがない60field（約0.998秒）窓の新画像数。",
+    "limitation": "今回のMesenと入力で観測した頻度。任意のプレイや実機の保証ではない。"
+  }
+}

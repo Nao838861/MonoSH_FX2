@@ -12,8 +12,8 @@
 ;       160..191: 同じ4画素を逆のbit順で格納。左右反転用。
 ; この配置はtools/build_game.pyのexport_assets/pack_assetsと対応する。
 ; 原画行の後のpaddingには横方向だけQ8.8で縮小済みのpacked行を置く。
-; 対象は草2種・木・ボス胴/顔/弾。縦方向のV/DVは実行時に計算する。
-; 原画を置換せず、対応幅の608段階を追加する。メタ表はROM bank5F。
+; 既定はボス胴13・顔14・弾31、各幅1..96の288段階。メタ表はROM bank5F。
+; 原画を置換せず、草・木などは最大原画から直接描く。縦V/DVは実行時に計算。
 ;
 ; 描画ループ直前のレジスタ契約（packet/clip/UV準備中は役割が変わる）:
 ;   R0  演算・packed画素展開の作業値
@@ -31,12 +31,15 @@
 ; GSUはジャンプ/分岐の直後の命令も実行する（delay slot）。
 ; LOOP直後のPLOTや行末のINCを移動すると、画素数や座標が変わる。
 ; CACHEは命令キャッシュを使うための指定であり、画素データの圧縮ではない。
-; stableGsuCache: 共通準備+scaled+genericを485byteへ配置。clip補正はcache外。
+; stableGsuCache: 共通準備+scaled+generic+余白省略を511byteへ配置。
+; 1体につき1回のpacket展開の前半とclip補正はcache外。CBRを維持して戻る。
 ; generic/packed間や異なるpacked経路へ切替時にCBRを変更。同じ経路なら保持。
 ; cpuClipCommands: packet末尾bit15=INSIDE。GSUは座標補正だけを省く。
 ;
 ; 最適化の評価: 内側のループは短くしてあるが、描画全体の最速は未証明。
 ; genericは未収録幅・左右反転等の任意倍率を受け持つ。整数比はpackedへ。
+; genericPipelineでは現画素をPLOTする間に次画素を先読みし、GETCをdelay slotへ。
+; MERGE後のROM待ちへWITH/ADD/PLOT/LOOPを重ねる。行頭に最初の色を準備する。
 ; その他の対応幅はscaled_renderで4画素ずつ展開し、clipの先頭端数も描く。
 ; scaled/genericと共通準備を同じ512byte枠に置き、clipでCBRを変えない。
 ; 最後のDMA区間生成だけ別cacheへ移る。比較結果はRENDER_ITERATIONS参照。
@@ -119,7 +122,17 @@ scaled_render:
   .endif
   .ifdef FX_FAST_UV
 generic_render:
+  .ifdef FX_GENERIC_PIPELINE
+  .include "gsu_generic_pipeline.inc"
+  .else
   .include "gsu_generic.inc"
+  .endif
+  .endif
+  .ifdef FX_ROW_MARGINS
+margin_render:
+  .export margin_render, margin_render_end
+  .include "gsu_margin_draw.inc"
+margin_render_end:
   .endif
   .else
 generic_render:
@@ -302,6 +315,12 @@ hot_cache_end:
   .assert hot_cache_end-hot_cache <= 512, error, "GSU common path exceeds cache"
   .endif
 generic:
+  .ifdef FX_ROW_MARGINS
+  iwt r11,#.loword(margin_select)
+  jmp (r11)
+  nop
+margin_generic:
+  .endif
   .ifdef FX_SCALED_ROWS
   iwt r11,#.loword(scaled_select)
   jmp (r11)
@@ -574,6 +593,14 @@ uv_slow:
   iwt r8,#.loword(uv_fast_done)
   jmp (r8)
   nop
+  .endif
+  .ifdef FX_ROW_MARGINS
+draw_prefix:
+  .include "gsu_draw_prefix.inc"
+  iwt r10,#.loword(draw_prefix_done)
+  jmp (r10)
+  nop
+  .include "gsu_margins.inc"
   .endif
 finished:
   rpix                       ; 件数0でも含め、最後の画素cacheをflushする。

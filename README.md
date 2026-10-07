@@ -1,8 +1,10 @@
 # MonoSH Super FX2 開発プロジェクト
 
-録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
+最新ROMは [ボス限定の縮小画像と追加最適化](game/v001/RESULTS_20261008_BOSS_SCALING.md)。縮小画像をボス3素材だけにし、先読み・透明余白省略・511byteの共通GSUキャッシュ・転送量別のDMA締切を採用した。追加データを約203KiB減らし、録画由来の大きい自弾・二層遠景も統合。CPUのOAM生成・地面HDMA表・転送区間loopも追加最適化した。表示256×180・内部FB256×192・2bpp。統合前後の速度・画素・転送の検証を上記の結果に分けて記録する。
 
-前版は [反復最適化](game/v001/RESULTS_20261007_RENDER_ITERATIONS.md) で、通常入力約5分の道中・ボス戦・撃破後すべて提示遅延0回、**60.10fps**を達成。横縮小済みpacked行、485byteの共通GSUキャッシュ、CPUのOBJ準備、DMA取得を改善した。録画素材を追加した現行版の測定値は上記の検証結果に記録する。表示256×180・内部FB256×192・2bppを維持。
+統合した最終ROMで通常プレイ・長期ボス各約5分、**全区分の表示遅延0、60.10fps**を確認した。固定523場面2,454画像の全FB/OBJ、42条件のDMA限界量、操作・表示・押しっぱなしも検証済み。任意の入力・実機での保証はまだない。
+
+録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 

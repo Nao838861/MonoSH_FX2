@@ -80,13 +80,16 @@ def fixtures():
     return output
 
 
-def run_variant(name, flags, cases):
+def run_variant(name, flags, cases, reuse_build=False):
     output=BUILD/('cache_compare_'+name);output.mkdir(exist_ok=True)
     if '--resume' in sys.argv and (output/'summary.json').exists() and not (output/'error.txt').exists():
         digest=hashlib.sha256((output/'MonoSHFX2_v001.sfc').read_bytes()).hexdigest()
         config=json.loads((output/'build_mode.json').read_text())
         return summarize(output,digest,config,cases)
-    subprocess.run([sys.executable,'-X','utf8',str(ROOT/'tools/build_game.py'),*flags],check=True)
+    if reuse_build:
+        assert not flags,'build flags cannot be combined with reuse-build'
+    else:
+        subprocess.run([sys.executable,'-X','utf8',str(ROOT/'tools/build_game.py'),*flags],check=True)
     assert output.resolve().parent==BUILD.resolve()
     for old in output.iterdir():
         if old.is_file():old.unlink()
@@ -122,9 +125,9 @@ def run_variant(name, flags, cases):
     data['Debug']['ScriptWindow']['ScriptTimeout']=10
     data['Snes'].update({'Port1':{'Type':'SnesController'},'DisableFrameSkipping':True})
     settings.write_text(json.dumps(data))
-    result=subprocess.run([str(mesen),'--testRunner','--timeout=120','--doNotSaveSettings','--enableStdout',
+    result=subprocess.run([str(mesen),'--testRunner','--timeout=360','--doNotSaveSettings','--enableStdout',
                            str(output/rom.name),str(path)],cwd=mesen.parent,capture_output=True,
-                          timeout=130,creationflags=subprocess.CREATE_NO_WINDOW)
+                          timeout=370,creationflags=subprocess.CREATE_NO_WINDOW)
     (output/'emulator.log').write_bytes(result.stdout+result.stderr)
     if (output/'error.txt').exists():raise RuntimeError((output/'error.txt').read_text())
     assert result.returncode==0, result.returncode

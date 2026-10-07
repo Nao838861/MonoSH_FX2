@@ -326,8 +326,11 @@ _fx_present:
   rep #$30
   jsr fx_plan_dma
   ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
-  ; bytes+区間数*128が9.75KiB以下だけ220行目まで許可。全FBは203行目。
+  ; dynamicDmaDeadlineでは転送量に応じ220/226/233行目まで許可。全FBは203行目。
   ; 設定費用をbyte換算し、翌22行のOBJ準備より前に転送を終える。
+  .ifdef FX_DYNAMIC_DMA
+  jsr select_dma_deadline
+  .else
   lda #203
   sta f:$7e1d10
   lda fx_dma_count
@@ -341,6 +344,7 @@ _fx_present:
   lda #220
   sta f:$7e1d10
 :
+  .endif
   jsr fx_upload_ground
   lda _fx_ground_vptr
   sta f:$7e1d04
@@ -465,6 +469,9 @@ gsu_dma_copied:
   .endif
   lda f:$70000a
   sta fx_dma_bytes
+  .ifdef FX_DYNAMIC_DMA
+  jsr select_dma_deadline
+  .else
   lda #203
   sta f:$7e1d10
   lda fx_dma_count
@@ -478,7 +485,18 @@ gsu_dma_copied:
   lda #220
   sta f:$7e1d10
 :
+  .endif
   sep #$20
+  .endif
+  .ifdef FX_DMA_DEADLINE_PROBE
+  .export dma_probe_delay
+dma_probe_delay:
+  ; 帯域検証専用ROM: 許可された最終行まで意図的に待って転送する。
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp f:$7e1d10
+  bne dma_probe_delay
   .endif
 wait_bottom:
   lda f:$00213f
@@ -525,9 +543,9 @@ dma_started:
   sta f:$7e1df0
   rep #$30
   ldx #0
-dma_span:
-  lda fx_dma_count
+  ldy fx_dma_count
   beq dma_finished
+dma_span:
   lda fx_dma_desc,x
   sta f:$002116
   asl
@@ -544,8 +562,10 @@ dma_span:
   inx
   inx
   inx
-  dec fx_dma_count
-  bra dma_span
+  ; 区間数をYで数え、WRAMの読戻し・DEC・BRAを各区間から外す。
+  dey
+  bne dma_span
+  stz fx_dma_count           ; 従来どおり完了時は0。次のclear表は別に保持する。
 dma_finished:
   jsr fx_commit_dma
   sep #$20
@@ -556,6 +576,64 @@ dma_finished:
   plp
   rts
 render_entry_address = $8000
+
+  .ifdef FX_DYNAMIC_DMA
+select_dma_deadline:
+  .export select_dma_deadline
+  rep #$30
+  ; W=bytes+64*区間数+768。区間設定を64bytes換算し、HDMA等の固定費も予約。
+  ; 設定・OBJ転送に最大4行を予約し、完了を翌21行より前へ収める。
+  ; A/Xは16bit。全FBなど大きい転送は従来の203行を守る。
+  lda #203
+  sta f:$7e1d10
+  lda fx_dma_count
+  .repeat 6
+    asl
+  .endrepeat
+  clc
+  adc fx_dma_bytes
+  clc
+  adc #768
+  cmp #(FX_DMA_ADMISSION_BYTES+1)
+  bcs deadline_done
+  .ifdef FX_FINE_DMA
+  ; Wを170byte/行で割り、受付を220..240行で細かく選ぶ。
+  ; D=278-floor(W/170)。D+4+W*8/1364 <283（翌21行の前）。
+  ; 768bytesの固定予約と64bytes/区間もWへ含めた保守的な上限。
+  .export dma_deadline_fine
+dma_deadline_fine:
+  sta f:$004204
+  sep #$20
+  lda #170
+  sta f:$004206
+  rep #$20
+  lda #278
+  sec
+  .repeat 8
+    nop                    ; dividerの16 CPU cyclesを確実に待つ。
+  .endrepeat
+  sbc f:$004214
+  cmp #241
+  bcc fine_save
+  lda #240
+fine_save:
+  sta f:$7e1d10
+  rts
+  .else
+  ldx #220
+  cmp #8961
+  bcs deadline_save
+  ldx #226
+  cmp #7681
+  bcs deadline_save
+  ldx #233
+deadline_save:
+  txa
+  sta f:$7e1d10
+  .endif
+deadline_done:
+  rts
+  .endif
 
 blank_table:
   ; 22行目は輝度0でOBJ評価/CHR fetchを再開し、23行目のOBJを用意する。

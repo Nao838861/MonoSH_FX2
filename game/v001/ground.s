@@ -145,7 +145,6 @@ sky_tail:
   sbc #127
 horizontal_tail:
   jsr horizontal_run
-  sty $013e
   ldx $013c
   lda #0                    ; TAYが16bitを受け取るのでBも0にする。
   sep #$20
@@ -154,17 +153,16 @@ row:
   beq horizontal_done
   sta (hp),y
   iny
-  sty $013e
+  sty fp                    ; 空/遠景の生成後はfpを出力Yの退避へ再利用する。
   lda f:$7e0001,x
   tay
   lda (hv),y
-  ldy $013e
+  ldy fp
   sta (hp),y
   iny
-  lda #0
-  sta (hp),y
+  ; HOFS上位byteはBSS初期化で0。全bufferでoffset%3==2は0のまま使う。
+  ; horizontal_runも16bitの128を書いて同じ不変条件を保つ。
   iny
-  sty $013e
   inx
   inx
   bra row

@@ -1,0 +1,155 @@
+{
+  "objMaxCount": 12,
+  "maxCommands": 1,
+  "loopSeen": false,
+  "packed_double": 337,
+  "logic": 338,
+  "doneSeen": false,
+  "stumbleMax": 0,
+  "deaths": 1,
+  "reflected": 0,
+  "fields": 360,
+  "maxDmaSpanCount": 1,
+  "deathImage": true,
+  "minBytes": 12288,
+  "stumbles": 0,
+  "interval2": 0,
+  "interval3plus": 0,
+  "checked": 336,
+  "rendered": 336,
+  "stage": 529,
+  "bossSeen": false,
+  "enemyPaths": {},
+  "maxBytes": 12288,
+  "dyingSeen": false,
+  "em1States": {},
+  "cpuMaxMs": 8.3319706525112,
+  "enemyTypes": {},
+  "maxDmaStartLine": 206,
+  "dmaMaxMs": 4.8347853489028,
+  "gsuMaxMs": 5.1811049373496,
+  "respawns": 0,
+  "lateDmaStarts": 0,
+  "interval1": 335,
+  "enemyShotsMax": 0,
+  "romSha256": "cca68332dc8b6ea32e0165cdd3e534d478a8cb926dece98d863c267dde346bb6",
+  "dmaBytesPerImage": 12288,
+  "objBytesPerImage": 68,
+  "latestCompletionScanline": 20,
+  "objPrefetchScanline": 22,
+  "firstVisibleScanline": 23,
+  "framebufferDmaMaxMs": 4.83479,
+  "objDmaMaxMs": 0.071517,
+  "objDmaMeanMs": 0.07094686053412463,
+  "ppuChecks": {
+    "screens": 66,
+    "checkedObjectPixels": 15313,
+    "secondChrTableSeen": true,
+    "flips": [
+      0,
+      64,
+      128,
+      192
+    ],
+    "opaquePaletteIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "objPaletteRgb5": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        3
+      ],
+      [
+        22,
+        13,
+        13
+      ],
+      [
+        31,
+        3,
+        4
+      ],
+      [
+        12,
+        21,
+        31
+      ],
+      [
+        31,
+        31,
+        31
+      ],
+      [
+        0,
+        1,
+        18
+      ],
+      [
+        31,
+        12,
+        0
+      ],
+      [
+        31,
+        28,
+        2
+      ],
+      [
+        17,
+        0,
+        0
+      ],
+      [
+        27,
+        0,
+        0
+      ],
+      [
+        30,
+        15,
+        13
+      ],
+      [
+        31,
+        26,
+        23
+      ],
+      [
+        31,
+        31,
+        18
+      ],
+      [
+        10,
+        4,
+        5
+      ],
+      [
+        20,
+        24,
+        31
+      ]
+    ]
+  },
+  "defaultRomSha256": "9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab"
+}

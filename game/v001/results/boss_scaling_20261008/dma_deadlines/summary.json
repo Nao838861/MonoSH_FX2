@@ -1,0 +1,193 @@
+{
+  "reflected": 0,
+  "deathImage": true,
+  "rendered": 336,
+  "enemyPaths": {},
+  "deaths": 1,
+  "interval3plus": 0,
+  "stumbles": 0,
+  "enemyShotsMax": 0,
+  "cpuMaxMs": 8.3255452554682,
+  "maxCommands": 1,
+  "respawns": 0,
+  "interval2": 0,
+  "dyingSeen": false,
+  "em1States": {},
+  "checked": 336,
+  "maxBytes": 12288,
+  "packed_double": 337,
+  "interval1": 335,
+  "fields": 360,
+  "stage": 529,
+  "bossSeen": false,
+  "maxDmaStartLine": 235,
+  "gsuMaxMs": 5.428436162656,
+  "enemyTypes": {},
+  "maxDmaSpanCount": 32,
+  "logic": 338,
+  "dmaMaxMs": 4.8344128621177,
+  "minBytes": 4864,
+  "objMaxCount": 12,
+  "lateDmaStarts": 336,
+  "doneSeen": false,
+  "loopSeen": false,
+  "stumbleMax": 0,
+  "romSha256": "dbacd464cda781df3d55ad05770500a05cab4071a7c66f01687f77dbf64f00e8",
+  "defaultRomSha256": "9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab",
+  "deadlineTiers": {
+    "226/1": {
+      "bytes": 8128,
+      "spans": 1,
+      "images": 56,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 228
+    },
+    "233/1": {
+      "bytes": 6848,
+      "spans": 1,
+      "images": 56,
+      "latestCompletionScanline": 16,
+      "maxDmaStartLine": 235
+    },
+    "220/32": {
+      "bytes": 7168,
+      "spans": 32,
+      "images": 56,
+      "latestCompletionScanline": 19,
+      "maxDmaStartLine": 222
+    },
+    "226/32": {
+      "bytes": 6144,
+      "spans": 32,
+      "images": 56,
+      "latestCompletionScanline": 19,
+      "maxDmaStartLine": 228
+    },
+    "233/32": {
+      "bytes": 4864,
+      "spans": 32,
+      "images": 56,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 235
+    },
+    "220/1": {
+      "bytes": 9152,
+      "spans": 1,
+      "images": 55,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 222
+    }
+  },
+  "objPrefetchScanline": 22,
+  "firstVisibleScanline": 23,
+  "ppuChecks": {
+    "screens": 66,
+    "checkedObjectPixels": 15313,
+    "secondChrTableSeen": true,
+    "flips": [
+      0,
+      64,
+      128,
+      192
+    ],
+    "opaquePaletteIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "objPaletteRgb5": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        3
+      ],
+      [
+        22,
+        13,
+        13
+      ],
+      [
+        31,
+        3,
+        4
+      ],
+      [
+        12,
+        21,
+        31
+      ],
+      [
+        31,
+        31,
+        31
+      ],
+      [
+        0,
+        1,
+        18
+      ],
+      [
+        31,
+        12,
+        0
+      ],
+      [
+        31,
+        28,
+        2
+      ],
+      [
+        17,
+        0,
+        0
+      ],
+      [
+        27,
+        0,
+        0
+      ],
+      [
+        30,
+        15,
+        13
+      ],
+      [
+        31,
+        26,
+        23
+      ],
+      [
+        31,
+        31,
+        18
+      ],
+      [
+        10,
+        4,
+        5
+      ],
+      [
+        20,
+        24,
+        31
+      ]
+    ]
+  }
+}

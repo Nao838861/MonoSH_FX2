@@ -283,6 +283,26 @@ single_bullet:
   clc
   adc #4
   sta tile_pointer
+ .ifdef FX_FAST_OBJ
+  ; 通常向きで64x32のtile領域まで画面内なら、各partのclip/flipを省く。
+  lda flags
+  and #$30
+  bne bullet_slow
+  lda left
+  cmp #193
+  bcs bullet_slow
+  lda top
+  cmp #193
+  bcs bullet_slow
+  lda fx_obj_count
+  clc
+  adc bullet_count
+  cmp #33
+  bcs bullet_slow
+  jsr bullet_fast
+  jmp next_record
+bullet_slow:
+ .endif
   stz part
 bullet_part:
   lda part
@@ -440,6 +460,62 @@ invisible:
   rts
 
 .ifdef FX_FAST_OBJ
+; clip/flip不要の自弾。同じOAM順・CHR・palette・sizeを短いloopで出す。
+; 余白を含むtile領域で分類し、XY wordの加算でXからYへの桁上がりを防ぐ。
+bullet_fast:
+  lda tile_pointer
+  sta obj_tp
+  lda top
+  xba
+  and #$ff00
+  ora left
+  sta obj_xy
+  lda fx_obj_count
+  asl
+  asl
+  tax
+bullet_fast_part:
+  lda (obj_tp)
+  clc
+  adc obj_xy
+  sta fx_obj_next,x
+  ldy #2
+  lda (obj_tp),y
+  pha
+  and #$01ff
+  ora #$3200                ; priority3、palette1、反転なし。CHRの第9bitを保存。
+  sta fx_obj_next+2,x
+  pla
+  bpl bullet_fast_small
+  lda fx_obj_count
+  and #3
+  asl
+  tay
+  lda large_obj_masks,y
+  sta work
+  lda fx_obj_count
+  lsr
+  lsr
+  tay
+  sep #$20
+  lda fx_obj_next+128,y
+  ora work
+  sta fx_obj_next+128,y
+  rep #$20
+bullet_fast_small:
+  inc fx_obj_count
+  inx
+  inx
+  inx
+  inx
+  lda obj_tp
+  clc
+  adc #4
+  sta obj_tp
+  dec bullet_count
+  bne bullet_fast_part
+  rts
+
 player_fast:
   lda tile_pointer
   sta obj_tp
@@ -492,6 +568,7 @@ player_fast_part:
   sta fx_obj_count
   rts
 .segment "RODATA"
+large_obj_masks: .word 2,8,32,128
 player_offsets:
   .word $0000,$0010,$1000,$1010,$2000,$2010
   .word $0010,$0000,$1010,$1000,$2010,$2000

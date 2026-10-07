@@ -1,0 +1,41 @@
+{
+  "dyingSeen": false,
+  "stumbleMax": 39,
+  "lateDmaStarts": 0,
+  "enemyShotsMax": 0,
+  "bossSeen": false,
+  "enemyTypes": {
+    "5": true
+  },
+  "objMaxCount": 6,
+  "maxDmaSpanCount": 19,
+  "loopSeen": false,
+  "em1States": {},
+  "cpuMaxMs": 7.9084531778524,
+  "checked": 696,
+  "rendered": 696,
+  "maxBytes": 12288,
+  "maxCommands": 5,
+  "fields": 720,
+  "dmaMaxMs": 4.841955719516,
+  "maxDmaStartLine": 206,
+  "logic": 698,
+  "gsuMaxMs": 7.9026796326833,
+  "enemyPaths": {
+    "0": true
+  },
+  "doneSeen": false,
+  "stumbles": 39,
+  "packed_double": 1394,
+  "reflected": 0,
+  "minBytes": 5536,
+  "interval2": 0,
+  "respawns": 1,
+  "interval3plus": 0,
+  "deaths": 1,
+  "interval1": 695,
+  "enemyImage": true,
+  "stage": 761,
+  "deathImage": true,
+  "romSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2"
+}

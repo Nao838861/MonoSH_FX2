@@ -1,0 +1,8 @@
+{
+  "previousRomSha256": "4c9308d79d3cdf1108267a9678289721e081912ffc3436b98758a32e4eec418b",
+  "finalRomSha256": "9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab",
+  "previousScenesCompared": 242,
+  "allPreviousFramebufferHashesMatch": true,
+  "finalScenes": 523,
+  "finalImagesVerified": 2457
+}

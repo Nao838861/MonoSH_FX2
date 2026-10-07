@@ -17,6 +17,7 @@ def main():
     parser.add_argument('--held-direction',default='up-left',choices=['up-left','up-right','down-left','down-right','up','down','left','right','none'])
     parser.add_argument('--held-fire',default='y',choices=['a','y','none'])
     parser.add_argument('--timeout',type=int,default=60)
+    parser.add_argument('--dma-probe',action='store_true',help='専用ROMで転送量の各上限を最終許可行に検証する。')
     args=parser.parse_args()
     rom=BUILD/'MonoSHFX2_v001.sfc'
     rom_sha=hashlib.sha256(rom.read_bytes()).hexdigest()
@@ -40,7 +41,11 @@ def main():
     script=script.replace('GSU_CLIP','true' if json.loads((BUILD/'build_mode.json').read_text())['gsuClip'] else 'false')
     script=script.replace('CPU_CLIP_COMMANDS','true' if json.loads((BUILD/'build_mode.json').read_text()).get('cpuClipCommands') else 'false')
     script=script.replace('DMA_ADMISSION_BYTES',str(json.loads((BUILD/'build_mode.json').read_text()).get('dmaAdmissionBytes',9216)))
-    script=script.replace('DISPLAY_CODE',(GAME/'display.lua').read_text(encoding='utf-8'))
+    display=(GAME/'display.lua').read_text(encoding='utf-8')
+    if args.dma_probe:
+        assert args.scenario=='objects' and 'dma_probe_delay' in labels
+        display+='\n'+(GAME/'dma_probe.lua').read_text(encoding='utf-8')
+    script=script.replace('DISPLAY_CODE',display)
     path=output/'test.lua'; path.write_text(script,encoding='utf-8')
     mesen=prepare_runtime(MESEN_EXE)
     settings=mesen.parent/'settings.json'

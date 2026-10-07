@@ -223,7 +223,7 @@ def pack_assets():
                     raw[base+160+x//4]=sum(raw[base+x+i]<<((3-i)*2) for i in range(min(4,image.width-x)))
         if raw!=path.read_bytes():path.write_bytes(raw)
 
-def build_scaled(enabled):
+def build_scaled(enabled, limits, row_margins=False):
     # 原画行の後のpaddingだけを利用。既存raw/packed/flip領域へは書かない。
     images=[Image.open(GAME/'assets'/f'{i:02d}.png').convert('RGBA') for i in range(44)]
     banks={b:bytearray((GAME/'assets'/f'bank{b:02x}.bin').read_bytes()) for b in range(0x44,0x5a)}
@@ -235,9 +235,23 @@ def build_scaled(enabled):
             banks[bank][start:end]=bytes(end-start)
             holes.append([bank,start,end])
     table=bytearray(65536)
+    bounds=bytearray(2048)
+    if row_margins:
+        for slot,asset,lo,hi in ((0,0,32,128),(1,1,32,128),(2,4,32,128),(3,36,32,52)):
+            image=images[asset];bank=0x44+asset//2
+            for width in range(lo,hi+1):
+                size=image.height*2;du=image.width*256//width
+                hole=next(h for h in holes if h[0]==bank and h[2]-h[1]>=size)
+                offset=hole[1];hole[1]+=size
+                struct.pack_into('<H',bounds,slot*512+width*2,offset)
+                for y in range(image.height):
+                    opaque=[x for x in range(width) if image.getpixel(((x*du)>>8,y))[3]>=128]
+                    left,right=(opaque[0],opaque[-1]+1) if opaque else (0,0)
+                    banks[bank][offset+y*2:offset+y*2+2]=bytes((left,right))
     used=0
     if enabled:
-        for asset,limit in [(13,96),(14,96),(31,96),(0,96),(1,96),(4,128)]:
+        for asset,limit in limits:
+            assert 0 <= asset < len(images) and 1 <= limit <= 255, (asset,limit)
             image=images[asset];source=banks[0x44+asset//2];sourcebase=(asset&1)*32768
             for width in range(1,limit+1):
                 stride=(width+3)//4;size=stride*image.height;du=image.width*256//width
@@ -257,6 +271,7 @@ def build_scaled(enabled):
         if data!=path.read_bytes():path.write_bytes(data)
     (GAME/'assets/scaled5f.bin').write_bytes(table)
     print(f'Horizontal Q8.8 packed scaling: {used} bytes in original ROM padding')
+    return bounds
 
 def prepare_logic():
     reference = '--reference-logic' in sys.argv
@@ -346,12 +361,22 @@ def main():
     cpu_clip_commands=gsu_clip and config.get('cpuClipCommands',False) and '--no-cpu-clip-commands' not in sys.argv
     stable_cache=gsu_clip and config.get('stableGsuCache',False) and '--no-stable-gsu-cache' not in sys.argv
     scaled=stable_cache and config.get('scaledRows',True) and '--no-scaled-rows' not in sys.argv
+    scaled_limits=[(int(asset),limit) for asset,limit in config['scaledAssetWidths'].items()]
+    if '--all-scaled-assets' in sys.argv:
+        scaled_limits=[(13,96),(14,96),(31,96),(0,96),(1,96),(4,128)]
     bucket_sort='--bucket-sort' in sys.argv
     fast_obj=config.get('fastObj',True) and '--no-fast-obj' not in sys.argv
     scaled_clip=scaled and config.get('scaledClip',True) and '--no-scaled-clip' not in sys.argv
     fast_uv=scaled and config.get('fastUv',True) and '--no-fast-uv' not in sys.argv
+    row_margins=fast_uv and (config.get('rowMargins',False) or '--row-margins' in sys.argv) and '--no-row-margins' not in sys.argv
+    generic_pipeline=fast_uv and (config.get('genericPipeline',False) or '--generic-pipeline' in sys.argv) and '--no-generic-pipeline' not in sys.argv
+    dynamic_dma=(config.get('dynamicDmaDeadline',False) or '--dynamic-dma-deadline' in sys.argv) and '--no-dynamic-dma-deadline' not in sys.argv
+    dma_probe='--dma-deadline-probe' in sys.argv
+    fine_dma=dynamic_dma and config.get('fineDmaDeadline',False) and '--no-fine-dma-deadline' not in sys.argv
+    assert not dma_probe or dynamic_dma
     descriptor_dma=config.get('descriptorDma',True) and '--no-descriptor-dma' not in sys.argv
     dma_admission=9216 if '--legacy-dma-admission' in sys.argv else config.get('dmaAdmissionBytes',9984)
+    assert 0 <= dma_admission <= 9984
     lock=json.loads((ROOT/'probes/v001/sources.lock.json').read_text(encoding='utf-8'))['ARM9/casfx']
     from bootstrap_probe import fetch
     fetch('ARM9/casfx',lock['commit'],'gsu/casfx.inc',lock['files']['gsu/casfx.inc']['sha256'])
@@ -363,7 +388,7 @@ def main():
     from build_objects import build as build_objects
     build_objects()
     pack_assets()
-    build_scaled(scaled)
+    bounds=build_scaled(scaled, scaled_limits, row_margins)
     scale=bytearray(65536)
     dimensions=[Image.open(GAME/'assets'/f'{i:02d}.png').size for i in range(44)]
     for axis in range(2):
@@ -372,6 +397,8 @@ def main():
                              *[size[axis]*256//n if n else 0 for n in range(256)])
     scale[0xb000:0xb02c]=bytes(w for w,h in dimensions)
     scale[0xb02c:0xb058]=bytes(h for w,h in dimensions)
+    if row_margins:
+        scale[0xb058:0xb858]=bounds
     (GAME/'assets/scale5e.bin').write_bytes(scale)
     prepare_logic()
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
@@ -395,6 +422,11 @@ def main():
              *(['-D','FX_FAST_OBJ=1'] if fast_obj else []),
              *(['-D','FX_SCALED_CLIP=1'] if scaled_clip else []),
              *(['-D','FX_FAST_UV=1'] if fast_uv else []),
+             *(['-D','FX_ROW_MARGINS=1'] if row_margins else []),
+             *(['-D','FX_GENERIC_PIPELINE=1'] if generic_pipeline else []),
+             *(['-D','FX_DYNAMIC_DMA=1'] if dynamic_dma else []),
+             *(['-D','FX_FINE_DMA=1'] if fine_dma else []),
+             *(['-D','FX_DMA_DEADLINE_PROBE=1'] if dma_probe else []),
              *(['-D','FX_DESCRIPTOR_DMA=1'] if descriptor_dma else []),
              '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
              '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
@@ -409,7 +441,7 @@ def main():
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
     (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
-        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledClip':scaled_clip,'fastUv':fast_uv,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
+        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()
