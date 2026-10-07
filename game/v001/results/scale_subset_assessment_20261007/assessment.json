@@ -1,0 +1,505 @@
+{
+  "releaseRomSha256": "4c9308d79d3cdf1108267a9678289721e081912ffc3436b98758a32e4eec418b",
+  "method": "Existing captures and build allocation arithmetic only; no new ROM or renderer changes.",
+  "assets": [
+    {
+      "asset": 13,
+      "sourceWidth": 128,
+      "sourceHeight": 86,
+      "widthPatterns": 96,
+      "packedBytes": 103200
+    },
+    {
+      "asset": 14,
+      "sourceWidth": 84,
+      "sourceHeight": 128,
+      "widthPatterns": 96,
+      "packedBytes": 153600
+    },
+    {
+      "asset": 31,
+      "sourceWidth": 128,
+      "sourceHeight": 125,
+      "widthPatterns": 96,
+      "packedBytes": 150000
+    },
+    {
+      "asset": 0,
+      "sourceWidth": 56,
+      "sourceHeight": 30,
+      "widthPatterns": 96,
+      "packedBytes": 36000
+    },
+    {
+      "asset": 1,
+      "sourceWidth": 67,
+      "sourceHeight": 31,
+      "widthPatterns": 96,
+      "packedBytes": 37200
+    },
+    {
+      "asset": 4,
+      "sourceWidth": 34,
+      "sourceHeight": 79,
+      "widthPatterns": 128,
+      "packedBytes": 166848
+    }
+  ],
+  "candidates": {
+    "current": 646848,
+    "bossBodyFaceBullet": 406800,
+    "bossFaceBullet": 303600,
+    "bossBodyFace": 256800
+  },
+  "metadataBytesUnchanged": 65536,
+  "romFileBytesUnchanged": 2097152,
+  "roadSamples": [
+    {
+      "scene": "boss_profile/draw00001",
+      "withPatternsGsuMs": 1.5987132816496,
+      "withoutAllPatternsGsuMs": 1.6503027013859,
+      "differenceMs": 0.051589419736300046
+    },
+    {
+      "scene": "boss_profile/draw00300",
+      "withPatternsGsuMs": 1.00366564245215,
+      "withoutAllPatternsGsuMs": 1.04882966514555,
+      "differenceMs": 0.04516402269340003
+    },
+    {
+      "scene": "boss_profile/draw00600",
+      "withPatternsGsuMs": 3.6773757859006,
+      "withoutAllPatternsGsuMs": 4.1669165432183,
+      "differenceMs": 0.48954075731769997
+    },
+    {
+      "scene": "boss_profile/draw00900",
+      "withPatternsGsuMs": 5.6957885526616,
+      "withoutAllPatternsGsuMs": 5.5057271705643,
+      "differenceMs": -0.1900613820973005
+    },
+    {
+      "scene": "boss_profile/draw01200",
+      "withPatternsGsuMs": 9.0794585085108,
+      "withoutAllPatternsGsuMs": 9.0265653850266,
+      "differenceMs": -0.05289312348419983
+    },
+    {
+      "scene": "boss_profile/draw01500",
+      "withPatternsGsuMs": 5.2702224006848,
+      "withoutAllPatternsGsuMs": 5.6902012508851,
+      "differenceMs": 0.4199788502002999
+    },
+    {
+      "scene": "boss_profile/draw01800",
+      "withPatternsGsuMs": 8.7911537368433,
+      "withoutAllPatternsGsuMs": 9.5552172547798,
+      "differenceMs": 0.7640635179364992
+    },
+    {
+      "scene": "boss_profile/draw02100",
+      "withPatternsGsuMs": 6.0973293069995,
+      "withoutAllPatternsGsuMs": 5.8120975513091,
+      "differenceMs": -0.2852317556903996
+    },
+    {
+      "scene": "boss_profile/draw02400",
+      "withPatternsGsuMs": 2.45645722603875,
+      "withoutAllPatternsGsuMs": 2.91815459617035,
+      "differenceMs": 0.46169737013160006
+    },
+    {
+      "scene": "boss_profile/draw02700",
+      "withPatternsGsuMs": 3.499420224319,
+      "withoutAllPatternsGsuMs": 3.3037715404452,
+      "differenceMs": -0.19564868387380008
+    },
+    {
+      "scene": "boss_profile/draw03000",
+      "withPatternsGsuMs": 11.362802501174,
+      "withoutAllPatternsGsuMs": 11.083623655742,
+      "differenceMs": -0.2791788454319999
+    },
+    {
+      "scene": "boss_profile/draw03300",
+      "withPatternsGsuMs": 3.0484318492591,
+      "withoutAllPatternsGsuMs": 3.3165292128349,
+      "differenceMs": 0.26809736357580016
+    },
+    {
+      "scene": "boss_profile/draw03600",
+      "withPatternsGsuMs": 6.908884890036351,
+      "withoutAllPatternsGsuMs": 7.527399196694949,
+      "differenceMs": 0.6185143066585983
+    },
+    {
+      "scene": "boss_profile/draw03900",
+      "withPatternsGsuMs": 7.5442542237208,
+      "withoutAllPatternsGsuMs": 7.097363203297,
+      "differenceMs": -0.44689102042379947
+    },
+    {
+      "scene": "boss_profile/draw04200",
+      "withPatternsGsuMs": 0.77831113746662,
+      "withoutAllPatternsGsuMs": 0.75372700965002,
+      "differenceMs": -0.02458412781659991
+    },
+    {
+      "scene": "boss_profile/draw04500",
+      "withPatternsGsuMs": 6.3759494222544,
+      "withoutAllPatternsGsuMs": 7.8597505307005,
+      "differenceMs": 1.4838011084460998
+    },
+    {
+      "scene": "boss_profile/draw04800",
+      "withPatternsGsuMs": 5.447712353785,
+      "withoutAllPatternsGsuMs": 5.2634245168567,
+      "differenceMs": -0.18428783692829942
+    },
+    {
+      "scene": "boss_profile/draw05700",
+      "withPatternsGsuMs": 0.51310054647536,
+      "withoutAllPatternsGsuMs": 0.54289948928337,
+      "differenceMs": 0.029798942808009987
+    },
+    {
+      "scene": "boss_profile/draw06000",
+      "withPatternsGsuMs": 1.0426836331914,
+      "withoutAllPatternsGsuMs": 1.1213714665438,
+      "differenceMs": 0.07868783335239993
+    },
+    {
+      "scene": "boss_profile/draw06300",
+      "withPatternsGsuMs": 6.1646562934064,
+      "withoutAllPatternsGsuMs": 5.99899279573305,
+      "differenceMs": -0.16566349767334998
+    },
+    {
+      "scene": "boss_profile/draw06600",
+      "withPatternsGsuMs": 5.4206139401689,
+      "withoutAllPatternsGsuMs": 5.374239335424,
+      "differenceMs": -0.046374604744900516
+    },
+    {
+      "scene": "boss_profile/draw06900",
+      "withPatternsGsuMs": 2.8906836957692,
+      "withoutAllPatternsGsuMs": 3.2296466702103,
+      "differenceMs": 0.3389629744410998
+    },
+    {
+      "scene": "boss_profile/draw07200",
+      "withPatternsGsuMs": 6.1307599959622,
+      "withoutAllPatternsGsuMs": 5.8455282402719,
+      "differenceMs": -0.2852317556903001
+    },
+    {
+      "scene": "boss_profile/draw07500",
+      "withPatternsGsuMs": 5.6129102429769,
+      "withoutAllPatternsGsuMs": 5.4593525658193,
+      "differenceMs": -0.15355767715760038
+    },
+    {
+      "scene": "boss_profile/draw07800",
+      "withPatternsGsuMs": 1.3524063950021,
+      "withoutAllPatternsGsuMs": 1.4291386727327,
+      "differenceMs": 0.0767322777306001
+    },
+    {
+      "scene": "boss_profile/draw08100",
+      "withPatternsGsuMs": 10.395640563662,
+      "withoutAllPatternsGsuMs": 10.681337927834,
+      "differenceMs": 0.285697364172
+    },
+    {
+      "scene": "boss_profile/draw08400",
+      "withPatternsGsuMs": 8.2020658862075,
+      "withoutAllPatternsGsuMs": 8.0161949804426,
+      "differenceMs": -0.18587090576489906
+    },
+    {
+      "scene": "boss_profile/draw08700",
+      "withPatternsGsuMs": 4.1822816231037,
+      "withoutAllPatternsGsuMs": 4.906302811642,
+      "differenceMs": 0.7240211885383001
+    },
+    {
+      "scene": "boss_profile/draw09000",
+      "withPatternsGsuMs": 1.9098328689044,
+      "withoutAllPatternsGsuMs": 1.991314353145,
+      "differenceMs": 0.08148148424059998
+    },
+    {
+      "scene": "boss_profile/draw09300",
+      "withPatternsGsuMs": 2.3104424062795,
+      "withoutAllPatternsGsuMs": 2.7666455963309,
+      "differenceMs": 0.45620319005139987
+    },
+    {
+      "scene": "boss_profile/draw09600",
+      "withPatternsGsuMs": 4.3614477667369,
+      "withoutAllPatternsGsuMs": 4.4222562344044,
+      "differenceMs": 0.06080846766750003
+    },
+    {
+      "scene": "boss_profile/draw09900",
+      "withPatternsGsuMs": 10.265456432269,
+      "withoutAllPatternsGsuMs": 10.10845325235,
+      "differenceMs": -0.15700317991900015
+    },
+    {
+      "scene": "boss_profile/draw10200",
+      "withPatternsGsuMs": 0.51310054647536,
+      "withoutAllPatternsGsuMs": 0.54289948928337,
+      "differenceMs": 0.029798942808009987
+    },
+    {
+      "scene": "boss_profile/draw11100",
+      "withPatternsGsuMs": 0.65669420213144,
+      "withoutAllPatternsGsuMs": 0.66796192738072,
+      "differenceMs": 0.011267725249279992
+    },
+    {
+      "scene": "boss_profile/draw11400",
+      "withPatternsGsuMs": 1.7124148728014,
+      "withoutAllPatternsGsuMs": 1.8826413335921,
+      "differenceMs": 0.17022646079070003
+    },
+    {
+      "scene": "boss_profile/draw11700",
+      "withPatternsGsuMs": 4.197646702989051,
+      "withoutAllPatternsGsuMs": 4.13451019291465,
+      "differenceMs": -0.06313651007440058
+    },
+    {
+      "scene": "boss_profile/draw12000",
+      "withPatternsGsuMs": 6.0894139628161,
+      "withoutAllPatternsGsuMs": 6.3212869865409,
+      "differenceMs": 0.23187302372480012
+    },
+    {
+      "scene": "boss_profile/draw12300",
+      "withPatternsGsuMs": 2.4111069599528,
+      "withoutAllPatternsGsuMs": 2.7774477130988,
+      "differenceMs": 0.3663407531459999
+    },
+    {
+      "scene": "boss_profile/draw12600",
+      "withPatternsGsuMs": 6.1158605245582,
+      "withoutAllPatternsGsuMs": 5.8306287688679,
+      "differenceMs": -0.2852317556903001
+    },
+    {
+      "scene": "boss_profile/draw12900",
+      "withPatternsGsuMs": 3.8357757912644,
+      "withoutAllPatternsGsuMs": 3.7413503912415,
+      "differenceMs": -0.09442540002290034
+    },
+    {
+      "scene": "boss_profile/draw13200",
+      "withPatternsGsuMs": 1.98758948529405,
+      "withoutAllPatternsGsuMs": 2.15772282438845,
+      "differenceMs": 0.17013333909439998
+    },
+    {
+      "scene": "boss_profile/draw13500",
+      "withPatternsGsuMs": 5.667479556994,
+      "withoutAllPatternsGsuMs": 5.5820869615098,
+      "differenceMs": -0.0853925954842003
+    },
+    {
+      "scene": "boss_profile/draw13800",
+      "withPatternsGsuMs": 5.5261208220485,
+      "withoutAllPatternsGsuMs": 5.4215451571317,
+      "differenceMs": -0.10457566491680037
+    },
+    {
+      "scene": "boss_profile/draw14100",
+      "withPatternsGsuMs": 5.4476192320887,
+      "withoutAllPatternsGsuMs": 5.3979853679741,
+      "differenceMs": -0.04963386411459947
+    },
+    {
+      "scene": "boss_profile/draw14400",
+      "withPatternsGsuMs": 3.5003514412817,
+      "withoutAllPatternsGsuMs": 3.6079070004794,
+      "differenceMs": 0.10755555919770021
+    },
+    {
+      "scene": "boss_profile/draw14700",
+      "withPatternsGsuMs": 1.6891344487326,
+      "withoutAllPatternsGsuMs": 1.7362540270478,
+      "differenceMs": 0.04711957831519986
+    },
+    {
+      "scene": "boss_profile/draw15000",
+      "withPatternsGsuMs": 4.9842456714242,
+      "withoutAllPatternsGsuMs": 5.0835133996534,
+      "differenceMs": 0.09926772822919983
+    },
+    {
+      "scene": "boss_profile/draw15300",
+      "withPatternsGsuMs": 8.4532151010613,
+      "withoutAllPatternsGsuMs": 8.459547376408,
+      "differenceMs": 0.0063322753467005555
+    },
+    {
+      "scene": "boss_profile/draw15600",
+      "withPatternsGsuMs": 0.51310054647536,
+      "withoutAllPatternsGsuMs": 0.54289948928337,
+      "differenceMs": 0.029798942808009987
+    },
+    {
+      "scene": "boss_profile/draw16500",
+      "withPatternsGsuMs": 0.73305399307696,
+      "withoutAllPatternsGsuMs": 0.69794711358128,
+      "differenceMs": -0.03510687949567992
+    },
+    {
+      "scene": "boss_profile/draw16800",
+      "withPatternsGsuMs": 2.4298244209041,
+      "withoutAllPatternsGsuMs": 2.5777016745888,
+      "differenceMs": 0.14787725368470017
+    },
+    {
+      "scene": "boss_profile/draw17100",
+      "withPatternsGsuMs": 1.7893333939245,
+      "withoutAllPatternsGsuMs": 1.7786243988529,
+      "differenceMs": -0.010708995071599947
+    },
+    {
+      "scene": "boss_profile_linger/draw00001",
+      "withPatternsGsuMs": 1.59964449861235,
+      "withoutAllPatternsGsuMs": 1.65123391834865,
+      "differenceMs": 0.051589419736300046
+    },
+    {
+      "scene": "boss_profile_linger/draw00300",
+      "withPatternsGsuMs": 1.00366564245215,
+      "withoutAllPatternsGsuMs": 1.04882966514555,
+      "differenceMs": 0.04516402269340003
+    },
+    {
+      "scene": "boss_profile_linger/draw00600",
+      "withPatternsGsuMs": 3.6773757859006,
+      "withoutAllPatternsGsuMs": 4.1669165432183,
+      "differenceMs": 0.48954075731769997
+    },
+    {
+      "scene": "boss_profile_linger/draw00900",
+      "withPatternsGsuMs": 5.6957885526616,
+      "withoutAllPatternsGsuMs": 5.5057271705643,
+      "differenceMs": -0.1900613820973005
+    },
+    {
+      "scene": "boss_profile_linger/draw01200",
+      "withPatternsGsuMs": 9.0794585085108,
+      "withoutAllPatternsGsuMs": 9.0265653850266,
+      "differenceMs": -0.05289312348419983
+    },
+    {
+      "scene": "boss_profile_linger/draw01500",
+      "withPatternsGsuMs": 5.2702224006848,
+      "withoutAllPatternsGsuMs": 5.6902012508851,
+      "differenceMs": 0.4199788502002999
+    },
+    {
+      "scene": "boss_profile_linger/draw01800",
+      "withPatternsGsuMs": 8.7911537368433,
+      "withoutAllPatternsGsuMs": 9.5552172547798,
+      "differenceMs": 0.7640635179364992
+    },
+    {
+      "scene": "boss_profile_linger/draw02100",
+      "withPatternsGsuMs": 6.0973293069995,
+      "withoutAllPatternsGsuMs": 5.8120975513091,
+      "differenceMs": -0.2852317556903996
+    },
+    {
+      "scene": "boss_profile_linger/draw02400",
+      "withPatternsGsuMs": 2.45645722603875,
+      "withoutAllPatternsGsuMs": 2.91815459617035,
+      "differenceMs": 0.46169737013160006
+    },
+    {
+      "scene": "boss_profile_linger/draw02700",
+      "withPatternsGsuMs": 3.499420224319,
+      "withoutAllPatternsGsuMs": 3.3037715404452,
+      "differenceMs": -0.19564868387380008
+    },
+    {
+      "scene": "boss_profile_linger/draw03000",
+      "withPatternsGsuMs": 11.362802501174,
+      "withoutAllPatternsGsuMs": 11.084554872704501,
+      "differenceMs": -0.278247628469499
+    },
+    {
+      "scene": "boss_profile_linger/draw03300",
+      "withPatternsGsuMs": 3.0484318492591,
+      "withoutAllPatternsGsuMs": 3.3165292128349,
+      "differenceMs": 0.26809736357580016
+    },
+    {
+      "scene": "boss_profile_linger/draw03600",
+      "withPatternsGsuMs": 6.908884890036351,
+      "withoutAllPatternsGsuMs": 7.527399196694949,
+      "differenceMs": 0.6185143066585983
+    },
+    {
+      "scene": "boss_profile_linger/draw03900",
+      "withPatternsGsuMs": 7.5442542237208,
+      "withoutAllPatternsGsuMs": 7.097363203297,
+      "differenceMs": -0.44689102042379947
+    },
+    {
+      "scene": "boss_profile_linger/draw04200",
+      "withPatternsGsuMs": 0.77831113746662,
+      "withoutAllPatternsGsuMs": 0.75372700965002,
+      "differenceMs": -0.02458412781659991
+    },
+    {
+      "scene": "boss_profile_linger/draw04500",
+      "withPatternsGsuMs": 6.3759494222544,
+      "withoutAllPatternsGsuMs": 7.8597505307005,
+      "differenceMs": 1.4838011084460998
+    },
+    {
+      "scene": "boss_profile_linger/draw04800",
+      "withPatternsGsuMs": 5.447712353785,
+      "withoutAllPatternsGsuMs": 5.2634245168567,
+      "differenceMs": -0.18428783692829942
+    }
+  ],
+  "roadSampleSummary": {
+    "count": 69,
+    "withPatternsMaxMs": 11.362802501174,
+    "withoutAllPatternsMaxMs": 11.084554872704501,
+    "meanDifferenceMs": 0.11183105968751272,
+    "largestSampleSlowdownMs": 1.4838011084460998
+  },
+  "tightestRoadMargins": [
+    {
+      "image": 4879,
+      "approximateGsuExtensionLimitMs": 0.9826201390940152
+    },
+    {
+      "image": 4880,
+      "approximateGsuExtensionLimitMs": 1.273252953168354
+    },
+    {
+      "image": 4878,
+      "approximateGsuExtensionLimitMs": 1.3825778245952278
+    },
+    {
+      "image": 8104,
+      "approximateGsuExtensionLimitMs": 1.4207577200679862
+    },
+    {
+      "image": 15219,
+      "approximateGsuExtensionLimitMs": 1.4932995214662272
+    },
+    {
+      "image": 4886,
+      "approximateGsuExtensionLimitMs": 1.5095026966180807
+    }
+  ]
+}
