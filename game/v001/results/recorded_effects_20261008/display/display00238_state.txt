@@ -1,0 +1,15 @@
+ppu.mode7.hscroll=34
+ppu.layers[1].hscroll=0
+ppu.layers[0].vscroll=14
+ppu.layers[3].hscroll=17
+ppu.layers[1].vscroll=1011
+ppu.layers[2].hscroll=153
+ppu.bgMode=0
+ppu.mode7.vscroll=14
+ppu.layers[2].vscroll=3
+ppu.extBgEnabled=false
+ppu.layers[0].hscroll=34
+ppu.mode1Bg3Priority=false
+ppu.hScrollLatchValue=0
+ppu.hvScrollLatchValue=0
+ppu.layers[3].vscroll=14

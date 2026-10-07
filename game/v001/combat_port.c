@@ -61,7 +61,7 @@ void monosh_combat_fast_render(void)
             }
             b->screen_x = x; b->screen_y = y;
         }
-        fx_submit(x, y, 12, 12, MONOSH_DRAW_PBULLET, 0, 0, 2);
+        fx_submit(x, y, 12, 12, MONOSH_DRAW_PBULLET, 64, 0, 2);
     }
 }
 

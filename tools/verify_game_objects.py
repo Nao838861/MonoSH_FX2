@@ -6,24 +6,25 @@ import sys
 from PIL import Image
 from build_game import BUILD,GAME
 from verify_game_pixels import is_obj
+from build_objects import bullet_image, SIZES
 
 def object_pixels(vram,oam):
     out={}
-    for i in reversed(range(16)):
+    for i in reversed(range(32)):
         x,y,tile,attr=oam[i*4:i*4+4]
         high=(oam[512+i//4]>>(2*(i%4)))&3
         x|=(high&1)<<8
         if x>=256:x-=512
-        assert not high&2,'unexpected large OBJ'
+        size=32 if high&2 else 16
         tile|=(attr&1)<<8
         for screen_y in range(224):
             sy=(screen_y-y-1)&255
-            if sy>=16:continue
-            yy=15-sy if attr&128 else sy
-            for dx in range(16):
+            if sy>=size:continue
+            yy=size-1-sy if attr&128 else sy
+            for dx in range(size):
                 screen_x=x+dx
                 if not 0<=screen_x<256:continue
-                xx=15-dx if attr&64 else dx
+                xx=size-1-dx if attr&64 else dx
                 number=tile+(yy//8)*16+xx//8
                 address=0xc000+number*32+(yy%8)*2
                 bit=7-xx%8
@@ -38,7 +39,14 @@ def reference(draw,meta):
         if not is_obj(d):continue
         x,bottom,w,h,asset,flags,_,_=d
         if flags&128 and meta['logic']&1:continue
-        image=Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png')
+        origin_x=x-w//2;origin_y=bottom-h-7
+        palette_base=128
+        if asset==10:
+            size=7 if flags&64 else w
+            image=bullet_image(size);visual_w,visual_h=SIZES[size]
+            origin_x=x-visual_w//2;origin_y=bottom-h//2-visual_h//2-7
+            w,h=visual_w,visual_h;palette_base=144
+        else:image=Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png')
         du=image.width*256//w;dv=image.height*256//h
         for dy in range(h):
             sy=((image.height*256-1-dy*dv) if flags&32 else dy*dv)>>8
@@ -46,8 +54,8 @@ def reference(draw,meta):
                 sx=((image.width*256-1-dx*du) if flags&16 else dx*du)>>8
                 color=image.getpixel((sx,sy))
                 if color==0:continue
-                px=x-w//2+dx;py=bottom-h-7+dy
-                if 0<=px<256 and 23<=py<203:out[px,py]=128+color
+                px=origin_x+dx;py=origin_y+dy
+                if 0<=px<256 and 23<=py<203:out[px,py]=palette_base+color
     return out
 
 def verify(directory):
@@ -60,7 +68,7 @@ def verify(directory):
         draw=(directory/f'draw{n}.bin').read_bytes()
         meta=json.loads((directory/f'meta{n}.json').read_text())
         oam=(directory/f'oam{n}.bin').read_bytes()
-        assert oam[:64]+oam[512:516]==path.read_bytes(),'OAM generation differs'
+        assert oam[:128]+oam[512:520]==path.read_bytes(),'OAM generation differs'
         actual={p:c for p,c in object_pixels(vram,oam).items() if 23<=p[1]<203}
         expected=reference(draw,meta)
         diff={p for p in actual.keys()|expected.keys() if actual.get(p)!=expected.get(p)}
@@ -70,7 +78,7 @@ def verify(directory):
             if is_obj(d):
                 if d[4]==10:sizes.add(d[2])
                 else:poses.add(d[4]);flips.add(d[5]&48)
-        max_count=max(max_count,sum(oam[i*4+1]!=240 for i in range(16)))
+        max_count=max(max_count,sum(oam[i*4+1]!=240 for i in range(32)))
     if directory.name=='objects':
         assert poses=={9,*range(15,31)} and flips=={0,16,32,48}
         assert sizes==set(range(1,17))
@@ -79,12 +87,14 @@ def verify(directory):
         pixels=0;bank1=False;view_flips=set();colors=set()
         planned=json.loads((GAME/'assets/obj_color/palette.json').read_text())['rgb5']
         planned_words=[r|(g<<5)|(b<<10) for r,g,b in planned]
-        assert (GAME/'assets/obj_palette.bin').read_bytes()==struct.pack('<16H',*planned_words)
+        shot=json.loads((GAME/'assets/recorded_effects/bullet_palette.json').read_text())['rgb5']
+        planned_words += [r|(g<<5)|(b<<10) for r,g,b in shot]
+        assert (GAME/'assets/obj_palette.bin').read_bytes()==struct.pack('<32H',*planned_words)
         for path in views:
             oam=path.read_bytes()
             cgram=path.with_name(path.name.replace('_oam.bin','_cgram.bin')).read_bytes()
             palette=struct.unpack('<256H',cgram)
-            assert list(palette[128:144])==planned_words,'PPU OBJ palette differs from requested colors'
+            assert list(palette[128:160])==planned_words,'PPU OBJ palette differs from requested colors'
             screen=Image.open(path.with_name(path.name.replace('_oam.bin','.png'))).convert('RGB')
             for (x,y),color in object_pixels(vram,oam).items():
                 if 23<=y<203:
@@ -93,15 +103,17 @@ def verify(directory):
                     assert screen.getpixel((x,y+6))==expected,f'final PPU OBJ pixel differs: {path.name} {(x,y)}'
                     pixels+=1
                     colors.add(color-128)
-            for i in range(16):
+            for i in range(32):
                 if oam[i*4+1]!=240:
                     bank1|=bool(oam[i*4+3]&1)
                     view_flips.add(oam[i*4+3]&192)
         assert bank1 and view_flips=={0,64,128,192}
         expected_colors=set()
-        for asset in [9,10,*range(15,31)]:
+        for asset in [9,*range(15,31)]:
             with Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png') as image:
                 expected_colors.update(c for _,c in image.getcolors() if c)
+        with Image.open(GAME/'assets/recorded_effects/bullet.png') as image:
+            expected_colors.update(c+16 for _,c in image.getcolors() if c)
         assert colors==expected_colors,f'player/bullet colors missing in actual PPU captures: {colors} / {expected_colors}'
         (directory/'objects_ppu.json').write_text(json.dumps({'screens':len(views),'checkedObjectPixels':pixels,
                     'secondChrTableSeen':bank1,'flips':sorted(view_flips),'opaquePaletteIndices':sorted(colors),

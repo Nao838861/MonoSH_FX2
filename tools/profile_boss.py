@@ -51,7 +51,7 @@ def main():
     region = data[0x10000:0x20000]
     assert region.count(marker) == 1
     labels['admission_ready'] = region.index(marker)
-    marker = bytes.fromhex('a9808f00210020')
+    marker = bytes.fromhex('a9808f002100')
     region_start, region_end = labels['render_finished'], labels['dma_started']
     region = data[0x10000 + region_start:0x10000 + region_end]
     assert region.count(marker) == 1

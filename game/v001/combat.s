@@ -171,7 +171,11 @@ reflected_loop:
 reflected_emit:
   lda #$0c0c
   sta $0246
-  jsr emit_bullet
+  lda #$400a                ; flags=$40は小さい反射弾。判定矩形12x12は維持。
+  sta $0248
+  lda #$0200
+  sta $024a
+  jsr fx_emit_native
   bra reflected_next
 outside:
   sep #$20

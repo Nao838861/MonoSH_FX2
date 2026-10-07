@@ -1,6 +1,8 @@
 # MonoSH FX2：実行可能な移植版 v001
 
-最新ROMは [反復最適化](RESULTS_20261007_RENDER_ITERATIONS.md) により、通常入力約5分の道中・ボス戦・撃破後で提示遅延0回、**60.10fps**を達成。横縮小済みpacked行とGSUキャッシュ配置、CPUのOBJ準備、DMA取得を改善した。表示256×180・内部FB256×192は維持。任意の入力や実機での全条件保証はまだない。
+録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
+
+前版は [反復最適化](RESULTS_20261007_RENDER_ITERATIONS.md) により、通常入力約5分の道中・ボス戦・撃破後で提示遅延0回、**60.10fps**を達成。録画素材を加えた現行版の速度と転送余裕は上記の検証結果を参照する。表示256×180・内部FB256×192は維持。
 
 Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮描画、自機・自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を担当する。
 
@@ -26,7 +28,7 @@ ROM単体は [../../releases/MonoSHFX2_v001.sfc](../../releases/MonoSHFX2_v001.s
 
 ## ビルドと検証
 
-Python 3.10以上、Pillow、PATH上のcc65/ca65/ld65を使用する。ca65用GSUマクロcasfxは固定ハッシュを検査し、なければ取得する。固定済みソース・画像・テーブルがリポジトリ内にあるため、通常ビルドに元のNES/MSXプロジェクトは不要。
+Python 3.10以上、Pillow・NumPy、PATH上のcc65/ca65/ld65を使用する。ca65用GSUマクロcasfxは固定ハッシュを検査し、なければ取得する。固定済みソース・画像・テーブルがリポジトリ内にあるため、通常ビルドに元のNES/MSXプロジェクトは不要。
 
 プロジェクトのルート（[README.md](../../README.md)のある場所）で実行する。
 
@@ -50,7 +52,7 @@ python -X utf8 tools/test_game.py --scenario long --frames 18000 --timeout 360
 
 `--equivalence` はC参照版と65816版を同一入力・更新回数で比較し、通常ステージとボス出現・撃破・次周を別々に確認する。`display` は低・中・高カメラの最終RGB、地上物と同じ投影表、緑四色を検査する。`packed` は7種の高速経路・clip・反転を実行したことも要求する。
 
-`objects` は全17pose・四反転・16弾サイズ・四辺clip・点滅を検査し、OAM/CHRの独立復号と最終PPUのRGBを照合する。`verify_full_transfer_objects.py` は全12KiBと最大12 OBJを同時検証して記録し、最後に既定ROMを復元する。動的画素の照合ではMesenのホスト負荷によるframe skipを無効にする。ゲームの処理落ち判定とは別の設定。
+`objects` は全17pose・四反転・16弾サイズ・四辺clip・点滅を検査し、OAM/CHRの独立復号と最終PPUのRGBを照合する。`verify_full_transfer_objects.py` は全12KiBと自弾三発・反射弾三発・自機の最悪の重なりを同時検証して記録し、最後に既定ROMを復元する。動的画素の照合ではMesenのホスト負荷によるframe skipを無効にする。ゲームの処理落ち判定とは別の設定。
 
 VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip、flip、透明合成の全画素を照合する。`build/game_v001/` は自動生成物。保存済み測定・画像は [results/](results/)。Mesenのテスト用メモリアクセスAPIを使った検証であり、実機確認はまだ行っていない。
 
@@ -67,12 +69,13 @@ VRAMとGSUのFBを比較し、別のPython実装でもソート、Q8.8 UV、clip
 |[boss_render.s](boss_render.s) / [boss_collision.s](boss_collision.s)|ボスの履歴投影、描画、頭部命中・胴反射の判定|
 |[player.s](player.s) / [enemy_update.s](enemy_update.s) / [enemy_bullet.s](enemy_bullet.s)|通常移動、敵経路・開き状態、敵弾・DDAの65816更新|
 |[submit.s](submit.s) / [packet.s](packet.s)|65816の描画リスト、安定ソート、10byte/体の送信情報|
-|[objects.s](objects.s) / [../../tools/build_objects.py](../../tools/build_objects.py)|自機17poseを16×16の6 OBJへ分割、自弾16サイズを事前生成、OAM世代固定と68bytes転送|
+|[objects.s](objects.s) / [../../tools/build_objects.py](../../tools/build_objects.py)|自機17poseを16×16の6 OBJへ分割、大きな自弾を16/32px OBJで事前生成、OAM世代固定と使用枠分の転送|
 |[stage.s](stage.s) / [projection.s](projection.s)|地形の投影と、描画矩形を共用する自弾判定。更新はstage_update.s|
 |[gsu.s](gsu.s) / [gsu_draw.inc](gsu_draw.inc) / [gsu_clip.inc](gsu_clip.inc) / [gsu_uv.inc](gsu_uv.inc)|生の描画情報、clip、ROM比率表によるQ8.8 UV、最近傍拡縮|
 |[gsu_clear.inc](gsu_clear.inc) / [gsu_dma.inc](gsu_dma.inc)|前回の描画tile消去、前後の和集合からDMA区間生成|
 |[dma.s](dma.s)|CPU側のDMA保存領域と比較用の旧範囲生成|
 |[ground.s](ground.s) / [ground.c](ground.c)|通常BGの行別縦横投影、奥行き帯ごとの緑四色、独立した遠景スクロール|
+|[../../tools/build_scenery.py](../../tools/build_scenery.py)|録画由来の山・森林を別BGへ配置、21色の空を間接HDMAで共有|
 |[cpu.s](cpu.s) / [rom.cfg](rom.cfg)|起動・WRAM配置・CPU/GSU並行処理・HDMA・DMA|
 
 GSU動作中、CPUのコード・定数・作業領域はWRAMだけを使う。GSUへ渡したリストはSTOPまで固定し、CPUは次フレームを準備する。GSU RAMをCPUが読む／DMAするのはSTOP後。地面の可変HDMA表は3組で、表示中・描画中・次フレーム準備が同じ表を書かない。

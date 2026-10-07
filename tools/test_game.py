@@ -47,6 +47,7 @@ def main():
     config=json.loads(settings.read_text()); config['Snes']['Port1']={'Type':'SnesController'}
     # ホスト負荷によるPPU frame skipを無効化し、動的OBJと同じ世代のRGBを観測する。
     config['Snes']['DisableFrameSkipping']=True
+    config['Debug']['ScriptWindow']['ScriptTimeout']=10
     settings.write_text(json.dumps(config))
     result=subprocess.run([str(mesen),'--testRunner',f'--timeout={args.timeout}','--doNotSaveSettings',
             '--enableStdout',str(BUILD/'MonoSHFX2_v001.sfc'),str(path)],

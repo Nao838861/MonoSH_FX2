@@ -358,6 +358,8 @@ def main():
     if '--import-assets' in sys.argv or not (GAME/'asset_tables.c').exists(): export_assets()
     from build_ground import build as build_ground
     build_ground()
+    from build_scenery import build as build_scenery
+    build_scenery()
     from build_objects import build as build_objects
     build_objects()
     pack_assets()

@@ -83,7 +83,7 @@ local obj_clock=0
 emu.addMemoryCallback(guard(function() obj_clock=emu.getState().masterClock end),
   emu.callbackType.exec,0x7F0000+labels.fx_upload_obj,0x7F0000+labels.fx_upload_obj,emu.cpuType.snes,emu.memType.snesMemory)
 emu.addMemoryCallback(guard(function()
-  report:write(string.format('{"objMs":%.6f,"objBytes":68,"field":%d}\n',elapsed(emu.getState().masterClock,obj_clock),field))
+  report:write(string.format('{"objMs":%.6f,"objBytes":%d,"field":%d}\n',elapsed(emu.getState().masterClock,obj_clock),read('fx_obj_dma_bytes',2),field))
 end),emu.callbackType.exec,0x7F0000+labels.fx_obj_upload_done,0x7F0000+labels.fx_obj_upload_done,emu.cpuType.snes,emu.memType.snesMemory)
 if scenario=='objects' then
   emu.addEventCallback(guard(function()
@@ -100,11 +100,19 @@ if scenario=='objects' then
     local r={{128,165,68,158,4,0,0,0}}
     for i=1,6 do
       local size=1+(n+i)%16
-      r[#r+1]={100+i*8,100+i*4,size,size,10,0,0,2}
+      r[#r+1]={100+i*8,100+i*4,size,size,10,i>3 and 64 or 0,0,2}
     end
     local flags=((n//17)%4)*16
     if (n//68)%2==1 then flags=flags|128 end
     r[#r+1]={({0,256,128,128})[1+(n//4)%4],({48,180,28,230})[1+(n//7)%4],32,48,poses[1+n%17],flags,0,2}
+    if n%17==0 then
+      -- 最悪の重なり：初期自弾3＋反射弾3＋自機。同一走査線34tile以内。
+      for i=2,7 do
+        local size=(n%34==0 and i<=4) and 11 or 12
+        r[i]={128,110,size,size,10,i>4 and 64 or 0,0,2}
+      end
+      r[8][1]=128;r[8][2]=125
+    end
     for i,v in ipairs(r) do
       local b={v[1]&255,(v[1]>>8)&255,v[2]&255,(v[2]>>8)&255,v[3],v[4],v[5],v[6],v[7],v[8]}
       for j,c in ipairs(b) do put('_fx_draw',(i-1)*10+j-1,c) end
@@ -275,7 +283,7 @@ emu.addMemoryCallback(guard(function(a,v)
   end
   if rendered==0 or (rendered+1)%300==0 or (scenario=='packed' and rendered<8) or (scenario=='objects' and (rendered+1)%4==0) then
     dump(string.format('draw%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels._fx_draw,640)
-    dump(string.format('obj%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels.fx_obj_present,68)
+    dump(string.format('obj%05d.bin',rendered+1),emu.memType.snesMemory,0x7E0000+labels.fx_obj_present,136)
     local f=assert(io.open(output..string.format('/meta%05d.json',rendered+1),'w'))
     f:write(encoded({count=read('_fx_draw_count'),logic=read('_monosh_runtime_frame_counter',2),gsuUv=gsu_uv,gsuClip=gsu_clip,cpuClipCommands=cpu_clip_commands}));f:close()
   end
@@ -321,8 +329,8 @@ emu.addMemoryCallback(guard(function(a,v)
   local bytes=read('fx_dma_bytes',2)
   stats.objMaxCount=math.max(stats.objMaxCount or 0,read('fx_obj_present_count',2))
   assert(read('fx_obj_overflow',2)==0,'OBJ packet capacity exceeded')
-  for i=0,63 do assert(emu.read(i,emu.memType.snesSpriteRam)==byte('fx_obj_present',i),'OAM low snapshot differs') end
-  for i=0,3 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==byte('fx_obj_present',64+i),'OAM high snapshot differs') end
+  for i=0,127 do assert(emu.read(i,emu.memType.snesSpriteRam)==byte('fx_obj_present',i),'OAM low snapshot differs') end
+  for i=0,7 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==byte('fx_obj_present',128+i),'OAM high snapshot differs') end
   stats.dmaMaxMs=math.max(stats.dmaMaxMs,duration)
   stats.minBytes=math.min(stats.minBytes,bytes);stats.maxBytes=math.max(stats.maxBytes,bytes)
   local interval=field-previous_field;previous_field=field
@@ -366,7 +374,12 @@ emu.addMemoryCallback(guard(function(a,v)
   assert(same==12288,'partial DMA: '..same)
   stats.checked=stats.checked+1
   for i=0,15 do assert(emu.read(0x1ff0+i,emu.memType.gsuWorkRam)==0xa5 and emu.read(0x5000+i,emu.memType.gsuWorkRam)==0x5a,'GSU clip writes outside framebuffer') end
-  assert(emu.read(0,emu.memType.snesCgRam)==0xd8 and emu.read(1,emu.memType.snesCgRam)==0x7d,'purple backdrop palette corruption: '..emu.read(0,emu.memType.snesCgRam)..'/'..emu.read(1,emu.memType.snesCgRam)..' constant '..read('_fx_sky_color',2))
+  local current=emu.read(0,emu.memType.snesCgRam)+256*emu.read(1,emu.memType.snesCgRam)
+  local valid=false
+  for i=0,20 do
+    if current==byte('fx_sky_colors',i*4+2)+256*byte('fx_sky_colors',i*4+3) then valid=true end
+  end
+  assert(valid,'sky gradient palette corrupted')
   end
   if rendered==1 then
     local f=io.open(output..'/framebuffer.bin','wb'); local b={}
@@ -407,10 +420,16 @@ emu.addEventCallback(guard(function()
   end
 end),emu.eventType.inputPolled)
 emu.addEventCallback(guard(function()
+  assert(emu.read(0x213e,emu.memType.snesMemory)&0xc0==0,'OBJ scanline range/time overflow')
+end),emu.eventType.endFrame)
+emu.addEventCallback(guard(function()
   field=field+1
   local status=emu.read(0x213e,emu.memType.snesMemory)
   assert(status&0xc0==0,'OBJ range/time overflow')
   if rendered>0 then
+    if scenario=='held' and held_direction=='none' and field>=90 and field<=150 then
+      screenshot(string.format('shot%05d',field))
+    end
     if read('_monosh_boss_state')==1 and read('_boss_age')>=100 and not stats.bossImage then screenshot('scene_boss');stats.bossImage=true end
     if read('_monosh_enemy_active_count_value')>=3 and not stats.enemyImage then screenshot('scene_enemies');stats.enemyImage=true end
     if read('_monosh_player_state')~=0 and not stats.deathImage then screenshot('scene_death');stats.deathImage=true end

@@ -1,6 +1,8 @@
 .setcpu "65816"
 .smart
 .export _fx_build_ground, _fx_ground_native, ground_done, ground_empty, fx_upload_ground
+.export fx_sky_pointer
+.export fx_sky_colors
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_horizon, _monosh_ground_offset, _fx_ground_phase
 .import _fx_far_u_acc, _fx_far_d_acc, _fx_ground_far_xptr
@@ -13,6 +15,8 @@ hp: .res 2
 hv: .res 2
 .segment "BSS"
 ground_slot: .res 2
+fx_sky_pointer: .res 2
+sky_tables: .res 30
 .segment "CODE"
 .a8
 .i8
@@ -36,6 +40,8 @@ _fx_build_ground:
   sta _fx_ground_hptr
   lda f:$7f0000+far_pointers,x
   sta _fx_ground_far_xptr
+  lda f:$7f0000+sky_pointers,x
+  sta fx_sky_pointer
   lda _monosh_ground_offset
   and #$ff
   sta $0120
@@ -54,6 +60,29 @@ _fx_ground_native:
   lda _monosh_ground_offset
   and #$ff
   sta $0120
+  lda fx_sky_pointer
+  sta fp
+  ldy #0
+  lda $0120
+  clc
+  adc #87
+  cmp #128
+  bcc sky_tail
+  pha
+  lda #127
+  jsr sky_run
+  pla
+  sec
+  sbc #127
+sky_tail:
+  jsr sky_run
+  lda #149                  ; 21走査線は共有色列を毎行読み進める。
+  jsr sky_run
+  sep #$20
+  lda #0
+  sta (fp),y
+  rep #$20
+  lda $0120
   asl
   tax
   lda f:$7f0000+ground_scroll_offsets,x
@@ -81,29 +110,12 @@ _fx_ground_native:
   .repeat 7
     lsr
   .endrepeat
-  and #$ff
+  and #$1ff
   sta $0134
-  lda $0120
-  clc
-  adc #102
-  ldy #0
-  cmp #128
-  bcc far_tail
-  pha
   lda #127
+  ldy #0
   jsr far_run
-  pla
-  sec
-  sbc #127
-far_tail:
-  jsr far_run
-  lda _fx_far_d_acc
-  .repeat 7
-    lsr
-  .endrepeat
-  and #$ff
-  sta $0134
-  lda #2
+  lda #97
   jsr far_run
   sep #$20
   lda #0
@@ -172,6 +184,16 @@ horizontal_run:
   iny
   iny
   rts
+sky_run:
+  sep #$20
+  sta (fp),y
+  rep #$20
+  iny
+  lda #fx_sky_colors
+  sta (fp),y
+  iny
+  iny
+  rts
 far_run:
   sep #$20
   sta (fp),y
@@ -226,6 +248,7 @@ color1_pointers: .word _fx_ground_color1, _fx_ground_color1+150, _fx_ground_colo
 color3_pointers: .word _fx_ground_color3, _fx_ground_color3+150, _fx_ground_color3+300
 horizontal_pointers: .word _fx_ground_horizontal, _fx_ground_horizontal+270, _fx_ground_horizontal+540
 far_pointers: .word _fx_ground_far_x, _fx_ground_far_x+10, _fx_ground_far_x+20
+sky_pointers: .word sky_tables, sky_tables+10, sky_tables+20
 ground_scroll_offsets: .incbin "assets/ground_scroll_offsets.bin"
 ground_horizontal_run_offsets: .incbin "assets/ground_horizontal_run_offsets.bin"
 ground_scroll_data: .incbin "assets/ground_scroll.bin"
@@ -234,6 +257,7 @@ ground_horizontal_runs: .incbin "assets/ground_horizontal_runs.bin"
 .segment "CODE"
 ground_horizontal_offsets: .incbin "assets/ground_horizontal_offsets.bin"
 .segment "RODATA"
+fx_sky_colors: .incbin "assets/sky_hdma.bin"
 ground_horizontal_values: .incbin "assets/ground_horizontal.bin"
 .repeat 4,I
   .segment .sprintf("PAL%02X",$5A+I)

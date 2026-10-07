@@ -3,6 +3,7 @@
 .import _main, _fx_frame, _fx_buttons, _fx_packet_count, _fx_packet
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_far_y
+.import _fx_far_d_acc, fx_sky_pointer
 .import _fx_ground_hptr
 .import ground_empty
 .import fx_upload_ground
@@ -50,16 +51,19 @@ reset:
   plb
   sep #$20
   stz $2105
-  stz $210b
+  lda #3
+  sta $210b                 ; BG1森林 CHR=$6000、BG2 FX CHR=$0000。
   lda #$32
   sta $210c                 ; BG3 CHR=$4000, BG4 CHR=$6000 bytes
   lda #$40
   sta $2108                 ; BG2 map=$8000
+  lda #$49
+  sta $2107                 ; BG1森林 map=$9000、64x32。
   lda #$51
   sta $2109                 ; BG3 map=$a000
-  lda #$58
+  lda #$59
   sta $210a                 ; BG4 map=$b000、OBJ CHR=$c000〜$ffff。
-  lda #$1e
+  lda #$1f
   sta $212c
   stz $212d
   stz $2133
@@ -123,8 +127,24 @@ obj_palette:
   lda f:obj_palette_data,x
   sta $2122
   inx
-  cpx #32
+  cpx #64
   bne obj_palette
+  stz $2121
+  ldx #0
+near_palette:
+  lda f:scenery_palette_data,x
+  sta $2122
+  inx
+  cpx #64
+  bne near_palette
+  lda #96
+  sta $2121
+far_palette:
+  lda f:scenery_palette_data,x
+  sta $2122
+  inx
+  cpx #128
+  bne far_palette
   lda #$63                  ; size選択3=small16、大32、CHR byte base C000。
   sta $2101
   stz $2102
@@ -182,6 +202,7 @@ clear_high_oam:
   jml $7f0000 + game_started
 
 obj_palette_data: .incbin "assets/obj_palette.bin"
+scenery_palette_data: .incbin "assets/scenery_palette.bin"
 
 .segment "CODE"
 .a8
@@ -196,6 +217,7 @@ game_started:
   sta f:$7e1d08
   sta f:$7e1d0c
   sta f:$7e1d0e
+  sta f:$7e1d16
   lda #ground_empty
   sta f:$7e1d04
   sep #$20
@@ -206,7 +228,7 @@ wait_initial_vblank:
   lda f:$004212
   and #$80
   beq wait_initial_vblank   ; 新規HDMAは次field先頭で初期化させる。
-  lda #$be
+  lda #$fe
   sta f:$00420c
   plp
   jsr _main
@@ -245,12 +267,20 @@ _fx_send_ground:
   sta f:$004352
   lda f:$7e1d0c
   sta f:$004372
+  lda f:$7e1d16
+  sta f:$004362
   sep #$20
   lda #$7e
   sta f:$004334
   sta f:$004344
   sta f:$004354
   sta f:$004374
+  sta f:$004364
+  sta f:$004367
+  lda #$43
+  sta f:$004360
+  lda #$21
+  sta f:$004361
   lda #$7f
   sta f:$004324
   lda #2
@@ -286,6 +316,8 @@ update_ground_pointers:
   sta f:$004352
   lda f:$7e1d0c
   sta f:$004372
+  lda f:$7e1d16
+  sta f:$004362
   plp
   rts
 
@@ -318,6 +350,14 @@ _fx_present:
   sta f:$7e1d08
   lda _fx_ground_far_y
   sta f:$7e1d0a
+  lda fx_sky_pointer
+  sta f:$7e1d16
+  lda _fx_far_d_acc
+  .repeat 7
+    lsr
+  .endrepeat
+  and #$1ff
+  sta f:$7e1d14
   lda _fx_ground_far_xptr
   sta f:$7e1d0c
   lda _fx_ground_hptr
@@ -456,12 +496,22 @@ wait_hblank:
   beq wait_hblank
   lda #$80
   sta f:$002100
+  lda #0
+  sta f:$00420c             ; 黒帯内だけHDMAを止め、共有スクロールラッチを保護。
   jsr update_ground_pointers
   lda f:$7e1d0a
   sta f:$002114
   lda f:$7e1d0b
   sta f:$002114
-  lda #$be
+  lda f:$7e1d0a
+  sta f:$00210e
+  lda f:$7e1d0b
+  sta f:$00210e
+  lda f:$7e1d14
+  sta f:$00210d
+  lda f:$7e1d15
+  sta f:$00210d
+  lda #$fe
   sta f:$00420c
   jsr fx_upload_obj
   rep #$20
@@ -509,7 +559,7 @@ render_entry_address = $8000
 
 blank_table:
   ; 22行目は輝度0でOBJ評価/CHR fetchを再開し、23行目のOBJを用意する。
-  ; 全FB+OAM DMAは20行目までに終える。表示範囲23..202は180行のまま。
+  ; 全FB+OAM DMAは21行目までに終える。表示範囲23..202は180行のまま。
   .byte 21,$80,1,$00,127,$0f,53,$0f,22,$80,1,$80,0
 
 

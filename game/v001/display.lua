@@ -5,6 +5,8 @@ if scenario=='display' then
     put('_monosh_ground_offset',0,offset)
     put('_fx_ground_world_phase',0,32)
     put('_fx_ground_phase',0,6)
+    write('_fx_far_u_acc',17*128)
+    write('_fx_far_d_acc',34*128)
     local records={}
     for i,z in ipairs({0,24,60,110}) do
       local geometry=labels._monosh_stage_geometry+4*2
@@ -33,13 +35,20 @@ if scenario=='display' then
     dump(prefix..'_oam.bin',emu.memType.snesSpriteRam,0,544)
     local meta={}
     for _,r in ipairs({{'v',0x1d04,500,0x7f0000},{'c1',0x1d06,128,0x7e0000},
-        {'c3',0x1d08,128,0x7e0000},{'far',0x1d0c,10,0x7e0000},{'h',0x1d0e,270,0x7e0000}}) do
+        {'c3',0x1d08,128,0x7e0000},{'far',0x1d0c,10,0x7e0000},{'h',0x1d0e,270,0x7e0000},
+        {'sky',0x1d16,10,0x7e0000}}) do
       local p=emu.read(0x7e0000+r[2],emu.memType.snesMemory)+256*emu.read(0x7e0000+r[2]+1,emu.memType.snesMemory)
       dump(prefix..'_'..r[1]..'.bin',emu.memType.snesMemory,r[4]+p,r[3])
     end
     local far=emu.read(0x7e1d0a,emu.memType.snesMemory)+256*emu.read(0x7e1d0b,emu.memType.snesMemory)
     if far>=32768 then far=far-65536 end
     meta.farY=far;meta.offset=14-far
+    meta.nearX=emu.read(0x7e1d14,emu.memType.snesMemory)+256*emu.read(0x7e1d15,emu.memType.snesMemory)
+    meta.skyBase=labels.fx_sky_colors
+    local sf=assert(io.open(output..'/'..prefix..'_state.txt','w'))
+    for k,v in pairs(emu.getState()) do if k:find('ppu') and (k:lower():find('scroll') or k:lower():find('bg')) then sf:write(k..'='..tostring(v)..'\n') end end
+    sf:close()
+    dump(prefix..'_skycolors.bin',emu.memType.snesMemory,0x7e0000+labels.fx_sky_colors,84)
     local f=assert(io.open(output..'/'..prefix..'.json','w'));f:write(encoded(meta));f:close()
   end),emu.eventType.startFrame)
   emu.addEventCallback(guard(function()

@@ -4,6 +4,7 @@
 .export fx_is_obj, fx_build_obj, fx_latch_obj, fx_upload_obj
 .export fx_obj_upload_done
 .export fx_obj_build_done
+.export fx_obj_dma_bytes
 .export fx_obj_next, fx_obj_present, fx_obj_count, fx_obj_present_count, fx_obj_overflow
 .import _fx_draw, _fx_draw_count, _monosh_runtime_frame_counter
 .ifdef FX_FAST_OBJ
@@ -14,8 +15,8 @@ obj_xy: .res 2
 obj_attr: .res 2
 .endif
 .segment "BSS"
-fx_obj_next: .res 68
-fx_obj_present: .res 68
+fx_obj_next: .res 136
+fx_obj_present: .res 136
 fx_obj_count: .res 2
 fx_obj_present_count: .res 2
 fx_obj_overflow: .res 2
@@ -31,6 +32,12 @@ py: .res 2
 tile: .res 2
 attribute: .res 2
 work: .res 2
+obj_size: .res 2
+bullet_width: .res 2
+bullet_height: .res 2
+bullet_count: .res 2
+last_upload_count: .res 2
+fx_obj_dma_bytes: .res 2
 .segment "CODE"
 .a16
 .i16
@@ -88,10 +95,12 @@ hide:
   inx
   inx
   inx
-  cpx #64
+  cpx #128
   bcc hide
-  stz fx_obj_next+64
-  stz fx_obj_next+66
+  stz fx_obj_next+128
+  stz fx_obj_next+130
+  stz fx_obj_next+132
+  stz fx_obj_next+134
   lda _fx_draw_count
   and #$ff
   sta work
@@ -111,6 +120,8 @@ next_record:
   jsr fx_is_obj
   jeq next_record
   sta kind
+  lda #16
+  sta obj_size
   lda _fx_draw+7,x
   and #$ff
   sta flags
@@ -161,7 +172,7 @@ next_record:
   cmp #177
   bcs player_slow
   lda fx_obj_count
-  cmp #11
+  cmp #27
   bcs player_slow
   jsr player_fast
   jmp next_record
@@ -220,17 +231,114 @@ player_part:
   bcc player_part
   jmp next_record
 single_bullet:
-  lda left
-  sta px
-  lda top
-  sta py
   lda _fx_draw+4,x
   and #$ff
+  sta work
+  lda flags
+  and #$40                  ; 反射弾には発射直後の大きな輪を使わない。
+  beq :+
+  lda #7
+  sta work
+:
+  lda work
   asl
+  tay
+  lda bullet_tiles,y
+  clc
+  adc #bullet_tiles+34
+  sta tile_pointer
+  tay
+  lda a:$0000,y
+  and #$ff
+  sta bullet_width
+  lsr
+  sta work
+  lda _fx_draw,x
+  sec
+  sbc work
+  sta left
+  lda a:$0000,y
+  xba
+  and #$ff
+  sta bullet_height
+  lsr
+  sta work
+  lda _fx_draw+4,x
+  xba
+  and #$ff
+  lsr
+  clc
+  adc work
+  sta work
+  lda _fx_draw+2,x
+  sec
+  sbc work
+  sec
+  sbc #8
+  sta top
+  lda a:$0002,y
+  and #$ff
+  sta bullet_count
+  lda tile_pointer
+  clc
+  adc #4
+  sta tile_pointer
+  stz part
+bullet_part:
+  lda part
+  asl
+  asl
+  clc
+  adc tile_pointer
   tax
-  lda bullet_tiles,x
+  lda a:$0002,x
   sta tile
+  lda #16
+  bit tile
+  bpl :+
+  lda #32
+:
+  sta obj_size
+  lda a:$0000,x
+  and #$ff
+  sta work
+  lda flags
+  and #$10
+  beq :+
+  lda bullet_width
+  sec
+  sbc work
+  sec
+  sbc obj_size
+  sta work
+:
+  lda left
+  clc
+  adc work
+  sta px
+  lda a:$0000,x
+  xba
+  and #$ff
+  sta work
+  lda flags
+  and #$20
+  beq :+
+  lda bullet_height
+  sec
+  sbc work
+  sec
+  sbc obj_size
+  sta work
+:
+  lda top
+  clc
+  adc work
+  sta py
   jsr emit
+  inc part
+  lda part
+  cmp bullet_count
+  jcc bullet_part
   jmp next_record
 done:
 fx_obj_build_done:
@@ -239,7 +347,7 @@ fx_obj_build_done:
 emit:
   lda px
   clc
-  adc #16
+  adc obj_size
   jmi invisible
   jeq invisible
   lda px
@@ -247,14 +355,14 @@ emit:
   jpl invisible
   lda py
   clc
-  adc #16
+  adc obj_size
   jmi invisible
   jeq invisible
   lda py
   cmp #224
   jpl invisible
   lda fx_obj_count
-  cmp #16
+  cmp #32
   bcc :+
   inc fx_obj_overflow
   rts
@@ -276,6 +384,13 @@ emit:
   asl
   ora #$30                  ; priority 3、palette 0。
   sta attribute
+  lda kind
+  cmp #2
+  bne :+
+  lda attribute
+  ora #2                    ; 自弾は独立した水色palette 1。
+  sta attribute
+:
   lda tile
   xba
   and #1
@@ -288,23 +403,38 @@ emit:
   sta fx_obj_next+2,y
   lda px
   and #$100
-  beq :+
+  xba
+  and #1
+  sta work
+  lda obj_size
+  cmp #32
+  bne :+
+  lda work
+  ora #2
+  sta work
+:
   lda fx_obj_count
   and #3
+  tay
+  lda work
+shift_high:
+  cpy #0
+  beq store_high
   asl
-  tax
-  lda f:$7f0000+high_masks,x
+  asl
+  dey
+  bra shift_high
+store_high:
   sta work
   lda fx_obj_count
   lsr
   lsr
   tax
   sep #$20
-  lda fx_obj_next+64,x
+  lda fx_obj_next+128,x
   ora work
-  sta fx_obj_next+64,x
+  sta fx_obj_next+128,x
   rep #$20
-:
   inc fx_obj_count
 invisible:
   rts
@@ -374,7 +504,7 @@ player_offsets:
 fx_latch_obj:
   php
   rep #$30
-  ldx #66
+  ldx #134
 copy:
   lda fx_obj_next,x
   sta fx_obj_present,x
@@ -386,7 +516,7 @@ copy:
   plp
   rts
 
-; forced blank中に16枠のlow64bytes、対応するhigh4bytesだけ更新。
+; forced blank中に32枠のlow128bytes、対応するhigh8bytesだけ更新。
 fx_upload_obj:
   php
   rep #$30
@@ -401,8 +531,23 @@ fx_upload_obj:
   sta f:$002102
   sta f:$002103
   rep #$20
-  lda #64
+  lda fx_obj_present_count
+  cmp last_upload_count
+  bcs :+
+  lda last_upload_count
+:
+  cmp #1
+  bcs :+
+  lda #1
+:
+  asl
+  asl
   sta f:$004305
+  clc
+  adc #8
+  sta fx_obj_dma_bytes
+  lda fx_obj_present_count
+  sta last_upload_count
   sep #$20
   lda #1
   sta f:$00420b
@@ -411,9 +556,9 @@ fx_upload_obj:
   lda #1
   sta f:$002103
   rep #$20
-  lda #fx_obj_present+64
+  lda #fx_obj_present+128
   sta f:$004302
-  lda #4
+  lda #8
   sta f:$004305
   sep #$20
   lda #1

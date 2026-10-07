@@ -1,0 +1,9 @@
+{
+  "bg1": "near: map9000, low priority",
+  "bg4": "far: mapB000",
+  "width": 512,
+  "chrBase": 24576,
+  "tiles": 220,
+  "skyColors": 21,
+  "skyTableBytes": 10
+}
