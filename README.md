@@ -4,7 +4,7 @@
 
 統合した最終ROMで通常プレイ・長期ボス各約5分、**全区分の表示遅延0、60.10fps**を確認した。固定523場面2,454画像の全FB/OBJ、42条件のDMA限界量、操作・表示・押しっぱなしも検証済み。任意の入力・実機での保証はまだない。
 
-録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
+録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](game/v001/RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](game/v001/results/recorded_effects_20261008/stationary_fire.gif)を保存している。遠景は録画と実PPU画像を比較し、森を9ドット上げ、山裾の透過穴とグラデーションの範囲を修正した。[修正前後の比較](game/v001/results/scenery_fix_20261008/comparison.png)、[修正内容](game/v001/RESULTS_20261008_SCENERY_FIX.md)。以前の測定値は、その測定時のROMに対する記録。
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 

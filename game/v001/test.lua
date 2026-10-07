@@ -382,7 +382,7 @@ emu.addMemoryCallback(guard(function(a,v)
   for i=0,15 do assert(emu.read(0x1ff0+i,emu.memType.gsuWorkRam)==0xa5 and emu.read(0x5000+i,emu.memType.gsuWorkRam)==0x5a,'GSU clip writes outside framebuffer') end
   local current=emu.read(0,emu.memType.snesCgRam)+256*emu.read(1,emu.memType.snesCgRam)
   local valid=false
-  for i=0,20 do
+  for i=0,(labels.fx_sky_colors_end-labels.fx_sky_colors)//4-1 do
     if current==byte('fx_sky_colors',i*4+2)+256*byte('fx_sky_colors',i*4+3) then valid=true end
   end
   assert(valid,'sky gradient palette corrupted')

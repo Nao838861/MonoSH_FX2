@@ -1,8 +1,9 @@
 .setcpu "65816"
 .smart
+.include "assets/scenery.inc"
 .export _fx_build_ground, _fx_ground_native, ground_done, ground_empty, fx_upload_ground
 .export fx_sky_pointer
-.export fx_sky_colors
+.export fx_sky_colors, fx_sky_colors_end
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_horizon, _monosh_ground_offset, _fx_ground_phase
 .import _fx_far_u_acc, _fx_far_d_acc, _fx_ground_far_xptr
@@ -48,7 +49,7 @@ _fx_build_ground:
   clc
   adc #111
   sta _fx_ground_horizon
-  lda #14
+  lda #FX_SCENERY_V
   sec
   sbc $0120
   sta _fx_ground_far_y
@@ -65,7 +66,7 @@ _fx_ground_native:
   ldy #0
   lda $0120
   clc
-  adc #87
+  adc #FX_SKY_START
   cmp #128
   bcc sky_tail
   pha
@@ -76,7 +77,7 @@ _fx_ground_native:
   sbc #127
 sky_tail:
   jsr sky_run
-  lda #149                  ; 21走査線は共有色列を毎行読み進める。
+  lda #128+FX_SKY_COLORS     ; 録画の色列を毎行読み進める。
   jsr sky_run
   sep #$20
   lda #0
@@ -256,6 +257,7 @@ ground_horizontal_runs: .incbin "assets/ground_horizontal_runs.bin"
 ground_horizontal_offsets: .incbin "assets/ground_horizontal_offsets.bin"
 .segment "RODATA"
 fx_sky_colors: .incbin "assets/sky_hdma.bin"
+fx_sky_colors_end:
 ground_horizontal_values: .incbin "assets/ground_horizontal.bin"
 .repeat 4,I
   .segment .sprintf("PAL%02X",$5A+I)

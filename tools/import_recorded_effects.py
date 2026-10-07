@@ -54,27 +54,41 @@ def main():
     captures_im.crop((209,84,277,126)).save(DEST/'bullet_capture.png')
     im,pal=indexed(bullet.resize((56,32),Image.Resampling.NEAREST));im.save(DEST/'bullet.png')
     (DEST/'bullet_palette.json').write_text(json.dumps({'rgb5':pal},indent=2)+'\n')
-    # 山の輪郭を紫/白/青と緑で分離。空の色は全幅の中央値を基準とする。
+    # 空だけの列で背景色を測る。山を含む行全体の中央値では輪郭に穴が開く。
     scene=captures[1741];strip=scene[140:159].astype(np.int16)
-    green=(strip[:,:,1]>strip[:,:,0]+12)&(strip[:,:,1]>strip[:,:,2]-15)
-    sky=np.median(scene[:,0:60],axis=1)
-    diff=((strip-sky[140:159,None,:])**2).sum(axis=2)>450
-    far=diff&~green&(strip[:,:,2]>strip[:,:,1]+8)&(strip[:,:,2]>strip[:,:,0]-15)&(strip[:,:,1]>90)
-    # 薄い紫の下端と緑の森林を別々の透明画像へ。159行以降の市松地面は含めない。
-    near=green&diff;near[:6]=False
-    for name,mask in [('far',far),('near',near)]:
-        rgba=np.dstack([strip.astype(np.uint8),mask.astype(np.uint8)*255])
+    sky=np.median(scene[:153,10:45],axis=1)
+    backdrop=np.vstack([sky[140:153],np.repeat(sky[150:151],6,axis=0)])
+    diff=((strip-backdrop[:,None,:])**2).sum(axis=2)>625
+    green=(strip[:,:,1]>strip[:,:,0]+16)&(strip[:,:,1]>strip[:,:,2]-12)
+    observed=diff&~green&(strip[:,:,2]>strip[:,:,1]+12)&(strip[:,:,2]>strip[:,:,0]-12)
+    near=green&diff;near[:10]=False
+    # 別速度で動く森を除去した跡は透明にしない。山の裾を背後まで延長し、
+    # 隠れていた色は同じ録画の最寄りの紫/白/青の画素で補う。
+    far=np.zeros_like(observed)
+    for x in range(320):
+        rows=np.flatnonzero(observed[:,x]);top=min(int(rows[0]) if len(rows) else 12,12)
+        far[top:,x]=True
+    mountain=strip.copy();known=np.argwhere(observed)
+    for y,x in np.argwhere(far&~observed):
+        distance=((known-np.array([y,x]))**2).sum(axis=1)
+        sy,sx=known[distance.argmin()];mountain[y,x]=strip[sy,sx]
+    for name,mask,pixels in [('far',far,mountain),('near',near,strip)]:
+        rgba=np.dstack([pixels.astype(np.uint8),mask.astype(np.uint8)*255])
         canvas=Image.new('RGBA',(512,256));patch=Image.fromarray(rgba)
         patch=patch.crop((0,0,256,19));canvas.paste(patch,(0,108))
         # 録画一画面の外側は反転してつなぎ、端の高さと色を連続させる。
         canvas.paste(patch.transpose(Image.Transpose.FLIP_LEFT_RIGHT),(256,108))
         canvas.save(DEST/f'{name}_source.png')
-    gradient=rgb5(np.median(scene[124:145],axis=1)).tolist()
+    # 130行の空の基色と131..150行を使い、紫→緑の終端を途中で切らない。
+    gradient=rgb5(sky[130:151]).tolist()
     (DEST/'source.json').write_text(json.dumps({'video':str(args.video),'sha256':hashlib.sha256(args.video.read_bytes()).hexdigest(),
         'nativeCrop':[480,204,960,672],'nativeResolution':[320,224],
         'bullet':{'frame':2344,'seconds':78.1,'crop':[209,84,277,126],'output':[56,32],
           'repair':'自機に隠れた画素を、同一フレームの水色が残る対称象限から補完'},
-        'mountains':{'frame':1741,'seconds':58,'crop':[0,140,320,159],'map':[512,256]},
+        'mountains':{'frame':1741,'seconds':58,'crop':[0,140,320,159],'map':[512,256],
+          'nativeHorizon':159,'mapHorizon':127,'screenHorizon':104,
+          'repair':'森の背後の山裾を不透明に延長し、録画内の最寄りの山の画素で補完'},
+        'skyNativeStart':130,
         'skyRgb5':gradient},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     preview=Image.new('RGB',(1024,480),(185,123,247));preview.paste(im.convert('RGBA').resize((448,256),Image.Resampling.NEAREST),(20,20),im.convert('RGBA').resize((448,256),Image.Resampling.NEAREST))
     for name in ('far','near'):

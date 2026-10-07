@@ -4,7 +4,7 @@
 
 最終統合ROMは通常プレイ・長期ボス各約5分で、全区分の表示遅延0、**60.10fps**。固定523場面と42条件のDMA限界量も検証した。任意の入力や実機での保証はまだない。
 
-録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](results/recorded_effects_20261008/stationary_fire.gif)を保存している。以前の測定値は、その測定時のROMに対する記録。
+録画由来の大きな自弾・紫から緑の空・二層遠景を実装した。[検証結果](RESULTS_20261008_RECORDED_EFFECTS.md)、[静止連射GIF](results/recorded_effects_20261008/stationary_fire.gif)を保存している。森の位置・山裾の透明穴・空の範囲は[録画との画像比較](RESULTS_20261008_SCENERY_FIX.md)で修正した。以前の測定値は、その測定時のROMに対する記録。
 
 Stage 1、地形・敵2種・射撃・反射・転倒・死亡・復帰・9節ボス・撃破・次周の進行を含む単独起動SNES ROM。MSX版の60Hz更新仕様とデータを移植し、CPUが更新・ソート、Super FX2が拡縮描画、自機・自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を担当する。
 

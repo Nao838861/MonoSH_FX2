@@ -60,6 +60,7 @@ def verify(directory):
         base=path.with_suffix('');meta=json.loads(path.read_text());offsets.append(meta['offset'])
         data=lambda name:Path(str(base)+'_'+name+'.bin').read_bytes()
         vram=data('vram');cgram=data('cgram');palette=list(struct.unpack('<256H',cgram))
+        assert any(min(rgb(word))>220 for word in palette[96:128]),'white mountain ridge lost during quantization'
         objects=object_pixels(vram,data('oam'))
         v,h,far=[hdma(data(name),2) for name in ('v','h','far')]
         # VRAM一致だけでなく、原本の地上物と同じ投影・横移動を要求する。
@@ -70,7 +71,20 @@ def verify(directory):
             assert struct.unpack('<H',h[physical])[0]==128+32*(source-127)*51//(64*80)
         c1,c3=[hdma(data(name),4) for name in ('c1','c3')]
         sky=hdma(data('sky'),4,indirect=(data('skycolors'),meta['skyBase']))
-        assert meta['nearX']==34 and all(struct.unpack('<H',row)[0]==17 for row in far),'two BG scroll rates'
+        assert meta['nearX']==meta['farX']*2 and all(struct.unpack('<H',row)[0]==meta['farX'] for row in far),'two BG scroll rates'
+        # 実装をなぞるRGB参照だけでなく、ユーザー指摘の三条件を独立に要求する。
+        horizon=104+meta['offset']
+        assert meta['farY']==23-meta['offset'],'forest/ground horizon alignment'
+        for x in range(512):
+            for y in range(horizon,horizon+8):
+                assert pixel(vram,3,x,y+meta['farY']) is None,'forest occludes ground'
+            for y in range(horizon-7,horizon):
+                assert pixel(vram,2,x,y+meta['farY']) is not None,'hole in purple mountain base'
+        # 山に遮られない空色列は原作の130..150行と同じ長さ・RGB5を持つ。
+        reference=json.loads((GAME/'assets/recorded_effects/source.json').read_text(encoding='utf-8'))['skyRgb5']
+        start=horizon-29
+        for row,(r,g,b) in enumerate(reference):
+            assert struct.unpack('<BBH',sky[start-1+row])[2]==r|(g<<5)|(b<<10),'sky gradient extent/color'
         image=Image.open(base.with_suffix('.png')).convert('RGB')
         greens={image.getpixel((x,y)) for y in range(image.height) for x in range(image.width)
                 if image.getpixel((x,y))[1]>max(image.getpixel((x,y))[0],image.getpixel((x,y))[2])}

@@ -14,6 +14,11 @@ def build():
         image=Image.open(source/f'{name}_source.png');a=np.array(image);mask=a[:,:,3]>0
         q=Image.fromarray(a[:,:,:3][mask][None,:,:]).quantize(12,method=Image.Quantize.MEDIANCUT)
         rgb5=np.unique(np.rint(np.array(q.getpalette()).reshape(-1,3)[:12]*31/255).astype(np.int16),axis=0)
+        # 面積の小さい白い稜線がmedian cutで薄紫に吸収されないよう実色を残す。
+        snow=mask&(a[:,:,:3].min(axis=2)>220)
+        if name=='far' and snow.any():
+            white=np.rint(np.median(a[:,:,:3][snow],axis=0)*31/255).astype(np.int16)
+            rgb5=np.unique(np.vstack([rgb5,white]),axis=0)
         colors=rgb5*8+(rgb5>>2)
         distances=((a[:,:,:3,None].astype(np.int32)-colors.T[None,None,:,:])**2).sum(axis=2)
         nearest=distances.argmin(axis=2)
@@ -54,13 +59,19 @@ def build():
         tile=struct.unpack_from('<H',vram,address)[0];struct.pack_into('<H',vram,address,tile|0x2000)
     for raw,ix in tiles.items():vram[0x6000+ix*16:0x6010+ix*16]=raw
     (assets/'scenery_palette.bin').write_bytes(struct.pack('<64H',*palette_words))
-    sky=json.loads((source/'source.json').read_text(encoding='utf-8'))['skyRgb5']
+    metadata=json.loads((source/'source.json').read_text(encoding='utf-8'))
+    sky=metadata['skyRgb5'];mountains=metadata['mountains']
+    far_y=mountains['mapHorizon']-mountains['screenHorizon']
+    sky_start=metadata['skyNativeStart']-mountains['nativeHorizon']+mountains['screenHorizon']-1
+    assert 0<len(sky)<128 and 0<sky_start<127
+    (assets/'scenery.inc').write_text(f'FX_SCENERY_V = {far_y}\nFX_SKY_START = {sky_start}\nFX_SKY_COLORS = {len(sky)}\n')
     words=[r|(g<<5)|(b<<10) for r,g,b in sky]
     # 間接HDMA。色列は全カメラで共有し、可変の開始行だけ10byte表へ書く。
     data=b''.join(struct.pack('<BBH',0,0,word) for word in words)
     (assets/'sky_hdma.bin').write_bytes(data);(assets/'ppu.bin').write_bytes(vram)
     (source/'scenery_layout.json').write_text(json.dumps({'bg1':'near: map9000, low priority','bg4':'far: mapB000',
-        'width':512,'chrBase':24576,'tiles':len(tiles),'skyColors':21,'skyTableBytes':10},indent=2)+'\n')
-    print(f'Scenery: {len(tiles)}/512 shared 2bpp tiles, two 512px BGs, 21 shared sky HDMA colors')
+        'width':512,'chrBase':24576,'tiles':len(tiles),'skyColors':len(sky),'skyTableBytes':10,
+        'farY':far_y,'skyStart':sky_start+1,'groundStart':mountains['screenHorizon']},indent=2)+'\n')
+    print(f'Scenery: {len(tiles)}/512 shared 2bpp tiles, two 512px BGs, {len(sky)} shared sky HDMA colors')
 
 if __name__=='__main__':build()

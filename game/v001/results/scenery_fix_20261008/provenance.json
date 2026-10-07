@@ -1,0 +1,31 @@
+{
+  "romSha256": "12e300196644619e5b0710859c71fd70d8d3294d2cf9c7cc54c4245523798978",
+  "baselineRomSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
+  "baselinePublicCommit": "c3376cf",
+  "referenceFrame": 1741,
+  "referenceSeconds": 58,
+  "comparisonNativeCrop": [
+    0,
+    115,
+    256,
+    170
+  ],
+  "comparisonPpuCrop": [
+    0,
+    66,
+    256,
+    121
+  ],
+  "ppuOverscanTop": 6,
+  "forestRaisedPixels": 9,
+  "gradientNativeRows": [
+    130,
+    151
+  ],
+  "gradientPpuRows": [
+    75,
+    96
+  ],
+  "parallaxNearSpeed": 2,
+  "parallaxFarSpeed": 1
+}

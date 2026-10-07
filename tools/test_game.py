@@ -13,7 +13,7 @@ from build_game import BUILD, GAME
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--frames',type=int,default=360)
-    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','objects','long','profile','controls','stumble','display','equivalence','equivalence_boss','held'])
+    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','objects','long','profile','controls','stumble','display','scenery','equivalence','equivalence_boss','held'])
     parser.add_argument('--held-direction',default='up-left',choices=['up-left','up-right','down-left','down-right','up','down','left','right','none'])
     parser.add_argument('--held-fire',default='y',choices=['a','y','none'])
     parser.add_argument('--timeout',type=int,default=60)
@@ -75,7 +75,7 @@ def main():
     summary_path.write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
     subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_pixels.py')),args.scenario],check=True)
     subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_objects.py')),args.scenario],check=True)
-    if args.scenario=='display':
+    if args.scenario in ('display','scenery'):
         subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_display.py')),args.scenario],check=True)
 
 if __name__=='__main__': main()
