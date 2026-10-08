@@ -2,9 +2,21 @@
 
 **このブランチは独立した[4bpp・30fps実験](README_4BPP30.md)です。** 起動は [play_4bpp30.cmd](play_4bpp30.cmd)、カラーROMは [MonoSHFX2_4bpp30_color.sfc](releases/MonoSHFX2_4bpp30_color.sfc)。mainの更新は一方向に取り込み、元の作業フォルダーには変更を加えません。以下の2bppの記述はmainから引き継いだ開発履歴です。
 
+4bpp版の最新は、録画から物体を切り抜いた共通16色・ディザなし素材への切り替え。木・敵・ボス・爆発の原作色と陰影を使い、自機の専用色・透明穴修正、BGM第2版とSEを引き継ぐ。[実ROMの結果](game/v001/RESULTS_4BPP30_20261008.md)、[切り抜きと減色の比較](game/v001/results/cutouts_20261009/materials.png)。
+
 最新ROMは [2bppの敵・障害物のカラー化試作](game/v001/RESULTS_20261008_BG_COLOR.md)。指定録画から原画を取り込み、透明＋3色×8組を8×8単位で割り当てる。CPUが奥から属性を上書きし、SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。[比較画像](game/v001/results/bg_color_20261008/comparison.png)。
 
-**カラー版は通常操作で平均31.62fps、ボス撃破から次周を含む試験で33.96fps。60fpsは未達。** 色属性のCPU処理が重く、表示とゲーム進行が遅くなる。変更前の60Hz検証済みROMも [比較用](releases/MonoSHFX2_pre_color_20261008.sfc) として残す。起動は [play.cmd](play.cmd)。
+最新は [白黒の二値化と自機の透明穴修正](game/v001/RESULTS_20261009_BINARY_PLAYER.md)。SELECT／Spaceで敵・障害物を純黒と純白へ切替。ズボン・背中の誤った透明176画素を修復し、描画最適化とBGM第2版を引き継ぐ。[修正前後](game/v001/results/binary_player_20261009/player_comparison.png)。
+
+最新ROMは [BGM第2版](game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md)：原作サントラで音色を測って作り直したメインテーマを、下の配色整理版に載せた。SEは前版のまま。通常・継続ボス各18,000fieldで全表示間隔1field（60.0988fps）。
+
+直前版は [木・小型敵・ボスの配色整理版](game/v001/RESULTS_20261008_PALETTE_REGIONS.md)。木は暗い緑・緑・茶色、敵は赤い目を本来の範囲に残し金属を灰色に、ボスは象牙色の目・角と茶色の腹部へ変更した。同一場面の実PPU比較と1,696単独表示場面で確認。音声・輪郭・操作・描画エンジンは維持し、異なる物体が重なるタイルの色混ざりは制約として残る。
+
+その前は [輪郭修正＋カラー＋BGM・SE版](game/v001/RESULTS_20261008_VISUAL_FIDELITY.md)。カラー化で欠けた草木・敵弾・敵・ボスの輪郭と暗部の細部を修復した。録画を色の参考にし、旧原画のポーズを保持する。6組の固定場面で、実エミュレーターのframebuffer輪郭がカラー化前ROMと完全一致。実PPUの比較画像と原作らしさの評価をリンク先に保存した。処理落ちは今回の反映条件にしていない。
+
+起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_v2_20261009/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_v2_20261009/se_preview.mp3)。音声・ゲーム進行・奥行き寸法・自機と自弾は維持する。
+
+[音声なしのカラー60Hz検証](game/v001/RESULTS_20261008_COLOR_60HZ.md)と[最初のカラー試作](game/v001/RESULTS_20261008_BG_COLOR.md)は履歴として保持する。
 
 カラー版にも [奥行きに沿った滑らかな拡縮](game/v001/RESULTS_20261008_SMOOTH_DEPTH.md)を引き継いだ。14寸法表を平滑化し、開いた敵EM1も各ポーズ111項目へ変更した。開EM1の最大段差20→1画素、ボス胴の最長同サイズ区間15→4段階。表示256×180・内部FB256×192・2bpp、木の接地、移動速度の設定を保つ。以下は前版の実装と検証の履歴。
 
@@ -16,7 +28,7 @@
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
-BGM・SEの追加は[実装方式の検討](game/v001/AUDIO_APPROACH_20261008.md)を保存した。原作の楽器サンプル＋音符列とSEサンプルを第一候補とし、音源ドライバの組み込み前の段階。
+BGM・SEは[標準SFC音源の実装・検証](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)へ進み、[BGM第2版](game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md)で曲の音色・編曲を作り直した。[実装前の比較](game/v001/AUDIO_APPROACH_20261008.md)は履歴。
 
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 

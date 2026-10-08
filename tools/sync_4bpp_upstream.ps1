@@ -20,9 +20,13 @@ python -X utf8 tools/build_game.py
 Check-Command
 python -c "from pathlib import Path; assert Path('build/game_v001/MonoSHFX2_v001.sfc').read_bytes()==Path('releases/MonoSHFX2_v001.sfc').read_bytes(), '2bpp build differs from main release'"
 Check-Command
+python -c "from pathlib import Path; import json,hashlib; p=Path('game/v001/results/cutouts_20261009/default_build.json'); p.parent.mkdir(parents=True,exist_ok=True); p.write_text(json.dumps({'sha256':hashlib.sha256(Path('build/game_v001/MonoSHFX2_v001.sfc').read_bytes()).hexdigest(),'matchesMainRelease':True},indent=2)+'\n')"
+Check-Command
+python -X utf8 tools/import_4bpp_cutouts.py
+Check-Command
 python -X utf8 tools/build_4bpp.py --color
 Check-Command
-foreach ($case in ([ordered]@{'controls'=2400; 'boss'=2600; 'boss_hold'=3600; 'death'=720; 'pause'=720; 'assets'=1784; 'players'=920; 'bullets'=240; 'full'=120; 'play'=18000}).GetEnumerator()) {
+foreach ($case in ([ordered]@{'controls'=2400; 'boss'=2600; 'boss_hold'=3600; 'death'=720; 'pause'=720; 'assets'=2000; 'players'=920; 'bullets'=480; 'full'=240; 'play'=18000}).GetEnumerator()) {
     python -X utf8 tools/test_4bpp.py --scenario $case.Key --frames $case.Value
     Check-Command
     python -X utf8 tools/verify_4bpp.py $case.Key
@@ -52,6 +56,9 @@ git add game/v001/config4.json
 git add game/v001/results/four_bpp_20261008
 git add game/v001/results/legacy_shapes_20261008
 git add game/v001/results/color_review_20261008
+git add game/v001/results/cutouts_20261009
+git add game/v001/results/color_review_20261009
+git add game/v001/assets/color4
 git add game/v001/RESULTS_4BPP30_20261008.md
 git add releases/MonoSHFX2_4bpp30_color.sfc
 git add releases/MonoSHFX2_4bpp30_mono.sfc

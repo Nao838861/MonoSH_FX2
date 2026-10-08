@@ -15,6 +15,9 @@ def shot(mode,scenario,name):
         return Image.open(io.BytesIO(z.read(name))).convert('RGB')
 
 def main():
+    if json.loads((ROOT/'game/v001/assets/color4/source.json').read_text())['shapePolicy'].get('dither') is False:
+        from report_4bpp_cutout_results import main as report_cutout_results
+        return report_cutout_results()
     manifests={m:json.loads((ROOT/f'releases/4bpp30_{m}.json').read_text()) for m in ('color','mono')}
     shapes=json.loads((DEST.parent/'legacy_shapes_20261008/summary.json').read_text())
     assert shapes['romSha256']==manifests['color']['sha256'],'shape verification ROM differs from release'

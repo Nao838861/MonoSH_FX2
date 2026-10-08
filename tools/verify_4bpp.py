@@ -18,8 +18,11 @@ def prepare_draw(raw):
     u=max(0,-left)*du;v=max(0,-top)*dv
     if flags&16:u=aw*256-1-u;du=-du
     if flags&32:v=ah*256-1-v;dv=-dv
-    v|=32768 if asset&1 else 0
-    return max(0,left),max(0,top),du,dv,0,height,v,width,u,0x44+asset//2
+    bank=0x44+asset//2;base=0x600 if asset==43 else 32768 if asset&1 else 0
+    if color:
+        bank,_,base=struct.unpack_from('<BBH',(BUILD/'assets4/bullet_variants.bin').read_bytes(),asset*12+(flags&3)*4)
+    v+=base
+    return max(0,left),max(0,top),du,dv,0,height,v,width,u,bank
 
 def encode(pix):
     tiles=pix.reshape(24,8,32,8).transpose(2,0,1,3).reshape(768,8,8)
@@ -35,6 +38,7 @@ def verify_player(directory,prefix,meta,vram):
     built=(directory/f'{prefix}_obj.bin').read_bytes()
     assert oam[:24]==built[:24] and oam[512:520]==built[128:136],f'{prefix}: OAM generation differs'
     cgram=(directory/f'{prefix}_cgram.bin').read_bytes()
+    assert cgram[32:64]==(BUILD/'assets4/palette4.bin').read_bytes(),f'{prefix}: object palette changed'
     assert cgram[256:288]==(GAME/'assets/obj_palette.bin').read_bytes()[:32],f'{prefix}: player palette changed'
     source=meta['playerObjSource']
     if source:
@@ -81,7 +85,7 @@ def verify(directory):
     backgrounds=np.frombuffer((assets/'background4.bin').read_bytes(),dtype=np.uint8)
     initial_vram=(assets/'ppu.bin').read_bytes()
     files=sorted(directory.glob('frame*_fb.bin'));assert files,'no captured 4bpp framebuffer'
-    player_cases=set();bullet_ages=set()
+    player_cases=set();bullet_ages=set();asset_cases=set()
     for path in files:
         prefix=path.name[:-7]
         packet=(directory/f'{prefix}_packet.bin').read_bytes()
@@ -96,14 +100,13 @@ def verify(directory):
                 pix[yy,row!=0]=row[row!=0]
         for i in range(struct.unpack_from('<H',packet)[0]):
             raw=struct.unpack_from('<hh6B',packet,32+i*10)
+            if directory.name=='four_assets':asset_cases.add(raw[:6])
             command=prepare_draw(raw)
             if command is None:continue
             left,top,du,dv,_,h,v,w,u,bank=command
             xx=(((u+np.arange(w)*du)&65535)>>8)
             yy=((v+np.arange(h)*dv)&65535)&0xff00
             colors=banks[bank][yy[:,None]+xx[None,:]]
-            if raw[4] in (6,7,8,31,37):
-                colors=np.where(colors>=9,colors+((raw[5]&3)*2),colors)
             target=pix[top:top+h,left:left+w]
             target[colors!=0]=colors[colors!=0]
         expected=encode(pix);actual=path.read_bytes()
@@ -136,6 +139,7 @@ def verify(directory):
         assert vram[0xd000:]==initial_vram[0xd000:],f'{prefix}: ground CHR/map changed'
         verify_player(directory,prefix,meta,vram)
     if directory.name=='four_players':assert len(player_cases)==408,f'player coverage: {len(player_cases)}/408'
+    if directory.name=='four_assets':assert len(asset_cases)==880,f'asset coverage: {len(asset_cases)}/880'
     if directory.name=='four_bullets':assert bullet_ages==set(range(64)),f'bullet ages: {len(bullet_ages)}/64'
     print(f'{directory.name}: {len(files)} frames, all 49,152 indexed pixels and 24KiB visible VRAM match')
 

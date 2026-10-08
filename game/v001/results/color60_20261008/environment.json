@@ -1,0 +1,45 @@
+{
+  "romSha256": "0c7282ce976a9345adcd1719d6aa14fa8088e553cfa01a0ba95e1a134955da38",
+  "baseCommit": "4c5ec389e67737837a09980069374267d24e7c20",
+  "emulator": "Mesen 2.1.1 Linux x64",
+  "mesenSha256": "ae43f1438282aaaff90a009aa8ada648bc5d631b070656285d7de9cbff513b41",
+  "cc65Commit": "71746c829e77f74c2b601a7d16821170c2610df3",
+  "compilerSha256": {
+    "cc65": "9024e60cbf4b50f31567b57c364acc12541ac4372d574b5d7ba2442f89da6662",
+    "ca65": "8072d707b545d7a07aa304db6be8c6a0ed56619d2a4d189d0cfc3fa23374483b",
+    "ld65": "d8c77e4b3635515802a1115384301440e4c85f093451ce3db9e00d681ac4e7e2"
+  },
+  "noneLibrarySha256": "be3a35666fa57de07b575b679ed49c7baa988f063a312a3a472def1028ce2e28",
+  "python": "3.12.14",
+  "region": "NTSC",
+  "gsuClockPercent": 100,
+  "extraScanlines": 0,
+  "physicalHardware": false,
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true,
+    "gsuColor": true,
+    "groundHorizontalCache": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "scaledAssetWidths": {
+      "13": 96,
+      "14": 96,
+      "31": 96
+    },
+    "scaledClip": true,
+    "fastUv": true,
+    "genericPipeline": true,
+    "rowMargins": true,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true
+  }
+}

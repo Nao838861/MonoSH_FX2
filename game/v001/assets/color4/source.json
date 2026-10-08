@@ -13,32 +13,34 @@
   ],
   "assets": {
     "0": {
-      "seconds": 10,
+      "seconds": 11,
       "crop": [
-        219,
-        155,
-        318,
-        194
+        163,
+        148,
+        265,
+        196
       ],
-      "mask": "green",
+      "mask": "grass",
       "size": [
-        56,
-        30
-      ]
+        98,
+        53
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "1": {
-      "seconds": 38,
+      "seconds": 41,
       "crop": [
-        218,
-        159,
-        309,
-        191
+        136,
+        154,
+        238,
+        194
       ],
-      "mask": "dry_bush",
+      "mask": "grass",
       "size": [
-        67,
-        31
-      ]
+        102,
+        48
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "2": {
       "seconds": 10,
@@ -50,23 +52,25 @@
       ],
       "mask": "sky",
       "size": [
-        35,
-        26
-      ]
+        36,
+        27
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "3": {
       "seconds": 38,
       "crop": [
-        139,
-        80,
-        214,
-        114
+        135,
+        78,
+        219,
+        115
       ],
       "mask": "sky",
       "size": [
-        55,
-        30
-      ]
+        77,
+        42
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "4": {
       "seconds": 50,
@@ -78,37 +82,55 @@
       ],
       "mask": "tree",
       "size": [
-        34,
-        79
-      ]
+        39,
+        91
+      ],
+      "resize": "nearest; uniform; transparent padding"
+    },
+    "5": {
+      "seconds": 77,
+      "crop": [
+        148,
+        101,
+        198,
+        144
+      ],
+      "mask": "fire",
+      "size": [
+        45,
+        33
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "6": {
-      "seconds": 32.25,
+      "seconds": 32.133333,
       "crop": [
-        193,
-        105,
-        237,
-        154
+        180,
+        100,
+        215,
+        145
       ],
       "mask": "purple",
       "size": [
-        82,
-        128
-      ]
+        41,
+        64
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "7": {
-      "seconds": 32.5,
+      "seconds": 31.75,
       "crop": [
-        207,
-        95,
-        278,
-        149
+        239,
+        87,
+        276,
+        116
       ],
       "mask": "blue",
       "size": [
-        100,
-        128
-      ]
+        50,
+        64
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "8": {
       "seconds": 34,
@@ -120,9 +142,10 @@
       ],
       "mask": "red",
       "size": [
-        128,
-        120
-      ]
+        64,
+        60
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "11": {
       "seconds": 32.25,
@@ -134,79 +157,145 @@
       ],
       "mask": "metal",
       "size": [
-        14,
-        15
-      ]
+        26,
+        28
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "12": {
-      "seconds": 32.8,
+      "seconds": 32.866667,
       "crop": [
-        80,
-        98,
-        132,
-        146
+        76,
+        95,
+        134,
+        150
       ],
       "mask": "metal",
       "size": [
-        16,
-        16
-      ]
+        58,
+        58
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "13": {
-      "seconds": 94,
+      "seconds": 63,
       "crop": [
-        106,
-        64,
-        152,
-        90
+        144,
+        35,
+        192,
+        69
       ],
-      "mask": "dragon",
+      "mask": "body",
       "size": [
-        128,
-        86
-      ]
+        50,
+        33
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "14": {
-      "seconds": 94,
+      "seconds": 62,
       "crop": [
-        119,
-        8,
-        157,
-        62
+        79,
+        101,
+        114,
+        144
       ],
-      "mask": "dragon",
+      "mask": "face",
       "size": [
-        84,
-        128
-      ]
+        32,
+        49
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "31": {
-      "seconds": 60,
+      "seconds": 63,
       "crop": [
-        156,
-        130,
-        180,
-        151
+        142,
+        165,
+        191,
+        220
       ],
       "mask": "fire",
       "size": [
-        128,
-        125
-      ]
+        57,
+        55
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
-    "5": {
-      "seconds": 93.25,
+    "32": {
+      "seconds": 32.333333,
       "crop": [
-        128,
-        110,
-        186,
-        158
+        78,
+        98,
+        133,
+        143
       ],
-      "mask": "fire",
+      "mask": "metal",
       "size": [
-        128,
-        95
-      ]
+        28,
+        30
+      ],
+      "resize": "nearest; uniform; transparent padding"
+    },
+    "33": {
+      "seconds": 32.466667,
+      "crop": [
+        78,
+        98,
+        133,
+        149
+      ],
+      "mask": "metal",
+      "size": [
+        33,
+        33
+      ],
+      "resize": "nearest; uniform; transparent padding"
+    },
+    "34": {
+      "seconds": 32.6,
+      "crop": [
+        76,
+        95,
+        134,
+        150
+      ],
+      "mask": "metal",
+      "size": [
+        32,
+        32
+      ],
+      "resize": "nearest; uniform; transparent padding"
+    },
+    "35": {
+      "seconds": 32.733333,
+      "crop": [
+        76,
+        95,
+        134,
+        150
+      ],
+      "mask": "metal",
+      "size": [
+        45,
+        43
+      ],
+      "resize": "nearest; uniform; transparent padding"
+    },
+    "36": {
+      "seconds": 32.866667,
+      "crop": [
+        76,
+        95,
+        134,
+        150
+      ],
+      "mask": "metal",
+      "size": [
+        58,
+        63
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "39": {
       "seconds": 93.3,
@@ -218,9 +307,10 @@
       ],
       "mask": "fire",
       "size": [
-        128,
-        94
-      ]
+        45,
+        33
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "40": {
       "seconds": 93.45,
@@ -232,9 +322,10 @@
       ],
       "mask": "fire",
       "size": [
-        128,
-        84
-      ]
+        75,
+        49
+      ],
+      "resize": "nearest; uniform; transparent padding"
     },
     "41": {
       "seconds": 93.5,
@@ -246,113 +337,16 @@
       ],
       "mask": "fire",
       "size": [
-        128,
-        88
-      ]
-    },
-    "32": {
-      "seconds": 32.3,
-      "crop": [
-        78,
-        98,
-        133,
-        161
+        80,
+        55
       ],
-      "mask": "metal",
-      "size": [
-        120,
-        128
-      ]
-    },
-    "33": {
-      "seconds": 32.4,
-      "crop": [
-        78,
-        98,
-        133,
-        161
-      ],
-      "mask": "metal",
-      "size": [
-        128,
-        127
-      ]
-    },
-    "34": {
-      "seconds": 32.5,
-      "crop": [
-        78,
-        98,
-        133,
-        161
-      ],
-      "mask": "metal",
-      "size": [
-        128,
-        127
-      ]
-    },
-    "35": {
-      "seconds": 32.6,
-      "crop": [
-        78,
-        98,
-        133,
-        161
-      ],
-      "mask": "metal",
-      "size": [
-        128,
-        122
-      ]
-    },
-    "36": {
-      "seconds": 32.8,
-      "crop": [
-        78,
-        98,
-        133,
-        161
-      ],
-      "mask": "metal",
-      "size": [
-        119,
-        128
-      ]
+      "resize": "nearest; uniform; transparent padding"
     }
   },
-  "otherAssets": {
-    "capturedPlayer": {
-      "9": 0,
-      "28": 1,
-      "29": 2,
-      "30": 3,
-      "15": 10,
-      "16": 11,
-      "17": 12,
-      "18": 13
-    },
-    "derivedPlayerDeath": [
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27
-    ],
-    "existingMonochrome": [
-      38,
-      42,
-      43
-    ],
-    "recordedBullet": 10,
-    "derivedEnemyBullet": 37
-  },
   "shapePolicy": {
-    "reference": "legacy alpha; anatomical colors checked against recording",
+    "reference": "recording cutouts; opaque pixels only; same shared palette for all objects",
+    "dither": false,
+    "trainingBackgroundExcluded": true,
     "assets": [
       0,
       1,
@@ -367,63 +361,18 @@
       12,
       13,
       14,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27,
       31,
       32,
       33,
       34,
       35,
       36,
-      37,
-      38,
       39,
       40,
-      41,
-      42,
-      43
+      41
     ],
-    "twoToneAssets": [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      11,
-      12,
-      13,
-      14,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27,
-      32,
-      33,
-      34,
-      35,
-      36,
-      38,
-      39,
-      40,
-      41,
-      42,
-      43
-    ],
-    "recordingUsage": "anatomical colors and animation reference; never replace geometry",
-    "bulletShading": "symmetric single-hue ramp with white center; legacy alpha fixed",
+    "paletteAllocation": "12 learned object colors; one recorded purple, blue and red each; transparent index 0",
+    "bulletShading": "legacy rotation axes; white center; continuous single-hue gradient without dither",
     "bulletCycleTicks": 32,
     "bulletCycle": [
       "purple",
@@ -459,8 +408,40 @@
       "blue",
       "blue"
     ],
-    "playerRendering": "dedicated 15-color OBJ palette; no world-palette quantization",
-    "monochromeThresholdRgbSum": 384,
-    "darkPatternColors": "dark shade of each anatomical region"
+    "playerRendering": "dedicated original OBJ palette including upstream alpha repairs",
+    "resize": "uniform nearest-neighbor; transparent padding to existing projected aspect"
+  },
+  "otherAssets": {
+    "capturedPlayer": [
+      9,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "legacyRotationMasks": [
+      6,
+      7,
+      8,
+      37
+    ],
+    "recordedBullet": 10,
+    "existingMonochrome": [
+      38,
+      42,
+      43
+    ]
   }
 }

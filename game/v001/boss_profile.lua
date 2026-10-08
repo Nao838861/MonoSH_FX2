@@ -1,5 +1,6 @@
 -- test.luaへ挿入する観測専用コード。ROM・ゲーム状態は書き換えない。
 -- CPUは次世代、GSUは提示予定の世代を並行処理するため、sceneは開始時に固定する。
+local profile_sections=PROFILE_SECTIONS
 local boss_report=assert(io.open(output..'/timings.jsonl','w'))
 local probe,previous_dma=nil,nil
 local function stamp()
@@ -42,15 +43,17 @@ emu.addMemoryCallback(guard(function(a,v)
   end
 end),emu.callbackType.write,0x7e1df0,0x7e1df0)
 -- 呼出入口のstamp差でCPU側の重い区間を絞る。ROMや計算量は変更しない。
+if profile_sections then
 for _,name in ipairs({'_fx_frame','_monosh_player_update','_monosh_combat_fast_frame',
   '_monosh_combat_render','_monosh_enemy_frame','_monosh_stage_frame','_monosh_boss_frame',
-  '_fx_build_packet','_fx_build_ground'}) do
+  '_fx_build_packet','fx_build_color','fx_color_build_done','_fx_build_ground'}) do
   if labels[name] then
     emu.addMemoryCallback(guard(function()
       if probe then probe.cpuSections[name]=stamp() end
     end),emu.callbackType.exec,0x7f0000+labels[name],0x7f0000+labels[name],
     emu.cpuType.snes,emu.memType.snesMemory)
   end
+end
 end
 emu.addMemoryCallback(guard(function() if probe then probe.cpuEnd=stamp() end end),
   emu.callbackType.exec,0x7f0000+labels.cpu_frame_return,0x7f0000+labels.cpu_frame_return,
@@ -65,3 +68,13 @@ emu.addMemoryCallback(guard(function() if probe then probe.ready=stamp() end end
 emu.addMemoryCallback(guard(function() if probe then probe.admitted=stamp() end end),
   emu.callbackType.exec,0x7f0000+labels.admitted,0x7f0000+labels.admitted,
   emu.cpuType.snes,emu.memType.snesMemory)
+-- Palette pass boundaries are observation-only and share the same GSU clock.
+if profile_sections then
+for _,name in ipairs({'gsu_color_begin','gsu_color_clear_end','gsu_color_delta_begin','gsu_color_done'}) do
+  if labels[name] then
+    emu.addMemoryCallback(guard(function()
+      if probe then probe[name]=stamp() end
+    end),emu.callbackType.exec,labels[name],labels[name],emu.cpuType.gsu,emu.memType.gsuMemory)
+  end
+end
+end

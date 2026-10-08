@@ -8,7 +8,18 @@ from build_game import BUILD, GAME
 
 
 def verify():
-    images=[Image.open(GAME/'assets'/f'{a:02d}.png').convert('RGBA') for a in range(44)]
+    images=[]
+    for asset in range(44):
+        color=GAME/'assets/bg_color'/f'{asset:02d}.png'
+        image=Image.open(color if color.exists() else GAME/'assets'/f'{asset:02d}.png')
+        images.append(image if color.exists() else image.convert('RGBA'))
+    def source_index(image,x,y):
+        value=image.getpixel((x,y))
+        if isinstance(value,int):
+            assert 0 <= value <= 3
+            return value
+        r,g,b,alpha=value
+        return 0 if alpha<128 else 3 if r+g+b>=384 else 1
     banks={b:(GAME/'assets'/f'bank{b:02x}.bin').read_bytes() for b in range(0x44,0x5a)}
     protected={b:[] for b in banks}
     source_pixels=0
@@ -18,8 +29,7 @@ def verify():
         for y in range(image.height):
             row=[]
             for x in range(image.width):
-                r,g,b,alpha=image.getpixel((x,y))
-                expected=0 if alpha<128 else 3 if r+g+b>=384 else 1
+                expected=source_index(image,x,y)
                 assert banks[bank][base+y*256+x]==expected,(asset,x,y)
                 row.append(expected);source_pixels+=1
             for x in range(0,image.width,4):
@@ -47,7 +57,7 @@ def verify():
                 used[bank].append((offset,end))
                 du=image.width*256//width
                 for y in range(image.height):
-                    nonzero=[x for x in range(width) if image.getpixel(((x*du)>>8,y))[3]>=128]
+                    nonzero=[x for x in range(width) if source_index(image,(x*du)>>8,y)!=0]
                     expected=bytes((nonzero[0],nonzero[-1]+1)) if nonzero else bytes(2)
                     assert banks[bank][offset+y*2:offset+y*2+2]==expected,(asset,width,y)
                     margin_rows+=1
@@ -67,8 +77,7 @@ def verify():
             for y in range(image.height):
                 for x in range(width):
                     value=(banks[bank][offset+y*stride+x//4]>>(2*(x%4)))&3
-                    r,g,b,alpha=image.getpixel(((x*du)>>8,y))
-                    expected=0 if alpha<128 else 3 if r+g+b>=384 else 1
+                    expected=source_index(image,(x*du)>>8,y)
                     assert value==expected,(asset,width,x,y)
                     pixels+=1
     rom=(BUILD/'MonoSHFX2_v001.sfc').read_bytes()

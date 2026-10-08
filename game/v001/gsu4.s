@@ -187,6 +187,17 @@ dispatch_nonzero:
   iwt r8,#6
   from r11
   stw (r8)
+  ; 43は透明の詰め物。STAGEの左端の透明画素 $59:0600 を共有する。
+  from r13
+  ibt r8,#63
+  and r8
+  ibt r8,#43
+  cmp r8
+  bne :+
+  nop
+  iwt r7,#$0600
+:
+  move r0,r12
   .if FX4_COLOR
   sms ($000a),r0
   ; 生packetのflags下位2bitを弾の色相として保存。UVのflip metaには混ぜない。
@@ -199,6 +210,41 @@ dispatch_nonzero:
   and r8
   add r0
   sms ($0016),r0
+  ; 共通15色の番号には規則性を持たせない。色周期ごとの原画bank/base行を選ぶ。
+  lms r0,($000a)
+  swap
+  ibt r8,#63
+  and r8
+  move r12,r0
+  add r0
+  add r12
+  add r0
+  add r0                  ; asset*12
+  move r12,r0
+  lms r0,($0016)
+  add r0                  ; hue*4
+  add r12
+  move r12,r0
+  ibt r0,#$5f
+  romb
+  iwt r8,#$6000
+  from r12
+  to r14
+  add r8
+  getb
+  move r12,r0             ; bank
+  inc r14
+  inc r14
+  getb
+  inc r14
+  getbh
+  move r7,r0              ; base V (256byte aligned)
+  sms ($000c),r0          ; 縮小行は原画内の行番号を使う。
+  lms r0,($000a)
+  iwt r8,#$ff00
+  and r8
+  or r12
+  sms ($000a),r0
   .endif
   sms ($001a),r3
   sms ($001e),r4           ; 原寸height。縮小済みの縦サンプルがある組だけ使う。
@@ -346,36 +392,10 @@ generic:
 .align 16,$01
 .export bullet_render4
 bullet_render4:
-  cache
-  lms r11,($0016)
-bullet_row4:
-  move r1,r5
-  move r8,r10
-  move r12,r9
-  merge r14
-bullet_pixel4:
-  getb
-  ibt r13,#9
-  cmp r13
-  blt bullet_white4
-  nop
-  add r11                  ; 紫9/10 → 青11/12、赤13/14。白と透明はそのまま。
-bullet_white4:
-  color
-  with r8
-  add r3
-  plot
-  merge r14
-  dec r12
-  bne bullet_pixel4
-  nop
-  with r7
-  add r4
-  dec r6
-  bne bullet_row4
-  inc r2
-  rpix
-  iwt r11,#.loword(dispatch)
+  ; 原画選択済み。通常のGETC経路なので1画素ごとの色相演算は不要。
+  lms r0,($000a)
+  romb
+  iwt r11,#.loword(generic)
   jmp (r11)
   nop
   .endif
@@ -588,12 +608,20 @@ scaled_lookup4:
   lms r8,($001e)
   from r8
   cmp r0
-  blt scaled_reject4
+  bge :+
   inc r14
+  iwt r11,#.loword(scaled_reject4)
+  jmp (r11)
+  nop
+:
   getb
   cmp r8
-  blt scaled_reject4
+  bge :+
   nop
+  iwt r11,#.loword(scaled_reject4)
+  jmp (r11)
+  nop
+:
 scaled_height_valid4:
   lms r0,($001a)
   add r0
@@ -646,6 +674,17 @@ scaled_height_valid4:
   move r4,r6
   lms r6,($0010)
 scaled_uv_ready4:
+  .if FX4_COLOR
+  lms r0,($000e)
+  ibt r8,#0
+  cmp r8
+  bne :+
+  nop
+  lms r0,($000c)
+  with r7
+  sub r0
+:
+  .endif
   move r0,r12             ; ROMBの後のSWAPにもbank/形式の値を残す。
   romb
   swap
@@ -927,7 +966,11 @@ integer_end4:
   .include "gsu_dma4.inc"
 .repeat 22,I
   .segment .sprintf("ASSET%02X",$44+I)
+  .if I = 21
+  .incbin .sprintf("assets4/bank%02x.bin",$44+I), 0, $1300
+  .else
   .incbin .sprintf("assets4/bank%02x.bin",$44+I)
+  .endif
 .endrepeat
 .segment "SCALE5E"
 .incbin "assets4/scale5e.bin"

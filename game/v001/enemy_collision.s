@@ -9,6 +9,7 @@
 .import fx_em1_open_sizes
 .endif
 .import _monosh_ground_screen_delta, _monosh_combat_reflect_bullet
+.import _fx_audio_events
 .segment "ZEROPAGE"
 ce: .res 2
 .segment "CODE"
@@ -216,6 +217,9 @@ hit:
   jmp next_enemy
 destroy:
   sep #$20
+  lda _fx_audio_events
+  ora #2
+  sta _fx_audio_events
   stz _monosh_player_bullets,x
   dec _monosh_player_bullet_count
   lda $0270

@@ -18,6 +18,9 @@ hv: .res 2
 ground_slot: .res 2
 fx_sky_pointer: .res 2
 sky_tables: .res 30
+.ifdef FX_GROUND_CACHE
+ground_horizontal_keys: .res 6
+.endif
 .segment "CODE"
 .a8
 .i8
@@ -122,6 +125,29 @@ sky_tail:
   lda #0
   sta (fp),y
   rep #$20
+  .ifdef FX_GROUND_CACHE
+  ; Horizontal HDMA depends only on camera height and world phase. Each of
+  ; the three buffers has its own key, so a visible/in-flight table is never
+  ; modified early. Palette animation, sky and far scroll remain per-frame.
+  lda _monosh_ground_offset
+  and #$ff
+  xba
+  sta $013e
+  lda _fx_ground_world_phase
+  and #$ff
+  ora $013e
+  inc                      ; zero is the BSS-invalid key; valid keys are >0.
+  pha
+  lda ground_slot
+  asl
+  tax
+  pla
+  cmp ground_horizontal_keys,x
+  bne :+
+  jmp ground_done
+:
+  sta ground_horizontal_keys,x
+  .endif
   lda _fx_ground_world_phase
   and #$ff
   asl

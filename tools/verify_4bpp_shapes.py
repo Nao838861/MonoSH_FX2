@@ -12,6 +12,9 @@ PACK=ROOT/'build/game_v001/assets4'
 DEST=ROOT/'game/v001/results/legacy_shapes_20261008'
 
 def main():
+    if json.loads((ASSETS/'color4/source.json').read_text())['shapePolicy'].get('dither') is False:
+        from verify_4bpp_cutouts import main as verify_cutouts
+        return verify_cutouts()
     mode=json.loads((PACK.parent/'build_mode.json').read_text())
     assert mode['bitsPerPixel']==4 and mode['color']
     rom=(PACK.parent/'MonoSHFX2_v001.sfc').read_bytes()

@@ -69,8 +69,37 @@ def assets(color):
     for i,image in enumerate(images):
         start=(i&1)*32768+image.height*256;end=(1+(i&1))*32768
         if start<end:holes.append([i//2,start,end])
+    # mainと共通の音源データ $59:1300..FFFF を避ける。
+    holes=[q for q in holes if q[0]!=21 or q[2]<=0x1300]
+    bullet_variants={}
+    variant_table=bytearray(44*12)
+    def indexed_image(image):
+        a=np.array(image.convert('RGBA'));opaque=a[:,:,3]>=128
+        pix=1+((a[:,:,:3,None].astype(np.int32)-rgb[1:].T[None,None,:,:])**2).sum(axis=2).argmin(axis=2)
+        return np.where(opaque,pix,0).astype(np.uint8)
+    for i in range(44):
+        for phase in range(3):
+            struct.pack_into('<BBH',variant_table,i*12+phase*4,0x44+i//2,0,0x600 if i==43 else (i&1)*32768)
+    assert pixels[42][6,0]==0,'transparent padding aliases STAGE row 6'
+    if color:
+        for i in (6,7,8,31,37):
+            phases=[pixels[i]]
+            for phase in (1,2):
+                pix=indexed_image(Image.open(ASSETS/f'color4/{i:02d}_hue{phase}.png'))
+                assert pix.shape==pixels[i].shape and np.array_equal(pix!=0,pixels[i]!=0)
+                size=pix.shape[0]*256
+                fits=[q for q in holes if q[2]-q[1]>=size]
+                if not fits:raise ValueError(f'no contiguous ROM space for bullet {i}/{phase}')
+                hole=min(fits,key=lambda q:q[2]-q[1]);bank,offset,_=hole;hole[1]+=size
+                assert offset%256==0
+                for y,row in enumerate(pix):banks[bank][offset+y*256:offset+y*256+len(row)]=row.tobytes()
+                struct.pack_into('<BBH',variant_table,i*12+phase*4,0x44+bank,0,offset)
+                phases.append(pix)
+            bullet_variants[i]=phases
+    (PACK/'bullet_variants.bin').write_bytes(variant_table)
     holes += [[i//2,(i&1)*32768+y*256+im.width,(i&1)*32768+(y+1)*256]
-              for i,im in enumerate(images) for y in range(im.height) if im.width<256]
+              for i,im in enumerate(images) for y in range(im.height) if im.width<256
+              and (i//2!=21 or (i&1)*32768+(y+1)*256<=0x1300)]
     prescaled=bytearray((9 if color else 7)*1024)
     allowed_heights=bytearray((9 if color else 7)*512)
     geometry=(base.GAME/'upstream/monosh_boss_data.c').read_text()
@@ -84,7 +113,7 @@ def assets(color):
         name='monosh_ebullet4' if kind=='bullet' else 'monosh_boss_'+kind
         vals=[int(x) for x in re.search(name+r'_geometry\[222\] = \{([^}]+)',bullet_geometry if kind=='bullet' else geometry).group(1).replace('\n','').strip(',').split(',')]
         pix=pixels[i];h,w=pix.shape
-        if slot>=7:pix=np.where(pix>=9,pix+(slot-6)*2,pix)
+        if slot>=7:pix=bullet_variants[i][slot-6]
         for width in sorted(set(vals[::2])):
             rowpix=pix[:,(np.arange(width)*(w*256//width))>>8]
             heights={vals[z+1] for z in range(0,len(vals),2) if vals[z]==width}
@@ -139,6 +168,8 @@ def assets(color):
              'prescaledBytes':sum(len(rows)*2+sum(map(len,rows)) for _,_,rows in jobs),
              'freeAssetBankBytes':sum(q[2]-q[1] for q in holes),'prescaledAssets':[13,14,5,39,40,41,31],
              'unpackedPrescaledAssets':[13,14]}
+    packing['bulletVariantBytes']=sum(p.nbytes for phases in bullet_variants.values() for p in phases[1:])
+    packing['audioReservedBytes']=0xed00
     (PACK/'packing4.json').write_text(json.dumps(packing,indent=2)+'\n')
     (PACK/'margin_slots.bin').write_bytes(slots);(PACK/'margin_tables.bin').write_bytes(tables)
     for i,raw in enumerate(banks):(PACK/f'bank{0x44+i:02x}.bin').write_bytes(raw)
@@ -160,6 +191,8 @@ def assets(color):
     height_base=0x4800 if color else 0x3c00
     far[height_base:height_base+len(allowed_heights)]=allowed_heights
     if color:
+        assert height_base+len(allowed_heights)<=0x6000
+        far[0x6000:0x6000+len(variant_table)]=variant_table
         # BG1は固定のC000 mapを使うため、未使用のC800 map領域を自機OBJへ使う。
         assert meta[1]['height']*512<=0x4000,'near background overlaps player ROM frames'
         from build_4bpp_player import build as player_obj

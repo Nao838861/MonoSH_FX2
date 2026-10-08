@@ -1,6 +1,7 @@
 .setcpu "65816"
 .smart
 .import _main, _fx_frame, _fx_buttons, _fx_packet_count, _fx_packet
+.import fx_audio_init: far, fx_audio_process: far
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_far_y
 .import _fx_far_d_acc, fx_sky_pointer
@@ -8,11 +9,14 @@
 .import ground_empty
 .import fx_upload_ground
 .import _fx_ground_far_xptr
-.import _fx_sky_color, fx_latch_obj, fx_upload_obj
+.import _fx_sky_color, fx_latch_obj, fx_upload_obj, fx_prepare_obj_dma
 .import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
 .import fx_read_gsu_spans
 .import fx_latch_color, fx_upload_color, fx_color_dma_count, fx_color_dma_bytes
-.import color_palette, color_boot_map, fx_stage_color, fx_color_staged
+.import color_palette, color_boot_map, fx_stage_color, fx_color_staged, fx_upload_color_palette
+.ifdef FX_GSU_COLOR
+.import fx_read_gsu_color_plan
+.endif
 .import __COLORRODATA_LOAD__, __COLORRODATA_RUN__, __COLORRODATA_SIZE__
 .ifndef FX_DMA_ADMISSION_BYTES
 FX_DMA_ADMISSION_BYTES = 9984
@@ -49,7 +53,7 @@ reset:
   ldy #$2000
   lda #$ffff
   mvn #$42,#$7e
-  ; $0400..$17ffをカラー専用に予約。native scratch($0160..$02xx)と
+  ; $0400..$15ffはカラー、$1600..$17ffは音源用。native scratch($0160..$02xx)と
   ; C stack($1c00から下降、$1800より上)・HDMA状態($1d00台)から分離。
   ldx #0
   lda #0
@@ -66,6 +70,7 @@ clear_color_ram:
   pea $0000
   plb
   plb
+  jsl fx_audio_init
   sep #$20
   stz $2105
   lda #3
@@ -364,6 +369,7 @@ _fx_present:
   rep #$30
   jsr fx_latch_color
   jsr fx_plan_dma
+  .ifndef FX_GSU_COLOR
   ; 前の画像転送後に残る黒帯で裏mapを準備できれば、追加fieldは不要。
   lda fx_color_dma_count
   beq color_early_ready
@@ -388,6 +394,7 @@ color_early_stage:
   sta f:$002100
   jsr fx_stage_color
 color_early_ready:
+  .endif
   rep #$30
   ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
   ; dynamicDmaDeadlineでは転送量に応じ220/226/233行目まで許可。全FBは203行目。
@@ -444,13 +451,47 @@ color_early_ready:
   .endif
   sta f:$7e1d02
   beq copy_clear_spans
+  ; S-CPU revision 1 can fail when DMA ends at an active HDMA boundary.
+  ; Use the fast copy only in the middle of VBlank, with enough room even
+  ; for the maximum 1280-byte legacy packet. Keep MVN everywhere else.
+  sep #$20
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #225
+  bcc packet_mvn
+  cmp #251
+  bcs packet_mvn
+  rep #$20
+  lda f:$7e1d02
+  ; Reverse DMA reads WRAM through B-bus $2180 and writes cartridge SRAM
+  ; on the A bus. GSU is stopped; this is not the invalid WRAM-to-WRAM DMA.
+  sta f:$004305
+  lda #$8080
+  sta f:$004300
+  lda #$0020
+  sta f:$004302
+  lda #_fx_packet
+  sta f:$002181
+  sep #$20
+  lda #$70
+  sta f:$004304
+  lda #0
+  sta f:$002183
+  lda #1
+  sta f:$00420b
+  rep #$20
+  bra copy_clear_spans
+packet_mvn:
+  rep #$30
+  lda f:$7e1d02
   dec
   ldx #_fx_packet
   ldy #$0020
-  mvn #$7e,#$70             ; GSU STOP中にWRAM→cart RAMを連続コピー。
+  mvn #$7e,#$70
   pea $7e7e
   plb
-  plb                      ; MVNが変更したDBRをCのWRAMへ戻す。
+  plb
 copy_clear_spans:
   .ifdef FX_GSU_CLIP
   lda clear_initialized
@@ -507,6 +548,10 @@ wait_gsu:
   and #$20
   bne wait_gsu
 render_finished:
+  jsl fx_audio_process
+  .ifdef FX_GSU_COLOR
+  jsr fx_read_gsu_color_plan
+  .endif
   lda #2
   sta f:$7e1df0
   .if .defined(FX_GSU_CLIP) .and .not .defined(FX_FULL_TRANSFER)
@@ -552,21 +597,29 @@ gsu_dma_copied:
   .endif
   sep #$20
   .endif
-  .ifdef FX_DMA_DEADLINE_PROBE
-  .export dma_probe_delay
-dma_probe_delay:
-  ; 帯域検証専用ROM: 許可された最終行まで意図的に待って転送する。
-  lda f:$00213f
-  lda f:$002137
-  lda f:$00213d
-  cmp f:$7e1d10
-  bne dma_probe_delay
-  .endif
-  ; 全12KiBに色mapが加わる場面だけ、裏mapを1field前に転送する。
+  ; A large partial FB can overflow the same blank as a full transfer once
+  ; color spans are added. Use the FB planner's conservative weighted limit,
+  ; rather than testing only the exact 12 KiB case. Stage color separately.
   rep #$30
-  lda fx_dma_bytes
-  cmp #12288
-  bne color_stage_ready
+  lda fx_dma_count
+  .repeat 6
+    asl
+  .endrepeat
+  clc
+  adc fx_dma_bytes
+  clc
+  adc fx_color_dma_bytes
+  pha
+  lda fx_color_dma_count
+  .repeat 6
+    asl
+  .endrepeat
+  clc
+  adc 1,s
+  sta 1,s
+  pla
+  cmp #12000
+  bcc color_stage_ready
   lda fx_color_dma_count
   beq color_stage_ready
   lda fx_color_staged
@@ -591,6 +644,18 @@ wait_color_next_field:
   cmp #203
   bcs wait_color_next_field
 color_stage_ready:
+  jsr fx_prepare_obj_dma
+  .ifdef FX_DMA_DEADLINE_PROBE
+  sep #$20
+  .export dma_probe_delay
+dma_probe_delay:
+  ; 帯域検証専用ROM: 許可された最終行まで意図的に待って転送する。
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp f:$7e1d10
+  bne dma_probe_delay
+  .endif
   sep #$20
 wait_bottom:
   lda f:$00213f
@@ -603,9 +668,8 @@ wait_bottom:
   beq wait_hblank
   bra wait_bottom
 wait_hblank:
-  lda f:$004212
-  and #$40
-  beq wait_hblank
+  ; Visible output ended on line 202. Force blank immediately after admission;
+  ; waiting for this black scanline's HBlank would waste most of a scanline.
   lda #$80
   sta f:$002100
   lda #0
@@ -623,12 +687,13 @@ wait_hblank:
   sta f:$00210d
   lda f:$7e1d15
   sta f:$00210d
-  lda #$fe
-  sta f:$00420c
   jsr fx_upload_obj
 dma_started:
   lda #3
   sta f:$7e1df0
+  jsr fx_upload_color_palette
+  lda #$fe
+  sta f:$00420c
   jsr fx_upload_color
   rep #$20
   lda #$1801
@@ -706,10 +771,11 @@ color_deadline_no_map:
   cmp #(FX_DMA_ADMISSION_BYTES+1)
   bcs deadline_done
   .ifdef FX_FINE_DMA
-  ; Wを170byte/行で割り、受付を220..240行で細かく選ぶ。
+  ; Wを170byte/行で割り、受付を220..255行で細かく選ぶ。
   ; D=278-floor(W/170)。D+4+W*8/1364 <283（翌21行の前）。
   ; 768bytesの固定予約と64bytes/区間もWへ含めた保守的な上限。
-  .export dma_deadline_fine
+  .export dma_deadline_fine, dma_last_line
+dma_last_line = 255
 dma_deadline_fine:
   sta f:$004204
   sep #$20
@@ -722,9 +788,9 @@ dma_deadline_fine:
     nop                    ; dividerの16 CPU cyclesを確実に待つ。
   .endrepeat
   sbc f:$004214
-  cmp #241
+  cmp #(dma_last_line+1)
   bcc fine_save
-  lda #240
+  lda #dma_last_line
 fine_save:
   sta f:$7e1d10
   rts

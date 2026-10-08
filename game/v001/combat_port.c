@@ -5,6 +5,7 @@
 #include "monosh_runtime.h"
 #include "monosh_player.h"
 extern unsigned char monosh_combat_fire_cooldown, monosh_bullet_reflect_rng;
+extern unsigned char fx_audio_events;
 extern const unsigned char monosh_player_bullet_sizes[];
 void monosh_combat_fast_render(void);
 
@@ -29,6 +30,7 @@ void monosh_combat_fast_frame(void)
         b->active = 1; b->screen_x = monosh_player_x;
         b->screen_y = monosh_player_bottom - 20;
         b->wz = 0; b->timer = 2; ++monosh_player_bullet_count;
+        fx_audio_events |= 1;
         break;
     }
 }
@@ -78,6 +80,7 @@ void monosh_combat_reflect_bullet(unsigned int packed)
     if (index >= 3) return;
     b = &monosh_player_bullets[index];
     if (b->active != 1) return;
+    fx_audio_events |= 4;
     monosh_bullet_reflect_rng += monosh_runtime_frame_counter + index*2 + object*4 + 3;
     for (i = 0; i < 3; ++i) if (!monosh_reflected_bullets[i].active) break;
     if (i == 3) i = monosh_bullet_reflect_rng % 3;

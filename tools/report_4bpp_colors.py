@@ -13,6 +13,9 @@ ASSETS=ROOT/'game/v001/assets'
 DEST=ROOT/'game/v001/results/color_review_20261008'
 
 def main():
+    if json.loads((ASSETS/'color4/source.json').read_text())['shapePolicy'].get('dither') is False:
+        from report_4bpp_cutout_colors import main as report_cutout_colors
+        return report_cutout_colors()
     manifest=json.loads((ROOT/'releases/4bpp30_color.json').read_text())
     rom=(ROOT/manifest['rom']).read_bytes()
     assert hashlib.sha256(rom).hexdigest()==manifest['sha256']

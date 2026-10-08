@@ -6,3 +6,5 @@ game/v001/licenses/* -text
 *.sfc binary
 *.png binary
 *.gz binary
+
+game/v001/results/color60_20261008/game.map -whitespace

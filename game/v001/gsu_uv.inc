@@ -126,7 +126,15 @@ uv_v_done:
   ldw (r8)
   move r8,r0
   with r7
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+  add r8                  ; 任意の行位置へ配置した色周期原画のbase V。
+  .else
   or r8
+  .endif
+  .else
+  or r8
+  .endif
   iwt r8,#$0010
   to r6
   ldw (r8)

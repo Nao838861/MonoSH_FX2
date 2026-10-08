@@ -185,7 +185,7 @@ def prepare_runtime(mesen):
     (runtime/'settings.json').write_text(json.dumps({'Debug':{'ScriptWindow':{'AllowIoOsAccess':True}},
                                                   'Snes':{'GsuClockSpeed':100}}))
     for path in mesen.parent.iterdir():
-        if path.is_file() and (path.suffix.lower()=='.dll' or path.name in ('Mesen.exe','MesenNesDB.txt')):
+        if path.is_file() and (path.suffix.lower() in ('.dll','.so') or path.name in (mesen.name,'MesenNesDB.txt')):
             target=runtime/path.name
             if not target.exists() or hashlib.sha256(target.read_bytes()).digest()!=hashlib.sha256(path.read_bytes()).digest():
                 shutil.copy2(path,target)

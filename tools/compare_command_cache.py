@@ -22,6 +22,16 @@ local current_index,current_repeat=0,0
 local packet_start=0
 local cache_calls,cache_invalidations=0,0
 local replay_report=assert(io.open(output..'/replay.jsonl','w'))
+emu.addMemoryCallback(guard(function(a,v)
+  if v~=4 or not labels.fx_upload_color then return end
+  local number=string.format('%05d',rendered+1)
+  if labels.gsu_color_begin then
+    dump('attribute'..number..'.bin',emu.memType.gsuWorkRam,0x1000,768)
+  else
+    dump('attribute'..number..'.bin',emu.memType.snesMemory,0x7e0000+read('fx_color_present_ptr',2),768)
+  end
+  dump('attribute_vram'..number..'.bin',emu.memType.snesVideoRam,read('fx_color_vram_base',2)*2,1536)
+end),emu.callbackType.write,0x7e1df0,0x7e1df0)
 emu.addMemoryCallback(guard(function()
   fixture_number=fixture_number+1
   fixture_index=1+((fixture_number-1)//3)%#replay_fixtures
@@ -127,7 +137,7 @@ def run_variant(name, flags, cases, reuse_build=False):
     settings.write_text(json.dumps(data))
     result=subprocess.run([str(mesen),'--testRunner','--timeout=360','--doNotSaveSettings','--enableStdout',
                            str(output/rom.name),str(path)],cwd=mesen.parent,capture_output=True,
-                          timeout=370,creationflags=subprocess.CREATE_NO_WINDOW)
+                          timeout=370,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     (output/'emulator.log').write_bytes(result.stdout+result.stderr)
     if (output/'error.txt').exists():raise RuntimeError((output/'error.txt').read_text())
     assert result.returncode==0, result.returncode
@@ -137,6 +147,16 @@ def run_variant(name, flags, cases, reuse_build=False):
 def summarize(output,digest,config,cases):
     verify(output)
     records=[json.loads(line) for line in (output/'replay.jsonl').read_text().splitlines()]
+    palette_samples=0
+    from verify_bg_colors import reference as palette_reference
+    for path in sorted(output.glob('attribute[0-9]*.bin')):
+        number=path.stem[len('attribute'):]
+        meta=json.loads((output/f'meta{number}.json').read_text())
+        expected=palette_reference((output/f'draw{number}.bin').read_bytes()[:meta['count']*10],meta['logic'])
+        assert path.read_bytes()==expected,(path.name,'palette generator')
+        vram=(output/f'attribute_vram{number}.bin').read_bytes()
+        assert vram[1::2]==expected,(path.name,'palette delta upload')
+        palette_samples+=1
     rows=[]
     for i,case in enumerate(cases,1):
         gsu=[r for r in records if r['kind']=='gsu' and r['scene']==i and r['repeatIndex'] in (2,3)
@@ -149,7 +169,7 @@ def summarize(output,digest,config,cases):
                      'cacheCallsMedian':statistics.median(r['cacheCalls'] for r in gsu),
                      'cacheInvalidationsMedian':statistics.median(r['cacheInvalidations'] for r in gsu),
                      'framebufferHashes':sorted(hashes),'samples':len(gsu)})
-    summary={'romSha256':digest,'buildMode':config,'scenes':rows,'imagesVerified':len(list(output.glob('frame[0-9]*.bin')))}
+    summary={'romSha256':digest,'buildMode':config,'scenes':rows,'imagesVerified':len(list(output.glob('frame[0-9]*.bin'))),'paletteImagesVerified':palette_samples,'paletteCellsVerified':palette_samples*768}
     (output/'comparison.json').write_text(json.dumps(summary,indent=2)+'\n')
     return summary
 

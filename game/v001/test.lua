@@ -9,6 +9,11 @@ local gsu_clip = GSU_CLIP
 local cpu_clip_commands = CPU_CLIP_COMMANDS
 local report = assert(io.open(output..'/trace.jsonl','w'))
 local field = 0
+local game_started = false
+-- 音源の初期転送を待つ。固定時刻の画像・入力標本を起動処理中に採らない。
+emu.addMemoryCallback(function() game_started = true end,
+  emu.callbackType.exec,0x7F0000+labels.game_started,0x7F0000+labels.game_started,
+  emu.cpuType.snes,emu.memType.snesMemory)
 local rendered = 0
 local clock_start = 0
 local gsu_start = 0
@@ -332,7 +337,7 @@ emu.addMemoryCallback(guard(function(a,v)
   stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
   stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)
   stats.maxDmaSpanCount=math.max(stats.maxDmaSpanCount or 0,count)
-  report:write(string.format('{"dmaStartLine":%d,"spans":%d,"deadline":%d,"field":%d}\n',line,count,deadline,field))
+  report:write(string.format('{"dmaStartLine":%d,"spans":%d,"deadline":%d,"field":%d,"colorReserve":%d}\n',line,count,deadline,field,weight-read('fx_dma_bytes',2)-count*(labels.select_dma_deadline and 64 or 128)-(labels.select_dma_deadline and 768 or 0)))
   if rendered==0 then
     local f=io.open(output..'/descriptors.txt','w')
     for i=0,31 do
@@ -448,6 +453,7 @@ emu.addEventCallback(guard(function()
   assert(emu.read(0x213e,emu.memType.snesMemory)&0xc0==0,'OBJ scanline range/time overflow')
 end),emu.eventType.endFrame)
 emu.addEventCallback(guard(function()
+  if not game_started then return end
   field=field+1
   local status=emu.read(0x213e,emu.memType.snesMemory)
   assert(status&0xc0==0,'OBJ range/time overflow')

@@ -7,7 +7,6 @@ import subprocess
 import numpy as np
 from PIL import Image, ImageDraw
 from build_game import GAME
-from color4_legacy_shape import PALETTE, LEGACY_ASSETS, TWO_TONE_ASSETS, preserve_shape
 
 VIDEO=Path('D:/HomeBrew/MonoSH/tmp/スペースハリアー録画１.mp4')
 ASSETS=GAME/'assets'
@@ -92,50 +91,7 @@ def cut(image,box,kind):
     return Image.fromarray(np.dstack((a.astype(np.uint8),mask.astype(np.uint8)*255)))
 
 def main():
-    global VIDEO
-    p=argparse.ArgumentParser();p.add_argument('--video',type=Path,default=VIDEO);args=p.parse_args()
-    VIDEO=args.video
-    OUT.mkdir(exist_ok=True)
-    legacy={i:Image.open(ASSETS/f'{i:02d}.png').convert('RGBA') for i in range(44)}
-    images={i:im.copy() for i,im in legacy.items()}
-    samples=[];manifest={}
-    for i,(seconds,box,kind) in CUTS.items():
-        native=frame(seconds);raw=native.crop(box);im=cut(native,box,kind)
-        raw.save(OUT/f'{i:02d}_capture.png');im.save(OUT/f'{i:02d}_source.png')
-        im=im.resize(images[i].size,Image.Resampling.NEAREST)
-        images[i]=im
-        manifest[str(i)]={'seconds':seconds,'crop':box,'mask':kind,'size':im.size}
-        samples.append((i,raw,im))
-    images[37]=images[6].resize(images[37].size,Image.Resampling.NEAREST)
-    # 自機は現在の録画版を継承する。死亡など未採取姿勢は対応する輪郭に着色する。
-    pose_map={9:0,28:1,29:2,30:3,15:10,16:11,17:12,18:13}
-    for i in pose_map:images[i]=Image.open(ASSETS/f'obj_color/{i:02d}.png').convert('RGBA')
-    for i in range(19,28):
-        src=np.array(images[i]);yy=np.indices(src.shape[:2])[0]
-        # 録画にない転倒姿勢は既存の輪郭・陰影を保ち、採取済みの服の色を使う。
-        rgb=np.zeros_like(src[:,:,:3]);rgb[:]=(25,72,215)
-        rgb[yy<24]=(218,38,12);rgb[yy<11]=(220,150,90)
-        rgb[src[:,:,:3].sum(axis=2)<128]=(8,8,8)
-        src[:,:,:3]=rgb;images[i]=Image.fromarray(src)
-    images[10]=Image.open(ASSETS/'recorded_effects/bullet.png').convert('RGBA')
-    for i in LEGACY_ASSETS:images[i]=preserve_shape(legacy[i],images[i],i)
-    for i,im in images.items():im.save(OUT/f'{i:02d}.png')
-    # 空と地面は別のRGB5 HDMA。物体には輪郭、肌、植物、炎、弾を残す15色。
-    (OUT/'palette.json').write_text(json.dumps({'rgb5':PALETTE},indent=2)+'\n')
-    provenance={'capturedPlayer':pose_map,'derivedPlayerDeath':list(range(19,28)),
-                'existingMonochrome':[38,42,43],'recordedBullet':10,'derivedEnemyBullet':37}
-    policy={'reference':'legacy alpha; anatomical colors checked against recording',
-            'assets':sorted(LEGACY_ASSETS),'twoToneAssets':sorted(TWO_TONE_ASSETS),
-            'recordingUsage':'anatomical colors and animation reference; never replace geometry',
-            'bulletShading':'symmetric single-hue ramp with white center; legacy alpha fixed',
-            'bulletCycleTicks':32,'bulletCycle':['purple']*16+['red']*8+['blue']*8,
-            'playerRendering':'dedicated 15-color OBJ palette; no world-palette quantization',
-            'monochromeThresholdRgbSum':384,'darkPatternColors':'dark shade of each anatomical region'}
-    (OUT/'source.json').write_text(json.dumps({'video':str(VIDEO),'sha256':hashlib.sha256(VIDEO.read_bytes()).hexdigest(),'nativeCrop':[480,204,960,672],'nativeSize':[320,224],'assets':manifest,'otherAssets':provenance,'shapePolicy':policy},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    preview=Image.new('RGB',(640,((len(samples)+3)//4)*160),(65,65,65));draw=ImageDraw.Draw(preview)
-    for n,(i,raw,_) in enumerate(samples):
-        im=images[i].copy()
-        x=n%4*160;y=n//4*160;draw.text((x+4,y+2),f'{i:02d}',fill='white');raw.thumbnail((150,65));preview.paste(raw,(x+4,y+20));im.thumbnail((150,65));preview.paste(im,(x+4,y+88),im)
-    preview.save(OUT/'captures.png')
+    from import_4bpp_cutouts import main as import_cutouts
+    import_cutouts()
 
-if __name__=='__main__':main()
+if __name__=="__main__":main()

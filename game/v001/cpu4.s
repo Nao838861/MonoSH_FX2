@@ -2,6 +2,7 @@
 .smart
 .macpack longbranch
 .import _main, _fx_frame, _fx_buttons, _fx_packet_count, _fx_packet
+.import fx_audio_init: far, fx_audio_process: far
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_far_y
 .import _fx_far_d_acc, _fx_far_u_acc, _monosh_ground_offset, fx_sky_pointer
@@ -25,6 +26,7 @@ FX_DMA_ADMISSION_BYTES = 9984
 .export _fx_present, _fx_read_input, _fx_send_ground
 .export reset, game_started, render_started, render_finished, dma_started, dma_finished
 .export render_second_started, render_second_finished
+.export audio4_first_done, audio4_second_done
 .export half_dma_finished
 .if FX4_COLOR
 .export fx4_wait_obj_blank
@@ -74,6 +76,7 @@ reset:
   pea $0000
   plb
   plb
+  jsl fx_audio_init
   sep #$20
   lda #1
   sta $2105
@@ -398,6 +401,8 @@ wait_gsu:
   and #$20
   bne wait_gsu
 render_finished:
+  jsl fx_audio_process
+audio4_first_done:
   rep #$30
   lda fx4_page
   eor #$3000
@@ -427,6 +432,8 @@ wait_second_gsu:
   and #$20
   bne wait_second_gsu
 render_second_finished:
+  jsl fx_audio_process
+audio4_second_done:
   jsr prepare_frame
   rep #$30
   lda #$3800
@@ -698,4 +705,3 @@ blank_table:
   .byte $20,$15,$0b,$00,$01,$33,$00
   .word $ffff,$0000
   .res $20,$00
-

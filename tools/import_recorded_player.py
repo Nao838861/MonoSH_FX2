@@ -57,9 +57,12 @@ def cut_sprite(frame, box, mirror):
         bg=frame.getpixel((220,gy)) if box[0]<200 else frame.getpixel((80,gy))
         for x in range(crop.width):
             r,g,b,_=crop.getpixel((x,y))
-            purple=b>r+18 and r>g+20
             green=g>r+10 and g>b+5
-            background=sum((v-w)**2 for v,w in zip((r,g,b),bg))<45**2
+            # 青紫はズボン・背中の陰影にもあるため、色相だけでは抜かない。
+            # 赤と緑が近い青系の服は保護し、空の紫や輪郭外の圧縮ノイズは抜く。
+            blue_cloth=b>g+25 and b>r+25 and r-g<30
+            purple=b>r+18 and r>g+20 and not blue_cloth
+            background=sum((v-w)**2 for v,w in zip((r,g,b),bg))<(30 if blue_cloth else 45)**2
             mountain=box[1]>=160 and gy<170 and b>r+10
             pixels.append((r,g,b,0 if purple or green or background or mountain else 255))
     crop.putdata(pixels)
@@ -107,7 +110,8 @@ def extract(video):
               'videoSize':[1920,1080],'fps':30,'screenRect':[480,204,960,672],
               'nativeScreenSize':[320,224],'captures':records,'scale':0.75,
               'destinationSize':[32,48], 'unrecordedPoses':[4,5,6,7,8,9,14,15,16],
-              'note':'録画にない死亡・つまずきは既存の固定原画を維持。動画自体は同梱しない。'}
+              'maskVersion':2,
+              'note':'同じ走査線の背景色との距離で透明判定。青紫の服を抜かない。録画にない死亡・つまずきは既存の固定原画を維持。動画自体は同梱しない。'}
     (SOURCE/'source.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 def build():

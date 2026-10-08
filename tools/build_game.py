@@ -15,7 +15,26 @@ ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game/v001'
 BUILD = ROOT / 'build/game_v001'
 UP = GAME / 'upstream'
-CC65 = Path(shutil.which('cc65')).resolve().parent
+CC65_EXE = shutil.which('cc65')
+if not CC65_EXE:
+    raise RuntimeError('cc65 is required on PATH')
+CC65 = Path(CC65_EXE).resolve().parent
+
+def cc65_tool(name):
+    path = shutil.which(name)
+    if path:
+        return Path(path)
+    return CC65 / (name + ('.exe' if os.name == 'nt' else ''))
+
+def cc65_library():
+    override = os.environ.get('CC65_HOME')
+    candidates = ([Path(override) / 'lib/none.lib'] if override else []) + [
+        CC65.parent / 'lib/none.lib', CC65.parent / 'share/cc65/lib/none.lib',
+        Path('/usr/share/cc65/lib/none.lib')]
+    for path in candidates:
+        if path.is_file():
+            return path
+    raise RuntimeError('Cannot find cc65 none.lib; set CC65_HOME')
 NES = Path(os.environ.get('MONOSH_NES_ROOT','D:/HomeBrew/MonoSH'))
 
 def run(args):
@@ -244,6 +263,8 @@ def build_scaled(enabled, limits, row_margins=False):
     holes=[]
     for asset,image in enumerate(images):
         start=(asset&1)*32768+image.height*256;end=(1+(asset&1))*32768
+        if asset//2==0x59-0x44:
+            continue          # $59:1300〜FFFF は音のデータ（rom.cfg AUDIO59）に予約
         if start<end:
             bank=0x44+asset//2
             banks[bank][start:end]=bytes(end-start)
@@ -383,12 +404,14 @@ def main():
     BUILD.mkdir(parents=True,exist_ok=True)
     config=json.loads((GAME/('config4.json' if '--4bpp' in sys.argv else 'config.json')).read_text(encoding='utf-8'))
     four_bpp=config.get('bitsPerPixel',2)==4
+    gsu_color=not four_bpp and ('--gsu-color' in sys.argv or config.get('gsuColor',False)) and '--cpu-color' not in sys.argv
     smooth_depth=config.get('smoothDepthSizes',True) and '--legacy-depth-sizes' not in sys.argv
     full_transfer=('--full-transfer' in sys.argv or config['fullFramebufferTransfer']) and '--partial-transfer' not in sys.argv
     gsu_uv=('--gsu-uv' in sys.argv or config['gsuUv']) and '--cpu-uv' not in sys.argv
     gsu_clip=('--gsu-clip' in sys.argv or config['gsuClip']) and '--cpu-clip' not in sys.argv
     if gsu_clip:
         gsu_uv=True
+    gsu_color = gsu_color and gsu_clip  # Color pass consumes the native 10-byte draw packet.
     cpu_clip_commands=gsu_clip and config.get('cpuClipCommands',False) and '--no-cpu-clip-commands' not in sys.argv
     stable_cache=gsu_clip and config.get('stableGsuCache',False) and '--no-stable-gsu-cache' not in sys.argv
     scaled=stable_cache and config.get('scaledRows',True) and '--no-scaled-rows' not in sys.argv
@@ -396,6 +419,7 @@ def main():
     if '--all-scaled-assets' in sys.argv:
         scaled_limits=[(13,96),(14,96),(31,96),(0,96),(1,96),(4,128)]
     bucket_sort='--bucket-sort' in sys.argv
+    ground_cache=('--ground-cache' in sys.argv or config.get('groundHorizontalCache',False)) and '--no-ground-cache' not in sys.argv
     fast_obj=config.get('fastObj',True) and '--no-fast-obj' not in sys.argv
     scaled_clip=scaled and config.get('scaledClip',True) and '--no-scaled-clip' not in sys.argv
     fast_uv=scaled and config.get('fastUv',True) and '--no-fast-uv' not in sys.argv
@@ -419,6 +443,8 @@ def main():
     from build_objects import build as build_objects
     build_objects()
     pack_assets()
+    from build_color_tables import build as build_color_tables
+    build_color_tables()
     bounds=build_scaled(scaled, scaled_limits, row_margins)
     scale=bytearray(65536)
     dimensions=[Image.open(GAME/'assets'/('color4' if four_bpp and config.get('color',False) else '')/f'{i:02d}.png').size for i in range(44)]
@@ -433,29 +459,35 @@ def main():
     if four_bpp:
         from build_4bpp import augment_scale
         augment_scale(scale)
+    if gsu_color:
+        from build_gsu_color import build as build_gsu_color
+        build_gsu_color(scale)
     (BUILD/'assets4/scale5e.bin' if four_bpp else GAME/'assets/scale5e.bin').write_bytes(scale)
     prepare_logic(smooth_depth)
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
     objects=[]
     for source in sources:
         out=BUILD/(source.stem+'.s'); obj=BUILD/(source.stem+'.o')
-        run([CC65/'cc65.exe','-Oirs','--cpu','65c02','-D','__z88dk_fastcall=',
+        run([cc65_tool('cc65'),'-Oirs','--cpu','65c02','-D','__z88dk_fastcall=',
              *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_4BPP=1'] if four_bpp else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
-        run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet',*(['color'] if not four_bpp else []),'objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
+        run([cc65_tool('ca65'),'-o',obj,out]); objects.append(obj)
+    for name in ['cpu','audio','audio/data','gsu','ground','packet',*(['color'] if not four_bpp else []),'objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
+        (BUILD/name).parent.mkdir(parents=True, exist_ok=True)
         obj=BUILD/(name+'_asm.o')
-        run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
+        run([cc65_tool('ca65'),*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_4BPP=1'] if four_bpp else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
              *(['-D','FX_SMOOTH_DEPTH=1'] if smooth_depth else []),
              *(['-D','FX_GSU_UV=1'] if gsu_uv else []),
+             *(['-D','FX_GSU_COLOR=1'] if gsu_color else []),
              *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
              *(['-D','FX_CPU_CLIP_COMMANDS=1'] if cpu_clip_commands else []),
              *(['-D','FX_STABLE_GSU_CACHE=1'] if stable_cache else []),
              *(['-D','FX_SCALED_ROWS=1'] if scaled else []),
              *(['-D','FX_BUCKET_SORT=1'] if bucket_sort else []),
+             *(['-D','FX_GROUND_CACHE=1'] if ground_cache else []),
              *(['-D','FX_FAST_OBJ=1'] if fast_obj else []),
              *(['-D','FX_SCALED_CLIP=1'] if scaled_clip else []),
              *(['-D','FX_FAST_UV=1'] if fast_uv else []),
@@ -468,8 +500,8 @@ def main():
              '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
              '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-I',BUILD,'-o',obj,GAME/((name+'4' if four_bpp and name in ('cpu','gsu','objects') else name)+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
-    run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
-         '-o',rom,*objects,CC65.parent/'lib/none.lib'])
+    run([cc65_tool('ld65'),'-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
+         '-o',rom,*objects,cc65_library()])
     data=bytearray(rom.read_bytes()); assert len(data)==0x200000,len(data)
     # 標準LoROM reset vectorおよびchecksum。
     data[0x7ffc:0x7ffe]=struct.pack('<H',0x8000)
@@ -478,7 +510,7 @@ def main():
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
     (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
-        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort,'smoothDepthSizes':smooth_depth})+'\n')
+        'gsuColor':gsu_color,'groundHorizontalCache':ground_cache,'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort,'smoothDepthSizes':smooth_depth})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()

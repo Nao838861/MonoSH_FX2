@@ -6,7 +6,11 @@
   "cpuClipCommands": true,
   "stableGsuCache": true,
   "scaledRows": true,
-  "scaledAssetWidths": {"13": 96, "14": 96, "31": 96},
+  "scaledAssetWidths": {
+    "13": 96,
+    "14": 96,
+    "31": 96
+  },
   "scaledClip": true,
   "fastUv": true,
   "genericPipeline": true,
@@ -15,5 +19,7 @@
   "fineDmaDeadline": true,
   "fastObj": true,
   "descriptorDma": true,
-  "dmaAdmissionBytes": 9984
+  "dmaAdmissionBytes": 9984,
+  "gsuColor": true,
+  "groundHorizontalCache": true
 }

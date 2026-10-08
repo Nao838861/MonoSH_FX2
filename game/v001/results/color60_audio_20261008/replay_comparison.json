@@ -1,0 +1,5788 @@
+{
+  "romSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true,
+    "gsuColor": true,
+    "groundHorizontalCache": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "scaledAssetWidths": {
+      "13": 96,
+      "14": 96,
+      "31": 96
+    },
+    "scaledClip": true,
+    "fastUv": true,
+    "genericPipeline": true,
+    "rowMargins": true,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true
+  },
+  "scenes": [
+    {
+      "scene": "boss_profile/draw00001",
+      "gsuMedianMs": 2.3965799753339,
+      "packetMedianMs": 1.06894395154095,
+      "cacheCallsMedian": 14.0,
+      "cacheInvalidationsMedian": 12.0,
+      "framebufferHashes": [
+        "1f170aaae38cbec03e4e357b36f22c069b521df2424bd42095d0cabd9927c738"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw00300",
+      "gsuMedianMs": 1.831145035552,
+      "packetMedianMs": 2.1179598600790497,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "0111abe4d557ae16d06a832e3489a8ae7b630f0b885bae7985debe6bb431ee9c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw00600",
+      "gsuMedianMs": 5.180918693957,
+      "packetMedianMs": 3.7199324010982497,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "e7eee93a8513615987576aab1c987872649aa42ec3c1fca24ef79228a7539bfa"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw00900",
+      "gsuMedianMs": 6.3330203202716,
+      "packetMedianMs": 3.7654689105767503,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 33.0,
+      "framebufferHashes": [
+        "d67c2f6a13fba96d2b8538ffae99a842869a50ef11199def66d0109b9974c528"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw01200",
+      "gsuMedianMs": 8.9633357532558,
+      "packetMedianMs": 4.0139175962385,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "e19d03420743aa98b761157328e1a74b80db4980df5805ad2777dd871d371c7a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw01500",
+      "gsuMedianMs": 6.4649737638933,
+      "packetMedianMs": 4.28196839896615,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "18dd6110c58057e3eaeefcd62448521b7cebf5ecceaaf999a00bd21750eaa253"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw01800",
+      "gsuMedianMs": 10.283056432865,
+      "packetMedianMs": 4.866307043091901,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "b5c3938e899b360356e5f6a7ac11e017f506641d36a434310cbac36eecf4c6ad"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw02100",
+      "gsuMedianMs": 6.97742245849475,
+      "packetMedianMs": 5.0871451458081,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "0e0cf8ac1797385bbd63aae3fefbdd510886cacc3ba53fed52df6c233ee74938"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw02400",
+      "gsuMedianMs": 3.8490921938317,
+      "packetMedianMs": 3.27495037544805,
+      "cacheCallsMedian": 44.0,
+      "cacheInvalidationsMedian": 29.0,
+      "framebufferHashes": [
+        "fd126377989c44828b7aeb48b78b5c3b579edb685a6e3a63338450208b65e131"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw02700",
+      "gsuMedianMs": 4.5327916878829,
+      "packetMedianMs": 4.06587950275995,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "1e773390e872eaf5ae8847c9e1f4114651be5b07cd284f833fb7e559cf2d67f6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw03000",
+      "gsuMedianMs": 11.43115382624,
+      "packetMedianMs": 4.94769540563625,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 45.0,
+      "framebufferHashes": [
+        "61f7644734b9cb527324efebc5f857127af2c011745a14e122460e4167f186e9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw03300",
+      "gsuMedianMs": 4.4100572921924,
+      "packetMedianMs": 3.5263323945424503,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "29381d39ae2b35b6700feeaedc3fb3e74ac0fbdcdc5af71179e43fdb3ed9330a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw03600",
+      "gsuMedianMs": 8.0529780504712,
+      "packetMedianMs": 4.0710477569032,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "67d9333bccaac80618fd79abbae4826c4f2ac5b71f561533c092d05fbece5af6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw03900",
+      "gsuMedianMs": 8.2601738246831,
+      "packetMedianMs": 4.8142985757223,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "2ffbf7eec0bd752300e42607e29b4affe6c430b13cf0e610fbb3d4bd0acf84a0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04200",
+      "gsuMedianMs": 1.5476825920908,
+      "packetMedianMs": 2.1503196495346,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "929fe15767de1259c656bffd5bc357f363c3e90942ea4019487394e1a9f8ebf1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04500",
+      "gsuMedianMs": 7.9206521200644,
+      "packetMedianMs": 4.1111366471496,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 40.0,
+      "framebufferHashes": [
+        "0dd7e6166c804889126c398fe95d0eac6755d4420d9109270f4c4e59ab8749df"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw04800",
+      "gsuMedianMs": 6.6349208595952,
+      "packetMedianMs": 5.0126477887881,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "56813cee5584f2f3e89df5822684d0e83a52258b7fe69f9e0e58d0ce053ee13b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05100",
+      "gsuMedianMs": 2.7869461261188,
+      "packetMedianMs": 3.8453673259807,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "0d8655a5104a4b75ccd8d213a6d6f4d6cb2dbd372d6be2ec4e3e3218d0512487"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05400",
+      "gsuMedianMs": 8.2013209126373,
+      "packetMedianMs": 5.1132657816132,
+      "cacheCallsMedian": 79.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "92e0ee8c6d51343bcc34ca30a5670143fef1c6c3f7151238241f38a37c03eca1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw05700",
+      "gsuMedianMs": 1.1882328444693,
+      "packetMedianMs": 1.53357465510515,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "89a83a866a3b88754c877d1a5a55183a9f00ddc8e322d1acd0706ecd39e4e024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06000",
+      "gsuMedianMs": 1.9081566783714,
+      "packetMedianMs": 1.8904169952310501,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "b7cc6919f07c4d5f1137588c2e74690123eb589859acd8e779329038d99db672"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06300",
+      "gsuMedianMs": 6.8246097549074,
+      "packetMedianMs": 3.39437895092075,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 33.0,
+      "framebufferHashes": [
+        "f1ee1d700e62769bfa6d73c474f433f5fc4b82e92cc91c8ee80ec714f87ae5f9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06600",
+      "gsuMedianMs": 6.2362668778418,
+      "packetMedianMs": 3.1881143936716,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "25a8b7d5e0a6417ff6a7f4f85953922c75254c72655ae671156d55baa43a7c4d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw06900",
+      "gsuMedianMs": 4.148105960570749,
+      "packetMedianMs": 3.0972276181072,
+      "cacheCallsMedian": 39.0,
+      "cacheInvalidationsMedian": 26.0,
+      "framebufferHashes": [
+        "a27c0f293a0dcbf73c23756659b7f8b0e7ebf9078f7f08c8f3ac09f3070179bf"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07200",
+      "gsuMedianMs": 7.0150436237898,
+      "packetMedianMs": 5.08011445773935,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "5a1297acd4566a4bd868bd59aa7bd26a73216e1fb50cfc748db1636bfc92ce51"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07500",
+      "gsuMedianMs": 6.6062393771425,
+      "packetMedianMs": 5.08723826750435,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 50.0,
+      "framebufferHashes": [
+        "e7e42eff4c067015cc6a1cd49db853b1fb66f75e6600c72045519329aa3c38d9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw07800",
+      "gsuMedianMs": 2.2891175378326,
+      "packetMedianMs": 2.58347521975785,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "ead673e6257a6379434bfe35fe0c55d28705f02eec5d0dfb683febe1d53eab98"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08100",
+      "gsuMedianMs": 11.288398265851,
+      "packetMedianMs": 4.998400169258,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "771ea1b0e3937179b21f310fe9873c7348f74bf0d066bae2f660aa7dfd41a360"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08400",
+      "gsuMedianMs": 8.5910352115483,
+      "packetMedianMs": 4.04106257070265,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 36.0,
+      "framebufferHashes": [
+        "f7b0ceba1b98cd641bbb409f43f23cc382d965b43145e006e9bf924ae1e1d63d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw08700",
+      "gsuMedianMs": 5.6631028372691,
+      "packetMedianMs": 3.7331091211211502,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "c8d5aa56804307df3671f5ee454409b38ac23ebc0dd6df332d31f5323540cf22"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09000",
+      "gsuMedianMs": 3.2195895270126,
+      "packetMedianMs": 3.41272392508695,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "96180dc57d77dcbddca47910fc554a440eb56be358709868ef4c65b775ab2984"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09300",
+      "gsuMedianMs": 3.4477376828864,
+      "packetMedianMs": 2.6618371271733503,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 20.0,
+      "framebufferHashes": [
+        "00b8fe622b2669f682cefffec939bd19fa4cdbc0f6b56f192e0e89eb7b6ef191"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09600",
+      "gsuMedianMs": 5.8118181862203,
+      "packetMedianMs": 4.42784353618095,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 44.0,
+      "framebufferHashes": [
+        "6ab94d0049321f7389239488113edb3ae593c959eef516320131cd6c5495844d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw09900",
+      "gsuMedianMs": 9.5838987372326,
+      "packetMedianMs": 3.3717503787259497,
+      "cacheCallsMedian": 44.0,
+      "cacheInvalidationsMedian": 29.0,
+      "framebufferHashes": [
+        "b23eb205e94857c7b3465b2d533555928e421922ebb71239e26e70ab90aaa53f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10200",
+      "gsuMedianMs": 1.1882328444693,
+      "packetMedianMs": 1.7996699022109999,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "89a83a866a3b88754c877d1a5a55183a9f00ddc8e322d1acd0706ecd39e4e024"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10500",
+      "gsuMedianMs": 11.3997718145955,
+      "packetMedianMs": 5.6218964866674,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "78d661cc7b152f1eccf3a7eca95f0064b126a0bb3d658d30f6fea7908f0c17f7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw10800",
+      "gsuMedianMs": 10.354480773908,
+      "packetMedianMs": 3.206180002749,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "767a4cd424a46222532a6e924a61b72508da96b263d08b2de985d3adc96ec018"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11100",
+      "gsuMedianMs": 1.4507429062685,
+      "packetMedianMs": 2.2301715040904497,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "e9656ecfd6ce7bb93860c1fc6408e17623b675fbb16db1d353ee9b4b3df74e1c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11400",
+      "gsuMedianMs": 2.8637715255457,
+      "packetMedianMs": 2.9358942793107,
+      "cacheCallsMedian": 34.0,
+      "cacheInvalidationsMedian": 23.0,
+      "framebufferHashes": [
+        "44dc6d4eafae6d340f2749cbe8f401002c8018b9f0215d2e9f914948d74faa56"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw11700",
+      "gsuMedianMs": 4.8468911694185,
+      "packetMedianMs": 3.084982115047,
+      "cacheCallsMedian": 39.0,
+      "cacheInvalidationsMedian": 28.0,
+      "framebufferHashes": [
+        "b62c409b52dc20fd0b2abaf1396848b524a8fc052f47c31f5e390091cf5c43b5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12000",
+      "gsuMedianMs": 6.8924954714919,
+      "packetMedianMs": 3.8546794956082,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "305347c306d9928bc3d58c08d2174006166235c17b7984132d6507bd06d85fa5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12300",
+      "gsuMedianMs": 3.483496414256,
+      "packetMedianMs": 2.85562337712165,
+      "cacheCallsMedian": 34.0,
+      "cacheInvalidationsMedian": 25.0,
+      "framebufferHashes": [
+        "6656e385e49ef2b11d540d8786125094efc5a68c937bc7777ea2af26828eabbd"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12600",
+      "gsuMedianMs": 7.0001441523858,
+      "packetMedianMs": 5.10050810922355,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "a2ae7d13b263218dc789dc22f3d2f5e384658921480ef429527888a85f4e647a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw12900",
+      "gsuMedianMs": 5.0276403818884,
+      "packetMedianMs": 4.4117800435735,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 46.0,
+      "framebufferHashes": [
+        "434a622270568d37cc95d25ed67193bea5ec3e7eaa71c092990a5e9f8efc5fe1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13200",
+      "gsuMedianMs": 3.194353547322,
+      "packetMedianMs": 3.08577364946535,
+      "cacheCallsMedian": 44.0,
+      "cacheInvalidationsMedian": 31.0,
+      "framebufferHashes": [
+        "f532c8e397f6719f08d1cc1c3434282a717e35f8d28fd045ae55d53be35feeac"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13500",
+      "gsuMedianMs": 6.9070224561108,
+      "packetMedianMs": 4.418391684009,
+      "cacheCallsMedian": 64.0,
+      "cacheInvalidationsMedian": 41.0,
+      "framebufferHashes": [
+        "d5e8b84329adf5efa81cbee37a9cfe1b58a3a1bc985344f6eaaf84b4313846bc"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw13800",
+      "gsuMedianMs": 6.2189462423347,
+      "packetMedianMs": 3.25534825838215,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "d4dca7d88b6dcbb0df400ef9ea20cf1fe89c4110793294728b6349c15fc724ed"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14100",
+      "gsuMedianMs": 6.2493039153203,
+      "packetMedianMs": 3.38902445338495,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "b017a1602b04cd74237d6860cdcfb11c35a2163904eb0edd78451eed8c86788b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14400",
+      "gsuMedianMs": 4.878552546152051,
+      "packetMedianMs": 3.6129355720782,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "6f957b7b31f0ae711c59685ff7b53f251a216b61f4f31aa5a70ee33bb25cede4"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw14700",
+      "gsuMedianMs": 2.4738709832422,
+      "packetMedianMs": 2.20703076256615,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "a2e5c5eba8c0211088e75556af0481462f9a0aca9775e384c8a4e8a375cbb47d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15000",
+      "gsuMedianMs": 6.329761060902,
+      "packetMedianMs": 4.4825059718944,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 46.0,
+      "framebufferHashes": [
+        "3bde69f899b669c563146300a53a999289799e63d5130d15de402d470a82154e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15300",
+      "gsuMedianMs": 8.832779135078251,
+      "packetMedianMs": 3.41556413682335,
+      "cacheCallsMedian": 44.0,
+      "cacheInvalidationsMedian": 30.0,
+      "framebufferHashes": [
+        "8a4ff439b35942fa912838bf9868c56ff17b00a487e2fa4f6c1e30641678ad9e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15600",
+      "gsuMedianMs": 1.1882328444693,
+      "packetMedianMs": 1.8021376271623,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "f42fb7c0530c4680f3cb3aa4536ac0447f3075422b23947e9a1701775fa2dc24"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw15900",
+      "gsuMedianMs": 7.5102648045804,
+      "packetMedianMs": 3.84443610901795,
+      "cacheCallsMedian": 64.0,
+      "cacheInvalidationsMedian": 42.0,
+      "framebufferHashes": [
+        "02692837371a95915c81defedfecf46858f10b0bdf6e433ae893f68cf9ce8229"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16200",
+      "gsuMedianMs": 11.558544306744,
+      "packetMedianMs": 3.6158689055109,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "2e98fe2dcbc9c016f3db406ce290f2c81b9db9f87c105d6487f0fba3e1357b32"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16500",
+      "gsuMedianMs": 1.4965587808359,
+      "packetMedianMs": 1.9474540341995001,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "bfd2ae407b1040666d22fd36018448a597b3792d55650a49f2b48288356617cb"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw16800",
+      "gsuMedianMs": 3.7265440415338,
+      "packetMedianMs": 3.6856170560209,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "7e552a8db5eb1510aef8040d1bb8b2b956eaeeabbcd3e62c149afe18bb67be39"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile/draw17100",
+      "gsuMedianMs": 2.660021254096,
+      "packetMedianMs": 2.86712390661165,
+      "cacheCallsMedian": 34.0,
+      "cacheInvalidationsMedian": 25.0,
+      "framebufferHashes": [
+        "dffdb5265e20fe7dedfea65ba7e36befab15214f1b47f355d4420012571bee74"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00001",
+      "gsuMedianMs": 2.3965799753339,
+      "packetMedianMs": 1.06950268171865,
+      "cacheCallsMedian": 14.0,
+      "cacheInvalidationsMedian": 12.0,
+      "framebufferHashes": [
+        "1f170aaae38cbec03e4e357b36f22c069b521df2424bd42095d0cabd9927c738"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00300",
+      "gsuMedianMs": 1.831145035552,
+      "packetMedianMs": 2.1413799666922504,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "0111abe4d557ae16d06a832e3489a8ae7b630f0b885bae7985debe6bb431ee9c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00600",
+      "gsuMedianMs": 5.180918693957,
+      "packetMedianMs": 3.7212826656941997,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "e7eee93a8513615987576aab1c987872649aa42ec3c1fca24ef79228a7539bfa"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw00900",
+      "gsuMedianMs": 6.3330203202716,
+      "packetMedianMs": 3.7660276407544,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 33.0,
+      "framebufferHashes": [
+        "d67c2f6a13fba96d2b8538ffae99a842869a50ef11199def66d0109b9974c528"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01200",
+      "gsuMedianMs": 8.9633357532558,
+      "packetMedianMs": 4.0300276496941,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "e19d03420743aa98b761157328e1a74b80db4980df5805ad2777dd871d371c7a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01500",
+      "gsuMedianMs": 6.4649737638933,
+      "packetMedianMs": 4.28299273762515,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "18dd6110c58057e3eaeefcd62448521b7cebf5ecceaaf999a00bd21750eaa253"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw01800",
+      "gsuMedianMs": 10.283056432865,
+      "packetMedianMs": 4.87282556183115,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "b5c3938e899b360356e5f6a7ac11e017f506641d36a434310cbac36eecf4c6ad"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02100",
+      "gsuMedianMs": 6.976491241532,
+      "packetMedianMs": 5.0885419712522,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "0e0cf8ac1797385bbd63aae3fefbdd510886cacc3ba53fed52df6c233ee74938"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02400",
+      "gsuMedianMs": 3.8490921938317,
+      "packetMedianMs": 3.27504349714435,
+      "cacheCallsMedian": 44.0,
+      "cacheInvalidationsMedian": 29.0,
+      "framebufferHashes": [
+        "fd126377989c44828b7aeb48b78b5c3b579edb685a6e3a63338450208b65e131"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw02700",
+      "gsuMedianMs": 4.5327916878829,
+      "packetMedianMs": 4.0652276508859995,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "1e773390e872eaf5ae8847c9e1f4114651be5b07cd284f833fb7e559cf2d67f6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03000",
+      "gsuMedianMs": 11.43115382624,
+      "packetMedianMs": 4.94345836845575,
+      "cacheCallsMedian": 69.0,
+      "cacheInvalidationsMedian": 45.0,
+      "framebufferHashes": [
+        "61f7644734b9cb527324efebc5f857127af2c011745a14e122460e4167f186e9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03300",
+      "gsuMedianMs": 4.4100572921924,
+      "packetMedianMs": 3.5284741935568,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "29381d39ae2b35b6700feeaedc3fb3e74ac0fbdcdc5af71179e43fdb3ed9330a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03600",
+      "gsuMedianMs": 8.0529780504712,
+      "packetMedianMs": 4.07346892100635,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "67d9333bccaac80618fd79abbae4826c4f2ac5b71f561533c092d05fbece5af6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw03900",
+      "gsuMedianMs": 8.2601738246831,
+      "packetMedianMs": 4.8198858774988,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "2ffbf7eec0bd752300e42607e29b4affe6c430b13cf0e610fbb3d4bd0acf84a0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04200",
+      "gsuMedianMs": 1.5476825920908,
+      "packetMedianMs": 2.14924875002745,
+      "cacheCallsMedian": 19.0,
+      "cacheInvalidationsMedian": 14.0,
+      "framebufferHashes": [
+        "929fe15767de1259c656bffd5bc357f363c3e90942ea4019487394e1a9f8ebf1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04500",
+      "gsuMedianMs": 7.9206521200644,
+      "packetMedianMs": 4.1113694513903,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 40.0,
+      "framebufferHashes": [
+        "0dd7e6166c804889126c398fe95d0eac6755d4420d9109270f4c4e59ab8749df"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw04800",
+      "gsuMedianMs": 6.6349208595952,
+      "packetMedianMs": 5.0140446142322,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "56813cee5584f2f3e89df5822684d0e83a52258b7fe69f9e0e58d0ce053ee13b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05100",
+      "gsuMedianMs": 2.7869461261188,
+      "packetMedianMs": 3.2819810635168,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "0d8655a5104a4b75ccd8d213a6d6f4d6cb2dbd372d6be2ec4e3e3218d0512487"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05400",
+      "gsuMedianMs": 8.2013209126373,
+      "packetMedianMs": 4.42053348302335,
+      "cacheCallsMedian": 79.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "92e0ee8c6d51343bcc34ca30a5670143fef1c6c3f7151238241f38a37c03eca1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw05700",
+      "gsuMedianMs": 11.968279770354,
+      "packetMedianMs": 3.0702223261874497,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "6a64077165319945005ddd1ba748bda12b58f2d84a3151e92edb34aff5408c19"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06000",
+      "gsuMedianMs": 9.5759833930492,
+      "packetMedianMs": 4.7681102143699,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 53.0,
+      "framebufferHashes": [
+        "a2c36be314897f7a6929eecc38f8066348264dadc687f1a37d6f8115627e27dd"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06300",
+      "gsuMedianMs": 10.340605641163,
+      "packetMedianMs": 2.71766358409015,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "7172ebcbb77ed85bf88b4e4f2bd36128bc6e5dfdc128e59145382e25894ca0c1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06600",
+      "gsuMedianMs": 4.1286435260493,
+      "packetMedianMs": 4.8535493707022,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 53.0,
+      "framebufferHashes": [
+        "3202766770605db5cb304d086611feb90dabb28660ca88ffbc46884547c48ead"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw06900",
+      "gsuMedianMs": 13.555632205058501,
+      "packetMedianMs": 4.4067514719746494,
+      "cacheCallsMedian": 79.0,
+      "cacheInvalidationsMedian": 53.0,
+      "framebufferHashes": [
+        "78d75e67b050782f6a20a3224809a3d1d37f11a78befdbbe3099aa4196d412a8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07200",
+      "gsuMedianMs": 3.2047831773048,
+      "packetMedianMs": 3.478421281809,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 38.0,
+      "framebufferHashes": [
+        "3e85c1a785298ad32d4da9dbb7cc71bb384104065ae3fab3474d4fb43b6f4640"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07500",
+      "gsuMedianMs": 4.6461207922496,
+      "packetMedianMs": 2.9297016865084,
+      "cacheCallsMedian": 59.0,
+      "cacheInvalidationsMedian": 40.0,
+      "framebufferHashes": [
+        "3ef445a7ff75c911868d6f33a78cbd587a8fb1202b5b3800152f6d6bd7a17843"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw07800",
+      "gsuMedianMs": 4.3998139056022,
+      "packetMedianMs": 3.2214985217862,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 37.0,
+      "framebufferHashes": [
+        "868c586f99c209fc8e9fe44353c366f43d32b023f30fc30e5ef49fac43f2757b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08100",
+      "gsuMedianMs": 11.398840597633,
+      "packetMedianMs": 4.7491599491778995,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "78d661cc7b152f1eccf3a7eca95f0064b126a0bb3d658d30f6fea7908f0c17f7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08400",
+      "gsuMedianMs": 13.90409359252,
+      "packetMedianMs": 4.055123946840149,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "cc6e0c25236bdbb1b37d5ade4da1aa5d70e179a8ca8ed7ecacf282dc5ac3fc2e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw08700",
+      "gsuMedianMs": 3.5788530312416,
+      "packetMedianMs": 4.92609117210045,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 53.0,
+      "framebufferHashes": [
+        "63cc59376ad2693fe12979e98da9902a6d8bf5776b7116a66e9c6c69675c27d6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09000",
+      "gsuMedianMs": 6.9529314523744,
+      "packetMedianMs": 4.41932290097175,
+      "cacheCallsMedian": 79.0,
+      "cacheInvalidationsMedian": 52.0,
+      "framebufferHashes": [
+        "ec3e4f6f183b3796ad608334126039c63ddabf35f2d9289bb05c89b2010b54c2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09300",
+      "gsuMedianMs": 3.6492530336255,
+      "packetMedianMs": 3.22005513549395,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "fc40c0cf787596bbc8310d84941b4ec0e7bf9a3e470f36539c0e5eefe08cbd29"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09600",
+      "gsuMedianMs": 11.412995095467,
+      "packetMedianMs": 4.74138428753895,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "25bc4a40b68ec6e7aa533548429bd3bbc3032e6391bbf7ec22e3721eddb4c2d2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw09900",
+      "gsuMedianMs": 5.22934197602,
+      "packetMedianMs": 3.2210794741529503,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "79ee06a7e4e8b0d04d55a092ad5e02056a335983db51aa110a1364c91f45eab9"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10200",
+      "gsuMedianMs": 11.3997718145955,
+      "packetMedianMs": 4.7472975152524,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "78d661cc7b152f1eccf3a7eca95f0064b126a0bb3d658d30f6fea7908f0c17f7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10500",
+      "gsuMedianMs": 7.9769907463108,
+      "packetMedianMs": 3.2191239185312,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "179d45747e28e278e43be3a054e373bdcfa637e97fa0c19d302e5983f6d9c218"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw10800",
+      "gsuMedianMs": 11.417930545369,
+      "packetMedianMs": 4.7486943406965,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "e8c933a2a5f927b8020203e7a08740bc90c883ccae53d5ff4240c739a3f9392d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11100",
+      "gsuMedianMs": 13.90409359252,
+      "packetMedianMs": 4.0612234179462,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "2132fc35f62df42823c0dd1365ac80014681280f71ce07c8392200bba80b5538"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11400",
+      "gsuMedianMs": 4.629452008616351,
+      "packetMedianMs": 3.2213122783936496,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "1087d2c2916470008331cfdae810dcd348ee580057d59e58192b561acd9b9220"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw11700",
+      "gsuMedianMs": 11.412995095467,
+      "packetMedianMs": 4.7484149756077,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "25bc4a40b68ec6e7aa533548429bd3bbc3032e6391bbf7ec22e3721eddb4c2d2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12000",
+      "gsuMedianMs": 6.5926436094863,
+      "packetMedianMs": 3.2190307968349003,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "4b35c80bfa117eb3b406c34c3224b2bd8621a11154a00ffa79ea47ea6599b65f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12300",
+      "gsuMedianMs": 11.398840597633,
+      "packetMedianMs": 4.75120862649595,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "78d661cc7b152f1eccf3a7eca95f0064b126a0bb3d658d30f6fea7908f0c17f7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12600",
+      "gsuMedianMs": 11.121151699341,
+      "packetMedianMs": 3.2117673045255,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "6e2a3019f78643680d4daa07d9cfb1e3739b17c192d252b8891df078d20ded4b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw12900",
+      "gsuMedianMs": 11.4018204919135,
+      "packetMedianMs": 4.7650371983928,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "b16cf8c151a167aa8f824fb1daf9f2d3957754d1aa6964cecde66e7da59a9457"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13200",
+      "gsuMedianMs": 11.662374998091,
+      "packetMedianMs": 2.7779598824283003,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "5f2b3d10a4c41e0a28bf0a7d27ccd9a772275e7559ec7a26f65241348fb58298"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13500",
+      "gsuMedianMs": 5.2305525580716,
+      "packetMedianMs": 4.77742238399735,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 53.0,
+      "framebufferHashes": [
+        "a445be8af6ff515c9d0dd6fc48ac2ce1d51b5a5e328f0d4f9df48d2c25d31760"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw13800",
+      "gsuMedianMs": 11.002794023375,
+      "packetMedianMs": 4.06229431745335,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 47.0,
+      "framebufferHashes": [
+        "e5490904acfa335ed156cd90d2a95c78c2c8a06afcb9c0c804e15156df2d6f86"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw14100",
+      "gsuMedianMs": 8.9133294023561,
+      "packetMedianMs": 3.2224762995970497,
+      "cacheCallsMedian": 54.0,
+      "cacheInvalidationsMedian": 35.0,
+      "framebufferHashes": [
+        "46751ea257e183402edebed074b103f6d71ee05677c45590b16bebd9827eb644"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_profile_linger/draw14400",
+      "gsuMedianMs": 11.404614142802,
+      "packetMedianMs": 4.75912397067935,
+      "cacheCallsMedian": 84.0,
+      "cacheInvalidationsMedian": 54.0,
+      "framebufferHashes": [
+        "b07bf1d29758d4c6ee8dc8e5050be4f025688eba6ef3e6549842b11eee36d552"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_worst_19ms",
+      "gsuMedianMs": 13.90409359252,
+      "packetMedianMs": 3.0262688855456004,
+      "cacheCallsMedian": 74.0,
+      "cacheInvalidationsMedian": 48.0,
+      "framebufferHashes": [
+        "2132fc35f62df42823c0dd1365ac80014681280f71ce07c8392200bba80b5538"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "inside64",
+      "gsuMedianMs": 16.382713782272,
+      "packetMedianMs": 42.810697745971,
+      "cacheCallsMedian": 324.0,
+      "cacheInvalidationsMedian": 196.0,
+      "framebufferHashes": [
+        "c0a4ffdf0209725393c81be2e1adfc3d07612ee072b050910ff7959ac05890ad"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "clipped64",
+      "gsuMedianMs": 14.271924292806,
+      "packetMedianMs": 40.8442934465795,
+      "cacheCallsMedian": 324.0,
+      "cacheInvalidationsMedian": 196.0,
+      "framebufferHashes": [
+        "38367ee014233412d698c8972eec56dd90bf7378e532c226e68a160f011cd2d7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_0_20_13_19",
+      "gsuMedianMs": 0.93205505801668,
+      "packetMedianMs": 0.51580107566734,
+      "cacheCallsMedian": 7.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_256_212_13_19",
+      "gsuMedianMs": 1.1572233196097,
+      "packetMedianMs": 0.518874091644415,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "fe1ed21cd74042682ca499c7053ae7fc6754f335e8659194268d8313ba563301"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_249_212_14_19",
+      "gsuMedianMs": 1.194565119816,
+      "packetMedianMs": 0.544529118968185,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "f41ab382a1475effd83127bc8c2f05e1594872dad2644a8e7ea922be6ff38b15"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_7_39_14_19",
+      "gsuMedianMs": 1.1930751726756,
+      "packetMedianMs": 0.55332911926617,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 8.0,
+      "framebufferHashes": [
+        "2b0ca0529cfb16000f9b7917edf851a0610022271e6ff58db19b3d903fc57e54"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_-300_100_13_19",
+      "gsuMedianMs": 0.88866034755252,
+      "packetMedianMs": 0.5144508110713499,
+      "cacheCallsMedian": 6.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_600_100_13_19",
+      "gsuMedianMs": 0.89741378700237,
+      "packetMedianMs": 0.512821181386535,
+      "cacheCallsMedian": 6.0,
+      "cacheInvalidationsMedian": 5.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_-100_13_19",
+      "gsuMedianMs": 0.9330793966757001,
+      "packetMedianMs": 0.523297372217475,
+      "cacheCallsMedian": 7.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_500_13_19",
+      "gsuMedianMs": 0.93252066649805,
+      "packetMedianMs": 0.523483615610025,
+      "cacheCallsMedian": 7.0,
+      "cacheInvalidationsMedian": 6.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_100_0_19",
+      "gsuMedianMs": 0.84638309744366,
+      "packetMedianMs": 0.501134408504025,
+      "cacheCallsMedian": 4.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_100_13_0",
+      "gsuMedianMs": 0.85439156332331,
+      "packetMedianMs": 0.530281499438105,
+      "cacheCallsMedian": 4.0,
+      "cacheInvalidationsMedian": 4.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_0_100_255_255",
+      "gsuMedianMs": 5.664779027802,
+      "packetMedianMs": 0.52753440939799,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "d451839aab6bf51ceb2082fc8da1702847e30d7e7cb252fcd5ff1f179bdddded"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "edge_128_212_255_192",
+      "gsuMedianMs": 23.553270638841,
+      "packetMedianMs": 0.559009542738945,
+      "cacheCallsMedian": 9.0,
+      "cacheInvalidationsMedian": 7.0,
+      "framebufferHashes": [
+        "d2883e8072f07f7957a8641d3ef86e1169d06bc667c275df47455f1e006ba54f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "boss_only_worst_road",
+      "gsuMedianMs": 13.740385650468,
+      "packetMedianMs": 2.14026250633695,
+      "cacheCallsMedian": 49.0,
+      "cacheInvalidationsMedian": 32.0,
+      "framebufferHashes": [
+        "a225eb423d19aa2861cc11afacf55bd86da20e122f706915be4a7facedc356d2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_1_0",
+      "gsuMedianMs": 1.5413503167441,
+      "packetMedianMs": 1.56681910067535,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "d7b92533a6f61821787bef4756c6bb403105cf2f799847b982b4a79911f47973"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_1_16",
+      "gsuMedianMs": 1.5669587832198,
+      "packetMedianMs": 1.5603005819361,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "34553d3dd3b725e0e6cae1015cffca579ff8aa61db5b5126e8f935d0c576e067"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_1_32",
+      "gsuMedianMs": 1.5759915877584,
+      "packetMedianMs": 1.56286142858365,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "8b3392a41ba6e391f50a7dd2c847946213d5d3cdb9ac6a624c78a3343338b71a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_1_48",
+      "gsuMedianMs": 1.5740360321367,
+      "packetMedianMs": 1.559928095151,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "183f2247f72132a6e66b77d729bb2923ac1b5f7d7033d00e454ecbd851ee9f59"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_2_0",
+      "gsuMedianMs": 2.375627593672,
+      "packetMedianMs": 1.57389634959225,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "e5f2b8023c0de6266620d1ccf715eb33e551b4f03657210633966756eb3bb12c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_2_16",
+      "gsuMedianMs": 2.4310350029557,
+      "packetMedianMs": 1.5724529633,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "5154a3e26ef8a4deee5c4e768886a9887a12676b36fa15d72907d3aa204f32c0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_2_32",
+      "gsuMedianMs": 2.4501249506921,
+      "packetMedianMs": 1.57431539722545,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "0438fa9de39d2f294c44e9728ea41fd0fd2a93ee2c09f28cb64b1fcb1368dff3"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_2_48",
+      "gsuMedianMs": 2.4450963790932,
+      "packetMedianMs": 1.57412915383295,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "c5b3b133c648e15d548994a047e9d7d994bade77869cb8d3dd9df3a7d6716526"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_3_0",
+      "gsuMedianMs": 2.8529694087778,
+      "packetMedianMs": 1.57254608499625,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "ab04aac10626af77a1418e31069e2f393fb7d3e2e8f9cdb16c6ab4ef7f654439"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_3_16",
+      "gsuMedianMs": 2.9111704689497,
+      "packetMedianMs": 1.57417571468105,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "5bf245844dc620f551a5f38c05460e999ae4e6606a682fb9f60e60b8533ca0af"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_3_32",
+      "gsuMedianMs": 2.9331471892706,
+      "packetMedianMs": 1.5744550797699,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "b8747aeb68825cdbf32e1c622890f151c2fb34d908c2e268f937c1e995a7dd4c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_3_48",
+      "gsuMedianMs": 2.93091226856,
+      "packetMedianMs": 1.57352386280715,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "b53b2cac10d6b9a81006dd18c59fb48d1f1e8402a404f142b0f4007b87a84df8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_7_0",
+      "gsuMedianMs": 4.3511112584503,
+      "packetMedianMs": 1.5750138099475501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a3fe6965d04589e4b257f391345e9f47f972b5d62cef75a5ed614d7e44317849"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_7_16",
+      "gsuMedianMs": 4.4232805730635,
+      "packetMedianMs": 1.57422227552925,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3e371a878556526f15d71bf8545e32b8ebefbd9fbc502b20f1973c0a3f9e727e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_7_32",
+      "gsuMedianMs": 4.440042478393,
+      "packetMedianMs": 1.5743619580736,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "15135b49818f076f0dfaa75a6b85372059aed53635ba3d1889760253fe0cb9b8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_7_48",
+      "gsuMedianMs": 4.4473059707024,
+      "packetMedianMs": 1.5745016406180499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2acf43a7fd6ad60423e01f38b5dff8937b9ce670ec6946b778310acabcac0ba5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_8_0",
+      "gsuMedianMs": 4.6819726453155,
+      "packetMedianMs": 1.57496724909945,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c46a8411ca2ca65cd3de3e70b88f2e216503d38067407f455edd457794fe1923"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_8_16",
+      "gsuMedianMs": 4.7181969851665,
+      "packetMedianMs": 1.5728720109332501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "bb26d8172fc0952ad95579120c595485ae106cdcdf391083b06c487044c195f0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_8_32",
+      "gsuMedianMs": 4.7672721191034,
+      "packetMedianMs": 1.5734307411109,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b34a43cc3b6807b6d2ad45e43016571ce15fdeb6900f81c8a48b53c40a670393"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_8_48",
+      "gsuMedianMs": 4.7431535997682,
+      "packetMedianMs": 1.5741291538328999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e23518a2c8bcf16fb6cff7819c43017555d775b23189b7aebd5e00de169211e5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_9_0",
+      "gsuMedianMs": 4.9654350887766,
+      "packetMedianMs": 1.5747344448587,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "106930d92bf53dceeeafd0204f31ff75d9e6c33991235f1ceabfa45e0f19ec14"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_9_16",
+      "gsuMedianMs": 4.8523853494988,
+      "packetMedianMs": 1.5745947623143,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "83a942029f1465075a61cc9be0159ed763321d673128b6238376b3d30fe3c9df"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_9_32",
+      "gsuMedianMs": 5.0550181605932,
+      "packetMedianMs": 1.57585190521405,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "77288f1cbab08f72e00c14ab375170845c88d347955750f920937a6060e00357"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_9_48",
+      "gsuMedianMs": 4.8814393187366,
+      "packetMedianMs": 1.5754328575808,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c3e9150fbdfdd0251272db9049c706aa38c894f0048daa9d93b5539b1191c118"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_96_0",
+      "gsuMedianMs": 21.913676932527,
+      "packetMedianMs": 1.57361698450345,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6a27fabee7c916ddb0a51ba81f6a66374483a8b84f79da823f963f4083355129"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_96_16",
+      "gsuMedianMs": 27.965842216833,
+      "packetMedianMs": 1.5733376194146,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3ad5a557e9dde68a704e8a8eae05e23c650f462f6815e30b9e96a0a2df078326"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_96_32",
+      "gsuMedianMs": 21.99608963373,
+      "packetMedianMs": 1.5726392066925001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e436e220a2866118a1b171027eb64f98c26617fb35f7f20beac8f9252fb311c7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_96_48",
+      "gsuMedianMs": 27.980927931629,
+      "packetMedianMs": 1.5737101061997,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f37a54c746746ec94bb06f28c12d22343982cf7ce13b280ad3307b56b646e948"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_97_0",
+      "gsuMedianMs": 28.193524764225,
+      "packetMedianMs": 1.5739894712884999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f9bd2c04f3188687b33cb2085cd9ff8c9fccd33d38ee7c79cebb3cfd8d48c110"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_97_16",
+      "gsuMedianMs": 28.199950161268,
+      "packetMedianMs": 1.5728720109332,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a00796a20765a5bb0e98737106f0893dc4135d343434c6b9773aeb0ea3a2cd04"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_97_32",
+      "gsuMedianMs": 28.277986142747,
+      "packetMedianMs": 1.5717545505779,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "74a153fd89cefcb4d91a1d48abba48b5b44be5b34a7204e2113133b533005747"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_13_97_48",
+      "gsuMedianMs": 28.229749104076,
+      "packetMedianMs": 1.57338418026275,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "125efd755a5a6dfe7aac2684ecad346171f6c7a96326c6db9434372cf7ac8993"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_1_0",
+      "gsuMedianMs": 1.53045507828,
+      "packetMedianMs": 1.5686349737527001,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_1_16",
+      "gsuMedianMs": 1.5564360315407,
+      "packetMedianMs": 1.5589503173401,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_1_32",
+      "gsuMedianMs": 1.5638857672427,
+      "packetMedianMs": 1.5591831215808,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_1_48",
+      "gsuMedianMs": 1.5614646031395,
+      "packetMedianMs": 1.55988153430285,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_2_0",
+      "gsuMedianMs": 2.3445249471162,
+      "packetMedianMs": 1.5751534924919501,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "efe752cf55151ecbf1a3130d24f3a0333d6e01a649222edb60ac5e6cf76ec48a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_2_16",
+      "gsuMedianMs": 2.40067732997,
+      "packetMedianMs": 1.564677301661,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "efe752cf55151ecbf1a3130d24f3a0333d6e01a649222edb60ac5e6cf76ec48a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_2_32",
+      "gsuMedianMs": 2.4269376483196,
+      "packetMedianMs": 1.56556195777565,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "720796a778f8e3469f2e375c9374da052a4950a884ab1c1c673f198e829c88ac"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_2_48",
+      "gsuMedianMs": 2.4227471719872,
+      "packetMedianMs": 1.5548064018558998,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "720796a778f8e3469f2e375c9374da052a4950a884ab1c1c673f198e829c88ac"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_3_0",
+      "gsuMedianMs": 2.8658202028638,
+      "packetMedianMs": 1.5597884126066,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "166a1beab6f39b366f4f77226330cc48335647bb8f6d7024e9e553f97d1fae08"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_3_16",
+      "gsuMedianMs": 2.8788572403423,
+      "packetMedianMs": 1.5601608993917,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "153ee5724a9ed02d9f6559583ae36b4ecbdae5e946d617be75bd1cc156cb8bec"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_3_32",
+      "gsuMedianMs": 2.948512269156,
+      "packetMedianMs": 1.56011433854355,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "6badd99baf7f4502f0addac0c65aef06555232802d520c558c3a4c737a4f7ec1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_3_48",
+      "gsuMedianMs": 2.9009270823594,
+      "packetMedianMs": 1.56039370363235,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "89c9e291441339f6ecf1fe43d8390eb63110f246bae59a7d17c1a33dd328489a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_7_0",
+      "gsuMedianMs": 4.3509250150578,
+      "packetMedianMs": 1.5672847091567,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c53200740f59029f0915cec4d99f6fc4ca3eeaf1351772cc73e6d77c9e6ed1f5"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_7_16",
+      "gsuMedianMs": 4.4564318969374,
+      "packetMedianMs": 1.5674243917011,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9a073cc2de1804430024433c1df37d3b6d397201d1152020fd0aa44cfc7de9ee"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_7_32",
+      "gsuMedianMs": 4.4376213142898,
+      "packetMedianMs": 1.5747344448587,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "26e321dc38efce5a31f0df065c3102d072717b88b571056f91deccc7322d4628"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_7_48",
+      "gsuMedianMs": 4.4943324273213,
+      "packetMedianMs": 1.57343074111085,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fd943bf5d1d5bfe0f5ac3f2636a759dd40b8ab1ae9c3cc582af74170c5749f86"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_8_0",
+      "gsuMedianMs": 4.6834625924559,
+      "packetMedianMs": 1.57291857178135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4a3a3dbcf6514d251632971ff7626b4fc3a3189356392153556da37c20b3ccc2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_8_16",
+      "gsuMedianMs": 4.7064636514358,
+      "packetMedianMs": 1.57366354535155,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f22480b8fcb8426516d8413673d394acd0a99288bfae84ae4f7ac78f059cadba"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_8_32",
+      "gsuMedianMs": 4.7706245001693,
+      "packetMedianMs": 1.5743619580736001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "dcf2dcce364bb61a5c7864ac84c698f9cc619efe82c9fb4bf844e7459cd37cff"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_8_48",
+      "gsuMedianMs": 4.7483684147596,
+      "packetMedianMs": 1.5739894712884999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "73d916010d67c8883d27252d91314d47599a0ab7e705618e651f80caac20330c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_9_0",
+      "gsuMedianMs": 4.9622689511033,
+      "packetMedianMs": 1.5740825929848001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7ca67ed9ebb06536b4347532bbc496fa471b66a23e8399df9abae900b95f5e37"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_9_16",
+      "gsuMedianMs": 4.8562964607423,
+      "packetMedianMs": 1.57417571468105,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "909b6587a3291c2bb3582ce6cf43651a8cc101a15293c24ba4251be91b169ee1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_9_32",
+      "gsuMedianMs": 5.0426329749886,
+      "packetMedianMs": 1.5723132807556,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "330199ffc31780a0a3aa8d8f7cf4ec2646b93075e01b3408ee832ac6951b4558"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_9_48",
+      "gsuMedianMs": 4.8905652449715,
+      "packetMedianMs": 1.5747344448587501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9168e543f40f4ca7c7147fa6089390688fc967b07371fa83da1dc92d9fdc14e7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_96_0",
+      "gsuMedianMs": 21.418269508344,
+      "packetMedianMs": 1.5722667199074,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e8b1d11f0b903c3e0b33275537feded9fc276cdd5e7145352ee23662097d786c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_96_16",
+      "gsuMedianMs": 27.478815745314,
+      "packetMedianMs": 1.5745482014662,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "219145c80894a0cb015abbd35e3cec4b742ae3a65f3439ff81a46b730f764990"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_96_32",
+      "gsuMedianMs": 21.519958400676,
+      "packetMedianMs": 1.5737566670478,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7bc4b20b532a1f640fabe047ebdf707c0a7bc4b18135085ab5da85be5bb15352"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_96_48",
+      "gsuMedianMs": 27.517368127572,
+      "packetMedianMs": 1.57454820146615,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "73f0062491d9c9f776e2ac51ecd33c9977b48320470e025e9ecae724b76ccb1a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_97_0",
+      "gsuMedianMs": 27.707615753062,
+      "packetMedianMs": 1.57180111142605,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cca5e4495991aaf6ac4bc6bc3daa0805fc0aa1b4b112066a36b83b74ab478571"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_97_16",
+      "gsuMedianMs": 27.735366018552,
+      "packetMedianMs": 1.57217359821115,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1ed8d6aac5504af241869e65304408c47aa3d5ce00e4cbbd6b7850a616f4f802"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_97_32",
+      "gsuMedianMs": 27.807814698254,
+      "packetMedianMs": 1.5742222755292001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "dbe77ef21dfa063af77c0e9c783cabf0f7f7eecbb4d21b2912ab9cbf718b0eaa"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_14_97_48",
+      "gsuMedianMs": 27.774384009291,
+      "packetMedianMs": 1.5741291538328999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fd9ec8e09fb5568046adfa9a98a58c4dd8a428b2404060c7762ecfebcc99fc9a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_1_0",
+      "gsuMedianMs": 1.5325968772943,
+      "packetMedianMs": 1.56993867750055,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_1_16",
+      "gsuMedianMs": 1.5572741268072,
+      "packetMedianMs": 1.5702180425894001,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_1_32",
+      "gsuMedianMs": 1.5658413228645,
+      "packetMedianMs": 1.568728095449,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_1_48",
+      "gsuMedianMs": 1.562302698406,
+      "packetMedianMs": 1.5694265081710501,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_2_0",
+      "gsuMedianMs": 2.276080500354,
+      "packetMedianMs": 1.57431539722545,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "8b4448275f9be9e98a014510f4e0e7e5f04e507120d315b4b23c1fb87b64a3df"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_2_16",
+      "gsuMedianMs": 2.3283217719643,
+      "packetMedianMs": 1.5722201590593,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "cf4d85cbcbf2be1438220c43c2a156df3b1d2369048450bf6b4ea0d186e721ca"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_2_32",
+      "gsuMedianMs": 2.3491810319299,
+      "packetMedianMs": 1.57315137602205,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "ee907e9169eb70cabddef016e440614da5d14c1bc41d73da1a931b095195eb6c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_2_48",
+      "gsuMedianMs": 2.3418244179242,
+      "packetMedianMs": 1.57464132316245,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "ee907e9169eb70cabddef016e440614da5d14c1bc41d73da1a931b095195eb6c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_3_0",
+      "gsuMedianMs": 2.7527704635859,
+      "packetMedianMs": 1.57454820146615,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "23e8f94a3885f9ee589e0caa097ab66778a4fe0ad69ea69c28d0ac7311d518b8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_3_16",
+      "gsuMedianMs": 2.8107852803652,
+      "packetMedianMs": 1.5726392066925001,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "8159fd263610c435d8b426cfa1f892e0bb2dafe99844fc43436853519fff70c0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_3_32",
+      "gsuMedianMs": 2.8353694081818,
+      "packetMedianMs": 1.5724995241481001,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "0c610eb9994fb86bf264a298062b80b81a241403b4bf6af9fd9131d3880c88a4"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_3_48",
+      "gsuMedianMs": 2.83490379970045,
+      "packetMedianMs": 1.5746413231624499,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "a71c8d9459eaffc01721924019257ce593f9edc0f2c30d8f2e5f7f5362743d12"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_7_0",
+      "gsuMedianMs": 4.372994857075,
+      "packetMedianMs": 1.5729185717813499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c5d1ad6409433aeb4d3c7d4ec7e5575f4f3b4d572239d395ce4574ab577d71a6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_7_16",
+      "gsuMedianMs": 4.422442477797,
+      "packetMedianMs": 1.5726392066925499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fe5ef7363f92f325a8dd64c7c36f403e9e1692aae3f7162e875f46d29d410b6a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_7_32",
+      "gsuMedianMs": 4.4492615263242,
+      "packetMedianMs": 1.5737101061996999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "beb54602bd9de50b0af41f35f95bee106221a9b09f42055ec80bbcc5f99707e7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_7_48",
+      "gsuMedianMs": 4.4417186689259,
+      "packetMedianMs": 1.5718942331223,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "757552384ec2c2f4d42ce0c0c43356eb512e3b0d7e9d9ff39fde26071777af8d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_8_0",
+      "gsuMedianMs": 4.6802964547825,
+      "packetMedianMs": 1.5731979368702,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c17aff8b520e0bd1904dd6fba3af0096da9c4c2614bd94fa512f922fb295fe16"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_8_16",
+      "gsuMedianMs": 4.7046943392066,
+      "packetMedianMs": 1.5745947623143,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "24cdd5900bfb82beceaa46d0be7317ec589c684464f19c5b3824a8b39bfbaf25"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_8_32",
+      "gsuMedianMs": 4.7691345530289,
+      "packetMedianMs": 1.57394291044035,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ba80498f25f5388016941c28e5b76fc5b56572f97ad675ac54ee9a6832f0567b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_8_48",
+      "gsuMedianMs": 4.7335620650518,
+      "packetMedianMs": 1.57352386280715,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "72428989da631cb632650d95d77e3f5fd97156c0e4cd3dbb797e999b390653d7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_9_0",
+      "gsuMedianMs": 4.9949546664958,
+      "packetMedianMs": 1.5745016406180499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "bf00c538c0e71ac7efa2cda1547542a8172dfc3a67a7dcbba839dd365620cea7"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_9_16",
+      "gsuMedianMs": 4.8677504293841,
+      "packetMedianMs": 1.5745016406180001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5d6305b72a26ba153d3214110d09b3762d0f8249e7a426b7c96a7efccb9089e3"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_9_32",
+      "gsuMedianMs": 5.07559805547,
+      "packetMedianMs": 1.57338418026275,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cb670f73ffcd8396e39508ff95b9ae056b422f29f9b78701238dc0b42c66c39b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_9_48",
+      "gsuMedianMs": 4.8920551921119,
+      "packetMedianMs": 1.57352386280715,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2cba5d1118b364568a9b6b94cced886aa88f9b10b19a0cab3dfa89df86a3b786"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_96_0",
+      "gsuMedianMs": 22.821147862727,
+      "packetMedianMs": 1.57268576754065,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "38c2d34c28121fd886ada8547bab3ebb7885354ed75f88f8bc187ee31031cea2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_96_16",
+      "gsuMedianMs": 28.974163944099,
+      "packetMedianMs": 1.57454820146615,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "eefde34423759772cf4e28e4b6cc1fc2b8d8d6ff46fa81d3090c9c0e63ca4a7b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_96_32",
+      "gsuMedianMs": 22.91231400338,
+      "packetMedianMs": 1.5730582543257499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8e8e0f5fa58ca78bfcd5486abb7e34ec10536c797d50fd6b2235825f6f2cf1aa"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_96_48",
+      "gsuMedianMs": 29.003776643514,
+      "packetMedianMs": 1.57329105856645,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "87f4da63e097d873b6fb8c2a7b7ec2b1296b69871bcfc91d1dfd1de94e0bba1d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_97_0",
+      "gsuMedianMs": 29.187691993657,
+      "packetMedianMs": 1.5735704236552501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "16d1bc8333580cf95c239d97b800840ec94e00ea038f5fe814f7d644c5412ea8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_97_16",
+      "gsuMedianMs": 29.195607337841,
+      "packetMedianMs": 1.5735704236552999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "616551b7a83483cac17faefc06017686d3c8928732eb9217af6d08b85a5a4178"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_97_32",
+      "gsuMedianMs": 29.278299404133,
+      "packetMedianMs": 1.5739894712884999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e318c1e920cd2e54b95becf22b98ad034c4ac3b79b333ca86a3ee5b018747329"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_31_97_48",
+      "gsuMedianMs": 29.224940672167,
+      "packetMedianMs": 1.5739894712885,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "72bfe358b8ddd81a383bfd063838feaeaea881e7c05b0d7ac596ecb568153025"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_1_0",
+      "gsuMedianMs": 1.5682624869676,
+      "packetMedianMs": 1.56979899495615,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f4dae32ace494034ae7da2981a139e064f8a84401ce26163fdd2058d6a94f91a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_1_16",
+      "gsuMedianMs": 1.56979899495615,
+      "packetMedianMs": 1.5694730690192,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "da4508f7970669075cd89a9841d0fe74a39fe7d0c2ebfb1e5173eea1d6857970"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_1_32",
+      "gsuMedianMs": 1.6033693664633,
+      "packetMedianMs": 1.5688212171453,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "0e60f43cbf305445c184731841e4fda14edcca14699c71ec0ffbed7bbeb2818c"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_1_48",
+      "gsuMedianMs": 1.57282545008505,
+      "packetMedianMs": 1.5711958204002499,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "9dc2a1e258a7aa4131b5bc606cf2eaecf51bdfe213b0292d97eeb474b1b2c93b"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_2_0",
+      "gsuMedianMs": 2.4083133090646,
+      "packetMedianMs": 1.57575878351775,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "1696903a3c51090da37f6c0b4f43b339971327e66ccc95d253cfb91985f9515a"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_2_16",
+      "gsuMedianMs": 2.4314074897408,
+      "packetMedianMs": 1.57268576754065,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "6888d36454d4147bc1467681f6a20a858879e27851b831a640aedc4f9205d681"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_2_32",
+      "gsuMedianMs": 2.4889566980387,
+      "packetMedianMs": 1.574827566555,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "09049564f597addfd2ca93fe9e2bbdce9dd3f3d3880a1f6c10073a23ff6f281e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_2_48",
+      "gsuMedianMs": 2.4483556384628,
+      "packetMedianMs": 1.5732910585664999,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "1256ce7906ef65772639bd9bca300058e942dea5ae69cea4423b3385815eb969"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_3_0",
+      "gsuMedianMs": 2.8943154419239,
+      "packetMedianMs": 1.5739894712884999,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "1c15d8d00d03feb2379780e8ec5afc69e08fe42745b550fe0318498cbee16896"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_3_16",
+      "gsuMedianMs": 2.9135916330528,
+      "packetMedianMs": 1.5727788892369499,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "f4a29d078670523b1a84ca5cb0db17965d635f63d3c5aa4257f16a85f87827c3"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_3_32",
+      "gsuMedianMs": 2.9805461326746,
+      "packetMedianMs": 1.5734307411108501,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "436d57e2f3d958c74c8294138f342621b4b7323f7de808bd6cbd1bcd9423e51e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_3_48",
+      "gsuMedianMs": 2.9371514222104,
+      "packetMedianMs": 1.57380322789595,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "a96070fa3511056757da9d01095872938eac88b466b80b3fce4605c7341cb043"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_7_0",
+      "gsuMedianMs": 4.4032594083643,
+      "packetMedianMs": 1.5717079897297501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5bd85ead3021a1dfb36e185b6b8247cb52db04b51e788d33c65a69013a51178e"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_7_16",
+      "gsuMedianMs": 4.4231874513672,
+      "packetMedianMs": 1.5747810057068499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6c58cbbc8104db69b2b797248268e75485788e206a1faa51334f60902c30a205"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_7_32",
+      "gsuMedianMs": 4.4903281943814495,
+      "packetMedianMs": 1.5745482014662,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a73c9ec2639d83dfbbecc7909e4b0c7c8235779bfe0209519827c32068d8dd55"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_7_48",
+      "gsuMedianMs": 4.4598773996996,
+      "packetMedianMs": 1.5724995241481499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0484d808fc3216f852cffd027aeafd6bf8a4d37619e5a61445f186e393cf0d1d"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_8_0",
+      "gsuMedianMs": 4.6379260829774,
+      "packetMedianMs": 1.5755725401251999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f5cbd35eab9bd6cbdf9dcd8fb0b4d501bffe4f65e5d635c5c02a650dc86a90e3"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_8_16",
+      "gsuMedianMs": 4.6694943380146,
+      "packetMedianMs": 1.57431539722545,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3e6edd7443afb7ab313b61f016c1b2d40b5d13091123d174487a8b950f72e80f"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_8_32",
+      "gsuMedianMs": 4.7385906366507,
+      "packetMedianMs": 1.57310481517395,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d7bcd48dc54e76f737607531ca2b563d9b825fae233b8d9ff0b3911bd7c6d0eb"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_8_48",
+      "gsuMedianMs": 4.691284814943,
+      "packetMedianMs": 1.5750138099475501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "22d617fd3f04cdafaf397e681698942497ae1b66c127d1638704cfce335687e0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_9_0",
+      "gsuMedianMs": 4.8239832321349,
+      "packetMedianMs": 1.573477301959,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "edbf07fb8f76ececcd4e27c9912148cd4c406dfb38e5f975dbfd1409baca4ac6"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_9_16",
+      "gsuMedianMs": 4.8442837619228,
+      "packetMedianMs": 1.57389634959225,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d9b27a4227702ecf602c64ffc53c23281fde6e34bfd7c8f65b647034dbfe86bf"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_9_32",
+      "gsuMedianMs": 4.9265102197337,
+      "packetMedianMs": 1.5751534924919501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8991e0b02bf3f5bba191338e812b4b2b9e61726d61679449209d9e36f3793d27"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_9_48",
+      "gsuMedianMs": 4.8725927575904,
+      "packetMedianMs": 1.57389634959225,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "268a25f1707c07fdcbc41ec6938e6facd841c8ada9eb9105b987a4c7e59036d1"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_96_0",
+      "gsuMedianMs": 26.983222077739,
+      "packetMedianMs": 1.57254608499625,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "42a1f1cf392942f0554a26515575f42ffa0ee63f69cd80ad040edeb13a4e4ec8"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_96_16",
+      "gsuMedianMs": 28.809245419996,
+      "packetMedianMs": 1.5736169845034,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c2883dea06fddc09a5ca7cd76f39841490019c3368b126985a9d6fc17f0134cf"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_96_32",
+      "gsuMedianMs": 27.178591396524,
+      "packetMedianMs": 1.57417571468105,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "369c33d97634eb981055f9179c1c905f89eb31bb1782bb2bf50c3341a684fdd2"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_96_48",
+      "gsuMedianMs": 28.867818966953,
+      "packetMedianMs": 1.5736635453516,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9f926dd11f6f40be0b6a836f1f918a828e2570bdf840b73eb3e9eebcd97b68f0"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_97_0",
+      "gsuMedianMs": 27.237164943481,
+      "packetMedianMs": 1.57464132316245,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4416438ba1751f9e3d7211af7b3c24e6d49fbe01d9321d1dfd2c23fbe5320013"
+      ],
+      "samples": 4
+    },
+    {
+      "scene": "scaled_edge_0_97_16",
+      "gsuMedianMs": 29.015929024877998,
+      "packetMedianMs": 1.57440851892175,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1071cc15da6f18bd45a883f7eb2c658931efccff463a9a195cd1425283d5a752"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_0_97_32",
+      "gsuMedianMs": 27.428250664237,
+      "packetMedianMs": 1.5745947623143,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b6b6619a7399ec383e582da5d6947d5669e4ebb8bb7f6ccf47f69b46836a4e4e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_0_97_48",
+      "gsuMedianMs": 29.084233789096,
+      "packetMedianMs": 1.57282545008505,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3f4a0b9c3cf223f4d03afc7c4f0cb67349736cedae441e1f0d86cdb932d2bd0d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_1_0",
+      "gsuMedianMs": 1.5486138090536,
+      "packetMedianMs": 1.5676571959418,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "9e9c34a5dc6688cbcc24170a23c46331cd2c7c7b7987cfca8fab450660f428fc"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_1_16",
+      "gsuMedianMs": 1.5825101064977,
+      "packetMedianMs": 1.5686349737527,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "34f65c5b16175eabdf724ada69084d913ec2eef9a4d97b586a420d0ecd2c636f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_1_32",
+      "gsuMedianMs": 1.5783196301653,
+      "packetMedianMs": 1.5683556086639001,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "42692fd30dddbea274ddc089ef1fbb97a50030eb7c13b37556a5d6d0c8f4147e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_1_48",
+      "gsuMedianMs": 1.5797164556094,
+      "packetMedianMs": 1.5668656615235,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "d17b8f1ac7b0b3953feffced208c7339dcf5b63b02a6166d106d751b1c6c2fad"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_2_0",
+      "gsuMedianMs": 2.2840889662337,
+      "packetMedianMs": 1.5723598416037001,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "4b7952aed0fa177364355729a909ca0c1b89ff4aa50a535dfdb34f6b7ed51062"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_2_16",
+      "gsuMedianMs": 2.3557926723655,
+      "packetMedianMs": 1.5744550797699,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "1dd5f4c792149a4b4bb284237daefcb77680dfa59527bd2c1db4a2df8023b018"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_2_32",
+      "gsuMedianMs": 2.3525334129958,
+      "packetMedianMs": 1.57417571468105,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "eaae469cb81d2cd5f28e16566f1293aa274e9ad87dd4325d1adef32ebd8d96b5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_2_48",
+      "gsuMedianMs": 2.359703783609,
+      "packetMedianMs": 1.57208047651485,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "16109e8099a7320bc255444b9566629d6c661b8ad58a21e6f5a3c3ec18c14833"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_3_0",
+      "gsuMedianMs": 2.7806138507721,
+      "packetMedianMs": 1.57412915383295,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "68c8606ea3c35559036073920d772e97a13ff6b1b6ab406215d3f7a8212b47bd"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_3_16",
+      "gsuMedianMs": 2.8818371346231,
+      "packetMedianMs": 1.57431539722545,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "dc413339054032f627efba9fea770034fa2bf8add40cbba7a8cf7e002229a617"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_3_32",
+      "gsuMedianMs": 2.8491514192305,
+      "packetMedianMs": 1.5755725401252,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "dcdae9368dde110fbab86f6181c5b297eb8bff5a9b1d0153adc0d9129c43d481"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_3_48",
+      "gsuMedianMs": 2.8877038014884,
+      "packetMedianMs": 1.5750603707957,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "96599714a621f04640abbdc16f0be7a44ae15c338df210a58b894985ec9d731a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_7_0",
+      "gsuMedianMs": 4.1735281836538505,
+      "packetMedianMs": 1.5737101061996999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e764f51fd5ea382fe047eea1e1f3cd5e477a94c497e37715c4e1bbe4c69c5754"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_7_16",
+      "gsuMedianMs": 4.2369440588172,
+      "packetMedianMs": 1.57338418026275,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8df3bef9d2d5f09dd584db5ca5fc25cf9a7f98ebcba4acd121963543315e6594"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_7_32",
+      "gsuMedianMs": 4.2431832124676,
+      "packetMedianMs": 1.57575878351775,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5ff61c4f60259300f6e56a46e4ceeb966854a45a4f3be3b72fea7e6f150e5a20"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_7_48",
+      "gsuMedianMs": 4.238247762565,
+      "packetMedianMs": 1.5737101061996999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7f6200add66b3768a681c8b667f389b561a1caeaa0471996ea5180a34530a4d6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_8_0",
+      "gsuMedianMs": 4.4909800462554,
+      "packetMedianMs": 1.5724529633,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4889bb5cecb5bdf733d0bdbf163b82b580f8679d3c492a2a4557e12043b48c71"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_8_16",
+      "gsuMedianMs": 4.5185440683528,
+      "packetMedianMs": 1.5745947623143,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "120414311c6b87e35418105fc473a19b560b6d3d244ecc6a5b9ca6a417070ec5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_8_32",
+      "gsuMedianMs": 4.5513229054416,
+      "packetMedianMs": 1.57389634959225,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "49e2cbc79ddc70cfe178755644b0c6b5f3b5df2d645e8648eb47544685729e9a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_8_48",
+      "gsuMedianMs": 4.5198477721007,
+      "packetMedianMs": 1.5731048151739,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cb944779d32937533a0df5c5530474244dd8e3cd1fa2a3dbb0da2f18b65b1924"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_9_0",
+      "gsuMedianMs": 4.7487409015447,
+      "packetMedianMs": 1.57533973588455,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "93f37e34979585fa5210f61574468b8cb957046ec5e6df33b2c34528f43fd8e0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_9_16",
+      "gsuMedianMs": 4.760381113579051,
+      "packetMedianMs": 1.5718476722742,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9cae35e73e01ef673d6c49279522b0660db3ccb9575acad1ed9c36915f9f1206"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_9_32",
+      "gsuMedianMs": 4.8178372001807,
+      "packetMedianMs": 1.57603814860655,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5a9837f2f1726c18af4f888bb5b0173e749ff69121b50c49d7929f37a50a635b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_9_48",
+      "gsuMedianMs": 4.7663409021406,
+      "packetMedianMs": 1.58157888953495,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "26ee9954456df101f901b28ac811dd2e9ff5c56280aaf8290f0214deaf10db39"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_96_0",
+      "gsuMedianMs": 28.5406824479385,
+      "packetMedianMs": 1.5731979368701499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9c13ef5d26b2b16699d40d774c321cab449bb9cd50a9b2ff87a6c6422c820b42"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_96_16",
+      "gsuMedianMs": 29.477579834161,
+      "packetMedianMs": 1.57380322789595,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8bf6201f4bc1e38c8a5eb5398b0ec940b050c3fe9870e27bf2d3655615cb7d92"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_96_32",
+      "gsuMedianMs": 28.120982962827,
+      "packetMedianMs": 1.57454820146615,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c5dc4e10ec294c925d1a580c408c5df6bcf0ba1b8da6e0b9665783030da7fdf8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_96_48",
+      "gsuMedianMs": 29.412767133554,
+      "packetMedianMs": 1.5724995241481001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c480805e23bb1df86482c0f5e1759e95e26011fd39c21b497d393bcda5449a05"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_97_0",
+      "gsuMedianMs": 28.753465523927,
+      "packetMedianMs": 1.57305825432575,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0049de5f897454a627edf4c390f0ad9c7c898084918cc83f39ef5c6c4d3d8370"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_97_16",
+      "gsuMedianMs": 29.707683545657,
+      "packetMedianMs": 1.573477301959,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "144111d1e05593b20a5fc57df33e809406811cc534049028168721e2409fc055"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_97_32",
+      "gsuMedianMs": 28.320635879641,
+      "packetMedianMs": 1.5729651326295,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ffdda1b975bbaa3c107845a12af510a255dd8671185154022591073172de9a87"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_1_97_48",
+      "gsuMedianMs": 29.641474019605,
+      "packetMedianMs": 1.5712889420965501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c038d11cbec092437e2144e888a24acbed62937e5f70282abd79ddc74578ce27"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_1_0",
+      "gsuMedianMs": 1.5493587826238,
+      "packetMedianMs": 1.567051904916,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "717182e7e1b75f04bc7961199013efda8e6de1f2ac03dd2d0e95d2decdee28f6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_1_16",
+      "gsuMedianMs": 1.5571810051109,
+      "packetMedianMs": 1.56546883607935,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "180b7dc92c255d21aed99198a693722d716aa380241b101355bb60603c4424fe"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_1_32",
+      "gsuMedianMs": 1.5855831224748,
+      "packetMedianMs": 1.56868153460085,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "0130461d99dfdb2e2bb9dff5be10f731fb9821d57a887a01dbca59242588f4b9"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_1_48",
+      "gsuMedianMs": 1.563327037065,
+      "packetMedianMs": 1.56770375678995,
+      "cacheCallsMedian": 20.0,
+      "cacheInvalidationsMedian": 13.0,
+      "framebufferHashes": [
+        "f586d4f0fef393f441918a8b1cfe6e58cef7397e6f07715e7cdcc970f69dbe29"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_2_0",
+      "gsuMedianMs": 2.35374399504745,
+      "packetMedianMs": 1.5703577251338001,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "8765e7810ffe622ef45599c12c16408f82cf3c811892755d895695ccd2164b6e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_2_16",
+      "gsuMedianMs": 2.3817736256262,
+      "packetMedianMs": 1.5719873548186,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "5044c70514199f1f008a1981c40b3fc365de7ba228af16230f44a6dda19652e8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_2_32",
+      "gsuMedianMs": 2.4352254792881,
+      "packetMedianMs": 1.57468788401055,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "f6e25af31e87fc2b429c84c2c307239db9be579361fd366662850ab916898357"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_2_48",
+      "gsuMedianMs": 2.4022603988067,
+      "packetMedianMs": 1.5750138099475501,
+      "cacheCallsMedian": 26.0,
+      "cacheInvalidationsMedian": 17.0,
+      "framebufferHashes": [
+        "90b3316c6c38da912bb400ed9c3f69b3c1df7f5b3111a8821367c2cc0a7ab2eb"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_3_0",
+      "gsuMedianMs": 2.8292233762277,
+      "packetMedianMs": 1.5754328575807501,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "493fe985a72449ece8ec3eea09530c1548a210b3d96e90bedbc5784a814f69d6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_3_16",
+      "gsuMedianMs": 2.8566942766288,
+      "packetMedianMs": 1.5747344448587,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "0bd0a0e2429b3b3f157c537636fda8f1ff949298674a39119a37ecbccc288179"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_3_32",
+      "gsuMedianMs": 2.9163852839411,
+      "packetMedianMs": 1.57189423312235,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "66bc92d205181689da95dfc49208e51dce180511fa71ce8ad35ca498624af759"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_3_48",
+      "gsuMedianMs": 2.880812795964,
+      "packetMedianMs": 1.5728254500851,
+      "cacheCallsMedian": 29.0,
+      "cacheInvalidationsMedian": 19.0,
+      "framebufferHashes": [
+        "1e9dbe9ecf4b6a62705645d91548812a122ce9441e9089cbeffb7f41ceae622c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_7_0",
+      "gsuMedianMs": 4.3314625805363,
+      "packetMedianMs": 1.5752000533401,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "533174a6c48a061ab736134c9bc6871d8835880e8a634206719f078da15dd0eb"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_7_16",
+      "gsuMedianMs": 4.3567916819231,
+      "packetMedianMs": 1.5723598416037001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "273defec7004f758dc05dde447f2f6d68ea133b4880a27687657268b0f7890e0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_7_32",
+      "gsuMedianMs": 4.421418139138,
+      "packetMedianMs": 1.5759450269103001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d349cc05e32b16ffbf3cdb3310fbab98dbba1374e5fbb757cc830a0ca6395bc0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_7_48",
+      "gsuMedianMs": 4.387242476605,
+      "packetMedianMs": 1.57338418026275,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "63599381b8724f29304cd26822dd640bd275851c092621974fa0c413a04911e3"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_8_0",
+      "gsuMedianMs": 4.6260065058542,
+      "packetMedianMs": 1.57426883637735,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "29fb3b0d4594ef4adfa3bbd847f48668038e430c199836d92ca8a6262ae06251"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_8_16",
+      "gsuMedianMs": 4.6606477768685,
+      "packetMedianMs": 1.5745016406180001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6af3a079e5e101c4e2e1dd357beab03de01ffb4da3478044e37f88ca6872b5d8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_8_32",
+      "gsuMedianMs": 4.7254604774759,
+      "packetMedianMs": 1.57389634959225,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "04122a915db0059954e5f618324b232940bca03e1e78c61cc889a2aac8a41832"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_8_48",
+      "gsuMedianMs": 4.7004107411779,
+      "packetMedianMs": 1.57352386280715,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "95241e231661eae158ad5a1aeb0c41e8f5959c3a08d7e1c9c0bc837ce32ebf86"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_9_0",
+      "gsuMedianMs": 4.7748149765017,
+      "packetMedianMs": 1.5740360321367,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a0cf0b26612eccd39d9d7dcfd393ce220304562ae6d3e614b020b71fcc32fbbb"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_9_16",
+      "gsuMedianMs": 4.7823578338999,
+      "packetMedianMs": 1.5752000533401,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a4e7643c4f05b41cd93041dcca594b1d44c51f6a655df6450d2e70b46bb994c3"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_9_32",
+      "gsuMedianMs": 4.8668192124214,
+      "packetMedianMs": 1.57375666704785,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d7d51b74a528ddecf3344bf2b8e6d55fc1bdcce7e0b750b3e082c3085eee10b0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_9_48",
+      "gsuMedianMs": 4.8146710625074,
+      "packetMedianMs": 1.5738497887440999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7ff98b5ecac12d74086ec91b8803fc99db78a27fda701bc07997f169d7549ee1"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_128_0",
+      "gsuMedianMs": 32.974392650985,
+      "packetMedianMs": 1.5735704236552501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2fc0eb8ec9c696a87bfd61f8778f18b5a38a71bee05eddff02f0e0aaebc59f25"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_128_16",
+      "gsuMedianMs": 35.949723968668,
+      "packetMedianMs": 1.5749672490994,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8e4f6c2726b24196ca9ff50f3c7ad5b7a2788feacf044f1d6df45eff89896d25"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_128_32",
+      "gsuMedianMs": 33.250125993655,
+      "packetMedianMs": 1.57585190521405,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "72eb71ba6e3e0e60e8d52ffbbf39a76835ca2f21a895663760463e6b7d677508"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_128_48",
+      "gsuMedianMs": 36.025152542651,
+      "packetMedianMs": 1.5733841802627,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e4e323aa124ee9d8a1f4722e99cbce235750d6c4df466b33ced6ae9f4b553623"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_129_0",
+      "gsuMedianMs": 36.19016418845,
+      "packetMedianMs": 1.57357042365525,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "217012c110fac25912bc96b0883eaf4be2e5d16b021edd6b1b81dc8f7ddfc579"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_129_16",
+      "gsuMedianMs": 36.155616039132,
+      "packetMedianMs": 1.5733841802627,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0ae461fc6de1b53f7331eaac8291d915c52e46bdef835d098d13932251f03807"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_129_32",
+      "gsuMedianMs": 36.331709166788,
+      "packetMedianMs": 1.57492068825125,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d59f1602b3c3a0feaa7bf108f73c8500540cd2c3bd8ad6920f94c993007d0605"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "scaled_edge_4_129_48",
+      "gsuMedianMs": 36.250786412725,
+      "packetMedianMs": 1.5752000533401,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2065cf7b2dcceb2ea446303297833ed1fb1294bd02e323278a8d3c61142ea97d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_34_0",
+      "gsuMedianMs": 11.394370756211,
+      "packetMedianMs": 1.62604449950625,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a1b6a44e5a82961b00fabb61990dd351049d3f5a6c5fddc5d3f1c8e7ef89e487"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_34_16",
+      "gsuMedianMs": 12.351941159008,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e9a3e111bcdd0e3650d48eeb9870a025bdc303e07ffeadf3374f4d7df70ceecc"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_34_32",
+      "gsuMedianMs": 11.487958060968,
+      "packetMedianMs": 1.6258116952655999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f330c202f6a35e5abffcfdb023438f100bf0991c26e12d7cba6580b7ef8a25ad"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_34_48",
+      "gsuMedianMs": 12.386489308326,
+      "packetMedianMs": 1.627301642406,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3ac6347066a2714633b88d76ac15a52863daed010503adc390ab34d8b5bf6ef7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_35_0",
+      "gsuMedianMs": 11.513194040658,
+      "packetMedianMs": 1.62641698629135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f102b818809155aeb61b7211ed1a17c727d7dd55d29f9c41e1cdb4dde2a0f895"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_35_16",
+      "gsuMedianMs": 12.6567284709155,
+      "packetMedianMs": 1.62553233017675,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3e81480b4bf3baac99d94f4816003df556f49599a55ce5971929e76bd73ac349"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_35_32",
+      "gsuMedianMs": 11.613858594332,
+      "packetMedianMs": 1.62492703915095,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9463f0eca99a5ab36539aa53b70589edf92309fb26a66c5c19557c68ef334415"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_35_48",
+      "gsuMedianMs": 12.685689318457,
+      "packetMedianMs": 1.6249735999991,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d60f1844dabcadf30c4847042476619b87dcf4fe4155296c4cb43f9c73653180"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_36_0",
+      "gsuMedianMs": 11.643191928658,
+      "packetMedianMs": 1.62455455236585,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2a45039959fbe2fcf556d69905547b91a4875238763b6d34a7561542952813d8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_36_16",
+      "gsuMedianMs": 12.796131650239499,
+      "packetMedianMs": 1.6257185735693,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fc426e0c51c9d88684e5bd2578941a46c637507d93172f713dd54c3fcff3c578"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_36_32",
+      "gsuMedianMs": 11.739293519214,
+      "packetMedianMs": 1.6242286264288999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4244d9894e750f00c8f2c3f1d14b685d0c319fa1ee2685e92bd5717721e280ec"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_36_48",
+      "gsuMedianMs": 12.829748582595,
+      "packetMedianMs": 1.6255788910249,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a2a77d9915de89370825858983427670f50fcceb23ae756d59a6681438b8f1a0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_37_0",
+      "gsuMedianMs": 11.75940780561,
+      "packetMedianMs": 1.6266032296839,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fd75eda98293667fa815a92a000459272f3088bf9e0a9c7cbad6ad7e78f1ca0b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_37_16",
+      "gsuMedianMs": 13.044394092509,
+      "packetMedianMs": 1.6273482032541,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "aea65c666a949030e34f9ecf17961e783254e43fbeffbbb9295b1e9fe3a51611"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_37_32",
+      "gsuMedianMs": 11.864262835615,
+      "packetMedianMs": 1.6252529650879501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1c6ebabab994051ae117ebe2a9b94ee9227ec2fb465d1635b7e31f26bae5b88e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_37_48",
+      "gsuMedianMs": 13.079873458789,
+      "packetMedianMs": 1.62464767406215,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fab9ac0b374234cb7a310b261e02b14f803c7a29515308afbb0f137fa64586aa"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_65_0",
+      "gsuMedianMs": 17.534815408586,
+      "packetMedianMs": 1.62478735660655,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7d0fb9040e65bce4b822c8ba1efdbb2af5e79ea3ec34b3e3373db29325fb36df"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_65_16",
+      "gsuMedianMs": 20.25015095027,
+      "packetMedianMs": 1.62576513441745,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c1130425efb57a0c86bde6de733857574d9c1e7fb2915f86eda458d080654d7c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_65_32",
+      "gsuMedianMs": 17.633245041549,
+      "packetMedianMs": 1.6258582561137,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8343003e322c582f435815f1c3a5b4ef2ba3d9c7a2fde7d5dfa3f87f7254074e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_65_48",
+      "gsuMedianMs": 20.303509682235,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e6cde34a190c318dab8ddc0f3d35cd10385f499164c2d932a5a362ad7835b696"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_66_0",
+      "gsuMedianMs": 17.948834470225,
+      "packetMedianMs": 1.62492703915095,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6be9b7b8887e29fee3da3a8c9252fb70ebccf7094332000f863849ed240126f0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_66_16",
+      "gsuMedianMs": 20.790349910361,
+      "packetMedianMs": 1.62813973767245,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "83185dc5abccab348ea1b0d0aa90f6b08d7623e2cccf34103ff41358625e4ef5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_66_32",
+      "gsuMedianMs": 18.041304314626,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c74747ec724bbc553ad38c761ed72a30cd5f7a625da803771db219acb76c86af"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_66_48",
+      "gsuMedianMs": 20.82862292753,
+      "packetMedianMs": 1.6284656636094499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b8349b3d9c6b656259952ae1eaf9a41dba9d8f4230e66e6b51576b092c86e151"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_67_0",
+      "gsuMedianMs": 18.169998498878,
+      "packetMedianMs": 1.6258582561137,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8508836663e13a9f9641aa83993b0c9b531798f39973d34172592523cb7e77c7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_67_16",
+      "gsuMedianMs": 21.02762399247,
+      "packetMedianMs": 1.6268360339246,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "78af212f8cb1ad29c2084e91b72df9da497177cf1f3dfd3688959d1a3995ec28"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_67_32",
+      "gsuMedianMs": 18.270011200678,
+      "packetMedianMs": 1.6276741291910999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "48c4ac11c198b82f86e527baca429521443756fbe6a4f93a69ae14001a789c05"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_67_48",
+      "gsuMedianMs": 21.070087485971,
+      "packetMedianMs": 1.6251598433916499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a37953b91f3b290e5857c4fbb5dd584be4ab48a3194a0a22ec4c2bfc3be16828"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_68_0",
+      "gsuMedianMs": 14.468411071946,
+      "packetMedianMs": 1.6255323301767501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "4cd0b524ddb07f9b0b13ffc29d2665050db223335df4d884891109c1becdc9d6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_68_16",
+      "gsuMedianMs": 21.129778493284,
+      "packetMedianMs": 1.6246011132140001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2704eac821dec23a62c09571327d324873ea228ee4c8269fef70062e1a845876"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_68_32",
+      "gsuMedianMs": 14.515344406869,
+      "packetMedianMs": 1.6251598433916499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "1fc37189480f36f74ac97391fa20c710268abf4fe88c9be9f41548d50f13ed71"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_68_48",
+      "gsuMedianMs": 21.160601774751,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d442c5a653458f82dfd2c1f51874493a35a577a3d3ff472025b36d6695ee6aea"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_69_0",
+      "gsuMedianMs": 18.249058819016,
+      "packetMedianMs": 1.6264635471395001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "26492241b291e79a0f520b0c5834e01cddc9b8cde408cd7d2ce2f5feda26566d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_69_16",
+      "gsuMedianMs": 21.420690672447,
+      "packetMedianMs": 1.62613762120255,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d6b972e16a49d2d2a57967e16f901df803bf66fbd37f47156d006e304c09f832"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_69_32",
+      "gsuMedianMs": 18.351678928311,
+      "packetMedianMs": 1.6252064042398,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e526d309f5662401ba5ea6b02df9a1c58975a39f6d99435fc23fcf71a63eb999"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_69_48",
+      "gsuMedianMs": 21.461291732023,
+      "packetMedianMs": 1.6275810074948,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "de7896a7f108c94f7fb5a17c31305a7a96bbac7f22025f8d2b0f95f52e7c15ac"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_126_0",
+      "gsuMedianMs": 28.147615767962,
+      "packetMedianMs": 1.6266963513802,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "96bc9233fe585e599fb5971dc07f1b2230fb93dd0080492cdd6415e415cd9358"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_126_16",
+      "gsuMedianMs": 34.690346148245,
+      "packetMedianMs": 1.6273016424059499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b7d20887f7f8386d2ecd386654f65756dfa798da79d4361bbb0587d17375eb6b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_126_32",
+      "gsuMedianMs": 28.254985083767,
+      "packetMedianMs": 1.6255788910249,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7d76766076215bf68553948adf8f87034e964c9dc3c78331eb375b664e7cd8a8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_126_48",
+      "gsuMedianMs": 34.746777896187,
+      "packetMedianMs": 1.6268825947727499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ba83adde8aba5e55e08338ce3579bbec3c8ce09bd721627e0ecc565c203c30c7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_127_0",
+      "gsuMedianMs": 28.337584028363,
+      "packetMedianMs": 1.6265566688358,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "33b8432b0b0a37e4c171e2590288c6f00006c8ebe52ef8e6b16325a575c2f84a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_127_16",
+      "gsuMedianMs": 34.991781079087,
+      "packetMedianMs": 1.62651010798765,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "42d1fa2b56ab46fbc80d1457fefb799cc3bf2498981e8b67a2e362b0d39e0efa"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_127_32",
+      "gsuMedianMs": 28.448678212019,
+      "packetMedianMs": 1.62678947307645,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ef56309e6768e94f3dcf099b90e4eb199b67ff8befc68eb242f666e1c03c7673"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_127_48",
+      "gsuMedianMs": 35.046816001585,
+      "packetMedianMs": 1.62664979053205,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "eee4c822149edb4af5872cb33bce828d7a75fe2b9e8c5141bae722b7a3d7951a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_128_0",
+      "gsuMedianMs": 28.229749104076,
+      "packetMedianMs": 1.62762756834295,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d6a15e9ecd0ce514fb9a5332afbe968a79768ec98dc1f7d5c0656913dd3f86a1"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_128_16",
+      "gsuMedianMs": 35.15595462962,
+      "packetMedianMs": 1.6270222773171499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f9ab86762c3509286ac889949cda8afbe28b9e61cf0c394d33c2e2298f7e38b5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_128_32",
+      "gsuMedianMs": 28.34214699148,
+      "packetMedianMs": 1.6263238645951001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d6d464285f971552acfa2c60948891833246f127eb5514dc3b8887baa85bfd2d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_128_48",
+      "gsuMedianMs": 35.224492198078,
+      "packetMedianMs": 1.6253926476323501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "dfda62eb7d06948a930c8aaf408773daabec932e161497a38ef6dec450cad216"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_129_0",
+      "gsuMedianMs": 35.443514427717,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fa244490d8fdedd5f14d91aa760ca1f9f0064fed6962783d77f6ac5c8eb05a2b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_129_16",
+      "gsuMedianMs": 35.53468056837,
+      "packetMedianMs": 1.6270222773171499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "be19255849b813ad398b7b4049bdee944c381c3f52da1c131a43d8a0a413959a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_129_32",
+      "gsuMedianMs": 35.546227658708005,
+      "packetMedianMs": 1.6243217481252001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e01d4844810dff330fb71b9de64fafe009c1ab32c26154688dfaf0aecd3478e2"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "tree_margin_129_48",
+      "gsuMedianMs": 35.588318665425,
+      "packetMedianMs": 1.6252064042398,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "89a19689d1884458ead610bae5973fb1e07afed3b5eb32892873ba4e72f21424"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_8_0",
+      "gsuMedianMs": 5.1816636675272,
+      "packetMedianMs": 1.62441486982145,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "58f7b1421c573a578e83bc95a13cc31854b8becf39e2f85e36c5a33ab8cde3ec"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_8_16",
+      "gsuMedianMs": 5.1654604923754,
+      "packetMedianMs": 1.6258116952656,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "454b30b88fad112515ef43b5550d412387657a0f0c9b8132e62669ab47674f8f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_8_32",
+      "gsuMedianMs": 5.2678943582779,
+      "packetMedianMs": 1.6258116952656,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "024ce95deecb91fe3688f74249b5f21a73de5e35867bf0d429ae3f6ed10ceddb"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_8_48",
+      "gsuMedianMs": 5.1865991174298,
+      "packetMedianMs": 1.6249735999991,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cd5d5c32943db637251843a55adc5f559d6c92056ca00487d037d12d8dabfd8c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_9_0",
+      "gsuMedianMs": 5.5364573303351,
+      "packetMedianMs": 1.62599793865815,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c4ef7b45a3598dd82b5bad4af9a8d3e27a23b6b8bcf23aa9c7241d4d07aa4cdc"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_9_16",
+      "gsuMedianMs": 5.5736128871488,
+      "packetMedianMs": 1.62613762120255,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d7f6a0761c53ff013bb28d35e620f1d1868aa28279946e713d63378acca1061f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_9_32",
+      "gsuMedianMs": 5.6220361692118,
+      "packetMedianMs": 1.6246942349103,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "459a3319497b96724781a906cfeca6b432d04fc4b144cb1c2a307bceaebfca7e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_9_48",
+      "gsuMedianMs": 5.6129102429769,
+      "packetMedianMs": 1.6246011132140001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ffbc7c2126c659221599c59cffa9ef92036bd09c3b5bc5b9f0a0aef08dee5a65"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_13_0",
+      "gsuMedianMs": 6.5557674177614,
+      "packetMedianMs": 1.6272550815578501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fceb361b81b68f6d65550b13d33ead5a23dedac7de0ab5a4e799c255017c22ed"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_13_16",
+      "gsuMedianMs": 6.517028792111,
+      "packetMedianMs": 1.6247407957584001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "40a6886bdc5bb2b78d5bc144fb09a42c718d48d82bfb5f935c93ed4e92f72870"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_13_32",
+      "gsuMedianMs": 6.6427430820823,
+      "packetMedianMs": 1.6250667216954,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fcf15563b4573e3628ffc819728f91082608ec6c96e50f9f82a148cd02adbb02"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_13_48",
+      "gsuMedianMs": 6.5492488990222,
+      "packetMedianMs": 1.6255323301767501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c9306774accd8614e4a3fcf25e9c77c1ef204a7729a8f81e56d50a7f7eccead6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_14_0",
+      "gsuMedianMs": 6.1856086750682,
+      "packetMedianMs": 1.62627730374695,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "75c9de7f73d094ecfaf38b6ba4401812532b7a65c717c5205a7d771873d7fed0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_14_16",
+      "gsuMedianMs": 6.1886816910453,
+      "packetMedianMs": 1.62664979053205,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "1b3d572b366f06e1d5e606c1bf6277d8b381c5e0913733d160ceb44c3de89a8e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_14_32",
+      "gsuMedianMs": 6.2551705821857,
+      "packetMedianMs": 1.62692915562085,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "8aded8aaf207f2cb297c83971e6a6a14cfcd2e177f2447332d6b6ba2717aca0a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_14_48",
+      "gsuMedianMs": 6.2169906867129,
+      "packetMedianMs": 1.62655666883575,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 22.0,
+      "framebufferHashes": [
+        "1cc07fd31eec1bbf738eabb8e683f65c5785447c9742ba6190605797b2a5b8ef"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_31_0",
+      "gsuMedianMs": 11.4299432441885,
+      "packetMedianMs": 1.6256720127211999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7f066972e48942dc2ad36964d95226bb125e85093a450326cce0f0cedf999539"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_31_16",
+      "gsuMedianMs": 11.308791917335,
+      "packetMedianMs": 1.62804661597615,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "301e6b26d4c198d67e11dafdf3f7860d876d098ebfb0f18939f99092f61aef31"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_31_32",
+      "gsuMedianMs": 11.519246950916,
+      "packetMedianMs": 1.62678947307645,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "16f312176cd460f8e294ee21977fb078190fa3962d8636e3f64d76ed2fcffcf5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_31_48",
+      "gsuMedianMs": 11.359543241805,
+      "packetMedianMs": 1.62748788579855,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1e12d233db8432f5433350d996cd1313a4d01349929dd2e65e4cc80f5ed4e226"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_32_0",
+      "gsuMedianMs": 10.827538990985,
+      "packetMedianMs": 1.6272550815578501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8c46cd49a0b45fc96c2387b28704ff1be008f8af6cf6854f670ff757d61f4f36"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_32_16",
+      "gsuMedianMs": 11.487771817575,
+      "packetMedianMs": 1.6280931768242999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "bd95c53bced7a7b5031c8bf5b0098880cfe3cb67aab75bff56444782e3f76311"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_32_32",
+      "gsuMedianMs": 10.993202488659,
+      "packetMedianMs": 1.6284191027613,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3204914321a7e8ca73785f900e8e42f23f8037e23dc67db4de5965e99a76535b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_32_48",
+      "gsuMedianMs": 11.516639543421,
+      "packetMedianMs": 1.6267429122283499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "50ccbdd20851443f6f4dbf9a6620ad31a67ff288d1ad23ebbd5181253b075911"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_34_0",
+      "gsuMedianMs": 11.766485054526,
+      "packetMedianMs": 1.62627730374695,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8b9297348ebee0108fb8e30d0034bbc0d3775a51602c28064f68b42c2c31807e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_34_16",
+      "gsuMedianMs": 12.661943285907,
+      "packetMedianMs": 1.6248339174547,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "23c3ab19ac8f538589350c3791cbefb023c67714ee92d991777a62ae1bfbea7c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_34_32",
+      "gsuMedianMs": 11.961109399741,
+      "packetMedianMs": 1.6264635471395001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9ca085c7f375b213be25dd13b447d1f9c2d7bf3142c641e6ca23ff508f0b7abf"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_34_48",
+      "gsuMedianMs": 12.721820536612,
+      "packetMedianMs": 1.62441486982145,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9c84c0f8dfa6cbadbb14f4f1dd0678791aebdfec897910237461b3722265591d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_35_0",
+      "gsuMedianMs": 12.005435327168,
+      "packetMedianMs": 1.62399582218825,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "96d2beeb0d24e200d914da75815025c68d874bc05485677ff334441e44e6a300"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_35_16",
+      "gsuMedianMs": 12.929947527787,
+      "packetMedianMs": 1.6257185735693,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c5f4ec30645d621d111599d157815bebe474d0a867c013147321a97cc01b93f0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_35_32",
+      "gsuMedianMs": 12.193354910251,
+      "packetMedianMs": 1.6254392084805,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "36503be40b944b2ae91d4f27c748a61db9ccd3d445dd1336849f7ad9b3b36351"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_35_48",
+      "gsuMedianMs": 12.986565519122,
+      "packetMedianMs": 1.62455455236585,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4c1daa7cc94a1cdb33063af4a6500a8bf80bb1a18b7c76999d5c90252e3975a0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_52_0",
+      "gsuMedianMs": 15.7275095272805,
+      "packetMedianMs": 1.62725508155785,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7e13739f4ef414ccf851d19c2c6107b4ba790ae0c5666922b64a5bff430b0159"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_52_16",
+      "gsuMedianMs": 17.504643978993,
+      "packetMedianMs": 1.6254392084805,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3710f8f335431574148f7fee3599af1c775efc779aa191fbf00b8b44613844bd"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_52_32",
+      "gsuMedianMs": 15.979589959097,
+      "packetMedianMs": 1.62450799151775,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "42a69b30c7e653f16872be8396a92b781d5441236512609345dd926077fff96b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_52_48",
+      "gsuMedianMs": 17.574671494592,
+      "packetMedianMs": 1.6266032296839001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "491a2e93d7bbffafefb37493de25325d239fa71d11d2cdfae7d39bcb91fd9327"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_53_0",
+      "gsuMedianMs": 15.980148689275,
+      "packetMedianMs": 1.6260444995063,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "837e5afb05724ef91db1b20f550bf8e58f20c027abfac103a50ff214a55692d8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_53_16",
+      "gsuMedianMs": 17.706904303303,
+      "packetMedianMs": 1.6244614306696,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b148f27c0f11ad90a17d865f101bf64b41575f574e7a9efefb99f4ad7b1ae242"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_53_32",
+      "gsuMedianMs": 16.2024301782835,
+      "packetMedianMs": 1.62390270049195,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7eace98a997074637eb1d3cde0fcb1b1ba8689bcbcb552b2caa57fd01972d9b9"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_53_48",
+      "gsuMedianMs": 17.771996368999,
+      "packetMedianMs": 1.62469423491025,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1279ca319f61b1626dcc4d6ac4ad8f943925e9a521394f6e7e81dd67dc9469d4"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_127_0",
+      "gsuMedianMs": 29.927543870562,
+      "packetMedianMs": 1.6275810074948,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "df2ced69403fc1a2624863cd35bfc94acb8c3f66d6f647dad784080488173eab"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_127_16",
+      "gsuMedianMs": 35.730515495637,
+      "packetMedianMs": 1.6248339174547,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0f95239293ad8d0fb712f104211e9273bc0cbf639fb1ec168993ad807dbce95a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_127_32",
+      "gsuMedianMs": 30.328805259811,
+      "packetMedianMs": 1.6251598433916499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "937fd8ce5cdd221234bdda1086f97f86ebf5b54554e2f9e61490a621fd69258b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_127_48",
+      "gsuMedianMs": 35.798121847132,
+      "packetMedianMs": 1.6273947641022501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "025f581862a49adae0e934d94dfd3b089921ae2377af44f9c5e101a6ef5441ac"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_128_0",
+      "gsuMedianMs": 29.952221120075,
+      "packetMedianMs": 1.6273482032541,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ce93b7222c1abb2448f62055bd34686309811e4600394c3777f3a35ea6d4e2be"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_128_16",
+      "gsuMedianMs": 36.007738785447,
+      "packetMedianMs": 1.62427518727705,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "a9fb064b639bec80dd6276cea010de4f3a1efac8d3f60a5f1c3b884b3aba7a63"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_128_32",
+      "gsuMedianMs": 30.34184229729,
+      "packetMedianMs": 1.62790693343175,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "f0e0d075fcd5747eca924e3ce82efec379d1bb5bc39575fe60135e61ee6e318a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_128_48",
+      "gsuMedianMs": 36.061842490983,
+      "packetMedianMs": 1.62478735660655,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e5191209c3683b8012f242eb518dc5bf815b91c2777c73238752a9e5bc236013"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_129_0",
+      "gsuMedianMs": 36.297440382559,
+      "packetMedianMs": 1.6255788910249,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ef7cf20ca4945ee64fe722e1e5ce20623334d6f89c04dcef44acfb9c59bb0470"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_129_16",
+      "gsuMedianMs": 36.353965252198,
+      "packetMedianMs": 1.62664979053205,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "23e5a35c2364d50ac438e109e5c719a925841be5d585b086eae70de05243b776"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_129_32",
+      "gsuMedianMs": 36.413842502903,
+      "packetMedianMs": 1.6240889438844999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "48790a7ff2f6bb3cbd6ff9c968ab80cff1470efc35098e58b7493c05421092ec"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_0_129_48",
+      "gsuMedianMs": 36.445783244725,
+      "packetMedianMs": 1.62590481696185,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d2848a0f87d0dc25314c365e91743f3ef3d27d1355bb456ebc0d5478009732fa"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_8_0",
+      "gsuMedianMs": 4.9729779461749,
+      "packetMedianMs": 1.6265566688358,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "99a304d3881880b42dbc515c1f2170bf40a1b8dea302f886ffd34ae0fc75603b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_8_16",
+      "gsuMedianMs": 4.951001225854,
+      "packetMedianMs": 1.62678947307645,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "ef1dff3c538786532feadcbcebbc1bc45826c9c955156cde7cb33c70f4d5f639"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_8_32",
+      "gsuMedianMs": 5.0817440874241,
+      "packetMedianMs": 1.6267429122283499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1373711ce3a4f569c763d8e4298cf6f7a303fdafd054a1e2267ba23706167693"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_8_48",
+      "gsuMedianMs": 4.992999110874,
+      "packetMedianMs": 1.6258116952655999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e762d8d6cdfdd5e2ea071716d87b05c8f83b707a5b82d05c5954061c93415989"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_9_0",
+      "gsuMedianMs": 5.3953779604784,
+      "packetMedianMs": 1.6273947641022501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "de138302ce818bbf2559ab6bde406716b6b15fe79ec129295d75b85dd853cfba"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_9_16",
+      "gsuMedianMs": 5.357756795183249,
+      "packetMedianMs": 1.62651010798765,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5476d27a075f2ce49a961b1b37196a47a7097a75bc402c32936a0b43b3b0be57"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_9_32",
+      "gsuMedianMs": 5.4882202916646,
+      "packetMedianMs": 1.6270222773171499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5bf39cba0edba2a5e39a3caca6fc7023ca73a11488d7fdd11178f9ef63709dfb"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_9_48",
+      "gsuMedianMs": 5.3978922462778,
+      "packetMedianMs": 1.6251598433916499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "70208503a70c26880279a36afc8ec0a12713eceb0591a2b9e8518fc8ed253f83"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_13_0",
+      "gsuMedianMs": 6.4206478364664,
+      "packetMedianMs": 1.6247407957584001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cf02162f239e025d4208af7d14e68521e4d54e74d733798c53c47c6c5033ebb3"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_13_16",
+      "gsuMedianMs": 6.3590012735323,
+      "packetMedianMs": 1.6254857693286,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "88a7c746a6671c471b098a01fe40bfcfe2b717379dcfff9baec6cde79e105709"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_13_32",
+      "gsuMedianMs": 6.5284827607529,
+      "packetMedianMs": 1.6249735999991,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "468309d48769a5806083eb05b5f874ca88ebb4b71b04a3e39fe11d6efda09140"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_13_48",
+      "gsuMedianMs": 6.4118943970165,
+      "packetMedianMs": 1.62478735660655,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5e09e6728d1b6729664705f885c0586723dc043b0ff8f7f4c3ebbbf7c77da575"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_14_0",
+      "gsuMedianMs": 6.6783155700594,
+      "packetMedianMs": 1.6263238645951001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d71b3e6189a68e4abfa606e6020e33b371d512f5e7274ab0918ec9696d1722de"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_14_16",
+      "gsuMedianMs": 6.650099696088,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5c6bc433cd859ad962d2f77dcc5492c1fe73665fd13ed9d8a690023071fb5098"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_14_32",
+      "gsuMedianMs": 6.7832637217613,
+      "packetMedianMs": 1.6257185735693,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b962f1684c7860b0842844bdb8b235a2a51db4f19d9d490c774367a4c75bbd4a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_14_48",
+      "gsuMedianMs": 6.6891176868273,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1d69900720e5d8da798659994a0bd38c4aea523f7be20c93898fb5980ba7b9e5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_31_0",
+      "gsuMedianMs": 11.441117847742,
+      "packetMedianMs": 1.6271153990134,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "83f9fe768ad0346a318e5b4b28f9161f9fbc1db445aa153a5478223f60b290d4"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_31_16",
+      "gsuMedianMs": 11.322201441598,
+      "packetMedianMs": 1.62604449950625,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5c70256e6500739bc7d1bb432e2e54372724a0df4410330790aac96e7e4dd2cf"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_31_32",
+      "gsuMedianMs": 11.557333724693,
+      "packetMedianMs": 1.6256720127211501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "bd336fbec17771fd357dc1cef19affa85fd922c56d90629c00d2d861728a19c7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_31_48",
+      "gsuMedianMs": 11.379750649896,
+      "packetMedianMs": 1.6263238645951,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "046fe7c79d7eabdab4d74627b4a9b1fe34c0be6a9453baab89f60fde50a61eae"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_32_0",
+      "gsuMedianMs": 11.014713600498,
+      "packetMedianMs": 1.6267429122283499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "da5cc3f6f4b2411eb4d5866fe2907b81aa81de16aa78ce548a2dce7b0cd9b3f6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_32_16",
+      "gsuMedianMs": 11.704745369896,
+      "packetMedianMs": 1.62865190700195,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "50c0e7f1957b5f24b12dda2277b9d67f26519baab6a169606ef5b9ed96c73a65"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_32_32",
+      "gsuMedianMs": 11.204216252418,
+      "packetMedianMs": 1.62418206558075,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fa346d166db4580d28b3da2ad4663375f052d8c6262cbb2ab245a1f599048aa8"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_32_48",
+      "gsuMedianMs": 11.751213096337,
+      "packetMedianMs": 1.62590481696185,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0c472384307d8b8540ec968748e1d19801b6bbb87ecdd7b1d6fa54629b78ebdc"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_34_0",
+      "gsuMedianMs": 11.984948553988,
+      "packetMedianMs": 1.6251598433916499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8e8fba225dc06162cca19a678fe9d443e827294409a1d6b18a88441dc6cea0e0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_34_16",
+      "gsuMedianMs": 12.771826887512,
+      "packetMedianMs": 1.62627730374695,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3d9a6d7c02bfa203b5fc902d5db1b6b13ee8eaf591b8c0322f3471baad3a9de0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_34_32",
+      "gsuMedianMs": 12.178362317151,
+      "packetMedianMs": 1.6255323301767501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "dec679bdbf33d900a8637b7e1a95317706de857bc000aa5203842698db065284"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_34_48",
+      "gsuMedianMs": 12.839060752222,
+      "packetMedianMs": 1.6252995259360499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5faf04a17bd62ed670cf22b48f4ac6e8811c09813f897716303fc4d5ee66ed11"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_35_0",
+      "gsuMedianMs": 12.17389247573,
+      "packetMedianMs": 1.62469423491025,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "066c71f98f41834e3ed4ac8222c62150c5d7359ea0c0a067acc9305ba2bf5241"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_35_16",
+      "gsuMedianMs": 12.938328480451,
+      "packetMedianMs": 1.6271153990134,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "bbe13582159a2ea162e29e19ec4c2be7655f8b40708730aa52df8b71ab4b7a02"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_35_32",
+      "gsuMedianMs": 12.397105181701,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9f8988cdd284b5b349e9c312f9f1eeb402fe71a44b8c676eb747bcbb5324257d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_35_48",
+      "gsuMedianMs": 12.999043826423,
+      "packetMedianMs": 1.62441486982145,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fb83f8490a518de922cf29045fd80ca2877801a630ffbc17f1b87a91384698e0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_52_0",
+      "gsuMedianMs": 16.576313788828,
+      "packetMedianMs": 1.6254392084805,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "28efd9b916901c823ddd25674060cf0e03d236f4c7291fbd263b35c41f59f97e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_52_16",
+      "gsuMedianMs": 17.80822070885,
+      "packetMedianMs": 1.6274413249504,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "dd658bed04cfad581f40e7bac8c5e0bb64bd3b0cc4e52de2e758e09e01b490f6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_52_32",
+      "gsuMedianMs": 16.790400568564,
+      "packetMedianMs": 1.6271619598615499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c86bbb4afc710258f17a820d5f03f38124b722aaa7198a5b4cea25ad95fde080"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_52_48",
+      "gsuMedianMs": 17.892402722282,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "acb31725180e0aee6b6bf7a9d12811790077a2066341bb37e39696fdd3a23ab6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_53_0",
+      "gsuMedianMs": 16.736483106421,
+      "packetMedianMs": 1.6267429122283499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "16b8d5b1dd7b772ace73c4a4495bd0ad505d9b4fbd41b64e856046e3213fcde2"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_53_16",
+      "gsuMedianMs": 18.039907489182,
+      "packetMedianMs": 1.6256720127211501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "319ffa85bb9e2ef8dc101b7ef670d28d9e7a659fb0525fa25faa635db77f0b66"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_53_32",
+      "gsuMedianMs": 16.908851366226,
+      "packetMedianMs": 1.6247407957584,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b8e16b73ffb43d8e8a448077a3838c7eeb10570d08e07dc6d8233d19f1af7e41"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_53_48",
+      "gsuMedianMs": 18.109190031211,
+      "packetMedianMs": 1.6257185735693,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cc6359e334b6e55b39397a076505b32bbba8d3a0f57efb7355c739f1cb980357"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_127_0",
+      "gsuMedianMs": 32.628538671019,
+      "packetMedianMs": 1.625625451873,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5c56c255e7a85a3799b281fc8e7d3a189b3ccf79bf50da641d1cccc988285c08"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_127_16",
+      "gsuMedianMs": 36.423806524404,
+      "packetMedianMs": 1.6266032296839,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e1a726f2003672732855f53e225e5c84b766a8113172e2f0c562a38d0c1ce48c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_127_32",
+      "gsuMedianMs": 32.995065667558,
+      "packetMedianMs": 1.62641698629135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "495c54781859112a42a28423758b30d818d4421d5a5d9aeaa2fdf7cb3c42719a"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_127_48",
+      "gsuMedianMs": 36.582579016553,
+      "packetMedianMs": 1.6264635471395,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "662b68997f26ee3975aa9fe4e25081df546a3b7d375c2fba7851f1fbb894e304"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_128_0",
+      "gsuMedianMs": 32.727433912463,
+      "packetMedianMs": 1.62641698629135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0538f6c9416e17f23c4b6d5e1750ae53594806ac2b2004fd31acea978def945e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_128_16",
+      "gsuMedianMs": 36.648229812427,
+      "packetMedianMs": 1.6261841820507001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5f5bc046ff7e2b8935591fc928ed3e0db2e72e3d025e7fe9ca9dbf2d65e04379"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_128_32",
+      "gsuMedianMs": 33.096382073105,
+      "packetMedianMs": 1.62692915562085,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8a3308ceb980c66b4e90cf5973844d2e1b076a12784ac290b8f66d40625e2095"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_128_48",
+      "gsuMedianMs": 36.782976906937,
+      "packetMedianMs": 1.6264635471395,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9040715b9dc266056d8cd43a9a8163b0d6e850a766c9a643a6740536602f967c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_129_0",
+      "gsuMedianMs": 37.197368455361,
+      "packetMedianMs": 1.62641698629135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "73f1ff60a84195408e5983f9cfde2b20e5ed05b5191c9dccfea276475775880e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_129_16",
+      "gsuMedianMs": 36.840339871842,
+      "packetMedianMs": 1.62450799151775,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "80f47220d1ade7b0cb6ddfb86175bc38616ae8f4000dcffc1c4ca449c5fb9048"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_129_32",
+      "gsuMedianMs": 37.401863700381,
+      "packetMedianMs": 1.6246011132140001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1349be1a37dd7bf89c3f483bcd6efe9ccf7d76586164281b990aeb707d24e614"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_1_129_48",
+      "gsuMedianMs": 36.986447813298,
+      "packetMedianMs": 1.6250201608472499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3ee09f514aff4be6ea1c81f7da32da458a86307891789b063a3629d78c47a954"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_8_0",
+      "gsuMedianMs": 5.2676149931891,
+      "packetMedianMs": 1.6236698962512501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "56d7959321ff06913045013a927efc6952bc5d79ec874c3f93c5a9d44af2a970"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_8_16",
+      "gsuMedianMs": 5.2124869489943,
+      "packetMedianMs": 1.6244614306696,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "0c14198412b7052ded07f98b8fb8b0986813aa3815d88d2f64f926771c98495c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_8_32",
+      "gsuMedianMs": 5.3550562659913,
+      "packetMedianMs": 1.6259979386581,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "11ce211d6c387b326c550617a912a85e93cfa0424a36b0bd4bb8088b583f32a2"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_8_48",
+      "gsuMedianMs": 5.2412615531432,
+      "packetMedianMs": 1.6265566688358,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "573b0671a4e379be9114d406ca7f6368bb90fe21bf4be9b0236fad23e3307b5b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_9_0",
+      "gsuMedianMs": 5.6166351108279,
+      "packetMedianMs": 1.62813973767245,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "98c54006d31902e9f8b6ed85a03bbf6a814498f417e2025cdb5ad81576ab72b9"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_9_16",
+      "gsuMedianMs": 5.561507066633,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1d760a2dedb30bd167d5e3d2c783694456226d8e554ebb0c91afd55cdb10a775"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_9_32",
+      "gsuMedianMs": 5.7007240025642,
+      "packetMedianMs": 1.6264635471395001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "37e0f127cecf662d2bae0d61a801f8cb5049b67e8e1b68e10aac4ff7ad43c7c4"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_9_48",
+      "gsuMedianMs": 5.5860911944496,
+      "packetMedianMs": 1.6250201608472499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b6426f4f2be77cdac51a2bd56a93a59c27aef4f53fd26a907714eb48ebbc32ed"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_13_0",
+      "gsuMedianMs": 6.62444466876425,
+      "packetMedianMs": 1.6273482032541,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "fbf52485b73ef736f6b13826566d7f76532e996f2da56d41d707f26e0199569d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_13_16",
+      "gsuMedianMs": 6.5629377883746,
+      "packetMedianMs": 1.62427518727705,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3af210417310e7d6e4cdfe0b6ddd07b2d3ecca3a62f443861b4fa8be59ec91fa"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_13_32",
+      "gsuMedianMs": 6.7073695392972,
+      "packetMedianMs": 1.6275344466466501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8f7b04cb89f626f98a71ca52d38ef3df279d5bd841af88e685e1546f15e8809b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_13_48",
+      "gsuMedianMs": 6.5866838209247,
+      "packetMedianMs": 1.6276741291910999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "064a004dc2569a5a83bb9e784c51ef93cf71a8f6c97826382f866cbfb5269f93"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_14_0",
+      "gsuMedianMs": 6.8988277468386,
+      "packetMedianMs": 1.6270222773171499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e9a62496ec5a7f66dc01e6115a322be97ae5038e0ddc0a0f7ac7af82a0c8625f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_14_16",
+      "gsuMedianMs": 6.8352256282828,
+      "packetMedianMs": 1.6250667216954,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b2e8690bdf3480e00b7a5f7d2834b021d4a638bc955bd1dc02e001ed7861fe1f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_14_32",
+      "gsuMedianMs": 6.9851515592856,
+      "packetMedianMs": 1.62604449950625,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e6514ec1c48207a095891a876a11eb4ea7894e90d9ff3ce88ddc3300ef7bdd1b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_14_48",
+      "gsuMedianMs": 6.8611134598472,
+      "packetMedianMs": 1.6268360339246,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "35d232e35e85e7b5af300c7cb5ec6e06d0bb8d5c9a12bae75dac1ac3248bc4fa"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_31_0",
+      "gsuMedianMs": 11.125249053977,
+      "packetMedianMs": 1.6255323301767501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "17fc9ba4e9645d32de57acaf4345e1c11c0cccee16ccb226d44baa2826a08873"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_31_16",
+      "gsuMedianMs": 11.071797200315,
+      "packetMedianMs": 1.6250201608472499,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "11bbc675a59d548c98d698676f3b3df7d94f8002614807143e5b60a8d0d8f075"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_31_32",
+      "gsuMedianMs": 11.2572956192945,
+      "packetMedianMs": 1.6253926476323501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "b8adceed8adf3a845ed5e6134c528758603b86db8f8a395cf4c3974f4bb68cb9"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_31_48",
+      "gsuMedianMs": 11.134281858515,
+      "packetMedianMs": 1.6279534942798999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "4688ebdb450744688fd841cab36ebbbe31d531d6bcd721b0d73867cae8ebbbb9"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_32_0",
+      "gsuMedianMs": 10.300283946676,
+      "packetMedianMs": 1.62734820325415,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "237d60ecb264dbac525e4807f0edf87046243a76fc6d7e6ac0e384627f743cf3"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_32_16",
+      "gsuMedianMs": 11.223213078458,
+      "packetMedianMs": 1.6254857693286,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "3f3e9b3baeb6f7ab0c5bf6df89079dfced1f1538ef66f0d60742970f19af8162"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_32_32",
+      "gsuMedianMs": 10.64893157753,
+      "packetMedianMs": 1.6263238645951001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "12c31eaf8d76d2f1386560f8f7644b0cc09a0e172dfe42e0fe5a7e0ea2e0569c"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_32_48",
+      "gsuMedianMs": 11.286722075318,
+      "packetMedianMs": 1.6256720127211501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2086f96c9df81c326273fae908136d4deb40fbc53ddeaa37333edb949d4b04d5"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_34_0",
+      "gsuMedianMs": 11.108766513736,
+      "packetMedianMs": 1.62651010798765,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d3644dada1958eac0a487273a1872fe973054f8e043d3c68e354036b098d880e"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_34_16",
+      "gsuMedianMs": 12.271949621907,
+      "packetMedianMs": 1.62455455236585,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "7c7a00613a4718a54a92bc086325740cb43a9784936fd4b8d31f218d3d1b741f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_34_32",
+      "gsuMedianMs": 11.525020496085,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "cf6a66f0e1d0ff8ff86fe001a14aa4515575058f728a5004493fe4d396692c12"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_34_48",
+      "gsuMedianMs": 12.358925286228,
+      "packetMedianMs": 1.6254392084805,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "e1a43ed79410a588b015d0bdf915f63cbdfff29615a1a59b4c5895cffd103f87"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_35_0",
+      "gsuMedianMs": 11.383196152658,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "1cb82c952ef8eb5f754827eb799da695fac5c81bb9c0041a06fc9d25db709094"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_35_16",
+      "gsuMedianMs": 12.509223704016,
+      "packetMedianMs": 1.6288381503945,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "424080f0ddc7920ce34ed3fbc36abe5e5dcefbc395338248395de6786a4994ae"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_35_32",
+      "gsuMedianMs": 11.774027911925,
+      "packetMedianMs": 1.6272085207097,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "614421a56ed28aafa3985cbc5db684d2999f790d25fc282b13fd8a7f66d59d39"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_35_48",
+      "gsuMedianMs": 12.588749632635,
+      "packetMedianMs": 1.6273947641022501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "880e54807d4f8efe99d13d2049be5c5e8beae9cdeeb0fee8739d3379b3eb6f6b"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_52_0",
+      "gsuMedianMs": 14.717604731178,
+      "packetMedianMs": 1.6255323301767501,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9c1f5de1e50ae724947c127965f215066b0d217af8440733f038238021f195b0"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_52_16",
+      "gsuMedianMs": 16.905871471945,
+      "packetMedianMs": 1.62748788579855,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "39e6af3886e1081a582278f4551171f3ea3e401dba8174e6484e52c2d1c4ca63"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_52_32",
+      "gsuMedianMs": 15.246070357539,
+      "packetMedianMs": 1.6249735999991,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "8ad8f10da7e7e2736d78eae6c9916bb7b866b6cbac3acb5f4ed65f238ee8cde1"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_52_48",
+      "gsuMedianMs": 17.015382586764503,
+      "packetMedianMs": 1.62590481696185,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "9b85351b21a272c38693b7a318396a16f6a5018d3717e5418738dd766730a114"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_53_0",
+      "gsuMedianMs": 17.165681004552,
+      "packetMedianMs": 1.6260910603543999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "93b62403af1e685ac8a09363193f715505db6d6ecdb8fb0cdb841231de0fa33d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_53_16",
+      "gsuMedianMs": 17.079543435498,
+      "packetMedianMs": 1.6250667216954,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "49e6ca8bb4b8e35cb0334c47748a24d28a49b7388ac8b1af45da6d4a5525458d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_53_32",
+      "gsuMedianMs": 17.337583655876,
+      "packetMedianMs": 1.62651010798765,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "34c83964ad8d0fb4435dbf9e2bbfcdae691c1ff9a9363301451e8f928393a2e7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_53_48",
+      "gsuMedianMs": 17.187657724873,
+      "packetMedianMs": 1.6275344466466999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6ef59f4eface7e7ba322d09c244658d8afc3d5a8a6f4d5b659c125b7de2f2b5d"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_127_0",
+      "gsuMedianMs": 34.628792707007,
+      "packetMedianMs": 1.6262307428987999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2759f4006c22a3c62200d3bb60a22e0a19e02ec52489cb75e89d75744ecbd2e6"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_127_16",
+      "gsuMedianMs": 34.554760958468,
+      "packetMedianMs": 1.6266032296839001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "d27f8263f2f60e6f34fb0f66495aea9da65963c78b4ae97935b40b81f0d51ffe"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_127_32",
+      "gsuMedianMs": 34.86969853527,
+      "packetMedianMs": 1.62664979053205,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "5a4b4a308c0f62674440d2bcd908d16f25bed33a5c9b60236d87bff2af156826"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_127_48",
+      "gsuMedianMs": 34.734578953975,
+      "packetMedianMs": 1.62613762120255,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "99f1230e70e6d9e46976edf49a142b6f10e26aed596ee2f0fc808a93939e83c3"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_128_0",
+      "gsuMedianMs": 34.869977900359,
+      "packetMedianMs": 1.6266032296839001,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "c0a06fead7b929f46586ae628820d5def946ab2ab57167d81bdc1c59388351fe"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_128_16",
+      "gsuMedianMs": 34.778253029528,
+      "packetMedianMs": 1.62641698629135,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "62f5d2a8380a015e4506d2139abcfda728256df944c58714e829fdaca1b45211"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_128_32",
+      "gsuMedianMs": 35.110231876749,
+      "packetMedianMs": 1.6259513778099999,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "af07c691a31d0567b5c3dc77755335dd2deb11aa91927a3fc22cdd5a9a2e448f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_128_48",
+      "gsuMedianMs": 34.956022347717,
+      "packetMedianMs": 1.6270688381653,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "13e6f55ebbc19d442801222ab68e2d99109622e32558e4ae9d946a827a215a21"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_129_0",
+      "gsuMedianMs": 35.17094722272,
+      "packetMedianMs": 1.6253460867842,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "234b6859ff3e397c4287b4d6007f58d916c173988ce93885ffe9671d229cb5a7"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_129_16",
+      "gsuMedianMs": 35.110976850319,
+      "packetMedianMs": 1.62767412919105,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "6b3be95fbc64ce999d6698bf3973bd30920874a40e38d1e09c5d8c0bc8f848f1"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_129_32",
+      "gsuMedianMs": 35.421817072485,
+      "packetMedianMs": 1.62590481696185,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "88971a4b1fc1cec1be7af7dc800ca5cf465a52736d90750282d8a13e3ea4b85f"
+      ],
+      "samples": 2
+    },
+    {
+      "scene": "margin_edge_36_129_48",
+      "gsuMedianMs": 35.30020013715,
+      "packetMedianMs": 1.62376301794755,
+      "cacheCallsMedian": 32.0,
+      "cacheInvalidationsMedian": 21.0,
+      "framebufferHashes": [
+        "2e7d68d75beb9dabf7105ca772ad648dc29f0113968edae4ce3dfdbb980ad803"
+      ],
+      "samples": 2
+    }
+  ],
+  "imagesVerified": 2314,
+  "paletteImagesVerified": 2314,
+  "paletteCellsVerified": 1777152
+}

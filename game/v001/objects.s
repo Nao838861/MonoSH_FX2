@@ -38,6 +38,7 @@ bullet_height: .res 2
 bullet_count: .res 2
 last_upload_count: .res 2
 fx_obj_dma_bytes: .res 2
+obj_latch_initialized: .res 2
 .segment "CODE"
 .a16
 .i16
@@ -585,20 +586,52 @@ player_offsets:
 fx_latch_obj:
   php
   rep #$30
-  ldx #134
+  ; Copy only live/previously-live low entries. Every untouched entry stays
+  ; hidden after the first full initialization; shrinking lists still copy
+  ; the cleared tail. High-table bytes always travel with this generation.
+  lda obj_latch_initialized
+  bne obj_latch_used
+  inc obj_latch_initialized
+  lda #32
+  bra obj_latch_size
+obj_latch_used:
+  lda fx_obj_count
+  cmp fx_obj_present_count
+  bcs obj_latch_size
+  lda fx_obj_present_count
+obj_latch_size:
+  asl
+  asl
+  clc
+  adc #7
+  and #$fff8
+  sec
+  sbc #8
+  tax
+  bmi obj_latch_high
 copy:
-  lda fx_obj_next,x
-  sta fx_obj_present,x
-  dex
-  dex
+  .repeat 4,Word
+    lda fx_obj_next+Word*2,x
+    sta fx_obj_present+Word*2,x
+  .endrepeat
+  txa
+  sec
+  sbc #8
+  tax
   bpl copy
+obj_latch_high:
+  .repeat 4,Word
+    lda fx_obj_next+128+Word*2
+    sta fx_obj_present+128+Word*2
+  .endrepeat
   lda fx_obj_count
   sta fx_obj_present_count
   plp
   rts
 
 ; forced blank中に32枠のlow128bytes、対応するhigh8bytesだけ更新。
-fx_upload_obj:
+.export fx_prepare_obj_dma
+fx_prepare_obj_dma:
   php
   rep #$30
   lda #$0400
@@ -608,9 +641,6 @@ fx_upload_obj:
   sep #$20
   lda #$7e
   sta f:$004304
-  lda #0
-  sta f:$002102
-  sta f:$002103
   rep #$20
   lda fx_obj_present_count
   cmp last_upload_count
@@ -629,7 +659,14 @@ fx_upload_obj:
   sta fx_obj_dma_bytes
   lda fx_obj_present_count
   sta last_upload_count
+  plp
+  rts
+fx_upload_obj:
+  php
   sep #$20
+  lda #0
+  sta f:$002102
+  sta f:$002103
   lda #1
   sta f:$00420b
   lda #0

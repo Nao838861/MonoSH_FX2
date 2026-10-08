@@ -1,0 +1,277 @@
+; 音符参照: JK150 / SixtyTunes (VGMusic)。パートの役割ごとに8声へ割り振ったSFC編曲。
+#Title Space Harrier - native SFC arrangement v2
+#Composer Hiroshi Kawaguchi
+#ZenLen 192
+#Tempo 154
+#MainVolume 96
+#EchoLength 32
+#EchoFeedback 36
+#EchoVolume 34
+#FirFilter 127 0 0 0 0 0 0 0
+@bass bass
+@brass brass
+@crash crash
+@hat hat
+@kick kick
+@kick2 kick2
+@lead lead
+@lead_hi lead_hi
+@lead_mid lead_mid
+@ohat ohat
+@pad pad
+@snare snare
+@stab stab
+@tom tom
+A @lead V74 p64 E L
+A o4c%144 o4c%24 o4c%192 & o4c%24 o4c%120 o4c%24 r%24 o4c%192 & o4c%24 o4c%144 o4c%24 o4c%192 & o4c%24 o4c%120 o4c%24 r%24 o4c%192 & o4c%24 o5c%144 o5c%24
+A o5c%192 & o5c%24 o5c%120 o5c%24 r%24 o5c%192 & o5c%24 o5c%144 o5c%24 o5c%192 & o5c%24 o5d%24 o5d%24 o5d%24 r%48 o5d%24 r%24 o5c%24 r%192
+A o5f%72 o5e%24 o5e%192 o4g%48 o4a%48 o5f%72 o5e%24 o5e%192 & o5e%48 r%48 o5f%72 o5e%24 o5e%192 o5d%48 o5e%48 o5f%192 @lead_mid
+A o5g+%72 @lead o5g%72 o5f%48 o5f%72 o5e%24 o5e%192 o4g%48 o4a%48 o5f%72 o5e%24 o5e%192 & o5e%48 r%48 o5f%72 o5e%24 o5e%192
+A o5d%48 o5e%48 o5f%192 @lead_mid o5g+%72 @lead o5g%72 o5f%48 o5e%192 & o5e%48 o4e%48 o4g%48 o5d%48 o5c+%144 o4a+%48 o4a%96 o4a%32
+A o4g%32 o4f%32 o4e%48 o4f%24 o4d%192 o4d%24 o4e%24 o4f%48 o4g%24 o4a%144 o4g+%48 o5f%96 o5d%96 o5e%192 & o5e%48 o4e%48 o4g%48
+A o5d%48 o5c+%192 & o5c+%24 o5e%24 o5c+%24 o4a+%24 o4a%24 o4g%24 o4f%24 o4e%24 o4d%144 o4e%48 o4f%32 o4e%32 o4f%32 o4g%32 o4f%32
+A o4g%32 o4a%144 o4g%24 o5g%120 @lead_mid o5a%12 o5a+%12 o5b%12 o6c%12 @lead_hi o6c+%12 o6d%12 o6d+%12 o6e%12 o6f%72 o6e%24
+A o6e%192 @lead o5g%48 @lead_mid o5a%48 @lead_hi o6f%72 o6e%24 o6e%192 & o6e%48 r%48 o6f%72 o6e%24 o6e%192 o6d%48 o6e%48 o6f%192
+A o6g+%72 o6g%72 o6f%48 o6f%72 o6e%24 o6e%192 @lead o5g%48 @lead_mid o5a%48 @lead_hi o6f%72 o6e%24 o6e%192 & o6e%48 r%48 o6f%72
+A o6e%24 o6e%192 o6d%48 o6e%48 o6f%192 o6g+%72 o6g%72 o6f%48 o6e%192 & o6e%48 @lead o5e%48 o5g%48 @lead_hi o6d%48 o6c+%144 @lead_mid
+A o5a+%48 o5a%96 o5a%32 @lead o5g%32 o5f%32 o5e%48 o5f%24 o5d%192 o5d%24 o5e%24 o5f%48 o5g%24 @lead_mid o5a%144 o5g+%48
+A @lead_hi o6f%96 o6d%96 o6e%192 & o6e%48 @lead o5e%48 o5g%48 @lead_hi o6d%48 o6c+%192 & o6c+%24 o6e%24 o6c+%24 @lead_mid o5a+%24 o5a%24 @lead
+A o5g%24 o5f%24 o5e%24 o5d%144 o5e%48 o5f%32 o5e%32 o5f%32 o5g%32 o5f%32 o5g%32 @lead_mid o5a%144 @lead o5g%24 @lead_hi
+A o6g%192 & o6g%24 @lead o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%180 o4e%12 r%12 o4e%12 r%12 o4e%36 r%36
+A o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%180 o4f%12 r%12 o4f%12 r%12 o4f%36 r%36 o4b%12 r%12
+A o4b%12 r%12 o4a%12 r%12 o4b%12 r%180 o4g%12 r%12 o4g%12 r%12 o4g%36 r%36 o4a%12 r%12 o4a%12 r%12
+A o4g%12 r%12 o4a%12 r%192 r%108 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%180 o4e%12 r%12 o4e%12 r%12
+A o4e%36 r%36 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%180 o4f%12 r%12 o4f%12 r%12 o4f%36 r%36
+A o4b%12 r%12 o4b%12 r%12 o4a%12 r%12 o4b%12 r%180 o4g%12 r%12 o4g%12 r%12 o4g%36 r%36 o4a%12 r%12
+A o4a%12 r%12 o4g%12 r%12 o4a%12 r%192 r%108 o5c%12 r%12 o5c%12 r%12 o4b%12 r%12 o5c%12 r%192 r%108 o5c%12 r%12
+A o5c%12 r%12 o4b%12 r%12 o5c%12 r%192 r%108 o4b%12 r%12 o4b%12 r%12 o4a%12 r%12 o4b%12 r%156 o4g%48 o4g%48
+A o4g%48 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%192 r%108 o5c%12 r%12 o5c%12 r%12 o4b%12 r%12 o5c%12
+A r%192 r%108 o5c%12 r%12 o5c%12 r%12 o4b%12 r%12 o5c%12 r%192 r%108 o4b%12 r%12 o4b%12 r%12 o4a%12 r%12 o4b%12
+A r%156 o4g%48 o4g%48 o4g%48 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%132 o4a%12 r%12 o4a%12 r%36
+A o4b%12 r%12 o4b%72 o5f%72 o5e%24 o5e%192 o4g%48 o4a%48 o5f%72 o5e%24 o5e%192 & o5e%48 r%48 o5f%72 o5e%24 o5e%192 o5d%48
+A o5e%48 o5f%192 @lead_mid o5g+%72 @lead o5g%72 o5f%48 o5f%72 o5e%24 o5e%192 o4g%48 o4a%48 o5f%72 o5e%24 o5e%192 & o5e%48 r%48
+A o5f%72 o5e%24 o5e%192 o5d%48 o5e%48 o5f%192 @lead_mid o5g+%72 @lead o5g%72 o5f%48 o5e%192 & o5e%48 o4e%48 o4g%48 o5d%48 o5c+%144
+A o4a+%48 o4a%96 o4a%32 o4g%32 o4f%32 o4e%48 o4f%24 o4d%192 o4d%24 o4e%24 o4f%48 o4g%24 o4a%144 o4g+%48 o5f%96 o5d%96
+A o5e%192 & o5e%48 o4e%48 o4g%48 o5d%48 o5c+%192 & o5c+%24 o5e%24 o5c+%24 o4a+%24 o4a%24 o4g%24 o4f%24 o4e%24 o4d%144 o4e%48 o4f%32 o4e%32
+A o4f%32 o4g%32 o4f%32 o4g%32 o4a%144 o4g%24 o5g%192 & o5g%24 o4c%144 o4c%24 o4c%192 & o4c%24 o4c%120 o4c%24 r%24 o4c%192 & o4c%24 o4c%144 o4c%24
+A o4c%192 & o4c%24 o4c%120 o4c%24 r%24 o4c%192 & o4c%24 o5c%144 o5c%24 o5c%192 & o5c%24 o5c%120 o5c%24 r%24 o5c%192 & o5c%24 o5c%144 o5c%24 o5c%192 & o5c%24 o5d%24
+A o5d%24 o5d%24 r%48 o5d%24 r%24 o5c%24 r%192 @lead
+C @stab V24 p46 E L
+C r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24 r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48
+C o3a+%24 o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48
+C o4d%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24 r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48
+C o3a+%24 o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48
+C o4d%48 o4g%192 o4d%96 o4e%96 o4a%192 o4a+%96 o4e%96 o4d%192 o4c%96 o4d%96 o4c%192 o4d%96 o4f%96 o4g%192 o4d%96 o4e%96
+C o4a%192 o4a+%96 o4e%96 o4d%192 o4c%96 o4d%96 o4c%168 o4g%192 & o4g%24 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24
+C r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48 o3a+%24 o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48
+C o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48 o4d%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24
+C r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48 o3a+%24 o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48
+C o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48 o4d%48 o4g%192 o4d%96 o4e%96 o4a%192 o4a+%96 o4e%96 o4d%192 o4c%96
+C o4d%96 o4c%192 o4d%96 o4f%96 o4g%192 o4d%96 o4e%96 o4a%192 o4a+%96 o4e%96 o4d%192 o4c%96 o4d%96 o4c%168 o4g%192 & o4g%24 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192
+C o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24 r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48 o3a+%24
+C o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48 o4d%48
+C o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%24 o4c%24 r%48 o4c%72 o3a+%24 r%48 o4d%72 o4c%24 r%48 o3a+%24
+C o4c%24 r%48 o4c%72 o3b%24 r%48 o4d%72 o4c%24 r%48 o3b%48 o4c%48 o4c%120 o4d%24 o4e%24 o4d%120 o4c%48 o4d%48
+C o4g%192 o4d%96 o4e%96 o4a%192 o4a+%96 o4e%96 o4d%192 o4c%96 o4d%96 o4c%192 o4d%96 o4f%96 o4g%192 o4d%96 o4e%96 o4a%192
+C o4a+%96 o4e%96 o4d%192 o4c%96 o4d%96 o4c%168 o4g%192 & o4g%24 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192
+D @stab V23 p82 E L
+D o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o4e%144 o4e%24
+D o4f%192 & o4f%24 o4f%120 o4f%24 r%24 o4e%192 & o4e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%24 o4f%24 o4f%24 r%48 o4f%24 r%24 o4e%24 r%192
+D o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24
+D o3g%24 r%48 o3a%72 o3a%24 r%48 o3a%72 o3a%24 r%48 o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%72
+D o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24
+D r%48 o3a%72 o3a%24 r%48 o3a%72 o3a%24 r%48 o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%192 & o3g%192 o3e%192 & o3e%192
+D o3d%192 & o3d%192 o3a%144 o3g+%48 o3g+%192 o3g%192 & o3g%192 o3e%192 o3a+%96 o3e%96 o3d%192 & o3d%192 o3a%144 o3g%24 o3g%192 & o3g%24 o3g%72 o3g%24 r%48 o3g%72
+D o3g%24 r%48 o3g%24 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3a%72 o3a%24
+D r%48 o3a%72 o3a%24 r%48 o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24
+D r%48 o3g%24 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3a%72 o3a%24 r%48
+D o3a%72 o3a%24 r%48 o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%192 & o3g%192 o3e%192 & o3e%192 o3d%192 & o3d%192 o3a%144 o3g+%48 o3g+%192
+D o3g%192 & o3g%192 o3e%192 o3a+%96 o3e%96 o3d%192 & o3d%192 o3a%144 o3g%24 o3g%192 & o3g%24 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12 o4e%12 r%180
+D o3a%12 r%12 o3b%12 r%12 o4c%36 r%36 o4f%12 r%12 o4f%12 r%12 o4e%12 r%12 o4f%12 r%180 o3a%12 r%12
+D o3b%12 r%12 o4c%36 r%36 o4g%12 r%12 o4g%12 r%12 o4f%12 r%12 o4g%12 r%180 o3b%12 r%12 o4c%12 r%12
+D o4d%36 r%36 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12 o4e%12 r%192 r%108 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12
+D o4e%12 r%180 o3a%12 r%12 o3b%12 r%12 o4c%36 r%36 o4f%12 r%12 o4f%12 r%12 o4e%12 r%12 o4f%12 r%180
+D o3a%12 r%12 o3b%12 r%12 o4c%36 r%36 o4g%12 r%12 o4g%12 r%12 o4f%12 r%12 o4g%12 r%180 o3b%12 r%12
+D o4c%12 r%12 o4d%36 r%36 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12 o4e%12 r%192 r%108 o4e%12 r%12 o4e%12 r%12
+D o4d%12 r%12 o4e%12 r%192 r%108 o4f%12 r%12 o4f%12 r%12 o4e%12 r%12 o4f%12 r%192 r%108 o4d%12 r%12 o4d%12 r%12
+D o4c%12 r%12 o4d%12 r%156 o4d%48 o4d%48 o4d%48 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12 o4e%12 r%192 r%108 o4e%12
+D r%12 o4e%12 r%12 o4d%12 r%12 o4e%12 r%192 r%108 o4f%12 r%12 o4f%12 r%12 o4e%12 r%12 o4f%12 r%192 r%108 o4d%12
+D r%12 o4d%12 r%12 o4c%12 r%12 o4d%12 r%156 o4d%48 o4d%48 o4d%48 o4e%12 r%12 o4e%12 r%12 o4d%12 r%12
+D o4e%12 r%132 o4c%12 r%12 o4c%12 r%36 o4d%12 r%12 o4d%72 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24
+D o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3a%72 o3a%24 r%48 o3a%72 o3a%24
+D r%48 o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24
+D r%48 o3g%72 o3g%24 r%48 o3g%72 o3g%24 r%48 o3g%24 o3g%24 r%48 o3a%72 o3a%24 r%48 o3a%72 o3a%24 r%48
+D o3a%48 o3a%48 o3f%120 o3a%72 o3g+%96 o3f%48 o3g%48 o3g%192 & o3g%192 o3e%192 & o3e%192 o3d%192 & o3d%192 o3a%144 o3g+%48 o3g+%192 o3g%192 & o3g%192 o3e%192 o3a+%96
+D o3e%96 o3d%192 & o3d%192 o3a%144 o3g%24 o3g%192 & o3g%24 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120
+D o3f%24 r%24 o3e%192 & o3e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%120 o4f%24 r%24 o4e%192 & o4e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%24 o4f%24 o4f%24
+D r%48 o4f%24 r%24 o4e%24 r%192
+E @bass V137 p64 L
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%72 o2c%48 o2c%24 r%192 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24
+E o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24
+E o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24
+E o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24
+E o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24
+E o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24
+E o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24
+E o1g+%24 o2g+%24 o1a%24 o2a%24 o1b%24 o2b%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24
+E o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24
+E o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24
+E o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24
+E o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24
+E o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24
+E o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24
+E o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24
+E o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24
+E o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24
+E o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24
+E o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24
+E o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24
+E o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24
+E o1g%24 o2g%24 o1g%24 o2g%24 o1g%24 o2g%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%48 o1f%24 o1f%48
+E o1g%24 o1g%18 r%54 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24
+E o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24
+E o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24
+E o2f%24 o1f%24 o2f%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24 o2a+%24 o1a+%24
+E o2a+%24 o1a+%24 o2a+%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24
+E o2a%24 o1a%24 o2a%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24
+E o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24
+E o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24
+E o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24
+E o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24
+E o2f%24 o1f%24 o2f%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24 o2e%24 o1e%24
+E o2e%24 o1e%24 o2e%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24 o2a%24 o1a%24
+E o2a%24 o1a%24 o2a%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24 o2d%24 o1d%24
+E o2d%24 o1d%24 o2d%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1f%24 o2f%24 o1g%24 o2g%24 o1g%24 o2g%24 o1g%24
+E o2g%24 o1g%24 o2g%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%24
+E o3c%24 o2c%24 o3c%24 o2c%24 o3c%24 o2c%72 o2c%48 o2c%24 r%192
+G @brass V66 p56 E L
+G o3g%144 o3g%24 o3a%192 & o3a%24 o3g+%120 o3g+%24 r%24 o3g%192 & o3g%24 o3g%144 o3g%24 o3a%192 & o3a%24 o3g+%120 o3g+%24 r%24 o3g%192 & o3g%24 o4g%144 o4g%24
+G o4a%192 & o4a%24 o4g+%120 o4g+%24 r%24 o4g%192 & o4g%24 o4g%144 o4g%24 o4a%192 & o4a%24 o4g+%24 o4g+%24 o4g+%24 r%48 o4g+%24 r%24 o4g%24 r%192
+G o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48 o4e%48 o4f%192 o4g+%72
+G o4g%72 o4f%48 o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48 o4e%48
+G o4f%192 o4g+%72 o4g%72 o4f%48 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%144 o3a+%48 o3a%96 o3a%32 o3g%32 o3f%32 o3e%48 o3f%24
+G o3d%192 o3d%24 o3e%24 o3f%48 o3g%24 o3a%144 o3g+%48 o4f%96 o4d%96 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%192 & o4c+%24 o4e%24 o4c+%24
+G o3a+%24 o3a%24 o3g%24 o3f%24 o3e%24 o3d%144 o3e%48 o3f%32 o3e%32 o3f%32 o3g%32 o3f%32 o3g%32 o3a%144 o3g%24 o4g%192 & o4g%24
+G o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48 o4e%48 o4f%192 o4g+%72
+G o4g%72 o4f%48 o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48 o4e%48
+G o4f%192 o4g+%72 o4g%72 o4f%48 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%144 o3a+%48 o3a%96 o3a%32 o3g%32 o3f%32 o3e%48 o3f%24
+G o3d%192 o3d%24 o3e%24 o3f%48 o3g%24 o3a%144 o3g+%48 o4f%96 o4d%96 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%192 & o4c+%24 o4e%24 o4c+%24
+G o3a+%24 o3a%24 o3g%24 o3f%24 o3e%24 o3d%144 o3e%48 o3f%32 o3e%32 o3f%32 o3g%32 o3f%32 o3g%32 o3a%144 o3g%24 o4g%192 & o4g%24
+G o4c%12 r%12 o4c%12 r%12 o3b%12 r%12 o4c%12 r%180 o3e%12 r%12 o3g%12 r%12 o3a%36 r%36 o4c%12 r%12
+G o4c%12 r%12 o3b%12 r%12 o4c%12 r%180 o3f%12 r%12 o3g%12 r%12 o3a%36 r%36 o4d%12 r%12 o4d%12 r%12
+G o4c%12 r%12 o4d%12 r%180 o3g%12 r%12 o3a%12 r%12 o3b%36 r%36 o4c%12 r%12 o4c%12 r%12 o3b%12 r%12
+G o4c%12 r%192 r%108 o4c%12 r%12 o4c%12 r%12 o3b%12 r%12 o4c%12 r%180 o3e%12 r%12 o3g%12 r%12 o3a%36 r%36
+G o4c%12 r%12 o4c%12 r%12 o3b%12 r%12 o4c%12 r%180 o3f%12 r%12 o3g%12 r%12 o3a%36 r%36 o4d%12 r%12
+G o4d%12 r%12 o4c%12 r%12 o4d%12 r%180 o3g%12 r%12 o3a%12 r%12 o3b%36 r%36 o4c%12 r%12 o4c%12 r%12
+G o3b%12 r%12 o4c%12 r%192 r%108 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%192 r%108 o4a%12 r%12 o4a%12 r%12
+G o4g%12 r%12 o4a%12 r%192 r%108 o4g%12 r%12 o4g%12 r%12 o4f%12 r%12 o4g%12 r%156 o4c%48 o3b%48 o4c%48 o4c%12
+G r%12 o4c%12 r%12 o3b%12 r%12 o4c%12 r%192 r%108 o4a%12 r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%192 r%108 o4a%12
+G r%12 o4a%12 r%12 o4g%12 r%12 o4a%12 r%192 r%108 o4g%12 r%12 o4g%12 r%12 o4f%12 r%12 o4g%12 r%156 o4c%48
+G o3b%48 o4c%48 o4c%12 r%12 o4c%12 r%12 o3b%12 r%12 o4c%12 r%132 o4f%12 r%12 o4f%12 r%36 o4g%12 r%12
+G o4g%72 o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48 o4e%48 o4f%192
+G o4g+%72 o4g%72 o4f%48 o4f%72 o4e%24 o4e%192 o3g%48 o3a%48 o4f%72 o4e%24 o4e%192 & o4e%48 r%48 o4f%72 o4e%24 o4e%192 o4d%48
+G o4e%48 o4f%192 o4g+%72 o4g%72 o4f%48 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%144 o3a+%48 o3a%96 o3a%32 o3g%32 o3f%32 o3e%48
+G o3f%24 o3d%192 o3d%24 o3e%24 o3f%48 o3g%24 o3a%144 o3g+%48 o4f%96 o4d%96 o4e%192 & o4e%48 o3e%48 o3g%48 o4d%48 o4c+%192 & o4c+%24 o4e%24
+G o4c+%24 o3a+%24 o3a%24 o3g%24 o3f%24 o3e%24 o3d%144 o3e%48 o3f%32 o3e%32 o3f%32 o3g%32 o3f%32 o3g%32 o3a%144 o3g%24
+G o4g%192 & o4g%24 o3g%144 o3g%24 o3a%192 & o3a%24 o3g+%120 o3g+%24 r%24 o3g%192 & o3g%24 o3g%144 o3g%24 o3a%192 & o3a%24 o3g+%120 o3g+%24 r%24 o3g%192 & o3g%24 o4g%144
+G o4g%24 o4a%192 & o4a%24 o4g+%120 o4g+%24 r%24 o4g%192 & o4g%24 o4g%144 o4g%24 o4a%192 & o4a%24 o4g+%24 o4g+%24 o4g+%24 r%48 o4g+%24 r%24 o4g%24
+G r%192
+H @pad V56 p74 E L
+H o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o4e%144 o4e%24
+H o4f%192 & o4f%24 o4f%120 o4f%24 r%24 o4e%192 & o4e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%24 o4f%24 o4f%24 r%48 o4f%24 r%24 o4e%24 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192
+H o5a%192 & o5a%24 o5c%24 o5d%24 o5e%24 o5g%24 o5e%24 o5d%24 o5c%192 & o5c%48 o5g%24 o4a%24 o5c%24 o5e%24 o4a%24 o5c%24 o5d%192 & o5d%72 o5c%48
+H o4b%48 o5c%48 o4b%12 r%12 o4a%12 r%12 o4g%12 r%12 o4e%12 r%192 r%108 o5a%192 & o5a%24 o5c%24 o5d%24 o5e%24 o5g%24 o5e%24
+H o5d%24 o5c%192 & o5c%48 o5g%24 o4a%24 o5c%24 o5e%24 o4a%24 o5c%24 o5d%192 & o5d%72 o5c%48 o4b%48 o5c%48 o4b%12 r%12 o4a%12 r%12
+H o4g%12 r%12 o4e%12 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%192 r%108 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24 r%24 o3e%192 & o3e%24 o3e%144 o3e%24 o3f%192 & o3f%24 o3f%120 o3f%24
+H r%24 o3e%192 & o3e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%120 o4f%24 r%24 o4e%192 & o4e%24 o4e%144 o4e%24 o4f%192 & o4f%24 o4f%24 o4f%24 o4f%24 r%48
+H o4f%24 r%24 o4e%24 r%192
+!drumB0 @crash s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB1 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB2 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%36
+!drumB3 @crash s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB4 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB5 @crash s0,%24 @crash s0,%24 @crash s0,%36 r%36 @crash s0,%24 @hat s0,%4 r%20 @crash s0,%24
+!drumB6 @hat s0,%4 r%188
+!drumB7 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @snare s0,%12 @snare s0,%12 @snare s0,%12
+!drumB8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%104
+!drumB9 @crash s0,%24 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB10 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%12 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB11 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB12 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%12 @hat s0,%4 r%8 @hat s0,%4 r%8 @hat s0,%4 r%20 @hat s0,%4 r%8 @hat s0,%4 r%8 @snare s0,%12 r%12 @hat s0,%4 r%8 @hat s0,%4 r%8
+!drumB13 @hat s0,%4 r%20 @hat s0,%4 r%20 @hat s0,%4 r%44 @hat s0,%4 r%20 @hat s0,%4 r%68
+B V137 p60 L
+B !drumB0 !drumB1 !drumB1 !drumB1 !drumB1 !drumB1 !drumB1 !drumB2 !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB5 !drumB6
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB7
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB8
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB7
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB8
+B !drumB9 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB12
+B !drumB9 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB10 !drumB11 !drumB13
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB7
+B !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB8
+B !drumB0 !drumB1 !drumB1 !drumB1 !drumB1 !drumB1 !drumB1 !drumB2 !drumB3 !drumB4 !drumB4 !drumB4 !drumB4 !drumB4 !drumB5 !drumB6
+!drumF0 @kick s0,%14 r%34 @kick s0,%14 r%34 @kick s0,%14 r%34 @kick s0,%14 r%34
+!drumF1 @kick s0,%14 r%34 @kick s0,%14 r%34 @tom s1,%20 r%4 @tom s1,%12 @tom s1,%12 @kick s0,%14 r%10 @tom s1,%12 @tom s0,%12
+!drumF2 @kick s0,%14 r%82 @kick s0,%14 r%82
+!drumF3 @kick s0,%14 r%10 @kick s0,%14 r%10 @kick s0,%14 r%10 @tom s2,%12 @tom s1,%12 @tom s0,%20 r%4 @kick s0,%14 r%34 @kick s0,%14 r%10
+!drumF4 r%48 @tom s3,%6 @tom s3,%6 @tom s3,%12 @tom s3,%12 @tom s3,%12 @tom s1,%6 @tom s1,%6 @tom s1,%12 @tom s1,%12 @tom s1,%12 @tom s0,%6 @tom s0,%6 @tom s0,%12 @tom s0,%12 @tom s0,%12
+!drumF5 @kick s0,%14 r%82 @tom s3,%12 @tom s3,%12 @tom s3,%12 @tom s3,%12 @tom s3,%12 @tom s2,%12 @tom s1,%12 @tom s0,%12
+!drumF6 @kick2 s0,%12 r%24 @kick2 s0,%12 @kick2 s0,%12 r%12 @kick2 s0,%12 r%108
+!drumF7 @kick2 s0,%12 r%24 @kick2 s0,%12 r%24 @kick2 s0,%12 r%36 @kick2 s0,%12 @kick2 s0,%12 r%48
+!drumF8 @kick2 s0,%12 @kick2 s0,%12 @kick2 s0,%12 @kick2 s0,%12 r%24 @kick2 s0,%12 @kick2 s0,%12 @kick2 s0,%12 r%12 @kick2 s0,%12 r%24 @kick2 s0,%12 r%24
+!drumF9 @kick s0,%14 r%22 @kick s0,%12 @kick s0,%14 r%10 @kick s0,%14 r%106
+!drumF10 @kick s0,%14 r%22 @kick s0,%14 r%22 @kick s0,%14 r%34 @kick s0,%12 @kick s0,%14 r%46
+!drumF11 r%24 @kick s0,%14 r%10 @kick s0,%14 r%34 @kick s0,%14 r%10 @kick s0,%14 r%10 @tom s3,%12 @tom s3,%12 @tom s2,%12 @tom s1,%12
+!drumF12 r%192
+F V152 p64 L
+F !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF1 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF3 !drumF4
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF5
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF5
+F !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF7 !drumF6 !drumF8
+F !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF10 !drumF9 !drumF11
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2
+F !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF5
+F !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF0 !drumF1 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF2 !drumF3 !drumF12

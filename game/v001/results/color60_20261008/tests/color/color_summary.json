@@ -1,0 +1,24 @@
+{
+  "samples": 243,
+  "cases": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "transitions": [
+    1,
+    0,
+    1
+  ],
+  "tiles_checked": 186624,
+  "palette_bytes_checked": 15552,
+  "map_errors": 0,
+  "vram_errors": 0,
+  "palette_errors": 0,
+  "physical_hardware": false
+}
