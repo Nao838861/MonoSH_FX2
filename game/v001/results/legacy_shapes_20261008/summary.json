@@ -1,6 +1,14 @@
 {
-  "romSha256": "9c4f4e5d842afc36456f51199a2d19bc685aea5be9fea0befff349aab2b75141",
+  "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
   "assetsVerified": 35,
+  "twoToneAssetsVerified": 30,
+  "reshadedBulletAssets": [
+    6,
+    7,
+    8,
+    31,
+    37
+  ],
   "changedAlphaPixels": 0,
   "changedTwoTonePixels": 0,
   "assets": [
@@ -96,11 +104,11 @@
       ],
       "referenceSha256": "462a71f30cf7cf5e82e7e86dde2acef1dcc2d488a7c9f07431097cb32fc67562",
       "alpha": 0,
-      "twoTone": 0,
+      "twoTone": 3101,
       "packedAlpha": 0,
-      "packedTwoTone": 0,
-      "grayscaleTwoTone": 0,
-      "packedGrayscaleTwoTone": 0
+      "packedTwoTone": 3101,
+      "grayscaleTwoTone": 3101,
+      "packedGrayscaleTwoTone": 3101
     },
     {
       "asset": 7,
@@ -110,11 +118,11 @@
       ],
       "referenceSha256": "5cbdf63d778ee26f72280e51f4dd3dedfd1459ead3e1e4619b44ffad86456bf4",
       "alpha": 0,
-      "twoTone": 0,
+      "twoTone": 3380,
       "packedAlpha": 0,
-      "packedTwoTone": 0,
-      "grayscaleTwoTone": 0,
-      "packedGrayscaleTwoTone": 0
+      "packedTwoTone": 3380,
+      "grayscaleTwoTone": 3380,
+      "packedGrayscaleTwoTone": 3380
     },
     {
       "asset": 8,
@@ -124,11 +132,11 @@
       ],
       "referenceSha256": "9e57a03dcd5542fc365e2c0054b0a3bf21ccd79a52198dcc03937821de435e4d",
       "alpha": 0,
-      "twoTone": 0,
+      "twoTone": 3792,
       "packedAlpha": 0,
-      "packedTwoTone": 0,
-      "grayscaleTwoTone": 0,
-      "packedGrayscaleTwoTone": 0
+      "packedTwoTone": 3792,
+      "grayscaleTwoTone": 3792,
+      "packedGrayscaleTwoTone": 3792
     },
     {
       "asset": 11,
@@ -320,11 +328,11 @@
       ],
       "referenceSha256": "8b3929442eb76b4d88083eda9ef8975959afeb2bf57682c1a09c38271156c87f",
       "alpha": 0,
-      "twoTone": 0,
+      "twoTone": 6847,
       "packedAlpha": 0,
-      "packedTwoTone": 0,
-      "grayscaleTwoTone": 0,
-      "packedGrayscaleTwoTone": 0
+      "packedTwoTone": 6847,
+      "grayscaleTwoTone": 6847,
+      "packedGrayscaleTwoTone": 6847
     },
     {
       "asset": 32,
@@ -404,11 +412,11 @@
       ],
       "referenceSha256": "de044a84b5332107c62c863e789354ffe30cf5754c09727092fe5ea6e49aca85",
       "alpha": 0,
-      "twoTone": 0,
+      "twoTone": 3074,
       "packedAlpha": 0,
-      "packedTwoTone": 0,
-      "grayscaleTwoTone": 0,
-      "packedGrayscaleTwoTone": 0
+      "packedTwoTone": 3074,
+      "grayscaleTwoTone": 3074,
+      "packedGrayscaleTwoTone": 3074
     },
     {
       "asset": 38,

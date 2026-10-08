@@ -5,7 +5,7 @@
   "halves": 3577,
   "logicCalls": 3579,
   "logic": 3579,
-  "gsuMaxMs": 13.942273,
+  "gsuMaxMs": 13.458413,
   "intervals": {
     "25": 1,
     "2": 1787
@@ -14,14 +14,14 @@
   "dyingSeen": false,
   "doneSeen": false,
   "restartSeen": false,
-  "romSha256": "9c4f4e5d842afc36456f51199a2d19bc685aea5be9fea0befff349aab2b75141",
-  "actualGsuMaxMs": 13.937245,
+  "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
+  "actualGsuMaxMs": 13.454595,
   "renderFPS": 30.0494,
   "delayedPresents": 0,
   "dmaBytes": {
-    "min": 4000,
-    "max": 11680,
-    "mean": 6537.52125279642
+    "min": 3104,
+    "max": 11648,
+    "mean": 6096.697986577181
   },
   "mathChecks": 0,
   "pixelSamples": 29

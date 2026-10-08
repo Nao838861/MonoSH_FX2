@@ -19,7 +19,7 @@ def main():
     rom=releases/f'MonoSHFX2_4bpp30_{args.mode}.sfc';shutil.copy2(BUILD/'MonoSHFX2_v001.sfc',rom)
     manifest={'rom':rom.relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(rom.read_bytes()).hexdigest(),
               'buildMode':mode,'packing':json.loads((BUILD/'assets4/packing4.json').read_text()),
-              'upstream':subprocess.check_output(['git','rev-parse','origin/main'],cwd=ROOT,text=True).strip(),'scenarios':{}}
+              'upstream':subprocess.check_output(['git','merge-base','HEAD','origin/main'],cwd=ROOT,text=True).strip(),'scenarios':{}}
     for scenario in args.scenarios:
         src=BUILD/f'four_{scenario}';out=dest/scenario;out.mkdir(exist_ok=True)
         summary=json.loads((src/'summary.json').read_text())
@@ -41,7 +41,7 @@ def main():
         with zipfile.ZipFile(out/'samples.zip','w',zipfile.ZIP_DEFLATED) as z:
             for f in sorted(src.glob('frame*')):z.write(f,f.name)
         with zipfile.ZipFile(out/'screens.zip','w',zipfile.ZIP_DEFLATED) as z:
-            for f in sorted(src.glob('screen*.png')):z.write(f,f.name)
+            for f in sorted([*src.glob('screen*.png'),*src.glob('anim*.png')]):z.write(f,f.name)
         shots=sorted(src.glob('screen*.png'))
         if shots:shutil.copy2(shots[min(1,len(shots)-1)],out/'preview.png')
     for name in ('game.lbl','game.map','build_mode.json'):

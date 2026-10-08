@@ -19,6 +19,8 @@ def main():
     shapes=json.loads((DEST.parent/'legacy_shapes_20261008/summary.json').read_text())
     assert shapes['romSha256']==manifests['color']['sha256'],'shape verification ROM differs from release'
     assert shapes['changedAlphaPixels']==shapes['changedTwoTonePixels']==0
+    colors=json.loads((DEST.parent/'color_review_20261008/summary.json').read_text())
+    assert colors['romSha256']==manifests['color']['sha256'],'color review ROM differs from release'
     for mode,m in manifests.items():
         assert hashlib.sha256((ROOT/m['rom']).read_bytes()).hexdigest()==m['sha256']
         m['buildMode']['transferMode']='column-spans-two-pages'
@@ -36,7 +38,8 @@ def main():
         panel.paste(shot('color',scenario,name).resize((512,448),Image.Resampling.NEAREST),(x,y+24))
     panel.save(DEST/'overview.png')
     names={'controls':'移動＋連射','boss':'ボス撃破・次周','boss_hold':'ボス維持・無射撃','death':'被弾・復帰',
-           'pause':'ポーズ・解除','assets':'全素材・反転・clip','play':'通常進行・照準操作','full':'全24KiB転送fixture'}
+           'pause':'ポーズ・解除','assets':'全素材・反転・clip','play':'通常進行・照準操作','full':'全24KiB転送fixture',
+           'players':'自機17姿勢・反転・clip・点滅','bullets':'弾64位相・同時三発＋ボス光弾'}
     rows=[]
     for mode in ('color','mono'):
         for key,s in manifests[mode]['scenarios'].items():
@@ -50,7 +53,7 @@ def main():
     full_ms=max(r['dmaMs'] for r in full_dma)
     full_end=max(r['dmaEndLine'] for r in full_dma if r['dmaEndLine']<203)
     prescale_bytes=manifests['color']['packing']['prescaledBytes']
-    status=('**全場面で30fps固定には未到達**。ボスの近距離描画が主な残りの負荷であり、更新が遅れた時はゲーム進行も遅れる。'
+    status=('**全場面で30fps固定には未到達**。CPU準備・描画・転送の合計が締切を超える場面が残り、更新が遅れた時はゲーム進行も遅れる。'
             if long['delayedPresents'] else '**この長時間試験では約30.05fps、表示遅延0回**。下記の人工的な全面拡大fixtureまで含む、任意の物量の常時30fpsを保証するものではない。')
     gsu_budget='を超えた' if long['actualGsuMaxMs']>16.64 else '以内に収まった'
     full_fps=manifests['color']['scenarios']['full']['renderFPS']
@@ -59,7 +62,7 @@ def main():
 
 ## 結果と達成範囲
 
-独立したカラー4bpp版と、元の白黒素材を4bpp化した比較版を作成した。通常操作・連射は約30.05fps。通常進行18,000フィールドでは平均{long['renderFPS']:.4f}fps、画像更新間隔{long['renders']-1:,}回中{long['delayedPresents']}回が3フィールドになった。{status}
+独立したカラー4bpp版と、元の白黒素材を4bpp化した比較版を作成した。通常進行18,000フィールドでは平均{long['renderFPS']:.4f}fps、画像更新間隔{long['renders']-1:,}回中{long['delayedPresents']}回が2フィールドを超えた。{status}
 
 ゲーム計算と入力は各画像につき2回、画像は原則2フィールドごとに提示する。NTSCの目標は約30.0494fpsで、ゲームを30Hzへ半速化していない。通常進行は無敵化せず、通常の連射とボスに照準を合わせる方向入力を与え、ボス撃破・次周、{deaths}回の死亡と復帰を通過した。ボス個別試験はステージ終了条件と通常自弾の位置を設定するfixtureを使い、HPを書き換えていない。
 
@@ -77,11 +80,11 @@ MesenでROMを直接開ける。専用ランチャーはGSU 100%、NTSC。矢印
 
 ## 転送帯域と残るボトルネック
 
-内部256×192の4bppは24,576bytes。表示は既存と同じ256×180。VRAMに24KiBの画像を二面置き、64pxの四本の縦帯を交互に二本ずつ描画・転送する。完成した二つの半分が揃ってから表示面を切り替える。地面・空のHDMAは維持する。
+内部256×192の4bppは24,576bytes。表示は既存と同じ256×180。VRAMに24KiBの画像を二面置き、64pxの四本の縦帯を交互に二本ずつ描画・転送する。カラー版の自機は専用15色のOBJで表示し、VRAMの未使用領域C800..CB7Fへ姿勢変更時に896bytesを転送する。二つの半分と自機が揃ってからOAMと表示面を同じ世代へ切り替える。地面・空のHDMAは維持する。
 
 DMAを使うのは強制非表示の走査線203以降と、次フィールドの22まで。現在の列範囲と転送先に残る旧範囲の和集合を送り、隣接区間は結合する。区間が多すぎる場合は担当する二本の帯全体へ切り替える。両半分のDMA完了時刻と表示面の24KiBを検査した。
 
-全量fixtureでは12KiBずつ、各2記述子、最大{full_ms:.6f}msでDMAが完了し、次フィールドの{full_end}行までに収まった。したがって**24KiBを二つの非表示区間へ分ける帯域自体は成立する**。ただし全面に拡大した物体を描くこの人工試験は描画とDMAの合計時間が長く、提示は平均{full_fps:.4f}fpsになる。全転送が収まることは、描画まで含めた常時30fpsの保証ではない。
+全量fixtureでは12KiBずつ、各2記述子、最大{full_ms:.6f}msで画像DMAが完了し、次フィールドの{full_end}行までに収まった。したがって**24KiBを二つの非表示区間へ分ける帯域自体は成立する**。追加の自機CHR転送が入る時は安全な非表示区間を待ち、表示面を先に切り替えない。ただし全面に拡大した物体を描くこの人工試験は描画とDMAの合計時間が長く、提示は平均{full_fps:.4f}fpsになる。全転送が収まることは、描画まで含めた常時30fpsの保証ではない。
 
 通常進行のDMA最大は{long['dmaBytes']['max']:,}bytes/画像。GSUの半分の描画時間は最大{long['actualGsuMaxMs']:.6f}msで、1フィールドの時間（約16.64ms）{gsu_budget}。締切には描画だけでなくCPU準備とDMAも含まれ、合流が間に合わなければ次の黒帯へ待つ。VRAM容量不足で画面が欠ける現象と、描画・準備・転送の合計時間を分けて扱う。
 
@@ -94,13 +97,15 @@ DMAを使うのは強制非表示の走査線203以降と、次フィールド�
 
 ## 素材と色の範囲
 
-自機を採取した同じ `スペースハリアー録画１.mp4` から色の手掛かりを採取する。敵・岩・植物・弾・ボス・爆発・開閉5姿勢は、元の白黒原画の透過と黒い模様を固定して着色する。録画の別姿勢を拡縮して形ごと置換した旧方式は廃止した。二層遠景と既存60fps版の自機8姿勢・自弾も合成する。[採取一覧](assets/color4/captures.png)、[時刻・矩形・動画SHA256と形の基準](assets/color4/source.json)を保存した。
+自機を採取した同じ `スペースハリアー録画１.mp4` をコマ送りで確認し、部位ごとの色を修正した。草二種類は緑、ボスの顔は{colors['bossFaceGreenFraction']:.1%}が緑、胴は緑の背中と茶色の腹。別姿勢の切り抜きの色を座標だけで重ねる方法と、明るさだけを優先した配色を改めた。[録画の確認フレーム](results/color_review_20261008/reference_frames.png)、[修正素材](results/color_review_20261008/materials.png)、[採取一覧](assets/color4/captures.png)、[時刻・矩形・動画SHA256と形の基準](assets/color4/source.json)を保存した。
 
-35素材はPNGとROM内画素の両方で、透過と白黒化した絵が元原画に完全一致する。通常のグレースケールを128で二値化しても一致する。[原画・カラー・白黒復元の比較](results/legacy_shapes_20261008/comparison.png)と [検証値](results/legacy_shapes_20261008/summary.json)を保存し、継続同期でも再検査する。以前の全画素照合は採取画像の描画だけを確認しており、元原画との一致を検査していなかった。修正後のROMで描画試験も測り直した。
+35素材はPNGとROM内画素の両方で透過輪郭が元原画に完全一致する。うち30素材は通常のグレースケールを128で二値化しても元原画と一致する。弾5素材は白い中心と同系色の両側の陰影へ直したため、内部の白黒模様の一致対象から除く。[原画・カラー・白黒復元の比較](results/legacy_shapes_20261008/comparison.png)と [検証値](results/legacy_shapes_20261008/summary.json)を保存し、継続同期でも再検査する。
 
-**4bppは16色インデックスであり、16bppの無損失カラーではない。** 合成画像は共通15色＋透明色へ減色し、空と地面は別のRGB5 HDMAを使う。原画RGBAは保持する。録画にない転倒9姿勢は元の輪郭・陰影を録画由来の服の色で着色した派生素材。影・STAGE文字は従来素材であり、すべての姿勢を動画から直接採取したわけではない。
+通常弾は一発につき一つの色相を使い、経過時間の32論理更新周期（紫16→赤8→青8）で色を変える。白い中心は色相変更の対象外。回転は元の64更新周期を維持する。ボス光弾は全体の論理時間に従い同じ色周期を使い、三色の縮小行を用意した。周期は録画のサンプルから推定した値であり、原作のパレットデータを抽出したものではない。[実ROMの色アニメ](results/color_review_20261008/bullet_cycle.gif)を保存した。
 
-![同じ4bpp描画経路の白黒・カラー比較](results/four_bpp_20261008/comparison.png)
+**4bppは16色インデックスであり、16bppの無損失カラーではない。** GSUの合成画像は共通15色＋透明色、自機は元の専用15色＋透明色をそのまま使う。自機8姿勢と派生の転倒9姿勢を共通パレットへ減色しない。空と地面は別のRGB5 HDMAを使う。弾の陰影は白と同系色二段階を固定ディザで補間する。原画RGBAは保持する。影・STAGE文字は従来素材であり、すべての姿勢を動画から直接採取したわけではない。
+
+![白黒比較版と修正カラー版](results/four_bpp_20261008/comparison.png)
 
 ## 計測と正しさ
 
@@ -110,7 +115,7 @@ Mesen、GSU 100%、HDMA有効。起動時の長い最初の間隔を除き、完
 |---|---|---:|---:|---:|---:|
 {chr(10).join(rows)}
 
-合計{total:,}枚について、独立したPython合成器が全49,152画素と表示中VRAMの24KiBに一致した。全44素材×四反転×五寸法・clip条件は880通り＋次周期1枚。ポーズ中60論理更新分が停止して解除後に再開すること、被弾から復帰すること、移動入力と連射が実際にゲームへ届くこともassertした。検証入力はMesenの`inputPolled`イベントへ渡す。
+合計{total:,}枚について、独立したPython合成器が全49,152画素と表示中VRAMの24KiBに一致した。全44素材×四反転×五寸法・clip条件は880通り＋次周期1枚。自機は実OAM・CHR・CGRAMから別途RGBA合成し、17姿勢×四反転×六条件の408通りが元の専用カラー画像と一致した。弾は異なる年齢の通常弾三発とボス光弾を同時に描き、64位相と色周期を全て照合した。地面CHRとマップが上書きされないことも検査する。ポーズ中60論理更新分の停止・再開、被弾から復帰、移動入力と連射もassertした。検証入力はMesenの`inputPolled`イベントへ渡す。
 
 途中で検証入力を`startFrame`から渡していた誤りを修正し、通常操作・連射・ポーズ・死亡・長時間進行を測り直した。旧測定値を最終結果に混ぜていない。検証callbackの失敗は`pcall`で捕捉して異常終了させ、エラー後にゲームだけ走り続ける誤判定も防ぐ。
 

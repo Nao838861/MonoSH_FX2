@@ -6,6 +6,10 @@
 .import _fx_ground_far_y
 .import _fx_far_d_acc, _fx_far_u_acc, _monosh_ground_offset, fx_sky_pointer
 .include "assets4/background4.inc"
+.include "assets4/source4.inc"
+.if FX4_COLOR
+.import player4_upload_bytes
+.endif
 .import _fx_ground_hptr
 .import ground_empty
 .import fx_upload_ground
@@ -22,6 +26,9 @@ FX_DMA_ADMISSION_BYTES = 9984
 .export reset, game_started, render_started, render_finished, dma_started, dma_finished
 .export render_second_started, render_second_finished
 .export half_dma_finished
+.if FX4_COLOR
+.export fx4_wait_obj_blank
+.endif
 .segment "BSS"
 clear_initialized: .res 2
 .export fx4_page, fx4_generation
@@ -78,6 +85,9 @@ reset:
   lda #$79
   sta $2109                 ; BG3 map byte F000 (64x32)
   lda #5
+  .if FX4_COLOR
+  ora #$10
+  .endif
   sta $212c                 ; BG1 FX + BG3 ground. OBJ merged by GSU.
   stz $212d
   stz $2133
@@ -349,6 +359,9 @@ _fx_present:
   sta f:$700700            ; バッテリーRAMの前回起動のdirty flagを継承しない。
   jsr prepare_frame
 frame_prepared:
+  .if FX4_COLOR
+  jsr fx_latch_obj
+  .endif
   lda fx4_page
   eor #$3000
   sta f:$701016
@@ -436,6 +449,9 @@ render_second_finished:
   sta f:$004302
   jsr send_half
   sep #$20
+  .if FX4_COLOR
+  jsr fx_upload_obj
+  .endif
   lda fx4_page+1
   lsr
   lsr
@@ -547,7 +563,19 @@ plan_half:
   plb
 :
   ; Divide the exact byte budget by 164 bytes/scanline. Reserve CPU setup.
+  .if FX4_COLOR
+  lda f:$701010
+  and #64
+  beq first_half_budget4
   lda fx4_half_bytes
+  clc
+  adc player4_upload_bytes
+  adc #128                 ; OAM32bytesとCPU設定の余裕。
+  bra byte_budget4
+first_half_budget4:
+  .endif
+  lda fx4_half_bytes
+byte_budget4:
   clc
   adc #163
   sta f:$004204
@@ -607,6 +635,20 @@ plan_full_left4:
   sta fx4_descriptors+10
 plan_budget_ready4:
   rts
+  .if FX4_COLOR
+fx4_wait_obj_blank:
+  .a8
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #203
+  bcs obj_blank_ready4
+  cmp #15                   ; 自機の全896bytes＋OAMを22行までに完了させる。
+  bcc obj_blank_ready4
+  jsr wait_blank             ; 全面fixtureなど帯域が一杯なら次の黒帯へ待つ。
+obj_blank_ready4:
+  rts
+  .endif
 send_half:
   .a16
   .i16

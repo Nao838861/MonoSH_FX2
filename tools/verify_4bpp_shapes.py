@@ -40,7 +40,9 @@ def main():
                  'packedTwoTone':int((binary!=packed_binary).sum()),
                  'grayscaleTwoTone':int((binary!=(gray&alpha)).sum()),
                  'packedGrayscaleTwoTone':int((binary!=(packed_gray&alpha)).sum())}
-        assert not any(changes.values()),f'{i}: legacy image differs: {changes}'
+        assert changes['alpha']==changes['packedAlpha']==0,f'{i}: silhouette differs'
+        if i in policy.get('twoToneAssets',policy['assets']):
+            assert not any(changes.values()),f'{i}: legacy image differs: {changes}'
         records.append({'asset':i,'size':[old.shape[1],old.shape[0]],'referenceSha256':hashlib.sha256(path.read_bytes()).hexdigest(),**changes})
         mono=color.copy();mono[:,:,:3]=np.where(restored[:,:,None],255,0)
         cards.append((i,Image.fromarray(old),Image.fromarray(color),Image.fromarray(mono)))
@@ -53,9 +55,12 @@ def main():
             im.thumbnail((130,128),Image.Resampling.NEAREST)
             panel.paste(im,(x+col*140+4,y+23),im)
     panel.save(DEST/'comparison.png')
+    two_tone=policy.get('twoToneAssets',policy['assets'])
     summary={'romSha256':hashlib.sha256(rom).hexdigest(),
-             'assetsVerified':len(records),'changedAlphaPixels':0,'changedTwoTonePixels':0,'assets':records}
+             'assetsVerified':len(records),'twoToneAssetsVerified':len(two_tone),
+             'reshadedBulletAssets':[i for i in policy['assets'] if i not in two_tone],
+             'changedAlphaPixels':0,'changedTwoTonePixels':sum(r['twoTone'] for r in records if r['asset'] in two_tone),'assets':records}
     (DEST/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
-    print(f'Legacy shapes: {len(records)} assets, alpha/two-tone/packed pixels all identical')
+    print(f'Legacy shapes: {len(records)} identical silhouettes; {len(two_tone)} identical two-tone patterns; bullets reshaded')
 
 if __name__=='__main__':main()

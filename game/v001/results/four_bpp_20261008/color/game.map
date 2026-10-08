@@ -35,13 +35,13 @@ asset_tables.o:
 ground.o:
     BSS               Offs=000BEC  Size=0006DD  Align=00001  Fill=0000
 cpu_asm.o:
-    CODE              Offs=002F2E  Size=000484  Align=00001  Fill=0000
+    CODE              Offs=002F2E  Size=0004B7  Align=00001  Fill=0000
     BSS               Offs=0012C9  Size=000014  Align=00001  Fill=0000
-    BOOT              Offs=000000  Size=000262  Align=00001  Fill=0000
+    BOOT              Offs=000000  Size=000264  Align=00001  Fill=0000
     GFX               Offs=000000  Size=010000  Align=00001  Fill=0000
     HEADER            Offs=000000  Size=000050  Align=00001  Fill=0000
 gsu_asm.o:
-    GSU               Offs=000000  Size=00086D  Align=00010  Fill=0000
+    GSU               Offs=000000  Size=0008FD  Align=00010  Fill=0000
     ASSET44           Offs=000000  Size=010000  Align=00001  Fill=0000
     ASSET45           Offs=000000  Size=010000  Align=00001  Fill=0000
     ASSET46           Offs=000000  Size=010000  Align=00001  Fill=0000
@@ -67,7 +67,7 @@ gsu_asm.o:
     SCALE5E           Offs=000000  Size=010000  Align=00001  Fill=0000
     SPAN5F            Offs=000000  Size=010000  Align=00001  Fill=0000
 ground_asm.o:
-    CODE              Offs=0033B2  Size=0028C5  Align=00001  Fill=0000
+    CODE              Offs=0033E5  Size=0028C5  Align=00001  Fill=0000
     RODATA            Offs=0078B9  Size=004ABC  Align=00001  Fill=0000
     BSS               Offs=0012DD  Size=000022  Align=00001  Fill=0000
     ZEROPAGE          Offs=000000  Size=000006  Align=00001  Fill=0000
@@ -76,166 +76,165 @@ ground_asm.o:
     PAL5C             Offs=000000  Size=010000  Align=00001  Fill=0000
     PAL5D             Offs=000000  Size=010000  Align=00001  Fill=0000
 packet_asm.o:
-    CODE              Offs=005C77  Size=000133  Align=00001  Fill=0000
+    CODE              Offs=005CAA  Size=000133  Align=00001  Fill=0000
     RODATA            Offs=00C375  Size=000022  Align=00001  Fill=0000
     BSS               Offs=0012FF  Size=000100  Align=00001  Fill=0000
     ZEROPAGE          Offs=000006  Size=000026  Align=00001  Fill=0000
 objects_asm.o:
-    CODE              Offs=005DAA  Size=000519  Align=00001  Fill=0000
-    RODATA            Offs=00C397  Size=00030E  Align=00001  Fill=0000
-    BSS               Offs=0013FF  Size=00013A  Align=00001  Fill=0000
-    ZEROPAGE          Offs=00002C  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=005DDD  Size=00025B  Align=00001  Fill=0000
+    RODATA            Offs=00C397  Size=000064  Align=00001  Fill=0000
+    BSS               Offs=0013FF  Size=00012E  Align=00001  Fill=0000
 projection_asm.o:
-    CODE              Offs=0062C3  Size=007097  Align=00001  Fill=0000
+    CODE              Offs=006038  Size=007097  Align=00001  Fill=0000
 stage_asm.o:
-    CODE              Offs=00D35A  Size=000406  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000034  Size=000006  Align=00001  Fill=0000
+    CODE              Offs=00D0CF  Size=000406  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00002C  Size=000006  Align=00001  Fill=0000
 stage_update_asm.o:
-    CODE              Offs=00D760  Size=000161  Align=00001  Fill=0000
+    CODE              Offs=00D4D5  Size=000161  Align=00001  Fill=0000
 enemy_render_asm.o:
-    CODE              Offs=00D8C1  Size=000276  Align=00001  Fill=0000
-    ZEROPAGE          Offs=00003A  Size=000004  Align=00001  Fill=0000
+    CODE              Offs=00D636  Size=0002A1  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000032  Size=000004  Align=00001  Fill=0000
 enemy_collision_asm.o:
-    CODE              Offs=00DB37  Size=00020D  Align=00001  Fill=0000
-    ZEROPAGE          Offs=00003E  Size=000002  Align=00001  Fill=0000
+    CODE              Offs=00D8D7  Size=00020D  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000036  Size=000002  Align=00001  Fill=0000
 enemy_geometry_asm.o:
-    CODE              Offs=00DD44  Size=00008A  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000040  Size=000004  Align=00001  Fill=0000
+    CODE              Offs=00DAE4  Size=00008A  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000038  Size=000004  Align=00001  Fill=0000
 enemy_bullet_asm.o:
-    CODE              Offs=00DDCE  Size=00014A  Align=00001  Fill=0000
+    CODE              Offs=00DB6E  Size=00014A  Align=00001  Fill=0000
 enemy_update_asm.o:
-    CODE              Offs=00DF18  Size=0002BE  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000044  Size=000002  Align=00001  Fill=0000
+    CODE              Offs=00DCB8  Size=0002BE  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00003C  Size=000002  Align=00001  Fill=0000
 player_asm.o:
-    CODE              Offs=00E1D6  Size=000262  Align=00001  Fill=0000
+    CODE              Offs=00DF76  Size=000262  Align=00001  Fill=0000
 frame_asm.o:
-    CODE              Offs=00E438  Size=0002FB  Align=00001  Fill=0000
+    CODE              Offs=00E1D8  Size=0002FB  Align=00001  Fill=0000
 boss_render_asm.o:
-    CODE              Offs=00E733  Size=00019F  Align=00001  Fill=0000
+    CODE              Offs=00E4D3  Size=00019F  Align=00001  Fill=0000
 boss_collision_asm.o:
-    CODE              Offs=00E8D2  Size=000162  Align=00001  Fill=0000
+    CODE              Offs=00E672  Size=000162  Align=00001  Fill=0000
 combat_asm.o:
-    CODE              Offs=00EA34  Size=0001A5  Align=00001  Fill=0000
+    CODE              Offs=00E7D4  Size=0001A5  Align=00001  Fill=0000
 dma_asm.o:
-    CODE              Offs=00EBD9  Size=00004B  Align=00001  Fill=0000
-    BSS               Offs=001539  Size=000146  Align=00001  Fill=0000
-    ZEROPAGE          Offs=000046  Size=000002  Align=00001  Fill=0000
+    CODE              Offs=00E979  Size=00004B  Align=00001  Fill=0000
+    BSS               Offs=00152D  Size=000146  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00003E  Size=000002  Align=00001  Fill=0000
 submit_asm.o:
-    CODE              Offs=00EC24  Size=0000D4  Align=00001  Fill=0000
+    CODE              Offs=00E9C4  Size=0000D4  Align=00001  Fill=0000
 smooth_depth_asm.o:
-    CODE              Offs=00ECF8  Size=000481  Align=00001  Fill=0000
+    CODE              Offs=00EA98  Size=000481  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(add.o):
-    CODE              Offs=00F179  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00EF19  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addeqsp.o):
-    CODE              Offs=00F195  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00EF35  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addysp.o):
-    CODE              Offs=00F1A6  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00EF46  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax2.o):
-    CODE              Offs=00F1B4  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00EF54  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax3.o):
-    CODE              Offs=00F1BF  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00EF5F  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax4.o):
-    CODE              Offs=00F1CD  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00EF6D  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax1.o):
-    CODE              Offs=00F1DE  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=00EF7E  Size=00000A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax2.o):
-    CODE              Offs=00F1E8  Size=00000F  Align=00001  Fill=0000
+    CODE              Offs=00EF88  Size=00000F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax3.o):
-    CODE              Offs=00F1F7  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00EF97  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp1.o):
-    CODE              Offs=00F20B  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=00EFAB  Size=000009  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp2.o):
-    CODE              Offs=00F214  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFB4  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp3.o):
-    CODE              Offs=00F221  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFC1  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp4.o):
-    CODE              Offs=00F22E  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFCE  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp5.o):
-    CODE              Offs=00F23B  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFDB  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(div.o):
-    CODE              Offs=00F248  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00EFE8  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(icmp.o):
-    CODE              Offs=00F25D  Size=00002E  Align=00001  Fill=0000
+    CODE              Offs=00EFFD  Size=00002E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp1.o):
-    CODE              Offs=00F28B  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=00F02B  Size=000007  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp2.o):
-    CODE              Offs=00F292  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F032  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp3.o):
-    CODE              Offs=00F2A8  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F048  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp4.o):
-    CODE              Offs=00F2AD  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F04D  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp5.o):
-    CODE              Offs=00F2B2  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F052  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp6.o):
-    CODE              Offs=00F2B7  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F057  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp7.o):
-    CODE              Offs=00F2BC  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F05C  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp8.o):
-    CODE              Offs=00F2C1  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F061  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(ldai.o):
-    CODE              Offs=00F2C6  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=00F066  Size=00000C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(makebool.o):
-    CODE              Offs=00F2D2  Size=00002C  Align=00001  Fill=0000
+    CODE              Offs=00F072  Size=00002C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(memcpy.o):
-    CODE              Offs=00F2FE  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=00F09E  Size=00003C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax10.o):
-    CODE              Offs=00F33A  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F0DA  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax3.o):
-    CODE              Offs=00F353  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F0F3  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax5.o):
-    CODE              Offs=00F364  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00F104  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax6.o):
-    CODE              Offs=00F378  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F118  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax7.o):
-    CODE              Offs=00F38E  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F12E  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(negabs.o):
-    CODE              Offs=00F3A7  Size=000012  Align=00001  Fill=0000
+    CODE              Offs=00F147  Size=000012  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(popptr1.o):
-    CODE              Offs=00F3B9  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F159  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pusha.o):
-    CODE              Offs=00F3C7  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F167  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushax.o):
-    CODE              Offs=00F3DD  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=00F17D  Size=00001A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushwsp.o):
-    CODE              Offs=00F3F7  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00F197  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shelp.o):
-    CODE              Offs=00F413  Size=000020  Align=00001  Fill=0000
+    CODE              Offs=00F1B3  Size=000020  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax1.o):
-    CODE              Offs=00F433  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=00F1D3  Size=000008  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax3.o):
-    CODE              Offs=00F43B  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F1DB  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax4.o):
-    CODE              Offs=00F449  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F1E9  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staspidx.o):
-    CODE              Offs=00F45A  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F1FA  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxsp.o):
-    CODE              Offs=00F470  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00F210  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxspi.o):
-    CODE              Offs=00F47B  Size=00001B  Align=00001  Fill=0000
+    CODE              Offs=00F21B  Size=00001B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(sub.o):
-    CODE              Offs=00F496  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00F236  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(subysp.o):
-    CODE              Offs=00F4AB  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F24B  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(udiv.o):
-    CODE              Offs=00F4B8  Size=00004F  Align=00001  Fill=0000
+    CODE              Offs=00F258  Size=00004F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(umod.o):
-    CODE              Offs=00F507  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F2A7  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(zeropage.o):
-    ZEROPAGE          Offs=000048  Size=00001A  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000040  Size=00001A  Align=00001  Fill=0000
 
 
 Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-CODE                  000000  00F517  00F518  00001
-ZEROPAGE              000000  000061  000062  00001
-RODATA                002000  00E6A4  00C6A5  00001
-BOOT                  008000  008261  000262  00001
-DATA                  00E6A5  00E6A7  000003  00001
-BSS                   00E6A8  00FD26  00167F  00001
+CODE                  000000  00F2B7  00F2B8  00001
+ZEROPAGE              000000  000059  00005A  00001
+RODATA                002000  00E3FA  00C3FB  00001
+BOOT                  008000  008263  000264  00001
+DATA                  00E3FB  00E3FD  000003  00001
+BSS                   00E3FE  00FA70  001673  00001
 HEADER                00FFB0  00FFFF  000050  00001
-GSU                   018000  01886C  00086D  00010
+GSU                   018000  0188FC  0008FD  00010
 GFX                   430000  43FFFF  010000  00001
 ASSET44               440000  44FFFF  010000  00001
 ASSET45               450000  45FFFF  010000  00001
@@ -269,142 +268,144 @@ SPAN5F                5F0000  5FFFFF  010000  00001
 
 Exports list by name:
 ---------------------
-__STARTUP__               000001 REA    _boss_age                 00E90F RLA
-_boss_dda_phase           00E9E9 RLA    _boss_dda_x               00E9EF RLA
-_boss_dda_y               00E9F5 RLA    _boss_death_parts         00E911 RLA
-_boss_death_timer         00E910 RLA    _boss_history_x           00E6EA RLA
-_boss_history_y           00E76A RLA    _boss_history_z           00E7EA RLA
-_boss_part_active         00E6C6 RLA    _boss_part_bottom         00E6B4 RLA
-_boss_part_timer          00E6CF RLA    _boss_part_x              00E6AB RLA
-_boss_part_z              00E6BD RLA    _boss_render_camera_delta 00E90D RLA
-_fx4_explosion_lift       00335C RLA    _fx_boss_hits             00E8D2 RLA
-_fx_boss_project          00E80F RLA    _fx_build_ground          0033B2 RLA
-_fx_build_packet          005C77 RLA    _fx_buttons               00F281 RLA
-_fx_draw                  00EAFD RLA    _fx_draw_count            00ED7D RLA
-_fx_em0_geometry          00DD44 RLA    _fx_enemy_collisions      00DB37 RLA
-_fx_enemy_em1_update      00E0B0 RLA    _fx_enemy_em1_update_reference 001D8C RLA
+__STARTUP__               000001 REA    _boss_age                 00E665 RLA
+_boss_dda_phase           00E73F RLA    _boss_dda_x               00E745 RLA
+_boss_dda_y               00E74B RLA    _boss_death_parts         00E667 RLA
+_boss_death_timer         00E666 RLA    _boss_history_x           00E440 RLA
+_boss_history_y           00E4C0 RLA    _boss_history_z           00E540 RLA
+_boss_part_active         00E41C RLA    _boss_part_bottom         00E40A RLA
+_boss_part_timer          00E425 RLA    _boss_part_x              00E401 RLA
+_boss_part_z              00E413 RLA    _boss_render_camera_delta 00E663 RLA
+_fx4_explosion_lift       00338F RLA    _fx_boss_hits             00E672 RLA
+_fx_boss_project          00E5AF RLA    _fx_build_ground          0033E5 RLA
+_fx_build_packet          005CAA RLA    _fx_buttons               00EFD7 RLA
+_fx_draw                  00E853 RLA    _fx_draw_count            00EAD3 RLA
+_fx_em0_geometry          00DAE4 RLA    _fx_enemy_collisions      00D8D7 RLA
+_fx_enemy_em1_update      00DE50 RLA    _fx_enemy_em1_update_reference 001D8C RLA
 _fx_enemy_fire_em1        001D4E RLA    _fx_enemy_remove          001D43 RLA
-_fx_enemy_render          00D8C1 RLA    _fx_enemy_render_bullets  00D9D8 RLA
-_fx_far_d_acc             00F28D RLA    _fx_far_u_acc             00F28B RLA
-_fx_fire_actions          00F284 RLA    _fx_frame                 00E438 RLA
-_fx_ground_c1ptr          00F969 RLA    _fx_ground_c3ptr          00F96B RLA
-_fx_ground_camera         00833C RLA    _fx_ground_color1         00F294 RLA
-_fx_ground_color3         00F456 RLA    _fx_ground_depth_rows     0083CD RLA
-_fx_ground_far_x          00F947 RLA    _fx_ground_far_xptr       00F965 RLA
-_fx_ground_far_y          00F96F RLA    _fx_ground_horizon        00F96D RLA
-_fx_ground_horizontal     00F618 RLA    _fx_ground_hptr           00F942 RLA
-_fx_ground_palette_record 00F945 RLA    _fx_ground_phase          00F280 RLA
-_fx_ground_vptr           00F967 RLA    _fx_ground_world_phase    00F944 RLA
-_fx_input                 00F283 RLA    _fx_open_size             00ECF8 RLA
-_fx_packet                00ED80 RLA    _fx_packet_count          00ED7E RLA
+_fx_enemy_render          00D636 RLA    _fx_enemy_render_bullets  00D74D RLA
+_fx_far_d_acc             00EFE3 RLA    _fx_far_u_acc             00EFE1 RLA
+_fx_fire_actions          00EFDA RLA    _fx_frame                 00E1D8 RLA
+_fx_ground_c1ptr          00F6BF RLA    _fx_ground_c3ptr          00F6C1 RLA
+_fx_ground_camera         00833C RLA    _fx_ground_color1         00EFEA RLA
+_fx_ground_color3         00F1AC RLA    _fx_ground_depth_rows     0083CD RLA
+_fx_ground_far_x          00F69D RLA    _fx_ground_far_xptr       00F6BB RLA
+_fx_ground_far_y          00F6C5 RLA    _fx_ground_horizon        00F6C3 RLA
+_fx_ground_horizontal     00F36E RLA    _fx_ground_hptr           00F698 RLA
+_fx_ground_palette_record 00F69B RLA    _fx_ground_phase          00EFD6 RLA
+_fx_ground_vptr           00F6BD RLA    _fx_ground_world_phase    00F69A RLA
+_fx_input                 00EFD9 RLA    _fx_open_size             00EA98 RLA
+_fx_packet                00EAD6 RLA    _fx_packet_count          00EAD4 RLA
 _fx_present               003076 RLA    _fx_read_input            002F6E RLA
-_fx_sky_color             0098B7 RLA    _fx_stage_contact         00D615 RLA
-_fx_stage_render          00D35A RLA    _fx_stage_update          00D760 RLA
-_fx_submit                00EC24 RLA    _ground_irq_vblank_count  00F288 RLA
-_history_head             00E90E RLA    _hit_pending              00F28F RLA
-_intro_timer              00EA0C RLA    _main                     002DBB RLA
-_memcpy                   00F2FE RLA    _monosh_bom_geometry      0047FF RLA
+_fx_sky_color             0098B7 RLA    _fx_stage_contact         00D38A RLA
+_fx_stage_render          00D0CF RLA    _fx_stage_update          00D4D5 RLA
+_fx_submit                00E9C4 RLA    _ground_irq_vblank_count  00EFDE RLA
+_history_head             00E664 RLA    _hit_pending              00EFE5 RLA
+_intro_timer              00E762 RLA    _main                     002DBB RLA
+_memcpy                   00F09E RLA    _monosh_bom_geometry      0047FF RLA
 _monosh_boss_body_geometry 00375E RLA    _monosh_boss_bom_depth_by_size 00391A RLA
 _monosh_boss_bom_geometry 00383C RLA    _monosh_boss_bullet_velocity 003A08 RLA
 _monosh_boss_explosion_ground_bottom 003999 RLA    _monosh_boss_explosion_scale_low 00392A RLA
 _monosh_boss_face_geometry 003680 RLA    _monosh_boss_frame        0000B2 RLA
-_monosh_boss_hp           00E6A9 RLA    _monosh_boss_init         000015 RLA
+_monosh_boss_hp           00E3FF RLA    _monosh_boss_init         000015 RLA
 _monosh_boss_path_center_y 0021E0 RLA    _monosh_boss_path_center_y_mid 0024B0 RLA
 _monosh_boss_path_x       0020F0 RLA    _monosh_boss_path_x_mid   0023C0 RLA
 _monosh_boss_path_z       002000 RLA    _monosh_boss_path_z_mid   0022D0 RLA
-_monosh_boss_prepare_render 0000D6 RLA    _monosh_boss_render_only  00E733 RLA
-_monosh_boss_should_restart 000000 RLA    _monosh_boss_state        00E6A8 RLA
-_monosh_bullet_reflect_rng 00E947 RLA    _monosh_combat_fast_cache_reset 002F24 RLA
-_monosh_combat_fast_frame 00EA34 RLA    _monosh_combat_fast_render 00EAAE RLA
-_monosh_combat_fire_cooldown 00E948 RLA    _monosh_combat_init       000837 RLA
+_monosh_boss_prepare_render 0000D6 RLA    _monosh_boss_render_only  00E4D3 RLA
+_monosh_boss_should_restart 000000 RLA    _monosh_boss_state        00E3FE RLA
+_monosh_bullet_reflect_rng 00E69D RLA    _monosh_combat_fast_cache_reset 002F24 RLA
+_monosh_combat_fast_frame 00E7D4 RLA    _monosh_combat_fast_render 00E84E RLA
+_monosh_combat_fire_cooldown 00E69E RLA    _monosh_combat_init       000837 RLA
 _monosh_combat_reflect_bullet 002DC6 RLA    _monosh_combat_render     0008D0 RLA
 _monosh_ebullet_animation_geometry 004A48 RLA    _monosh_ebullet_geometry  004C04 RLA
 _monosh_ebullet_velocity  004C0E RLA    _monosh_em1_closed_geometry 0048DD RLA
-_monosh_enemies           00E94D RLA    _monosh_enemy_active_count_value 00E94B RLA
-_monosh_enemy_bullet_count 00E94A RLA    _monosh_enemy_bullets     00E99D RLA
-_monosh_enemy_em1_count   00E9E3 RLA    _monosh_enemy_em1_phase   00E9CA RLA
-_monosh_enemy_fast_advance 00DF18 RLA    _monosh_enemy_fast_update_bullets 00DDCE RLA
+_monosh_enemies           00E6A3 RLA    _monosh_enemy_active_count_value 00E6A1 RLA
+_monosh_enemy_bullet_count 00E6A0 RLA    _monosh_enemy_bullets     00E6F3 RLA
+_monosh_enemy_em1_count   00E739 RLA    _monosh_enemy_em1_phase   00E720 RLA
+_monosh_enemy_fast_advance 00DCB8 RLA    _monosh_enemy_fast_update_bullets 00DB6E RLA
 _monosh_enemy_fire_boss_at 000BF4 RLA    _monosh_enemy_fire_em0_fast 00195E RLA
 _monosh_enemy_frame       000B06 RLA    _monosh_enemy_geometry    004721 RLA
 _monosh_enemy_ground_bottom 0049D9 RLA    _monosh_enemy_init        000A71 RLA
-_monosh_enemy_paths       00706F RLA    _monosh_enemy_player_hit  00E9E8 RLA
+_monosh_enemy_paths       00706F RLA    _monosh_enemy_player_hit  00E73E RLA
 _monosh_enemy_render_only 000B24 RLA    _monosh_enemy_spawns      0070A5 RLA
-_monosh_enemy_stage_complete_flag 00E94C RLA    _monosh_ground_depth_pointer 00F292 RLA
-_monosh_ground_offset     00E6A5 RLA    _monosh_ground_screen_delta 00E6A6 RLA
-_monosh_player_bottom     00E9FF RLA    _monosh_player_bullet_count 00E92E RLA
-_monosh_player_bullet_sizes 004708 RLA    _monosh_player_bullets    00E91F RLA
+_monosh_enemy_stage_complete_flag 00E6A2 RLA    _monosh_ground_depth_pointer 00EFE8 RLA
+_monosh_ground_offset     00E3FB RLA    _monosh_ground_screen_delta 00E3FC RLA
+_monosh_player_bottom     00E755 RLA    _monosh_player_bullet_count 00E684 RLA
+_monosh_player_bullet_sizes 004708 RLA    _monosh_player_bullets    00E675 RLA
 _monosh_player_draw_asset 00247A RLA    _monosh_player_draw_flags 002440 RLA
-_monosh_player_init       002401 RLA    _monosh_player_invuln     00EA02 RLA
-_monosh_player_pose       00EA04 RLA    _monosh_player_state      00EA01 RLA
-_monosh_player_stumble    00EA03 RLA    _monosh_player_update     00E1D6 RLA
-_monosh_player_update_reference 002933 RLA    _monosh_player_x          00E9FD RLA
-_monosh_project_x         0062C3 RLA    _monosh_reflected_bullet_count 00E93E RLA
-_monosh_reflected_bullets 00E92F RLA    _monosh_runtime_fire_actions 00F285 RLA
-_monosh_runtime_frame_counter 00F286 RLA    _monosh_runtime_paused    00F28A RLA
+_monosh_player_init       002401 RLA    _monosh_player_invuln     00E758 RLA
+_monosh_player_pose       00E75A RLA    _monosh_player_state      00E757 RLA
+_monosh_player_stumble    00E759 RLA    _monosh_player_update     00DF76 RLA
+_monosh_player_update_reference 002933 RLA    _monosh_player_x          00E753 RLA
+_monosh_project_x         006038 RLA    _monosh_reflected_bullet_count 00E694 RLA
+_monosh_reflected_bullets 00E685 RLA    _monosh_runtime_fire_actions 00EFDB RLA
+_monosh_runtime_frame_counter 00EFDC RLA    _monosh_runtime_paused    00EFE0 RLA
 _monosh_stage1_spawn_count 00751B RLA    _monosh_stage1_spawns     007173 RLA
-_monosh_stage_frame       002A46 RLA    _monosh_stage_frame_counter 00EA71 RLA
-_monosh_stage_geometry    007F85 RLA    _monosh_stage_half_frame  00EA75 RLA
+_monosh_stage_frame       002A46 RLA    _monosh_stage_frame_counter 00E7C7 RLA
+_monosh_stage_geometry    007F85 RLA    _monosh_stage_half_frame  00E7CB RLA
 _monosh_stage_init        002A23 RLA    _monosh_stage_lift        00829A RLA
-_monosh_stage_near_count  00EA76 RLA    _monosh_stage_need_hitboxes 00EAF8 RLA
-_monosh_stage_object_count 00EA6F RLA    _monosh_stage_objects     00EA0F RLA
-_monosh_stage_render_only 002A74 RLA    _monosh_stage_spawn_index 00EA70 RLA
-_monosh_stage_title_timer 00EA05 RLA    _monosh_title_draw        002DB0 RLA
-_monosh_title_visible     00E6A7 RLA    _movement_fraction        00EA0A RLA
-_old_buttons              00F290 RLA    _player_flip              00EA0D RLA
-_player_fy                00EA06 RLA    _player_run_phase         00EA0E RLA
+_monosh_stage_near_count  00E7CC RLA    _monosh_stage_need_hitboxes 00E84E RLA
+_monosh_stage_object_count 00E7C5 RLA    _monosh_stage_objects     00E765 RLA
+_monosh_stage_render_only 002A74 RLA    _monosh_stage_spawn_index 00E7C6 RLA
+_monosh_stage_title_timer 00E75B RLA    _monosh_title_draw        002DB0 RLA
+_monosh_title_visible     00E3FD RLA    _movement_fraction        00E760 RLA
+_old_buttons              00EFE6 RLA    _player_flip              00E763 RLA
+_player_fy                00E75C RLA    _player_run_phase         00E764 RLA
 _pose_x_01                007135 RLA    _pose_x_12                007148 RLA
-_pose_x_23                00715B RLA    addeq0sp                  00F195 RLA
-addeqysp                  00F197 RLA    addysp                    00F1A7 RLA
-addysp1                   00F1A6 RLA    aslax2                    00F1B4 RLA
-aslax4                    00F1CD RLA    asrax1                    00F1DE RLA
-asrax2                    00F1E8 RLA    asrax3                    00F1F7 RLA
-booleq                    00F2D8 RLA    boolne                    00F2D2 RLA
-boolult                   00F2F1 RLA    c_sp                      000048 RLZ
-decsp1                    00F20B RLA    decsp2                    00F214 RLA
-decsp3                    00F221 RLA    decsp4                    00F22E RLA
-decsp5                    00F23B RLA    fx4_build_skip            00F973 RLA
-fx_build_obj              005E03 RLA    fx_em1_open_sizes         00ED23 RLA
-fx_emit_native            00DAAE RLA    fx_is_obj                 005DAA RLA
-fx_project16              0062E1 RLA    fx_reset_next_bounds      00EC23 RLA
-fx_sky_pointer            00F987 RLA    fx_upload_ground          00352C RLA
-ground_empty              00358A RLA    incsp1                    00F28B RLA
-incsp2                    00F29A RLA    incsp3                    00F2A8 RLA
-incsp4                    00F2AD RLA    incsp5                    00F2B2 RLA
-incsp6                    00F2B7 RLA    incsp7                    00F2BC RLA
-incsp8                    00F2C1 RLA    ldaidx                    00F2C6 RLA
-mulax10                   00F33A RLA    mulax3                    00F353 RLA
-mulax5                    00F364 RLA    mulax6                    00F378 RLA
-mulax7                    00F38E RLA    negax                     00F3AB RLA
-popax                     00F292 RLA    popptr1                   00F3B9 RLA
-popsargsudiv16            00F413 RLA    ptr1                      000050 RLZ
-ptr2                      000052 RLZ    ptr3                      000054 RLZ
-ptr4                      000056 RLZ    push0                     00F3DD RLA
-pusha                     00F3CB RLA    pusha0                    00F3DF RLA
-pushax                    00F3E1 RLA    pushw0sp                  00F3F7 RLA
-pushwysp                  00F3F9 RLA    regsave                   00004C RLZ
-shlax2                    00F1B4 RLA    shlax3                    00F1BF RLA
-shlax4                    00F1CD RLA    shrax1                    00F433 RLA
-shrax3                    00F43B RLA    shrax4                    00F449 RLA
-sreg                      00004A RLZ    staspidx                  00F45A RLA
-stax0sp                   00F470 RLA    staxspidx                 00F47B RLA
-staxysp                   00F472 RLA    subysp                    00F4AB RLA
-tmp1                      000058 RLZ    tmp2                      000059 RLZ
-tosaddax                  00F17B RLA    tosdiva0                  00F248 RLA
-tosicmp                   00F25F RLA    tosicmp0                  00F25D RLA
-tossuba0                  00F496 RLA    tossubax                  00F498 RLA
-tosudiva0                 00F4B8 RLA    tosudivax                 00F4BA RLA
-tosumoda0                 00F507 RLA    udiv16                    00F4C9 RLA
+_pose_x_23                00715B RLA    addeq0sp                  00EF35 RLA
+addeqysp                  00EF37 RLA    addysp                    00EF47 RLA
+addysp1                   00EF46 RLA    aslax2                    00EF54 RLA
+aslax4                    00EF6D RLA    asrax1                    00EF7E RLA
+asrax2                    00EF88 RLA    asrax3                    00EF97 RLA
+booleq                    00F078 RLA    boolne                    00F072 RLA
+boolult                   00F091 RLA    c_sp                      000040 RLZ
+decsp1                    00EFAB RLA    decsp2                    00EFB4 RLA
+decsp3                    00EFC1 RLA    decsp4                    00EFCE RLA
+decsp5                    00EFDB RLA    fx4_build_skip            00F6C9 RLA
+fx4_wait_obj_blank        00331F RLA    fx_build_obj              005E0D RLA
+fx_em1_open_sizes         00EAC3 RLA    fx_emit_native            00D84E RLA
+fx_is_obj                 005DDD RLA    fx_latch_obj              005F69 RLA
+fx_project16              006056 RLA    fx_reset_next_bounds      00E9C3 RLA
+fx_sky_pointer            00F6DD RLA    fx_upload_ground          00355F RLA
+fx_upload_obj             005F97 RLA    ground_empty              0035BD RLA
+incsp1                    00F02B RLA    incsp2                    00F03A RLA
+incsp3                    00F048 RLA    incsp4                    00F04D RLA
+incsp5                    00F052 RLA    incsp6                    00F057 RLA
+incsp7                    00F05C RLA    incsp8                    00F061 RLA
+ldaidx                    00F066 RLA    mulax10                   00F0DA RLA
+mulax3                    00F0F3 RLA    mulax5                    00F104 RLA
+mulax6                    00F118 RLA    mulax7                    00F12E RLA
+negax                     00F14B RLA    player4_upload_bytes      00F91B RLA
+popax                     00F032 RLA    popptr1                   00F159 RLA
+popsargsudiv16            00F1B3 RLA    ptr1                      000048 RLZ
+ptr2                      00004A RLZ    ptr3                      00004C RLZ
+ptr4                      00004E RLZ    push0                     00F17D RLA
+pusha                     00F16B RLA    pusha0                    00F17F RLA
+pushax                    00F181 RLA    pushw0sp                  00F197 RLA
+pushwysp                  00F199 RLA    regsave                   000044 RLZ
+shlax2                    00EF54 RLA    shlax3                    00EF5F RLA
+shlax4                    00EF6D RLA    shrax1                    00F1D3 RLA
+shrax3                    00F1DB RLA    shrax4                    00F1E9 RLA
+sreg                      000042 RLZ    staspidx                  00F1FA RLA
+stax0sp                   00F210 RLA    staxspidx                 00F21B RLA
+staxysp                   00F212 RLA    subysp                    00F24B RLA
+tmp1                      000050 RLZ    tmp2                      000051 RLZ
+tosaddax                  00EF1B RLA    tosdiva0                  00EFE8 RLA
+tosicmp                   00EFFF RLA    tosicmp0                  00EFFD RLA
+tossuba0                  00F236 RLA    tossubax                  00F238 RLA
+tosudiva0                 00F258 RLA    tosudivax                 00F25A RLA
+tosumoda0                 00F2A7 RLA    udiv16                    00F269 RLA
 
 
 
 Exports list by value:
 ----------------------
 _monosh_boss_should_restart 000000 RLA    __STARTUP__               000001 REA
-_monosh_boss_init         000015 RLA    c_sp                      000048 RLZ
-sreg                      00004A RLZ    regsave                   00004C RLZ
-ptr1                      000050 RLZ    ptr2                      000052 RLZ
-ptr3                      000054 RLZ    ptr4                      000056 RLZ
-tmp1                      000058 RLZ    tmp2                      000059 RLZ
+_monosh_boss_init         000015 RLA    c_sp                      000040 RLZ
+sreg                      000042 RLZ    regsave                   000044 RLZ
+ptr1                      000048 RLZ    ptr2                      00004A RLZ
+ptr3                      00004C RLZ    ptr4                      00004E RLZ
+tmp1                      000050 RLZ    tmp2                      000051 RLZ
 _monosh_boss_frame        0000B2 RLA    _monosh_boss_prepare_render 0000D6 RLA
 _monosh_combat_init       000837 RLA    _monosh_combat_render     0008D0 RLA
 _monosh_enemy_init        000A71 RLA    _monosh_enemy_frame       000B06 RLA
@@ -420,110 +421,112 @@ _monosh_stage_init        002A23 RLA    _monosh_stage_frame       002A46 RLA
 _monosh_stage_render_only 002A74 RLA    _monosh_title_draw        002DB0 RLA
 _main                     002DBB RLA    _monosh_combat_reflect_bullet 002DC6 RLA
 _monosh_combat_fast_cache_reset 002F24 RLA    _fx_read_input            002F6E RLA
-_fx_present               003076 RLA    _fx4_explosion_lift       00335C RLA
-_fx_build_ground          0033B2 RLA    fx_upload_ground          00352C RLA
-ground_empty              00358A RLA    _monosh_boss_face_geometry 003680 RLA
-_monosh_boss_body_geometry 00375E RLA    _monosh_boss_bom_geometry 00383C RLA
-_monosh_boss_bom_depth_by_size 00391A RLA    _monosh_boss_explosion_scale_low 00392A RLA
-_monosh_boss_explosion_ground_bottom 003999 RLA    _monosh_boss_bullet_velocity 003A08 RLA
-_monosh_player_bullet_sizes 004708 RLA    _monosh_enemy_geometry    004721 RLA
-_monosh_bom_geometry      0047FF RLA    _monosh_em1_closed_geometry 0048DD RLA
-_monosh_enemy_ground_bottom 0049D9 RLA    _monosh_ebullet_animation_geometry 004A48 RLA
-_monosh_ebullet_geometry  004C04 RLA    _monosh_ebullet_velocity  004C0E RLA
-_fx_build_packet          005C77 RLA    fx_is_obj                 005DAA RLA
-fx_build_obj              005E03 RLA    _monosh_project_x         0062C3 RLA
-fx_project16              0062E1 RLA    _monosh_enemy_paths       00706F RLA
-_monosh_enemy_spawns      0070A5 RLA    _pose_x_01                007135 RLA
-_pose_x_12                007148 RLA    _pose_x_23                00715B RLA
-_monosh_stage1_spawns     007173 RLA    _monosh_stage1_spawn_count 00751B RLA
-_monosh_stage_geometry    007F85 RLA    _monosh_stage_lift        00829A RLA
-_fx_ground_camera         00833C RLA    _fx_ground_depth_rows     0083CD RLA
-_fx_sky_color             0098B7 RLA    _fx_stage_render          00D35A RLA
-_fx_stage_contact         00D615 RLA    _fx_stage_update          00D760 RLA
-_fx_enemy_render          00D8C1 RLA    _fx_enemy_render_bullets  00D9D8 RLA
-fx_emit_native            00DAAE RLA    _fx_enemy_collisions      00DB37 RLA
-_fx_em0_geometry          00DD44 RLA    _monosh_enemy_fast_update_bullets 00DDCE RLA
-_monosh_enemy_fast_advance 00DF18 RLA    _fx_enemy_em1_update      00E0B0 RLA
-_monosh_player_update     00E1D6 RLA    _fx_frame                 00E438 RLA
-_monosh_ground_offset     00E6A5 RLA    _monosh_ground_screen_delta 00E6A6 RLA
-_monosh_title_visible     00E6A7 RLA    _monosh_boss_state        00E6A8 RLA
-_monosh_boss_hp           00E6A9 RLA    _boss_part_x              00E6AB RLA
-_boss_part_bottom         00E6B4 RLA    _boss_part_z              00E6BD RLA
-_boss_part_active         00E6C6 RLA    _boss_part_timer          00E6CF RLA
-_boss_history_x           00E6EA RLA    _monosh_boss_render_only  00E733 RLA
-_boss_history_y           00E76A RLA    _boss_history_z           00E7EA RLA
-_fx_boss_project          00E80F RLA    _fx_boss_hits             00E8D2 RLA
-_boss_render_camera_delta 00E90D RLA    _history_head             00E90E RLA
-_boss_age                 00E90F RLA    _boss_death_timer         00E910 RLA
-_boss_death_parts         00E911 RLA    _monosh_player_bullets    00E91F RLA
-_monosh_player_bullet_count 00E92E RLA    _monosh_reflected_bullets 00E92F RLA
-_monosh_reflected_bullet_count 00E93E RLA    _monosh_bullet_reflect_rng 00E947 RLA
-_monosh_combat_fire_cooldown 00E948 RLA    _monosh_enemy_bullet_count 00E94A RLA
-_monosh_enemy_active_count_value 00E94B RLA    _monosh_enemy_stage_complete_flag 00E94C RLA
-_monosh_enemies           00E94D RLA    _monosh_enemy_bullets     00E99D RLA
-_monosh_enemy_em1_phase   00E9CA RLA    _monosh_enemy_em1_count   00E9E3 RLA
-_monosh_enemy_player_hit  00E9E8 RLA    _boss_dda_phase           00E9E9 RLA
-_boss_dda_x               00E9EF RLA    _boss_dda_y               00E9F5 RLA
-_monosh_player_x          00E9FD RLA    _monosh_player_bottom     00E9FF RLA
-_monosh_player_state      00EA01 RLA    _monosh_player_invuln     00EA02 RLA
-_monosh_player_stumble    00EA03 RLA    _monosh_player_pose       00EA04 RLA
-_monosh_stage_title_timer 00EA05 RLA    _player_fy                00EA06 RLA
-_movement_fraction        00EA0A RLA    _intro_timer              00EA0C RLA
-_player_flip              00EA0D RLA    _player_run_phase         00EA0E RLA
-_monosh_stage_objects     00EA0F RLA    _monosh_combat_fast_frame 00EA34 RLA
-_monosh_stage_object_count 00EA6F RLA    _monosh_stage_spawn_index 00EA70 RLA
-_monosh_stage_frame_counter 00EA71 RLA    _monosh_stage_half_frame  00EA75 RLA
-_monosh_stage_near_count  00EA76 RLA    _monosh_combat_fast_render 00EAAE RLA
-_monosh_stage_need_hitboxes 00EAF8 RLA    _fx_draw                  00EAFD RLA
-fx_reset_next_bounds      00EC23 RLA    _fx_submit                00EC24 RLA
-_fx_open_size             00ECF8 RLA    fx_em1_open_sizes         00ED23 RLA
-_fx_draw_count            00ED7D RLA    _fx_packet_count          00ED7E RLA
-_fx_packet                00ED80 RLA    tosaddax                  00F17B RLA
-addeq0sp                  00F195 RLA    addeqysp                  00F197 RLA
-addysp1                   00F1A6 RLA    addysp                    00F1A7 RLA
-aslax2                    00F1B4 RLA    shlax2                    00F1B4 RLA
-shlax3                    00F1BF RLA    shlax4                    00F1CD RLA
-aslax4                    00F1CD RLA    asrax1                    00F1DE RLA
-asrax2                    00F1E8 RLA    asrax3                    00F1F7 RLA
-decsp1                    00F20B RLA    decsp2                    00F214 RLA
-decsp3                    00F221 RLA    decsp4                    00F22E RLA
-decsp5                    00F23B RLA    tosdiva0                  00F248 RLA
-tosicmp0                  00F25D RLA    tosicmp                   00F25F RLA
-_fx_ground_phase          00F280 RLA    _fx_buttons               00F281 RLA
-_fx_input                 00F283 RLA    _fx_fire_actions          00F284 RLA
-_monosh_runtime_fire_actions 00F285 RLA    _monosh_runtime_frame_counter 00F286 RLA
-_ground_irq_vblank_count  00F288 RLA    _monosh_runtime_paused    00F28A RLA
-incsp1                    00F28B RLA    _fx_far_u_acc             00F28B RLA
-_fx_far_d_acc             00F28D RLA    _hit_pending              00F28F RLA
-_old_buttons              00F290 RLA    _monosh_ground_depth_pointer 00F292 RLA
-popax                     00F292 RLA    _fx_ground_color1         00F294 RLA
-incsp2                    00F29A RLA    incsp3                    00F2A8 RLA
-incsp4                    00F2AD RLA    incsp5                    00F2B2 RLA
-incsp6                    00F2B7 RLA    incsp7                    00F2BC RLA
-incsp8                    00F2C1 RLA    ldaidx                    00F2C6 RLA
-boolne                    00F2D2 RLA    booleq                    00F2D8 RLA
-boolult                   00F2F1 RLA    _memcpy                   00F2FE RLA
-mulax10                   00F33A RLA    mulax3                    00F353 RLA
-mulax5                    00F364 RLA    mulax6                    00F378 RLA
-mulax7                    00F38E RLA    negax                     00F3AB RLA
-popptr1                   00F3B9 RLA    pusha                     00F3CB RLA
-push0                     00F3DD RLA    pusha0                    00F3DF RLA
-pushax                    00F3E1 RLA    pushw0sp                  00F3F7 RLA
-pushwysp                  00F3F9 RLA    popsargsudiv16            00F413 RLA
-shrax1                    00F433 RLA    shrax3                    00F43B RLA
-shrax4                    00F449 RLA    _fx_ground_color3         00F456 RLA
-staspidx                  00F45A RLA    stax0sp                   00F470 RLA
-staxysp                   00F472 RLA    staxspidx                 00F47B RLA
-tossuba0                  00F496 RLA    tossubax                  00F498 RLA
-subysp                    00F4AB RLA    tosudiva0                 00F4B8 RLA
-tosudivax                 00F4BA RLA    udiv16                    00F4C9 RLA
-tosumoda0                 00F507 RLA    _fx_ground_horizontal     00F618 RLA
-_fx_ground_hptr           00F942 RLA    _fx_ground_world_phase    00F944 RLA
-_fx_ground_palette_record 00F945 RLA    _fx_ground_far_x          00F947 RLA
-_fx_ground_far_xptr       00F965 RLA    _fx_ground_vptr           00F967 RLA
-_fx_ground_c1ptr          00F969 RLA    _fx_ground_c3ptr          00F96B RLA
-_fx_ground_horizon        00F96D RLA    _fx_ground_far_y          00F96F RLA
-fx4_build_skip            00F973 RLA    fx_sky_pointer            00F987 RLA
+_fx_present               003076 RLA    fx4_wait_obj_blank        00331F RLA
+_fx4_explosion_lift       00338F RLA    _fx_build_ground          0033E5 RLA
+fx_upload_ground          00355F RLA    ground_empty              0035BD RLA
+_monosh_boss_face_geometry 003680 RLA    _monosh_boss_body_geometry 00375E RLA
+_monosh_boss_bom_geometry 00383C RLA    _monosh_boss_bom_depth_by_size 00391A RLA
+_monosh_boss_explosion_scale_low 00392A RLA    _monosh_boss_explosion_ground_bottom 003999 RLA
+_monosh_boss_bullet_velocity 003A08 RLA    _monosh_player_bullet_sizes 004708 RLA
+_monosh_enemy_geometry    004721 RLA    _monosh_bom_geometry      0047FF RLA
+_monosh_em1_closed_geometry 0048DD RLA    _monosh_enemy_ground_bottom 0049D9 RLA
+_monosh_ebullet_animation_geometry 004A48 RLA    _monosh_ebullet_geometry  004C04 RLA
+_monosh_ebullet_velocity  004C0E RLA    _fx_build_packet          005CAA RLA
+fx_is_obj                 005DDD RLA    fx_build_obj              005E0D RLA
+fx_latch_obj              005F69 RLA    fx_upload_obj             005F97 RLA
+_monosh_project_x         006038 RLA    fx_project16              006056 RLA
+_monosh_enemy_paths       00706F RLA    _monosh_enemy_spawns      0070A5 RLA
+_pose_x_01                007135 RLA    _pose_x_12                007148 RLA
+_pose_x_23                00715B RLA    _monosh_stage1_spawns     007173 RLA
+_monosh_stage1_spawn_count 00751B RLA    _monosh_stage_geometry    007F85 RLA
+_monosh_stage_lift        00829A RLA    _fx_ground_camera         00833C RLA
+_fx_ground_depth_rows     0083CD RLA    _fx_sky_color             0098B7 RLA
+_fx_stage_render          00D0CF RLA    _fx_stage_contact         00D38A RLA
+_fx_stage_update          00D4D5 RLA    _fx_enemy_render          00D636 RLA
+_fx_enemy_render_bullets  00D74D RLA    fx_emit_native            00D84E RLA
+_fx_enemy_collisions      00D8D7 RLA    _fx_em0_geometry          00DAE4 RLA
+_monosh_enemy_fast_update_bullets 00DB6E RLA    _monosh_enemy_fast_advance 00DCB8 RLA
+_fx_enemy_em1_update      00DE50 RLA    _monosh_player_update     00DF76 RLA
+_fx_frame                 00E1D8 RLA    _monosh_ground_offset     00E3FB RLA
+_monosh_ground_screen_delta 00E3FC RLA    _monosh_title_visible     00E3FD RLA
+_monosh_boss_state        00E3FE RLA    _monosh_boss_hp           00E3FF RLA
+_boss_part_x              00E401 RLA    _boss_part_bottom         00E40A RLA
+_boss_part_z              00E413 RLA    _boss_part_active         00E41C RLA
+_boss_part_timer          00E425 RLA    _boss_history_x           00E440 RLA
+_boss_history_y           00E4C0 RLA    _monosh_boss_render_only  00E4D3 RLA
+_boss_history_z           00E540 RLA    _fx_boss_project          00E5AF RLA
+_boss_render_camera_delta 00E663 RLA    _history_head             00E664 RLA
+_boss_age                 00E665 RLA    _boss_death_timer         00E666 RLA
+_boss_death_parts         00E667 RLA    _fx_boss_hits             00E672 RLA
+_monosh_player_bullets    00E675 RLA    _monosh_player_bullet_count 00E684 RLA
+_monosh_reflected_bullets 00E685 RLA    _monosh_reflected_bullet_count 00E694 RLA
+_monosh_bullet_reflect_rng 00E69D RLA    _monosh_combat_fire_cooldown 00E69E RLA
+_monosh_enemy_bullet_count 00E6A0 RLA    _monosh_enemy_active_count_value 00E6A1 RLA
+_monosh_enemy_stage_complete_flag 00E6A2 RLA    _monosh_enemies           00E6A3 RLA
+_monosh_enemy_bullets     00E6F3 RLA    _monosh_enemy_em1_phase   00E720 RLA
+_monosh_enemy_em1_count   00E739 RLA    _monosh_enemy_player_hit  00E73E RLA
+_boss_dda_phase           00E73F RLA    _boss_dda_x               00E745 RLA
+_boss_dda_y               00E74B RLA    _monosh_player_x          00E753 RLA
+_monosh_player_bottom     00E755 RLA    _monosh_player_state      00E757 RLA
+_monosh_player_invuln     00E758 RLA    _monosh_player_stumble    00E759 RLA
+_monosh_player_pose       00E75A RLA    _monosh_stage_title_timer 00E75B RLA
+_player_fy                00E75C RLA    _movement_fraction        00E760 RLA
+_intro_timer              00E762 RLA    _player_flip              00E763 RLA
+_player_run_phase         00E764 RLA    _monosh_stage_objects     00E765 RLA
+_monosh_stage_object_count 00E7C5 RLA    _monosh_stage_spawn_index 00E7C6 RLA
+_monosh_stage_frame_counter 00E7C7 RLA    _monosh_stage_half_frame  00E7CB RLA
+_monosh_stage_near_count  00E7CC RLA    _monosh_combat_fast_frame 00E7D4 RLA
+_monosh_combat_fast_render 00E84E RLA    _monosh_stage_need_hitboxes 00E84E RLA
+_fx_draw                  00E853 RLA    fx_reset_next_bounds      00E9C3 RLA
+_fx_submit                00E9C4 RLA    _fx_open_size             00EA98 RLA
+fx_em1_open_sizes         00EAC3 RLA    _fx_draw_count            00EAD3 RLA
+_fx_packet_count          00EAD4 RLA    _fx_packet                00EAD6 RLA
+tosaddax                  00EF1B RLA    addeq0sp                  00EF35 RLA
+addeqysp                  00EF37 RLA    addysp1                   00EF46 RLA
+addysp                    00EF47 RLA    shlax2                    00EF54 RLA
+aslax2                    00EF54 RLA    shlax3                    00EF5F RLA
+aslax4                    00EF6D RLA    shlax4                    00EF6D RLA
+asrax1                    00EF7E RLA    asrax2                    00EF88 RLA
+asrax3                    00EF97 RLA    decsp1                    00EFAB RLA
+decsp2                    00EFB4 RLA    decsp3                    00EFC1 RLA
+decsp4                    00EFCE RLA    _fx_ground_phase          00EFD6 RLA
+_fx_buttons               00EFD7 RLA    _fx_input                 00EFD9 RLA
+_fx_fire_actions          00EFDA RLA    _monosh_runtime_fire_actions 00EFDB RLA
+decsp5                    00EFDB RLA    _monosh_runtime_frame_counter 00EFDC RLA
+_ground_irq_vblank_count  00EFDE RLA    _monosh_runtime_paused    00EFE0 RLA
+_fx_far_u_acc             00EFE1 RLA    _fx_far_d_acc             00EFE3 RLA
+_hit_pending              00EFE5 RLA    _old_buttons              00EFE6 RLA
+tosdiva0                  00EFE8 RLA    _monosh_ground_depth_pointer 00EFE8 RLA
+_fx_ground_color1         00EFEA RLA    tosicmp0                  00EFFD RLA
+tosicmp                   00EFFF RLA    incsp1                    00F02B RLA
+popax                     00F032 RLA    incsp2                    00F03A RLA
+incsp3                    00F048 RLA    incsp4                    00F04D RLA
+incsp5                    00F052 RLA    incsp6                    00F057 RLA
+incsp7                    00F05C RLA    incsp8                    00F061 RLA
+ldaidx                    00F066 RLA    boolne                    00F072 RLA
+booleq                    00F078 RLA    boolult                   00F091 RLA
+_memcpy                   00F09E RLA    mulax10                   00F0DA RLA
+mulax3                    00F0F3 RLA    mulax5                    00F104 RLA
+mulax6                    00F118 RLA    mulax7                    00F12E RLA
+negax                     00F14B RLA    popptr1                   00F159 RLA
+pusha                     00F16B RLA    push0                     00F17D RLA
+pusha0                    00F17F RLA    pushax                    00F181 RLA
+pushw0sp                  00F197 RLA    pushwysp                  00F199 RLA
+_fx_ground_color3         00F1AC RLA    popsargsudiv16            00F1B3 RLA
+shrax1                    00F1D3 RLA    shrax3                    00F1DB RLA
+shrax4                    00F1E9 RLA    staspidx                  00F1FA RLA
+stax0sp                   00F210 RLA    staxysp                   00F212 RLA
+staxspidx                 00F21B RLA    tossuba0                  00F236 RLA
+tossubax                  00F238 RLA    subysp                    00F24B RLA
+tosudiva0                 00F258 RLA    tosudivax                 00F25A RLA
+udiv16                    00F269 RLA    tosumoda0                 00F2A7 RLA
+_fx_ground_horizontal     00F36E RLA    _fx_ground_hptr           00F698 RLA
+_fx_ground_world_phase    00F69A RLA    _fx_ground_palette_record 00F69B RLA
+_fx_ground_far_x          00F69D RLA    _fx_ground_far_xptr       00F6BB RLA
+_fx_ground_vptr           00F6BD RLA    _fx_ground_c1ptr          00F6BF RLA
+_fx_ground_c3ptr          00F6C1 RLA    _fx_ground_horizon        00F6C3 RLA
+_fx_ground_far_y          00F6C5 RLA    fx4_build_skip            00F6C9 RLA
+fx_sky_pointer            00F6DD RLA    player4_upload_bytes      00F91B RLA
 
 
 
@@ -581,16 +584,16 @@ _fx_buttons (game.o):
     cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
 _fx_draw (game.o):
     submit_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\submit.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:10
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
     stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects.s:9
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
     packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
 _fx_draw_count (game.o):
     submit_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\submit.s:5
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:13
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:10
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
     stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects.s:9
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
     packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
 _fx_em0_geometry (enemy_geometry_asm.o):
     enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:10
@@ -640,7 +643,7 @@ _fx_ground_far_x (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
 _fx_ground_far_xptr (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:9
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:12
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:16
 _fx_ground_far_y (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:12
     cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:6
@@ -650,7 +653,7 @@ _fx_ground_horizontal (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
 _fx_ground_hptr (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:10
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:9
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:13
 _fx_ground_palette_record (ground.o):
     ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:10
 _fx_ground_phase (game.o):
@@ -677,7 +680,7 @@ _fx_present (cpu_asm.o):
 _fx_read_input (cpu_asm.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
 _fx_sky_color (asset_tables.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:13
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:17
 _fx_stage_contact (stage_asm.o):
     monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:16
 _fx_stage_render (stage_asm.o):
@@ -772,34 +775,34 @@ _monosh_combat_reflect_bullet (combat_port.o):
 _monosh_combat_render (monosh_combat.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:13
 _monosh_ebullet_animation_geometry (monosh_enemy_data.o):
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:9
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:15
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:65
 _monosh_ebullet_geometry (monosh_enemy_data.o):
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:9
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:15
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:35
 _monosh_ebullet_velocity (monosh_enemy_data.o):
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:36
 _monosh_em1_closed_geometry (monosh_enemy_data.o):
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:7
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:8
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:14
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:34
 _monosh_enemies (monosh_enemy.o):
     enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:6
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:6
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:12
 _monosh_enemy_active_count_value (monosh_enemy.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:17
     enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:6
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:6
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:12
 _monosh_enemy_bullet_count (monosh_enemy.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:18
     enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:6
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:7
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:13
     monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:38
 _monosh_enemy_bullets (monosh_enemy.o):
     enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:6
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:7
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:13
 _monosh_enemy_em1_count (monosh_enemy.o):
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
 _monosh_enemy_em1_phase (monosh_enemy.o):
@@ -849,7 +852,7 @@ _monosh_ground_screen_delta (game.o):
     enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:8
     enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_geometry.s:4
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:11
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:10
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:53
     monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:41
 _monosh_player_bottom (monosh_player.o):
@@ -920,7 +923,8 @@ _monosh_runtime_fire_actions (game.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:7
 _monosh_runtime_frame_counter (game.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects.s:9
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:7
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
     packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:12
     combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:18
     monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:21
@@ -1058,7 +1062,7 @@ c_sp (zeropage.o):
     player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:10
     enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:12
     projection_asm.o          D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\projection.s:4
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:19
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:23
     combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:10
     game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:10
     monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:10
@@ -1109,17 +1113,21 @@ decsp5 (decsp5.o):
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
 fx4_build_skip (cpu_asm.o):
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:330
+fx4_wait_obj_blank (cpu_asm.o):
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:12
 fx_build_obj (objects_asm.o):
     packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:14
 fx_em1_open_sizes (smooth_depth_asm.o):
     enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:9
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:12
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:18
 fx_emit_native (enemy_render_asm.o):
     combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:10
     boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:9
     frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:20
 fx_is_obj (objects_asm.o):
     packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:14
+fx_latch_obj (objects_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:17
 fx_project16 (projection_asm.o):
     stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
 fx_reset_next_bounds (dma_asm.o):
@@ -1127,9 +1135,11 @@ fx_reset_next_bounds (dma_asm.o):
 fx_sky_pointer (ground_asm.o):
     cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:7
 fx_upload_ground (ground_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:11
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:15
+fx_upload_obj (objects_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:17
 ground_empty (ground_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:10
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:14
 incsp1 (incsp1.o):
     game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:148
     monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
@@ -1235,6 +1245,8 @@ negax (negabs.o):
     monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
     monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+player4_upload_bytes (objects_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:11
 popax (incsp2.o):
     shelp.o                   runtime/shelp.s:11
     memcpy.o                  common/memcpy.s:14

@@ -466,7 +466,7 @@ def main():
              *(['-D','FX_DMA_DEADLINE_PROBE=1'] if dma_probe else []),
              *(['-D','FX_DESCRIPTOR_DMA=1'] if descriptor_dma else []),
              '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
-             '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-I',BUILD,'-o',obj,GAME/((name+'4' if four_bpp and name in ('cpu','gsu') else name)+'.s')]); objects.append(obj)
+             '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-I',BUILD,'-o',obj,GAME/((name+'4' if four_bpp and name in ('cpu','gsu','objects') else name)+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
     run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
          '-o',rom,*objects,CC65.parent/'lib/none.lib'])

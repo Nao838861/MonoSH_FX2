@@ -1,4 +1,5 @@
 .include "casfx.inc"
+.include "assets4/source4.inc"
 ; 4bpp実験専用。ゲームのpacket/clip/UV規則は60fps版と共用する。
 .segment "GSU"
 .export render_entry, render_stop, background_done, dispatch_nonzero, generic, margin_render, scaled_render4, integer_render4
@@ -186,9 +187,24 @@ dispatch_nonzero:
   iwt r8,#6
   from r11
   stw (r8)
+  .if FX4_COLOR
+  sms ($000a),r0
+  ; 生packetのflags下位2bitを弾の色相として保存。UVのflip metaには混ぜない。
+  move r8,r11
+  dec r8
+  dec r8
+  dec r8
+  ldb (r8)
+  ibt r8,#3
+  and r8
+  add r0
+  sms ($0016),r0
+  .endif
   sms ($001a),r3
   sms ($001e),r4           ; 原寸height。縮小済みの縦サンプルがある組だけ使う。
+  .if !FX4_COLOR
   sms ($000a),r0
+  .endif
   iwt r8,#$1010
   ldw (r8)
   move r8,r0
@@ -222,6 +238,36 @@ uv_normal4:
   sms ($000e),r0
   lms r0,($000a)
   .include "gsu_uv.inc"
+  .if FX4_COLOR
+  lms r0,($000a)
+  swap
+  ibt r8,#63
+  and r8
+  ibt r8,#6
+  cmp r8
+  blt :+
+  nop
+  ibt r8,#9
+  cmp r8
+  blt bullet_selected4
+  nop
+  ibt r8,#37
+  cmp r8
+  beq bullet_selected4
+  nop
+  ibt r8,#31
+  cmp r8
+  bne :+
+  nop
+  iwt r11,#.loword(scaled_select4)
+  jmp (r11)
+  nop
+bullet_selected4:
+  iwt r11,#.loword(bullet_render4)
+  jmp (r11)
+  nop
+:
+  .endif
   ibt r8,#$ff
   from r3
   and r8
@@ -296,6 +342,43 @@ generic_jump:
 generic:
   cache
   .include "gsu_generic_pipeline.inc"
+  .if FX4_COLOR
+.align 16,$01
+.export bullet_render4
+bullet_render4:
+  cache
+  lms r11,($0016)
+bullet_row4:
+  move r1,r5
+  move r8,r10
+  move r12,r9
+  merge r14
+bullet_pixel4:
+  getb
+  ibt r13,#9
+  cmp r13
+  blt bullet_white4
+  nop
+  add r11                  ; 紫9/10 → 青11/12、赤13/14。白と透明はそのまま。
+bullet_white4:
+  color
+  with r8
+  add r3
+  plot
+  merge r14
+  dec r12
+  bne bullet_pixel4
+  nop
+  with r7
+  add r4
+  dec r6
+  bne bullet_row4
+  inc r2
+  rpix
+  iwt r11,#.loword(dispatch)
+  jmp (r11)
+  nop
+  .endif
 .align 16,$01
 margin_render:
   cache
@@ -453,6 +536,13 @@ scaled_select4:
   nop
 scaled_bullet4:
   iwt r12,#$3800
+  .if FX4_COLOR
+  lms r0,($0016)
+  swap
+  add r0
+  to r12
+  add r12
+  .endif
   bra scaled_lookup4
   nop
 scaled_bom41:
@@ -483,7 +573,11 @@ scaled_lookup4:
   romb
   from r12
   lsr
+  .if FX4_COLOR
+  iwt r8,#$3800
+  .else
   iwt r8,#$2c00
+  .endif
   add r8
   move r14,r0
   lms r0,($001a)
@@ -584,6 +678,22 @@ scaled_reject4:
   jmp (r11)
   nop
 scaled_generic_reject4:
+  .if FX4_COLOR
+  lms r0,($000a)
+  swap
+  ibt r8,#63
+  and r8
+  ibt r8,#31
+  cmp r8
+  bne :+
+  nop
+  lms r0,($000a)
+  romb                    ; 縮小表を参照した5Fから原画bankへ戻す。
+  iwt r11,#.loword(bullet_render4)
+  jmp (r11)
+  nop
+:
+  .endif
   iwt r11,#.loword(margin_select4)
   jmp (r11)
   nop

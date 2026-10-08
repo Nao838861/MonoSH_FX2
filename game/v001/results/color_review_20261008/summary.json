@@ -1,0 +1,23 @@
+{
+  "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
+  "grassAssetsGreen": [
+    0,
+    1
+  ],
+  "bossFaceGreenFraction": 0.9335382813643683,
+  "bossBody": "green back / brown belly",
+  "bulletCycleTicks": 32,
+  "rotationTicks": 64,
+  "bulletAgesVerified": 64,
+  "playerCasesVerified": 408,
+  "playerPalette": "original OBJ 15 colors",
+  "referenceSeconds": [
+    10,
+    32.133333,
+    32.4,
+    32.5,
+    88,
+    94
+  ],
+  "videoSha256": "ad7892c75c4433e6563e83251c12529a56ef1305308ddeed342cdca8bdd234a4"
+}

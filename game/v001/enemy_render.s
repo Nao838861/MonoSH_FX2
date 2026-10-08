@@ -1,6 +1,12 @@
 .setcpu "65816"
 .smart
 .macpack longbranch
+.ifdef FX_4BPP
+.include "assets4/source4.inc"
+.if FX4_COLOR
+.import _monosh_runtime_frame_counter
+.endif
+.endif
 .export _fx_enemy_render, _fx_enemy_render_bullets
 .export fx_emit_native
 .import _monosh_enemies, _monosh_enemy_active_count_value
@@ -215,12 +221,31 @@ bullet_loop:
   and #$ff
   bit #$80
   beq bullet_normal
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+  lda _monosh_runtime_frame_counter
+  jsr bullet_hue4
+  lda $0250
+  ora #31
+  .else
   lda #31
+  .endif
+  .else
+  lda #31
+  .endif
   sta $0248
   lda _monosh_ebullet_geometry+8
   sta eg
   bra bullet_geometry
 bullet_normal:
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+  ; 回転とは独立した32 tickの色周期。紫16、赤8、青8。
+  pha
+  jsr bullet_hue4
+  pla
+  .endif
+  .endif
   lsr
   lsr
   and #15
@@ -258,6 +283,11 @@ bullet_asset:
   sta $0248
   txa
   ora $0248
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+  ora $0250
+  .endif
+  .endif
   sta $0248
   lda #_monosh_ebullet_animation_geometry
   sta eg
@@ -270,6 +300,23 @@ bullet_geometry:
   jsr emit
   dec $0240
   jmp bullet_loop
+
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+bullet_hue4:
+  and #31
+  ldx #0
+  cmp #16
+  bcc :+
+  ldx #$0200
+  cmp #24
+  bcc :+
+  ldx #$0100
+:
+  stx $0250
+  rts
+  .endif
+  .endif
 
 ; 引数は専用WRAM scratch。Cのsoftware stackへの9byte pushを省く。
 emit:

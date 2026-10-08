@@ -71,17 +71,20 @@ def assets(color):
         if start<end:holes.append([i//2,start,end])
     holes += [[i//2,(i&1)*32768+y*256+im.width,(i&1)*32768+(y+1)*256]
               for i,im in enumerate(images) for y in range(im.height) if im.width<256]
-    prescaled=bytearray(7168)
-    allowed_heights=bytearray(3584)
+    prescaled=bytearray((9 if color else 7)*1024)
+    allowed_heights=bytearray((9 if color else 7)*512)
     geometry=(base.GAME/'upstream/monosh_boss_data.c').read_text()
     from smooth_depth import transform
     geometry=transform('monosh_boss_data',geometry)
     bullet_geometry=transform('monosh_enemy_data',(base.GAME/'upstream/monosh_enemy_data.c').read_text())
     jobs=[]
-    for slot,(i,kind) in enumerate(((13,'body'),(14,'face'),(5,'bom'),(39,'bom'),(40,'bom'),(41,'bom'),(31,'bullet'))):
+    variants=[(13,'body'),(14,'face'),(5,'bom'),(39,'bom'),(40,'bom'),(41,'bom'),(31,'bullet')]
+    if color:variants.extend([(31,'bullet'),(31,'bullet')])
+    for slot,(i,kind) in enumerate(variants):
         name='monosh_ebullet4' if kind=='bullet' else 'monosh_boss_'+kind
         vals=[int(x) for x in re.search(name+r'_geometry\[222\] = \{([^}]+)',bullet_geometry if kind=='bullet' else geometry).group(1).replace('\n','').strip(',').split(',')]
         pix=pixels[i];h,w=pix.shape
+        if slot>=7:pix=np.where(pix>=9,pix+(slot-6)*2,pix)
         for width in sorted(set(vals[::2])):
             rowpix=pix[:,(np.arange(width)*(w*256//width))>>8]
             heights={vals[z+1] for z in range(0,len(vals),2) if vals[z]==width}
@@ -153,8 +156,14 @@ def assets(color):
         far[i*32768:i*32768+pix.nbytes]=pix.tobytes()
         meta.append({'top':bbox[1]-36,'height':image.height,'address':i*32768})
     assert meta[0]['height']*512<=0x2000
-    far[0x2000:0x3c00]=prescaled
-    far[0x3c00:0x4a00]=allowed_heights
+    far[0x2000:0x2000+len(prescaled)]=prescaled
+    height_base=0x4800 if color else 0x3c00
+    far[height_base:height_base+len(allowed_heights)]=allowed_heights
+    if color:
+        # BG1は固定のC000 mapを使うため、未使用のC800 map領域を自機OBJへ使う。
+        assert meta[1]['height']*512<=0x4000,'near background overlaps player ROM frames'
+        from build_4bpp_player import build as player_obj
+        player_obj(ASSETS,PACK,far)
     (PACK/'background4.bin').write_bytes(far)
     (PACK/'background4.inc').write_text('\n'.join(f'FX_BG_{i}_{k.upper()} = {v}' for i,m in enumerate(meta) for k,v in m.items())+'\n')
 
