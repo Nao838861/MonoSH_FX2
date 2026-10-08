@@ -1,0 +1,28 @@
+{
+  "romSha256": "2e2d5b40e5b534c14f262815365037fa3d3b99bf35390cb59924ae8171f06a30",
+  "scenes": 33,
+  "opaquePpuPixels": 31396,
+  "overlappingSourcePixels": 5248,
+  "ppuColorErrors": 8475,
+  "bitmapErrors": 0,
+  "grassAssets": [
+    0,
+    1
+  ],
+  "drawOrders": 2,
+  "tilePositions": 8,
+  "palette": 1,
+  "shadowIndex": 1,
+  "shadowRgb5": [
+    1,
+    7,
+    2
+  ],
+  "shadowRgb": [
+    8,
+    57,
+    16
+  ],
+  "baseline": true,
+  "hardwareTested": false
+}

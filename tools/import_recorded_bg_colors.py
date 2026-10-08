@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'game/v001/assets'
 DEST = ASSETS / 'bg_color'
-# RGB5。組0はタイトル・影、組1..7を録画の色相ごとに共有する。
+# RGB5。影は草と同じ組1の最暗色。組0は敵などに使う。
 PALETTES = [
     [[0,0,0],[3,3,3],[16,16,16],[31,31,31]],
     [[0,0,0],[1,7,2],[3,21,4],[16,31,12]],
@@ -139,12 +139,12 @@ def main():
             # 表示だけ整数倍で大きくする。
             scale=max(1,min(240//pic.width,190//pic.height));pic=pic.resize((pic.width*scale,pic.height*scale),Image.Resampling.NEAREST)
             sheet.paste(pic,(x+j*250,y+24),pic)
-    # 残る爆発は録画の火色、開く砲台は金属色、影と文字はグレー。
+    # 残る爆発は録画の火色、開く砲台は金属色、影は草の最暗色。
     for asset in range(44):
         if str(asset) in manifest:continue
         if asset in [9,10,*range(15,31),43]:continue
         base=Image.open(ASSETS/f'{asset:02d}.png').convert('RGBA');a=np.array(base)
-        pal=4 if asset in [5,39,40,41] else 3 if asset in range(32,37) else 0
+        pal=1 if asset==38 else 4 if asset in [5,39,40,41] else 3 if asset in range(32,37) else 0
         ix=np.where(a[:,:,3]<128,0,np.where(a[:,:,:3].sum(axis=2)>384,3,1)).astype(np.uint8)
         # 既存alphaと輪郭は保持し、録画で確認できない開閉中の形を捏造しない。
         im=Image.fromarray(ix).convert('P');im.putpalette([0,0,0,24,24,24,132,132,132,255,255,255]+[0]*756)

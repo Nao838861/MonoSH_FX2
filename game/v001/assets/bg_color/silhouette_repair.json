@@ -335,5 +335,14 @@
         6
       ]
     }
+  },
+  "playerShadow": {
+    "asset": 38,
+    "palette": 1,
+    "opaqueIndex": 1,
+    "sharesWithGrassAssets": [
+      0,
+      1
+    ]
   }
 }

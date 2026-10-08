@@ -86,7 +86,10 @@ def main():
     assert list(palette[2,1:])==[word(1,7,2),word(3,21,4),word(22,14,10)],'tree/body palette changed'
     assert list(palette[0,1:])==[word(3,3,3),word(31,3,2),word(22,23,25)],'enemy metal must be gray'
     assert list(palette[7,1:])==[word(1,7,2),word(7,23,6),word(25,25,20)],'head must use muted ivory'
-    for asset,pal in [(3,0),(4,2),(13,2),(14,7),(42,3)]:
+    shadow=np.array(Image.open(COLOR/'38.png'))
+    assert set(np.unique(shadow))=={0,1},'shadow must use grass darkest index only'
+    assert int(palette[1,1])==word(1,7,2),'grass/shadow darkest color changed'
+    for asset,pal in [(0,1),(1,1),(3,0),(4,2),(13,2),(14,7),(38,1),(42,3)]:
         im=np.array(Image.open(COLOR/f'{asset:02d}.png'))
         for ty in range((im.shape[0]+7)//8):
             for tx in range((im.shape[1]+7)//8):

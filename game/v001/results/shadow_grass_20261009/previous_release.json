@@ -633,7 +633,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "8c04514f4856c6beab3ce179f772c37c7a15bc1a19e29b608aedffb42d8744bc",
+  "romSha256": "2e2d5b40e5b534c14f262815365037fa3d3b99bf35390cb59924ae8171f06a30",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -662,8 +662,8 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "影を草の最暗色へ。影単独と草2種類・両描画順・8タイル位置の実PPU33場面、二値切替と原画輪郭を検証。",
-  "verificationResults": "game/v001/results/shadow_grass_20261009",
+  "verificationKind": "自弾を時間色へ修正。地面の上2行だけをclipし、山・森林を全復元して下へ2ドット表示。三カメラ・実PPU・反転とclip・ポーズ・二値切替を検証。",
+  "verificationResults": "game/v001/results/ground_time_20261009",
   "scenarioFrames": {
     "color": 360,
     "display": 720,
@@ -674,7 +674,7 @@
     "objects": 360,
     "held": 900
   },
-  "previousRomSha256": "2e2d5b40e5b534c14f262815365037fa3d3b99bf35390cb59924ae8171f06a30",
+  "previousRomSha256": "d85a66a6bc45f003be3b5549ca44708c4cc2803cd98aa3a1bdd5fef21c757460",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -886,17 +886,44 @@
     "longProfileRequiredForThisRelease": false,
     "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261009_SHADOW_GRASS.md",
+  "verificationReport": "game/v001/RESULTS_20261009_GROUND_TIME.md",
   "validation": {
-    "baseCommit": "f780e8b",
-    "shadowGrassPpuScenes": 33,
-    "shadowGrassPpuPixels": 31396,
-    "shadowGrassPpuErrorsBefore": 8475,
-    "shadowGrassPpuErrorsAfter": 0,
-    "bitmapErrors": 0,
+    "baseCommit": "e8a1f64",
+    "finalPpuScreens": 76,
+    "finalPpuObjectPixels": 89101,
+    "playerPoses": 17,
+    "playerFlips": 4,
+    "bulletSizes": 16,
+    "bulletPaletteGroups": 4,
+    "bulletTimeFramesPerPhase": 4,
+    "bulletTimeCycleFrames": 16,
+    "bulletClock": "globalLogicFrame",
+    "fixedSizeTimePalettes": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "bulletFlips": [
+      0,
+      16,
+      32,
+      48
+    ],
+    "bulletClipCenters": [
+      0,
+      256
+    ],
+    "cameraOffsets": [
+      0,
+      32,
+      64
+    ],
+    "stationaryFireFields": 900,
     "colorToggleSamples": 219,
+    "pauseObjColorFrozen": true,
     "hardwareTested": false,
-    "historicalResults": "game/v001/results/shadow_grass_20261009/previous_release.json"
+    "historicalResults": "game/v001/results/ground_time_20261009/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -952,19 +979,5 @@
     "projectionHorizon": 104,
     "visibleGroundStart": 106
   },
-  "audioStartFix": "起動時に曲データの読み込みを終えてから画面を出す。画面表示から曲開始まで約3.6秒→約0.17秒。音の16,000field、カラー・表示・ポーズの画素回帰を再確認。",
-  "playerShadow": {
-    "asset": 38,
-    "palette": 1,
-    "opaqueIndex": 1,
-    "sharesWithGrassAssets": [
-      0,
-      1
-    ],
-    "rgb5": [
-      1,
-      7,
-      2
-    ]
-  }
+  "audioStartFix": "起動時に曲データの読み込みを終えてから画面を出す。画面表示から曲開始まで約3.6秒→約0.17秒。音の16,000field、カラー・表示・ポーズの画素回帰を再確認。"
 }

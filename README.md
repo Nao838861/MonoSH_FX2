@@ -1,5 +1,7 @@
 # MonoSH Super FX2 開発プロジェクト
 
+最新は [影と草のパレット共通化](game/v001/RESULTS_20261009_SHADOW_GRASS.md)。プレイヤーの影を草と同じpalette1の最暗色へ変更し、重なる8×8タイルの色崩れを解消。[修正前後](game/v001/results/shadow_grass_20261009/comparison.png)。自弾の時間色・地面clip・遠景復元を引き継ぐ。
+
 最新は [自弾の時間色と地面上2行の修正](game/v001/RESULTS_20261009_GROUND_TIME.md)。自弾は距離によらず全弾共通の論理時間で4色を巡る。地面の上2行だけを隠し、山・森林は元の全行を復元して2ドット下へ表示する。[固定サイズの色変化](game/v001/results/ground_time_20261009/fixed_size_time_colors.gif)、[地平線の比較](game/v001/results/ground_time_20261009/horizon_closeup.png)。前回の距離色と遠景削除は依頼の解釈違いだったため取り消した。
 
 最新は [白黒の二値化と自機の透明穴修正](game/v001/RESULTS_20261009_BINARY_PLAYER.md)。SELECT／Spaceで敵・障害物を純黒と純白へ切替。ズボン・背中の誤った透明176画素を修復し、描画最適化とBGM第2版を引き継ぐ。[修正前後](game/v001/results/binary_player_20261009/player_comparison.png)。

@@ -14,7 +14,8 @@ PALETTES = [[color[:] for color in palette] for palette in RECORDED_PALETTES]
 # The recording has warm-white cores and orange midtones, not solid lemon
 # yellow. Preserve the dark outline contrast while restoring the pale core.
 PALETTES[4] = [[0,0,0],[15,1,0],[31,15,3],[31,30,26]]
-# Palette 0 shares only its dark entry with the shadow. The title uses the
+# Palette 0 belongs to the enemy lens/metal. The shadow shares grass palette 1.
+# The title uses the
 # existing near-white palette 3 so gray enemy metal cannot gray the banner.
 # Put the red lens in pixels, never in a separate red 8x8 attribute block.
 PALETTES[0][2] = [31,3,2]
@@ -136,7 +137,10 @@ def main():
             allcells[asset] = cells
         else:
             indices = np.array(Image.open(path))
-            pal = 4 if asset in [5,39,40,41] else 3 if asset in [*range(32,37),42] else 0
+            pal = 1 if asset == 38 else 4 if asset in [5,39,40,41] else 3 if asset in [*range(32,37),42] else 0
+            if asset == 38:
+                # 草と重なる8x8属性セルでも、影は草の最暗色(index1)を使う。
+                assert np.all(indices[mask] == 1),'shadow must use grass darkest index'
             for ty in range((indices.shape[0]+7)//8):
                 for tx in range((indices.shape[1]+7)//8):
                     allcells[asset,ty,tx]=pal
@@ -164,6 +168,7 @@ def main():
     manifest = {'method':'original alpha and structural detail; tree dark-green/green/brown; enemy red lens/gray metal; boss brown body and ivory eye/horn head',
         'reference':'source.json and frozen source PNGs remain unchanged; no unmasked original video is available here',
         'projectile37':'fourth rotation was accidentally grayscale; uses observed purple family from frame 6; exact arcade phase color remains unverified',
+        'playerShadow':{'asset':38,'palette':1,'opaqueIndex':1,'sharesWithGrassAssets':[0,1]},
         'rgb5':PALETTES,'assets':metrics}
     (DEST/'silhouette_repair.json').write_text(json.dumps(manifest,indent=2)+'\n')
     sheet=Image.new('RGB',(900,len(POLICIES)*160),(44,40,50));draw=ImageDraw.Draw(sheet)
