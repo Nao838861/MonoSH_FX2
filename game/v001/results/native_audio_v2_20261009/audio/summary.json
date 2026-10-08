@@ -1,19 +1,19 @@
 {
   "fields": 16000,
-  "ticks": 32065,
+  "ticks": 32357,
   "sfxCommands": [
     1,
     1,
     18,
     1,
     1,
-    8
+    25
   ],
-  "spawns": 26,
+  "spawns": 25,
   "busyCalls": 0,
   "pauseStableFields": 59,
-  "audioCalls": 15985,
-  "audioMaxMs": 5.360923,
-  "audioMeanMs": 0.148175,
-  "romSha256": "bfb35914dedf793f3178015d650c9fc040eb1b3fe810a68a8a005ffa1d5e9025"
+  "audioCalls": 15926,
+  "audioMaxMs": 0.124317,
+  "audioMeanMs": 0.084703,
+  "romSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475"
 }

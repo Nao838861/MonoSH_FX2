@@ -633,7 +633,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "8c04514f4856c6beab3ce179f772c37c7a15bc1a19e29b608aedffb42d8744bc",
+  "romSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -674,7 +674,7 @@
     "objects": 360,
     "held": 900
   },
-  "previousRomSha256": "2e2d5b40e5b534c14f262815365037fa3d3b99bf35390cb59924ae8171f06a30",
+  "previousRomSha256": "8c04514f4856c6beab3ce179f772c37c7a15bc1a19e29b608aedffb42d8744bc",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -966,5 +966,6 @@
       7,
       2
     ]
-  }
+  },
+  "audioVolumeFix": "S-DSPの主音量96→127、楽器・SE波形を約+1.9dB。曲・SEとも約+4.3dB（試聴 -18.5→-14.2 LUFS）、SEとの釣り合いは不変。音16,000field、画素回帰、通常・継続ボス各18,000fieldの60Hzを再確認。"
 }

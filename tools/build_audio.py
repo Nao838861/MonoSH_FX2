@@ -40,7 +40,7 @@ def write_wav(name, values, rate=32000):
     with wave.open(str(AUDIO / 'samples' / (name + '.wav')), 'wb') as out:
         out.setparams((1, 2, rate, 0, 'NONE', 'not compressed'))
         out.writeframes(struct.pack('<' + 'h' * len(values),
-                                   *[round(x / peak * 23000) for x in values]))
+                                   *[round(x / peak * 28600) for x in values]))
 
 
 def se_samples():

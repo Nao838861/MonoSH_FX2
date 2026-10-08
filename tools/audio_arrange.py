@@ -178,7 +178,7 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
     end = beats * TPB
     lines = ['; 音符参照: JK150 / SixtyTunes (VGMusic)。パートの役割ごとに8声へ割り振ったSFC編曲。',
              f'#Title {title}', '#Composer Hiroshi Kawaguchi',
-             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 96'] + ECHO
+             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 127'] + ECHO
     insts = sorted({v['inst'] for v in VOICES.values()} | {i for v in VOICES.values() for _, i in v.get('ranges', [])}
                    | {m[1] for m in DRUM_MAP.values()})
     lines += [f'@{name} {name}' for name in insts]
