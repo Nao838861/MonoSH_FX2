@@ -13,7 +13,7 @@ from build_game import BUILD, GAME
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--frames',type=int,default=360)
-    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','objects','long','profile','controls','stumble','display','scenery','equivalence','equivalence_boss','held'])
+    parser.add_argument('--scenario',default='play',choices=['play','pause','boss','stress','packed','objects','long','profile','controls','stumble','display','scenery','equivalence','equivalence_boss','held','color'])
     parser.add_argument('--held-direction',default='up-left',choices=['up-left','up-right','down-left','down-right','up','down','left','right','none'])
     parser.add_argument('--held-fire',default='y',choices=['a','y','none'])
     parser.add_argument('--timeout',type=int,default=60)
@@ -46,6 +46,7 @@ def main():
         assert args.scenario=='objects' and 'dma_probe_delay' in labels
         display+='\n'+(GAME/'dma_probe.lua').read_text(encoding='utf-8')
     script=script.replace('DISPLAY_CODE',display)
+    if args.scenario=='color':script+='\n'+(GAME/'color_test.lua').read_text(encoding='utf-8')
     path=output/'test.lua'; path.write_text(script,encoding='utf-8')
     mesen=prepare_runtime(MESEN_EXE)
     settings=mesen.parent/'settings.json'
@@ -77,5 +78,7 @@ def main():
     subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_objects.py')),args.scenario],check=True)
     if args.scenario in ('display','scenery'):
         subprocess.run([sys.executable,str(Path(__file__).with_name('verify_game_display.py')),args.scenario],check=True)
+    if args.scenario=='color':
+        subprocess.run([sys.executable,str(Path(__file__).with_name('verify_bg_colors.py'))],check=True)
 
 if __name__=='__main__': main()

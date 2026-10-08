@@ -8,6 +8,9 @@
 .import _monosh_em1_closed_geometry, _monosh_em1_open_geometry
 .import _monosh_ebullet_geometry, _monosh_ebullet_animation_geometry
 .import _monosh_ground_screen_delta, _fx_draw, _fx_draw_count
+.ifdef FX_SMOOTH_DEPTH
+.import fx_em1_open_sizes
+.endif
 .segment "ZEROPAGE"
 er: .res 2
 eg: .res 2
@@ -123,6 +126,23 @@ em1_open:
   adc #31
   sta $0248
   lda $024a
+  .ifdef FX_SMOOTH_DEPTH
+  ; Z*10+(pose-1)*2。5pose×111項目をWRAM7Fから直接読む。
+  asl
+  sta $024e
+  asl
+  asl
+  clc
+  adc $024e
+  sta $024e
+  lda $024c
+  dec
+  asl
+  clc
+  adc $024e
+  tax
+  lda f:$7f0000+fx_em1_open_sizes,x
+  .else
   ldx #0
   cmp #80
   bcs :+
@@ -138,6 +158,7 @@ em1_open:
   asl
   tax
   lda _monosh_em1_open_geometry,x
+  .endif
 em1_geometry:
   sta $0246
 enemy_emit:

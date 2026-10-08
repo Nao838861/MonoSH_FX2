@@ -11,6 +11,9 @@
 .import _fx_sky_color, fx_latch_obj, fx_upload_obj
 .import fx_plan_dma, fx_commit_dma, fx_dma_count, fx_dma_desc, fx_dma_bytes
 .import fx_read_gsu_spans
+.import fx_latch_color, fx_upload_color, fx_color_dma_count, fx_color_dma_bytes
+.import color_palette, color_boot_map, fx_stage_color, fx_color_staged
+.import __COLORRODATA_LOAD__, __COLORRODATA_RUN__, __COLORRODATA_SIZE__
 .ifndef FX_DMA_ADMISSION_BYTES
 FX_DMA_ADMISSION_BYTES = 9984
 .endif
@@ -46,6 +49,20 @@ reset:
   ldy #$2000
   lda #$ffff
   mvn #$42,#$7e
+  ; $0400..$17ffをカラー専用に予約。native scratch($0160..$02xx)と
+  ; C stack($1c00から下降、$1800より上)・HDMA状態($1d00台)から分離。
+  ldx #0
+  lda #0
+clear_color_ram:
+  sta f:$7e0400,x
+  inx
+  inx
+  cpx #$1400
+  bne clear_color_ram
+  ldx #.loword(__COLORRODATA_LOAD__)
+  ldy #__COLORRODATA_RUN__
+  lda #(__COLORRODATA_SIZE__-1)
+  mvn #$00,#$7e
   pea $0000
   plb
   plb
@@ -92,6 +109,18 @@ reset:
   sep #$20
   lda #$43
   sta $4304
+  lda #1
+  sta $420b
+  ; 裏のBG2 map($8800)も同じtile番号で初期化する。
+  rep #$20
+  lda #$4400
+  sta $2116
+  lda #.loword(color_boot_map)
+  sta $4302
+  lda #2048
+  sta $4305
+  sep #$20
+  stz $4304
   lda #1
   sta $420b
   ; 各BGの白黒palette。色0透明、1暗色、3白。
@@ -145,6 +174,15 @@ far_palette:
   inx
   cpx #128
   bne far_palette
+  lda #32
+  sta $2121
+  ldx #0
+initial_fx_palette:
+  lda f:color_palette,x
+  sta $2122
+  inx
+  cpx #64
+  bne initial_fx_palette
   lda #$63                  ; size選択3=small16、大32、CHR byte base C000。
   sta $2101
   stz $2102
@@ -324,7 +362,33 @@ update_ground_pointers:
 _fx_present:
   php
   rep #$30
+  jsr fx_latch_color
   jsr fx_plan_dma
+  ; 前の画像転送後に残る黒帯で裏mapを準備できれば、追加fieldは不要。
+  lda fx_color_dma_count
+  beq color_early_ready
+  sep #$20
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  pha
+  lda f:$00213d
+  and #1
+  bne color_early_high
+  pla
+  cmp #15
+  bcc color_early_stage
+  cmp #203
+  bcc color_early_ready
+  bra color_early_stage
+color_early_high:
+  pla
+color_early_stage:
+  lda #$80
+  sta f:$002100
+  jsr fx_stage_color
+color_early_ready:
+  rep #$30
   ; 小さい転送は203行目に間に合わなくても黒帯内で完了できる。
   ; dynamicDmaDeadlineでは転送量に応じ220/226/233行目まで許可。全FBは203行目。
   ; 設定費用をbyte換算し、翌22行のOBJ準備より前に転送を終える。
@@ -498,6 +562,36 @@ dma_probe_delay:
   cmp f:$7e1d10
   bne dma_probe_delay
   .endif
+  ; 全12KiBに色mapが加わる場面だけ、裏mapを1field前に転送する。
+  rep #$30
+  lda fx_dma_bytes
+  cmp #12288
+  bne color_stage_ready
+  lda fx_color_dma_count
+  beq color_stage_ready
+  lda fx_color_staged
+  bne color_stage_ready
+  sep #$20
+wait_color_blank:
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #203
+  bcc wait_color_blank
+  lda f:$004212
+  and #$40
+  beq wait_color_blank
+  lda #$80
+  sta f:$002100
+  jsr fx_stage_color
+wait_color_next_field:
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #203
+  bcs wait_color_next_field
+color_stage_ready:
+  sep #$20
 wait_bottom:
   lda f:$00213f
   lda f:$002137
@@ -532,15 +626,16 @@ wait_hblank:
   lda #$fe
   sta f:$00420c
   jsr fx_upload_obj
+dma_started:
+  lda #3
+  sta f:$7e1df0
+  jsr fx_upload_color
   rep #$20
   lda #$1801
   sta f:$004300
   sep #$20
   lda #$70
   sta f:$004304
-dma_started:
-  lda #3
-  sta f:$7e1df0
   rep #$30
   ldx #0
   ldy fx_dma_count
@@ -593,7 +688,21 @@ select_dma_deadline:
   clc
   adc fx_dma_bytes
   clc
-  adc #768
+  adc #(768+64)             ; 切替時CGRAM64byteも最大費用として予約。
+  ldx fx_color_staged
+  bne color_deadline_no_map
+  clc
+  adc fx_color_dma_bytes
+  pha
+  lda fx_color_dma_count
+  .repeat 6
+    asl
+  .endrepeat
+  clc
+  adc 1,s
+  sta 1,s
+  pla
+color_deadline_no_map:
   cmp #(FX_DMA_ADMISSION_BYTES+1)
   bcs deadline_done
   .ifdef FX_FINE_DMA

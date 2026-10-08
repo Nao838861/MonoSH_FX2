@@ -24,8 +24,9 @@ def hdma(raw, size, lines=224, indirect=None):
         if not indirect:position=cursor
     return result+[last]*(lines-len(result))
 
-def pixel(vram, layer, x, y):
+def pixel(vram, layer, x, y, fx_map_base=0x8000):
     mapbase,chrbase,width=[(0x8000,0,32),(0xa000,0x4000,64),(0xb000,0x6000,64),(0x9000,0x6000,64)][layer]
+    if layer==0:mapbase=fx_map_base
     x%=width*8;y%=256
     tx,ty=x//8,y//8
     address=mapbase+(tx//32)*0x800+(ty*32+tx%32)*2
@@ -109,7 +110,7 @@ def verify(directory):
                 color=(0,0,0)
                 if 23<=y<203:
                     index=objects.get((x,y))
-                    if index is None:index=pixel(vram,0,x,y-13)
+                    if index is None:index=pixel(vram,0,x,y-13,meta.get('fxMapBase',0x8000))
                     if index is None:index=pixel(vram,3,x+meta['nearX'],y+meta['farY'])
                     if index is None:index=pixel(vram,1,x+ho,y+vo)
                     if index is None:index=pixel(vram,2,x+fo,y+meta['farY'])

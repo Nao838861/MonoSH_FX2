@@ -71,6 +71,8 @@ def assets(color):
         if start<end:holes.append([i//2,start,end])
     prescaled=bytearray(6144)
     geometry=(base.GAME/'upstream/monosh_boss_data.c').read_text()
+    from smooth_depth import transform
+    geometry=transform('monosh_boss_data',geometry)
     jobs=[]
     for slot,(i,kind) in enumerate(((13,'body'),(14,'face'),(5,'bom'),(39,'bom'),(40,'bom'),(41,'bom'))):
         vals=[int(x) for x in re.search('monosh_boss_'+kind+r'_geometry\[222\] = \{([^}]+)',geometry).group(1).replace('\n','').strip(',').split(',')]

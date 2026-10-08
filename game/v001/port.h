@@ -27,6 +27,7 @@ void fx_submit(int x, int bottom, unsigned char width, unsigned char height,
                unsigned char asset, unsigned char flags, unsigned char z,
                unsigned char priority);
 void fx_build_packet(void);
+void fx_toggle_color(void);
 void fx_init(void);
 void fx_frame(void);
 void fx_present(void);

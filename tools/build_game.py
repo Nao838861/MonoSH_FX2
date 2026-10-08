@@ -9,6 +9,7 @@ import struct
 import subprocess
 import sys
 from PIL import Image
+from smooth_depth import transform as smooth_depth_tables, open_enemy_sizes
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = ROOT / 'game/v001'
@@ -215,7 +216,16 @@ def pack_assets():
         path=GAME/'assets'/f'bank{0x44+bank:02x}.bin'
         raw=bytearray(path.read_bytes())
         for half in range(2):
-            image=Image.open(GAME/'assets'/f'{bank*2+half:02d}.png')
+            image=asset_image(bank*2+half)
+            color=GAME/'assets/bg_color'/f'{bank*2+half:02d}.png'
+            if color.exists():
+                pixels=image.tobytes()
+                assert image.mode=='P' and max(pixels)<=3
+                original=Image.open(GAME/'assets'/f'{bank*2+half:02d}.png')
+                assert image.size==original.size
+                for y in range(image.height):
+                    base=half*32768+y*256
+                    raw[base:base+image.width]=pixels[y*image.width:(y+1)*image.width]
             for y in range(image.height):
                 base=half*32768+y*256
                 for x in range(0,image.width,4):
@@ -223,9 +233,13 @@ def pack_assets():
                     raw[base+160+x//4]=sum(raw[base+x+i]<<((3-i)*2) for i in range(min(4,image.width-x)))
         if raw!=path.read_bytes():path.write_bytes(raw)
 
+def asset_image(asset):
+    color=GAME/'assets/bg_color'/f'{asset:02d}.png'
+    return Image.open(color if color.exists() else GAME/'assets'/f'{asset:02d}.png')
+
 def build_scaled(enabled, limits, row_margins=False):
     # 原画行の後のpaddingだけを利用。既存raw/packed/flip領域へは書かない。
-    images=[Image.open(GAME/'assets'/f'{i:02d}.png').convert('RGBA') for i in range(44)]
+    images=[asset_image(i).convert('RGBA') for i in range(44)]
     banks={b:bytearray((GAME/'assets'/f'bank{b:02x}.bin').read_bytes()) for b in range(0x44,0x5a)}
     holes=[]
     for asset,image in enumerate(images):
@@ -273,15 +287,27 @@ def build_scaled(enabled, limits, row_margins=False):
     print(f'Horizontal Q8.8 packed scaling: {used} bytes in original ROM padding')
     return bounds
 
-def prepare_logic():
+def prepare_logic(smooth_depth=True):
     reference = '--reference-logic' in sys.argv
     enemy_impl=(GAME/'enemy_impl.inc').read_text(encoding='utf-8')
+    (BUILD/'em1_open_sizes.bin').write_bytes(open_enemy_sizes((UP/'monosh_enemy_data.c').read_text()))
+    if smooth_depth:
+        enemy_impl=enemy_impl.replace('unsigned char pose = e->display & 7, index;', 'unsigned char pose = e->display & 7;')
+        enemy_impl=enemy_impl.replace('    index = pose - 1 + (e->z >= 80 ? 0 : (e->z >= 54 ? 5 : 10));\n    return monosh_em1_open_geometry + index*2;', '''    {
+        static unsigned char dimensions[2];
+        unsigned int size = fx_open_size(((unsigned int)pose << 8) | (e->z > 110 ? 110 : e->z));
+        dimensions[0] = (unsigned char)size; dimensions[1] = (unsigned char)(size >> 8);
+        return dimensions;
+    }''')
+        enemy_impl='unsigned int __fastcall__ fx_open_size(unsigned int);\n'+enemy_impl
     if reference: enemy_impl=enemy_impl.replace('fx_em0_geometry(e);', 'update_em0_geometry(e, path);')
     else: enemy_impl=enemy_impl.replace('void fx_enemy_em1_update(', 'void fx_enemy_em1_update_reference(')
     (BUILD/'enemy_impl.inc').write_text(enemy_impl,encoding='utf-8')
     for name in ['monosh_player','monosh_stage','monosh_enemy','monosh_combat',
                  'monosh_boss','monosh_projection','monosh_stage_data','monosh_enemy_data','monosh_boss_data']:
         text=(UP/(name+'.c')).read_text()
+        if smooth_depth:
+            text=smooth_depth_tables(name,text)
         if name == 'monosh_player':
             for decl in ['unsigned int player_fy','signed char death_vy','unsigned char death_timer',
                          'unsigned char movement_fraction','unsigned char death_accel_fraction',
@@ -354,6 +380,7 @@ def main():
     BUILD.mkdir(parents=True,exist_ok=True)
     config=json.loads((GAME/('config4.json' if '--4bpp' in sys.argv else 'config.json')).read_text(encoding='utf-8'))
     four_bpp=config.get('bitsPerPixel',2)==4
+    smooth_depth=config.get('smoothDepthSizes',True) and '--legacy-depth-sizes' not in sys.argv
     full_transfer=('--full-transfer' in sys.argv or config['fullFramebufferTransfer']) and '--partial-transfer' not in sys.argv
     gsu_uv=('--gsu-uv' in sys.argv or config['gsuUv']) and '--cpu-uv' not in sys.argv
     gsu_clip=('--gsu-clip' in sys.argv or config['gsuClip']) and '--cpu-clip' not in sys.argv
@@ -404,7 +431,7 @@ def main():
         from build_4bpp import augment_scale
         augment_scale(scale)
     (BUILD/'assets4/scale5e.bin' if four_bpp else GAME/'assets/scale5e.bin').write_bytes(scale)
-    prepare_logic()
+    prepare_logic(smooth_depth)
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
     objects=[]
     for source in sources:
@@ -414,11 +441,12 @@ def main():
              *(['-D','FX_4BPP=1'] if four_bpp else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit']:
+    for name in ['cpu','gsu','ground','packet',*(['color'] if not four_bpp else []),'objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_4BPP=1'] if four_bpp else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
+             *(['-D','FX_SMOOTH_DEPTH=1'] if smooth_depth else []),
              *(['-D','FX_GSU_UV=1'] if gsu_uv else []),
              *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
              *(['-D','FX_CPU_CLIP_COMMANDS=1'] if cpu_clip_commands else []),
@@ -447,7 +475,7 @@ def main():
     data[0x7fdc:0x7fe0]=struct.pack('<HH',checksum^65535,checksum)
     rom.write_bytes(data)
     (BUILD/'build_mode.json').write_text(json.dumps({'fullFramebufferTransfer':full_transfer,'gsuUv':gsu_uv,'gsuClip':gsu_clip,
-        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort})+'\n')
+        'cpuClipCommands':cpu_clip_commands,'stableGsuCache':stable_cache,'scaledRows':scaled,'scaledAssetWidths':dict(scaled_limits) if scaled else {},'scaledClip':scaled_clip,'fastUv':fast_uv,'genericPipeline':generic_pipeline,'rowMargins':row_margins,'dynamicDmaDeadline':dynamic_dma,'fineDmaDeadline':fine_dma,'dmaDeadlineProbe':dma_probe,'fastObj':fast_obj,'descriptorDma':descriptor_dma,'dmaAdmissionBytes':dma_admission,'bucketSort':bucket_sort,'smoothDepthSizes':smooth_depth})+'\n')
     print(f'Built {rom} ({len(data)} bytes)')
 
 if __name__=='__main__': main()

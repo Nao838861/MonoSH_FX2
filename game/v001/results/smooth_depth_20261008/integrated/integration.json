@@ -1,0 +1,25 @@
+{
+  "romSha256": "0b5e3c57072898c91feeb31721d8a211d4bb59a68c44a78920e907b77db99bfe",
+  "scalingReferenceRomSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
+  "sceneryReferenceRomSha256": "12e300196644619e5b0710859c71fd70d8d3294d2cf9c7cc54c4245523798978",
+  "baseRomSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
+  "referenceLabelsVerified": 450,
+  "gsuCodeIdentical": true,
+  "spriteGraphicsAndUvIdentical": true,
+  "backgroundDataBytesChanged": 3119,
+  "cpuOperandChanges": [
+    {
+      "fileOffset": 78500,
+      "opcode": 169,
+      "before": 14,
+      "after": 23
+    },
+    {
+      "fileOffset": 78538,
+      "opcode": 105,
+      "before": 87,
+      "after": 74
+    }
+  ],
+  "scope": "CPU命令は背景座標の即値2箇所のみ。残りは遠景修正版の画像・色データとchecksum。全旧label位置も一致。"
+}

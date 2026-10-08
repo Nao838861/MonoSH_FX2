@@ -76,6 +76,24 @@ local function guard(fn)
   end
 end
 DISPLAY_CODE
+-- 実ゲームが出した開EM1の矩形を、全ZのWRAM表と照合する。
+-- 人工描画リストのreplay/packed/stressでは任意寸法を許す。
+if labels.fx_em1_open_sizes and scenario~='replay' and scenario~='packed' and scenario~='stress' and scenario~='objects' then
+  emu.addMemoryCallback(guard(function()
+    for i=0,read('_fx_draw_count')-1 do
+      local at=i*10
+      local asset=byte('_fx_draw',at+6)
+      if asset>=32 and asset<=36 then
+        local z=math.min(110,byte('_fx_draw',at+8))
+        local addr=0x7f0000+labels.fx_em1_open_sizes+z*10+(asset-32)*2
+        local width=emu.read(addr,emu.memType.snesMemory)
+        local height=emu.read(addr+1,emu.memType.snesMemory)
+        assert(byte('_fx_draw',at+4)==width and byte('_fx_draw',at+5)==height,'open EM1 depth lookup mismatch')
+        stats.openEm1SizeChecks=(stats.openEm1SizeChecks or 0)+1
+      end
+    end
+  end),emu.callbackType.exec,0x7f0000+labels._fx_build_packet,0x7f0000+labels._fx_build_packet,emu.cpuType.snes,emu.memType.snesMemory)
+end
 emu.addMemoryCallback(guard(function()
   report:write(string.format('{"bootSky":%d,"skyConstant":%d}\n',emu.read(0,emu.memType.snesCgRam)+256*emu.read(1,emu.memType.snesCgRam),read('_fx_sky_color',2)))
 end),emu.callbackType.exec,0x7f0000+labels.game_started,0x7f0000+labels.game_started,emu.cpuType.snes,emu.memType.snesMemory)
@@ -180,7 +198,7 @@ if scenario=='equivalence' or scenario=='equivalence_boss' then
   end),emu.callbackType.exec,0x7F0000+labels._fx_build_packet,0x7F0000+labels._fx_build_packet,emu.cpuType.snes,emu.memType.snesMemory)
 end
 if scenario=='profile' then
-for _,pair in ipairs({{'_fx_build_packet','packet_done'},{'_fx_ground_native','ground_done'}}) do
+for _,pair in ipairs({{'_fx_build_packet','packet_done'},{'_fx_ground_native','ground_done'},{'fx_build_color','fx_color_build_done'}}) do
   emu.addMemoryCallback(guard(function() native_profile[pair[1]]=emu.getState().masterClock end),
     emu.callbackType.exec,0x7F0000+labels[pair[1]],0x7F0000+labels[pair[1]],emu.cpuType.snes,emu.memType.snesMemory)
   emu.addMemoryCallback(guard(function()
@@ -305,6 +323,7 @@ emu.addMemoryCallback(guard(function(a,v)
   -- 完了側でも21行以内を検査し、22行OBJ準備の余裕を独立に守る。
   assert(line>=203 and line<=deadline+4,'DMA start outside admitted blank window')
   local weight=read('fx_dma_bytes',2)+count*(labels.select_dma_deadline and 64 or 128)+(labels.select_dma_deadline and 768 or 0)
+  if labels.fx_upload_color then weight=weight+64+(read('fx_color_staged',2)==0 and (read('fx_color_dma_bytes',2)+read('fx_color_dma_count',2)*64) or 0) end
   if deadline>203 then
     local limit=deadline==220 and DMA_ADMISSION_BYTES or deadline==226 and 8960 or deadline==233 and 7680
     if labels.dma_deadline_fine then limit=math.min(DMA_ADMISSION_BYTES,(279-deadline)*170-1) end

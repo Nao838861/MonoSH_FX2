@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import argparse
 from build_game import BUILD, GAME
 
 TOOLS=Path(__file__).resolve().parent
@@ -15,6 +16,7 @@ def reference_cache_fingerprint():
            and not p.name.startswith('gsu')]
     files+=list((GAME/'upstream').rglob('*'))+list((GAME/'platform').rglob('*'))
     files+=[TOOLS/'build_game.py']
+    files+=[TOOLS/'smooth_depth.py']
     digest=hashlib.sha256()
     for p in sorted(set(p for p in files if p.is_file())):
         digest.update(str(p.relative_to(GAME.parent.parent)).encode())
@@ -43,6 +45,11 @@ def capture(reference=False):
     return rom_sha,captures
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--result-root',type=Path,default=GAME/'results')
+    parser.add_argument('--reuse-reference',action='store_true')
+    args=parser.parse_args()
+    assert args.result_root.resolve().is_relative_to((GAME/'results').resolve())
     if '--reuse-reference' in sys.argv:
         ref_cases={}; reference=None
         for scenario in ['equivalence','equivalence_boss']:
@@ -58,9 +65,9 @@ def main():
         reference,ref_cases=capture(True)
     native,native_cases=capture()
     for scenario in ref_cases:
-        compare(scenario,reference,native,ref_cases[scenario],native_cases[scenario])
+        compare(scenario,reference,native,ref_cases[scenario],native_cases[scenario],args.result_root)
 
-def compare(scenario,reference,native,ref_capture,native_capture):
+def compare(scenario,reference,native,ref_capture,native_capture,result_root=None):
     a,blocks=ref_capture
     b,native_blocks=native_capture
     assert blocks==native_blocks
@@ -79,7 +86,7 @@ def compare(scenario,reference,native,ref_capture,native_capture):
             assert aa==bb,f'update {frame+1}, {name}: {aa.hex()} != {bb.hex()}'
             offset+=size
     if scenario=='equivalence_boss': assert {1,2,3} <= boss_states,boss_states
-    results=GAME/'results'/scenario;results.mkdir(exist_ok=True)
+    results=(result_root or GAME/'results')/scenario;results.mkdir(parents=True,exist_ok=True)
     for name,states in [('reference',a),('native',b)]:
         (results/(name+'.bin.gz')).write_bytes(gzip.compress(states,mtime=0))
     report={'referenceRomSha256':reference,'nativeRomSha256':native,'matchedUpdates':n,

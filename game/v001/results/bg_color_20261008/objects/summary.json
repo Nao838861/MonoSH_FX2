@@ -1,0 +1,50 @@
+{
+  "enemyPaths": {
+    "0": true
+  },
+  "deathImage": true,
+  "interval3plus": 0,
+  "enemyShotsMax": 0,
+  "dmaMaxMs": 4.8789250329371,
+  "objMaxCount": 18,
+  "maxCommands": 1,
+  "fields": 720,
+  "doneSeen": false,
+  "stumbles": 39,
+  "reflected": 0,
+  "cpuMaxMs": 15.946252391831,
+  "em1States": {},
+  "interval1": 503,
+  "maxBytes": 12288,
+  "stage": 664,
+  "maxDmaStartLine": 243,
+  "enemyImage": true,
+  "logic": 601,
+  "checked": 599,
+  "minBytes": 3040,
+  "rendered": 599,
+  "enemyTypes": {
+    "5": true
+  },
+  "maxDmaSpanCount": 10,
+  "interval2": 95,
+  "stumbleMax": 39,
+  "dyingSeen": false,
+  "packed_double": 600,
+  "deaths": 1,
+  "bossSeen": false,
+  "lateDmaStarts": 272,
+  "gsuMaxMs": 5.4624255817964,
+  "respawns": 1,
+  "loopSeen": false,
+  "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "extraWritesInSameBlank": 1,
+  "presentationFps": 51.69882363112392,
+  "presentationIntervals": {
+    "1": 500,
+    "2": 97
+  },
+  "intervalBasis": "DMA開始field。完了のfield跨ぎを除外。",
+  "cpuMeanMs": 13.94682575,
+  "gsuMeanMs": 3.2785273833333335
+}

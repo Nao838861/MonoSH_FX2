@@ -1,5 +1,6 @@
 {
   "fullFramebufferTransfer": false,
+  "smoothDepthSizes": true,
   "gsuUv": true,
   "gsuClip": true,
   "cpuClipCommands": true,

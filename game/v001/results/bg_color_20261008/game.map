@@ -1,0 +1,1587 @@
+Modules list:
+-------------
+monosh_boss.o:
+    CODE              Offs=000000  Size=00084A  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=000277  Align=00001  Fill=0000
+monosh_boss_data.o:
+    RODATA            Offs=000000  Size=002708  Align=00001  Fill=0000
+monosh_combat.o:
+    CODE              Offs=00084A  Size=00023A  Align=00001  Fill=0000
+    RODATA            Offs=002708  Size=000019  Align=00001  Fill=0000
+    BSS               Offs=000277  Size=00002B  Align=00001  Fill=0000
+monosh_enemy.o:
+    CODE              Offs=000A84  Size=001990  Align=00001  Fill=0000
+    BSS               Offs=0002A2  Size=0000B3  Align=00001  Fill=0000
+monosh_enemy_data.o:
+    RODATA            Offs=002721  Size=002A14  Align=00001  Fill=0000
+monosh_player.o:
+    CODE              Offs=002414  Size=000622  Align=00001  Fill=0000
+    RODATA            Offs=005135  Size=00003E  Align=00001  Fill=0000
+    BSS               Offs=000355  Size=000012  Align=00001  Fill=0000
+monosh_stage.o:
+    CODE              Offs=002A36  Size=000373  Align=00001  Fill=0000
+    BSS               Offs=000367  Size=0000EE  Align=00001  Fill=0000
+monosh_stage_data.o:
+    RODATA            Offs=005173  Size=001135  Align=00001  Fill=0000
+game.o:
+    CODE              Offs=002DA9  Size=000030  Align=00001  Fill=0000
+    BSS               Offs=000455  Size=000797  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000003  Align=00001  Fill=0000
+combat_port.o:
+    CODE              Offs=002DD9  Size=000168  Align=00001  Fill=0000
+    RODATA            Offs=0062A8  Size=000010  Align=00001  Fill=0000
+asset_tables.o:
+    RODATA            Offs=0062B8  Size=001601  Align=00001  Fill=0000
+ground.o:
+    BSS               Offs=000BEC  Size=0006DD  Align=00001  Fill=0000
+cpu_asm.o:
+    CODE              Offs=002F41  Size=0003B6  Align=00001  Fill=0000
+    BSS               Offs=0012C9  Size=000002  Align=00001  Fill=0000
+    BOOT              Offs=000000  Size=0002B2  Align=00001  Fill=0000
+    GFX               Offs=000000  Size=010000  Align=00001  Fill=0000
+    HEADER            Offs=000000  Size=000050  Align=00001  Fill=0000
+gsu_asm.o:
+    GSU               Offs=000000  Size=00083F  Align=00010  Fill=0000
+    ASSET44           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET45           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET46           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET47           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET48           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET49           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4A           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4B           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4C           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4D           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4E           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET4F           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET50           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET51           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET52           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET53           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET54           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET55           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET56           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET57           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET58           Offs=000000  Size=010000  Align=00001  Fill=0000
+    ASSET59           Offs=000000  Size=010000  Align=00001  Fill=0000
+    SCALE5E           Offs=000000  Size=010000  Align=00001  Fill=0000
+    SPAN5F            Offs=000000  Size=010000  Align=00001  Fill=0000
+ground_asm.o:
+    CODE              Offs=0032F7  Size=0028C5  Align=00001  Fill=0000
+    RODATA            Offs=0078B9  Size=004ABC  Align=00001  Fill=0000
+    BSS               Offs=0012CB  Size=000022  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000006  Align=00001  Fill=0000
+    PAL5A             Offs=000000  Size=010000  Align=00001  Fill=0000
+    PAL5B             Offs=000000  Size=010000  Align=00001  Fill=0000
+    PAL5C             Offs=000000  Size=010000  Align=00001  Fill=0000
+    PAL5D             Offs=000000  Size=010000  Align=00001  Fill=0000
+packet_asm.o:
+    CODE              Offs=005BBC  Size=000146  Align=00001  Fill=0000
+    BSS               Offs=0012ED  Size=000100  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000006  Size=000026  Align=00001  Fill=0000
+color_asm.o:
+    CODE              Offs=005D02  Size=000973  Align=00001  Fill=0000
+    DATA              Offs=000003  Size=000008  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00002C  Size=000006  Align=00001  Fill=0000
+    COLORBSS          Offs=000000  Size=00071C  Align=00001  Fill=0000
+    COLORRODATA       Offs=000000  Size=000A80  Align=00001  Fill=0000
+    BOOT              Offs=0002B2  Size=000880  Align=00001  Fill=0000
+objects_asm.o:
+    CODE              Offs=006675  Size=000515  Align=00001  Fill=0000
+    RODATA            Offs=00C375  Size=00030E  Align=00001  Fill=0000
+    BSS               Offs=0013ED  Size=00013A  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000032  Size=000008  Align=00001  Fill=0000
+projection_asm.o:
+    CODE              Offs=006B8A  Size=007097  Align=00001  Fill=0000
+stage_asm.o:
+    CODE              Offs=00DC21  Size=000406  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00003A  Size=000006  Align=00001  Fill=0000
+stage_update_asm.o:
+    CODE              Offs=00E027  Size=000161  Align=00001  Fill=0000
+enemy_render_asm.o:
+    CODE              Offs=00E188  Size=000276  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000040  Size=000004  Align=00001  Fill=0000
+enemy_collision_asm.o:
+    CODE              Offs=00E3FE  Size=00020D  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000044  Size=000002  Align=00001  Fill=0000
+enemy_geometry_asm.o:
+    CODE              Offs=00E60B  Size=00008A  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000046  Size=000004  Align=00001  Fill=0000
+enemy_bullet_asm.o:
+    CODE              Offs=00E695  Size=00014A  Align=00001  Fill=0000
+enemy_update_asm.o:
+    CODE              Offs=00E7DF  Size=0002BE  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00004A  Size=000002  Align=00001  Fill=0000
+player_asm.o:
+    CODE              Offs=00EA9D  Size=000262  Align=00001  Fill=0000
+frame_asm.o:
+    CODE              Offs=00ECFF  Size=000309  Align=00001  Fill=0000
+boss_render_asm.o:
+    CODE              Offs=00F008  Size=00019F  Align=00001  Fill=0000
+boss_collision_asm.o:
+    CODE              Offs=00F1A7  Size=000162  Align=00001  Fill=0000
+combat_asm.o:
+    CODE              Offs=00F309  Size=0001A5  Align=00001  Fill=0000
+dma_asm.o:
+    CODE              Offs=00F4AE  Size=00004B  Align=00001  Fill=0000
+    BSS               Offs=001527  Size=000146  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00004C  Size=000002  Align=00001  Fill=0000
+submit_asm.o:
+    CODE              Offs=00F4F9  Size=0000D4  Align=00001  Fill=0000
+smooth_depth_asm.o:
+    CODE              Offs=00F5CD  Size=000481  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(add.o):
+    CODE              Offs=00FA4E  Size=00001C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(addeqsp.o):
+    CODE              Offs=00FA6A  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(addysp.o):
+    CODE              Offs=00FA7B  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax2.o):
+    CODE              Offs=00FA89  Size=00000B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax3.o):
+    CODE              Offs=00FA94  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(aslax4.o):
+    CODE              Offs=00FAA2  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asleax1.o):
+    CODE              Offs=00FAB3  Size=00000C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax1.o):
+    CODE              Offs=00FABF  Size=00000A  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax2.o):
+    CODE              Offs=00FAC9  Size=00000F  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(asrax3.o):
+    CODE              Offs=00FAD8  Size=000014  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp1.o):
+    CODE              Offs=00FAEC  Size=000009  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp2.o):
+    CODE              Offs=00FAF5  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp3.o):
+    CODE              Offs=00FB02  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp4.o):
+    CODE              Offs=00FB0F  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(decsp5.o):
+    CODE              Offs=00FB1C  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(div.o):
+    CODE              Offs=00FB29  Size=000015  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(icmp.o):
+    CODE              Offs=00FB3E  Size=00002E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp1.o):
+    CODE              Offs=00FB6C  Size=000007  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp2.o):
+    CODE              Offs=00FB73  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp3.o):
+    CODE              Offs=00FB89  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp4.o):
+    CODE              Offs=00FB8E  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp5.o):
+    CODE              Offs=00FB93  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp6.o):
+    CODE              Offs=00FB98  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp7.o):
+    CODE              Offs=00FB9D  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(incsp8.o):
+    CODE              Offs=00FBA2  Size=000005  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(ldai.o):
+    CODE              Offs=00FBA7  Size=00000C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(lmul.o):
+    CODE              Offs=00FBB3  Size=00005C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(lpush.o):
+    CODE              Offs=00FC0F  Size=000021  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(makebool.o):
+    CODE              Offs=00FC30  Size=00002C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(memcpy.o):
+    CODE              Offs=00FC5C  Size=00003C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax10.o):
+    CODE              Offs=00FC98  Size=000019  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax3.o):
+    CODE              Offs=00FCB1  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax5.o):
+    CODE              Offs=00FCC2  Size=000014  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax6.o):
+    CODE              Offs=00FCD6  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(mulax7.o):
+    CODE              Offs=00FCEC  Size=000019  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(negabs.o):
+    CODE              Offs=00FD05  Size=000012  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(popptr1.o):
+    CODE              Offs=00FD17  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pusha.o):
+    CODE              Offs=00FD25  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pushax.o):
+    CODE              Offs=00FD3B  Size=00001A  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(pushwsp.o):
+    CODE              Offs=00FD55  Size=00001C  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shelp.o):
+    CODE              Offs=00FD71  Size=000020  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax1.o):
+    CODE              Offs=00FD91  Size=000008  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax3.o):
+    CODE              Offs=00FD99  Size=00000E  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(shrax4.o):
+    CODE              Offs=00FDA7  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staspidx.o):
+    CODE              Offs=00FDB8  Size=000016  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staxsp.o):
+    CODE              Offs=00FDCE  Size=00000B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(staxspi.o):
+    CODE              Offs=00FDD9  Size=00001B  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(sub.o):
+    CODE              Offs=00FDF4  Size=000015  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(subysp.o):
+    CODE              Offs=00FE09  Size=00000D  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(udiv.o):
+    CODE              Offs=00FE16  Size=00004F  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(umod.o):
+    CODE              Offs=00FE65  Size=000011  Align=00001  Fill=0000
+D:\HomeBrew\CC65\lib\none.lib(zeropage.o):
+    ZEROPAGE          Offs=00004E  Size=00001A  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+CODE                  000000  00FE75  00FE76  00001
+ZEROPAGE              000000  000067  000068  00001
+COLORRODATA           000400  000E7F  000A80  00001
+COLORBSS              000E80  00159B  00071C  00001
+RODATA                002000  00E682  00C683  00001
+BOOT                  008000  008B31  000B32  00001
+DATA                  00E683  00E68D  00000B  00001
+BSS                   00E68E  00FCFA  00166D  00001
+HEADER                00FFB0  00FFFF  000050  00001
+GSU                   018000  01883E  00083F  00010
+GFX                   430000  43FFFF  010000  00001
+ASSET44               440000  44FFFF  010000  00001
+ASSET45               450000  45FFFF  010000  00001
+ASSET46               460000  46FFFF  010000  00001
+ASSET47               470000  47FFFF  010000  00001
+ASSET48               480000  48FFFF  010000  00001
+ASSET49               490000  49FFFF  010000  00001
+ASSET4A               4A0000  4AFFFF  010000  00001
+ASSET4B               4B0000  4BFFFF  010000  00001
+ASSET4C               4C0000  4CFFFF  010000  00001
+ASSET4D               4D0000  4DFFFF  010000  00001
+ASSET4E               4E0000  4EFFFF  010000  00001
+ASSET4F               4F0000  4FFFFF  010000  00001
+ASSET50               500000  50FFFF  010000  00001
+ASSET51               510000  51FFFF  010000  00001
+ASSET52               520000  52FFFF  010000  00001
+ASSET53               530000  53FFFF  010000  00001
+ASSET54               540000  54FFFF  010000  00001
+ASSET55               550000  55FFFF  010000  00001
+ASSET56               560000  56FFFF  010000  00001
+ASSET57               570000  57FFFF  010000  00001
+ASSET58               580000  58FFFF  010000  00001
+ASSET59               590000  59FFFF  010000  00001
+PAL5A                 5A0000  5AFFFF  010000  00001
+PAL5B                 5B0000  5BFFFF  010000  00001
+PAL5C                 5C0000  5CFFFF  010000  00001
+PAL5D                 5D0000  5DFFFF  010000  00001
+SCALE5E               5E0000  5EFFFF  010000  00001
+SPAN5F                5F0000  5FFFFF  010000  00001
+
+
+Exports list by name:
+---------------------
+__COLORRODATA_LOAD__      008B32 RLA    __COLORRODATA_RUN__       000400 RLA    
+__COLORRODATA_SIZE__      000A80 REA    __STARTUP__               000001 REA    
+_boss_age                 00E8F5 RLA    _boss_dda_phase           00E9CF RLA    
+_boss_dda_x               00E9D5 RLA    _boss_dda_y               00E9DB RLA    
+_boss_death_parts         00E8F7 RLA    _boss_death_timer         00E8F6 RLA    
+_boss_history_x           00E6D0 RLA    _boss_history_y           00E750 RLA    
+_boss_history_z           00E7D0 RLA    _boss_part_active         00E6AC RLA    
+_boss_part_bottom         00E69A RLA    _boss_part_timer          00E6B5 RLA    
+_boss_part_x              00E691 RLA    _boss_part_z              00E6A3 RLA    
+_boss_render_camera_delta 00E8F3 RLA    _fx_asset_height          0082E4 RLA    
+_fx_asset_width           0082B8 RLA    _fx_boss_hits             00F1A7 RLA    
+_fx_boss_project          00F0E4 RLA    _fx_build_ground          0032F7 RLA    
+_fx_build_packet          005BBC RLA    _fx_buttons               00F267 RLA    
+_fx_draw                  00EAE3 RLA    _fx_draw_count            00ED63 RLA    
+_fx_em0_geometry          00E60B RLA    _fx_enemy_collisions      00E3FE RLA    
+_fx_enemy_em1_update      00E977 RLA    _fx_enemy_em1_update_reference 001D9F RLA    
+_fx_enemy_fire_em1        001D61 RLA    _fx_enemy_remove          001D56 RLA    
+_fx_enemy_render          00E188 RLA    _fx_enemy_render_bullets  00E29F RLA    
+_fx_far_d_acc             00F273 RLA    _fx_far_u_acc             00F271 RLA    
+_fx_fire_actions          00F26A RLA    _fx_frame                 00ECFF RLA    
+_fx_ground_c1ptr          00F94F RLA    _fx_ground_c3ptr          00F951 RLA    
+_fx_ground_camera         00833C RLA    _fx_ground_color1         00F27A RLA    
+_fx_ground_color3         00F43C RLA    _fx_ground_depth_rows     0083CD RLA    
+_fx_ground_far_x          00F92D RLA    _fx_ground_far_xptr       00F94B RLA    
+_fx_ground_far_y          00F955 RLA    _fx_ground_horizon        00F953 RLA    
+_fx_ground_horizontal     00F5FE RLA    _fx_ground_hptr           00F928 RLA    
+_fx_ground_palette_record 00F92B RLA    _fx_ground_phase          00F266 RLA    
+_fx_ground_vptr           00F94D RLA    _fx_ground_world_phase    00F92A RLA    
+_fx_input                 00F269 RLA    _fx_open_size             00F5CD RLA    
+_fx_packet                00ED66 RLA    _fx_packet_count          00ED64 RLA    
+_fx_present               00306D RLA    _fx_read_input            002F81 RLA    
+_fx_sky_color             0098B7 RLA    _fx_stage_contact         00DEDC RLA    
+_fx_stage_render          00DC21 RLA    _fx_stage_update          00E027 RLA    
+_fx_submit                00F4F9 RLA    _fx_toggle_color          005D02 RLA    
+_ground_irq_vblank_count  00F26E RLA    _history_head             00E8F4 RLA    
+_hit_pending              00F275 RLA    _intro_timer              00E9F2 RLA    
+_main                     002DCE RLA    _memcpy                   00FC5C RLA    
+_monosh_bom_geometry      0047FF RLA    _monosh_boss_body_geometry 00375E RLA    
+_monosh_boss_bom_depth_by_size 00391A RLA    _monosh_boss_bom_geometry 00383C RLA    
+_monosh_boss_bullet_velocity 003A08 RLA    _monosh_boss_explosion_ground_bottom 003999 RLA    
+_monosh_boss_explosion_scale_low 00392A RLA    _monosh_boss_face_geometry 003680 RLA    
+_monosh_boss_frame        0000B2 RLA    _monosh_boss_hp           00E68F RLA    
+_monosh_boss_init         000015 RLA    _monosh_boss_path_center_y 0021E0 RLA    
+_monosh_boss_path_center_y_mid 0024B0 RLA    _monosh_boss_path_x       0020F0 RLA    
+_monosh_boss_path_x_mid   0023C0 RLA    _monosh_boss_path_z       002000 RLA    
+_monosh_boss_path_z_mid   0022D0 RLA    _monosh_boss_prepare_render 0000D6 RLA    
+_monosh_boss_render_only  00F008 RLA    _monosh_boss_should_restart 000000 RLA    
+_monosh_boss_state        00E68E RLA    _monosh_bullet_reflect_rng 00E92D RLA    
+_monosh_combat_fast_cache_reset 002F37 RLA    _monosh_combat_fast_frame 00F309 RLA    
+_monosh_combat_fast_render 00F383 RLA    _monosh_combat_fire_cooldown 00E92E RLA    
+_monosh_combat_init       00084A RLA    _monosh_combat_reflect_bullet 002DD9 RLA    
+_monosh_combat_render     0008E3 RLA    _monosh_ebullet_animation_geometry 004A48 RLA    
+_monosh_ebullet_geometry  004C04 RLA    _monosh_ebullet_velocity  004C0E RLA    
+_monosh_em1_closed_geometry 0048DD RLA    _monosh_enemies           00E933 RLA    
+_monosh_enemy_active_count_value 00E931 RLA    _monosh_enemy_bullet_count 00E930 RLA    
+_monosh_enemy_bullets     00E983 RLA    _monosh_enemy_em1_count   00E9C9 RLA    
+_monosh_enemy_em1_phase   00E9B0 RLA    _monosh_enemy_fast_advance 00E7DF RLA    
+_monosh_enemy_fast_update_bullets 00E695 RLA    _monosh_enemy_fire_boss_at 000C07 RLA    
+_monosh_enemy_fire_em0_fast 001971 RLA    _monosh_enemy_frame       000B19 RLA    
+_monosh_enemy_geometry    004721 RLA    _monosh_enemy_ground_bottom 0049D9 RLA    
+_monosh_enemy_init        000A84 RLA    _monosh_enemy_paths       00706F RLA    
+_monosh_enemy_player_hit  00E9CE RLA    _monosh_enemy_render_only 000B37 RLA    
+_monosh_enemy_spawns      0070A5 RLA    _monosh_enemy_stage_complete_flag 00E932 RLA    
+_monosh_ground_depth_pointer 00F278 RLA    _monosh_ground_offset     00E683 RLA    
+_monosh_ground_screen_delta 00E684 RLA    _monosh_player_bottom     00E9E5 RLA    
+_monosh_player_bullet_count 00E914 RLA    _monosh_player_bullet_sizes 004708 RLA    
+_monosh_player_bullets    00E905 RLA    _monosh_player_draw_asset 00248D RLA    
+_monosh_player_draw_flags 002453 RLA    _monosh_player_init       002414 RLA    
+_monosh_player_invuln     00E9E8 RLA    _monosh_player_pose       00E9EA RLA    
+_monosh_player_state      00E9E7 RLA    _monosh_player_stumble    00E9E9 RLA    
+_monosh_player_update     00EA9D RLA    _monosh_player_update_reference 002946 RLA    
+_monosh_player_x          00E9E3 RLA    _monosh_project_x         006B8A RLA    
+_monosh_reflected_bullet_count 00E924 RLA    _monosh_reflected_bullets 00E915 RLA    
+_monosh_runtime_fire_actions 00F26B RLA    _monosh_runtime_frame_counter 00F26C RLA    
+_monosh_runtime_paused    00F270 RLA    _monosh_stage1_spawn_count 00751B RLA    
+_monosh_stage1_spawns     007173 RLA    _monosh_stage_frame       002A59 RLA    
+_monosh_stage_frame_counter 00EA57 RLA    _monosh_stage_geometry    007F85 RLA    
+_monosh_stage_half_frame  00EA5B RLA    _monosh_stage_init        002A36 RLA    
+_monosh_stage_lift        00829A RLA    _monosh_stage_near_count  00EA5C RLA    
+_monosh_stage_need_hitboxes 00EADE RLA    _monosh_stage_object_count 00EA55 RLA    
+_monosh_stage_objects     00E9F5 RLA    _monosh_stage_render_only 002A87 RLA    
+_monosh_stage_spawn_index 00EA56 RLA    _monosh_stage_title_timer 00E9EB RLA    
+_monosh_title_draw        002DC3 RLA    _monosh_title_visible     00E685 RLA    
+_movement_fraction        00E9F0 RLA    _old_buttons              00F276 RLA    
+_player_flip              00E9F3 RLA    _player_fy                00E9EC RLA    
+_player_run_phase         00E9F4 RLA    _pose_x_01                007135 RLA    
+_pose_x_12                007148 RLA    _pose_x_23                00715B RLA    
+addeq0sp                  00FA6A RLA    addeqysp                  00FA6C RLA    
+addysp                    00FA7C RLA    addysp1                   00FA7B RLA    
+aslax2                    00FA89 RLA    aslax4                    00FAA2 RLA    
+asrax1                    00FABF RLA    asrax2                    00FAC9 RLA    
+asrax3                    00FAD8 RLA    booleq                    00FC36 RLA    
+boolne                    00FC30 RLA    boolult                   00FC4F RLA    
+c_sp                      00004E RLZ    color_boot_map            008332 RLA    
+color_palette             0082B2 RLA    decsp1                    00FAEC RLA    
+decsp2                    00FAF5 RLA    decsp3                    00FB02 RLA    
+decsp4                    00FB0F RLA    decsp5                    00FB1C RLA    
+fx_build_color            005D4F RLA    fx_build_obj              0066CA RLA    
+fx_color_dma_bytes        00158E RLA    fx_color_dma_count        00158C RLA    
+fx_color_staged           001592 RLA    fx_commit_dma             00F4F8 RLA    
+fx_dma_bytes              00FC79 RLA    fx_dma_count              00FC77 RLA    
+fx_dma_desc               00FC7B RLA    fx_em1_open_sizes         00F5F8 RLA    
+fx_emit_native            00E375 RLA    fx_is_obj                 006675 RLA    
+fx_latch_color            006535 RLA    fx_latch_obj              006AF1 RLA    
+fx_plan_dma               00F4E5 RLA    fx_project16              006BA8 RLA    
+fx_read_gsu_spans         00F4AE RLA    fx_reset_next_bounds      00F4F8 RLA    
+fx_sky_pointer            00F95B RLA    fx_stage_color            006637 RLA    
+fx_upload_color           006569 RLA    fx_upload_ground          003471 RLA    
+fx_upload_obj             006B09 RLA    ground_empty              0034CF RLA    
+incsp1                    00FB6C RLA    incsp2                    00FB7B RLA    
+incsp3                    00FB89 RLA    incsp4                    00FB8E RLA    
+incsp5                    00FB93 RLA    incsp6                    00FB98 RLA    
+incsp7                    00FB9D RLA    incsp8                    00FBA2 RLA    
+ldaidx                    00FBA7 RLA    mulax10                   00FC98 RLA    
+mulax3                    00FCB1 RLA    mulax5                    00FCC2 RLA    
+mulax6                    00FCD6 RLA    mulax7                    00FCEC RLA    
+negax                     00FD09 RLA    order                     00F97B RLA    
+packet_work               00000C RLZ    popax                     00FB73 RLA    
+popptr1                   00FD17 RLA    popsargsudiv16            00FD71 RLA    
+ptr1                      000056 RLZ    ptr2                      000058 RLZ    
+ptr3                      00005A RLZ    ptr4                      00005C RLZ    
+push0                     00FD3B RLA    push0ax                   00FC12 RLA    
+pusha                     00FD29 RLA    pusha0                    00FD3D RLA    
+pushax                    00FD3F RLA    pushw0sp                  00FD55 RLA    
+pushwysp                  00FD57 RLA    regsave                   000052 RLZ    
+shlax2                    00FA89 RLA    shlax3                    00FA94 RLA    
+shlax4                    00FAA2 RLA    shleax1                   00FAB3 RLA    
+shrax1                    00FD91 RLA    shrax3                    00FD99 RLA    
+shrax4                    00FDA7 RLA    sreg                      000050 RLZ    
+staspidx                  00FDB8 RLA    stax0sp                   00FDCE RLA    
+staxspidx                 00FDD9 RLA    staxysp                   00FDD0 RLA    
+subysp                    00FE09 RLA    tmp1                      00005E RLZ    
+tmp2                      00005F RLZ    tmp3                      000060 RLZ    
+tmp4                      000061 RLZ    tosaddax                  00FA50 RLA    
+tosdiva0                  00FB29 RLA    tosicmp                   00FB40 RLA    
+tosicmp0                  00FB3E RLA    tossuba0                  00FDF4 RLA    
+tossubax                  00FDF6 RLA    tosudiva0                 00FE16 RLA    
+tosudivax                 00FE18 RLA    tosumoda0                 00FE65 RLA    
+tosumul0ax                00FBB3 RLA    udiv16                    00FE27 RLA    
+
+
+
+Exports list by value:
+----------------------
+_monosh_boss_should_restart 000000 RLA    __STARTUP__               000001 REA    
+packet_work               00000C RLZ    _monosh_boss_init         000015 RLA    
+c_sp                      00004E RLZ    sreg                      000050 RLZ    
+regsave                   000052 RLZ    ptr1                      000056 RLZ    
+ptr2                      000058 RLZ    ptr3                      00005A RLZ    
+ptr4                      00005C RLZ    tmp1                      00005E RLZ    
+tmp2                      00005F RLZ    tmp3                      000060 RLZ    
+tmp4                      000061 RLZ    _monosh_boss_frame        0000B2 RLA    
+_monosh_boss_prepare_render 0000D6 RLA    __COLORRODATA_RUN__       000400 RLA    
+_monosh_combat_init       00084A RLA    _monosh_combat_render     0008E3 RLA    
+__COLORRODATA_SIZE__      000A80 REA    _monosh_enemy_init        000A84 RLA    
+_monosh_enemy_frame       000B19 RLA    _monosh_enemy_render_only 000B37 RLA    
+_monosh_enemy_fire_boss_at 000C07 RLA    fx_color_dma_count        00158C RLA    
+fx_color_dma_bytes        00158E RLA    fx_color_staged           001592 RLA    
+_monosh_enemy_fire_em0_fast 001971 RLA    _fx_enemy_remove          001D56 RLA    
+_fx_enemy_fire_em1        001D61 RLA    _fx_enemy_em1_update_reference 001D9F RLA    
+_monosh_boss_path_z       002000 RLA    _monosh_boss_path_x       0020F0 RLA    
+_monosh_boss_path_center_y 0021E0 RLA    _monosh_boss_path_z_mid   0022D0 RLA    
+_monosh_boss_path_x_mid   0023C0 RLA    _monosh_player_init       002414 RLA    
+_monosh_player_draw_flags 002453 RLA    _monosh_player_draw_asset 00248D RLA    
+_monosh_boss_path_center_y_mid 0024B0 RLA    _monosh_player_update_reference 002946 RLA    
+_monosh_stage_init        002A36 RLA    _monosh_stage_frame       002A59 RLA    
+_monosh_stage_render_only 002A87 RLA    _monosh_title_draw        002DC3 RLA    
+_main                     002DCE RLA    _monosh_combat_reflect_bullet 002DD9 RLA    
+_monosh_combat_fast_cache_reset 002F37 RLA    _fx_read_input            002F81 RLA    
+_fx_present               00306D RLA    _fx_build_ground          0032F7 RLA    
+fx_upload_ground          003471 RLA    ground_empty              0034CF RLA    
+_monosh_boss_face_geometry 003680 RLA    _monosh_boss_body_geometry 00375E RLA    
+_monosh_boss_bom_geometry 00383C RLA    _monosh_boss_bom_depth_by_size 00391A RLA    
+_monosh_boss_explosion_scale_low 00392A RLA    _monosh_boss_explosion_ground_bottom 003999 RLA    
+_monosh_boss_bullet_velocity 003A08 RLA    _monosh_player_bullet_sizes 004708 RLA    
+_monosh_enemy_geometry    004721 RLA    _monosh_bom_geometry      0047FF RLA    
+_monosh_em1_closed_geometry 0048DD RLA    _monosh_enemy_ground_bottom 0049D9 RLA    
+_monosh_ebullet_animation_geometry 004A48 RLA    _monosh_ebullet_geometry  004C04 RLA    
+_monosh_ebullet_velocity  004C0E RLA    _fx_build_packet          005BBC RLA    
+_fx_toggle_color          005D02 RLA    fx_build_color            005D4F RLA    
+fx_latch_color            006535 RLA    fx_upload_color           006569 RLA    
+fx_stage_color            006637 RLA    fx_is_obj                 006675 RLA    
+fx_build_obj              0066CA RLA    fx_latch_obj              006AF1 RLA    
+fx_upload_obj             006B09 RLA    _monosh_project_x         006B8A RLA    
+fx_project16              006BA8 RLA    _monosh_enemy_paths       00706F RLA    
+_monosh_enemy_spawns      0070A5 RLA    _pose_x_01                007135 RLA    
+_pose_x_12                007148 RLA    _pose_x_23                00715B RLA    
+_monosh_stage1_spawns     007173 RLA    _monosh_stage1_spawn_count 00751B RLA    
+_monosh_stage_geometry    007F85 RLA    _monosh_stage_lift        00829A RLA    
+color_palette             0082B2 RLA    _fx_asset_width           0082B8 RLA    
+_fx_asset_height          0082E4 RLA    color_boot_map            008332 RLA    
+_fx_ground_camera         00833C RLA    _fx_ground_depth_rows     0083CD RLA    
+__COLORRODATA_LOAD__      008B32 RLA    _fx_sky_color             0098B7 RLA    
+_fx_stage_render          00DC21 RLA    _fx_stage_contact         00DEDC RLA    
+_fx_stage_update          00E027 RLA    _fx_enemy_render          00E188 RLA    
+_fx_enemy_render_bullets  00E29F RLA    fx_emit_native            00E375 RLA    
+_fx_enemy_collisions      00E3FE RLA    _fx_em0_geometry          00E60B RLA    
+_monosh_ground_offset     00E683 RLA    _monosh_ground_screen_delta 00E684 RLA    
+_monosh_title_visible     00E685 RLA    _monosh_boss_state        00E68E RLA    
+_monosh_boss_hp           00E68F RLA    _boss_part_x              00E691 RLA    
+_monosh_enemy_fast_update_bullets 00E695 RLA    _boss_part_bottom         00E69A RLA    
+_boss_part_z              00E6A3 RLA    _boss_part_active         00E6AC RLA    
+_boss_part_timer          00E6B5 RLA    _boss_history_x           00E6D0 RLA    
+_boss_history_y           00E750 RLA    _boss_history_z           00E7D0 RLA    
+_monosh_enemy_fast_advance 00E7DF RLA    _boss_render_camera_delta 00E8F3 RLA    
+_history_head             00E8F4 RLA    _boss_age                 00E8F5 RLA    
+_boss_death_timer         00E8F6 RLA    _boss_death_parts         00E8F7 RLA    
+_monosh_player_bullets    00E905 RLA    _monosh_player_bullet_count 00E914 RLA    
+_monosh_reflected_bullets 00E915 RLA    _monosh_reflected_bullet_count 00E924 RLA    
+_monosh_bullet_reflect_rng 00E92D RLA    _monosh_combat_fire_cooldown 00E92E RLA    
+_monosh_enemy_bullet_count 00E930 RLA    _monosh_enemy_active_count_value 00E931 RLA    
+_monosh_enemy_stage_complete_flag 00E932 RLA    _monosh_enemies           00E933 RLA    
+_fx_enemy_em1_update      00E977 RLA    _monosh_enemy_bullets     00E983 RLA    
+_monosh_enemy_em1_phase   00E9B0 RLA    _monosh_enemy_em1_count   00E9C9 RLA    
+_monosh_enemy_player_hit  00E9CE RLA    _boss_dda_phase           00E9CF RLA    
+_boss_dda_x               00E9D5 RLA    _boss_dda_y               00E9DB RLA    
+_monosh_player_x          00E9E3 RLA    _monosh_player_bottom     00E9E5 RLA    
+_monosh_player_state      00E9E7 RLA    _monosh_player_invuln     00E9E8 RLA    
+_monosh_player_stumble    00E9E9 RLA    _monosh_player_pose       00E9EA RLA    
+_monosh_stage_title_timer 00E9EB RLA    _player_fy                00E9EC RLA    
+_movement_fraction        00E9F0 RLA    _intro_timer              00E9F2 RLA    
+_player_flip              00E9F3 RLA    _player_run_phase         00E9F4 RLA    
+_monosh_stage_objects     00E9F5 RLA    _monosh_stage_object_count 00EA55 RLA    
+_monosh_stage_spawn_index 00EA56 RLA    _monosh_stage_frame_counter 00EA57 RLA    
+_monosh_stage_half_frame  00EA5B RLA    _monosh_stage_near_count  00EA5C RLA    
+_monosh_player_update     00EA9D RLA    _monosh_stage_need_hitboxes 00EADE RLA    
+_fx_draw                  00EAE3 RLA    _fx_frame                 00ECFF RLA    
+_fx_draw_count            00ED63 RLA    _fx_packet_count          00ED64 RLA    
+_fx_packet                00ED66 RLA    _monosh_boss_render_only  00F008 RLA    
+_fx_boss_project          00F0E4 RLA    _fx_boss_hits             00F1A7 RLA    
+_fx_ground_phase          00F266 RLA    _fx_buttons               00F267 RLA    
+_fx_input                 00F269 RLA    _fx_fire_actions          00F26A RLA    
+_monosh_runtime_fire_actions 00F26B RLA    _monosh_runtime_frame_counter 00F26C RLA    
+_ground_irq_vblank_count  00F26E RLA    _monosh_runtime_paused    00F270 RLA    
+_fx_far_u_acc             00F271 RLA    _fx_far_d_acc             00F273 RLA    
+_hit_pending              00F275 RLA    _old_buttons              00F276 RLA    
+_monosh_ground_depth_pointer 00F278 RLA    _fx_ground_color1         00F27A RLA    
+_monosh_combat_fast_frame 00F309 RLA    _monosh_combat_fast_render 00F383 RLA    
+_fx_ground_color3         00F43C RLA    fx_read_gsu_spans         00F4AE RLA    
+fx_plan_dma               00F4E5 RLA    fx_reset_next_bounds      00F4F8 RLA    
+fx_commit_dma             00F4F8 RLA    _fx_submit                00F4F9 RLA    
+_fx_open_size             00F5CD RLA    fx_em1_open_sizes         00F5F8 RLA    
+_fx_ground_horizontal     00F5FE RLA    _fx_ground_hptr           00F928 RLA    
+_fx_ground_world_phase    00F92A RLA    _fx_ground_palette_record 00F92B RLA    
+_fx_ground_far_x          00F92D RLA    _fx_ground_far_xptr       00F94B RLA    
+_fx_ground_vptr           00F94D RLA    _fx_ground_c1ptr          00F94F RLA    
+_fx_ground_c3ptr          00F951 RLA    _fx_ground_horizon        00F953 RLA    
+_fx_ground_far_y          00F955 RLA    fx_sky_pointer            00F95B RLA    
+order                     00F97B RLA    tosaddax                  00FA50 RLA    
+addeq0sp                  00FA6A RLA    addeqysp                  00FA6C RLA    
+addysp1                   00FA7B RLA    addysp                    00FA7C RLA    
+shlax2                    00FA89 RLA    aslax2                    00FA89 RLA    
+shlax3                    00FA94 RLA    shlax4                    00FAA2 RLA    
+aslax4                    00FAA2 RLA    shleax1                   00FAB3 RLA    
+asrax1                    00FABF RLA    asrax2                    00FAC9 RLA    
+asrax3                    00FAD8 RLA    decsp1                    00FAEC RLA    
+decsp2                    00FAF5 RLA    decsp3                    00FB02 RLA    
+decsp4                    00FB0F RLA    decsp5                    00FB1C RLA    
+tosdiva0                  00FB29 RLA    tosicmp0                  00FB3E RLA    
+tosicmp                   00FB40 RLA    incsp1                    00FB6C RLA    
+popax                     00FB73 RLA    incsp2                    00FB7B RLA    
+incsp3                    00FB89 RLA    incsp4                    00FB8E RLA    
+incsp5                    00FB93 RLA    incsp6                    00FB98 RLA    
+incsp7                    00FB9D RLA    incsp8                    00FBA2 RLA    
+ldaidx                    00FBA7 RLA    tosumul0ax                00FBB3 RLA    
+push0ax                   00FC12 RLA    boolne                    00FC30 RLA    
+booleq                    00FC36 RLA    boolult                   00FC4F RLA    
+_memcpy                   00FC5C RLA    fx_dma_count              00FC77 RLA    
+fx_dma_bytes              00FC79 RLA    fx_dma_desc               00FC7B RLA    
+mulax10                   00FC98 RLA    mulax3                    00FCB1 RLA    
+mulax5                    00FCC2 RLA    mulax6                    00FCD6 RLA    
+mulax7                    00FCEC RLA    negax                     00FD09 RLA    
+popptr1                   00FD17 RLA    pusha                     00FD29 RLA    
+push0                     00FD3B RLA    pusha0                    00FD3D RLA    
+pushax                    00FD3F RLA    pushw0sp                  00FD55 RLA    
+pushwysp                  00FD57 RLA    popsargsudiv16            00FD71 RLA    
+shrax1                    00FD91 RLA    shrax3                    00FD99 RLA    
+shrax4                    00FDA7 RLA    staspidx                  00FDB8 RLA    
+stax0sp                   00FDCE RLA    staxysp                   00FDD0 RLA    
+staxspidx                 00FDD9 RLA    tossuba0                  00FDF4 RLA    
+tossubax                  00FDF6 RLA    subysp                    00FE09 RLA    
+tosudiva0                 00FE16 RLA    tosudivax                 00FE18 RLA    
+udiv16                    00FE27 RLA    tosumoda0                 00FE65 RLA    
+
+
+
+Imports list:
+-------------
+__COLORRODATA_LOAD__ ([linker generated]):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:16
+__COLORRODATA_RUN__ ([linker generated]):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:16
+__COLORRODATA_SIZE__ ([linker generated]):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:16
+__STARTUP__ (cpu_asm.o):
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:13
+_boss_age (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:10
+_boss_dda_phase (monosh_enemy.o):
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:7
+_boss_dda_x (monosh_enemy.o):
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:7
+_boss_dda_y (monosh_enemy.o):
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:7
+_boss_death_parts (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:9
+_boss_death_timer (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:9
+_boss_history_x (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:10
+_boss_history_y (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:10
+_boss_history_z (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:10
+_boss_part_active (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:6
+_boss_part_bottom (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:6
+_boss_part_timer (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:6
+_boss_part_x (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:6
+_boss_part_z (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:6
+_boss_render_camera_delta (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:7
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:16
+_fx_asset_height (asset_tables.o):
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:10
+_fx_asset_width (asset_tables.o):
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:10
+_fx_boss_hits (boss_collision_asm.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:14
+_fx_boss_project (boss_render_asm.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:13
+_fx_build_ground (ground_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:20
+_fx_build_packet (packet_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:20
+_fx_buttons (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:3
+_fx_draw (game.o):
+    submit_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\submit.s:5
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:10
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:7
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\objects.s:9
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:10
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:7
+_fx_draw_count (game.o):
+    submit_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\submit.s:5
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:13
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:10
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:7
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\objects.s:9
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:7
+_fx_em0_geometry (enemy_geometry_asm.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:10
+_fx_enemy_collisions (enemy_collision_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:14
+_fx_enemy_em1_update (enemy_update_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:13
+_fx_enemy_em1_update_reference (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:11
+_fx_enemy_fire_em1 (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:11
+_fx_enemy_remove (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:10
+_fx_enemy_render (enemy_render_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:15
+_fx_enemy_render_bullets (enemy_render_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:16
+_fx_far_d_acc (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:12
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:6
+_fx_far_u_acc (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:12
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:9
+_fx_fire_actions (game.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:6
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+_fx_frame (frame_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:3
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:26
+_fx_ground_c1ptr (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:7
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:4
+_fx_ground_c3ptr (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:7
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:4
+_fx_ground_camera (asset_tables.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:12
+_fx_ground_color1 (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:11
+_fx_ground_color3 (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:11
+_fx_ground_depth_rows (asset_tables.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:12
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:41
+_fx_ground_far_x (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:11
+_fx_ground_far_xptr (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:9
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:10
+_fx_ground_far_y (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:12
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:5
+_fx_ground_horizon (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:8
+_fx_ground_horizontal (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:11
+_fx_ground_hptr (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:10
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:7
+_fx_ground_palette_record (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:10
+_fx_ground_phase (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:8
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:8
+_fx_ground_vptr (ground.o):
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:7
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:4
+_fx_ground_world_phase (ground.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:8
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:10
+_fx_input (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+_fx_open_size (smooth_depth_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:62
+_fx_packet (game.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:7
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:3
+_fx_packet_count (game.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:7
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:3
+_fx_present (cpu_asm.o):
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:27
+_fx_read_input (cpu_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+_fx_sky_color (asset_tables.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:11
+_fx_stage_contact (stage_asm.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:16
+_fx_stage_render (stage_asm.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:14
+_fx_stage_update (stage_update_asm.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:15
+_fx_submit (submit_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:63
+_fx_toggle_color (color_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:22
+_ground_irq_vblank_count (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:8
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:39
+_history_head (monosh_boss.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:10
+_hit_pending (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+_intro_timer (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:8
+_main (game.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:3
+_memcpy (memcpy.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+_monosh_bom_geometry (monosh_enemy_data.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:7
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:7
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:33
+_monosh_boss_body_geometry (monosh_boss_data.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:8
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:8
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:29
+_monosh_boss_bom_depth_by_size (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:31
+_monosh_boss_bom_geometry (monosh_boss_data.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:8
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:30
+_monosh_boss_bullet_velocity (monosh_boss_data.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:64
+_monosh_boss_explosion_ground_bottom (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:33
+_monosh_boss_explosion_scale_low (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:32
+_monosh_boss_face_geometry (monosh_boss_data.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:8
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:8
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:28
+_monosh_boss_frame (monosh_boss.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:14
+_monosh_boss_hp (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:9
+_monosh_boss_init (monosh_boss.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:19
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:31
+_monosh_boss_path_center_y (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:24
+_monosh_boss_path_center_y_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:27
+_monosh_boss_path_x (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:23
+_monosh_boss_path_x_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:26
+_monosh_boss_path_z (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:22
+_monosh_boss_path_z_mid (monosh_boss_data.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:25
+_monosh_boss_prepare_render (monosh_boss.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:16
+_monosh_boss_render_only (boss_render_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:15
+_monosh_boss_should_restart (monosh_boss.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:19
+_monosh_boss_state (monosh_boss.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:9
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:16
+_monosh_bullet_reflect_rng (monosh_combat.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:19
+_monosh_combat_fast_cache_reset (combat_port.o):
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:29
+_monosh_combat_fast_frame (combat_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:13
+_monosh_combat_fast_render (combat_asm.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:20
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:28
+_monosh_combat_fire_cooldown (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:6
+_monosh_combat_init (monosh_combat.o):
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:32
+_monosh_combat_reflect_bullet (combat_port.o):
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:11
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:19
+_monosh_combat_render (monosh_combat.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:13
+_monosh_ebullet_animation_geometry (monosh_enemy_data.o):
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:9
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:65
+_monosh_ebullet_geometry (monosh_enemy_data.o):
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:9
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:35
+_monosh_ebullet_velocity (monosh_enemy_data.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:36
+_monosh_em1_closed_geometry (monosh_enemy_data.o):
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:7
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:8
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:34
+_monosh_enemies (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:6
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:5
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:6
+_monosh_enemy_active_count_value (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:17
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:6
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:5
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:6
+_monosh_enemy_bullet_count (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:18
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:6
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:7
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:37
+_monosh_enemy_bullets (monosh_enemy.o):
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:6
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:7
+_monosh_enemy_em1_count (monosh_enemy.o):
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:5
+_monosh_enemy_em1_phase (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:7
+_monosh_enemy_fast_advance (enemy_update_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:56
+_monosh_enemy_fast_update_bullets (enemy_bullet_asm.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:55
+_monosh_enemy_fire_boss_at (monosh_enemy.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:38
+_monosh_enemy_fire_em0_fast (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:10
+_monosh_enemy_frame (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:14
+_monosh_enemy_geometry (monosh_enemy_data.o):
+    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_geometry.s:4
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:32
+_monosh_enemy_ground_bottom (monosh_enemy_data.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:7
+_monosh_enemy_init (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:19
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:30
+_monosh_enemy_paths (monosh_enemy_data.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:6
+    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_geometry.s:4
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:30
+_monosh_enemy_player_hit (monosh_enemy.o):
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:8
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:6
+_monosh_enemy_render_only (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:15
+_monosh_enemy_spawns (monosh_enemy_data.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:31
+_monosh_enemy_stage_complete_flag (monosh_enemy.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:17
+_monosh_ground_depth_pointer (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:11
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:6
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:19
+_monosh_ground_offset (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:11
+    ground_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\ground.s:8
+_monosh_ground_screen_delta (game.o):
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:7
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:11
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:8
+    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_geometry.s:4
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:11
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:10
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:53
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:40
+_monosh_player_bottom (monosh_player.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:7
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:9
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:6
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:9
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:8
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:10
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:38
+_monosh_player_bullet_count (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:8
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:6
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:9
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:14
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:18
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:18
+_monosh_player_bullet_sizes (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:8
+_monosh_player_bullets (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:8
+    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:6
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:9
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:13
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:17
+_monosh_player_draw_asset (monosh_player.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:10
+_monosh_player_draw_flags (monosh_player.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:10
+_monosh_player_init (monosh_player.o):
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:28
+_monosh_player_invuln (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:7
+_monosh_player_pose (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:7
+_monosh_player_state (monosh_player.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:7
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:9
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:7
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:8
+_monosh_player_stumble (monosh_player.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:9
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:7
+_monosh_player_update (player_asm.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:10
+_monosh_player_update_reference (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:6
+_monosh_player_x (monosh_player.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:7
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:9
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:6
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:9
+    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_bullet.s:8
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:7
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:10
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:37
+_monosh_project_x (projection_asm.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:20
+_monosh_reflected_bullet_count (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:9
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:16
+_monosh_reflected_bullets (monosh_combat.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:9
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:15
+_monosh_runtime_fire_actions (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:7
+_monosh_runtime_frame_counter (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:7
+    objects_asm.o             D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\objects.s:9
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:11
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:9
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:18
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:21
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:39
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:22
+_monosh_runtime_paused (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:7
+_monosh_stage1_spawn_count (monosh_stage_data.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:7
+_monosh_stage1_spawns (monosh_stage_data.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:7
+_monosh_stage_frame (monosh_stage.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:14
+_monosh_stage_frame_counter (monosh_stage.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:6
+_monosh_stage_geometry (monosh_stage_data.o):
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:6
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:28
+_monosh_stage_half_frame (monosh_stage.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:6
+_monosh_stage_init (monosh_stage.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:19
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:29
+_monosh_stage_lift (monosh_stage_data.o):
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:6
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:29
+_monosh_stage_near_count (monosh_stage.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:6
+_monosh_stage_need_hitboxes (monosh_stage.o):
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:8
+_monosh_stage_object_count (monosh_stage.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:18
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:5
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:5
+_monosh_stage_objects (monosh_stage.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:5
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:5
+_monosh_stage_render_only (monosh_stage.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:15
+_monosh_stage_spawn_index (monosh_stage.o):
+    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage_update.s:5
+_monosh_stage_title_timer (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:8
+_monosh_title_draw (game.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:13
+_monosh_title_visible (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:18
+_movement_fraction (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:8
+_old_buttons (game.o):
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:6
+_player_flip (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+_player_fy (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+_player_run_phase (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+_pose_x_01 (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+_pose_x_12 (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+_pose_x_23 (monosh_player.o):
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:9
+addeq0sp (addeqsp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+addeqysp (addeqsp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+addysp (addysp.o):
+    incsp8.o                  runtime/incsp8.s:8
+    incsp7.o                  runtime/incsp7.s:8
+    incsp6.o                  runtime/incsp6.s:8
+    incsp5.o                  runtime/incsp5.s:8
+    incsp4.o                  runtime/incsp4.s:8
+    incsp3.o                  runtime/incsp3.s:8
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+addysp1 (addysp.o):
+    sub.o                     runtime/sub.s:8
+    lmul.o                    runtime/lmul.s:9
+aslax2 (aslax2.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+aslax4 (aslax4.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+asrax1 (asrax1.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+asrax2 (asrax2.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+asrax3 (asrax3.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+booleq (makebool.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+boolne (makebool.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+boolult (makebool.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+c_sp (zeropage.o):
+    subysp.o                  runtime/subysp.s:9
+    sub.o                     runtime/sub.s:9
+    staxspi.o                 runtime/staxspi.s:10
+    staxsp.o                  runtime/staxsp.s:8
+    staspidx.o                runtime/staspidx.s:9
+    pushwsp.o                 runtime/pushwsp.s:8
+    pushax.o                  runtime/pushax.s:8
+    pusha.o                   runtime/pusha.s:8
+    popptr1.o                 runtime/popptr1.s:9
+    memcpy.o                  common/memcpy.s:15
+    lpush.o                   runtime/lpush.s:13
+    lmul.o                    runtime/lmul.s:10
+    incsp2.o                  runtime/incsp2.s:8
+    incsp1.o                  runtime/incsp1.s:8
+    icmp.o                    runtime/icmp.s:9
+    decsp5.o                  runtime/decsp5.s:8
+    decsp4.o                  runtime/decsp4.s:8
+    decsp3.o                  runtime/decsp3.s:8
+    decsp2.o                  runtime/decsp2.s:8
+    decsp1.o                  runtime/decsp1.s:8
+    addysp.o                  runtime/addysp.s:8
+    addeqsp.o                 runtime/addeqsp.s:8
+    add.o                     runtime/add.s:12
+    submit_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\submit.s:6
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:21
+    player_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\player.s:10
+    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_update.s:12
+    projection_asm.o          D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\projection.s:4
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:20
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:10
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:10
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:10
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:10
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:10
+color_boot_map (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:15
+color_palette (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:15
+decsp1 (decsp1.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+decsp2 (decsp2.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+decsp3 (decsp3.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+decsp4 (decsp4.o):
+    lpush.o                   runtime/lpush.s:12
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+decsp5 (decsp5.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+fx_build_color (color_asm.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:12
+fx_build_obj (objects_asm.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:11
+fx_color_dma_bytes (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:14
+fx_color_dma_count (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:14
+fx_color_staged (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:15
+fx_commit_dma (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:12
+fx_dma_bytes (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:12
+fx_dma_count (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:12
+fx_dma_desc (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:12
+fx_em1_open_sizes (smooth_depth_asm.o):
+    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_collision.s:9
+    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\enemy_render.s:12
+fx_emit_native (enemy_render_asm.o):
+    combat_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\combat.s:10
+    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\boss_render.s:9
+    frame_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\frame.s:20
+fx_is_obj (objects_asm.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:11
+fx_latch_color (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:14
+fx_latch_obj (objects_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:11
+fx_plan_dma (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:12
+fx_project16 (projection_asm.o):
+    stage_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\stage.s:7
+fx_read_gsu_spans (dma_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:13
+fx_reset_next_bounds (dma_asm.o):
+    packet_asm.o              D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\packet.s:10
+fx_sky_pointer (ground_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:6
+fx_stage_color (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:15
+fx_upload_color (color_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:14
+fx_upload_ground (ground_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:9
+fx_upload_obj (objects_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:11
+ground_empty (ground_asm.o):
+    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\cpu.s:8
+incsp1 (incsp1.o):
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:148
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp2 (incsp2.o):
+    staxspi.o                 runtime/staxspi.s:9
+    staspidx.o                runtime/staspidx.s:8
+    popptr1.o                 runtime/popptr1.s:8
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp3 (incsp3.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp4 (incsp4.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp5 (incsp5.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp6 (incsp6.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp7 (incsp7.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+incsp8 (incsp8.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+ldaidx (ldai.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+mulax10 (mulax10.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+mulax3 (mulax3.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+mulax5 (mulax5.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+mulax6 (mulax6.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+mulax7 (mulax7.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+negax (negabs.o):
+    shelp.o                   runtime/shelp.s:11
+    div.o                     runtime/div.s:11
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+order (packet_asm.o):
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:11
+packet_work (packet_asm.o):
+    color_asm.o               D:\HomeBrew\MonoSHFX2_color_20261008\game\v001\color.s:12
+popax (incsp2.o):
+    shelp.o                   runtime/shelp.s:11
+    memcpy.o                  common/memcpy.s:14
+popptr1 (popptr1.o):
+    umod.o                    runtime/umod.s:8
+    udiv.o                    runtime/udiv.s:9
+    memcpy.o                  common/memcpy.s:14
+popsargsudiv16 (shelp.o):
+    div.o                     runtime/div.s:11
+ptr1 (zeropage.o):
+    udiv.o                    runtime/udiv.s:10
+    staxspi.o                 runtime/staxspi.s:10
+    staspidx.o                runtime/staspidx.s:9
+    shelp.o                   runtime/shelp.s:12
+    popptr1.o                 runtime/popptr1.s:9
+    mulax7.o                  runtime/mulax7.s:10
+    mulax6.o                  runtime/mulax6.s:9
+    mulax5.o                  runtime/mulax5.s:9
+    mulax3.o                  runtime/mulax3.s:9
+    mulax10.o                 runtime/mulax10.s:9
+    memcpy.o                  common/memcpy.s:15
+    lmul.o                    runtime/lmul.s:10
+    ldai.o                    runtime/ldai.s:8
+    div.o                     runtime/div.s:12
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:11
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:11
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:11
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:11
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:11
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:11
+ptr2 (zeropage.o):
+    memcpy.o                  common/memcpy.s:15
+ptr3 (zeropage.o):
+    memcpy.o                  common/memcpy.s:15
+    lmul.o                    runtime/lmul.s:10
+ptr4 (zeropage.o):
+    umod.o                    runtime/umod.s:9
+    udiv.o                    runtime/udiv.s:10
+    shelp.o                   runtime/shelp.s:12
+    lmul.o                    runtime/lmul.s:10
+push0 (pushax.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+push0ax (lpush.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+pusha (pusha.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    game.o                    D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\game.s:148
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+pusha0 (pushax.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+pushax (pushax.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+pushw0sp (pushwsp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+pushwysp (pushwsp.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+regsave (zeropage.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:10
+shlax2 (aslax2.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+shlax3 (aslax3.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+shlax4 (aslax4.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+shleax1 (asleax1.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+shrax1 (shrax1.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+shrax3 (shrax3.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+shrax4 (shrax4.o):
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:439
+sreg (zeropage.o):
+    umod.o                    runtime/umod.s:9
+    udiv.o                    runtime/udiv.s:10
+    lpush.o                   runtime/lpush.s:13
+    lmul.o                    runtime/lmul.s:10
+    icmp.o                    runtime/icmp.s:9
+    asleax1.o                 runtime/asleax1.s:8
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:10
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:10
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:10
+staspidx (staspidx.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+stax0sp (staxsp.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+staxspidx (staxspi.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+staxysp (staxsp.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+subysp (subysp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+tmp1 (zeropage.o):
+    staxspi.o                 runtime/staxspi.s:10
+    staspidx.o                runtime/staspidx.s:9
+    shrax4.o                  runtime/shrax4.s:8
+    shrax3.o                  runtime/shrax3.s:8
+    shrax1.o                  runtime/shrax1.s:8
+    shelp.o                   runtime/shelp.s:12
+    div.o                     runtime/div.s:12
+    asrax3.o                  runtime/asrax3.s:9
+    asrax2.o                  runtime/asrax2.s:8
+    asrax1.o                  runtime/asrax1.s:8
+    asleax1.o                 runtime/asleax1.s:8
+    aslax4.o                  runtime/aslax4.s:8
+    aslax3.o                  runtime/aslax3.s:8
+    aslax2.o                  runtime/aslax2.s:8
+    add.o                     runtime/add.s:12
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:11
+tmp2 (zeropage.o):
+    shelp.o                   runtime/shelp.s:12
+    lmul.o                    runtime/lmul.s:10
+    div.o                     runtime/div.s:12
+tmp3 (zeropage.o):
+    lmul.o                    runtime/lmul.s:10
+tmp4 (zeropage.o):
+    lmul.o                    runtime/lmul.s:10
+tosaddax (add.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+tosdiva0 (div.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+tosicmp (icmp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+tosicmp0 (icmp.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+tossuba0 (sub.o):
+    monosh_stage.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+tossubax (sub.o):
+    monosh_player.o           D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+tosudiva0 (udiv.o):
+    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_enemy.s:3844
+tosudivax (udiv.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+tosumoda0 (umod.o):
+    combat_port.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\combat_port.s:280
+tosumul0ax (lmul.o):
+    monosh_boss.o             D:\HomeBrew\MonoSHFX2_color_20261008\build\game_v001\monosh_boss.s:1355
+udiv16 (udiv.o):
+    umod.o                    runtime/umod.s:8
+    shelp.o                   runtime/shelp.s:11
+

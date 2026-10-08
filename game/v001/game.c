@@ -138,6 +138,9 @@ void fx_frame(void)
 {
     unsigned char flags, target, world_active, stage_ready = 0, stage_hit;
     fx_read_input();
+#ifndef FX_4BPP
+    if ((fx_buttons & 0x2000) && !(old_buttons & 0x2000)) fx_toggle_color();
+#endif
     if ((fx_buttons & 0x1000) && !(old_buttons & 0x1000)) monosh_runtime_paused ^= 1;
     fx_input = 0; fx_fire_actions = 0;
     if (fx_buttons & 0x0100) fx_input |= MOVE_RIGHT;
