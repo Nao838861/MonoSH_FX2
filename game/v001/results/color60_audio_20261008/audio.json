@@ -1,0 +1,19 @@
+{
+  "fields": 16000,
+  "ticks": 32348,
+  "sfxCommands": [
+    1,
+    1,
+    18,
+    1,
+    1,
+    26
+  ],
+  "spawns": 26,
+  "busyCalls": 0,
+  "pauseStableFields": 59,
+  "audioCalls": 15985,
+  "audioMaxMs": 5.335873,
+  "audioMeanMs": 0.103444,
+  "romSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16"
+}

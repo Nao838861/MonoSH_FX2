@@ -1,0 +1,328 @@
+{
+  "romSha256": "0c7282ce976a9345adcd1719d6aa14fa8088e553cfa01a0ba95e1a134955da38",
+  "tables": {
+    "stage_bush0_geometry": {
+      "before": {
+        "uniqueSizes": 74,
+        "longestHold": 9,
+        "changeEvents": 73,
+        "sizeJerk": 97,
+        "groundTopReversals": 734,
+        "maximumTopReversal": 4
+      },
+      "after": {
+        "uniqueSizes": 80,
+        "longestHold": 5,
+        "changeEvents": 79,
+        "sizeJerk": 121,
+        "groundTopReversals": 1493,
+        "maximumTopReversal": 4
+      },
+      "maximumDimensionDifference": 3
+    },
+    "stage_bush1_geometry": {
+      "before": {
+        "uniqueSizes": 78,
+        "longestHold": 9,
+        "changeEvents": 77,
+        "sizeJerk": 112,
+        "groundTopReversals": 690,
+        "maximumTopReversal": 3
+      },
+      "after": {
+        "uniqueSizes": 87,
+        "longestHold": 4,
+        "changeEvents": 86,
+        "sizeJerk": 112,
+        "groundTopReversals": 1447,
+        "maximumTopReversal": 4
+      },
+      "maximumDimensionDifference": 4
+    },
+    "stage_flystone_geometry": {
+      "before": {
+        "uniqueSizes": 58,
+        "longestHold": 12,
+        "changeEvents": 57,
+        "sizeJerk": 117
+      },
+      "after": {
+        "uniqueSizes": 69,
+        "longestHold": 6,
+        "changeEvents": 68,
+        "sizeJerk": 116
+      },
+      "maximumDimensionDifference": 4
+    },
+    "stage_em0_geometry": {
+      "before": {
+        "uniqueSizes": 64,
+        "longestHold": 12,
+        "changeEvents": 63,
+        "sizeJerk": 107
+      },
+      "after": {
+        "uniqueSizes": 78,
+        "longestHold": 5,
+        "changeEvents": 77,
+        "sizeJerk": 113
+      },
+      "maximumDimensionDifference": 3
+    },
+    "stage_tree0_geometry": {
+      "before": {
+        "uniqueSizes": 70,
+        "longestHold": 9,
+        "changeEvents": 69,
+        "sizeJerk": 142,
+        "groundTopReversals": 38,
+        "maximumTopReversal": 1
+      },
+      "after": {
+        "uniqueSizes": 74,
+        "longestHold": 6,
+        "changeEvents": 73,
+        "sizeJerk": 160,
+        "groundTopReversals": 20,
+        "maximumTopReversal": 1
+      },
+      "maximumDimensionDifference": 4
+    },
+    "stage_bom0_geometry": {
+      "before": {
+        "uniqueSizes": 64,
+        "longestHold": 10,
+        "changeEvents": 63,
+        "sizeJerk": 131
+      },
+      "after": {
+        "uniqueSizes": 78,
+        "longestHold": 5,
+        "changeEvents": 77,
+        "sizeJerk": 113
+      },
+      "maximumDimensionDifference": 2
+    },
+    "monosh_enemy_geometry": {
+      "before": {
+        "uniqueSizes": 64,
+        "longestHold": 12,
+        "changeEvents": 63,
+        "sizeJerk": 107
+      },
+      "after": {
+        "uniqueSizes": 78,
+        "longestHold": 5,
+        "changeEvents": 77,
+        "sizeJerk": 113
+      },
+      "maximumDimensionDifference": 3
+    },
+    "monosh_bom_geometry": {
+      "before": {
+        "uniqueSizes": 64,
+        "longestHold": 10,
+        "changeEvents": 63,
+        "sizeJerk": 131
+      },
+      "after": {
+        "uniqueSizes": 78,
+        "longestHold": 5,
+        "changeEvents": 77,
+        "sizeJerk": 113
+      },
+      "maximumDimensionDifference": 2
+    },
+    "monosh_em1_closed_geometry": {
+      "before": {
+        "uniqueSizes": 25,
+        "longestHold": 42,
+        "changeEvents": 24,
+        "sizeJerk": 72
+      },
+      "after": {
+        "uniqueSizes": 32,
+        "longestHold": 39,
+        "changeEvents": 31,
+        "sizeJerk": 78
+      },
+      "maximumDimensionDifference": 3
+    },
+    "monosh_ebullet_animation_geometry": {
+      "before": {
+        "uniqueSizes": 52,
+        "longestHold": 12,
+        "changeEvents": 51,
+        "sizeJerk": 96
+      },
+      "after": {
+        "uniqueSizes": 56,
+        "longestHold": 6,
+        "changeEvents": 55,
+        "sizeJerk": 110
+      },
+      "maximumDimensionDifference": 4
+    },
+    "monosh_ebullet4_geometry": {
+      "before": {
+        "uniqueSizes": 51,
+        "longestHold": 23,
+        "changeEvents": 50,
+        "sizeJerk": 95
+      },
+      "after": {
+        "uniqueSizes": 54,
+        "longestHold": 9,
+        "changeEvents": 53,
+        "sizeJerk": 94
+      },
+      "maximumDimensionDifference": 3
+    },
+    "monosh_boss_face_geometry": {
+      "before": {
+        "uniqueSizes": 85,
+        "longestHold": 7,
+        "changeEvents": 84,
+        "sizeJerk": 134
+      },
+      "after": {
+        "uniqueSizes": 96,
+        "longestHold": 2,
+        "changeEvents": 95,
+        "sizeJerk": 139
+      },
+      "maximumDimensionDifference": 3
+    },
+    "monosh_boss_body_geometry": {
+      "before": {
+        "uniqueSizes": 61,
+        "longestHold": 15,
+        "changeEvents": 60,
+        "sizeJerk": 137
+      },
+      "after": {
+        "uniqueSizes": 81,
+        "longestHold": 4,
+        "changeEvents": 80,
+        "sizeJerk": 133
+      },
+      "maximumDimensionDifference": 3
+    },
+    "monosh_boss_bom_geometry": {
+      "before": {
+        "uniqueSizes": 64,
+        "longestHold": 10,
+        "changeEvents": 63,
+        "sizeJerk": 120
+      },
+      "after": {
+        "uniqueSizes": 78,
+        "longestHold": 5,
+        "changeEvents": 77,
+        "sizeJerk": 111
+      },
+      "maximumDimensionDifference": 2
+    },
+    "em1_open_pose1": {
+      "before": {
+        "uniqueSizes": 3,
+        "longestHold": 54,
+        "changeEvents": 2,
+        "sizeJerk": 688,
+        "maximumSizeStep": 12
+      },
+      "after": {
+        "uniqueSizes": 32,
+        "longestHold": 6,
+        "changeEvents": 31,
+        "sizeJerk": 72,
+        "maximumSizeStep": 1
+      },
+      "maximumDimensionDifference": 10
+    },
+    "em1_open_pose2": {
+      "before": {
+        "uniqueSizes": 3,
+        "longestHold": 54,
+        "changeEvents": 2,
+        "sizeJerk": 832,
+        "maximumSizeStep": 12
+      },
+      "after": {
+        "uniqueSizes": 21,
+        "longestHold": 6,
+        "changeEvents": 20,
+        "sizeJerk": 80,
+        "maximumSizeStep": 1
+      },
+      "maximumDimensionDifference": 10
+    },
+    "em1_open_pose3": {
+      "before": {
+        "uniqueSizes": 3,
+        "longestHold": 54,
+        "changeEvents": 2,
+        "sizeJerk": 1184,
+        "maximumSizeStep": 14
+      },
+      "after": {
+        "uniqueSizes": 25,
+        "longestHold": 5,
+        "changeEvents": 24,
+        "sizeJerk": 96,
+        "maximumSizeStep": 1
+      },
+      "maximumDimensionDifference": 11
+    },
+    "em1_open_pose4": {
+      "before": {
+        "uniqueSizes": 3,
+        "longestHold": 54,
+        "changeEvents": 2,
+        "sizeJerk": 1560,
+        "maximumSizeStep": 18
+      },
+      "after": {
+        "uniqueSizes": 43,
+        "longestHold": 5,
+        "changeEvents": 42,
+        "sizeJerk": 108,
+        "maximumSizeStep": 1
+      },
+      "maximumDimensionDifference": 15
+    },
+    "em1_open_pose5": {
+      "before": {
+        "uniqueSizes": 3,
+        "longestHold": 54,
+        "changeEvents": 2,
+        "sizeJerk": 2024,
+        "maximumSizeStep": 20
+      },
+      "after": {
+        "uniqueSizes": 48,
+        "longestHold": 4,
+        "changeEvents": 47,
+        "sizeJerk": 124,
+        "maximumSizeStep": 1
+      },
+      "maximumDimensionDifference": 16
+    }
+  },
+  "comparisonRomSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "cpuCodeIdentical": false,
+  "gsuCodeIdentical": false,
+  "graphicsAndUvIdentical": true,
+  "gsuPaletteCodeAndTablesAdded": true,
+  "upstreamFilesVerified": 34,
+  "totals": {
+    "before": {
+      "sizeJerk": 7886,
+      "changeEvents": 870
+    },
+    "after": {
+      "sizeJerk": 2106,
+      "changeEvents": 1169
+    }
+  }
+}

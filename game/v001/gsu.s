@@ -615,6 +615,9 @@ dma_cache:
 dma_cache_end:
   .assert dma_cache_end-dma_cache <= 512, error, "DMA planner cache overflow"
   .endif
+  .ifdef FX_GSU_COLOR
+  .include "gsu_color.inc"
+  .endif
   ; CPUへの完了値として元の描画件数をR0へ戻す。STOPでCPUへ所有権を返す。
   iwt r11,#$0000
   ldw (r11)

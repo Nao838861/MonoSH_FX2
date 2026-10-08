@@ -1,10 +1,10 @@
 # MonoSH Super FX2 開発プロジェクト
 
-標準SPC700で鳴る[メインテーマと六種類のSE](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)を追加した。BGM六声＋SE二声、ストリーミング不要。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。原作のSFC編曲初版。同じ論理区間の速度差は約0.12%で、以下のカラー化による速度低下は残る。
+最新ROMは [カラー最適化＋BGM・SE統合版](game/v001/RESULTS_20261008_COLOR_AUDIO_INTEGRATED.md)。既存のSPC700音声を残し、GSU属性生成と差分転送を統合した。通常・継続ボス各18,000fieldで平均60.0921／60.0654fps。2field間隔がそれぞれ2回／10回あり、完全な毎field更新ではない。ユーザーの指示に従い、このまま反映した。色・画素・操作・音声一周・DMA境界の回帰試験は合格。実機は未検証。
 
-最新ROMは [2bppの敵・障害物のカラー化試作](game/v001/RESULTS_20261008_BG_COLOR.md)。指定録画から原画を取り込み、透明＋3色×8組を8×8単位で割り当てる。CPUが奥から属性を上書きし、SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。[比較画像](game/v001/results/bg_color_20261008/comparison.png)。
+起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。素材のシルエット・原作との見た目は別途確認中。
 
-**カラー版は通常操作で平均31.62fps、ボス撃破から次周を含む試験で33.96fps。60fpsは未達。** 色属性のCPU処理が重く、表示とゲーム進行が遅くなる。変更前の60Hz検証済みROMも [比較用](releases/MonoSHFX2_pre_color_20261008.sfc) として残す。起動は [play.cmd](play.cmd)。
+[音声なしのカラー60Hz検証](game/v001/RESULTS_20261008_COLOR_60HZ.md)と[最初のカラー試作](game/v001/RESULTS_20261008_BG_COLOR.md)は履歴として保持する。
 
 カラー版にも [奥行きに沿った滑らかな拡縮](game/v001/RESULTS_20261008_SMOOTH_DEPTH.md)を引き継いだ。14寸法表を平滑化し、開いた敵EM1も各ポーズ111項目へ変更した。開EM1の最大段差20→1画素、ボス胴の最長同サイズ区間15→4段階。表示256×180・内部FB256×192・2bpp、木の接地、移動速度の設定を保つ。以下は前版の実装と検証の履歴。
 

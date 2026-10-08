@@ -57,7 +57,7 @@ def main():
     settings.write_text(json.dumps(config))
     result=subprocess.run([str(mesen),'--testRunner',f'--timeout={args.timeout}','--doNotSaveSettings',
             '--enableStdout',str(BUILD/'MonoSHFX2_v001.sfc'),str(path)],
-            cwd=mesen.parent,capture_output=True,timeout=args.timeout+10,creationflags=subprocess.CREATE_NO_WINDOW)
+            cwd=mesen.parent,capture_output=True,timeout=args.timeout+10,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     (output/'emulator.log').write_bytes(result.stdout+result.stderr)
     print('Mesen exit',result.returncode)
     if (output/'trace.jsonl').exists():

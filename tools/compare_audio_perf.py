@@ -62,7 +62,7 @@ def main():
         script.write_text(SCRIPT.replace('LABELS', lua(labels)).replace('OUTDIR', lua(out.as_posix())))
         result = subprocess.run([str(mesen), '--testRunner', '--timeout=180', '--doNotSaveSettings',
             '--enableStdout', str(rom), str(script)], cwd=mesen.parent, capture_output=True,
-            timeout=190, creationflags=subprocess.CREATE_NO_WINDOW)
+            timeout=190, creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         (out / 'emulator.log').write_bytes(result.stdout + result.stderr)
         assert result.returncode == 0, result.stdout + result.stderr
         summary = json.loads((out / 'perf.json').read_text())

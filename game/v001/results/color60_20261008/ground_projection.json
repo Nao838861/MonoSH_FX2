@@ -1,0 +1,13 @@
+{
+  "cameraOffsets": 65,
+  "horizontalPhases": [
+    0,
+    32,
+    64,
+    96,
+    127
+  ],
+  "checkedBoundaries": 158269,
+  "maxRasterQuantizationErrorPx": 3.485624999999999,
+  "note": "同一消失点の一次式。81source行と整数画素への量子化の差を含む"
+}

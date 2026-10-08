@@ -1,0 +1,690 @@
+{
+  "enemyTypes": {
+    "5": true,
+    "6": true
+  },
+  "maxBytes": 12288,
+  "stumbles": 707,
+  "fields": 7200,
+  "stumbleMax": 39,
+  "bossImage": true,
+  "cpuMaxMs": 10.229325214115,
+  "lateDmaStarts": 7174,
+  "maxDmaSpanCount": 32,
+  "em1States": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "0": true
+  },
+  "interval1": 7174,
+  "logic": 7177,
+  "deaths": 17,
+  "packed_double": 7176,
+  "loopSeen": false,
+  "objMaxCount": 18,
+  "gsuMaxMs": 6.3510859293489,
+  "dyingSeen": false,
+  "enemyShotsMax": 6,
+  "dmaMaxMs": 4.886654133728,
+  "interval3plus": 0,
+  "deathImage": true,
+  "doneSeen": false,
+  "checked": 249,
+  "maxDmaStartLine": 257,
+  "stage": 3746,
+  "interval2": 0,
+  "enemyImage": true,
+  "enemyPaths": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "8": true,
+    "0": true
+  },
+  "minBytes": 1184,
+  "respawns": 17,
+  "reflected": 0,
+  "bossSeen": true,
+  "maxCommands": 1,
+  "dmaPaletteChecks": 7175,
+  "rendered": 7175,
+  "romSha256": "5668803a2d3bf361499b5c1505468f3cd5e5162c6e63add36e91de692e2671d0",
+  "defaultRomSha256": "0c7282ce976a9345adcd1719d6aa14fa8088e553cfa01a0ba95e1a134955da38",
+  "deadlineTiers": {
+    "221/1": {
+      "bytes": 8960,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 223
+    },
+    "222/1": {
+      "bytes": 8784,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 224
+    },
+    "223/1": {
+      "bytes": 8608,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 225
+    },
+    "224/1": {
+      "bytes": 8448,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 226
+    },
+    "225/1": {
+      "bytes": 8272,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 227
+    },
+    "226/1": {
+      "bytes": 8112,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 228
+    },
+    "227/1": {
+      "bytes": 7936,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 229
+    },
+    "228/1": {
+      "bytes": 7760,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 230
+    },
+    "229/1": {
+      "bytes": 7600,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 231
+    },
+    "230/1": {
+      "bytes": 7424,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 232
+    },
+    "231/1": {
+      "bytes": 7248,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 233
+    },
+    "232/1": {
+      "bytes": 7088,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 234
+    },
+    "233/1": {
+      "bytes": 6912,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 235
+    },
+    "234/1": {
+      "bytes": 6752,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 236
+    },
+    "235/1": {
+      "bytes": 6576,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 237
+    },
+    "236/1": {
+      "bytes": 6400,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 238
+    },
+    "237/1": {
+      "bytes": 6240,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 239
+    },
+    "238/1": {
+      "bytes": 6064,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 240
+    },
+    "239/1": {
+      "bytes": 5888,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 241
+    },
+    "240/1": {
+      "bytes": 5728,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 242
+    },
+    "241/1": {
+      "bytes": 5552,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 243
+    },
+    "242/1": {
+      "bytes": 5392,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 244
+    },
+    "243/1": {
+      "bytes": 5216,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 245
+    },
+    "244/1": {
+      "bytes": 5040,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 246
+    },
+    "245/1": {
+      "bytes": 4880,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 247
+    },
+    "246/1": {
+      "bytes": 4704,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 248
+    },
+    "247/1": {
+      "bytes": 4528,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 249
+    },
+    "248/1": {
+      "bytes": 4368,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 250
+    },
+    "249/1": {
+      "bytes": 4192,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 251
+    },
+    "250/1": {
+      "bytes": 4032,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 252
+    },
+    "251/1": {
+      "bytes": 3856,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 253
+    },
+    "252/1": {
+      "bytes": 3680,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 254
+    },
+    "253/1": {
+      "bytes": 3520,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 255
+    },
+    "254/1": {
+      "bytes": 3344,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 256
+    },
+    "255/1": {
+      "bytes": 3168,
+      "spans": 1,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 257
+    },
+    "220/32": {
+      "bytes": 7104,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 222
+    },
+    "221/32": {
+      "bytes": 6976,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 223
+    },
+    "222/32": {
+      "bytes": 6800,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 224
+    },
+    "223/32": {
+      "bytes": 6624,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 225
+    },
+    "224/32": {
+      "bytes": 6464,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 226
+    },
+    "225/32": {
+      "bytes": 6288,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 227
+    },
+    "226/32": {
+      "bytes": 6128,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 228
+    },
+    "227/32": {
+      "bytes": 5952,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 229
+    },
+    "228/32": {
+      "bytes": 5776,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 230
+    },
+    "229/32": {
+      "bytes": 5616,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 231
+    },
+    "230/32": {
+      "bytes": 5440,
+      "spans": 32,
+      "images": 100,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 232
+    },
+    "231/32": {
+      "bytes": 5264,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 233
+    },
+    "232/32": {
+      "bytes": 5104,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 234
+    },
+    "233/32": {
+      "bytes": 4928,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 235
+    },
+    "234/32": {
+      "bytes": 4768,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 236
+    },
+    "235/32": {
+      "bytes": 4592,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 237
+    },
+    "236/32": {
+      "bytes": 4416,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 238
+    },
+    "237/32": {
+      "bytes": 4256,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 239
+    },
+    "238/32": {
+      "bytes": 4080,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 240
+    },
+    "239/32": {
+      "bytes": 3904,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 241
+    },
+    "240/32": {
+      "bytes": 3744,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 242
+    },
+    "241/32": {
+      "bytes": 3568,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 243
+    },
+    "242/32": {
+      "bytes": 3408,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 244
+    },
+    "243/32": {
+      "bytes": 3232,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 245
+    },
+    "244/32": {
+      "bytes": 3056,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 246
+    },
+    "245/32": {
+      "bytes": 2896,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 247
+    },
+    "246/32": {
+      "bytes": 2720,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 248
+    },
+    "247/32": {
+      "bytes": 2544,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 249
+    },
+    "248/32": {
+      "bytes": 2384,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 250
+    },
+    "249/32": {
+      "bytes": 2208,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 251
+    },
+    "250/32": {
+      "bytes": 2048,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 252
+    },
+    "251/32": {
+      "bytes": 1872,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 253
+    },
+    "252/32": {
+      "bytes": 1696,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 254
+    },
+    "253/32": {
+      "bytes": 1536,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 255
+    },
+    "254/32": {
+      "bytes": 1360,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 256
+    },
+    "255/32": {
+      "bytes": 1184,
+      "spans": 32,
+      "images": 99,
+      "latestCompletionScanline": 17,
+      "maxDmaStartLine": 257
+    },
+    "220/1": {
+      "bytes": 9088,
+      "spans": 1,
+      "images": 99,
+      "latestCompletionScanline": 18,
+      "maxDmaStartLine": 222
+    }
+  },
+  "objPrefetchScanline": 22,
+  "firstVisibleScanline": 23,
+  "ppuChecks": {
+    "screens": 66,
+    "checkedObjectPixels": 69477,
+    "secondChrTableSeen": true,
+    "flips": [
+      0,
+      64,
+      128,
+      192
+    ],
+    "opaquePaletteIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "objPaletteRgb5": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        3
+      ],
+      [
+        22,
+        13,
+        13
+      ],
+      [
+        31,
+        3,
+        4
+      ],
+      [
+        12,
+        21,
+        31
+      ],
+      [
+        31,
+        31,
+        31
+      ],
+      [
+        0,
+        1,
+        18
+      ],
+      [
+        31,
+        12,
+        0
+      ],
+      [
+        31,
+        28,
+        2
+      ],
+      [
+        17,
+        0,
+        0
+      ],
+      [
+        27,
+        0,
+        0
+      ],
+      [
+        30,
+        15,
+        13
+      ],
+      [
+        31,
+        26,
+        23
+      ],
+      [
+        31,
+        31,
+        18
+      ],
+      [
+        10,
+        4,
+        5
+      ],
+      [
+        20,
+        24,
+        31
+      ]
+    ]
+  }
+}

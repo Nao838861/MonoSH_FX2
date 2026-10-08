@@ -3,6 +3,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -24,7 +25,10 @@ def main():
     try:
         run('build_game.py','--dma-deadline-probe')
         fine=json.loads((BUILD/'build_mode.json').read_text()).get('fineDmaDeadline',False)
-        run('test_game.py','--scenario','objects','--frames','4200' if fine else '360','--timeout','240','--dma-probe')
+        labels={m[2]:int(m[1],16) for m in re.finditer(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
+        last_line=labels.get('dma_last_line',240)
+        frames=str((last_line-219)*200) if fine else '360'
+        run('test_game.py','--scenario','objects','--frames',frames,'--timeout','600','--dma-probe')
         source=BUILD/'objects';target.mkdir(parents=True,exist_ok=True)
         rows=[json.loads(s) for s in (source/'trace.jsonl').read_text().splitlines()]
         tiers={};pending=None
@@ -40,7 +44,7 @@ def main():
             count=pending['spans']
             assert count in (1,32)
             limit=min(9984,(279-deadline)*170-1)//16*16 if fine else {220:9984,226:8960,233:7680}[deadline]
-            expected=limit-count*64-768
+            expected=limit-count*64-768-pending.get('colorReserve',0)
             assert row['bytes']==expected
             assert deadline+2<=pending['dmaStartLine']<=deadline+4
             assert row['line']<=20
@@ -48,7 +52,7 @@ def main():
             tier['images']+=1
             tier['latestCompletionScanline']=max(tier['latestCompletionScanline'],row['line'])
             tier['maxDmaStartLine']=max(tier['maxDmaStartLine'],pending['dmaStartLine'])
-        deadlines=range(220,241) if fine else (220,226,233)
+        deadlines=range(220,last_line+1) if fine else (220,226,233)
         assert set(tiers)=={f'{d}/{n}' for d in deadlines for n in (1,32)} and all(t['images']>=40 for t in tiers.values())
         summary=json.loads((source/'summary.json').read_text())
         summary.update(defaultRomSha256=default_hash,deadlineTiers=tiers,

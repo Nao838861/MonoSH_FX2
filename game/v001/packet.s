@@ -20,9 +20,11 @@ packet_work: .res 32 ; ??????????routine????scratch?DP????
 order: .res 128
 keys: .res 128
 .ifdef FX_BUCKET_SORT
+.segment "COLORBSS"
 bucket_heads: .res 512
 bucket_links: .res 128
 .export bucket_heads, bucket_links, keys
+.segment "BSS"
 .endif
 .segment "CODE"
 .a8

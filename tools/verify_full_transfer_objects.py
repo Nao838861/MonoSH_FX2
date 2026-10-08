@@ -21,7 +21,7 @@ def main():
     target=(result_root/args.output).resolve()
     assert target.is_relative_to(result_root) and target!=result_root
     release=ROOT/'releases/MonoSHFX2_v001.sfc'
-    default_hash=hashlib.sha256(release.read_bytes()).hexdigest()
+    default_hash=hashlib.sha256((BUILD/'MonoSHFX2_v001.sfc').read_bytes()).hexdigest()
     try:
         run('build_game.py','--full-transfer')
         run('test_game.py','--scenario','objects','--frames','360')

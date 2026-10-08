@@ -1,0 +1,12 @@
+{
+  "romSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "baseMain": "f94087bcb3dad62b0f75deca413d7618c1145f8a",
+  "colorEngineeringCommit": "5a0ab007f86dbf562b0ed664ef4cb8e0c8b1b653",
+  "naturalFields": 18000,
+  "bossFields": 18000,
+  "naturalLateIntervals": 2,
+  "bossLateIntervals": 10,
+  "allFunctionalSuitesPassed": true,
+  "physicalHardwareTested": false,
+  "optimizationDeferred": "User explicitly requested publication with rare frame drops accepted; audio idle-skip experiment excluded."
+}

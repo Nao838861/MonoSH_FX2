@@ -46,7 +46,11 @@ emu.addMemoryCallback(guard(function(a,v)
   local f=assert(io.open(output..'/'..name..'_draw.bin','wb'));f:write(latched_draw);f:close()
   dump(name..'_map.bin',emu.memType.snesVideoRam,read('fx_color_vram_base',2)*2,1536)
   dump(name..'_cgram.bin',emu.memType.snesCgRam,64,64)
-  dump(name..'_ram.bin',emu.memType.snesMemory,0x7e0000+read('fx_color_present_ptr',2),768)
+  if labels.gsu_color_begin then
+    dump(name..'_ram.bin',emu.memType.gsuWorkRam,0x1000,768)
+  else
+    dump(name..'_ram.bin',emu.memType.snesMemory,0x7e0000+read('fx_color_present_ptr',2),768)
+  end
   f=assert(io.open(output..'/'..name..'.json','w'))
   f:write(encoded({count=latched_count,logic=latched_logic,case=latched_case,mode=latched_mode,field=field,line=emu.getState()['ppu.scanline']}));f:close()
   assert(read('fx_color_present_mode')==latched_mode,'color mode generation differs')

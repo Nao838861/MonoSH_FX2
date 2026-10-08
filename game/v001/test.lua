@@ -337,7 +337,7 @@ emu.addMemoryCallback(guard(function(a,v)
   stats.lateDmaStarts=(stats.lateDmaStarts or 0)+(line>206 and 1 or 0)
   stats.maxDmaStartLine=math.max(stats.maxDmaStartLine or 0,line)
   stats.maxDmaSpanCount=math.max(stats.maxDmaSpanCount or 0,count)
-  report:write(string.format('{"dmaStartLine":%d,"spans":%d,"deadline":%d,"field":%d}\n',line,count,deadline,field))
+  report:write(string.format('{"dmaStartLine":%d,"spans":%d,"deadline":%d,"field":%d,"colorReserve":%d}\n',line,count,deadline,field,weight-read('fx_dma_bytes',2)-count*(labels.select_dma_deadline and 64 or 128)-(labels.select_dma_deadline and 768 or 0)))
   if rendered==0 then
     local f=io.open(output..'/descriptors.txt','w')
     for i=0,31 do

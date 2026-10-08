@@ -34,6 +34,7 @@ def main():
                         help='noneは通常入力だけでボス戦を長く観測する。')
     parser.add_argument('--output', default='boss_profile')
     parser.add_argument('--allow-unreleased', action='store_true', help='未公開の比較ビルドもハッシュ付きで計測する。')
+    parser.add_argument('--minimal', action='store_true', help='Keep final CPU/GSU/DMA stamps; omit detailed phase callbacks to reduce host overhead.')
     args = parser.parse_args()
     rom = BUILD / 'MonoSHFX2_v001.sfc'
     data = rom.read_bytes()
@@ -49,13 +50,14 @@ def main():
     # CPUのwait_bottom直前のSEPを機械語から特定。ROMは変更しない。
     marker = bytes.fromhex('e220af3f2100af372100af3d2100c9cb')
     region = data[0x10000:0x20000]
-    assert region.count(marker) == 1
-    labels['admission_ready'] = region.index(marker)
+    assert region.count(marker) >= 1
+    labels['admission_ready'] = region.rindex(marker)
     marker = bytes.fromhex('a9808f002100')
     region_start, region_end = labels['render_finished'], labels['dma_started']
     region = data[0x10000 + region_start:0x10000 + region_end]
-    assert region.count(marker) == 1
-    labels['admitted'] = region_start + region.index(marker)
+    assert region.count(marker) >= 1
+    # Color staging may enter forced blank first; the last marker is FB admission.
+    labels['admitted'] = region_start + region.rindex(marker)
     assert re.fullmatch(r'boss_profile(?:_[a-z0-9]+)?', args.output), 'unsafe output name'
     output = BUILD / args.output
     output.mkdir(exist_ok=True)
@@ -71,7 +73,7 @@ def main():
         script = script.replace(marker, 'emu.setInput({a=false,right=x<tx-3')
     insertion = "emu.addMemoryCallback(guard(function()\n  gsu_ms="
     assert script.count(insertion) == 1
-    script = script.replace(insertion, (GAME / 'boss_profile.lua').read_text(encoding='utf-8') + '\n' + insertion)
+    script = script.replace(insertion, (GAME / 'boss_profile.lua').read_text(encoding='utf-8').replace('PROFILE_SECTIONS', 'false' if args.minimal else 'true') + '\n' + insertion)
     config = json.loads((BUILD / 'build_mode.json').read_text())
     for key, value in {'LABELS': lua(labels), 'OUTDIR': lua(output.as_posix()),
                        'MAXFRAME': str(args.frames), 'SCENARIO': lua('profile'),
@@ -94,7 +96,7 @@ def main():
     result = subprocess.run([str(mesen), '--testRunner', f'--timeout={args.timeout}',
                              '--doNotSaveSettings', '--enableStdout', str(rom), str(path)],
                             cwd=mesen.parent, capture_output=True, timeout=args.timeout + 10,
-                            creationflags=subprocess.CREATE_NO_WINDOW)
+                            creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     (output / 'emulator.log').write_bytes(result.stdout + result.stderr)
     print('Mesen exit', result.returncode)
     if (output / 'error.txt').exists():
@@ -112,6 +114,7 @@ def main():
                               for row in timings)
     summary.update({'romSha256': digest, 'mesenSha256': hashlib.sha256(mesen.read_bytes()).hexdigest(),
                     'scenario': 'natural-profile', 'framesRequested': args.frames, 'bossFire': args.boss_fire,
+                    'detailedPhaseCallbacks': not args.minimal,
                     'bossMeasurement': 'timings.jsonl', 'buildMode': config,
                     'generatedLuaSha256': hashlib.sha256(path.read_bytes()).hexdigest()})
     (output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')

@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "romSha256": "0c7282ce976a9345adcd1719d6aa14fa8088e553cfa01a0ba95e1a134955da38",
+  "suites": {
+    "cache_delta": {
+      "descriptorChecks": 4875,
+      "groundCalls": 1950,
+      "hdmaLines": 399750,
+      "groundCacheMisses": 975,
+      "groundCacheHits": 975,
+      "latestHdmaReenableLine": 258,
+      "guards": 596394,
+      "fullMaps": 2,
+      "paletteChecks": 1949,
+      "twelveSpans": 244,
+      "stages": 3,
+      "zeroSpans": 244,
+      "deltaChecks": 1949
+    },
+    "full_framebuffer": {
+      "descriptorChecks": 4875,
+      "maxDmaStartLine": 205,
+      "zeroSpans": 244,
+      "deltaChecks": 1949,
+      "hdmaLines": 399750,
+      "maxDmaEndLine": 21,
+      "groundCalls": 1950,
+      "latestHdmaReenableLine": 206,
+      "groundCacheHits": 975,
+      "fullMaps": 1949,
+      "stages": 1705,
+      "twelveSpans": 244,
+      "groundCacheMisses": 975,
+      "guards": 596394,
+      "paletteChecks": 1949
+    },
+    "late_max_oam": {
+      "latestHdmaReenableLine": 259,
+      "deltaChecks": 1949,
+      "fullMaps": 2,
+      "groundCacheMisses": 975,
+      "hdmaLines": 399750,
+      "guards": 596394,
+      "stages": 3,
+      "twelveSpans": 244,
+      "descriptorChecks": 4875,
+      "paletteChecks": 1949,
+      "groundCalls": 1950,
+      "groundCacheHits": 975,
+      "zeroSpans": 244
+    },
+    "obj_latch": {
+      "groundCacheHits": 132,
+      "objLatchPpuChecks": 35632,
+      "groundCalls": 264,
+      "latestHdmaReenableLine": 258,
+      "zeroSpans": 33,
+      "deltaChecks": 263,
+      "guards": 80478,
+      "fullMaps": 2,
+      "groundCacheMisses": 132,
+      "paletteChecks": 263,
+      "twelveSpans": 33,
+      "hdmaLines": 54120,
+      "stages": 3,
+      "descriptorChecks": 658,
+      "objLatchGenerations": 263
+    }
+  },
+  "totalPresentations": 6110,
+  "horizontalHdmaLinesChecked": 1253370,
+  "sramCanaryByteChecks": 1869660,
+  "latestFullFramebufferCompletion": {
+    "scanline": 21,
+    "hclock": 864,
+    "masterClocksUntilScanline22": 500
+  },
+  "latestHdmaReenableScanline": 259,
+  "physicalHardware": false
+}

@@ -1,0 +1,8 @@
+{
+  "commit": "4c5ec389e67737837a09980069374267d24e7c20",
+  "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "source": "game/v001/results/bg_color_20261008/profiles.json",
+  "archivedPlayFps": 31.61605220316179,
+  "archivedBossFps": 33.96097679112008,
+  "note": "Archived prototype scenarios are 3000 fields; final natural/endurance scenarios are 18000 fields. Gameplay and art equivalence are validated separately."
+}

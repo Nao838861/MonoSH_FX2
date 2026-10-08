@@ -84,7 +84,7 @@ def main():
     report = {'romSha256': hashlib.sha256(rom).hexdigest(), 'tables': {}}
     legacy = (GAME.parents[1]/'releases/MonoSHFX2_v001.sfc').read_bytes()
     previous = GAME/'results/smooth_depth_20261008/previous_release.sfc.gz'
-    if legacy == rom and previous.exists():
+    if not mode.get('gsuColor') and legacy == rom and previous.exists():
         legacy = gzip.decompress(previous.read_bytes())
     report['comparisonRomSha256'] = hashlib.sha256(legacy).hexdigest()
     if report['comparisonRomSha256'] != report['romSha256']:
@@ -92,7 +92,16 @@ def main():
         report['gsuCodeIdentical'] = rom[0x8000:0x10000] == legacy[0x8000:0x10000]
         # $43はPPU背景、GSU用の原画・縮小画像・UVは$44以降。
         report['graphicsAndUvIdentical'] = rom[0x40000:] == legacy[0x40000:]
-        assert all(report[key] for key in ('gsuCodeIdentical', 'graphicsAndUvIdentical'))
+        if mode.get('gsuColor'):
+            # The new GSU code and added palette tables are intentional. Source
+            # pixels, scaled graphics, UV tables and scaling metadata stay exact.
+            report['graphicsAndUvIdentical'] = (
+                rom[0x40000:0x1ec000] == legacy[0x40000:0x1ec000]
+                and rom[0x1f0000:] == legacy[0x1f0000:])
+            report['gsuPaletteCodeAndTablesAdded'] = True
+            assert report['graphicsAndUvIdentical']
+        else:
+            assert all(report[key] for key in ('gsuCodeIdentical', 'graphicsAndUvIdentical'))
     manifest = json.loads((GAME.parents[1]/'releases/v001.json').read_text(encoding='utf-8'))
     for filename, expected in manifest['sourceSha256'].items():
         assert hashlib.sha256((GAME/'upstream'/filename).read_bytes()).hexdigest() == expected

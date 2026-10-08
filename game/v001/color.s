@@ -7,24 +7,13 @@
 .export fx_color_dma_count, fx_color_dma, fx_color_dma_bytes
 .export color_palette
 .export fx_stage_color, fx_color_staged, fx_color_vram_base, color_boot_map, fx_color_stage_done
+.export color_clear_ready, color_next_draw, color_visible, color_prepare_cols, color_cols_done
+.export color_rows, color_kernel_restore, color_skip_draw, color_clear_dirty
+.export color_clear_dirty_row, color_clear_dirty_skip
 .import _fx_draw, _fx_asset_width, _fx_asset_height
 .import _monosh_runtime_frame_counter, order
 .importzp packet_work
 .segment "ZEROPAGE"
-color_mp: .res 2
-color_cp: .res 2
-color_bp: .res 2
-.segment "DATA"
-fx_color_mode: .byte 1
-fx_color_next_ptr: .word fx_color_map0
-fx_color_present_ptr: .word fx_color_map1
-color_uploaded_mode: .byte 1
-fx_color_vram_base: .word $4000
-.segment "COLORBSS"
-fx_color_map0: .res 768
-fx_color_map1: .res 768
-fx_color_present_mode: .res 1
-color_next_mode: .res 1
 color_order: .res 2
 color_draw: .res 2
 color_left: .res 2
@@ -59,38 +48,38 @@ color_bits: .res 2
 color_mul_arg: .res 2
 color_mul_step: .res 2
 color_mul_lo: .res 2
-color_initialized: .res 2
-color_bounds0: .res 96
-color_bounds1: .res 96
-fx_color_dma: .res 4
-fx_color_dma_count: .res 2
-fx_color_dma_bytes: .res 2
 color_desc_index: .res 2
-fx_color_staged: .res 2
-color_pending_vram: .res 2
 color_patch_offset: .res 2
 color_kernel_start: .res 2
 color_kernel_end: .res 2
+color_mp: .res 2
+color_cp: .res 2
+color_bp: .res 2
+.segment "DATA"
+fx_color_mode: .byte 1
+fx_color_next_ptr: .word fx_color_map0
+fx_color_present_ptr: .word fx_color_map1
+color_uploaded_mode: .byte 1
+fx_color_vram_base: .word $4000
+.segment "COLORBSS"
+fx_color_map0: .res 768
+fx_color_map1: .res 768
+fx_color_present_mode: .res 1
+color_next_mode: .res 1
+color_initialized: .res 2
+color_bounds0: .res 96
+color_bounds1: .res 96
+fx_color_dma: .res 48
+fx_color_dma_count: .res 2
+fx_color_dma_bytes: .res 2
+fx_color_staged: .res 2
+color_pending_vram: .res 2
 .segment "COLORRODATA"
-fx_color_cells: .incbin "assets/bg_color/cells.bin"
-color_cell_offsets: .incbin "assets/bg_color/offsets.bin"
-; Packed-byteからpriority/paletteへ変換。空セルだけ0。GSU動作中もWRAMを参照する。
-color_even:
-.repeat 256,V
-  .if (V&15)=15
-    .byte 0
-  .else
-    .byte $20|((V&7)<<2)
-  .endif
-.endrepeat
-color_odd:
-.repeat 256,V
-  .if (V>>4)=15
-    .byte 0
-  .else
-    .byte $20|(((V>>4)&7)<<2)
-  .endif
-.endrepeat
+; Expanded final attribute bytes, deduplicated by complete 16-cell source row.
+; Empty dictionary row zero lets the renderer omit an entirely transparent row.
+fx_color_cells: .incbin "assets/bg_color/runtime_generated_rows.bin"
+color_source_rows: .incbin "assets/bg_color/runtime_generated_sources.bin"
+color_cell_offsets: .incbin "assets/bg_color/runtime_generated_offsets.bin"
 .segment "BOOT"
 color_palette: .incbin "assets/bg_color/palette.bin"
 color_mono:
@@ -153,6 +142,16 @@ color_multiply:
 fx_build_color:
   php
   rep #$30
+  .ifdef FX_GSU_COLOR
+  ; Geometry and palette sampling are computed beside the GSU framebuffer.
+  ; CPU still owns mode latching and every PPU upload for this generation.
+  sep #$20
+  lda fx_color_mode
+  sta color_next_mode
+  jmp fx_color_build_done
+  .endif
+.a16
+.i16
   ; 基準mapをnextへ。presentはGSUの描画と対応し、CPU先行中には変更しない。
   lda fx_color_next_ptr
   sta color_mp
@@ -225,7 +224,7 @@ color_next_draw:
   tay
   lda color_cell_offsets,y
   clc
-  adc #fx_color_cells
+  adc #color_source_rows
   sta color_cp
   lda _fx_draw+4,x
   and #$ff
@@ -311,6 +310,8 @@ color_visible:
   .repeat 8
     nop
   .endrepeat
+  lda f:$004216
+  sta color_maxu
   lda f:$004214
   sta color_du
   asl
@@ -327,19 +328,23 @@ color_visible:
   .repeat 8
     nop
   .endrepeat
+  lda f:$004216
+  sta color_maxv
   lda f:$004214
   sta color_dv
   asl
   asl
   asl
   sta color_stepv
-  lda color_w
-  dec
-  sta color_mul_arg
+  lda color_aw
+  xba
+  sec
+  sbc color_maxu
+  sec
+  sbc color_du
+  sta color_maxu
   lda color_du
   sta color_mul_step
-  jsr color_multiply
-  sta color_maxu
   lda color_x0
   asl
   asl
@@ -348,9 +353,21 @@ color_visible:
   adc #4
   sec
   sbc color_left
-  bpl :+
-  lda #0
+  bpl color_first_u_inside
+  ; First tile center lies before the sprite. The next is only d+8 pixels away.
+  clc
+  adc #8
+  cmp color_w
+  bcc :+
+  lda color_w
+  dec
 :
+  sta color_mul_arg
+  jsr color_multiply
+  sta color_firststepu
+  stz color_u
+  bra color_first_u_ready
+color_first_u_inside:
   cmp color_w
   bcc :+
   lda color_w
@@ -359,33 +376,15 @@ color_visible:
   sta color_mul_arg
   jsr color_multiply
   sta color_u
-  ; 最初の中心が矩形外なら、次の中心までの距離は8px未満になる。
-  lda color_x0
-  asl
-  asl
-  asl
-  clc
-  adc #12
-  sec
-  sbc color_left
-  cmp color_w
-  bcc :+
-  lda color_w
-  dec
-:
-  sta color_mul_arg
-  jsr color_multiply
-  sec
-  sbc color_u
+  lda color_stepu
   sta color_firststepu
+color_first_u_ready:
   lda color_x0
   sta color_col
   asl
   asl
-  sta color_patch_offset
   asl
   clc
-  adc color_patch_offset
   adc color_col
   sta color_patch_offset
   clc
@@ -414,24 +413,13 @@ color_prepare_cols:
   lsr
   lsr
   lsr
-  pha
-  ldx color_patch_offset
-  and #1
-  beq :+
-  lda #color_odd
-  bra :++
-:
-  lda #color_even
-:
-  sta f:$7f0000+color_kernel+5,x
-  pla
-  lsr
   clc
-  adc color_cp
+  adc #fx_color_cells
+  ldx color_patch_offset
   sta f:$7f0000+color_kernel+1,x
   lda color_patch_offset
   clc
-  adc #13
+  adc #9
   sta color_patch_offset
   inc color_col
   lda color_col
@@ -456,13 +444,15 @@ color_cols_done:
   lda #$60                 ; 最終列の次の命令を一時RTSにする。
   sta f:$7f0000+color_kernel,x
   rep #$20
-  lda color_h
-  dec
-  sta color_mul_arg
+  lda color_ah
+  xba
+  sec
+  sbc color_maxv
+  sec
+  sbc color_dv
+  sta color_maxv
   lda color_dv
   sta color_mul_step
-  jsr color_multiply
-  sta color_maxv
   lda color_y0
   asl
   asl
@@ -471,9 +461,21 @@ color_cols_done:
   adc #4
   sec
   sbc color_top
-  bpl :+
-  lda #0
+  bpl color_first_v_inside
+  ; First tile center lies before the sprite. The next is only d+8 pixels away.
+  clc
+  adc #8
+  cmp color_h
+  bcc :+
+  lda color_h
+  dec
 :
+  sta color_mul_arg
+  jsr color_multiply
+  sta color_firststepv
+  stz color_v
+  bra color_first_v_ready
+color_first_v_inside:
   cmp color_h
   bcc :+
   lda color_h
@@ -482,53 +484,12 @@ color_cols_done:
   sta color_mul_arg
   jsr color_multiply
   sta color_v
-  ; 最初の中心が矩形外なら、次の中心までの距離は8px未満になる。
-  lda color_y0
-  asl
-  asl
-  asl
-  clc
-  adc #12
-  sec
-  sbc color_top
-  cmp color_h
-  bcc :+
-  lda color_h
-  dec
-:
-  sta color_mul_arg
-  jsr color_multiply
-  sec
-  sbc color_v
+  lda color_stepv
   sta color_firststepv
-  lda color_asset
-  asl
-  tay
-  lda color_cell_offsets,y
-  clc
-  adc #fx_color_cells
-  sta color_cp
+color_first_v_ready:
   lda color_y0
   sta color_row
 color_rows:
-  lda color_row
-  asl
-  asl
-  tay
-  lda (color_bp),y
-  cmp color_x0
-  bcc :+
-  lda color_x0
-  sta (color_bp),y
-:
-  iny
-  iny
-  lda color_x1
-  inc
-  cmp (color_bp),y
-  bcc :+
-  sta (color_bp),y
-:
   lda color_v
   cmp color_maxv
   bcc :+
@@ -548,7 +509,30 @@ color_rows:
   lda color_bits
   xba
   and #$f8
+  lsr
+  lsr                     ; source cell row * 2, an index into the row pointers
+  tay
+  lda (color_cp),y
+  beq color_row_done       ; all 16 cells transparent, keep previous attributes
   sta color_srcrow
+  lda color_row
+  asl
+  asl
+  tay
+  lda (color_bp),y
+  cmp color_x0
+  bcc :+
+  lda color_x0
+  sta (color_bp),y
+:
+  iny
+  iny
+  lda color_x1
+  inc
+  cmp (color_bp),y
+  bcc :+
+  sta (color_bp),y
+:
   sep #$20
   lda color_row
   cmp #16
@@ -556,15 +540,16 @@ color_rows:
   bcc :+
   inc
 :
-  sta f:$7f0000+color_kernel+10*13+10
+  sta f:$7f0000+color_kernel+10*9+6
   lda color_row
   cmp #8
   lda #1
   bcc :+
   inc
 :
-  sta f:$7f0000+color_kernel+21*13+10
+  sta f:$7f0000+color_kernel+21*9+6
   rep #$20
+  ldy color_srcrow
   phd
   lda color_row
   .repeat 5
@@ -573,11 +558,11 @@ color_rows:
   clc
   adc color_mp
   tcd                      ; 出力先の行をdirect pageにする。
-  sep #$30
-  ldy color_srcrow
+  sep #$20                ; keep 16-bit Y for the dictionary row offset
   jsr color_dispatch
   rep #$30
   pld
+color_row_done:
   lda color_row
   inc
   sta color_row
@@ -599,7 +584,7 @@ color_kernel_restore:
   tax
   sep #$20
   lda #$b9
-  cpx #32*13
+  cpx #32*9
   bcc :+
   lda #$60
 :
@@ -613,17 +598,15 @@ fx_color_build_done:
   plp
   rts
 
-; 各列13byte。ソースaddressとlookupをdrawごとに差し替える。
+; Each column is 9 bytes. Patch only its source-column address per draw.
 .a8
-.i8
+.i16
 color_dispatch:
   jmp (color_kernel_start)
 color_kernel:
 .repeat 32,Col
   .scope .ident(.sprintf("ColorColumn%d",Col))
     lda fx_color_cells,y
-    tax
-    lda color_even,x
     beq empty
     ora #((Col*24)>>8)
     sta Col
@@ -734,6 +717,14 @@ clear_rows:
 fx_latch_color:
   php
   rep #$30
+  .ifdef FX_GSU_COLOR
+  lda color_initialized
+  bne :+
+  inc color_initialized
+  lda #0
+  sta f:$701604            ; Reset shadow-map validity before the first GSU pass.
+:
+  .endif
   lda #1
   sta fx_color_dma_count
   lda #768
@@ -780,7 +771,11 @@ fx_upload_color:
   sep #$20
   lda #$80
   sta f:$002115
+  .ifdef FX_GSU_COLOR
+  lda #$70
+  .else
   lda #$7e
+  .endif
   sta f:$004304
   rep #$30
   ldx #0
@@ -797,7 +792,11 @@ color_upload_spans:
   sec
   sbc #$4000
   clc
+  .ifdef FX_GSU_COLOR
+  adc #$1000
+  .else
   adc fx_color_present_ptr
+  .endif
   sta f:$004302
   lda fx_color_dma+2,x
   sta f:$004305
@@ -811,10 +810,18 @@ color_upload_spans:
   inx
   bra color_upload_spans
 color_upload_spans_done:
+fx_color_upload_done:
+  plp
+  rts
+
+.export fx_upload_color_palette
+fx_upload_color_palette:
+  php
+  rep #$30
   sep #$20
   lda fx_color_present_mode
   cmp color_uploaded_mode
-  beq fx_color_upload_done
+  beq fx_color_palette_done
   sta color_uploaded_mode
   rep #$20
   lda #.loword(color_palette)
@@ -839,7 +846,7 @@ color_upload_cgram:
   sta f:$002121
   lda #1
   sta f:$00420b
-fx_color_upload_done:
+fx_color_palette_done:
   plp
   rts
 
@@ -854,12 +861,20 @@ fx_stage_color:
   sta f:$002116
   lda #$1900
   sta f:$004300
+  .ifdef FX_GSU_COLOR
+  lda #$1000
+  .else
   lda fx_color_present_ptr
+  .endif
   sta f:$004302
   lda #768
   sta f:$004305
   sep #$20
+  .ifdef FX_GSU_COLOR
+  lda #$70
+  .else
   lda #$7e
+  .endif
   sta f:$004304
   lda #$80
   sta f:$002115
@@ -868,3 +883,38 @@ fx_stage_color:
 fx_color_stage_done:
   plp
   rts
+
+.ifdef FX_GSU_COLOR
+.export fx_read_gsu_color_plan
+; Read only the compact span descriptors while GSU is stopped. Attribute data
+; stays in cartridge SRAM and DMA goes directly to VRAM under CPU ownership.
+fx_read_gsu_color_plan:
+  php
+  rep #$30
+  lda f:$701600
+  sta fx_color_dma_count
+  asl
+  asl
+  sta color_desc_index
+  sta f:$004305
+  lda f:$701602
+  sta fx_color_dma_bytes
+  lda color_desc_index
+  beq color_plan_done
+  lda #$8000
+  sta f:$004300
+  lda #$1620
+  sta f:$004302
+  lda #fx_color_dma
+  sta f:$002181
+  sep #$20
+  lda #$70
+  sta f:$004304
+  lda #0
+  sta f:$002183
+  lda #1
+  sta f:$00420b
+color_plan_done:
+  plp
+  rts
+.endif

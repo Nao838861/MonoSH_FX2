@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "defaultRomSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "probeRomSha256": "4e514627a22c81c0825f8b46a03183b7ae0a18e6e89ba0d5eabf44f1f9f61d92",
+  "fields": 7200,
+  "tierCount": 72,
+  "imagesPerTierMin": 99,
+  "imagesPerTierMax": 100,
+  "latestTierCompletionScanline": 18,
+  "firstVisibleScanline": 23,
+  "objPrefetchScanline": 22,
+  "defaultRestoredSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "physicalHardware": false,
+  "sourceFilesChangedAfterBuild": [],
+  "probeBuildModeDifferences": {
+    "dmaDeadlineProbe": [
+      false,
+      true
+    ]
+  }
+}

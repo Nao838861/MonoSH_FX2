@@ -159,7 +159,7 @@ def main():
     rom = BUILD / 'MonoSHFX2_v001.sfc'
     result = subprocess.run([str(mesen), '--testRunner', f'--timeout={args.timeout}',
         '--doNotSaveSettings', '--enableStdout', str(rom), str(path)], cwd=mesen.parent,
-        capture_output=True, timeout=args.timeout + 10, creationflags=subprocess.CREATE_NO_WINDOW)
+        capture_output=True, timeout=args.timeout + 10, creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     (output / 'emulator.log').write_bytes(result.stdout + result.stderr)
     if (output / 'error.txt').exists():
         print((output / 'error.txt').read_text())
