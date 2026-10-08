@@ -299,7 +299,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "8c25249fc07cb935184ed47beac3cf1dd64f23ba5b691f30ec3aced01f5e82ae",
+  "romSha256": "bfb35914dedf793f3178015d650c9fc040eb1b3fe810a68a8a005ffa1d5e9025",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -329,7 +329,7 @@
     "smoothDepthSizes": true
   },
   "verificationKind": "BGM第2版（原作サントラで音色を測った8声編曲）を配色整理版へ搭載。SEは前版のまま。曲一周・ポーズ・SE命令、カラー・表示・ポーズと60場面の画素・OBJ回帰、通常と継続ボス各18,000fieldの60Hzを検証。実機は未検証。",
-  "verificationResults": "game/v001/results/binary_player_20261009",
+  "verificationResults": "game/v001/results/native_audio_v2_20261009",
   "scenarioFrames": {
     "color": 360,
     "display": 720,
@@ -550,21 +550,25 @@
     "longProfileRequiredForThisRelease": false,
     "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261009_BINARY_PLAYER.md",
+  "verificationReport": "game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md",
   "validation": {
-    "baseCommit": "4a0fa27",
-    "changedRomBytes": 452,
-    "cpuGsuAudioUnchanged": true,
-    "colorToggleSamples": 200,
-    "playerPoses": 17,
-    "playerFlips": 4,
-    "bulletSizes": 16,
-    "finalPpuScreens": 66,
-    "finalPpuObjectPixels": 72664,
-    "heldInputFields": 900,
-    "restoredPlayerPixels": 176,
+    "baseCommit": "fdf1e0853d031684eab8ca2d09936d293bfaa375",
+    "fixedScenes": 523,
+    "fixedImages": 2325,
+    "paletteCellsChecked": 1785600,
+    "sourceAssetsChecked": 25,
+    "sourcePixelsChecked": 223169,
+    "reviewedRedLensPixels": 47,
+    "matchedDisplayedMaskCases": 6,
+    "realPpuComparisonImages": 24,
+    "playerAndShotFinalPpuIdentical": true,
+    "isolatedPaletteScenes": 1696,
+    "isolatedOpaquePpuPixels": 3690832,
+    "isolatedPaletteErrors": 0,
+    "audioQuickFields": 1400,
+    "audioDataUnchangedSha256": "a6593c9a0b44d02f6ac11d6e753da3f9f1ffeb2cd512724024374ad45987ca02",
     "hardwareTested": false,
-    "historicalResults": "game/v001/results/binary_player_20261009/previous_release.json"
+    "historicalResults": "game/v001/results/palette_regions_20261008/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -586,31 +590,5 @@
   "latePresentationIntervals": {
     "natural": 0,
     "sustainedBoss": 0
-  },
-  "binaryMonochrome": {
-    "transparentIndex": 0,
-    "opaqueRgb5": [
-      [
-        0,
-        0,
-        0
-      ],
-      [
-        31,
-        31,
-        31
-      ],
-      [
-        31,
-        31,
-        31
-      ]
-    ]
-  },
-  "playerMaskRepair": {
-    "protectedGarmentPixels": 28,
-    "transparentControlPixels": 4,
-    "unchangedPoseBounds": 8,
-    "errors": 0
   }
 }

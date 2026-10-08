@@ -84,7 +84,8 @@ color_cell_offsets: .incbin "assets/bg_color/runtime_generated_offsets.bin"
 color_palette: .incbin "assets/bg_color/palette.bin"
 color_mono:
 .repeat 8
-  .word 0, $0c63, $4210, $7fff
+  ; 0番は透明のまま。輪郭1番は純黒、陰影2番と明部3番は純白。
+  .word 0, $0000, $7fff, $7fff
 .endrepeat
 color_boot_map:
 .repeat 32,Row

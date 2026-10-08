@@ -2,12 +2,12 @@
   "paletteRule": "録画の金髪・赤服・青ズボンの陰影。透明1+不透明15色。弾の5/7/8は保持。",
   "bulletRule": "same diamond alpha, orange edge/yellow body/white core",
   "sourceImageSha256": {
-    "09.png": "076fe2c53f868b669bf32b5e4e8e3d44fdca822e66c544fe1104d2becdc9aea2",
+    "09.png": "73baad2aacee95e8dd6f7e8ba671d4e07175d39901b862916a67d4b786da776e",
     "10.png": "558a57f350cc1deff25fab63bc722c141e847f52d2037415a9cfc766de81bd2f",
     "15.png": "a73d0fe26dcecbdd3001ba50ceefa9578b1fe17001f4067d09908c1f1097387f",
     "16.png": "27fe4e46b1e47fc533d20ce8ce75cbaf5473e66471cec2b54480bffadaf5a31e",
-    "17.png": "6e93dfc558aa2826774220aad462fa90bd99579024e678251a282f2e9a953048",
-    "18.png": "3f2e93a874b95f546523641dfc2ba85617f27079393092a7d01e7053aa2ee6b2",
+    "17.png": "846684ecf24e9bdb4dada85190e0b76541178e6bc162a11533138a89f0b320fc",
+    "18.png": "66a523998520d89863f54c1a2179257f7cb5541df95656566f4274d3eabb07f9",
     "19.png": "73f67dc5eb24980185e659f10720b7822f488a3f983803c2184f3d33b14c8e25",
     "20.png": "b477350b0f7a17840bb673d6d3b44fbd3b08254151aaa70622eed7cbc6a43df3",
     "21.png": "accac04013bc52c2b56c44b02f0148ab62a0efb8fd923b15354eff2ef16710d1",
@@ -17,9 +17,9 @@
     "25.png": "87caf19f8b068a953d80b7743510d762d20b39ba734227e57ffd86a9813ca5b9",
     "26.png": "1cbfd4b9c91419f4badac19f0e8a212e1c91b6d0f838fdf29ad8ba907870e754",
     "27.png": "ade223859ae07a68107b3cd4e9764f08ecbca3db81f978ed425942ee9f16743e",
-    "28.png": "fd86b990321e1b748bdcf2843fb40190bca6a69803c904808e086c4fd4fa93d8",
-    "29.png": "75f380df38cfdb4d4903eb08c4193e85c86014838c8805ed3947077b265f51af",
-    "30.png": "12e35018999844a4e1a72f4f757295da1390952398608baff8c20eb400e068f5"
+    "28.png": "cc53be8699743a4d59b9a730a088de12d0176640369ea0fa83cfff305aa71126",
+    "29.png": "a52cf63fbc65bdb0c2177bfd7bd14a9f0eaf5bc3c7d94faf9044b8eceb0b26bc",
+    "30.png": "bb4ddf1c75d6f9050e3e72b4f76d88eec2a1c15d5c5258dbc70d9662a010e1a0"
   },
   "recordedPlayer": "../player_recording/source.json",
   "recordedPoses": [

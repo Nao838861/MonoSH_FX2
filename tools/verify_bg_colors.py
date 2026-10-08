@@ -34,7 +34,7 @@ def reference(draw,logic):
 def main():
     directory=BUILD/'color';rows=[];cases=set();modes=set()
     color=(GAME/'assets/bg_color/palette.bin').read_bytes()
-    mono=struct.pack('<4H',0,0x0c63,0x4210,0x7fff)*8
+    mono=struct.pack('<4H',0,0,0x7fff,0x7fff)*8
     for path in sorted(directory.glob('color[0-9]*.json')):
         meta=json.loads(path.read_text());base=path.with_suffix('')
         data=lambda n:Path(str(base)+'_'+n+'.bin').read_bytes()
@@ -53,7 +53,8 @@ def main():
     transitions=[rows[0]['mode']]+[b['mode'] for a,b in zip(rows,rows[1:]) if a['mode']!=b['mode']]
     assert transitions==[1,0,1],transitions
     result={'samples':len(rows),'cases':sorted(cases),'transitions':transitions,'tiles_checked':len(rows)*768,
-        'palette_bytes_checked':len(rows)*64,'map_errors':0,'vram_errors':0,'palette_errors':0,'physical_hardware':False}
+        'palette_bytes_checked':len(rows)*64,'monochromeOpaqueRgb5':[[0,0,0],[31,31,31],[31,31,31]],
+        'map_errors':0,'vram_errors':0,'palette_errors':0,'physical_hardware':False}
     (directory/'color_summary.json').write_text(json.dumps(result,indent=2)+'\n')
     print(result)
 
