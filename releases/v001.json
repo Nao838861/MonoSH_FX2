@@ -648,7 +648,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "93c8317ba02835810a62c44591d63e267f5b9697323583e5abe1e4626b253fbd",
+  "romSha256": "d85a66a6bc45f003be3b5549ca44708c4cc2803cd98aa3a1bdd5fef21c757460",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -687,7 +687,7 @@
     "naturalProfile": 18000,
     "sustainedBossProfile": 18000
   },
-  "previousRomSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
+  "previousRomSha256": "93c8317ba02835810a62c44591d63e267f5b9697323583e5abe1e4626b253fbd",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -969,5 +969,6 @@
     "topTrimRows": 2,
     "downPixels": 2,
     "clipAtGround": true
-  }
+  },
+  "audioStartFix": "起動時に曲データの読み込みを終えてから画面を出す。画面表示から曲開始まで約3.6秒→約0.17秒。音の16,000field、カラー・表示・ポーズの画素回帰を再確認。"
 }

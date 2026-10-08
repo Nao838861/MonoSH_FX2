@@ -31,7 +31,13 @@ fx_audio_init:
   sta Tad_audioMode
   lda #Song::theme
   jsr Tad_LoadSong
+  ; 起動時に曲まで読み終える。Tad_FinishLoadingData は転送中にしか働かず、ドライバの準備待ちの間は
+  ; 何も送らない。Tad_Process 任せだと1フレーム数百byteずつで、53KBの曲データでは開始が約4秒遅れた。
+wait_song_loaded:
+  jsl Tad_Process
   jsl Tad_FinishLoadingData
+  jsr Tad_IsSongLoaded
+  bcc wait_song_loaded
   plb
   plp
   rtl

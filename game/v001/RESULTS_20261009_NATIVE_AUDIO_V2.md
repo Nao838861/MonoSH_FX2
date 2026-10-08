@@ -50,6 +50,12 @@
 
 証拠：[音](results/native_audio_v2_20261009/audio/summary.json)、[通常](results/native_audio_v2_20261009/natural_profile/report.json)、[ボス](results/native_audio_v2_20261009/boss_profile/report.json)、[回帰](results/native_audio_v2_20261009/regressions.txt)、[音量](results/native_audio_v2_20261009/audio_levels.json)、[生成物hash](results/native_audio_v2_20261009/manifest.json)。
 
+## 開始直後の無音の修正
+
+起動時の初期化で、曲データを読み終えるまで `Tad_Process` と `Tad_FinishLoadingData` を繰り返すようにした（[audio.s](audio.s)）。`Tad_FinishLoadingData` は転送中にしか働かず、ドライバの準備待ちの間は何も送らないため、これまでは毎フレームの `Tad_Process` で数百byteずつ送られ、53KBの曲データでは画面が出てから曲が鳴るまで約3.6秒（30→245フィールド）かかっていた。修正後は画面表示90フィールド目、曲開始100フィールド目（約0.17秒差）。起動時の真っ黒な時間は約0.5秒から約1.5秒へ延びる。読み込みがゲーム中の処理から外れ、音の処理の最大時間は5.36msから0.12msになった。
+
+ROM `d85a66a6…`（モノクロ・弾色の更新後のmainに適用）で、音16,000フィールド（ループ通過・ポーズ・六SE）、カラー・表示・ポーズの画素回帰を再確認した。同じ修正を適用した前のROM `63dcf731…` では、通常・継続ボス各18,000フィールドも全区間1フィールド（60.0988fps）だった。変更は起動時の処理と、その呼出し先の番地だけ。
+
 ## 再実行
 
 ```powershell
