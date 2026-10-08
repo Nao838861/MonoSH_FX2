@@ -89,7 +89,7 @@ def main():
         'mountains':{'frame':1741,'seconds':58,'crop':[0,140,320,159],'map':[512,256],
           'nativeHorizon':159,'mapHorizon':127,'screenHorizon':104,
           'repair':'森の背後の山裾を不透明に延長し、録画内の最寄りの山の画素で補完'},
-        'sceneryDisplay':{'topTrimRows':2,'downPixels':2,'clipAtGround':True},
+        'sceneryDisplay':{'groundTopClipRows':2,'downPixels':2},
         'skyNativeStart':130,
         'skyRgb5':gradient},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     preview=Image.new('RGB',(1024,480),(185,123,247));preview.paste(im.convert('RGBA').resize((448,256),Image.Resampling.NEAREST),(20,20),im.convert('RGBA').resize((448,256),Image.Resampling.NEAREST))

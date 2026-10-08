@@ -65,7 +65,7 @@ def verify(directory):
         objects=object_pixels(vram,data('oam'))
         v,h,far=[hdma(data(name),2) for name in ('v','h','far')]
         # VRAM一致だけでなく、原本の地上物と同じ投影・横移動を要求する。
-        for physical in range(104+meta['offset'],205):
+        for physical in range(106+meta['offset'],205):
             span=100-meta['offset']
             source=127+((physical-104-meta['offset'])*80+span//2)//span
             assert struct.unpack('<H',v[physical])[0]==(source-physical)&65535
@@ -74,24 +74,27 @@ def verify(directory):
         sky=hdma(data('sky'),4,indirect=(data('skycolors'),meta['skyBase']))
         assert meta['nearX']==meta['farX']*2 and all(struct.unpack('<H',row)[0]==meta['farX'] for row in far),'two BG scroll rates'
         # 実装をなぞるRGB参照だけでなく、ユーザー指摘の三条件を独立に要求する。
-        horizon=104+meta['offset']
+        horizon=106+meta['offset']
         assert meta['farY']==21-meta['offset'],'scenery must move down by two pixels'
         for x in range(512):
             for y in range(horizon,horizon+8):
                 assert pixel(vram,3,x,y+meta['farY']) is None,'forest occludes ground'
-            for y in range(horizon-5,horizon):
+            for y in range(horizon-7,horizon):
                 assert pixel(vram,2,x,y+meta['farY']) is not None,'hole in purple mountain base'
-        # 各層の元画像上端2行を削る。移動後の下端は地面の開始位置で切る。
+            # スクロール表の隠した2行は、本当に透明な地面タイルを読む。
+            for physical in range(horizon-2,horizon):
+                vo=struct.unpack('<H',v[physical])[0]
+                assert pixel(vram,1,x,physical+vo) is None,'ground top two rows not clipped'
+        # 山と森林の上端・下端を含む、元画像の全不透明画素を復元する。
         for name,layer in [('near',3),('far',2)]:
             original=Image.open(GAME/'assets/recorded_effects'/f'{name}_source.png').convert('RGBA')
-            top=original.getbbox()[1]
             for y in range(108,130):
                 for x in range(512):
-                    opaque=bool(original.getpixel((x,y))[3]) and y>=top+2 and y<125
-                    assert (pixel(vram,layer,x,y) is not None)==opaque,('scenery trim/ground clip',name,x,y)
+                    opaque=bool(original.getpixel((x,y))[3])
+                    assert (pixel(vram,layer,x,y) is not None)==opaque,('scenery restoration',name,x,y)
         # 山に遮られない空色列は原作の130..150行と同じ長さ・RGB5を持つ。
         reference=json.loads((GAME/'assets/recorded_effects/source.json').read_text(encoding='utf-8'))['skyRgb5']
-        start=horizon-29
+        start=104+meta['offset']-29
         for row,(r,g,b) in enumerate(reference):
             assert struct.unpack('<BBH',sky[start-1+row])[2]==r|(g<<5)|(b<<10),'sky gradient extent/color'
         image=Image.open(base.with_suffix('.png')).convert('RGB')
@@ -101,7 +104,7 @@ def verify(directory):
         words=[r+(g<<5)+(b<<10) for r,g,b in [(14,23,14),(16,25,15),(18,27,18),(19,29,20)]]
         assert {rgb(word) for word in words}.issubset(greens),'ground colors missing'
         pairs=set()
-        for y in range(104+meta['offset']+1,203):
+        for y in range(horizon+1,203):
             bright=struct.unpack('<BBH',c1[y-1])[2]
             dark=struct.unpack('<BBH',c3[y-1])[2]
             assert bright in words[2:] and dark in words[:2],'depth column brightness group switched'

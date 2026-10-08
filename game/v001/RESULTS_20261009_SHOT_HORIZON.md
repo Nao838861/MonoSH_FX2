@@ -1,5 +1,7 @@
 # 自弾の原作配色と遠景上端の修正
 
+**この版の距離別の色選択と遠景上端の削除は依頼の解釈違いだった。現行版では取り消した。[自弾の時間色と地面上2行の修正](RESULTS_20261009_GROUND_TIME.md)を参照。以下は誤実装の検証履歴であり、現在の仕様ではない。**
+
 2026年10月9日。[修正版ROM](../../releases/MonoSHFX2_v001.sfc)、[静止連射GIF](results/shot_horizon_20261009/stationary_fire.gif)、[地平線の拡大比較](results/shot_horizon_20261009/horizon_closeup.png)、[三カメラの前後比較](results/shot_horizon_20261009/horizon_comparison.png)。
 
 ## 依頼原文

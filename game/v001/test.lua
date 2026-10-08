@@ -124,7 +124,9 @@ if scenario=='objects' then
     local r={{128,165,68,158,4,0,0,0}}
     for i=1,6 do
       local size=1+(n+i)%16
-      r[#r+1]={100+i*8,100+i*4,size,size,10,i>3 and 64 or 0,0,2}
+      local bullet_x=i==2 and ({0,256,116,116})[1+(n//4)%4] or 100+i*8
+      local bullet_flags=(i>3 and 64 or 0)|(((n//16)%4)*16)
+      r[#r+1]={bullet_x,100+i*4,size,size,10,bullet_flags,0,2}
     end
     local flags=((n//17)%4)*16
     if (n//68)%2==1 then flags=flags|128 end
@@ -138,7 +140,7 @@ if scenario=='objects' then
       r[8][1]=128;r[8][2]=125
     end
     if field>=304 and field<=343 then
-      -- 四つの色を同時に出す。重なりで小さい黄色の明暗が隠れない場面。
+      -- サイズと位置を固定し、時間だけで全弾の色が同期して変わることを調べる。
       r={{32,80,12,12,10,0,0,2},{96,80,7,7,10,0,0,2},
          {160,80,3,3,10,0,0,2},{224,80,1,1,10,0,0,2},
          {128,190,32,48,9,0,0,2}}
@@ -479,8 +481,18 @@ emu.addEventCallback(guard(function()
     stats.singleShotMax=math.max(stats.singleShotMax or 0,read('_monosh_player_bullet_count'))
   end
   if scenario=='pause' then
-    if field==165 then stats.pauseLogic=read('_monosh_runtime_frame_counter',2) end
-    if field==195 then assert(read('_monosh_runtime_frame_counter',2)==stats.pauseLogic,'pause keeps updating logic') end
+    if field==165 then
+      stats.pauseLogic=read('_monosh_runtime_frame_counter',2)
+      stats.pauseBulletAttributes={}
+      for i=0,31 do stats.pauseBulletAttributes[i+1]=emu.read(i*4+3,emu.memType.snesSpriteRam) end
+    end
+    if field==195 then
+      assert(read('_monosh_runtime_frame_counter',2)==stats.pauseLogic,'pause keeps updating logic')
+      for i=0,31 do
+        assert(emu.read(i*4+3,emu.memType.snesSpriteRam)==stats.pauseBulletAttributes[i+1],'OBJ color changes while paused')
+      end
+      stats.pauseObjColorFrozen=true
+    end
     if field==240 then assert(read('_monosh_runtime_frame_counter',2)>stats.pauseLogic,'pause did not resume') end
   end
   if field%30==0 then trace() end

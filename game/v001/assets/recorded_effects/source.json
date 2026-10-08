@@ -154,8 +154,7 @@
     ]
   ],
   "sceneryDisplay": {
-    "topTrimRows": 2,
-    "downPixels": 2,
-    "clipAtGround": true
+    "groundTopClipRows": 2,
+    "downPixels": 2
   }
 }

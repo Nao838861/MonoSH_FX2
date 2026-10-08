@@ -1,0 +1,41 @@
+{
+  "samples": 219,
+  "cases": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "transitions": [
+    1,
+    0,
+    1
+  ],
+  "tiles_checked": 168192,
+  "palette_bytes_checked": 14016,
+  "monochromeOpaqueRgb5": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      31,
+      31,
+      31
+    ],
+    [
+      31,
+      31,
+      31
+    ]
+  ],
+  "map_errors": 0,
+  "vram_errors": 0,
+  "palette_errors": 0,
+  "physical_hardware": false
+}

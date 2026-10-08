@@ -76,4 +76,7 @@ def main():
     manifest.write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print('Archived and released',digest)
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    # 旧版の距離色・遠景削除は誤解釈。履歴を上書きせず現行の証跡へ保存する。
+    from archive_ground_time import main as archive_current
+    archive_current()

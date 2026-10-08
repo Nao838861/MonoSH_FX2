@@ -3,12 +3,12 @@
   "bg4": "far: mapB000",
   "width": 512,
   "chrBase": 24576,
-  "tiles": 177,
+  "tiles": 203,
   "skyColors": 21,
   "skyTableBytes": 10,
   "farY": 21,
   "skyStart": 75,
-  "groundStart": 104,
-  "topTrimRows": 2,
+  "groundStart": 106,
+  "groundTopClipRows": 2,
   "downPixels": 2
 }

@@ -63,15 +63,17 @@ def build():
         return raw+bytes(128-len(raw))
     for offset in range(65):
         so.append(len(scrolls));ro.append(len(rows))
-        horizon=104+offset
+        # 投影の原点を動かさず、画面上の地面だけ上2行を隠す。
+        projection_horizon=104+offset
+        horizon=projection_horizon+2
         left=horizon
         while left:
-            run=min(127,left);scrolls.extend(struct.pack('<BH',run,(23-offset)&65535));left-=run
+            run=min(127,left);scrolls.extend(struct.pack('<BH',run,(21-offset)&65535));left-=run
         count=205-horizon;scrolls.append(count|128)
         frame_rows=[]
         for physical in range(horizon,205):
-            span=204-horizon
-            source_y=127+((physical-horizon)*80+span//2)//span
+            span=204-projection_horizon
+            source_y=127+((physical-projection_horizon)*80+span//2)//span
             rows.append(source_y-127)
             frame_rows.append(source_y-127)
             scrolls.extend(struct.pack('<h',source_y-physical))

@@ -50,7 +50,7 @@ _fx_build_ground:
   and #$ff
   sta $0120
   clc
-  adc #111
+  adc #113                  ; 元の地面開始104 + 上2行clip + HDMA表の補正7。
   sta _fx_ground_horizon
   lda #FX_SCENERY_V
   sec

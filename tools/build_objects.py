@@ -3,7 +3,7 @@ import json
 import struct
 from PIL import Image
 from build_ground import GAME
-from build_bullet_colors import build as build_bullet_colors,palette_number
+from build_bullet_colors import build as build_bullet_colors
 
 PLAYERS=[9,*range(15,31)]
 SIZES={1:(1,1),2:(2,2),3:(4,4),4:(6,4),5:(8,6),6:(10,6),7:(12,8),8:(16,12),9:(24,16),10:(32,20),11:(40,24)}
@@ -61,7 +61,7 @@ def build():
         if not size:records+=bytes(4);continue
         w,h=SIZES[size];layout=layouts[min(size,12)];records+=struct.pack('<4B',w,h,len(layout),0)
         # bit9..11はOBJのpalette番号。CHR番号・大OBJフラグと同じwordへ置く。
-        for x,y,tile,step in layout:records+=struct.pack('<BBH',x,y,tile|(palette_number(size)<<9)|(0x8000 if step==32 else 0))
+        for x,y,tile,step in layout:records+=struct.pack('<BBH',x,y,tile|(0x8000 if step==32 else 0))
     (assets/'obj_tiles.bin').write_bytes(struct.pack('<264H',*player_tiles))
     (assets/'obj_bullets.bin').write_bytes(struct.pack('<17H',*pointers)+records)
     palettes=palette+[color for phase in shot_palettes for color in phase]

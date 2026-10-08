@@ -7,9 +7,6 @@ from PIL import Image,ImageDraw
 ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'game/v001/assets/recorded_effects'
 
-def palette_number(size):
-    return 1 if size>=9 else 2 if size>=6 else 3 if size>=3 else 4
-
 def build():
     old=json.loads((ASSETS/'bullet_palette.json').read_text())['rgb5']
     used=sorted(c for count,c in Image.open(ASSETS/'bullet.png').getcolors() if c)
@@ -31,9 +28,9 @@ def build():
         core=Image.open(ASSETS/'bullet.png').getpixel((28,16))
         palette[core]=np.rint(np.median(ordered[int(len(ordered)*.9):],axis=0)*31/255).astype(int).tolist()
         palettes.append(palette)
-    meta={'rgb5':palettes,'sizePalette':[0]+[palette_number(s) for s in range(1,17)],
+    meta={'rgb5':palettes,'clock':'globalLogicFrame','framesPerPhase':4,'cycleFrames':16,
           'names':['cyan','mint','lemon','warm'],'source':'shot_color_reference/source.json',
-          'note':'自弾の論理サイズで水色→薄緑→黄緑→暖かい黄色へ。四組を起動時に転送し、各弾のOAM属性で選ぶ。'}
+          'note':'距離・サイズに依存せず、ゲーム全体の論理時間で水色→薄緑→黄緑→黄色。4更新ごとに切替。周期は仮設定で、ポーズ中は進まない。四組を起動時に転送し、OAM属性で選ぶ。'}
     (ASSETS/'bullet_color_phases.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     preview=Image.new('RGB',(4*224,160),(80,64,96));draw=ImageDraw.Draw(preview)
     for i,(name,pal) in enumerate(zip(meta['names'],palettes)):

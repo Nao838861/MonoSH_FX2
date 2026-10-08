@@ -36,6 +36,7 @@ obj_size: .res 2
 bullet_width: .res 2
 bullet_height: .res 2
 bullet_count: .res 2
+bullet_attribute: .res 2
 last_upload_count: .res 2
 fx_obj_dma_bytes: .res 2
 obj_latch_initialized: .res 2
@@ -85,6 +86,17 @@ no_obj:
 fx_build_obj:
   php
   rep #$30
+  ; 全自弾共通の時間色。16更新周期、4更新/色。サイズや距離は参照しない。
+  ; OAM世代に固定するので、FX待ち中やポーズ中の色だけが先走らない。
+  lda _monosh_runtime_frame_counter
+  lsr
+  lsr
+  and #3
+  inc
+  xba
+  asl
+  ora #$3000                ; palette1..4、priority3。CGRAMの追加DMAは不要。
+  sta bullet_attribute
   stz fx_obj_count
   stz fx_obj_overflow
   ldx #0
@@ -405,9 +417,17 @@ emit:
   asl
   ora #$30                  ; priority 3、palette 0。
   sta attribute
+  lda kind
+  cmp #2
+  bne :+
+  lda bullet_attribute
+  xba
+  ora attribute
+  sta attribute
+:
   lda tile
   xba
-  and #$0f                  ; CHRの第9bitと、距離別の自弾palette番号を保存。
+  and #1                    ; descriptorはCHRだけ。自弾paletteは時間から決める。
   ora attribute
   xba
   sta work
@@ -476,8 +496,8 @@ bullet_fast_part:
   ldy #2
   lda (obj_tp),y
   pha
-  and #$0fff
-  ora #$3000                ; priority3。CHRと距離別paletteをまとめて保存。
+  and #$01ff
+  ora bullet_attribute      ; priority3と、この描画世代の時間色。
   sta fx_obj_next+2,x
   pla
   bpl bullet_fast_small
