@@ -8,6 +8,8 @@
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
+BGM・SEの追加は[実装方式の検討](game/v001/AUDIO_APPROACH_20261008.md)を保存した。原作の楽器サンプル＋音符列とSEサンプルを第一候補とし、音源ドライバの組み込み前の段階。
+
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 
 NES版MonoSHのゲームを、MSXSHの60Hz更新仕様を参照してSNESのCPUへ移植した。Super FX2が拡縮スプライトを奥から描き、自機と自弾・反射弾はPPUのOBJ、通常BGとHDMAが地面・遠景を描く。**Stage 1からボス撃破・次周まで動くROM。** 押しっぱなし射撃で誤ポーズになる入力取得も修正済み。通常操作、押しっぱなし、Startでのポーズ・解除を検証した。詳細は [検証結果](game/v001/RESULTS.md)。
