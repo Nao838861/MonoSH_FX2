@@ -1,5 +1,5 @@
 {
-  "romSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
+  "romSha256": "0b5e3c57072898c91feeb31721d8a211d4bb59a68c44a78920e907b77db99bfe",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -23,7 +23,8 @@
     "fastObj": true,
     "descriptorDma": true,
     "dmaAdmissionBytes": 9984,
-    "bucketSort": false
+    "bucketSort": false,
+    "smoothDepthSizes": true
   },
   "display": [
     256,
@@ -83,10 +84,10 @@
     "stumble": 800,
     "stress": 360,
     "naturalProfile": 18000,
-    "bossLongNoFire": 18000
+    "bossLongNoFire": 9000
   },
-  "verificationKind": "ボス3素材の縮小表と録画自弾・二層遠景を統合。固定全FB/OBJ、通常入力と長期ボス各18,000field、42組のDMA限界量を検証。",
-  "comprehensiveVerificationReferenceRomSha256": "7a0a0c5dd7cb594017fbc87cac4e63644d69d0a19178cd4409abad3c93270b9d",
+  "verificationKind": "滑らかな奥行き寸法と遠景修正の統合。CPU差分は背景即値2箇所とデータのみ。統合版で表示・操作・通常プレイ・長期ボスを再検証。",
+  "comprehensiveVerificationReferenceRomSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
   "groundPalette": {
     "requestedRgb": [
       [
@@ -165,7 +166,7 @@
       ]
     ]
   },
-  "verificationResults": "game/v001/results/boss_scaling_20261008/integrated/profiles.json",
+  "verificationResults": "game/v001/results/smooth_depth_20261008/integrated/profiles.json",
   "paletteCorrectionReferenceRomSha256": "1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc",
   "objColor": {
     "rgb5": [
@@ -353,17 +354,22 @@
     "afterLongFields": 18000,
     "afterLongLogicUpdates": 14430
   },
-  "previousRomSha256": "61c228dd8b7576194756d260e84aa04e236af8e28b01aa99512e560673e049b9",
+  "previousRomSha256": "12e300196644619e5b0710859c71fd70d8d3294d2cf9c7cc54c4245523798978",
   "optimizationMeasurement": "game/v001/results/boss_scaling_20261008",
-  "replayScenes": 523,
-  "replayImagesVerified": 2454,
+  "replayScenes": 1221,
+  "replayImagesVerified": 7404,
   "sampledScenePixelMatch": true,
   "playerRecordingBaseRomSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
   "playerImageSource": "game/v001/assets/player_recording/source.json",
-  "playerImageValidation": "game/v001/results/boss_scaling_20261008/integrated/objects_ppu.json",
+  "playerImageValidation": "game/v001/results/smooth_depth_20261008/integrated/tests/objects/objects_ppu.json",
   "fullTransferValidation": "game/v001/results/boss_scaling_20261008/integrated/full_transfer_objects/summary.json",
   "dmaDeadlineValidation": "game/v001/results/boss_scaling_20261008/integrated/dma_deadlines/summary.json",
   "rendererBaselineRomSha256": "9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab",
   "integratedMeasurement": "game/v001/results/boss_scaling_20261008/integrated",
-  "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json"
+  "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
+  "smoothDepthMeasurement": "game/v001/results/smooth_depth_20261008",
+  "geometryPolicy": "単調Hermite曲線をビルド時に整数寸法へ変換。近遠端・接地・移動速度を保持。開EM1の描画と当たり判定は同じ111項目。",
+  "unchangedRendererValidationRomSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
+  "rendererReplayReferenceRomSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
+  "smoothDepthIntegration": "game/v001/results/smooth_depth_20261008/integrated/integration.json"
 }

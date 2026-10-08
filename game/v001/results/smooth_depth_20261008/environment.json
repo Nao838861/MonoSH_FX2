@@ -1,0 +1,37 @@
+{
+  "romSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
+  "mesenSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+  "gsuClockPercent": 100,
+  "region": "NTSC",
+  "extraScanlines": 0,
+  "compilerSha256": {
+    "cc65": "6acf79a7017bb3e70d7ad9391d689b04c127cdf4fbecc4c760cc292f66524344",
+    "ca65": "0294ad17df25cdc24a15b9743a7e678b0c865b1d09fd0b59379481ed11cf80f4",
+    "ld65": "843296b865ed433d4c284cc3531c73d33b69e5fd57a55db1ee144118584303fb"
+  },
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "scaledAssetWidths": {
+      "13": 96,
+      "14": 96,
+      "31": 96
+    },
+    "scaledClip": true,
+    "fastUv": true,
+    "genericPipeline": true,
+    "rowMargins": true,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true
+  }
+}

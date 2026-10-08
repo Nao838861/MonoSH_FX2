@@ -5,6 +5,9 @@
 .import _monosh_enemies, _monosh_enemy_active_count_value, _monosh_enemy_em1_count
 .import _monosh_player_bullets, _monosh_player_bullet_count
 .import _monosh_em1_closed_geometry, _monosh_em1_open_geometry, _monosh_bom_geometry
+.ifdef FX_SMOOTH_DEPTH
+.import fx_em1_open_sizes
+.endif
 .import _monosh_ground_screen_delta, _monosh_combat_reflect_bullet
 .segment "ZEROPAGE"
 ce: .res 2
@@ -88,6 +91,27 @@ open:
   ldy #6
   lda (ce),y
   and #$ff
+  .ifdef FX_SMOOTH_DEPTH
+  ; 描画と同じZ*10+(pose-1)*2。旧3段階の当たり判定を残さない。
+  cmp #111
+  bcc :+
+  lda #110
+:
+  asl
+  sta $0274
+  asl
+  asl
+  clc
+  adc $0274
+  sta $0274
+  lda $0272
+  dec
+  asl
+  clc
+  adc $0274
+  tax
+  lda f:$7f0000+fx_em1_open_sizes,x
+  .else
   ldx #0
   cmp #80
   bcs :+
@@ -103,6 +127,7 @@ open:
   asl
   tax
   lda _monosh_em1_open_geometry,x
+  .endif
 geometry:
   pha
   and #$ff
