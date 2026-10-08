@@ -1,0 +1,72 @@
+{
+  "assets_checked": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    11,
+    12,
+    13,
+    14,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "source_pixels_checked": 223169,
+  "alpha_errors": 0,
+  "dark_detail_errors": 0,
+  "negative_controls": 2,
+  "projectile_phases_colored": 4,
+  "emulator_captures": [
+    {
+      "fixture": "boss",
+      "before_mask_errors": 1757,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "enemies",
+      "before_mask_errors": 1964,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "foliage",
+      "before_mask_errors": 4619,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "overlap",
+      "before_mask_errors": 3911,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "player_shots",
+      "before_mask_errors": 0,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "projectiles",
+      "before_mask_errors": 4100,
+      "after_mask_errors": 0,
+      "select_bitmap_errors": 0
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "method": "original alpha and dark structure; recorded hue and split highlights",
+  "reference": "source.json and frozen source PNGs remain unchanged; no unmasked original video is available here",
+  "projectile37": "fourth rotation was accidentally grayscale; uses observed purple family from frame 6; exact arcade phase color remains unverified",
+  "rgb5": [
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        3
+      ],
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        31,
+        31,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        7,
+        2
+      ],
+      [
+        3,
+        21,
+        4
+      ],
+      [
+        16,
+        31,
+        12
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        9,
+        5,
+        3
+      ],
+      [
+        22,
+        14,
+        10
+      ],
+      [
+        31,
+        25,
+        19
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        5
+      ],
+      [
+        15,
+        16,
+        18
+      ],
+      [
+        29,
+        29,
+        30
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        15,
+        1,
+        0
+      ],
+      [
+        31,
+        15,
+        3
+      ],
+      [
+        31,
+        30,
+        26
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        8,
+        18
+      ],
+      [
+        13,
+        18,
+        30
+      ],
+      [
+        27,
+        30,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        12,
+        3,
+        13
+      ],
+      [
+        24,
+        9,
+        24
+      ],
+      [
+        31,
+        24,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        7,
+        1
+      ],
+      [
+        7,
+        23,
+        6
+      ],
+      [
+        29,
+        24,
+        17
+      ]
+    ]
+  ],
+  "assets": {
+    "0": {
+      "opaque_pixels": 1115,
+      "repaired_mask_errors": 364,
+      "before_mask_iou": 0.6999175597691674,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        1
+      ]
+    },
+    "1": {
+      "opaque_pixels": 1610,
+      "repaired_mask_errors": 1334,
+      "before_mask_iou": 0.23596792668957617,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        1
+      ]
+    },
+    "2": {
+      "opaque_pixels": 620,
+      "repaired_mask_errors": 240,
+      "before_mask_iou": 0.6352583586626139,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        3
+      ]
+    },
+    "3": {
+      "opaque_pixels": 740,
+      "repaired_mask_errors": 313,
+      "before_mask_iou": 0.6691331923890064,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        3,
+        4
+      ]
+    },
+    "4": {
+      "opaque_pixels": 2137,
+      "repaired_mask_errors": 666,
+      "before_mask_iou": 0.6922365988909427,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        1,
+        2
+      ]
+    },
+    "6": {
+      "opaque_pixels": 8251,
+      "repaired_mask_errors": 2526,
+      "before_mask_iou": 0.6989990467111534,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        6
+      ]
+    },
+    "7": {
+      "opaque_pixels": 8992,
+      "repaired_mask_errors": 6698,
+      "before_mask_iou": 0.2897136797454931,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        5
+      ]
+    },
+    "8": {
+      "opaque_pixels": 10065,
+      "repaired_mask_errors": 3707,
+      "before_mask_iou": 0.672323875187837,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        4
+      ]
+    },
+    "11": {
+      "opaque_pixels": 168,
+      "repaired_mask_errors": 68,
+      "before_mask_iou": 0.5952380952380952,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        3
+      ]
+    },
+    "12": {
+      "opaque_pixels": 208,
+      "repaired_mask_errors": 110,
+      "before_mask_iou": 0.4930875576036866,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        3
+      ]
+    },
+    "13": {
+      "opaque_pixels": 7080,
+      "repaired_mask_errors": 151,
+      "before_mask_iou": 0.9786723163841808,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        1,
+        2,
+        7
+      ]
+    },
+    "14": {
+      "opaque_pixels": 6831,
+      "repaired_mask_errors": 1387,
+      "before_mask_iou": 0.7969550578246231,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        1,
+        2,
+        7
+      ]
+    },
+    "31": {
+      "opaque_pixels": 11776,
+      "repaired_mask_errors": 5038,
+      "before_mask_iou": 0.5721807065217391,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        4
+      ]
+    },
+    "37": {
+      "opaque_pixels": 8135,
+      "repaired_mask_errors": 0,
+      "before_mask_iou": 1.0,
+      "after_mask_iou": 1.0,
+      "dark_structure_preserved": true,
+      "palette_candidates": [
+        6
+      ]
+    }
+  }
+}

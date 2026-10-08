@@ -1,8 +1,8 @@
 # MonoSH Super FX2 開発プロジェクト
 
-最新ROMは [カラー最適化＋BGM・SE統合版](game/v001/RESULTS_20261008_COLOR_AUDIO_INTEGRATED.md)。既存のSPC700音声を残し、GSU属性生成と差分転送を統合した。通常・継続ボス各18,000fieldで平均60.0921／60.0654fps。2field間隔がそれぞれ2回／10回あり、完全な毎field更新ではない。ユーザーの指示に従い、このまま反映した。色・画素・操作・音声一周・DMA境界の回帰試験は合格。実機は未検証。
+最新ROMは [輪郭修正＋カラー＋BGM・SE版](game/v001/RESULTS_20261008_VISUAL_FIDELITY.md)。カラー化で欠けた草木・敵弾・敵・ボスの輪郭と暗部の細部を修復した。録画を色の参考にし、旧原画のポーズを保持する。6組の固定場面で、実エミュレーターのframebuffer輪郭がカラー化前ROMと完全一致。実PPUの比較画像と原作らしさの評価をリンク先に保存した。処理落ちは今回の反映条件にしていない。
 
-起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。素材のシルエット・原作との見た目は別途確認中。
+起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。音声・ゲーム進行・奥行き寸法・自機と自弾は維持する。
 
 [音声なしのカラー60Hz検証](game/v001/RESULTS_20261008_COLOR_60HZ.md)と[最初のカラー試作](game/v001/RESULTS_20261008_BG_COLOR.md)は履歴として保持する。
 

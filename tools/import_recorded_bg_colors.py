@@ -171,5 +171,8 @@ def main():
         'fallback':'爆発・砲台開閉は既存alphaを保持して録画に近い色組を割当。'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     sheet.save(DEST/'comparison.png')
     print('13 recorded crops, indexed sources, 8 palettes and 44-cell maps written')
+    # A video crop supplies color, never replacement animation geometry.
+    from repair_color_silhouettes import main as repair_silhouettes
+    repair_silhouettes()
 
 if __name__=='__main__':main()

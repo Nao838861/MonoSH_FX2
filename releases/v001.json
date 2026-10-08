@@ -299,7 +299,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "romSha256": "84b1372d59d138c6c6d4d9f167d956b077d02598199996086a8a8980c0d76b17",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -328,25 +328,23 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "音付き2bppカラー統合版。通常18,000field中2回、継続ボス18,000field中10回の2field間隔あり。機能・音声一周・色・画素・OBJ・操作・DMA境界は合格。実機未検証。",
-  "verificationResults": "game/v001/results/color60_audio_20261008",
+  "verificationKind": "旧原画の輪郭・暗部を保持したカラー＋音声版。25素材、6固定画面、523描画fixture、操作・ボス進行・音声SE・カラー切替を検証。実機未検証。",
+  "verificationResults": "game/v001/results/visual_fidelity_20261008",
   "scenarioFrames": {
     "color": 360,
-    "objects": 720,
-    "display": 720,
-    "controls": 720,
-    "pause": 650,
+    "objects": 360,
     "packed": 360,
-    "stumble": 800,
-    "boss": 3000,
-    "stress": 360,
+    "controls": 720,
+    "pause": 360,
+    "display": 720,
     "held": 1800,
+    "boss": 2600,
+    "stumble": 800,
+    "stress": 360,
     "naturalProfile": 18000,
-    "bossLongNoFire": 18000,
-    "audio": 16000,
-    "scenery": 800
+    "audioQuick": 1400
   },
-  "previousRomSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
+  "previousRomSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -360,64 +358,218 @@
     "toggleScope": "2bpp enemies and obstacles only",
     "physicalHardwareTested": false,
     "attributeGeneration": "GSU exact Q8.8 tile-center sampling; CPU owns mode latching and palette/map DMA",
-    "attributeUpload": "up to 12 coalesced delta spans, staged full-map transfer for large combined DMA"
+    "attributeUpload": "up to 12 coalesced delta spans, staged full-map transfer for large combined DMA",
+    "structureRepair": "game/v001/assets/bg_color/silhouette_repair.json",
+    "historicalRecordingMetadata": "game/v001/assets/bg_color/source.json",
+    "rgb5": [
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          31,
+          31,
+          31
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          7,
+          2
+        ],
+        [
+          3,
+          21,
+          4
+        ],
+        [
+          16,
+          31,
+          12
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          5,
+          3
+        ],
+        [
+          22,
+          14,
+          10
+        ],
+        [
+          31,
+          25,
+          19
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          3,
+          5
+        ],
+        [
+          15,
+          16,
+          18
+        ],
+        [
+          29,
+          29,
+          30
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          1,
+          0
+        ],
+        [
+          31,
+          15,
+          3
+        ],
+        [
+          31,
+          30,
+          26
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          8,
+          18
+        ],
+        [
+          13,
+          18,
+          30
+        ],
+        [
+          27,
+          30,
+          31
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          12,
+          3,
+          13
+        ],
+        [
+          24,
+          9,
+          24
+        ],
+        [
+          31,
+          24,
+          31
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          7,
+          1
+        ],
+        [
+          7,
+          23,
+          6
+        ],
+        [
+          29,
+          24,
+          17
+        ]
+      ]
+    ]
   },
   "performance": {
-    "play": {
-      "scenario": "natural",
-      "framesRequested": 18000,
-      "presentationFps": 60.0988118623484,
-      "presentations": 17975,
+    "naturalProfile": {
+      "frames": 18000,
+      "presentationFps": 60.098811862348406,
+      "rendered": 17997,
       "presentationIntervals": {
-        "1": 17974
+        "1": 17996,
+        "2": 0,
+        "3plus": 0
       },
-      "extraWritesInSameBlank": 0,
-      "steady60Hz": true,
-      "cpuMeanMs": 8.534415158325164,
-      "cpuMaxMs": 15.211894695005958,
-      "gsuMeanMs": 5.953203653179842,
-      "gsuMaxMs": 14.967170877195203,
-      "evidence": "game/v001/results/color60_20261008/natural/performance.json"
-    },
-    "boss": {
-      "scenario": "sustained_boss",
-      "framesRequested": 18000,
-      "presentationFps": 60.09881186234841,
-      "presentations": 17976,
-      "presentationIntervals": {
-        "1": 17975
-      },
-      "extraWritesInSameBlank": 0,
-      "steady60Hz": true,
-      "cpuMeanMs": 8.1601234152276,
-      "cpuMaxMs": 13.999170844416367,
-      "gsuMeanMs": 8.119489061640678,
-      "gsuMaxMs": 14.025431162765924,
-      "evidence": "game/v001/results/color60_20261008/sustained_boss/performance.json",
-      "bossAliveImages": 12910
+      "evidence": "game/v001/results/visual_fidelity_20261008/natural_profile.json",
+      "sustainedBossRetested": false,
+      "performanceGateWaived": true
     }
   },
-  "verificationReport": "game/v001/RESULTS_20261008_COLOR_60HZ.md",
+  "verificationReport": "game/v001/RESULTS_20261008_VISUAL_FIDELITY.md",
   "validation": {
-    "verifiedCodeCommit": "5a0ab007f86dbf562b0ed664ef4cb8e0c8b1b653",
-    "baseCommit": "4c5ec389e67737837a09980069374267d24e7c20",
+    "baseCommit": "98b192026488b2791a334d1ee2d7b6622da09810",
     "fixedScenes": 523,
-    "fixedImages": 2309,
-    "paletteCellsChecked": 1773312,
-    "gameplayMatchedUpdates": {
-      "equivalence": 5966,
-      "equivalence_boss": 1942
-    },
-    "dmaDeadlineConditions": 72,
-    "pipelineBoundaryPresentations": 6110,
-    "latestFullFramebufferCompletion": {
-      "scanline": 21,
-      "hclock": 864,
-      "masterClocksUntilScanline22": 500
-    },
-    "physicalHardwareTested": false,
-    "environment": "game/v001/results/color60_20261008/environment.json",
-    "fileHashes": "game/v001/results/color60_20261008/SHA256SUMS.json"
+    "fixedImages": 2304,
+    "paletteCellsChecked": 1769472,
+    "sourceAssetsChecked": 25,
+    "sourcePixelsChecked": 223169,
+    "emulatorFramebufferMaskCases": 6,
+    "realPpuComparisonImages": 24,
+    "playerAndShotFinalPpuIdentical": true,
+    "audioQuickFields": 1400,
+    "audioDataUnchangedSha256": "a6593c9a0b44d02f6ac11d6e753da3f9f1ffeb2cd512724024374ad45987ca02",
+    "hardwareTested": false,
+    "historicalResults": "game/v001/results/visual_fidelity_20261008/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -430,12 +582,10 @@
     "physicalHardwareTested": false
   },
   "presentationRates": {
-    "natural": 60.092132732334804,
-    "sustainedBoss": 60.06541806790358
+    "natural": 60.098811862348406
   },
   "latePresentationIntervals": {
-    "natural": 2,
-    "sustainedBoss": 10
+    "natural": 0
   },
   "strict60Hz": false
 }
