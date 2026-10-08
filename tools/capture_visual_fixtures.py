@@ -83,6 +83,7 @@ def main():
  p.add_argument('--build-dir',type=Path,default=Path('build/game_v001'))
  p.add_argument('--output',type=Path,required=True)
  p.add_argument('--mode',choices=['color','mono'],default='color')
+ p.add_argument('--timeout',type=int,default=180)
  args=p.parse_args();build=args.build_dir.resolve();out=args.output.resolve();out.mkdir(parents=True,exist_ok=True)
  if (out/'error.txt').exists(): (out/'error.txt').unlink()
  labels={m[2]:int(m[1],16) for m in re.finditer(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(build/'game.lbl').read_text())}
@@ -90,7 +91,7 @@ def main():
  path=out/'capture.lua';path.write_text(script)
  mesen=prepare_runtime(MESEN_EXE);settings=mesen.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update({'Port1':{'Type':'SnesController'},'DisableFrameSkipping':True});cfg['Debug']['ScriptWindow']['ScriptTimeout']=10;settings.write_text(json.dumps(cfg))
  rom=build/'MonoSHFX2_v001.sfc'
- result=subprocess.run([str(mesen),'--testRunner','--timeout=180','--doNotSaveSettings','--enableStdout',str(rom),str(path)],cwd=mesen.parent,capture_output=True,timeout=190)
+ result=subprocess.run([str(mesen),'--testRunner',f'--timeout={args.timeout}','--doNotSaveSettings','--enableStdout',str(rom),str(path)],cwd=mesen.parent,capture_output=True,timeout=args.timeout+10)
  (out/'emulator.log').write_bytes(result.stdout+result.stderr)
  assert result.returncode==0,(result.returncode,(out/'error.txt').read_text() if (out/'error.txt').exists() else result.stdout[-1000:])
  for fixture in FIXTURES:

@@ -1,0 +1,36 @@
+{
+  "romSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
+  "fixtures": [
+    {
+      "fixture": "foliage",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "enemies",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "projectiles",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "boss",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "player_shots",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    },
+    {
+      "fixture": "overlap",
+      "displayed_alpha_errors": 0,
+      "select_bitmap_errors": 0
+    }
+  ],
+  "player_and_shot_final_ppu_identical": true
+}

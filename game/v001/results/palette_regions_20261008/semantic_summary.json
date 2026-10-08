@@ -1,0 +1,20 @@
+{
+  "rom_sha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
+  "scenes": 1696,
+  "opaque_ppu_pixels": 3690832,
+  "red_lens_ppu_pixels": 32128,
+  "ppu_color_errors": 0,
+  "alpha_errors": 0,
+  "all_64_x_y_tile_phase_pairs": true,
+  "horizontal_flips": [
+    0,
+    16
+  ],
+  "requested_assets_three_sizes": [
+    3,
+    4,
+    13,
+    14
+  ],
+  "overlap_limitation": "Different objects still share one palette per screen tile; checked separately in the fixed overlap scene."
+}

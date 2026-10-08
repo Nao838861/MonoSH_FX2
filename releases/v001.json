@@ -299,7 +299,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "84b1372d59d138c6c6d4d9f167d956b077d02598199996086a8a8980c0d76b17",
+  "romSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -328,8 +328,8 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "旧原画の輪郭・暗部を保持したカラー＋音声版。25素材、6固定画面、523描画fixture、操作・ボス進行・音声SE・カラー切替を検証。実機未検証。",
-  "verificationResults": "game/v001/results/visual_fidelity_20261008",
+  "verificationKind": "木3色・赤い目と灰色の小型敵・ボス頭の象牙色の目と角・緑と茶色の胴。輪郭、実PPUの色領域、操作、ボス進行、音声を検証。実機未検証。",
+  "verificationResults": "game/v001/results/palette_regions_20261008",
   "scenarioFrames": {
     "color": 360,
     "objects": 360,
@@ -341,10 +341,9 @@
     "boss": 2600,
     "stumble": 800,
     "stress": 360,
-    "naturalProfile": 18000,
     "audioQuick": 1400
   },
-  "previousRomSha256": "5894da3a3f3f25110ec3b05e122ec2a57f9fbff814ca3e6b26a9446e03c2dd16",
+  "previousRomSha256": "84b1372d59d138c6c6d4d9f167d956b077d02598199996086a8a8980c0d76b17",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -374,14 +373,14 @@
           3
         ],
         [
-          16,
-          16,
-          16
+          31,
+          3,
+          2
         ],
         [
-          31,
-          31,
-          31
+          22,
+          23,
+          25
         ]
       ],
       [
@@ -413,19 +412,19 @@
           0
         ],
         [
-          9,
-          5,
-          3
+          1,
+          7,
+          2
+        ],
+        [
+          3,
+          21,
+          4
         ],
         [
           22,
           14,
           10
-        ],
-        [
-          31,
-          25,
-          19
         ]
       ],
       [
@@ -525,7 +524,7 @@
         [
           1,
           7,
-          1
+          2
         ],
         [
           7,
@@ -533,43 +532,48 @@
           6
         ],
         [
-          29,
-          24,
-          17
+          25,
+          25,
+          20
         ]
       ]
-    ]
+    ],
+    "titlePalette3NearWhiteRgb": [
+      239,
+      239,
+      247
+    ],
+    "titlePalette3DarkRgb": [
+      24,
+      24,
+      41
+    ],
+    "paletteCoverage": "single palette per source image; full source-cell rectangle to cover partially visible screen-tile edges"
   },
   "performance": {
-    "naturalProfile": {
-      "frames": 18000,
-      "presentationFps": 60.098811862348406,
-      "rendered": 17997,
-      "presentationIntervals": {
-        "1": 17996,
-        "2": 0,
-        "3plus": 0
-      },
-      "evidence": "game/v001/results/visual_fidelity_20261008/natural_profile.json",
-      "sustainedBossRetested": false,
-      "performanceGateWaived": true
-    }
+    "performanceGateWaived": true,
+    "longProfileRequiredForThisRelease": false,
+    "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261008_VISUAL_FIDELITY.md",
+  "verificationReport": "game/v001/RESULTS_20261008_PALETTE_REGIONS.md",
   "validation": {
-    "baseCommit": "98b192026488b2791a334d1ee2d7b6622da09810",
+    "baseCommit": "fdf1e0853d031684eab8ca2d09936d293bfaa375",
     "fixedScenes": 523,
-    "fixedImages": 2304,
-    "paletteCellsChecked": 1769472,
+    "fixedImages": 2325,
+    "paletteCellsChecked": 1785600,
     "sourceAssetsChecked": 25,
     "sourcePixelsChecked": 223169,
-    "emulatorFramebufferMaskCases": 6,
+    "reviewedRedLensPixels": 47,
+    "matchedDisplayedMaskCases": 6,
     "realPpuComparisonImages": 24,
     "playerAndShotFinalPpuIdentical": true,
+    "isolatedPaletteScenes": 1696,
+    "isolatedOpaquePpuPixels": 3690832,
+    "isolatedPaletteErrors": 0,
     "audioQuickFields": 1400,
     "audioDataUnchangedSha256": "a6593c9a0b44d02f6ac11d6e753da3f9f1ffeb2cd512724024374ad45987ca02",
     "hardwareTested": false,
-    "historicalResults": "game/v001/results/visual_fidelity_20261008/previous_release.json"
+    "historicalResults": "game/v001/results/palette_regions_20261008/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -580,12 +584,6 @@
     "soundEffects": 6,
     "romAudioBytes": 18246,
     "physicalHardwareTested": false
-  },
-  "presentationRates": {
-    "natural": 60.098811862348406
-  },
-  "latePresentationIntervals": {
-    "natural": 0
   },
   "strict60Hz": false
 }

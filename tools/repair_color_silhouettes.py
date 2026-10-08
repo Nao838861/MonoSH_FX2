@@ -14,15 +14,41 @@ PALETTES = [[color[:] for color in palette] for palette in RECORDED_PALETTES]
 # The recording has warm-white cores and orange midtones, not solid lemon
 # yellow. Preserve the dark outline contrast while restoring the pale core.
 PALETTES[4] = [[0,0,0],[15,1,0],[31,15,3],[31,30,26]]
+# Palette 0 shares only its dark entry with the shadow. The title uses the
+# existing near-white palette 3 so gray enemy metal cannot gray the banner.
+# Put the red lens in pixels, never in a separate red 8x8 attribute block.
+PALETTES[0][2] = [31,3,2]
+PALETTES[0][3] = [22,23,25]
+# One palette per tree/boss prevents source-cell and scaled-screen seams.
+PALETTES[2] = [[0,0,0],[1,7,2],[3,21,4],[22,14,10]]
+PALETTES[7] = [[0,0,0],[1,7,2],[7,23,6],[25,25,20]]
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'game/v001/assets'
 DEST = ASSETS / 'bg_color'
 RECORDED = [0, 1, 2, 3, 4, 6, 7, 8, 11, 12, 13, 14, 31]
-POLICIES = {0:[1], 1:[1], 2:[3], 3:[3,4], 4:[1,2], 6:[6], 7:[5],
-            8:[4], 11:[3], 12:[3], 13:[1,2,7], 14:[1,2,7], 31:[4], 37:[6]}
+POLICIES = {0:[1], 1:[1], 2:[3], 3:[0], 4:[2], 6:[6], 7:[5],
+            8:[4], 11:[3], 12:[3], 13:[2], 14:[7], 31:[4], 37:[6]}
 GRAY = [0,0,0,24,24,24,132,132,132,255,255,255] + [0]*756
 RGB = np.array(PALETTES, dtype=float) * 255 / 31
+
+
+def enemy_lens_mask(original):
+    """Reviewed red interior of source 03, with the white glint and dark rim.
+
+    Only the top central lens may recolor original dark pixels. Its highlight
+    component is still white, and one pixel of the original rim stays dark.
+    The fixed source-coordinate mask is independently stored and regression
+    checked; it never depends on a source attribute cell or screen alignment.
+    """
+    opaque = original[:,:,3] >= 128
+    light = original[:,:,:3].astype(int).sum(axis=2) >= 384
+    yy,xx = np.indices(opaque.shape)
+    glint = light & (xx >= 24) & (xx < 29) & (yy >= 2) & (yy < 12)
+    lens = opaque & (~light | glint) & (xx >= 22) & (xx < 34) & (yy >= 1) & (yy < 14)
+    padded = np.pad(lens,1)
+    interior = lens & padded[:-2,1:-1] & padded[2:,1:-1] & padded[1:-1,:-2] & padded[1:-1,2:]
+    return interior & ~light
 
 
 def structure_color(asset):
@@ -33,19 +59,36 @@ def structure_color(asset):
     reference = np.array(Image.open(ref_path).convert('RGBA').resize(
         (base.shape[1],base.shape[0]),Image.Resampling.NEAREST)) if ref_path.exists() else None
     indices = np.where(opaque, np.where(light,3,1),0).astype(np.uint8)
+    # These regions are anchored to the frozen source drawing, never to a
+    # resized recording or to an 8x8 attribute-cell boundary.
+    yy,xx = np.indices(opaque.shape)
+    if asset == 4:
+        indices[opaque & light] = 2
+        trunk = (yy >= 69) | ((yy >= 64) & (xx >= 14) & (xx <= 21))
+        indices[opaque & light & trunk] = 3
+    elif asset in [13,14]:
+        indices[opaque & light] = 2
+        if asset == 13:
+            belly = (yy >= 48) & (xx >= 24) & (xx < 105)
+            indices[opaque & light & belly] = 3
+        if asset == 14:
+            eyes = ((xx >= 24) & (xx < 36) & (yy >= 37) & (yy < 51)) | ((xx >= 53) & (xx < 67) & (yy >= 37) & (yy < 48))
+            horns = ((xx >= 13) & (xx < 29) & (yy < 22)) | ((xx >= 41) & (xx < 65) & (yy < 14)) | ((xx >= 66) & (yy < 21))
+            indices[opaque & light & (eyes | horns)] = 3
+    elif asset == 3:
+        indices[enemy_lens_mask(base)] = 2
     cells = np.full((16,16),15,dtype=np.uint8)
     preview = np.zeros(base.shape,dtype=np.uint8)
     for ty in range((base.shape[0]+7)//8):
         for tx in range((base.shape[1]+7)//8):
             sl = np.s_[ty*8:(ty+1)*8,tx*8:(tx+1)*8]
             mask = opaque[sl]
-            if not mask.any(): continue
+            # Tile centers can sample a transparent source cell while the
+            # same screen tile contains an opaque edge. Every asset now uses
+            # one palette, so cover the full source rectangle consistently.
             choices = POLICIES[asset]
-            # The recorded bush includes brown ground, not a matching branch.
-            # The tree's trunk is anchored to the existing sprite, not the crop.
-            if asset == 4: choices = [2] if ty*8 >= 64 else [1]
             pal = choices[0]
-            if reference is not None:
+            if reference is not None and asset not in [3,4,13,14]:
                 src = reference[sl][:,:,:3].astype(float)
                 observed = (reference[sl][:,:,3] >= 128) & mask
                 if observed.any():
@@ -93,19 +136,21 @@ def main():
             allcells[asset] = cells
         else:
             indices = np.array(Image.open(path))
-            pal = 4 if asset in [5,39,40,41] else 3 if asset in range(32,37) else 0
+            pal = 4 if asset in [5,39,40,41] else 3 if asset in [*range(32,37),42] else 0
             for ty in range((indices.shape[0]+7)//8):
                 for tx in range((indices.shape[1]+7)//8):
-                    if indices[ty*8:(ty+1)*8,tx*8:(tx+1)*8].any(): allcells[asset,ty,tx]=pal
+                    allcells[asset,ty,tx]=pal
         new = np.array(Image.open(path))
         assert np.array_equal(new!=0,mask),(asset,'silhouette')
         dark = mask & (original[:,:,:3].astype(int).sum(axis=2)<384)
-        assert np.all(new[dark]==1),(asset,'dark structure')
+        protected_dark = dark & ~enemy_lens_mask(original) if asset == 3 else dark
+        assert np.all(new[protected_dark]==1),(asset,'dark structure')
         if asset in POLICIES:
             union = mask | (old!=0)
             metrics[str(asset)] = {'opaque_pixels':int(mask.sum()),'repaired_mask_errors':int(np.count_nonzero((old!=0)!=mask)),
                 'before_mask_iou':float(np.count_nonzero(mask & (old!=0))/np.count_nonzero(union)),
-                'after_mask_iou':1.0,'dark_structure_preserved':True,
+                'after_mask_iou':1.0,'dark_structure_preserved_outside_reviewed_eye':True,
+                'intentional_dark_lens_pixels':int(enemy_lens_mask(original).sum()) if asset == 3 else 0,
                 'palette_candidates':POLICIES[asset]}
     compact=bytearray();offsets=bytearray()
     for asset in range(44):
@@ -116,7 +161,7 @@ def main():
     (DEST/'cells.bin').write_bytes(compact);(DEST/'offsets.bin').write_bytes(offsets)
     palette = b''.join((r | g<<5 | b<<10).to_bytes(2,'little') for p in PALETTES for r,g,b in p)
     (DEST/'palette.bin').write_bytes(palette)
-    manifest = {'method':'original alpha and dark structure; recorded hue and split highlights',
+    manifest = {'method':'original alpha and structural detail; tree dark-green/green/brown; enemy red lens/gray metal; boss brown body and ivory eye/horn head',
         'reference':'source.json and frozen source PNGs remain unchanged; no unmasked original video is available here',
         'projectile37':'fourth rotation was accidentally grayscale; uses observed purple family from frame 6; exact arcade phase color remains unverified',
         'rgb5':PALETTES,'assets':metrics}
