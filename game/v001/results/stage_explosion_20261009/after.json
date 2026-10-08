@@ -1,0 +1,16 @@
+{
+  "romSha256": "7200889f76edfaabab9c0ad9435ddd77fd9c3cb76b09c4ad1bf5bf8861049ed0",
+  "phase": 0,
+  "asset": 5,
+  "field": 234,
+  "stageDraw": [
+    128,
+    128,
+    19,
+    15,
+    5,
+    0,
+    60,
+    0
+  ]
+}

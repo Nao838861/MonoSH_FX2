@@ -1,0 +1,28 @@
+{
+  "fields": 480,
+  "renders": 197,
+  "starts": 198,
+  "halves": 394,
+  "logicCalls": 396,
+  "logic": 396,
+  "gsuMaxMs": 9.142316,
+  "intervals": {
+    "88": 1,
+    "2": 196
+  },
+  "bossSeen": false,
+  "dyingSeen": false,
+  "doneSeen": false,
+  "restartSeen": false,
+  "romSha256": "7200889f76edfaabab9c0ad9435ddd77fd9c3cb76b09c4ad1bf5bf8861049ed0",
+  "actualGsuMaxMs": 9.138405,
+  "renderFPS": 30.0494,
+  "delayedPresents": 0,
+  "dmaBytes": {
+    "min": 3328,
+    "max": 8832,
+    "mean": 4711.959390862944
+  },
+  "mathChecks": 0,
+  "pixelSamples": 197
+}

@@ -215,6 +215,9 @@ world_x:
   sec
   sbc $01a6
 :
+  .ifdef FX_4BPP
+  cmp #0                  ; cmp #4のZではなく、折り返した位相の値で判定する。
+  .endif
   beq ordinary_asset
   clc
   adc #38

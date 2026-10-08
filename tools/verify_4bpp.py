@@ -117,12 +117,12 @@ def verify(directory):
             raise AssertionError(f'{prefix}: {sum(x!=y for x,y in zip(actual,expected))} framebuffer bytes differ')
         meta=json.loads((directory/f'{prefix}_meta.json').read_text())
         phase=meta.get('effectPhase')
-        if directory.name=='four_effects':assert phase is not None,f'{prefix}: explosion fixture did not reach enemy renderer'
+        if directory.name in ('four_effects','four_stage_effects'):assert phase is not None,f'{prefix}: explosion fixture did not reach renderer'
         if phase is not None:
             effect_phases.add(phase)
             draws=[struct.unpack_from('<hh6B',packet,32+i*10) for i in range(struct.unpack_from('<H',packet)[0])]
             expected_asset=(5,39,40,41,40,39)[phase]
-            for center in (64,192):
+            for center in ((128,) if directory.name=='four_stage_effects' else (64,192)):
                 assert any(r[0]==center and r[4]==expected_asset for r in draws),f'{prefix}: explosion sequence differs at {center}'
         inp=meta.get('playerInput')
         if inp:player_cases.add((inp['asset'],inp['flags'],inp['center'],inp['bottom']))
@@ -149,7 +149,7 @@ def verify(directory):
     if directory.name=='four_players':assert len(player_cases)==408,f'player coverage: {len(player_cases)}/408'
     if directory.name=='four_assets':assert len(asset_cases)==880,f'asset coverage: {len(asset_cases)}/880'
     if directory.name=='four_bullets':assert bullet_ages==set(range(64)),f'bullet ages: {len(bullet_ages)}/64'
-    if directory.name=='four_effects':assert effect_phases==set(range(6)),f'explosion phases: {effect_phases}'
+    if directory.name in ('four_effects','four_stage_effects'):assert effect_phases==set(range(6)),f'explosion phases: {effect_phases}'
     print(f'{directory.name}: {len(files)} frames, all 49,152 indexed pixels and 24KiB visible VRAM match')
 
 if __name__=='__main__':

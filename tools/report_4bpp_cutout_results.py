@@ -33,7 +33,7 @@ def main():
   panel.paste(shot(mode,'controls','screen00480.png').resize((512,448),Image.Resampling.NEAREST),(n*512,24))
  panel.save(DEST/'comparison.png')
  labels={'controls':'移動と連射','boss':'ボス撃破・次周','boss_hold':'ボス継続','death':'死亡と復帰','pause':'ポーズ',
-  'assets':'全素材・四反転・clip','players':'自機17姿勢','bullets':'弾の色周期・回転','effects':'敵・ボスの爆発6位相','full':'全量転送','play':'通常進行'}
+  'assets':'全素材・四反転・clip','players':'自機17姿勢','bullets':'弾の色周期・回転','effects':'敵・ボスの爆発6位相','stage_effects':'地上物体の爆発6位相','full':'全量転送','play':'通常進行'}
  rows=[];total=0
  for mode,m in manifests.items():
   for key,s in m['scenarios'].items():
@@ -45,11 +45,13 @@ def main():
  dma=[r for r in records if 'dmaMs' in r];dma_ms=max(r['dmaMs'] for r in dma)
  limitation='通常進行でも表示の遅延が残る。常時30fpsの達成とはしない。' if long['delayedPresents'] else '今回の通常進行では遅延0回。人工的な全画面拡大など任意の物量まで保証するものではない。'
  default=json.loads((GAME/'results/cutouts_20261009/default_build.json').read_text())
- result=f'''# 4bpp・30fps版：草の透過・爆発パターン・顎の修正（2026年10月9日）
+ result=f'''# 4bpp・30fps版：地上物体の爆発先頭が黒くなる不具合を修正（2026年10月9日）
 
 ユーザーが承認した物体だけの黒背景・16色実験を、実際の4bppカラーROMへ反映した。草二種類の色キーによる大量の透過を廃止し、明るい葉と暗部を保持した。爆発を火球で置き換えていた誤りを直し、白黒版と同じ四枚の輪郭・内部模様へ戻した。ボスの顎に混入した隣の胴も除去。自機は専用OBJ色とmainの服の透明穴修正を継承する。
 
 ![実ROMの画面](results/four_bpp_20261008/overview.png)
+
+地上物体の爆発は先頭位相0で、`cmp #4` の比較結果を0判定に流用し、爆発5ではなく影38を選んでいた。4bpp描画で位相自体を0比較するよう修正。通常敵・ボスとは別の地上物体経路を追加検査し、カラー・白黒双方の全六位相を確認した。[修正前後の実PPU](results/stage_explosion_20261009/comparison.png)。
 
 ## 起動と分岐
 
@@ -87,7 +89,7 @@ ROMは2MiB、原画{packing['rawSpriteBytes']:,}bytes、事前縮小行{packing[
 
 合計{total:,}標本で全49,152画素と表示中VRAMの24KiBを独立合成へ照合した。自機は実OAM・CHR・CGRAMから408条件を合成し、専用色・透明を元画像と照合。通常弾三発とボス炎弾で64位相を検査。地面CHR・mapの不変、DMAの非表示期間、通常の移動・連射、ポーズ、死亡と復帰、ボス撃破と次周も検査した。実機では未検証。
 
-素材修正前に確認した既定2bppビルドはmainの配布ROMと全2MiBが一致し、SHA256 `{default['sha256']}`。今回は4bpp用の素材・生成・検査を変更し、共通のゲーム描画コードは変更していない。
+素材修正前に確認した既定2bppビルドはmainの配布ROMと全2MiBが一致し、SHA256 `{default['sha256']}`。爆発先頭の条件判定は `FX_4BPP` の対象だけを変更し、既定2bppビルドへ追加命令を入れない。
 
 - カラーROM SHA256: `{manifests['color']['sha256']}`
 - 白黒ROM SHA256: `{manifests['mono']['sha256']}`

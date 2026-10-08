@@ -62,6 +62,8 @@ python -X utf8 tools/archive_4bpp.py color controls boss
 
 爆発の順序検査は `--scenario effects --frames 480`。通常敵とボスの描画処理へ六位相のタイマーを渡し、両方の実packetと全画素を照合する。`tools/report_4bpp_material_repair.py` が修正前後の草・顔、爆発四枚と実PPUのアニメを `results/material_repair_20261009/` へ保存する。
 
+地上物体の爆発は別経路なので、`--scenario stage_effects --frames 480` でカラー・白黒双方の六位相を検査する。先頭で位相0を正しく判定せず影38を選んでいた問題を、4bpp用描画で修正した。`tools/report_4bpp_stage_explosion.py` が保存済みのカラー標本から修正後を採り、既存の修正前と比較する。比較は `results/stage_explosion_20261009/`。
+
 次回以降のmainの取り込みは、変更をcommitしたこのworktreeで以下を実行する。mainから実験ブランチへの一方向のmerge、ビルド、検証、ROM保存、実験ブランチへのpushを行う。競合や検証失敗時は停止する。
 
 ```powershell

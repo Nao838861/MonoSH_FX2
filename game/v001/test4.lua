@@ -102,6 +102,14 @@ if scenario=='effects' then
   put('_boss_render_camera_delta',0,read('_monosh_ground_screen_delta',1))
  end)
 end
+if scenario=='stage_effects' then
+ cb('_fx_stage_render',function()
+  nextEffectPhase=((logic-1)//8)%6
+  put('_monosh_stage_object_count',0,1)
+  local data={0,0,60,2,12,48-nextEffectPhase*8}
+  for i,v in ipairs(data)do put('_monosh_stage_objects',i-1,v)end
+ end)
+end
 if scenario=='bullets' then
  cb('_fx_enemy_render_bullets',function()
   put('_monosh_enemy_bullet_count',0,4)
@@ -127,6 +135,10 @@ cb('math4_lift_result',function()
 end)
 cb('_fx_frame',function()
   logic=logic+1
+  if scenario=='stage_effects' then
+    put('_monosh_boss_state',0,0);put('_monosh_player_invuln',0,255)
+    put('_monosh_enemy_stage_complete_flag',0,0)
+  end
   if scenario=='effects' then
     put('_monosh_boss_state',0,1);put('_monosh_player_invuln',0,255)
     -- 敵描画の呼び出し自体がactive_countで省略されないよう、更新前にも枠を置く。
@@ -172,6 +184,7 @@ cb('_fx_frame',function()
   end
 end)
 cb('render_started',function()
+  if not labels.player4_present then presentEffectPhase=nextEffectPhase end
   starts=starts+1;gsu_start=emu.getState().masterClock
   if scenario=='assets' or scenario=='full' then
     -- 全44素材、四つの反転、左右上下のclip。事前縮小にない幅のfallbackも照合する。
@@ -195,7 +208,7 @@ cb('render_started',function()
     cartword(0x100a,192);cartword(0x100c,1)
   end
   trace:write(string.format('{"startLine":%d,"field":%d}\n',emu.getState()['ppu.scanline'],field))
-  if starts%60==0 or starts==1 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' then
+  if starts%60==0 or starts==1 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' or scenario=='stage_effects' then
     dump(string.format('frame%05d_packet.bin',starts),emu.memType.gsuWorkRam,0,1536)
     dump(string.format('frame%05d_background.bin',starts),emu.memType.gsuWorkRam,0x1000,16)
     dump(string.format('frame%05d_prepared.bin',starts),emu.memType.gsuWorkRam,0x0600,128)
@@ -258,7 +271,7 @@ cb('dma_finished',function()
   restartSeen=restartSeen or (doneSeen and boss==0)
   trace:write(string.format('{"present":%d,"field":%d,"interval":%d,"logic":%d,"page":%d,"boss":%d,"line":%d,"paused":%d,"player":%d,"x":%d,"bottom":%d,"shots":%d}\n',finishes,field,interval,read('_monosh_runtime_frame_counter',2),read('fx4_page',2),read('_monosh_boss_state',1),state['ppu.scanline'],paused,read('_monosh_player_state',1),read('_monosh_player_x',2),read('_monosh_player_bottom',2),read('_monosh_player_bullet_count',1)))
   trace:write(string.format('{"dmaBytes":%d,"field":%d}\n',read('fx4_dma_bytes',2),field))
-  if finishes%60==0 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' then
+  if finishes%60==0 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' or scenario=='stage_effects' then
     dump(string.format('frame%05d_fb.bin',finishes),emu.memType.gsuWorkRam,0x2000,24576)
     dump(string.format('frame%05d_vram.bin',finishes),emu.memType.snesVideoRam,0,65536)
     dump(string.format('frame%05d_bounds.bin',finishes),emu.memType.gsuWorkRam,0x580,64)
@@ -273,7 +286,7 @@ cb('dma_finished',function()
   end
 end)
 emu.addEventCallback(function()
-  local input={a=scenario~='boss_hold' and scenario~='boss' and scenario~='effects'}
+  local input={a=scenario~='boss_hold' and scenario~='boss' and scenario~='effects' and scenario~='stage_effects'}
   if scenario=='controls' then
     local phase=(field//240)%4
     input.up=phase==0;input.right=phase==1;input.down=phase==2;input.left=phase==3
@@ -290,7 +303,7 @@ emu.addEventCallback(function()
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
   field=field+1
-  if (scenario=='bullets' or scenario=='effects') and field%2==0 then screenshot(string.format('anim%05d',field)) end
+  if (scenario=='bullets' or scenario=='effects' or scenario=='stage_effects') and field%2==0 then screenshot(string.format('anim%05d',field)) end
   if field%240==0 then screenshot(string.format('screen%05d',field)) end
   if field>=maxframe then
     finished=true

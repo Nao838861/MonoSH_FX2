@@ -95,138 +95,138 @@ objects_asm.o:
 projection_asm.o:
     CODE              Offs=0062E7  Size=007097  Align=00001  Fill=0000
 stage_asm.o:
-    CODE              Offs=00D37E  Size=000406  Align=00001  Fill=0000
+    CODE              Offs=00D37E  Size=000409  Align=00001  Fill=0000
     ZEROPAGE          Offs=000036  Size=000006  Align=00001  Fill=0000
 stage_update_asm.o:
-    CODE              Offs=00D784  Size=000161  Align=00001  Fill=0000
+    CODE              Offs=00D787  Size=000161  Align=00001  Fill=0000
 enemy_render_asm.o:
-    CODE              Offs=00D8E5  Size=000276  Align=00001  Fill=0000
+    CODE              Offs=00D8E8  Size=000276  Align=00001  Fill=0000
     ZEROPAGE          Offs=00003C  Size=000004  Align=00001  Fill=0000
 enemy_collision_asm.o:
-    CODE              Offs=00DB5B  Size=000215  Align=00001  Fill=0000
+    CODE              Offs=00DB5E  Size=000215  Align=00001  Fill=0000
     ZEROPAGE          Offs=000040  Size=000002  Align=00001  Fill=0000
 enemy_geometry_asm.o:
-    CODE              Offs=00DD70  Size=00008A  Align=00001  Fill=0000
+    CODE              Offs=00DD73  Size=00008A  Align=00001  Fill=0000
     ZEROPAGE          Offs=000042  Size=000004  Align=00001  Fill=0000
 enemy_bullet_asm.o:
-    CODE              Offs=00DDFA  Size=00014A  Align=00001  Fill=0000
+    CODE              Offs=00DDFD  Size=00014A  Align=00001  Fill=0000
 enemy_update_asm.o:
-    CODE              Offs=00DF44  Size=0002BE  Align=00001  Fill=0000
+    CODE              Offs=00DF47  Size=0002BE  Align=00001  Fill=0000
     ZEROPAGE          Offs=000046  Size=000002  Align=00001  Fill=0000
 player_asm.o:
-    CODE              Offs=00E202  Size=000262  Align=00001  Fill=0000
+    CODE              Offs=00E205  Size=000262  Align=00001  Fill=0000
 frame_asm.o:
-    CODE              Offs=00E464  Size=0002FB  Align=00001  Fill=0000
+    CODE              Offs=00E467  Size=0002FB  Align=00001  Fill=0000
 boss_render_asm.o:
-    CODE              Offs=00E75F  Size=00019F  Align=00001  Fill=0000
+    CODE              Offs=00E762  Size=00019F  Align=00001  Fill=0000
 boss_collision_asm.o:
-    CODE              Offs=00E8FE  Size=000162  Align=00001  Fill=0000
+    CODE              Offs=00E901  Size=000162  Align=00001  Fill=0000
 combat_asm.o:
-    CODE              Offs=00EA60  Size=0001AD  Align=00001  Fill=0000
+    CODE              Offs=00EA63  Size=0001AD  Align=00001  Fill=0000
 dma_asm.o:
-    CODE              Offs=00EC0D  Size=00004B  Align=00001  Fill=0000
+    CODE              Offs=00EC10  Size=00004B  Align=00001  Fill=0000
     BSS               Offs=00153B  Size=000146  Align=00001  Fill=0000
     ZEROPAGE          Offs=000048  Size=000002  Align=00001  Fill=0000
 submit_asm.o:
-    CODE              Offs=00EC58  Size=0000D4  Align=00001  Fill=0000
+    CODE              Offs=00EC5B  Size=0000D4  Align=00001  Fill=0000
 smooth_depth_asm.o:
-    CODE              Offs=00ED2C  Size=000481  Align=00001  Fill=0000
+    CODE              Offs=00ED2F  Size=000481  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(add.o):
-    CODE              Offs=00F1AD  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00F1B0  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addeqsp.o):
-    CODE              Offs=00F1C9  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F1CC  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addysp.o):
-    CODE              Offs=00F1DA  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F1DD  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax2.o):
-    CODE              Offs=00F1E8  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00F1EB  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax3.o):
-    CODE              Offs=00F1F3  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F1F6  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax4.o):
-    CODE              Offs=00F201  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F204  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax1.o):
-    CODE              Offs=00F212  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=00F215  Size=00000A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax2.o):
-    CODE              Offs=00F21C  Size=00000F  Align=00001  Fill=0000
+    CODE              Offs=00F21F  Size=00000F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax3.o):
-    CODE              Offs=00F22B  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00F22E  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp1.o):
-    CODE              Offs=00F23F  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=00F242  Size=000009  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp2.o):
-    CODE              Offs=00F248  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F24B  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp3.o):
-    CODE              Offs=00F255  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F258  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp4.o):
-    CODE              Offs=00F262  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F265  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp5.o):
-    CODE              Offs=00F26F  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F272  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(div.o):
-    CODE              Offs=00F27C  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00F27F  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(icmp.o):
-    CODE              Offs=00F291  Size=00002E  Align=00001  Fill=0000
+    CODE              Offs=00F294  Size=00002E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp1.o):
-    CODE              Offs=00F2BF  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=00F2C2  Size=000007  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp2.o):
-    CODE              Offs=00F2C6  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F2C9  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp3.o):
-    CODE              Offs=00F2DC  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2DF  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp4.o):
-    CODE              Offs=00F2E1  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2E4  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp5.o):
-    CODE              Offs=00F2E6  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2E9  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp6.o):
-    CODE              Offs=00F2EB  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2EE  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp7.o):
-    CODE              Offs=00F2F0  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2F3  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp8.o):
-    CODE              Offs=00F2F5  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F2F8  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(ldai.o):
-    CODE              Offs=00F2FA  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=00F2FD  Size=00000C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(makebool.o):
-    CODE              Offs=00F306  Size=00002C  Align=00001  Fill=0000
+    CODE              Offs=00F309  Size=00002C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(memcpy.o):
-    CODE              Offs=00F332  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=00F335  Size=00003C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax10.o):
-    CODE              Offs=00F36E  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F371  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax3.o):
-    CODE              Offs=00F387  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F38A  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax5.o):
-    CODE              Offs=00F398  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00F39B  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax6.o):
-    CODE              Offs=00F3AC  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F3AF  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax7.o):
-    CODE              Offs=00F3C2  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F3C5  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(negabs.o):
-    CODE              Offs=00F3DB  Size=000012  Align=00001  Fill=0000
+    CODE              Offs=00F3DE  Size=000012  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(popptr1.o):
-    CODE              Offs=00F3ED  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F3F0  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pusha.o):
-    CODE              Offs=00F3FB  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F3FE  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushax.o):
-    CODE              Offs=00F411  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=00F414  Size=00001A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushwsp.o):
-    CODE              Offs=00F42B  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00F42E  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shelp.o):
-    CODE              Offs=00F447  Size=000020  Align=00001  Fill=0000
+    CODE              Offs=00F44A  Size=000020  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax1.o):
-    CODE              Offs=00F467  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=00F46A  Size=000008  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax3.o):
-    CODE              Offs=00F46F  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F472  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax4.o):
-    CODE              Offs=00F47D  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F480  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staspidx.o):
-    CODE              Offs=00F48E  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F491  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxsp.o):
-    CODE              Offs=00F4A4  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00F4A7  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxspi.o):
-    CODE              Offs=00F4AF  Size=00001B  Align=00001  Fill=0000
+    CODE              Offs=00F4B2  Size=00001B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(sub.o):
-    CODE              Offs=00F4CA  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00F4CD  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(subysp.o):
-    CODE              Offs=00F4DF  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F4E2  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(udiv.o):
-    CODE              Offs=00F4EC  Size=00004F  Align=00001  Fill=0000
+    CODE              Offs=00F4EF  Size=00004F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(umod.o):
-    CODE              Offs=00F53B  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F53E  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(zeropage.o):
     ZEROPAGE          Offs=00004A  Size=00001A  Align=00001  Fill=0000
 
@@ -235,7 +235,7 @@ Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-CODE                  000000  00F54B  00F54C  00001
+CODE                  000000  00F54E  00F54F  00001
 ZEROPAGE              000000  000063  000064  00001
 AUDIOBSS              001600  001617  000018  00001
 RODATA                002000  00E6A4  00C6A5  00001
@@ -290,16 +290,16 @@ _boss_part_active         00E6C6 RLA    _boss_part_bottom         00E6B4 RLA
 _boss_part_timer          00E6CF RLA    _boss_part_x              00E6AB RLA
 _boss_part_z              00E6BD RLA    _boss_render_camera_delta 00E90D RLA
 _fx4_explosion_lift       003369 RLA    _fx_audio_events          001610 RLA
-_fx_boss_hits             00E8FE RLA    _fx_boss_project          00E83B RLA
+_fx_boss_hits             00E901 RLA    _fx_boss_project          00E83E RLA
 _fx_build_ground          0033BF RLA    _fx_build_packet          005C84 RLA
 _fx_buttons               00F281 RLA    _fx_draw                  00EAFD RLA
-_fx_draw_count            00ED7D RLA    _fx_em0_geometry          00DD70 RLA
-_fx_enemy_collisions      00DB5B RLA    _fx_enemy_em1_update      00E0DC RLA
+_fx_draw_count            00ED7D RLA    _fx_em0_geometry          00DD73 RLA
+_fx_enemy_collisions      00DB5E RLA    _fx_enemy_em1_update      00E0DF RLA
 _fx_enemy_em1_update_reference 001D8C RLA    _fx_enemy_fire_em1        001D4E RLA
-_fx_enemy_remove          001D43 RLA    _fx_enemy_render          00D8E5 RLA
-_fx_enemy_render_bullets  00D9FC RLA    _fx_far_d_acc             00F28D RLA
+_fx_enemy_remove          001D43 RLA    _fx_enemy_render          00D8E8 RLA
+_fx_enemy_render_bullets  00D9FF RLA    _fx_far_d_acc             00F28D RLA
 _fx_far_u_acc             00F28B RLA    _fx_fire_actions          00F284 RLA
-_fx_frame                 00E464 RLA    _fx_ground_c1ptr          00F969 RLA
+_fx_frame                 00E467 RLA    _fx_ground_c1ptr          00F969 RLA
 _fx_ground_c3ptr          00F96B RLA    _fx_ground_camera         00833C RLA
 _fx_ground_color1         00F294 RLA    _fx_ground_color3         00F456 RLA
 _fx_ground_depth_rows     0083CD RLA    _fx_ground_far_x          00F947 RLA
@@ -308,14 +308,14 @@ _fx_ground_horizon        00F96D RLA    _fx_ground_horizontal     00F618 RLA
 _fx_ground_hptr           00F942 RLA    _fx_ground_palette_record 00F945 RLA
 _fx_ground_phase          00F280 RLA    _fx_ground_vptr           00F967 RLA
 _fx_ground_world_phase    00F944 RLA    _fx_input                 00F283 RLA
-_fx_open_size             00ED2C RLA    _fx_packet                00ED80 RLA
+_fx_open_size             00ED2F RLA    _fx_packet                00ED80 RLA
 _fx_packet_count          00ED7E RLA    _fx_present               00307B RLA
 _fx_read_input            002F73 RLA    _fx_sky_color             0098B7 RLA
-_fx_stage_contact         00D639 RLA    _fx_stage_render          00D37E RLA
-_fx_stage_update          00D784 RLA    _fx_submit                00EC58 RLA
+_fx_stage_contact         00D63C RLA    _fx_stage_render          00D37E RLA
+_fx_stage_update          00D787 RLA    _fx_submit                00EC5B RLA
 _ground_irq_vblank_count  00F288 RLA    _history_head             00E90E RLA
 _hit_pending              00F28F RLA    _intro_timer              00EA0C RLA
-_main                     002DBB RLA    _memcpy                   00F332 RLA
+_main                     002DBB RLA    _memcpy                   00F335 RLA
 _monosh_bom_geometry      0047FF RLA    _monosh_boss_body_geometry 00375E RLA
 _monosh_boss_bom_depth_by_size 00391A RLA    _monosh_boss_bom_geometry 00383C RLA
 _monosh_boss_bullet_velocity 003A08 RLA    _monosh_boss_explosion_ground_bottom 003999 RLA
@@ -325,18 +325,18 @@ _monosh_boss_init         000015 RLA    _monosh_boss_path_center_y 0021E0 RLA
 _monosh_boss_path_center_y_mid 0024B0 RLA    _monosh_boss_path_x       0020F0 RLA
 _monosh_boss_path_x_mid   0023C0 RLA    _monosh_boss_path_z       002000 RLA
 _monosh_boss_path_z_mid   0022D0 RLA    _monosh_boss_prepare_render 0000D6 RLA
-_monosh_boss_render_only  00E75F RLA    _monosh_boss_should_restart 000000 RLA
+_monosh_boss_render_only  00E762 RLA    _monosh_boss_should_restart 000000 RLA
 _monosh_boss_state        00E6A8 RLA    _monosh_bullet_reflect_rng 00E947 RLA
-_monosh_combat_fast_cache_reset 002F29 RLA    _monosh_combat_fast_frame 00EA60 RLA
-_monosh_combat_fast_render 00EAE2 RLA    _monosh_combat_fire_cooldown 00E948 RLA
+_monosh_combat_fast_cache_reset 002F29 RLA    _monosh_combat_fast_frame 00EA63 RLA
+_monosh_combat_fast_render 00EAE5 RLA    _monosh_combat_fire_cooldown 00E948 RLA
 _monosh_combat_init       000837 RLA    _monosh_combat_reflect_bullet 002DC6 RLA
 _monosh_combat_render     0008D0 RLA    _monosh_ebullet_animation_geometry 004A48 RLA
 _monosh_ebullet_geometry  004C04 RLA    _monosh_ebullet_velocity  004C0E RLA
 _monosh_em1_closed_geometry 0048DD RLA    _monosh_enemies           00E94D RLA
 _monosh_enemy_active_count_value 00E94B RLA    _monosh_enemy_bullet_count 00E94A RLA
 _monosh_enemy_bullets     00E99D RLA    _monosh_enemy_em1_count   00E9E3 RLA
-_monosh_enemy_em1_phase   00E9CA RLA    _monosh_enemy_fast_advance 00DF44 RLA
-_monosh_enemy_fast_update_bullets 00DDFA RLA    _monosh_enemy_fire_boss_at 000BF4 RLA
+_monosh_enemy_em1_phase   00E9CA RLA    _monosh_enemy_fast_advance 00DF47 RLA
+_monosh_enemy_fast_update_bullets 00DDFD RLA    _monosh_enemy_fire_boss_at 000BF4 RLA
 _monosh_enemy_fire_em0_fast 00195E RLA    _monosh_enemy_frame       000B06 RLA
 _monosh_enemy_geometry    004721 RLA    _monosh_enemy_ground_bottom 0049D9 RLA
 _monosh_enemy_init        000A71 RLA    _monosh_enemy_paths       00706F RLA
@@ -349,7 +349,7 @@ _monosh_player_bullets    00E91F RLA    _monosh_player_draw_asset 00247A RLA
 _monosh_player_draw_flags 002440 RLA    _monosh_player_init       002401 RLA
 _monosh_player_invuln     00EA02 RLA    _monosh_player_pose       00EA04 RLA
 _monosh_player_state      00EA01 RLA    _monosh_player_stumble    00EA03 RLA
-_monosh_player_update     00E202 RLA    _monosh_player_update_reference 002933 RLA
+_monosh_player_update     00E205 RLA    _monosh_player_update_reference 002933 RLA
 _monosh_player_x          00E9FD RLA    _monosh_project_x         0062E7 RLA
 _monosh_reflected_bullet_count 00E93E RLA    _monosh_reflected_bullets 00E92F RLA
 _monosh_runtime_fire_actions 00F285 RLA    _monosh_runtime_frame_counter 00F286 RLA
@@ -366,48 +366,48 @@ _movement_fraction        00EA0A RLA    _old_buttons              00F290 RLA
 _player_flip              00EA0D RLA    _player_fy                00EA06 RLA
 _player_run_phase         00EA0E RLA    _pose_x_01                007135 RLA
 _pose_x_12                007148 RLA    _pose_x_23                00715B RLA
-addeq0sp                  00F1C9 RLA    addeqysp                  00F1CB RLA
-addysp                    00F1DB RLA    addysp1                   00F1DA RLA
-aslax2                    00F1E8 RLA    aslax4                    00F201 RLA
-asrax1                    00F212 RLA    asrax2                    00F21C RLA
-asrax3                    00F22B RLA    booleq                    00F30C RLA
-boolne                    00F306 RLA    boolult                   00F325 RLA
-c_sp                      00004A RLZ    decsp1                    00F23F RLA
-decsp2                    00F248 RLA    decsp3                    00F255 RLA
-decsp4                    00F262 RLA    decsp5                    00F26F RLA
+addeq0sp                  00F1CC RLA    addeqysp                  00F1CE RLA
+addysp                    00F1DE RLA    addysp1                   00F1DD RLA
+aslax2                    00F1EB RLA    aslax4                    00F204 RLA
+asrax1                    00F215 RLA    asrax2                    00F21F RLA
+asrax3                    00F22E RLA    booleq                    00F30F RLA
+boolne                    00F309 RLA    boolult                   00F328 RLA
+c_sp                      00004A RLZ    decsp1                    00F242 RLA
+decsp2                    00F24B RLA    decsp3                    00F258 RLA
+decsp4                    00F265 RLA    decsp5                    00F272 RLA
 fx4_build_skip            00F973 RLA    fx_audio_init             00855B RLF
 fx_audio_process          008585 RLF    fx_build_obj              005DD1 RLA
-fx_em1_open_sizes         00ED57 RLA    fx_emit_native            00DAD2 RLA
+fx_em1_open_sizes         00ED5A RLA    fx_emit_native            00DAD5 RLA
 fx_is_obj                 005D78 RLA    fx_project16              006305 RLA
-fx_reset_next_bounds      00EC57 RLA    fx_sky_pointer            00F987 RLA
+fx_reset_next_bounds      00EC5A RLA    fx_sky_pointer            00F987 RLA
 fx_upload_ground          003539 RLA    ground_empty              003597 RLA
-incsp1                    00F2BF RLA    incsp2                    00F2CE RLA
-incsp3                    00F2DC RLA    incsp4                    00F2E1 RLA
-incsp5                    00F2E6 RLA    incsp6                    00F2EB RLA
-incsp7                    00F2F0 RLA    incsp8                    00F2F5 RLA
-ldaidx                    00F2FA RLA    mulax10                   00F36E RLA
-mulax3                    00F387 RLA    mulax5                    00F398 RLA
-mulax6                    00F3AC RLA    mulax7                    00F3C2 RLA
-negax                     00F3DF RLA    popax                     00F2C6 RLA
-popptr1                   00F3ED RLA    popsargsudiv16            00F447 RLA
+incsp1                    00F2C2 RLA    incsp2                    00F2D1 RLA
+incsp3                    00F2DF RLA    incsp4                    00F2E4 RLA
+incsp5                    00F2E9 RLA    incsp6                    00F2EE RLA
+incsp7                    00F2F3 RLA    incsp8                    00F2F8 RLA
+ldaidx                    00F2FD RLA    mulax10                   00F371 RLA
+mulax3                    00F38A RLA    mulax5                    00F39B RLA
+mulax6                    00F3AF RLA    mulax7                    00F3C5 RLA
+negax                     00F3E2 RLA    popax                     00F2C9 RLA
+popptr1                   00F3F0 RLA    popsargsudiv16            00F44A RLA
 ptr1                      000052 RLZ    ptr2                      000054 RLZ
 ptr3                      000056 RLZ    ptr4                      000058 RLZ
-push0                     00F411 RLA    pusha                     00F3FF RLA
-pusha0                    00F413 RLA    pushax                    00F415 RLA
-pushw0sp                  00F42B RLA    pushwysp                  00F42D RLA
-regsave                   00004E RLZ    shlax2                    00F1E8 RLA
-shlax3                    00F1F3 RLA    shlax4                    00F201 RLA
-shrax1                    00F467 RLA    shrax3                    00F46F RLA
-shrax4                    00F47D RLA    sreg                      00004C RLZ
-staspidx                  00F48E RLA    stax0sp                   00F4A4 RLA
-staxspidx                 00F4AF RLA    staxysp                   00F4A6 RLA
-subysp                    00F4DF RLA    tmp1                      00005A RLZ
-tmp2                      00005B RLZ    tosaddax                  00F1AF RLA
-tosdiva0                  00F27C RLA    tosicmp                   00F293 RLA
-tosicmp0                  00F291 RLA    tossuba0                  00F4CA RLA
-tossubax                  00F4CC RLA    tosudiva0                 00F4EC RLA
-tosudivax                 00F4EE RLA    tosumoda0                 00F53B RLA
-udiv16                    00F4FD RLA
+push0                     00F414 RLA    pusha                     00F402 RLA
+pusha0                    00F416 RLA    pushax                    00F418 RLA
+pushw0sp                  00F42E RLA    pushwysp                  00F430 RLA
+regsave                   00004E RLZ    shlax2                    00F1EB RLA
+shlax3                    00F1F6 RLA    shlax4                    00F204 RLA
+shrax1                    00F46A RLA    shrax3                    00F472 RLA
+shrax4                    00F480 RLA    sreg                      00004C RLZ
+staspidx                  00F491 RLA    stax0sp                   00F4A7 RLA
+staxspidx                 00F4B2 RLA    staxysp                   00F4A9 RLA
+subysp                    00F4E2 RLA    tmp1                      00005A RLZ
+tmp2                      00005B RLZ    tosaddax                  00F1B2 RLA
+tosdiva0                  00F27F RLA    tosicmp                   00F296 RLA
+tosicmp0                  00F294 RLA    tossuba0                  00F4CD RLA
+tossubax                  00F4CF RLA    tosudiva0                 00F4EF RLA
+tosudivax                 00F4F1 RLA    tosumoda0                 00F53E RLA
+udiv16                    00F500 RLA
 
 
 Exports list by value:
@@ -455,21 +455,21 @@ _monosh_stage_geometry    007F85 RLA    _monosh_stage_lift        00829A RLA
 _fx_ground_camera         00833C RLA    _fx_ground_depth_rows     0083CD RLA
 fx_audio_init             00855B RLF    fx_audio_process          008585 RLF
 LoadAudioData             00863C RLF    _fx_sky_color             0098B7 RLA
-_fx_stage_render          00D37E RLA    _fx_stage_contact         00D639 RLA
-_fx_stage_update          00D784 RLA    _fx_enemy_render          00D8E5 RLA
-_fx_enemy_render_bullets  00D9FC RLA    fx_emit_native            00DAD2 RLA
-_fx_enemy_collisions      00DB5B RLA    _fx_em0_geometry          00DD70 RLA
-_monosh_enemy_fast_update_bullets 00DDFA RLA    _monosh_enemy_fast_advance 00DF44 RLA
-_fx_enemy_em1_update      00E0DC RLA    _monosh_player_update     00E202 RLA
-_fx_frame                 00E464 RLA    _monosh_ground_offset     00E6A5 RLA
+_fx_stage_render          00D37E RLA    _fx_stage_contact         00D63C RLA
+_fx_stage_update          00D787 RLA    _fx_enemy_render          00D8E8 RLA
+_fx_enemy_render_bullets  00D9FF RLA    fx_emit_native            00DAD5 RLA
+_fx_enemy_collisions      00DB5E RLA    _fx_em0_geometry          00DD73 RLA
+_monosh_enemy_fast_update_bullets 00DDFD RLA    _monosh_enemy_fast_advance 00DF47 RLA
+_fx_enemy_em1_update      00E0DF RLA    _monosh_player_update     00E205 RLA
+_fx_frame                 00E467 RLA    _monosh_ground_offset     00E6A5 RLA
 _monosh_ground_screen_delta 00E6A6 RLA    _monosh_title_visible     00E6A7 RLA
 _monosh_boss_state        00E6A8 RLA    _monosh_boss_hp           00E6A9 RLA
 _boss_part_x              00E6AB RLA    _boss_part_bottom         00E6B4 RLA
 _boss_part_z              00E6BD RLA    _boss_part_active         00E6C6 RLA
 _boss_part_timer          00E6CF RLA    _boss_history_x           00E6EA RLA
-_monosh_boss_render_only  00E75F RLA    _boss_history_y           00E76A RLA
-_boss_history_z           00E7EA RLA    _fx_boss_project          00E83B RLA
-_fx_boss_hits             00E8FE RLA    _boss_render_camera_delta 00E90D RLA
+_monosh_boss_render_only  00E762 RLA    _boss_history_y           00E76A RLA
+_boss_history_z           00E7EA RLA    _fx_boss_project          00E83E RLA
+_fx_boss_hits             00E901 RLA    _boss_render_camera_delta 00E90D RLA
 _history_head             00E90E RLA    _boss_age                 00E90F RLA
 _boss_death_timer         00E910 RLA    _boss_death_parts         00E911 RLA
 _monosh_player_bullets    00E91F RLA    _monosh_player_bullet_count 00E92E RLA
@@ -487,53 +487,53 @@ _monosh_player_pose       00EA04 RLA    _monosh_stage_title_timer 00EA05 RLA
 _player_fy                00EA06 RLA    _movement_fraction        00EA0A RLA
 _intro_timer              00EA0C RLA    _player_flip              00EA0D RLA
 _player_run_phase         00EA0E RLA    _monosh_stage_objects     00EA0F RLA
-_monosh_combat_fast_frame 00EA60 RLA    _monosh_stage_object_count 00EA6F RLA
+_monosh_combat_fast_frame 00EA63 RLA    _monosh_stage_object_count 00EA6F RLA
 _monosh_stage_spawn_index 00EA70 RLA    _monosh_stage_frame_counter 00EA71 RLA
 _monosh_stage_half_frame  00EA75 RLA    _monosh_stage_near_count  00EA76 RLA
-_monosh_combat_fast_render 00EAE2 RLA    _monosh_stage_need_hitboxes 00EAF8 RLA
-_fx_draw                  00EAFD RLA    fx_reset_next_bounds      00EC57 RLA
-_fx_submit                00EC58 RLA    _fx_open_size             00ED2C RLA
-fx_em1_open_sizes         00ED57 RLA    _fx_draw_count            00ED7D RLA
+_monosh_combat_fast_render 00EAE5 RLA    _monosh_stage_need_hitboxes 00EAF8 RLA
+_fx_draw                  00EAFD RLA    fx_reset_next_bounds      00EC5A RLA
+_fx_submit                00EC5B RLA    _fx_open_size             00ED2F RLA
+fx_em1_open_sizes         00ED5A RLA    _fx_draw_count            00ED7D RLA
 _fx_packet_count          00ED7E RLA    _fx_packet                00ED80 RLA
-tosaddax                  00F1AF RLA    addeq0sp                  00F1C9 RLA
-addeqysp                  00F1CB RLA    addysp1                   00F1DA RLA
-addysp                    00F1DB RLA    aslax2                    00F1E8 RLA
-shlax2                    00F1E8 RLA    shlax3                    00F1F3 RLA
-shlax4                    00F201 RLA    aslax4                    00F201 RLA
-asrax1                    00F212 RLA    asrax2                    00F21C RLA
-asrax3                    00F22B RLA    decsp1                    00F23F RLA
-decsp2                    00F248 RLA    decsp3                    00F255 RLA
-decsp4                    00F262 RLA    decsp5                    00F26F RLA
-tosdiva0                  00F27C RLA    _fx_ground_phase          00F280 RLA
+tosaddax                  00F1B2 RLA    addeq0sp                  00F1CC RLA
+addeqysp                  00F1CE RLA    addysp1                   00F1DD RLA
+addysp                    00F1DE RLA    aslax2                    00F1EB RLA
+shlax2                    00F1EB RLA    shlax3                    00F1F6 RLA
+aslax4                    00F204 RLA    shlax4                    00F204 RLA
+asrax1                    00F215 RLA    asrax2                    00F21F RLA
+asrax3                    00F22E RLA    decsp1                    00F242 RLA
+decsp2                    00F24B RLA    decsp3                    00F258 RLA
+decsp4                    00F265 RLA    decsp5                    00F272 RLA
+tosdiva0                  00F27F RLA    _fx_ground_phase          00F280 RLA
 _fx_buttons               00F281 RLA    _fx_input                 00F283 RLA
 _fx_fire_actions          00F284 RLA    _monosh_runtime_fire_actions 00F285 RLA
 _monosh_runtime_frame_counter 00F286 RLA    _ground_irq_vblank_count  00F288 RLA
 _monosh_runtime_paused    00F28A RLA    _fx_far_u_acc             00F28B RLA
 _fx_far_d_acc             00F28D RLA    _hit_pending              00F28F RLA
-_old_buttons              00F290 RLA    tosicmp0                  00F291 RLA
-_monosh_ground_depth_pointer 00F292 RLA    tosicmp                   00F293 RLA
-_fx_ground_color1         00F294 RLA    incsp1                    00F2BF RLA
-popax                     00F2C6 RLA    incsp2                    00F2CE RLA
-incsp3                    00F2DC RLA    incsp4                    00F2E1 RLA
-incsp5                    00F2E6 RLA    incsp6                    00F2EB RLA
-incsp7                    00F2F0 RLA    incsp8                    00F2F5 RLA
-ldaidx                    00F2FA RLA    boolne                    00F306 RLA
-booleq                    00F30C RLA    boolult                   00F325 RLA
-_memcpy                   00F332 RLA    mulax10                   00F36E RLA
-mulax3                    00F387 RLA    mulax5                    00F398 RLA
-mulax6                    00F3AC RLA    mulax7                    00F3C2 RLA
-negax                     00F3DF RLA    popptr1                   00F3ED RLA
-pusha                     00F3FF RLA    push0                     00F411 RLA
-pusha0                    00F413 RLA    pushax                    00F415 RLA
-pushw0sp                  00F42B RLA    pushwysp                  00F42D RLA
-popsargsudiv16            00F447 RLA    _fx_ground_color3         00F456 RLA
-shrax1                    00F467 RLA    shrax3                    00F46F RLA
-shrax4                    00F47D RLA    staspidx                  00F48E RLA
-stax0sp                   00F4A4 RLA    staxysp                   00F4A6 RLA
-staxspidx                 00F4AF RLA    tossuba0                  00F4CA RLA
-tossubax                  00F4CC RLA    subysp                    00F4DF RLA
-tosudiva0                 00F4EC RLA    tosudivax                 00F4EE RLA
-udiv16                    00F4FD RLA    tosumoda0                 00F53B RLA
+_old_buttons              00F290 RLA    _monosh_ground_depth_pointer 00F292 RLA
+tosicmp0                  00F294 RLA    _fx_ground_color1         00F294 RLA
+tosicmp                   00F296 RLA    incsp1                    00F2C2 RLA
+popax                     00F2C9 RLA    incsp2                    00F2D1 RLA
+incsp3                    00F2DF RLA    incsp4                    00F2E4 RLA
+incsp5                    00F2E9 RLA    incsp6                    00F2EE RLA
+incsp7                    00F2F3 RLA    incsp8                    00F2F8 RLA
+ldaidx                    00F2FD RLA    boolne                    00F309 RLA
+booleq                    00F30F RLA    boolult                   00F328 RLA
+_memcpy                   00F335 RLA    mulax10                   00F371 RLA
+mulax3                    00F38A RLA    mulax5                    00F39B RLA
+mulax6                    00F3AF RLA    mulax7                    00F3C5 RLA
+negax                     00F3E2 RLA    popptr1                   00F3F0 RLA
+pusha                     00F402 RLA    push0                     00F414 RLA
+pusha0                    00F416 RLA    pushax                    00F418 RLA
+pushw0sp                  00F42E RLA    pushwysp                  00F430 RLA
+popsargsudiv16            00F44A RLA    _fx_ground_color3         00F456 RLA
+shrax1                    00F46A RLA    shrax3                    00F472 RLA
+shrax4                    00F480 RLA    staspidx                  00F491 RLA
+stax0sp                   00F4A7 RLA    staxysp                   00F4A9 RLA
+staxspidx                 00F4B2 RLA    tossuba0                  00F4CD RLA
+tossubax                  00F4CF RLA    subysp                    00F4E2 RLA
+tosudiva0                 00F4EF RLA    tosudivax                 00F4F1 RLA
+udiv16                    00F500 RLA    tosumoda0                 00F53E RLA
 _fx_ground_horizontal     00F618 RLA    _fx_ground_hptr           00F942 RLA
 _fx_ground_world_phase    00F944 RLA    _fx_ground_palette_record 00F945 RLA
 _fx_ground_far_x          00F947 RLA    _fx_ground_far_xptr       00F965 RLA
