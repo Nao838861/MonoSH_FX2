@@ -298,7 +298,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "romSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -325,20 +325,19 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "2bpp敵・障害物のカラー化とSELECT切替。色属性・VRAM/CGRAM・最終PPU合成・操作・ボス進行を検証。60fps未達。",
-  "verificationResults": "game/v001/results/bg_color_20261008",
+  "verificationKind": "標準SPC700のBGM・SE。実ROMのAPUIO/DSP/SPC、曲一周、ポーズ、画素・OBJ・遠景・ボス・カラー回帰、同一論理区間の速度を検証。",
+  "verificationResults": "game/v001/results/native_audio_20261008",
   "scenarioFrames": {
-    "color": 360,
-    "display": 720,
-    "objects": 720,
-    "play": 3000,
-    "boss": 3000,
-    "controls": 720,
-    "pause": 360,
-    "packed": 360,
-    "stress": 360
+    "audio": 16000,
+    "audio_quick": 1600,
+    "play": 6000,
+    "boss": 2600,
+    "objects": 360,
+    "pause": 650,
+    "scenery": 800,
+    "color": 240
   },
-  "previousRomSha256": "0b5e3c57072898c91feeb31721d8a211d4bb59a68c44a78920e907b77db99bfe",
+  "previousRomSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -352,7 +351,39 @@
     "toggleScope": "2bpp enemies and obstacles only",
     "physicalHardwareTested": false
   },
-  "performance": {
+  "nativeAudio": {
+    "driver": "TAD v0.4.2",
+    "streaming": false,
+    "musicVoices": 6,
+    "sfxVoices": 2,
+    "songs": 1,
+    "soundEffects": 6,
+    "romAudioBytes": 18246,
+    "physicalHardwareTested": false
+  },
+  "audioPerformance": {
+    "baseline": {
+      "logicFrames": 2000,
+      "seconds": 66.773351197,
+      "fps": 29.952069,
+      "fields": 4013,
+      "audioMeanMs": 0.0,
+      "audioMaxMs": 0.0,
+      "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+      "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
+    },
+    "native": {
+      "logicFrames": 2000,
+      "seconds": 66.856546399,
+      "fps": 29.914797,
+      "fields": 4018,
+      "audioMeanMs": 0.087131783,
+      "audioMaxMs": 0.127669846,
+      "romSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
+      "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
+    }
+  },
+  "previousColorPerformance": {
     "play": {
       "presentationFps": 31.61605220316179,
       "cpuMeanMs": 21.294204335887613,

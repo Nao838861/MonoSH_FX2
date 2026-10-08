@@ -8,6 +8,7 @@
 .import _monosh_player_bullets, _monosh_player_bullet_count, _monosh_player_bullet_sizes
 .import _monosh_reflected_bullets, _monosh_reflected_bullet_count
 .import fx_emit_native
+.import _fx_audio_events
 .segment "CODE"
 .a8
 .i8
@@ -66,6 +67,9 @@ spawn:
   lda #2
   sta _monosh_player_bullets+4,x
   inc _monosh_player_bullet_count
+  lda _fx_audio_events
+  ora #1
+  sta _fx_audio_events
 done8:
   rep #$20
 done:

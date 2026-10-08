@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "logicFrames": 2000,
+    "seconds": 66.773351197,
+    "fps": 29.952069,
+    "fields": 4013,
+    "audioMeanMs": 0.0,
+    "audioMaxMs": 0.0,
+    "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+    "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
+  },
+  "native": {
+    "logicFrames": 2000,
+    "seconds": 66.856546399,
+    "fps": 29.914797,
+    "fields": 4018,
+    "audioMeanMs": 0.087131783,
+    "audioMaxMs": 0.127669846,
+    "romSha256": "98ff99ececd91b3d641d822b005c83e63317c3dcf3edb813687b5fb490035088",
+    "stateSha256": "ddd8edf570504f5cc0c069974302744da4036cfc7bbb09cdfcaba351ad4693d8"
+  }
+}

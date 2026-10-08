@@ -1,6 +1,7 @@
 .setcpu "65816"
 .smart
 .import _main, _fx_frame, _fx_buttons, _fx_packet_count, _fx_packet
+.import fx_audio_init: far, fx_audio_process: far
 .import _fx_ground_vptr, _fx_ground_c1ptr, _fx_ground_c3ptr
 .import _fx_ground_far_y
 .import _fx_far_d_acc, fx_sky_pointer
@@ -49,7 +50,7 @@ reset:
   ldy #$2000
   lda #$ffff
   mvn #$42,#$7e
-  ; $0400..$17ffをカラー専用に予約。native scratch($0160..$02xx)と
+  ; $0400..$15ffはカラー、$1600..$17ffは音源用。native scratch($0160..$02xx)と
   ; C stack($1c00から下降、$1800より上)・HDMA状態($1d00台)から分離。
   ldx #0
   lda #0
@@ -66,6 +67,7 @@ clear_color_ram:
   pea $0000
   plb
   plb
+  jsl fx_audio_init
   sep #$20
   stz $2105
   lda #3
@@ -507,6 +509,7 @@ wait_gsu:
   and #$20
   bne wait_gsu
 render_finished:
+  jsl fx_audio_process
   lda #2
   sta f:$7e1df0
   .if .defined(FX_GSU_CLIP) .and .not .defined(FX_FULL_TRANSFER)

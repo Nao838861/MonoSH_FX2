@@ -1,5 +1,7 @@
 # MonoSH Super FX2 開発プロジェクト
 
+標準SPC700で鳴る[メインテーマと六種類のSE](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)を追加した。BGM六声＋SE二声、ストリーミング不要。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。原作のSFC編曲初版。同じ論理区間の速度差は約0.12%で、以下のカラー化による速度低下は残る。
+
 最新ROMは [2bppの敵・障害物のカラー化試作](game/v001/RESULTS_20261008_BG_COLOR.md)。指定録画から原画を取り込み、透明＋3色×8組を8×8単位で割り当てる。CPUが奥から属性を上書きし、SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。[比較画像](game/v001/results/bg_color_20261008/comparison.png)。
 
 **カラー版は通常操作で平均31.62fps、ボス撃破から次周を含む試験で33.96fps。60fpsは未達。** 色属性のCPU処理が重く、表示とゲーム進行が遅くなる。変更前の60Hz検証済みROMも [比較用](releases/MonoSHFX2_pre_color_20261008.sfc) として残す。起動は [play.cmd](play.cmd)。
@@ -14,7 +16,7 @@
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
-BGM・SEの追加は[実装方式の検討](game/v001/AUDIO_APPROACH_20261008.md)を保存した。原作の楽器サンプル＋音符列とSEサンプルを第一候補とし、音源ドライバの組み込み前の段階。
+BGM・SEは[標準SFC音源の実装・検証](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)へ進んだ。[実装前の比較](game/v001/AUDIO_APPROACH_20261008.md)は履歴。
 
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 

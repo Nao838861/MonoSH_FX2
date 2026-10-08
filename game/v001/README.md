@@ -1,5 +1,7 @@
 # MonoSH FX2：実行可能な移植版 v001
 
+[標準SFC音源のBGM・SE](RESULTS_20261008_NATIVE_AUDIO.md)を追加した。メインテーマ六声とSE二声、射撃・反射・爆発・転倒・死亡・ボス撃破に連動。Startで音も停止・再開する。[BGM試聴](results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](results/native_audio_20261008/se_preview.mp3)。ストリーム不要、原作のSFC編曲初版。
+
 最新ROMは [2bppの敵・障害物のカラー化試作](RESULTS_20261008_BG_COLOR.md)。起動時はカラー。SELECT／Spaceで敵・障害物だけモノクロへ切り替える。**通常操作は平均31.62fps、ボス進行試験は33.96fpsで、CPU負荷による進行の遅れが残る。** モノクロ切替も配色だけで、速度は変更前へ戻らない。[比較画像](results/bg_color_20261008/comparison.png)、[60Hz検証済みの変更前ROM](../../releases/MonoSHFX2_pre_color_20261008.sfc)を保存した。
 
 カラー版にも [奥行きに沿った滑らかな拡縮](RESULTS_20261008_SMOOTH_DEPTH.md)を引き継いだ。14寸法表と開いた敵EM1の5ポーズを、Z=0..110の滑らかな寸法へ変更した。開EM1の最大段差20→1画素、ボス胴の最長同サイズ区間15→4段階。接地・移動速度の設定・解像度を維持する。以下は前版の実装と検証の履歴。

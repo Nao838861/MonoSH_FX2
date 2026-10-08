@@ -436,7 +436,8 @@ def main():
              *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','color','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
+    for name in ['cpu','audio','audio/data','gsu','ground','packet','color','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
+        (BUILD/name).parent.mkdir(parents=True, exist_ok=True)
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
