@@ -299,7 +299,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
+  "romSha256": "bfb35914dedf793f3178015d650c9fc040eb1b3fe810a68a8a005ffa1d5e9025",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -328,22 +328,17 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "木3色・赤い目と灰色の小型敵・ボス頭の象牙色の目と角・緑と茶色の胴。輪郭、実PPUの色領域、操作、ボス進行、音声を検証。実機未検証。",
-  "verificationResults": "game/v001/results/palette_regions_20261008",
+  "verificationKind": "BGM第2版（原作サントラで音色を測った8声編曲）を配色整理版へ搭載。SEは前版のまま。曲一周・ポーズ・SE命令、カラー・表示・ポーズと60場面の画素・OBJ回帰、通常と継続ボス各18,000fieldの60Hzを検証。実機は未検証。",
+  "verificationResults": "game/v001/results/native_audio_v2_20261009",
   "scenarioFrames": {
     "color": 360,
-    "objects": 360,
-    "packed": 360,
-    "controls": 720,
-    "pause": 360,
     "display": 720,
-    "held": 1800,
-    "boss": 2600,
-    "stumble": 800,
-    "stress": 360,
-    "audioQuick": 1400
+    "pause": 650,
+    "audio": 16000,
+    "naturalProfile": 18000,
+    "sustainedBossProfile": 18000
   },
-  "previousRomSha256": "84b1372d59d138c6c6d4d9f167d956b077d02598199996086a8a8980c0d76b17",
+  "previousRomSha256": "29cf2c2d3882b98297f6e068872eb6edb119adb70360a7e304a7eb225f780296",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -555,7 +550,7 @@
     "longProfileRequiredForThisRelease": false,
     "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261008_PALETTE_REGIONS.md",
+  "verificationReport": "game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md",
   "validation": {
     "baseCommit": "fdf1e0853d031684eab8ca2d09936d293bfaa375",
     "fixedScenes": 523,
@@ -578,12 +573,22 @@
   "nativeAudio": {
     "driver": "TAD v0.4.2",
     "streaming": false,
-    "musicVoices": 6,
+    "musicVoices": 8,
     "sfxVoices": 2,
+    "sfxDucksMusicVoices": "G,H",
     "songs": 1,
     "soundEffects": 6,
-    "romAudioBytes": 18246,
+    "romAudioBytes": 53392,
+    "romAudioRegion": "$59:1300..$59:FFFF",
     "physicalHardwareTested": false
   },
-  "strict60Hz": false
+  "strict60Hz": false,
+  "presentationRates": {
+    "natural": 60.09881186234841,
+    "sustainedBoss": 60.098811862348406
+  },
+  "latePresentationIntervals": {
+    "natural": 0,
+    "sustainedBoss": 0
+  }
 }

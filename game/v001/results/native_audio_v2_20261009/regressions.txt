@@ -1,0 +1,12 @@
+color: 1 scenes, UV/clip packets and all 49,152 pixels match
+color: 1 OBJ scenes match, max 0 OBJ, 0 poses/0 flips/0 bullet sizes
+{'samples': 200, 'cases': [0, 1, 2, 3, 4, 5, 6, 7], 'transitions': [1, 0, 1], 'tiles_checked': 153600, 'palette_bytes_checked': 12800, 'map_errors': 0, 'vram_errors': 0, 'palette_errors': 0, 'physical_hardware': False}
+display: 3 scenes, UV/clip packets and all 49,152 pixels match
+display: 3 OBJ scenes match, max 6 OBJ, 1 poses/1 flips/0 bullet sizes
+3 camera heights: BG1/BG2/BG3/BG4 + sky HDMA final RGB matches
+pause: 3 scenes, UV/clip packets and all 49,152 pixels match
+pause: 3 OBJ scenes match, max 8 OBJ, 2 poses/1 flips/3 bullet sizes
+boss_profile_audio: 60 scenes, UV/clip packets and all 49,152 pixels match
+boss_profile_audio: 60 OBJ scenes match, max 12 OBJ, 10 poses/1 flips/9 bullet sizes
+boss_profile_audioboss: 60 scenes, UV/clip packets and all 49,152 pixels match
+boss_profile_audioboss: 60 OBJ scenes match, max 11 OBJ, 10 poses/1 flips/8 bullet sizes

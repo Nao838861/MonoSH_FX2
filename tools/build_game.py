@@ -263,6 +263,8 @@ def build_scaled(enabled, limits, row_margins=False):
     holes=[]
     for asset,image in enumerate(images):
         start=(asset&1)*32768+image.height*256;end=(1+(asset&1))*32768
+        if asset//2==0x59-0x44:
+            continue          # $59:1300〜FFFF は音のデータ（rom.cfg AUDIO59）に予約
         if start<end:
             bank=0x44+asset//2
             banks[bank][start:end]=bytes(end-start)

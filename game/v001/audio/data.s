@@ -21,15 +21,15 @@ LoadAudioData:
 common:
   lda #.bankbyte(audio_data + 3345)
   ldx #.loword(audio_data + 3345)
-  ldy #6209
+  ldy #41742
   sec
   rtl
 song:
-  lda #.bankbyte(audio_data + 9554)
-  ldx #.loword(audio_data + 9554)
-  ldy #8692
+  lda #.bankbyte(audio_data + 45087)
+  ldx #.loword(audio_data + 45087)
+  ldy #8305
   sec
   rtl
-.segment "AUDIO0"
+.segment "AUDIO59"
 audio_data: .incbin "data.bin"
-.assert .bankbyte(audio_data) = .bankbyte(audio_data + 18246 - 1), lderror, "Audio data crosses bank"
+.assert .bankbyte(audio_data) = .bankbyte(audio_data + 53392 - 1), lderror, "Audio data crosses bank"

@@ -627,7 +627,12 @@ render_stop:
 .repeat 22,I
   ; 通常参照+packed+反転packedを含む原画bank。行pitchは全方式で256bytes。
   .segment .sprintf("ASSET%02X",$44+I)
+  .if I = 21
+  ; $59 は原画42（44x19）の行だけ。残り $59:1300〜FFFF は音のデータ（AUDIO59）へ予約する。
+  .incbin .sprintf("assets/bank%02x.bin",$44+I), 0, $1300
+  .else
   .incbin .sprintf("assets/bank%02x.bin",$44+I)
+  .endif
 .endrepeat
 .segment "SCALE5E"
 .incbin "assets/scale5e.bin"

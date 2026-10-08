@@ -1,10 +1,12 @@
 # MonoSH Super FX2 開発プロジェクト
 
-最新ROMは [木・小型敵・ボスの配色整理版](game/v001/RESULTS_20261008_PALETTE_REGIONS.md)。木は暗い緑・緑・茶色、敵は赤い目を本来の範囲に残し金属を灰色に、ボスは象牙色の目・角と茶色の腹部へ変更した。同一場面の実PPU比較と1,696単独表示場面で確認。音声・輪郭・操作・描画エンジンは維持し、異なる物体が重なるタイルの色混ざりは制約として残る。
+最新ROMは [BGM第2版](game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md)：原作サントラで音色を測って作り直したメインテーマを、下の配色整理版に載せた。SEは前版のまま。通常・継続ボス各18,000fieldで全表示間隔1field（60.0988fps）。
 
-直前版は [輪郭修正＋カラー＋BGM・SE版](game/v001/RESULTS_20261008_VISUAL_FIDELITY.md)。カラー化で欠けた草木・敵弾・敵・ボスの輪郭と暗部の細部を修復した。録画を色の参考にし、旧原画のポーズを保持する。6組の固定場面で、実エミュレーターのframebuffer輪郭がカラー化前ROMと完全一致。実PPUの比較画像と原作らしさの評価をリンク先に保存した。処理落ちは今回の反映条件にしていない。
+直前版は [木・小型敵・ボスの配色整理版](game/v001/RESULTS_20261008_PALETTE_REGIONS.md)。木は暗い緑・緑・茶色、敵は赤い目を本来の範囲に残し金属を灰色に、ボスは象牙色の目・角と茶色の腹部へ変更した。同一場面の実PPU比較と1,696単独表示場面で確認。音声・輪郭・操作・描画エンジンは維持し、異なる物体が重なるタイルの色混ざりは制約として残る。
 
-起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_20261008/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_20261008/se_preview.mp3)。音声・ゲーム進行・奥行き寸法・自機と自弾は維持する。
+その前は [輪郭修正＋カラー＋BGM・SE版](game/v001/RESULTS_20261008_VISUAL_FIDELITY.md)。カラー化で欠けた草木・敵弾・敵・ボスの輪郭と暗部の細部を修復した。録画を色の参考にし、旧原画のポーズを保持する。6組の固定場面で、実エミュレーターのframebuffer輪郭がカラー化前ROMと完全一致。実PPUの比較画像と原作らしさの評価をリンク先に保存した。処理落ちは今回の反映条件にしていない。
+
+起動時はカラー。SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。Startで音も停止・再開する。[BGM試聴](game/v001/results/native_audio_v2_20261009/bgm_preview.mp3)、[SE試聴](game/v001/results/native_audio_v2_20261009/se_preview.mp3)。音声・ゲーム進行・奥行き寸法・自機と自弾は維持する。
 
 [音声なしのカラー60Hz検証](game/v001/RESULTS_20261008_COLOR_60HZ.md)と[最初のカラー試作](game/v001/RESULTS_20261008_BG_COLOR.md)は履歴として保持する。
 
@@ -18,7 +20,7 @@
 
 GitHub: [Nao838861/MonoSH_FX2](https://github.com/Nao838861/MonoSH_FX2)。ソース、単独起動ROM、設計書、測定ログ・画像をこのリポジトリにまとめる。
 
-BGM・SEは[標準SFC音源の実装・検証](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)へ進んだ。[実装前の比較](game/v001/AUDIO_APPROACH_20261008.md)は履歴。
+BGM・SEは[標準SFC音源の実装・検証](game/v001/RESULTS_20261008_NATIVE_AUDIO.md)へ進み、[BGM第2版](game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md)で曲の音色・編曲を作り直した。[実装前の比較](game/v001/AUDIO_APPROACH_20261008.md)は履歴。
 
 自機は録画から切り出した飛行4・走行4ポーズを32×48・16色へ差し替えた。原寸の16色素材と[比較画像](game/v001/assets/player_recording/comparison.png)、[処理・検証](game/v001/RESULTS_20261007_PLAYER_RECORDING.md)も保存し、通常起動するROMへ反映している。
 

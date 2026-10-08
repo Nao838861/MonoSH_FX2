@@ -1,9 +1,15 @@
-"""SFC向け楽器・6声編曲・SEを固定版TADで生成する（通常ROMビルドには不要）。"""
+"""SFC向け楽器・8声編曲・SEを固定版TADで生成する（通常ROMビルドには不要）。
+
+曲の楽器は tools/audio_instruments.py（原作サントラで測った倍音・減衰に合わせた合成音）、
+編曲は tools/audio_arrange.py（採譜MIDIのパートごとに8声へ割り振る）。
+効果音は前版と同じ短い周期波形（se_lead・se_bell・se_bass）で鳴らし、音を変えない。
+音のデータは $59 バンクの予約領域（$59:1300〜$59:FFFF）に置く。起動時に一度だけ転送する。
+"""
 from pathlib import Path
 import hashlib
 import json
 import math
-import random
+import sys
 import re
 import struct
 import subprocess
@@ -12,6 +18,7 @@ import wave
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 AUDIO = ROOT / 'game/v001/audio'
 CACHE = ROOT / '.cache/tad'
 VERSION = '0.4.2'
@@ -36,163 +43,26 @@ def write_wav(name, values, rate=32000):
                                    *[round(x / peak * 23000) for x in values]))
 
 
-def samples():
+def se_samples():
+    """前版の効果音用の楽器（同じ波形・同じADSR）。曲には使わない。"""
     (AUDIO / 'samples').mkdir(parents=True, exist_ok=True)
     entries = []
-    # 完全な周期波形を短くループし、SPC側のADSRで音の長さを作る。
     for name, harmonics, envelope in [
         ('lead', [1, .38, .22, .11, .07, .035], 'adsr 15 3 5 12'),
-        ('pad', [1, .18, .08], 'adsr 11 2 5 12'),
         ('bass', [1, .42, .12, .06], 'adsr 15 4 3 18'),
         ('bell', [1, .05, .55, .02, .25, 0, .12], 'adsr 15 6 1 22'),
     ]:
         period = 128 if name == 'bass' else 32
-        write_wav(name, (sum(a * math.sin(2 * math.pi * (h + 1) * i / period)
-                             for h, a in enumerate(harmonics)) for i in range(period)))
-        entries.append({'name': name, 'source': {'type': 'wav',
-            'source': f'samples/{name}.wav', 'evaluator': 'default',
+        write_wav('se_' + name, (sum(a * math.sin(2 * math.pi * (h + 1) * i / period)
+                                     for h, a in enumerate(harmonics)) for i in range(period)))
+        entries.append({'name': 'se_' + name, 'source': {'type': 'wav',
+            'source': f'samples/se_{name}.wav', 'evaluator': 'default',
             'loop_point': 0, 'loop_filter': 'reset_filter'},
             'ignore_gaussian_overflow': False, 'pitches': {'type': 'octave',
             'frequency': 32000 / period, 'first_octave': 1,
             'last_octave': 5 if name == 'bass' else 7},
             'envelope': envelope})
-    rng = random.Random(1985)
-    for name, duration in [('kick', .16), ('snare', .13), ('hat', .045), ('crash', .3)]:
-        rate = 16000
-        values = []
-        phase = 0
-        previous = 0
-        for i in range(int(rate * duration)):
-            t = i / rate
-            n = rng.uniform(-1, 1)
-            high = n - previous
-            previous = n
-            if name == 'kick':
-                phase += 2 * math.pi * (48 + 110 * math.exp(-t * 45)) / rate
-                v = math.sin(phase) * math.exp(-t * 26) + high * math.exp(-t * 200) * .12
-            elif name == 'snare':
-                v = (high * .55 + math.sin(2 * math.pi * 185 * t) * .3) * math.exp(-t * 32)
-            elif name == 'hat':
-                v = high * math.exp(-t * 90)
-            else:
-                v = (high + .2 * math.sin(2 * math.pi * 1960 * t)) * math.exp(-t * 13)
-            values.append(v * min(1, i / 8))
-        write_wav(name, values, rate)
-        entries.append({'name': name, 'source': {'type': 'wav',
-            'source': f'samples/{name}.wav', 'evaluator': 'default'},
-            'ignore_gaussian_overflow': False, 'pitches': {'type': 'samples',
-            'sample_rates': [rate]}, 'envelope': 'gain F127'})
     return entries
-
-
-def midi_tracks(path):
-    import mido
-    # 配布MIDIの一部velocityが128以上。clipはvelocityだけを127へ丸める。
-    midi = mido.MidiFile(path, clip=True)
-    tracks = []
-    for track in midi.tracks:
-        tick = 0
-        active = {}
-        notes = []
-        for msg in track:
-            tick += msg.time
-            now = round(tick * 48 / midi.ticks_per_beat)
-            if msg.type == 'note_on' and msg.velocity:
-                active[msg.note] = now
-            elif msg.type == 'note_off' or (msg.type == 'note_on' and not msg.velocity):
-                if msg.note in active:
-                    begin = active.pop(msg.note)
-                    notes.append((begin, max(begin + 1, now), msg.note))
-        tracks.append(notes)
-    return tracks
-
-
-def melodic_lanes(tracks, end):
-    # 音符開始/終了の境界ごとに上声・中声・下声を選ぶ。SE用G/Hは使用しない。
-    boundaries = sorted({0, end} | {v for tr in tracks[:6] for n in tr for v in n[:2] if v <= end})
-    lanes = [[] for _ in range(4)]
-    for begin, finish in zip(boundaries, boundaries[1:]):
-        active = [sorted({n for a, b, n in tr if a <= begin < b}) for tr in tracks[:6]]
-        chord = active[0]
-        voices = [chord[-1] if chord else None,
-                  chord[-2] if len(chord) >= 2 else (active[2][-1] if active[2] else None),
-                  chord[0] if len(chord) >= 3 else
-                  (active[5][-1] if active[5] else (active[3][-1] if active[3] else None)),
-                  active[1][0] if active[1] else None]
-        for lane, note in zip(lanes, voices):
-            if lane and lane[-1][2] == note and lane[-1][1] == begin:
-                lane[-1] = (lane[-1][0], finish, note)
-            else:
-                lane.append((begin, finish, note))
-    return lanes
-
-
-def duration_tokens(token, duration):
-    # 一命令の上限を守り、持続音は&で結ぶ。
-    out = []
-    while duration:
-        n = min(192, duration)
-        duration -= n
-        out.append(f'{token}%{n}' + (' &' if duration and token != 'r' else ''))
-    return ' '.join(out)
-
-
-def song(tracks):
-    end = 640 * 48
-    lines = ['; 音符参照: JK150 / SixtyTunes (VGMusic)。6声へ削減したSFC編曲。',
-             '#Title Space Harrier - native SFC arrangement', '#Composer Hiroshi Kawaguchi',
-             '#ZenLen 192', '#Tempo 154', '#MainVolume 88', '#EchoLength 0',
-             '@lead lead', '@pad pad', '@bass bass',
-             '@kick kick', '@snare snare', '@hat hat', '@crash crash']
-    for channel, lane, instrument, volume, pan in zip('ABCD', melodic_lanes(tracks, end),
-            ['lead', 'pad', 'pad', 'bass'], [160, 90, 78, 160], [64, 38, 90, 64]):
-        lines.append(f'{channel} @{instrument} V{volume} p{pan} L')
-        tokens = []
-        for begin, finish, note in lane:
-            token = 'r' if note is None else f'o{note // 12 - 1}' + ['c','c+','d','d+','e','f','f+','g','g+','a','a+','b'][note % 12]
-            tokens.append(duration_tokens(token, finish - begin))
-        for i in range(0, len(tokens), 16):
-            lines.append(channel + ' ' + ' '.join(tokens[i:i + 16]))
-    drums = {}
-    for begin, finish, note in tracks[6]:
-        if begin < end:
-            drums.setdefault(begin, []).append(note)
-    for channel in 'EF':
-        events = []
-        for begin, notes in sorted(drums.items()):
-            if channel == 'E':
-                instrument = ('snare' if any(n in notes for n in (38, 40)) else
-                              'kick' if any(n in notes for n in (35, 36)) else None)
-            else:
-                instrument = ('crash' if any(n in notes for n in (49, 51, 57)) else
-                              'hat' if any(n in notes for n in (42, 44, 46)) else None)
-            if instrument:
-                events.append((begin, instrument))
-        patterns = {}
-        calls = []
-        for bar in range(0, end, 192):
-            selected = [(a - bar, ins) for a, ins in events if bar <= a < bar + 192]
-            tokens = []
-            cursor = 0
-            for i, (begin, instrument) in enumerate(selected):
-                if begin > cursor:
-                    tokens.append(duration_tokens('r', begin - cursor))
-                next_time = selected[i + 1][0] if i + 1 < len(selected) else 192
-                duration = min(next_time - begin, {'kick': 10, 'snare': 12, 'hat': 4, 'crash': 24}[instrument])
-                tokens.append(f'@{instrument} s0,%{duration}')
-                cursor = begin + duration
-            if cursor < 192:
-                tokens.append(duration_tokens('r', 192 - cursor))
-            pattern = ' '.join(tokens)
-            if pattern not in patterns:
-                name = f'drum{channel}{len(patterns)}'
-                patterns[pattern] = name
-                lines.append(f'!{name} {pattern}')
-            calls.append('!' + patterns[pattern])
-        lines.append(f'{channel} V{130 if channel == "E" else 60} p{64 if channel == "E" else 80} L')
-        for i in range(0, len(calls), 16):
-            lines.append(channel + ' ' + ' '.join(calls[i:i + 16]))
-    (AUDIO / 'theme.mml').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
 def main():
@@ -205,13 +75,17 @@ def main():
             z.extractall(CACHE / 'release')
     midi = CACHE / 'reference.mid'
     obtain(MIDI_URL, midi, MIDI_HASH)
+    import audio_instruments, audio_arrange
+    for old in (AUDIO / 'samples').glob('*.wav'):
+        old.unlink()                                  # 前版の楽器を残さない
+    music = audio_arrange.brr_samples(audio_instruments.write_all(AUDIO / 'samples'))
     project = {'_about': {'file_type': 'Terrific Audio Driver project file', 'version': VERSION},
-        'brr_samples': samples(), 'default_sfx_flags': {'one_channel': True, 'interruptible': True},
+        'brr_samples': music + se_samples(), 'default_sfx_flags': {'one_channel': True, 'interruptible': True},
         'high_priority_sound_effects': ['death', 'boss_explosion'],
         'sound_effects': ['stumble', 'explosion', 'reflect'],
         'low_priority_sound_effects': ['shot'], 'sound_effect_file': 'effects.txt',
         'songs': [{'name': 'theme', 'source': 'theme.mml'}]}
-    song(midi_tracks(midi))
+    (AUDIO / 'theme.mml').write_text(audio_arrange.song(audio_arrange.midi_notes(midi)), encoding='utf-8')
     path = AUDIO / 'monosh.terrificaudio'
     path.write_text(json.dumps(project, indent=2) + '\n', encoding='utf-8')
     compiler = str(release / 'tad-compiler.exe')
@@ -262,7 +136,7 @@ song:
   ldy #{sizes[1]}
   sec
   rtl
-.segment "AUDIO0"
+.segment "AUDIO59"
 audio_data: .incbin "data.bin"
 .assert .bankbyte(audio_data) = .bankbyte(audio_data + {len(raw)} - 1), lderror, "Audio data crosses bank"
 '''
@@ -274,7 +148,8 @@ audio_data: .incbin "data.bin"
         'noteReferenceSha256': MIDI_HASH, 'noteReferenceAuthor': 'JK150 / SixtyTunes',
         'recordingReference': 'スペースハリアー録画１.mp4',
         'recordingReferenceSha256': 'ad7892c75c4433e6563e83251c12529a56ef1305308ddeed342cdca8bdd234a4',
-        'arrangementVoices': 6, 'sfxVoices': 2, 'tempoQuarterNotes': 154,
+        'soundtrackReference': '[BGM] [AC] Space Harrier（YouTube、効果音なしのサントラ）。音色・音量の測定にのみ使用、配布物には含めない',
+        'arrangementVoices': 8, 'sfxVoices': 2, 'sfxDucksMusicVoices': 'G,H', 'tempoQuarterNotes': 154,
         'durationQuarterNotes': 640,
         'files': {str(p.relative_to(AUDIO)).replace('\\', '/'): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in sorted(AUDIO.rglob('*')) if p.is_file() and p.name != 'manifest.json'}}
