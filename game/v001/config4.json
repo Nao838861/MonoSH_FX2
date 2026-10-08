@@ -1,0 +1,25 @@
+{
+  "fullFramebufferTransfer": true,
+  "gsuUv": true,
+  "gsuClip": true,
+  "cpuClipCommands": false,
+  "stableGsuCache": false,
+  "scaledRows": false,
+  "scaledAssetWidths": {
+    "13": 96,
+    "14": 96,
+    "31": 96
+  },
+  "scaledClip": true,
+  "fastUv": false,
+  "genericPipeline": false,
+  "rowMargins": false,
+  "dynamicDmaDeadline": true,
+  "fineDmaDeadline": true,
+  "fastObj": true,
+  "descriptorDma": true,
+  "dmaAdmissionBytes": 9984,
+  "bitsPerPixel": 4,
+  "renderRateDivisor": 2,
+  "color": false
+}

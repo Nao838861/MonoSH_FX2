@@ -1,6 +1,9 @@
 .setcpu "65816"
 .smart
 .macpack longbranch
+.ifdef FX_4BPP
+.include "assets4/source4.inc"
+.endif
 .export _fx_build_packet
 .export packet_done
 .export initialized, sorted
@@ -144,6 +147,9 @@ fast_compile:
   and #$80
   beq :+
   lda _monosh_runtime_frame_counter
+  .ifdef FX_4BPP
+  lsr                       ; 2 tickごとの描画でも点滅が片側に固定されない。
+  .endif
   and #1
   jne skip
 :
@@ -159,6 +165,41 @@ fast_compile:
   sta _fx_packet+4,y
   lda _fx_draw+6,x
   sta _fx_packet+6,y
+  .ifdef FX_4BPP
+  .if FX4_COLOR
+  and #$ff
+  cmp #10
+  bne color_bullet_done
+  lda _fx_draw+4,x
+  and #$ff
+  lsr
+  sta $0170
+  lda _fx_draw+7,x
+  and #$40
+  beq :+
+  lda #14                  ; 反射弾はsize7の12x8。
+  bra color_bullet_size
+:
+  lda _fx_draw+4,x
+  and #$ff
+  asl
+color_bullet_size:
+  phx
+  tax
+  lda color_bullet_dimensions,x
+  plx
+  sta _fx_packet+4,y
+  xba
+  and #$ff
+  lsr
+  clc
+  adc _fx_draw+2,x
+  sec
+  sbc $0170
+  sta _fx_packet+2,y
+color_bullet_done:
+  .endif
+  .endif
   .ifndef FX_CPU_CLIP_COMMANDS
   lda _fx_draw+8,x
   sta _fx_packet+8,y
@@ -707,4 +748,10 @@ product_shift:
 
 .ifdef FX_BUCKET_SORT
 .include "packet_bucket.inc"
+.endif
+.ifdef FX_4BPP
+.segment "RODATA"
+color_bullet_dimensions:
+  .word $0000,$0101,$0202,$0404,$0406,$0608,$060a,$080c,$0c10
+  .word $1018,$1420,$1828,$2038,$2038,$2038,$2038,$2038
 .endif

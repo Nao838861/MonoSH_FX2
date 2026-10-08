@@ -352,7 +352,8 @@ def prepare_logic():
 
 def main():
     BUILD.mkdir(parents=True,exist_ok=True)
-    config=json.loads((GAME/'config.json').read_text(encoding='utf-8'))
+    config=json.loads((GAME/('config4.json' if '--4bpp' in sys.argv else 'config.json')).read_text(encoding='utf-8'))
+    four_bpp=config.get('bitsPerPixel',2)==4
     full_transfer=('--full-transfer' in sys.argv or config['fullFramebufferTransfer']) and '--partial-transfer' not in sys.argv
     gsu_uv=('--gsu-uv' in sys.argv or config['gsuUv']) and '--cpu-uv' not in sys.argv
     gsu_clip=('--gsu-clip' in sys.argv or config['gsuClip']) and '--cpu-clip' not in sys.argv
@@ -390,7 +391,7 @@ def main():
     pack_assets()
     bounds=build_scaled(scaled, scaled_limits, row_margins)
     scale=bytearray(65536)
-    dimensions=[Image.open(GAME/'assets'/f'{i:02d}.png').size for i in range(44)]
+    dimensions=[Image.open(GAME/'assets'/('color4' if four_bpp and config.get('color',False) else '')/f'{i:02d}.png').size for i in range(44)]
     for axis in range(2):
         for asset,size in enumerate(dimensions):
             struct.pack_into('<256H',scale,axis*0x5800+asset*512,
@@ -399,7 +400,10 @@ def main():
     scale[0xb02c:0xb058]=bytes(h for w,h in dimensions)
     if row_margins:
         scale[0xb058:0xb858]=bounds
-    (GAME/'assets/scale5e.bin').write_bytes(scale)
+    if four_bpp:
+        from build_4bpp import augment_scale
+        augment_scale(scale)
+    (BUILD/'assets4/scale5e.bin' if four_bpp else GAME/'assets/scale5e.bin').write_bytes(scale)
     prepare_logic()
     sources=[p for p in sorted(BUILD.glob('monosh_*.c')) if p.stem != 'monosh_projection']+[GAME/n for n in ['game.c','combat_port.c','asset_tables.c','ground.c']]
     objects=[]
@@ -407,11 +411,13 @@ def main():
         out=BUILD/(source.stem+'.s'); obj=BUILD/(source.stem+'.o')
         run([CC65/'cc65.exe','-Oirs','--cpu','65c02','-D','__z88dk_fastcall=',
              *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
+             *(['-D','FX_4BPP=1'] if four_bpp else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
     for name in ['cpu','gsu','ground','packet','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit']:
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
+             *(['-D','FX_4BPP=1'] if four_bpp else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),
              *(['-D','FX_GSU_UV=1'] if gsu_uv else []),
              *(['-D','FX_GSU_CLIP=1'] if gsu_clip else []),
@@ -429,7 +435,7 @@ def main():
              *(['-D','FX_DMA_DEADLINE_PROBE=1'] if dma_probe else []),
              *(['-D','FX_DESCRIPTOR_DMA=1'] if descriptor_dma else []),
              '-D',f'FX_DMA_ADMISSION_BYTES={dma_admission}',
-             '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-o',obj,GAME/(name+'.s')]); objects.append(obj)
+             '-I',ROOT/'.cache/casfx/gsu','-I',GAME,'-I',BUILD,'-o',obj,GAME/((name+'4' if four_bpp and name in ('cpu','gsu') else name)+'.s')]); objects.append(obj)
     rom=BUILD/'MonoSHFX2_v001.sfc'
     run([CC65/'ld65.exe','-C',GAME/'rom.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl',
          '-o',rom,*objects,CC65.parent/'lib/none.lib'])

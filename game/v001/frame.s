@@ -313,6 +313,11 @@ restart:
   stz _hit_pending
   rep #$20
 packet:
+  .ifdef FX_4BPP
+  .import fx4_build_skip
+  lda fx4_build_skip
+  bne done
+  .endif
   jsr _fx_build_packet
   jsr _fx_build_ground
 done:

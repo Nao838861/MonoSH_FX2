@@ -43,6 +43,10 @@ fx_obj_dma_bytes: .res 2
 .i16
 ; X=FxDrawのbyte offset。A=0:FX、1:自機、2:自弾。Xを保存する。
 fx_is_obj:
+  .ifdef FX_4BPP
+  lda #0                    ; 4bpp版はVRAM二面確保のためGSUで合成する。
+  rts
+  .endif
   lda _fx_draw+8,x
   and #$ff00
   cmp #$0200

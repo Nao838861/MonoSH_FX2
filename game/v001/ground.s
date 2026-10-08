@@ -261,5 +261,9 @@ fx_sky_colors_end:
 ground_horizontal_values: .incbin "assets/ground_horizontal.bin"
 .repeat 4,I
   .segment .sprintf("PAL%02X",$5A+I)
+  .ifdef FX_4BPP
+  .incbin .sprintf("assets4/palette%02x.bin",$5A+I)
+  .else
   .incbin .sprintf("assets/palette%02x.bin",$5A+I)
+  .endif
 .endrepeat
