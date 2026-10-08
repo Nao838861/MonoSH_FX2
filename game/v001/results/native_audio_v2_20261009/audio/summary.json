@@ -7,13 +7,14 @@
     18,
     1,
     1,
+    1,
     25
   ],
   "spawns": 25,
   "busyCalls": 0,
   "pauseStableFields": 59,
   "audioCalls": 15926,
-  "audioMaxMs": 0.124317,
-  "audioMeanMs": 0.084703,
-  "romSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475"
+  "audioMaxMs": 0.128322,
+  "audioMeanMs": 0.088354,
+  "romSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27"
 }

@@ -1,5 +1,5 @@
 {
-  "romSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475",
+  "romSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
   "emulatorSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
   "fieldsRequested": 18000,
   "presentations": 17997,
@@ -16,9 +16,9 @@
       "intervals": {
         "1": 17996
       },
-      "cpuMeanMs": 8.520329662168383,
-      "cpuMaxMs": 15.184610037997377,
-      "gsuMeanMs": 5.982765725710236,
+      "cpuMeanMs": 8.520656449624623,
+      "cpuMaxMs": 15.18209575219795,
+      "gsuMeanMs": 5.982771826198089,
       "gsuMaxMs": 14.745448118364381
     },
     "road": {
@@ -26,9 +26,9 @@
       "intervals": {
         "1": 15880
       },
-      "cpuMeanMs": 8.558549704285175,
-      "cpuMaxMs": 15.184610037997377,
-      "gsuMeanMs": 5.858072625049334,
+      "cpuMeanMs": 8.558596347209852,
+      "cpuMaxMs": 15.18209575219795,
+      "gsuMeanMs": 5.858078399720124,
       "gsuMaxMs": 13.363335902250528
     },
     "bossAlive": {
@@ -36,18 +36,18 @@
       "intervals": {
         "1": 1281
       },
-      "cpuMeanMs": 9.87952784942066,
-      "cpuMaxMs": 14.048711586834678,
-      "gsuMeanMs": 9.267949803690122,
-      "gsuMaxMs": 13.820470309264604
+      "cpuMeanMs": 9.883501476943174,
+      "cpuMaxMs": 14.051691481115478,
+      "gsuMeanMs": 9.267962060361985,
+      "gsuMaxMs": 13.822332743190103
     },
     "bossDying": {
       "images": 289,
       "intervals": {
         "1": 286
       },
-      "cpuMeanMs": 8.541028538428193,
-      "cpuMaxMs": 12.53092105924812,
+      "cpuMeanMs": 8.541100071357512,
+      "cpuMaxMs": 12.530455450766746,
       "gsuMeanMs": 7.191540493610027,
       "gsuMaxMs": 14.745448118364381
     },
@@ -56,9 +56,9 @@
       "intervals": {
         "1": 537
       },
-      "cpuMeanMs": 4.153145223919948,
-      "cpuMaxMs": 8.53739711449387,
-      "gsuMeanMs": 1.1922341458001295,
+      "cpuMeanMs": 4.153177644066059,
+      "cpuMaxMs": 8.536559019227395,
+      "gsuMeanMs": 1.192238456989772,
       "gsuMaxMs": 1.8724910686981104
     }
   },

@@ -1,5 +1,5 @@
 {
-  "romSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475",
+  "romSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
   "emulatorSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
   "fieldsRequested": 18000,
   "presentations": 17998,
@@ -16,9 +16,9 @@
       "intervals": {
         "1": 17997
       },
-      "cpuMeanMs": 8.147856786241626,
-      "cpuMaxMs": 13.994328516210066,
-      "gsuMeanMs": 8.081388446239032,
+      "cpuMeanMs": 8.147843830539465,
+      "cpuMaxMs": 13.992652325677115,
+      "gsuMeanMs": 8.081397588701378,
       "gsuMaxMs": 13.820470309264604
     },
     "road": {
@@ -26,9 +26,9 @@
       "intervals": {
         "1": 5065
       },
-      "cpuMeanMs": 8.234295422931192,
-      "cpuMaxMs": 13.994328516210066,
-      "gsuMeanMs": 6.32655902376694,
+      "cpuMeanMs": 8.234420344969859,
+      "cpuMaxMs": 13.992652325677115,
+      "gsuMeanMs": 6.326573912944592,
       "gsuMaxMs": 13.231754945413924
     },
     "bossAlive": {
@@ -36,9 +36,9 @@
       "intervals": {
         "1": 12931
       },
-      "cpuMeanMs": 8.113995192252347,
-      "cpuMaxMs": 10.850260684876552,
-      "gsuMeanMs": 8.768827810161365,
+      "cpuMeanMs": 8.113928224128673,
+      "cpuMaxMs": 10.853054335764803,
+      "gsuMeanMs": 8.768834701397317,
       "gsuMaxMs": 13.820470309264604
     }
   },

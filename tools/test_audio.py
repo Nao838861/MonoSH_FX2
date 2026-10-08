@@ -120,13 +120,13 @@ emu.addEventCallback(guard(function()
   end
   if field==MAXFRAME-5 then requested='loop' end
   if field>=MAXFRAME then
-    for id=0,5 do assert(commands[id] and commands[id]>0,'missing sfx '..id) end
+    for id=0,6 do assert(commands[id] and commands[id]>0,'missing sfx '..id) end
     assert(busyCalls==0,'audio API called while GSU running')
     assert(pauseStable==59,'pause not checked')
-    assert(shots>=commands[5],'more shot sounds than actual spawns')
+    assert(shots>=commands[6],'more shot sounds than actual spawns')
     if CHECKLOOP then assert(tick()>30720,'song has not crossed loop point') end
     local f=assert(io.open(output..'/summary.json','w'))
-    local counts={};for id=0,5 do counts[#counts+1]=commands[id] end
+    local counts={};for id=0,6 do counts[#counts+1]=commands[id] end
     f:write(string.format('{"fields":%d,"ticks":%d,"sfxCommands":[%s],"spawns":%d,"busyCalls":%d,"pauseStableFields":%d,"audioCalls":%d,"audioMaxMs":%.6f,"audioMeanMs":%.6f}',field,tick(),table.concat(counts,','),shots,busyCalls,pauseStable,audioCalls,audioMax,audioSum/audioCalls))
     f:close();report:close();emu.stop(0)
   end
@@ -166,7 +166,7 @@ def main():
     if result.returncode:
         print(result.stdout.decode(errors='replace'), result.stderr.decode(errors='replace'))
         raise SystemExit(result.returncode)
-    assert all((output / f'sfx{i}.ram').exists() for i in range(6)), 'missing SFX snapshots'
+    assert all((output / f'sfx{i}.ram').exists() for i in range(7)), 'missing SFX snapshots'
     for ram in output.glob('*.ram'):
         state = dict(line.split('=', 1) for line in ram.with_suffix('.state').read_text().splitlines())
         # Mesenのflat stateのキーはspc.a等。opcode境界なのでPC/レジスタが整合する。

@@ -7,7 +7,7 @@
 
 
 LAST_SONG_ID = 1
-N_SOUND_EFFECTS = 6
+N_SOUND_EFFECTS = 7
 
 ;; Song enum.
 ;; Input argument for `Tad_LoadSong`
@@ -26,7 +26,8 @@ N_SOUND_EFFECTS = 6
   ; normal-priority sound effects
   stumble = 2
   explosion = 3
-  reflect = 4
+  ground_explosion = 4
+  reflect = 5
   ; low-priority sound effects
-  shot = 5
+  shot = 6
 .endenum

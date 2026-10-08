@@ -11,7 +11,7 @@ LOROM = 1
 .export _fx_audio_events, fx_audio_sent, fx_audio_last_sfx
 
 .segment "AUDIOBSS"
-_fx_audio_events: .res 1          ; 1=shot, 2=explosion, 4=reflect
+_fx_audio_events: .res 1          ; 1=shot, 2=explosion, 4=reflect, 8=ground object destroyed
 audio_old_player: .res 1
 audio_old_stumble: .res 1
 audio_old_boss: .res 1
@@ -82,6 +82,12 @@ check_events:
   and #4
   beq :+
   lda #SFX::reflect
+  sta fx_audio_last_sfx
+:
+  lda _fx_audio_events
+  and #8
+  beq :+
+  lda #SFX::ground_explosion
   sta fx_audio_last_sfx
 :
   lda _fx_audio_events
