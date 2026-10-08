@@ -21,5 +21,7 @@
   "dmaAdmissionBytes": 9984,
   "bitsPerPixel": 4,
   "renderRateDivisor": 2,
-  "color": false
+  "color": true,
+  "transferMode": "column-spans-two-pages",
+  "smoothDepthSizes": true
 }

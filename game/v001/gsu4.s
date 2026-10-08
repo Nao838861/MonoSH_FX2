@@ -1,7 +1,8 @@
 .include "casfx.inc"
 ; 4bpp実験専用。ゲームのpacket/clip/UV規則は60fps版と共用する。
 .segment "GSU"
-.export render_entry, render_stop, background_done, dispatch_nonzero, generic, margin_render, scaled_render4
+.export render_entry, render_stop, background_done, dispatch_nonzero, generic, margin_render, scaled_render4, integer_render4
+.export scaled_unpacked4
 .align 16
 render_entry:
   cache
@@ -11,6 +12,7 @@ render_entry:
   iwt r11,#$1000
   ibt r10,#2
 background_layer:
+  cache                   ; 二層共通の境界計算と画素loopを同じwindowへ置く。
   ldw (r11)
   move r5,r0               ; horizontal source position (0..511)
   iwt r8,#$1010
@@ -33,6 +35,24 @@ background_layer:
   move r7,r0               ; ROM row address
   inc r11
   inc r11
+  ibt r8,#0
+  from r6
+  cmp r8
+  bne background_has_rows4
+  nop
+  iwt r8,#.loword(background_end)
+  jmp (r8)
+  nop
+background_has_rows4:
+  iwt r8,#192
+  from r2
+  cmp r8
+  blt background_on_screen4
+  nop
+  iwt r8,#.loword(background_end)
+  jmp (r8)
+  nop
+background_on_screen4:
   ibt r0,#$5f
   romb
   from r2
@@ -90,7 +110,6 @@ background_first_count:
   move r4,r0               ; length after horizontal wrap
   .align 16,$01
 background_cache:
-  cache
 background_row:
   iwt r0,#192
   from r2
@@ -140,14 +159,12 @@ background_end:
   jmp (r8)
   nop
 background_done:
-  iwt r11,#$8000
+  iwt r11,#0
   ldw (r11)
   iwt r8,#4
   stw (r8)
-  inc r11
-  inc r11
   iwt r8,#6
-  from r11
+  ibt r0,#32
   stw (r8)
 dispatch:
   iwt r11,#4
@@ -165,124 +182,55 @@ dispatch_nonzero:
   iwt r11,#6
   ldw (r11)
   move r11,r0
-  to r1
-  ldw (r11)
-  inc r11
-  inc r11
-  to r2
-  ldw (r11)
-  inc r11
-  inc r11
-  to r3
-  ldw (r11)
-  inc r11
-  inc r11
-  to r4
-  ldw (r11)
-  inc r11
-  inc r11
-  to r5
-  ldw (r11)
-  inc r11
-  inc r11
-  to r6
-  ldw (r11)
-  inc r11
-  inc r11
-  to r7
-  ldw (r11)
-  inc r11
-  inc r11
-  to r9
-  ldw (r11)
-  inc r11
-  inc r11
-  to r10
-  ldw (r11)
-  inc r11
-  inc r11
-  ldw (r11)
-  romb
-  sms ($000a),r0
-  inc r11
-  inc r11
-  ldw (r11)
-  sms ($001a),r0
-  inc r11
-  inc r11
-  ldw (r11)
-  sms ($0018),r0
-  inc r11
-  inc r11
+  .include "gsu_draw.inc"
   iwt r8,#6
   from r11
   stw (r8)
+  sms ($001a),r3
+  sms ($001e),r4           ; 原寸height。縮小済みの縦サンプルがある組だけ使う。
+  sms ($000a),r0
   iwt r8,#$1010
-  to r11
   ldw (r8)
-  from r1
-  add r9
-  cmp r11
-  blt :+
+  move r8,r0
+  with r1
+  sub r8
+  lms r0,($000a)
+  .include "gsu_clip4.inc"
+  ; 縮小済みの胴・顔は水平UVを使わない。通常向きだけ先に選ぶ。
+  swap
+  iwt r8,#255
+  and r8
+  ibt r8,#13
+  cmp r8
+  beq prescaled_pre4
   nop
-  bne strip_right_visible
+  ibt r8,#14
+  cmp r8
+  bne uv_normal4
+  nop
+prescaled_pre4:
+  sms ($0010),r6
+  sms ($0012),r7
+  sms ($0014),r4
+  ibt r0,#1
+  sms ($000e),r0
+  iwt r11,#.loword(scaled_select4)
+  jmp (r11)
+  nop
+uv_normal4:
+  ibt r0,#0
+  sms ($000e),r0
+  lms r0,($000a)
+  .include "gsu_uv.inc"
+  ibt r8,#$ff
+  from r3
+  and r8
+  bne :+
+  nop
+  iwt r11,#.loword(integer_render4)
+  jmp (r11)
   nop
 :
-  iwt r8,#.loword(dispatch)
-  jmp (r8)
-  nop
-strip_right_visible:
-  ibt r8,#64
-  with r11
-  add r8
-  from r1
-  cmp r11
-  blt strip_left_visible
-  nop
-  iwt r8,#.loword(dispatch)
-  jmp (r8)
-  nop
-strip_left_visible:
-  from r1
-  add r9
-  cmp r11
-  blt strip_end_ready
-  nop
-  move r0,r11
-strip_end_ready:
-  to r9
-  sub r1
-  ibt r8,#64
-  with r11
-  sub r8
-  from r11
-  sub r1
-  ibt r8,#0
-  cmp r8
-  blt strip_skip_ready
-  nop
-  beq strip_skip_ready
-  nop
-  move r11,r0
-  with r9
-  sub r11
-  with r1
-  add r11
-  sms ($0020),r4
-  sms ($0022),r6
-  move r6,r3
-  from r11
-  lmult
-  with r10
-  add r4
-  lms r4,($0020)
-  lms r6,($0022)
-  lms r0,($0018)
-  add r11
-  sms ($0018),r0
-strip_skip_ready:
-  move r5,r1
-  .include "gsu_bounds4.inc"
   iwt r11,#.loword(scaled_select4)
   jmp (r11)
   nop
@@ -339,6 +287,8 @@ margin_reject:
   lms r0,($000a)
   romb
 generic_jump:
+  lms r0,($000a)
+  romb
   iwt r11,#.loword(generic)
   jmp (r11)
   nop
@@ -434,7 +384,7 @@ finished:
   ldw (r11)
   ibt r8,#0
   cmp r8
-  bne render_stop
+  bne render_plan
   nop
   ibt r0,#1
   stw (r11)
@@ -446,15 +396,19 @@ finished:
   iwt r11,#.loword(render_entry)
   jmp (r11)
   nop
+render_plan:
+  iwt r11,#.loword(plan_dma4)
+  jmp (r11)
+  nop
 render_stop:
   stop
   nop
 
-; ボス3原画を同じQ8.8で水平縮小済み。縦の倍率・clip・Y反転は実行時のまま。
+; ボス胴・顔・爆発4姿勢・ボス弾を同じQ8.8で水平縮小済み。通常の向きだけを使用する。
 scaled_select4:
   lms r0,($000a)
   swap
-  ibt r8,#64
+  iwt r8,#192
   and r8
   beq :+
   nop
@@ -488,7 +442,20 @@ scaled_select4:
   nop
   ibt r8,#41
   cmp r8
-  bne scaled_reject4
+  beq scaled_bom41
+  nop
+  ibt r8,#31
+  cmp r8
+  beq scaled_bullet4
+  nop
+  iwt r11,#.loword(scaled_reject4)
+  jmp (r11)
+  nop
+scaled_bullet4:
+  iwt r12,#$3800
+  bra scaled_lookup4
+  nop
+scaled_bom41:
   nop
   iwt r12,#$3400
   bra scaled_lookup4
@@ -514,6 +481,26 @@ scaled_bom40:
 scaled_lookup4:
   ibt r0,#$5f
   romb
+  from r12
+  lsr
+  iwt r8,#$2c00
+  add r8
+  move r14,r0
+  lms r0,($001a)
+  add r0
+  to r14
+  add r14
+  getb
+  lms r8,($001e)
+  from r8
+  cmp r0
+  blt scaled_reject4
+  inc r14
+  getb
+  cmp r8
+  blt scaled_reject4
+  nop
+scaled_height_valid4:
   lms r0,($001a)
   add r0
   add r0
@@ -533,15 +520,70 @@ scaled_lookup4:
   cmp r8
   beq scaled_reject4
   nop
+  lms r0,($000e)
+  cmp r8
+  beq scaled_uv_ready4
+  nop
+  ; 先行選択に成功した場合は、垂直UVだけを元と同じ整数式で作る。
+  ibt r0,#$5e
+  romb                    ; R14更新より先にbankを選び、先読みを新bankへ向ける。
+  lms r0,($000a)
+  swap
+  ibt r8,#63
+  and r8
+  swap
+  add r0
+  move r11,r0
+  lms r0,($0014)
+  add r0
+  add r11
+  iwt r8,#$5800
+  to r14
+  add r8
+  getb
+  inc r14
+  getbh
+  move r6,r0
+  iwt r8,#255
+  from r7
+  and r8
+  lmult
+  move r7,r4
+  move r4,r6
+  lms r6,($0010)
+scaled_uv_ready4:
+  move r0,r12             ; ROMBの後のSWAPにもbank/形式の値を残す。
   romb
   swap
   iwt r8,#255
   and r8
   move r3,r0
+  ibt r8,#0
+  cmp r8
+  beq scaled_packed_select4
+  nop
+  iwt r11,#.loword(scaled_unpacked4)
+  jmp (r11)
+  nop
+scaled_packed_select4:
   iwt r11,#.loword(scaled_render4)
   jmp (r11)
   nop
 scaled_reject4:
+  lms r0,($000e)
+  ibt r8,#0
+  cmp r8
+  beq scaled_generic_reject4
+  nop
+  lms r3,($001a)
+  lms r4,($0014)
+  lms r6,($0010)
+  lms r7,($0012)
+  lms r10,($0018)
+  iwt r11,#.loword(uv_normal4)
+  jmp (r11)
+  nop
+scaled_generic_reject4:
   iwt r11,#.loword(margin_select4)
   jmp (r11)
   nop
@@ -659,6 +701,120 @@ scaled_end4:
   iwt r11,#.loword(dispatch)
   jmp (r11)
   nop
+.align 16,$01
+scaled_unpacked4:
+  cache
+unpacked_row4:
+  from r7
+  swap
+  ibt r8,#127
+  and r8
+  add r0
+  to r14
+  add r10
+  getb
+  inc r14
+  getbh
+  move r14,r0
+  move r1,r5
+  getb
+  move r11,r0
+  sms ($001e),r0
+  inc r14
+  lms r0,($0018)
+  cmp r11
+  blt unpacked_left4
+  nop
+  move r11,r0
+unpacked_left4:
+  getb
+  move r12,r0
+  inc r14
+  lms r0,($0018)
+  add r9
+  cmp r12
+  bge unpacked_right4
+  nop
+  move r12,r0
+unpacked_right4:
+  from r12
+  sub r11
+  beq unpacked_next4
+  nop
+  blt unpacked_next4
+  nop
+  move r12,r0
+  lms r0,($0018)
+  from r11
+  sub r0
+  with r1
+  add r0
+  lms r0,($001e)
+  from r11
+  sub r0
+  to r14
+  add r14
+  iwt r13,#.loword(unpacked_pixels4)
+unpacked_pixels4:
+  getc
+  inc r14
+  loop
+  plot
+unpacked_next4:
+  with r7
+  add r4
+  dec r6
+  beq unpacked_end4
+  inc r2
+  iwt r8,#.loword(unpacked_row4)
+  jmp (r8)
+  nop
+unpacked_end4:
+  rpix
+  iwt r11,#.loword(dispatch)
+  jmp (r11)
+  nop
+.align 16,$01
+integer_render4:
+  cache
+integer_row4:
+  from r3
+  swap
+  sex
+  move r8,r0              ; 整数DUをbyte刻みに。反転時は負のまま加算。
+  from r10
+  swap
+  iwt r11,#$ff
+  and r11
+  move r14,r0
+  from r7
+  iwt r11,#$ff00
+  and r11
+  to r14
+  add r14
+  move r1,r5
+  move r12,r9
+  iwt r13,#.loword(integer_pixels4)
+integer_pixels4:
+  getc
+  with r14
+  add r8
+  loop
+  plot
+  with r7
+  add r4
+  dec r6
+  beq integer_end4
+  inc r2
+  iwt r11,#.loword(integer_row4)
+  jmp (r11)
+  nop
+integer_end4:
+  rpix
+  iwt r11,#.loword(dispatch)
+  jmp (r11)
+  nop
+  .include "gsu_dma4.inc"
 .repeat 22,I
   .segment .sprintf("ASSET%02X",$44+I)
   .incbin .sprintf("assets4/bank%02x.bin",$44+I)

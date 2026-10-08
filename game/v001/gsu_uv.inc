@@ -13,7 +13,9 @@
   .ifndef FX_STABLE_GSU_CACHE
 .export gsu_uv_cache
 gsu_uv_cache:
+  .ifndef FX_4BPP
   cache
+  .endif                   ; 4bppでは連続するボスの描画loopのcacheを維持する。
   iwt r8,#$000a
   stw (r8)                 ; r0はbank/meta。ROMBは下7bitだけを読む。
   .endif                   ; 安定cache構成ではclip入口が既にbank/metaを保存済み。

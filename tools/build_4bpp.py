@@ -69,37 +69,55 @@ def assets(color):
     for i,image in enumerate(images):
         start=(i&1)*32768+image.height*256;end=(1+(i&1))*32768
         if start<end:holes.append([i//2,start,end])
-    prescaled=bytearray(6144)
+    holes += [[i//2,(i&1)*32768+y*256+im.width,(i&1)*32768+(y+1)*256]
+              for i,im in enumerate(images) for y in range(im.height) if im.width<256]
+    prescaled=bytearray(7168)
+    allowed_heights=bytearray(3584)
     geometry=(base.GAME/'upstream/monosh_boss_data.c').read_text()
     from smooth_depth import transform
     geometry=transform('monosh_boss_data',geometry)
+    bullet_geometry=transform('monosh_enemy_data',(base.GAME/'upstream/monosh_enemy_data.c').read_text())
     jobs=[]
-    for slot,(i,kind) in enumerate(((13,'body'),(14,'face'),(5,'bom'),(39,'bom'),(40,'bom'),(41,'bom'))):
-        vals=[int(x) for x in re.search('monosh_boss_'+kind+r'_geometry\[222\] = \{([^}]+)',geometry).group(1).replace('\n','').strip(',').split(',')]
+    for slot,(i,kind) in enumerate(((13,'body'),(14,'face'),(5,'bom'),(39,'bom'),(40,'bom'),(41,'bom'),(31,'bullet'))):
+        name='monosh_ebullet4' if kind=='bullet' else 'monosh_boss_'+kind
+        vals=[int(x) for x in re.search(name+r'_geometry\[222\] = \{([^}]+)',bullet_geometry if kind=='bullet' else geometry).group(1).replace('\n','').strip(',').split(',')]
         pix=pixels[i];h,w=pix.shape
         for width in sorted(set(vals[::2])):
             rowpix=pix[:,(np.arange(width)*(w*256//width))>>8]
-            data=bytearray(h*2);offsets=[]
+            heights={vals[z+1] for z in range(0,len(vals),2) if vals[z]==width}
+            allowed_heights[slot*512+width*2:slot*512+width*2+2]=bytes((min(heights),max(heights)))
+            used={int(y) for height in range(min(heights),max(heights)+1) for y in (np.arange(height)*(h*256//height))>>8}
+            rows=[]
             for y,row in enumerate(rowpix):
-                offsets.append(len(data));opaque_x=np.flatnonzero(row)
-                if not len(opaque_x):data+=bytes((0,0));continue
+                opaque_x=np.flatnonzero(row)
+                if y not in used or not len(opaque_x):rows.append(bytes((0,0)));continue
                 first=int(opaque_x[0]);last=int(opaque_x[-1])+1
-                data+=bytes((first,last))
+                if kind in ('body','face'):
+                    rows.append(bytes((first,last))+row[first:last].tobytes());continue
                 packed=bytearray((last-(first&~1)+1)//2)
                 for x in range(first&~1,last):packed[(x-(first&~1))//2]|=int(row[x])<<((x&1)*4)
-                data+=packed
-            jobs.append((slot,width,data,offsets))
-    for slot,width,data,offsets in sorted(jobs,key=lambda job:-len(job[2])):
-        hole=next(q for q in holes if q[2]-q[1]>=len(data))
-        bank,offset,_=hole;hole[1]+=len(data)
-        for y,relative in enumerate(offsets):struct.pack_into('<H',data,y*2,offset+relative)
-        banks[bank][offset:offset+len(data)]=data
-        struct.pack_into('<BBH',prescaled,slot*1024+width*4,0x44+bank,0,offset)
-    # 原画の各行の未使用列も行境界表に使い、縮小原画用の大きな連続領域を残す。
-    holes=[(i//2,(i&1)*32768+y*256+im.width,(i&1)*32768+(y+1)*256)
-           for i,im in enumerate(images) for y in range(im.height)]+holes
-    holes=[list(q) for q in holes]
-    selected=[i for i in range(44) if i not in (5,9,10,13,14,38,39,40,41,42,43) and not 15<=i<=30]
+                rows.append(bytes((first,last))+packed)
+            jobs.append((slot,width,rows))
+    for slot,width,rows in sorted(jobs,key=lambda job:-(len(job[2])*2+sum(map(len,job[2])))):
+        # 行を同一bank内の空き領域へ分散。原画の未使用列も使い2MiBに収める。
+        chunks=[bytes(len(rows)*2)]+rows
+        allocations=None
+        for bank in sorted(range(22),key=lambda b:sum(q[2]-q[1] for q in holes if q[0]==b)):
+            trial=[q.copy() for q in holes if q[0]==bank];addresses={}
+            for n in sorted(range(len(chunks)),key=lambda n:-len(chunks[n])):
+                fits=[q for q in trial if q[2]-q[1]>=len(chunks[n])]
+                if not fits:break
+                hole=min(fits,key=lambda q:q[2]-q[1]);addresses[n]=hole[1];hole[1]+=len(chunks[n])
+            else:
+                allocations=addresses;holes=[q for q in holes if q[0]!=bank]+trial;break
+        if allocations is None:raise ValueError(f'4bpp prescale ROM space exhausted: {slot}/{width}')
+        table=bytearray(len(rows)*2)
+        for y,row in enumerate(rows):
+            address=allocations[y+1];banks[bank][address:address+len(row)]=row
+            struct.pack_into('<H',table,y*2,address)
+        offset=allocations[0];banks[bank][offset:offset+len(table)]=table
+        struct.pack_into('<BBH',prescaled,slot*1024+width*4,0x44+bank,int(slot<2),offset)
+    selected=[i for i in range(44) if i not in (5,9,10,13,14,31,38,39,40,41,42,43) and not 15<=i<=30]
     slots=bytearray([255]*44);tables=bytearray(len(selected)*768)
     for slot,i in enumerate(selected):
         slots[i]=slot;pix=pixels[i];h,w=pix.shape
@@ -114,6 +132,11 @@ def assets(color):
             banks[bank][offset:offset+h]=padding.tobytes()
             struct.pack_into('<BH',tables,slot*768+width*3,0x44+bank,offset)
     assert len(tables)<=0x4f00
+    packing={'rawSpriteBytes':sum(im.width*im.height for im in images),
+             'prescaledBytes':sum(len(rows)*2+sum(map(len,rows)) for _,_,rows in jobs),
+             'freeAssetBankBytes':sum(q[2]-q[1] for q in holes),'prescaledAssets':[13,14,5,39,40,41,31],
+             'unpackedPrescaledAssets':[13,14]}
+    (PACK/'packing4.json').write_text(json.dumps(packing,indent=2)+'\n')
     (PACK/'margin_slots.bin').write_bytes(slots);(PACK/'margin_tables.bin').write_bytes(tables)
     for i,raw in enumerate(banks):(PACK/f'bank{0x44+i:02x}.bin').write_bytes(raw)
     # 5Fは512px幅の遠景二層。画素参照はGSU、空のグラデーションは既存HDMA。
@@ -130,14 +153,15 @@ def assets(color):
         far[i*32768:i*32768+pix.nbytes]=pix.tobytes()
         meta.append({'top':bbox[1]-36,'height':image.height,'address':i*32768})
     assert meta[0]['height']*512<=0x2000
-    far[0x2000:0x3800]=prescaled
+    far[0x2000:0x3c00]=prescaled
+    far[0x3c00:0x4a00]=allowed_heights
     (PACK/'background4.bin').write_bytes(far)
     (PACK/'background4.inc').write_text('\n'.join(f'FX_BG_{i}_{k.upper()} = {v}' for i,m in enumerate(meta) for k,v in m.items())+'\n')
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--color',action='store_true');args=parser.parse_args()
     config=json.loads((base.GAME/'config4.json' if (base.GAME/'config4.json').exists() else base.GAME/'config.json').read_text())
-    config.update(bitsPerPixel=4,color=args.color,renderRateDivisor=2,fullFramebufferTransfer=True,stableGsuCache=False,
+    config.update(bitsPerPixel=4,color=args.color,renderRateDivisor=2,transferMode='column-spans-two-pages',smoothDepthSizes=True,fullFramebufferTransfer=True,stableGsuCache=False,
                   scaledRows=False,fastUv=False,rowMargins=False,genericPipeline=False,cpuClipCommands=False)
     (base.GAME/'config4.json').write_text(json.dumps(config,indent=2)+'\n')
     assets(args.color)
@@ -146,7 +170,7 @@ def main():
     build_objects.build=ppu
     sys.argv.append('--4bpp')
     base.main()
-    mode=base.BUILD/'build_mode.json';m=json.loads(mode.read_text());m.update(bitsPerPixel=4,renderRateDivisor=2,color=args.color)
+    mode=base.BUILD/'build_mode.json';m=json.loads(mode.read_text());m.update(bitsPerPixel=4,renderRateDivisor=2,color=args.color,transferMode='column-spans-two-pages')
     mode.write_text(json.dumps(m,indent=2)+'\n')
 
 if __name__=='__main__':main()

@@ -360,6 +360,7 @@ def prepare_logic(smooth_depth=True):
             text=text.replace('    stage_render();','    fx_stage_render();')
             text=text.replace('    if (monosh_stage_need_hitboxes) check_player_bullets();','    /* stage.s resolves live shots using the same projected rectangle. */')
         if name == 'monosh_boss':
+            text='#ifdef FX_4BPP\nunsigned int __fastcall__ fx4_explosion_lift(unsigned int packed);\n#endif\n'+text
             text='void fx_boss_project(void);\nvoid fx_boss_hits(void);\n'+text
             if not reference:
                 text=text.replace('        dos_project_boss_parts();','        fx_boss_project();')
@@ -369,6 +370,8 @@ def prepare_logic(smooth_depth=True):
             text=text.replace('        dos_cache_boss_attributes();','        /* SNES shared draw queue replaces SAT cache. */')
             text=text.replace('((unsigned int)world_y * boss_explosion_scale(z) >> 8)',
                               '((unsigned long)world_y * boss_explosion_scale(z) >> 8)')
+            text=text.replace('    return ((unsigned long)world_y * boss_explosion_scale(z) >> 8) << 1;',
+                '#ifdef FX_4BPP\n    return fx4_explosion_lift(((unsigned int)world_y << 8) | z);\n#else\n    return ((unsigned long)world_y * boss_explosion_scale(z) >> 8) << 1;\n#endif')
         if name == 'monosh_boss_data':
             text=text.replace('#ifdef __ROM__\nconst unsigned char monosh_boss_bullet_velocity',
                               '#if 1\nconst unsigned char monosh_boss_bullet_velocity')

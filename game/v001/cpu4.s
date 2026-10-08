@@ -21,6 +21,7 @@ FX_DMA_ADMISSION_BYTES = 9984
 .export _fx_present, _fx_read_input, _fx_send_ground
 .export reset, game_started, render_started, render_finished, dma_started, dma_finished
 .export render_second_started, render_second_finished
+.export half_dma_finished
 .segment "BSS"
 clear_initialized: .res 2
 .export fx4_page, fx4_generation
@@ -30,6 +31,14 @@ fx4_upload_vram: .res 2
 fx4_page: .res 2
 fx4_generation: .res 2
 
+.export fx4_dma_bytes
+.export fx4_half_bytes, fx4_desc_count
+fx4_dma_bytes: .res 2
+fx4_half_bytes: .res 2
+fx4_descriptors = $0400
+fx4_desc_count: .res 2
+fx4_desc_pos: .res 2
+fx4_latest: .res 2
 .segment "BOOT"
 reset:
   sei
@@ -237,6 +246,17 @@ _fx_read_input:
   ; Startを含む$1280に見え、押していないポーズが発生する。
   ; 読み取り前後にbusyを確認し、開始境界をまたいだ結果も捨てる。
   sep #$20
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #203
+  bcc wait_auto_joy
+  cmp #230
+  bcs wait_auto_joy
+wait_auto_vblank:
+  lda f:$004212
+  and #$80
+  beq wait_auto_vblank
 wait_auto_joy:
   lda f:$004212
   and #1
@@ -327,16 +347,12 @@ _fx_present:
   inc clear_initialized
   lda #0
   sta f:$700700            ; バッテリーRAMの前回起動のdirty flagを継承しない。
-  lda _fx_packet_count
-  asl
-  asl
-  clc
-  adc _fx_packet_count
-  asl
-  sta f:$7e1d02
-  jsr prepare_commands4
   jsr prepare_frame
 frame_prepared:
+  lda fx4_page
+  eor #$3000
+  sta f:$701016
+  stz fx4_dma_bytes
   lda _fx_ground_vptr
   sta f:$7e1d04
   lda _fx_ground_c1ptr
@@ -369,7 +385,6 @@ wait_gsu:
   and #$20
   bne wait_gsu
 render_finished:
-  jsr wait_blank
   rep #$30
   lda fx4_page
   eor #$3000
@@ -378,6 +393,10 @@ render_finished:
   sta f:$002116
   lda #$2000
   sta f:$004302
+  jsr plan_half
+  sep #$20
+  jsr wait_blank
+  rep #$30
   jsr send_half
   lda #64
   sta f:$701010
@@ -389,15 +408,6 @@ render_second_started:
   stz fx4_build_skip
   sep #$30
   jsr _fx_frame
-  rep #$30
-  lda _fx_packet_count
-  asl
-  asl
-  clc
-  adc _fx_packet_count
-  asl
-  sta f:$7e1d02
-  jsr prepare_commands4
   sep #$20
 wait_second_gsu:
   lda f:$003030
@@ -405,6 +415,10 @@ wait_second_gsu:
   bne wait_second_gsu
 render_second_finished:
   jsr prepare_frame
+  rep #$30
+  lda #$3800
+  sta f:$004302
+  jsr plan_half
   sep #$20
   jsr wait_blank
   jsr update_ground_pointers
@@ -490,24 +504,6 @@ prepare_frame:
   plb
   plb
 prepare_done:
-  lda f:$7e0400
-  sta f:$708000
-  beq prepare_copied
-  asl
-  asl
-  asl
-  sta f:$7e1d02
-  asl
-  clc
-  adc f:$7e1d02
-  dec
-  ldx #$0402
-  ldy #$8002
-  mvn #$7e,#$70
-  pea $7e7e
-  plb
-  plb
-prepare_copied:
   plp
   rts
 
@@ -518,7 +514,7 @@ wait_blank:
   lda f:$00213d
   cmp #203
   bcc wait_blank
-  cmp #208
+  cmp fx4_latest
   bcs wait_blank
 wait_hblank:
   lda f:$004212
@@ -528,40 +524,130 @@ wait_hblank:
   sta f:$002100
   rts
 
+plan_half:
+  .a16
+  .i16
+  lda f:$701160
+  sta fx4_desc_count
+  asl
+  clc
+  adc fx4_desc_count
+  asl
+  sta fx4_desc_pos
+  lda f:$701162
+  sta fx4_half_bytes
+  lda fx4_desc_pos
+  beq :+
+  dec
+  ldx #$1100
+  ldy #fx4_descriptors
+  mvn #$70,#$7e
+  pea $7e7e
+  plb
+  plb
+:
+  ; Divide the exact byte budget by 164 bytes/scanline. Reserve CPU setup.
+  lda fx4_half_bytes
+  clc
+  adc #163
+  sta f:$004204
+  sep #$20
+  lda #164
+  sta f:$004206
+  rep #$20
+  lda fx4_desc_count
+  clc
+  adc #1
+  lsr
+  sta fx4_latest
+  lda #280
+  sec
+  sbc fx4_latest
+  sec
+  sbc f:$004214
+  cmp #246
+  bcc :+
+  lda #245
+:
+  sta fx4_latest
+  cmp #204
+  bcs plan_budget_ready4
+  ; 区間が多い最悪形状は、担当する二本の全帯へまとめる。最低でもline203に開始できる。
+  lda #2
+  sta fx4_desc_count
+  lda #12
+  sta fx4_desc_pos
+  lda #12288
+  sta fx4_half_bytes
+  lda #204
+  sta fx4_latest
+  lda #6144
+  sta fx4_descriptors
+  sta fx4_descriptors+6
+  lda f:$701010
+  and #64
+  beq plan_full_left4
+  lda #$1800
+plan_full_left4:
+  clc
+  adc #$2000
+  sta fx4_descriptors+2
+  clc
+  adc #$3000
+  sta fx4_descriptors+8
+  lda fx4_descriptors+2
+  sec
+  sbc #$2000
+  lsr
+  clc
+  adc fx4_page
+  sta fx4_descriptors+4
+  clc
+  adc #$1800
+  sta fx4_descriptors+10
+plan_budget_ready4:
+  rts
 send_half:
   .a16
   .i16
+  lda fx4_dma_bytes
+  clc
+  adc fx4_half_bytes
+  sta fx4_dma_bytes
   lda #$1801
   sta f:$004300
-  lda #$1800
-  sta f:$004305
   sep #$20
   lda #$70
   sta f:$004304
 dma_started:
-  lda #1
-  sta f:$00420b
   rep #$30
-  lda f:$004302
-  clc
-  adc #$1800
-  sta f:$004302
-  ; DMA??VMADD????strip?????1strip??????
-  lda fx4_upload_vram
-  clc
-  adc #$1800
-  sta f:$002116
-  lda #$1800
+  ldx #0
+send_descriptor:
+  cpx fx4_desc_pos
+  bcs descriptors_done
+  lda fx4_descriptors,x
   sta f:$004305
+  lda fx4_descriptors+2,x
+  sta f:$004302
+  lda fx4_descriptors+4,x
+  sta f:$002116
   sep #$20
   lda #1
   sta f:$00420b
   rep #$30
+  txa
+  clc
+  adc #6
+  tax
+  bra send_descriptor
+descriptors_done:
+half_dma_finished:
   rts
 
 blank_table:
   .byte 21,$80,1,$00,127,$0f,53,$0f,22,$80,1,$80,0
-.include "prepare4.inc"
+
+ .include "math4.inc"
 .segment "GFX"
   .incbin "assets4/ppu.bin"
 .segment "HEADER"
