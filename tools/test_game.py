@@ -63,7 +63,8 @@ def main():
     if (output/'trace.jsonl').exists():
         rows=[json.loads(x) for x in (output/'trace.jsonl').read_text().splitlines()]
         print('last records:',json.dumps(rows[-4:],ensure_ascii=False))
-    if (output/'error.txt').exists(): print((output/'error.txt').read_text())
+    if (output/'error.txt').exists():
+        raise RuntimeError((output/'error.txt').read_text())
     for path in output.glob('*.rgb'):
         raw=path.read_bytes(); Image.frombytes('RGB',(256,len(raw)//768),raw).save(path.with_suffix('.png'))
     if result.returncode: raise SystemExit(result.returncode)

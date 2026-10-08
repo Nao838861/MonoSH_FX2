@@ -45,7 +45,9 @@ def reference(draw,meta):
             size=7 if flags&64 else w
             image=bullet_image(size);visual_w,visual_h=SIZES[size]
             origin_x=x-visual_w//2;origin_y=bottom-h//2-visual_h//2-7
-            w,h=visual_w,visual_h;palette_base=144
+            # 独立した仕様表：大きい弾から水色、薄緑、黄緑、黄色。
+            pal=1 if size>=9 else 2 if size>=6 else 3 if size>=3 else 4
+            w,h=visual_w,visual_h;palette_base=128+16*pal
         else:image=Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png')
         du=image.width*256//w;dv=image.height*256//h
         for dy in range(h):
@@ -87,14 +89,14 @@ def verify(directory):
         pixels=0;bank1=False;view_flips=set();colors=set()
         planned=json.loads((GAME/'assets/obj_color/palette.json').read_text())['rgb5']
         planned_words=[r|(g<<5)|(b<<10) for r,g,b in planned]
-        shot=json.loads((GAME/'assets/recorded_effects/bullet_palette.json').read_text())['rgb5']
-        planned_words += [r|(g<<5)|(b<<10) for r,g,b in shot]
-        assert (GAME/'assets/obj_palette.bin').read_bytes()==struct.pack('<32H',*planned_words)
+        phases=json.loads((GAME/'assets/recorded_effects/bullet_color_phases.json').read_text(encoding='utf-8'))['rgb5']
+        planned_words += [r|(g<<5)|(b<<10) for phase in phases for r,g,b in phase]
+        assert (GAME/'assets/obj_palette.bin').read_bytes()==struct.pack('<80H',*planned_words)
         for path in views:
             oam=path.read_bytes()
             cgram=path.with_name(path.name.replace('_oam.bin','_cgram.bin')).read_bytes()
             palette=struct.unpack('<256H',cgram)
-            assert list(palette[128:160])==planned_words,'PPU OBJ palette differs from requested colors'
+            assert list(palette[128:208])==planned_words,'PPU OBJ palette differs from requested colors'
             screen=Image.open(path.with_name(path.name.replace('_oam.bin','.png'))).convert('RGB')
             for (x,y),color in object_pixels(vram,oam).items():
                 if 23<=y<203:
@@ -112,8 +114,10 @@ def verify(directory):
         for asset in [9,*range(15,31)]:
             with Image.open(GAME/'assets/obj_color'/f'{asset:02d}.png') as image:
                 expected_colors.update(c for _,c in image.getcolors() if c)
-        with Image.open(GAME/'assets/recorded_effects/bullet.png') as image:
-            expected_colors.update(c+16 for _,c in image.getcolors() if c)
+        for size in range(1,17):
+            pal=1 if size>=9 else 2 if size>=6 else 3 if size>=3 else 4
+            image=bullet_image(size)
+            expected_colors.update(c+16*pal for _,c in image.getcolors() if c)
         assert colors==expected_colors,f'player/bullet colors missing in actual PPU captures: {colors} / {expected_colors}'
         (directory/'objects_ppu.json').write_text(json.dumps({'screens':len(views),'checkedObjectPixels':pixels,
                     'secondChrTableSeen':bank1,'flips':sorted(view_flips),'opaquePaletteIndices':sorted(colors),

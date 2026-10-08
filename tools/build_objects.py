@@ -3,6 +3,7 @@ import json
 import struct
 from PIL import Image
 from build_ground import GAME
+from build_bullet_colors import build as build_bullet_colors,palette_number
 
 PLAYERS=[9,*range(15,31)]
 SIZES={1:(1,1),2:(2,2),3:(4,4),4:(6,4),5:(8,6),6:(10,6),7:(12,8),8:(16,12),9:(24,16),10:(32,20),11:(40,24)}
@@ -15,7 +16,7 @@ def bullet_image(size):
 def build():
     assets=GAME/'assets';vram=bytearray((assets/'ppu.bin').read_bytes());vram[0xc000:]=bytes(0x4000)
     palette=json.loads((assets/'obj_color/palette.json').read_text())['rgb5']
-    shot_palette=json.loads((assets/'recorded_effects/bullet_palette.json').read_text())['rgb5']
+    shot_palettes=build_bullet_colors()
     occupied=set();cached={};player_tiles=[0]*264;records=bytearray();pointers=[];layouts={}
     def base(slot):return (slot//64)*256+(slot%8)*2+((slot%64)//8)*32
     def encode(image,tile):
@@ -59,12 +60,13 @@ def build():
         pointers.append(len(records))
         if not size:records+=bytes(4);continue
         w,h=SIZES[size];layout=layouts[min(size,12)];records+=struct.pack('<4B',w,h,len(layout),0)
-        for x,y,tile,step in layout:records+=struct.pack('<BBH',x,y,tile|(0x8000 if step==32 else 0))
+        # bit9..11はOBJのpalette番号。CHR番号・大OBJフラグと同じwordへ置く。
+        for x,y,tile,step in layout:records+=struct.pack('<BBH',x,y,tile|(palette_number(size)<<9)|(0x8000 if step==32 else 0))
     (assets/'obj_tiles.bin').write_bytes(struct.pack('<264H',*player_tiles))
     (assets/'obj_bullets.bin').write_bytes(struct.pack('<17H',*pointers)+records)
-    palettes=palette+shot_palette
+    palettes=palette+[color for phase in shot_palettes for color in phase]
     assert all(len(p)==3 and all(0<=c<32 for c in p) for p in palettes)
-    (assets/'obj_palette.bin').write_bytes(struct.pack('<32H',*[r|(g<<5)|(b<<10) for r,g,b in palettes]))
+    (assets/'obj_palette.bin').write_bytes(struct.pack('<'+str(len(palettes))+'H',*[r|(g<<5)|(b<<10) for r,g,b in palettes]))
     (assets/'ppu.bin').write_bytes(vram)
     (assets/'recorded_effects/bullet_layout.json').write_text(json.dumps({'sizes':SIZES,'occupied16pxSlots':len(occupied),
         'vramBytes':len(occupied)*128,'maxBulletObjects':max(map(len,layouts.values()))},indent=2)+'\n')

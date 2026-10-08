@@ -45,7 +45,7 @@ if scenario=='display' or scenario=='scenery' then
     local far=emu.read(0x7e1d0a,emu.memType.snesMemory)+256*emu.read(0x7e1d0b,emu.memType.snesMemory)
     if far>=32768 then far=far-65536 end
     -- 表示中の画像にラッチ済みの座標を読む。次画像のgame状態とは時点が異なる。
-    meta.farY=far;meta.offset=23-far
+    meta.farY=far;meta.offset=21-far
     meta.nearX=emu.read(0x7e1d14,emu.memType.snesMemory)+256*emu.read(0x7e1d15,emu.memType.snesMemory)
     local fp=emu.read(0x7e1d0c,emu.memType.snesMemory)+256*emu.read(0x7e1d0d,emu.memType.snesMemory)
     meta.farX=emu.read(0x7e0001+fp,emu.memType.snesMemory)+256*emu.read(0x7e0002+fp,emu.memType.snesMemory)

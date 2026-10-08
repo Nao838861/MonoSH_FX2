@@ -8,6 +8,9 @@ from build_ground import GAME
 
 def build():
     assets=GAME/'assets';source=assets/'recorded_effects'
+    metadata=json.loads((source/'source.json').read_text(encoding='utf-8'))
+    trim=metadata.get('sceneryDisplay',{}).get('topTrimRows',0)
+    shift=metadata.get('sceneryDisplay',{}).get('downPixels',0)
     vram=bytearray((assets/'ppu.bin').read_bytes());vram[0x6000:0x8000]=bytes(8192)
     tiles={bytes(16):0};palette_words=[]
     for name,mapbase in [('near',0x9000),('far',0xb000)]:
@@ -22,6 +25,11 @@ def build():
         colors=rgb5*8+(rgb5>>2)
         distances=((a[:,:,:3,None].astype(np.int32)-colors.T[None,None,:,:])**2).sum(axis=2)
         nearest=distances.argmin(axis=2)
+        # 元画像と色見本は保存し、各層の上端2行だけ表示から除く。
+        # 下へ動かした森林が地面へ重ならないよう、下端は地平線で切る。
+        top=int(np.flatnonzero(mask.any(axis=1))[0])
+        mask[:top+trim]=False
+        mask[metadata['mountains']['mapHorizon']-shift:]=False
         counts=[]
         for ty in range(32):
             for tx in range(64):
@@ -59,9 +67,8 @@ def build():
         tile=struct.unpack_from('<H',vram,address)[0];struct.pack_into('<H',vram,address,tile|0x2000)
     for raw,ix in tiles.items():vram[0x6000+ix*16:0x6010+ix*16]=raw
     (assets/'scenery_palette.bin').write_bytes(struct.pack('<64H',*palette_words))
-    metadata=json.loads((source/'source.json').read_text(encoding='utf-8'))
     sky=metadata['skyRgb5'];mountains=metadata['mountains']
-    far_y=mountains['mapHorizon']-mountains['screenHorizon']
+    far_y=mountains['mapHorizon']-mountains['screenHorizon']-shift
     sky_start=metadata['skyNativeStart']-mountains['nativeHorizon']+mountains['screenHorizon']-1
     assert 0<len(sky)<128 and 0<sky_start<127
     (assets/'scenery.inc').write_text(f'FX_SCENERY_V = {far_y}\nFX_SKY_START = {sky_start}\nFX_SKY_COLORS = {len(sky)}\n')
@@ -71,7 +78,8 @@ def build():
     (assets/'sky_hdma.bin').write_bytes(data);(assets/'ppu.bin').write_bytes(vram)
     (source/'scenery_layout.json').write_text(json.dumps({'bg1':'near: map9000, low priority','bg4':'far: mapB000',
         'width':512,'chrBase':24576,'tiles':len(tiles),'skyColors':len(sky),'skyTableBytes':10,
-        'farY':far_y,'skyStart':sky_start+1,'groundStart':mountains['screenHorizon']},indent=2)+'\n')
+        'farY':far_y,'skyStart':sky_start+1,'groundStart':mountains['screenHorizon'],
+        'topTrimRows':trim,'downPixels':shift},indent=2)+'\n')
     print(f'Scenery: {len(tiles)}/512 shared 2bpp tiles, two 512px BGs, {len(sky)} shared sky HDMA colors')
 
 if __name__=='__main__':build()

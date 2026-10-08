@@ -75,12 +75,20 @@ def verify(directory):
         assert meta['nearX']==meta['farX']*2 and all(struct.unpack('<H',row)[0]==meta['farX'] for row in far),'two BG scroll rates'
         # 実装をなぞるRGB参照だけでなく、ユーザー指摘の三条件を独立に要求する。
         horizon=104+meta['offset']
-        assert meta['farY']==23-meta['offset'],'forest/ground horizon alignment'
+        assert meta['farY']==21-meta['offset'],'scenery must move down by two pixels'
         for x in range(512):
             for y in range(horizon,horizon+8):
                 assert pixel(vram,3,x,y+meta['farY']) is None,'forest occludes ground'
-            for y in range(horizon-7,horizon):
+            for y in range(horizon-5,horizon):
                 assert pixel(vram,2,x,y+meta['farY']) is not None,'hole in purple mountain base'
+        # 各層の元画像上端2行を削る。移動後の下端は地面の開始位置で切る。
+        for name,layer in [('near',3),('far',2)]:
+            original=Image.open(GAME/'assets/recorded_effects'/f'{name}_source.png').convert('RGBA')
+            top=original.getbbox()[1]
+            for y in range(108,130):
+                for x in range(512):
+                    opaque=bool(original.getpixel((x,y))[3]) and y>=top+2 and y<125
+                    assert (pixel(vram,layer,x,y) is not None)==opaque,('scenery trim/ground clip',name,x,y)
         # 山に遮られない空色列は原作の130..150行と同じ長さ・RGB5を持つ。
         reference=json.loads((GAME/'assets/recorded_effects/source.json').read_text(encoding='utf-8'))['skyRgb5']
         start=horizon-29

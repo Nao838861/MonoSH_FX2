@@ -1,5 +1,9 @@
 # 録画由来の自弾と二層遠景
 
+2026年10月9日、自弾を全サイズ水色固定から、同じ弾を追った録画の水色・薄緑・黄緑・黄色へ変更した。色の実画素は `shot_color_reference/`、生成する四組のRGB5は `bullet_color_phases.json`。元の `bullet_palette.json` は画像のindexを解釈する抽出時のパレットとして残すが、実表示には四組を使う。論理サイズ9〜16／6〜8／3〜5／1〜2に対応し、palette 1〜4を選ぶ。毎弾の距離で独立に変わり、共通の時刻で全弾を点滅させない。OBJ用160bytesを起動時に転送する。CHR・OAM量は同じ。[結果](../../RESULTS_20261009_SHOT_HORIZON.md)。
+
+山と森林は、それぞれ元画像の最上端2行を描画から除き、BGの縦座標を2ドット下へ動かす。森林の下端を地面へ重ねないよう、地面104行の位置で切る。元のRGBA画像は保ち、`source.json` の `sceneryDisplay` を `build_scenery.py` が反映する。現在の共用CHRは177タイル。
+
 原本は `D:\HomeBrew\MonoSH\tmp\スペースハリアー録画１.mp4`。動画は同梱しない。切り出し位置・フレーム・原本SHA256は `source.json` に保存した。
 
 `bullet_capture.png` は78.100秒の実画素。`bullet_source.png` は自機に隠れた輪を対称補完した画像。中央は露出した発光芯の実色で補った。完全に遮蔽された画素を無損失で取り出したとは扱わない。`bullet.png` は56×32、透明0＋最大15不透明色のindexed PNG。パレットはSNES RGB5。旧 `obj_color/10.png` は以前の黄色い弾の記録として残るが、現在のカラーOBJには使わない。

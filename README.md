@@ -1,5 +1,7 @@
 # MonoSH Super FX2 開発プロジェクト
 
+最新は [自弾の原作配色と遠景上端の修正](game/v001/RESULTS_20261009_SHOT_HORIZON.md)。自弾が距離に応じて水色→薄緑→黄緑→黄色へ変化。山と森林の上端2行を削り、2ドット下げた。[地平線の比較](game/v001/results/shot_horizon_20261009/horizon_closeup.png)、[静止連射](game/v001/results/shot_horizon_20261009/stationary_fire.gif)。
+
 最新は [白黒の二値化と自機の透明穴修正](game/v001/RESULTS_20261009_BINARY_PLAYER.md)。SELECT／Spaceで敵・障害物を純黒と純白へ切替。ズボン・背中の誤った透明176画素を修復し、描画最適化とBGM第2版を引き継ぐ。[修正前後](game/v001/results/binary_player_20261009/player_comparison.png)。
 
 最新ROMは [BGM第2版](game/v001/RESULTS_20261009_NATIVE_AUDIO_V2.md)：原作サントラで音色を測って作り直したメインテーマを、下の配色整理版に載せた。SEは前版のまま。通常・継続ボス各18,000fieldで全表示間隔1field（60.0988fps）。

@@ -24,7 +24,8 @@
       56,
       32
     ],
-    "repair": "自機に隠れた画素を、同一フレームの水色が残る対称象限から補完"
+    "repair": "自機に隠れた画素を、同一フレームの水色が残る対称象限から補完",
+    "colorPhases": "shot_color_reference/source.json"
   },
   "mountains": {
     "frame": 1741,
@@ -151,5 +152,10 @@
       28,
       20
     ]
-  ]
+  ],
+  "sceneryDisplay": {
+    "topTrimRows": 2,
+    "downPixels": 2,
+    "clipAtGround": true
+  }
 }

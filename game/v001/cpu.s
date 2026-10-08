@@ -161,7 +161,7 @@ obj_palette:
   lda f:obj_palette_data,x
   sta $2122
   inx
-  cpx #64
+  cpx #obj_palette_data_end-obj_palette_data
   bne obj_palette
   stz $2121
   ldx #0
@@ -245,6 +245,7 @@ clear_high_oam:
   jml $7f0000 + game_started
 
 obj_palette_data: .incbin "assets/obj_palette.bin"
+obj_palette_data_end:
 scenery_palette_data: .incbin "assets/scenery_palette.bin"
 
 .segment "CODE"

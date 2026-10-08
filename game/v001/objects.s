@@ -405,16 +405,9 @@ emit:
   asl
   ora #$30                  ; priority 3、palette 0。
   sta attribute
-  lda kind
-  cmp #2
-  bne :+
-  lda attribute
-  ora #2                    ; 自弾は独立した水色palette 1。
-  sta attribute
-:
   lda tile
   xba
-  and #1
+  and #$0f                  ; CHRの第9bitと、距離別の自弾palette番号を保存。
   ora attribute
   xba
   sta work
@@ -483,8 +476,8 @@ bullet_fast_part:
   ldy #2
   lda (obj_tp),y
   pha
-  and #$01ff
-  ora #$3200                ; priority3、palette1、反転なし。CHRの第9bitを保存。
+  and #$0fff
+  ora #$3000                ; priority3。CHRと距離別paletteをまとめて保存。
   sta fx_obj_next+2,x
   pla
   bpl bullet_fast_small

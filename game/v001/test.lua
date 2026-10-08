@@ -21,6 +21,7 @@ local dma_start = 0
 local profile={}
 local native_profile={}
 local failed=false
+local finished=false
 local previous_field,previous_boss,previous_player=0,0,0
 local last_logic,last_logic_field=-1,0
 local stats={fields=0,rendered=0,checked=0,deaths=0,respawns=0,bossSeen=false,dyingSeen=false,doneSeen=false,loopSeen=false,
@@ -64,7 +65,7 @@ local function write(name,v)
 end
 local function guard(fn)
   return function(...)
-    if failed then return end
+    if failed or finished then return end
     local ok,err=pcall(fn,...)
     if not ok then
       failed=true
@@ -111,8 +112,8 @@ end),emu.callbackType.exec,0x7F0000+labels.fx_obj_upload_done,0x7F0000+labels.fx
 if scenario=='objects' then
   emu.addEventCallback(guard(function()
     -- StartFrameでは直前の完成RGB、OAMは次に走査するfieldのもの。
-    if field>=41 and field<=301 and (field-1)%4==0 then screenshot(string.format('objview%05d',field-1)) end
-    if field>=40 and field<=300 and field%4==0 then
+    if field>=41 and field<=341 and (field-1)%4==0 then screenshot(string.format('objview%05d',field-1)) end
+    if field>=40 and field<=340 and field%4==0 then
       dump(string.format('objview%05d_oam.bin',field),emu.memType.snesSpriteRam,0,544)
       dump(string.format('objview%05d_cgram.bin',field),emu.memType.snesCgRam,0,512)
     end
@@ -135,6 +136,12 @@ if scenario=='objects' then
         r[i]={128,110,size,size,10,i>4 and 64 or 0,0,2}
       end
       r[8][1]=128;r[8][2]=125
+    end
+    if field>=304 and field<=343 then
+      -- 四つの色を同時に出す。重なりで小さい黄色の明暗が隠れない場面。
+      r={{32,80,12,12,10,0,0,2},{96,80,7,7,10,0,0,2},
+         {160,80,3,3,10,0,0,2},{224,80,1,1,10,0,0,2},
+         {128,190,32,48,9,0,0,2}}
     end
     for i,v in ipairs(r) do
       local b={v[1]&255,(v[1]>>8)&255,v[2]&255,(v[2]>>8)&255,v[3],v[4],v[5],v[6],v[7],v[8]}
@@ -521,6 +528,7 @@ emu.addEventCallback(guard(function()
     if scenario=='long' then assert(stats.bossSeen and stats.loopSeen and stats.deaths>0 and stats.respawns>0,'natural stage progression incomplete') end
     if scenario=='controls' then assert(stats.singleShotMax==1,'single shot was not exactly one slot') end
     if scenario=='stumble' then assert(stats.stumbles==39 and stats.stumbleMax==39 and read('_monosh_player_stumble')==0,'40-update bush stumble/recovery failed') end
+    finished=true
     report:close();emu.stop(0);return
   end
   if scenario=='play' then

@@ -215,58 +215,58 @@
       ],
       [
         18,
-        24,
-        27
+        26,
+        25
       ],
       [
         18,
-        24,
-        28
+        28,
+        26
+      ],
+      [
+        17,
+        23,
+        25
       ],
       [
         19,
-        22,
-        28
-      ],
-      [
-        19,
-        24,
-        28
+        28,
+        26
       ],
       [
         20,
-        25,
-        30
+        27,
+        27
       ],
       [
-        21,
-        28,
+        20,
+        30,
         28
       ],
       [
         21,
-        28,
-        29
+        30,
+        28
       ],
       [
-        22,
+        27,
         30,
         30
       ],
       [
-        25,
-        28,
+        23,
+        30,
         29
       ],
       [
-        25,
+        24,
         30,
-        31
+        30
       ],
       [
         27,
-        29,
-        31
+        30,
+        30
       ],
       [
         0,
@@ -290,16 +290,365 @@
       ]
     ],
     "source": "game/v001/assets/player_recording/source.json",
-    "bulletSource": "game/v001/assets/recorded_effects/source.json",
+    "bulletSource": "game/v001/assets/recorded_effects/shot_color_reference/source.json",
     "objAtlasBytes": 16128,
     "objBytesPerImageMin": 12,
     "objBytesPerImageMax": 80,
-    "objPaletteBytesAtBoot": 64,
-    "syntheticBoundaryObjBytesMax": 136
+    "objPaletteBytesAtBoot": 160,
+    "syntheticBoundaryObjBytesMax": 136,
+    "bulletPhaseRgb5": [
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          18,
+          26,
+          25
+        ],
+        [
+          18,
+          28,
+          26
+        ],
+        [
+          17,
+          23,
+          25
+        ],
+        [
+          19,
+          28,
+          26
+        ],
+        [
+          20,
+          27,
+          27
+        ],
+        [
+          20,
+          30,
+          28
+        ],
+        [
+          21,
+          30,
+          28
+        ],
+        [
+          27,
+          30,
+          30
+        ],
+        [
+          23,
+          30,
+          29
+        ],
+        [
+          24,
+          30,
+          30
+        ],
+        [
+          27,
+          30,
+          30
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          19,
+          25,
+          20
+        ],
+        [
+          18,
+          26,
+          19
+        ],
+        [
+          16,
+          22,
+          16
+        ],
+        [
+          20,
+          28,
+          21
+        ],
+        [
+          21,
+          28,
+          23
+        ],
+        [
+          21,
+          29,
+          22
+        ],
+        [
+          20,
+          31,
+          22
+        ],
+        [
+          27,
+          30,
+          29
+        ],
+        [
+          22,
+          31,
+          24
+        ],
+        [
+          26,
+          30,
+          28
+        ],
+        [
+          27,
+          30,
+          28
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          22,
+          24,
+          23
+        ],
+        [
+          22,
+          25,
+          20
+        ],
+        [
+          17,
+          22,
+          16
+        ],
+        [
+          22,
+          26,
+          21
+        ],
+        [
+          25,
+          27,
+          24
+        ],
+        [
+          24,
+          28,
+          24
+        ],
+        [
+          24,
+          30,
+          20
+        ],
+        [
+          30,
+          29,
+          27
+        ],
+        [
+          25,
+          31,
+          22
+        ],
+        [
+          28,
+          30,
+          26
+        ],
+        [
+          30,
+          29,
+          29
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          26,
+          23,
+          25
+        ],
+        [
+          26,
+          24,
+          23
+        ],
+        [
+          24,
+          22,
+          21
+        ],
+        [
+          26,
+          25,
+          19
+        ],
+        [
+          28,
+          26,
+          22
+        ],
+        [
+          29,
+          26,
+          25
+        ],
+        [
+          29,
+          29,
+          22
+        ],
+        [
+          30,
+          30,
+          24
+        ],
+        [
+          30,
+          30,
+          22
+        ],
+        [
+          30,
+          30,
+          23
+        ],
+        [
+          30,
+          30,
+          24
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    ],
+    "bulletSizePalette": [
+      0,
+      4,
+      4,
+      3,
+      3,
+      3,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "8c25249fc07cb935184ed47beac3cf1dd64f23ba5b691f30ec3aced01f5e82ae",
+  "romSha256": "93c8317ba02835810a62c44591d63e267f5b9697323583e5abe1e4626b253fbd",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -328,8 +677,8 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "BGM第2版（原作サントラで音色を測った8声編曲）を配色整理版へ搭載。SEは前版のまま。曲一周・ポーズ・SE命令、カラー・表示・ポーズと60場面の画素・OBJ回帰、通常と継続ボス各18,000fieldの60Hzを検証。実機は未検証。",
-  "verificationResults": "game/v001/results/binary_player_20261009",
+  "verificationKind": "原作の自弾四色・遠景上端2行削除と2ドット下移動。全17姿勢・弾16サイズ・実PPU三カメラ・静止連射・白黒切替を検証。",
+  "verificationResults": "game/v001/results/shot_horizon_20261009",
   "scenarioFrames": {
     "color": 360,
     "display": 720,
@@ -550,21 +899,24 @@
     "longProfileRequiredForThisRelease": false,
     "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261009_BINARY_PLAYER.md",
+  "verificationReport": "game/v001/RESULTS_20261009_SHOT_HORIZON.md",
   "validation": {
-    "baseCommit": "4a0fa27",
-    "changedRomBytes": 452,
-    "cpuGsuAudioUnchanged": true,
-    "colorToggleSamples": 200,
+    "baseCommit": "41f84bf",
+    "finalPpuScreens": 76,
+    "finalPpuObjectPixels": 88749,
     "playerPoses": 17,
     "playerFlips": 4,
     "bulletSizes": 16,
-    "finalPpuScreens": 66,
-    "finalPpuObjectPixels": 72664,
-    "heldInputFields": 900,
-    "restoredPlayerPixels": 176,
+    "bulletPaletteGroups": 4,
+    "cameraOffsets": [
+      0,
+      32,
+      64
+    ],
+    "stationaryFireFields": 900,
+    "colorToggleSamples": 200,
     "hardwareTested": false,
-    "historicalResults": "game/v001/results/binary_player_20261009/previous_release.json"
+    "historicalResults": "game/v001/results/shot_horizon_20261009/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -612,5 +964,10 @@
     "transparentControlPixels": 4,
     "unchangedPoseBounds": 8,
     "errors": 0
+  },
+  "sceneryDisplay": {
+    "topTrimRows": 2,
+    "downPixels": 2,
+    "clipAtGround": true
   }
 }
