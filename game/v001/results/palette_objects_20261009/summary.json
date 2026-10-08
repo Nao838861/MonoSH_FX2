@@ -1,0 +1,303 @@
+{
+  "videoSha256": "ad7892c75c4433e6563e83251c12529a56ef1305308ddeed342cdca8bdd234a4",
+  "baseSeconds": 86.5,
+  "nativeCrop": [
+    480,
+    204,
+    960,
+    672
+  ],
+  "size": [
+    320,
+    224
+  ],
+  "layers": [
+    {
+      "name": "enemy",
+      "seconds": 38,
+      "crop": [
+        135,
+        78,
+        219,
+        115
+      ],
+      "position": [
+        8,
+        31,
+        92,
+        68
+      ],
+      "mask": "sky"
+    },
+    {
+      "name": "purple_bullet",
+      "seconds": 32.133333,
+      "crop": [
+        180,
+        100,
+        215,
+        145
+      ],
+      "position": [
+        109,
+        28,
+        144,
+        73
+      ],
+      "mask": "purple"
+    },
+    {
+      "name": "red_blue_bullets",
+      "seconds": 32.133333,
+      "crop": [
+        230,
+        54,
+        309,
+        102
+      ],
+      "position": [
+        202,
+        28,
+        281,
+        76
+      ],
+      "mask": "sky"
+    },
+    {
+      "name": "tree",
+      "seconds": 50,
+      "crop": [
+        54,
+        96,
+        110,
+        184
+      ],
+      "position": [
+        258,
+        130,
+        314,
+        218
+      ],
+      "mask": "tree"
+    },
+    {
+      "name": "explosion",
+      "seconds": 77,
+      "crop": [
+        148,
+        101,
+        198,
+        144
+      ],
+      "position": [
+        194,
+        160,
+        244,
+        203
+      ],
+      "mask": "fire"
+    }
+  ],
+  "baseMask": "boss/flames only; row sky removed; mountain pixels removed at flame edge",
+  "excluded": [
+    "sky",
+    "mountains",
+    "ground",
+    "HUD",
+    "player (dedicated OBJ palette)",
+    "occluded ring under player"
+  ],
+  "foregroundPixels": 17180,
+  "totalColors": 16,
+  "foregroundColors": 15,
+  "backgroundRgb": [
+    0,
+    0,
+    0
+  ],
+  "backgroundIndex": 0,
+  "opaqueIndices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "paletteRgb8": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      239,
+      214,
+      231
+    ],
+    [
+      247,
+      222,
+      156
+    ],
+    [
+      214,
+      181,
+      181
+    ],
+    [
+      231,
+      132,
+      107
+    ],
+    [
+      132,
+      189,
+      41
+    ],
+    [
+      181,
+      206,
+      99
+    ],
+    [
+      41,
+      247,
+      24
+    ],
+    [
+      16,
+      181,
+      8
+    ],
+    [
+      173,
+      140,
+      181
+    ],
+    [
+      222,
+      156,
+      41
+    ],
+    [
+      107,
+      74,
+      156
+    ],
+    [
+      66,
+      140,
+      16
+    ],
+    [
+      165,
+      107,
+      107
+    ],
+    [
+      148,
+      8,
+      8
+    ],
+    [
+      8,
+      8,
+      8
+    ]
+  ],
+  "paletteRgb5": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      29,
+      26,
+      28
+    ],
+    [
+      30,
+      27,
+      19
+    ],
+    [
+      26,
+      22,
+      22
+    ],
+    [
+      28,
+      16,
+      13
+    ],
+    [
+      16,
+      23,
+      5
+    ],
+    [
+      22,
+      25,
+      12
+    ],
+    [
+      5,
+      30,
+      3
+    ],
+    [
+      2,
+      22,
+      1
+    ],
+    [
+      21,
+      17,
+      22
+    ],
+    [
+      27,
+      19,
+      5
+    ],
+    [
+      13,
+      9,
+      19
+    ],
+    [
+      8,
+      17,
+      2
+    ],
+    [
+      20,
+      13,
+      13
+    ],
+    [
+      18,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "trainingBackgroundExcluded": true,
+  "dither": false,
+  "runtimeChanged": false
+}
