@@ -9,6 +9,8 @@
 .import _monosh_runtime_frame_counter
 .import fx_reset_next_bounds, fx_add_next_bounds
 .import fx_is_obj, fx_build_obj
+.import fx_build_color
+.export order, packet_work
 .segment "ZEROPAGE"
 dp: .res 2
 pp: .res 2
@@ -20,7 +22,7 @@ keys: .res 128
 .ifdef FX_BUCKET_SORT
 bucket_heads: .res 512
 bucket_links: .res 128
-.export bucket_heads, bucket_links, order, keys
+.export bucket_heads, bucket_links, keys
 .endif
 .segment "CODE"
 .a8
@@ -129,6 +131,7 @@ next:
   cmp packet_work+8
   bcc fast_compile
 packet_done:
+  jsr fx_build_color
   plp
   rts
 ; 四辺が画面内の通常スプライト。divider待ちはpacketの書込と重ねる。

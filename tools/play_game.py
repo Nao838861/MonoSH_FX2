@@ -17,12 +17,12 @@ def main():
     config['Snes']['Region']='Ntsc'
     # Mesen共通KeyDefinitions: 矢印、X=A、Z=Y、Enter=Start。
     config['Snes']['Port1']={'Type':'SnesController','Mapping1':
-        {'Up':24,'Down':26,'Left':23,'Right':25,'A':67,'Y':69,'Start':6}}
+        {'Up':24,'Down':26,'Left':23,'Right':25,'A':67,'Y':69,'Start':6,'Select':18}}
     settings.write_text(json.dumps(config))
     if args.prepare_only:
         print(f'専用設定を準備しました: {settings}')
         return
     subprocess.Popen([str(mesen),'--doNotSaveSettings',str(rom)],cwd=mesen.parent)
-    print('MonoSH FX2: Arrow keys / X=auto fire / Z=single fire / Enter=pause')
+    print('MonoSH FX2: Arrow keys / X=auto fire / Z=single fire / Enter=pause / Space=color')
 
 if __name__=='__main__': main()

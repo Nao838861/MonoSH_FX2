@@ -19,6 +19,7 @@
 .import _monosh_boss_should_restart, _monosh_stage_init, _monosh_enemy_init, _monosh_boss_init
 .import _fx_build_packet, _fx_build_ground, fx_emit_native
 .importzp c_sp
+.import _fx_toggle_color
 .macro CALL_C name
   sep #$30
   jsr name
@@ -31,6 +32,14 @@ _fx_frame:
   php
   rep #$30
   CALL_C _fx_read_input
+  lda _fx_buttons
+  bit #$2000
+  beq :+
+  lda _old_buttons
+  bit #$2000
+  bne :+
+  jsr _fx_toggle_color
+:
   stz $02a8                 ; stage_ready
   lda _fx_buttons
   bit #$1000

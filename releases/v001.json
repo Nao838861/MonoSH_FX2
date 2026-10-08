@@ -1,31 +1,4 @@
 {
-  "romSha256": "0b5e3c57072898c91feeb31721d8a211d4bb59a68c44a78920e907b77db99bfe",
-  "romBytes": 2097152,
-  "buildMode": {
-    "fullFramebufferTransfer": false,
-    "gsuUv": true,
-    "gsuClip": true,
-    "cpuClipCommands": true,
-    "stableGsuCache": true,
-    "scaledRows": true,
-    "scaledAssetWidths": {
-      "13": 96,
-      "14": 96,
-      "31": 96
-    },
-    "scaledClip": true,
-    "fastUv": true,
-    "genericPipeline": true,
-    "rowMargins": true,
-    "dynamicDmaDeadline": true,
-    "fineDmaDeadline": true,
-    "dmaDeadlineProbe": false,
-    "fastObj": true,
-    "descriptorDma": true,
-    "dmaAdmissionBytes": 9984,
-    "bucketSort": false,
-    "smoothDepthSizes": true
-  },
   "display": [
     256,
     180
@@ -73,21 +46,6 @@
   },
   "hardwareObjects": "自機17pose・自弾16段階（最大56×32、1〜3 OBJ）・反射弾。32枠確保、検査最大18 OBJ、OAMは可変長。",
   "testedEmulator": "Mesen 2.1.1, GsuClockSpeed=100, NTSC, extra scanlines=0",
-  "scenarioFrames": {
-    "objects": 360,
-    "packed": 360,
-    "controls": 720,
-    "pause": 360,
-    "display": 720,
-    "held": 1800,
-    "boss": 2600,
-    "stumble": 800,
-    "stress": 360,
-    "naturalProfile": 18000,
-    "bossLongNoFire": 9000
-  },
-  "verificationKind": "滑らかな奥行き寸法と遠景修正の統合。CPU差分は背景即値2箇所とデータのみ。統合版で表示・操作・通常プレイ・長期ボスを再検証。",
-  "comprehensiveVerificationReferenceRomSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
   "groundPalette": {
     "requestedRgb": [
       [
@@ -166,8 +124,6 @@
       ]
     ]
   },
-  "verificationResults": "game/v001/results/smooth_depth_20261008/integrated/profiles.json",
-  "paletteCorrectionReferenceRomSha256": "1dfedc985036b201e5f32cef9a771389027c94fc21e550f56d5b0d9fc7c37bdc",
   "objColor": {
     "rgb5": [
       [
@@ -340,36 +296,76 @@
     "objBytesPerImageMax": 80,
     "objPaletteBytesAtBoot": 64
   },
-  "inputReadFix": {
-    "priorRomSha256": "1134f7fbcc033c178ab8877ad74fbe5a538b478cdac9067612b9aa42cc04c886",
-    "registers": [
-      "HVBJOY $4212 bit0",
-      "JOY1 $4218/$4219"
-    ],
-    "busyCheckedBeforeAndAfter": true,
-    "firstFalsePauseFieldBefore": 226,
-    "beforeExpectedJoy1": 18944,
-    "beforeCachedJoy1": 4736,
-    "holdTurboUsed": false,
-    "afterLongFields": 18000,
-    "afterLongLogicUpdates": 14430
-  },
-  "previousRomSha256": "12e300196644619e5b0710859c71fd70d8d3294d2cf9c7cc54c4245523798978",
-  "optimizationMeasurement": "game/v001/results/boss_scaling_20261008",
-  "replayScenes": 1221,
-  "replayImagesVerified": 7404,
-  "sampledScenePixelMatch": true,
-  "playerRecordingBaseRomSha256": "f051e4e435b875e6513f1e4f05d6e91f1e71e448d285c925cf536a690b65eff7",
   "playerImageSource": "game/v001/assets/player_recording/source.json",
-  "playerImageValidation": "game/v001/results/smooth_depth_20261008/integrated/tests/objects/objects_ppu.json",
-  "fullTransferValidation": "game/v001/results/boss_scaling_20261008/integrated/full_transfer_objects/summary.json",
-  "dmaDeadlineValidation": "game/v001/results/boss_scaling_20261008/integrated/dma_deadlines/summary.json",
-  "rendererBaselineRomSha256": "9a66b840a57758921c78635f46f8c2019ac305dd773d123288e6eda9956e7bab",
-  "integratedMeasurement": "game/v001/results/boss_scaling_20261008/integrated",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "smoothDepthMeasurement": "game/v001/results/smooth_depth_20261008",
-  "geometryPolicy": "単調Hermite曲線をビルド時に整数寸法へ変換。近遠端・接地・移動速度を保持。開EM1の描画と当たり判定は同じ111項目。",
-  "unchangedRendererValidationRomSha256": "571c1d9fc0d0389aff5f58326388e43297bc3674934b7564bae00f6dd20356c2",
-  "rendererReplayReferenceRomSha256": "887ac0a0401f7523b0e2f506380f19139615e0fa557b8ea2045038d3f2e37c27",
-  "smoothDepthIntegration": "game/v001/results/smooth_depth_20261008/integrated/integration.json"
+  "romSha256": "4ef5a95fec70a4ee3dfcf3b9f39ea38180aa138fd44b7709fed8b21704197025",
+  "romBytes": 2097152,
+  "buildMode": {
+    "fullFramebufferTransfer": false,
+    "gsuUv": true,
+    "gsuClip": true,
+    "cpuClipCommands": true,
+    "stableGsuCache": true,
+    "scaledRows": true,
+    "scaledAssetWidths": {
+      "13": 96,
+      "14": 96,
+      "31": 96
+    },
+    "scaledClip": true,
+    "fastUv": true,
+    "genericPipeline": true,
+    "rowMargins": true,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true
+  },
+  "verificationKind": "2bpp敵・障害物のカラー化とSELECT切替。色属性・VRAM/CGRAM・最終PPU合成・操作・ボス進行を検証。60fps未達。",
+  "verificationResults": "game/v001/results/bg_color_20261008",
+  "scenarioFrames": {
+    "color": 360,
+    "display": 720,
+    "objects": 720,
+    "play": 3000,
+    "boss": 3000,
+    "controls": 720,
+    "pause": 360,
+    "packed": 360,
+    "stress": 360
+  },
+  "previousRomSha256": "0b5e3c57072898c91feeb31721d8a211d4bb59a68c44a78920e907b77db99bfe",
+  "bgColor": {
+    "source": "game/v001/assets/bg_color/source.json",
+    "paletteGroups": 8,
+    "visibleColorsPerGroup": 3,
+    "attributeTilePixels": [
+      8,
+      8
+    ],
+    "default": "color",
+    "toggle": "SELECT",
+    "toggleScope": "2bpp enemies and obstacles only",
+    "physicalHardwareTested": false
+  },
+  "performance": {
+    "play": {
+      "presentationFps": 31.61605220316179,
+      "cpuMeanMs": 21.294204335887613,
+      "cpuMaxMs": 33.633508017219,
+      "gsuMeanMs": 4.0801669093231165,
+      "gsuMaxMs": 10.084427854711
+    },
+    "boss": {
+      "presentationFps": 33.96097679112008,
+      "cpuMeanMs": 19.607142179334918,
+      "cpuMaxMs": 39.566291286901,
+      "gsuMeanMs": 3.9826817695961996,
+      "gsuMaxMs": 12.86485546209
+    }
+  }
 }

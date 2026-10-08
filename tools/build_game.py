@@ -216,7 +216,16 @@ def pack_assets():
         path=GAME/'assets'/f'bank{0x44+bank:02x}.bin'
         raw=bytearray(path.read_bytes())
         for half in range(2):
-            image=Image.open(GAME/'assets'/f'{bank*2+half:02d}.png')
+            image=asset_image(bank*2+half)
+            color=GAME/'assets/bg_color'/f'{bank*2+half:02d}.png'
+            if color.exists():
+                pixels=image.tobytes()
+                assert image.mode=='P' and max(pixels)<=3
+                original=Image.open(GAME/'assets'/f'{bank*2+half:02d}.png')
+                assert image.size==original.size
+                for y in range(image.height):
+                    base=half*32768+y*256
+                    raw[base:base+image.width]=pixels[y*image.width:(y+1)*image.width]
             for y in range(image.height):
                 base=half*32768+y*256
                 for x in range(0,image.width,4):
@@ -224,9 +233,13 @@ def pack_assets():
                     raw[base+160+x//4]=sum(raw[base+x+i]<<((3-i)*2) for i in range(min(4,image.width-x)))
         if raw!=path.read_bytes():path.write_bytes(raw)
 
+def asset_image(asset):
+    color=GAME/'assets/bg_color'/f'{asset:02d}.png'
+    return Image.open(color if color.exists() else GAME/'assets'/f'{asset:02d}.png')
+
 def build_scaled(enabled, limits, row_margins=False):
     # 原画行の後のpaddingだけを利用。既存raw/packed/flip領域へは書かない。
-    images=[Image.open(GAME/'assets'/f'{i:02d}.png').convert('RGBA') for i in range(44)]
+    images=[asset_image(i).convert('RGBA') for i in range(44)]
     banks={b:bytearray((GAME/'assets'/f'bank{b:02x}.bin').read_bytes()) for b in range(0x44,0x5a)}
     holes=[]
     for asset,image in enumerate(images):
@@ -423,7 +436,7 @@ def main():
              *(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              '-I',GAME/'platform','-I',UP,'-I',GAME,'-o',out,source])
         run([CC65/'ca65.exe','-o',obj,out]); objects.append(obj)
-    for name in ['cpu','gsu','ground','packet','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
+    for name in ['cpu','gsu','ground','packet','color','objects','projection','stage','stage_update','enemy_render','enemy_collision','enemy_geometry','enemy_bullet','enemy_update','player','frame','boss_render','boss_collision','combat','dma','submit','smooth_depth']:
         obj=BUILD/(name+'_asm.o')
         run([CC65/'ca65.exe',*(['-D','FX_REFERENCE=1'] if '--reference-logic' in sys.argv else []),
              *(['-D','FX_FULL_TRANSFER=1'] if full_transfer else []),

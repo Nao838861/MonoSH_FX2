@@ -1,0 +1,450 @@
+{
+  "video": "D:\\HomeBrew\\MonoSH\\tmp\\スペースハリアー録画１.mp4",
+  "video_sha256": "ad7892c75c4433e6563e83251c12529a56ef1305308ddeed342cdca8bdd234a4",
+  "native_crop": [
+    480,
+    204,
+    960,
+    672
+  ],
+  "native_size": [
+    320,
+    224
+  ],
+  "rgb5": [
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        3
+      ],
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        31,
+        31,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        7,
+        2
+      ],
+      [
+        3,
+        21,
+        4
+      ],
+      [
+        16,
+        31,
+        12
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        9,
+        5,
+        3
+      ],
+      [
+        22,
+        14,
+        10
+      ],
+      [
+        31,
+        25,
+        19
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        3,
+        5
+      ],
+      [
+        15,
+        16,
+        18
+      ],
+      [
+        29,
+        29,
+        30
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        15,
+        1,
+        0
+      ],
+      [
+        31,
+        8,
+        0
+      ],
+      [
+        31,
+        28,
+        5
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        8,
+        18
+      ],
+      [
+        13,
+        18,
+        30
+      ],
+      [
+        27,
+        30,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        12,
+        3,
+        13
+      ],
+      [
+        24,
+        9,
+        24
+      ],
+      [
+        31,
+        24,
+        31
+      ]
+    ],
+    [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        7,
+        1
+      ],
+      [
+        7,
+        23,
+        6
+      ],
+      [
+        29,
+        24,
+        17
+      ]
+    ]
+  ],
+  "assets": {
+    "0": {
+      "seconds": 11,
+      "crop": [
+        163,
+        148,
+        265,
+        196
+      ],
+      "mask": "green",
+      "size": [
+        56,
+        30
+      ],
+      "palettes": [
+        1
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "d8cbca5f81ac1b3391bdb4f689e926235ff1605d9556551566255d2f26194edd"
+    },
+    "1": {
+      "seconds": 41,
+      "crop": [
+        136,
+        154,
+        238,
+        194
+      ],
+      "mask": "bush",
+      "size": [
+        67,
+        31
+      ],
+      "palettes": [
+        1,
+        2
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "df414aafa129842d06ddf4dcb10b88d5ce7c5bc09cb91016dae3a074ca1114c9"
+    },
+    "2": {
+      "seconds": 10,
+      "crop": [
+        100,
+        108,
+        143,
+        136
+      ],
+      "mask": "sky",
+      "size": [
+        35,
+        26
+      ],
+      "palettes": [
+        3,
+        4
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "9f37871dcb392659eb78130869ad7a78cda5ba2a6b4fe8ea2720d19802c2ee8d"
+    },
+    "3": {
+      "seconds": 38,
+      "crop": [
+        139,
+        80,
+        214,
+        114
+      ],
+      "mask": "sky",
+      "size": [
+        55,
+        30
+      ],
+      "palettes": [
+        3,
+        4
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "bc1b9d8b8eed25fd2f5449b66be5daae26e53a80e41a9a0e04f137e7f28ddaca"
+    },
+    "4": {
+      "seconds": 50,
+      "crop": [
+        59,
+        94,
+        100,
+        184
+      ],
+      "mask": "tree",
+      "size": [
+        34,
+        79
+      ],
+      "palettes": [
+        1,
+        2
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "169f0d989fdc06423b3a90f85d4f4e8bb4f3b0d19011a977d2490bae0d0e85c6"
+    },
+    "6": {
+      "seconds": 32.25,
+      "crop": [
+        193,
+        105,
+        237,
+        154
+      ],
+      "mask": "purple",
+      "size": [
+        82,
+        128
+      ],
+      "palettes": [
+        6
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "9c9cabb7e142c2cfb35641a9495f261613725c9b32b88e44345e74cd80623ee1"
+    },
+    "7": {
+      "seconds": 31.75,
+      "crop": [
+        239,
+        87,
+        276,
+        116
+      ],
+      "mask": "blue",
+      "size": [
+        100,
+        128
+      ],
+      "palettes": [
+        5
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "1373f35747ab8f605a89e02e4467d078c815f945a9c8b195c63feb740626d62e"
+    },
+    "8": {
+      "seconds": 34,
+      "crop": [
+        88,
+        105,
+        137,
+        142
+      ],
+      "mask": "red",
+      "size": [
+        128,
+        120
+      ],
+      "palettes": [
+        4
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "714e8506f7ed63c65cfa74b2a2a0b7ab6c205f7ad6fd4a8d6e29d926ace620df"
+    },
+    "11": {
+      "seconds": 32.25,
+      "crop": [
+        152,
+        54,
+        181,
+        83
+      ],
+      "mask": "metal",
+      "size": [
+        14,
+        15
+      ],
+      "palettes": [
+        3
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "7c8377784f4e9372596ecae07fb8a1c6c562e6f919aac002a48452e36e0de7ee"
+    },
+    "12": {
+      "seconds": 31.5,
+      "crop": [
+        146,
+        45,
+        187,
+        82
+      ],
+      "mask": "metal",
+      "size": [
+        16,
+        16
+      ],
+      "palettes": [
+        3
+      ],
+      "original_outline_matte": false,
+      "source_sha256": "4a2370b6ce1678037c1aebb612b2de3997f081c83d6d26282d3ac932b13ebaba"
+    },
+    "13": {
+      "seconds": 63,
+      "crop": [
+        144,
+        35,
+        193,
+        75
+      ],
+      "mask": "dragon",
+      "size": [
+        128,
+        86
+      ],
+      "palettes": [
+        1,
+        2,
+        7
+      ],
+      "original_outline_matte": true,
+      "source_sha256": "33eb05637be6b3da4041037fce2f7143a39d73f24bf88e0e4c668ad3907c1416"
+    },
+    "14": {
+      "seconds": 62,
+      "crop": [
+        79,
+        101,
+        114,
+        159
+      ],
+      "mask": "dragon",
+      "size": [
+        84,
+        128
+      ],
+      "palettes": [
+        1,
+        2,
+        7
+      ],
+      "original_outline_matte": true,
+      "source_sha256": "fad4d43e12e05e52a461aa5952b5be405dba59f283695342a3744270b4d0983a"
+    },
+    "31": {
+      "seconds": 63,
+      "crop": [
+        142,
+        165,
+        191,
+        220
+      ],
+      "mask": "fire",
+      "size": [
+        128,
+        125
+      ],
+      "palettes": [
+        4
+      ],
+      "original_outline_matte": true,
+      "source_sha256": "7dc5817f2030a4daaabdc62cf831609a82ccee99ec9397428e2d68f23c1fb004"
+    }
+  },
+  "fallback": "爆発・砲台開閉は既存alphaを保持して録画に近い色組を割当。"
+}

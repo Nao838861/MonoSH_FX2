@@ -50,6 +50,7 @@ if scenario=='display' or scenario=='scenery' then
     local fp=emu.read(0x7e1d0c,emu.memType.snesMemory)+256*emu.read(0x7e1d0d,emu.memType.snesMemory)
     meta.farX=emu.read(0x7e0001+fp,emu.memType.snesMemory)+256*emu.read(0x7e0002+fp,emu.memType.snesMemory)
     meta.skyBase=labels.fx_sky_colors
+    meta.fxMapBase=labels.fx_color_vram_base and read('fx_color_vram_base',2)*2 or 0x8000
     local sf=assert(io.open(output..'/'..prefix..'_state.txt','w'))
     for k,v in pairs(emu.getState()) do if k:find('ppu') and (k:lower():find('scroll') or k:lower():find('bg')) then sf:write(k..'='..tostring(v)..'\n') end end
     sf:close()
