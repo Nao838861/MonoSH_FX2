@@ -1,10 +1,12 @@
 {
   "rom": "releases/MonoSHFX2_4bpp30_color.sfc",
-  "sha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
+  "sha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
   "buildMode": {
     "fullFramebufferTransfer": true,
     "gsuUv": true,
     "gsuClip": true,
+    "gsuColor": false,
+    "groundHorizontalCache": false,
     "cpuClipCommands": false,
     "stableGsuCache": false,
     "scaledRows": false,
@@ -27,9 +29,9 @@
     "transferMode": "column-spans-two-pages"
   },
   "packing": {
-    "rawSpriteBytes": 251074,
-    "prescaledBytes": 699132,
-    "freeAssetBankBytes": 154221,
+    "rawSpriteBytes": 89354,
+    "prescaledBytes": 427610,
+    "freeAssetBankBytes": 518313,
     "prescaledAssets": [
       13,
       14,
@@ -42,296 +44,299 @@
     "unpackedPrescaledAssets": [
       13,
       14
-    ]
+    ],
+    "bulletVariantBytes": 31230,
+    "audioReservedBytes": 60672
   },
-  "upstream": "4c5ec389e67737837a09980069374267d24e7c20",
+  "upstream": "41f84bfa8355c65f6dbe30a2a498acdd75398217",
   "scenarios": {
     "controls": {
       "fields": 2400,
-      "renders": 1188,
-      "starts": 1189,
-      "halves": 2377,
-      "logicCalls": 2379,
-      "logic": 2379,
-      "gsuMaxMs": 12.85843,
+      "renders": 1157,
+      "starts": 1158,
+      "halves": 2314,
+      "logicCalls": 2316,
+      "logic": 2316,
+      "gsuMaxMs": 10.471349,
       "intervals": {
-        "25": 1,
-        "2": 1187
+        "88": 1,
+        "2": 1156
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 12.855543,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 10.678358,
       "controlsFireVerified": true,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
         "min": 3456,
-        "max": 15488,
-        "mean": 6888.727272727273
+        "max": 11936,
+        "mean": 6708.024200518583
       },
       "mathChecks": 0,
       "pixelSamples": 19
     },
     "boss": {
       "fields": 2600,
-      "renders": 1288,
-      "starts": 1289,
-      "halves": 2577,
-      "logicCalls": 2579,
-      "logic": 2579,
-      "gsuMaxMs": 13.458413,
+      "renders": 1256,
+      "starts": 1257,
+      "halves": 2513,
+      "logicCalls": 2515,
+      "logic": 2515,
+      "gsuMaxMs": 14.224991,
       "intervals": {
-        "25": 1,
-        "2": 1287
+        "3": 1,
+        "88": 1,
+        "2": 1254
       },
       "bossSeen": true,
       "dyingSeen": true,
       "doneSeen": true,
       "restartSeen": true,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 15.008796,
-      "renderFPS": 30.0494,
-      "delayedPresents": 0,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 15.930515,
+      "renderFPS": 30.03743289526085,
+      "delayedPresents": 1,
       "dmaBytes": {
         "min": 3072,
-        "max": 15168,
-        "mean": 6410.285714285715
+        "max": 16032,
+        "mean": 6587.821656050955
       },
       "mathChecks": 583,
-      "pixelSamples": 21
+      "pixelSamples": 20
     },
     "boss_hold": {
       "fields": 3600,
-      "renders": 1788,
-      "starts": 1789,
-      "halves": 3577,
-      "logicCalls": 3579,
-      "logic": 3579,
-      "gsuMaxMs": 13.458413,
+      "renders": 1757,
+      "starts": 1758,
+      "halves": 3514,
+      "logicCalls": 3516,
+      "logic": 3516,
+      "gsuMaxMs": 13.898134,
       "intervals": {
-        "25": 1,
-        "2": 1787
+        "88": 1,
+        "2": 1756
       },
       "bossSeen": true,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 13.454595,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 14.308521,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
         "min": 3104,
-        "max": 11648,
-        "mean": 6096.697986577181
+        "max": 11744,
+        "mean": 6218.344906089926
       },
       "mathChecks": 0,
       "pixelSamples": 29
     },
     "death": {
       "fields": 720,
-      "renders": 348,
-      "starts": 349,
-      "halves": 697,
-      "logicCalls": 699,
-      "logic": 699,
-      "gsuMaxMs": 10.858642,
+      "renders": 317,
+      "starts": 317,
+      "halves": 634,
+      "logicCalls": 635,
+      "logic": 635,
+      "gsuMaxMs": 10.245901,
       "intervals": {
-        "25": 1,
-        "2": 347
+        "88": 1,
+        "2": 316
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 10.98566,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 10.242735,
       "deathRespawnVerified": true,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
-        "min": 3552,
-        "max": 14048,
-        "mean": 7738.390804597701
+        "min": 3520,
+        "max": 14240,
+        "mean": 6546.372239747634
       },
       "mathChecks": 0,
       "pixelSamples": 5
     },
     "pause": {
       "fields": 720,
-      "renders": 348,
-      "starts": 349,
-      "halves": 697,
-      "logicCalls": 699,
-      "logic": 639,
-      "gsuMaxMs": 10.858642,
+      "renders": 317,
+      "starts": 318,
+      "halves": 634,
+      "logicCalls": 636,
+      "logic": 576,
+      "gsuMaxMs": 10.921871,
       "intervals": {
-        "25": 1,
-        "2": 347
+        "88": 1,
+        "2": 316
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 11.676343,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 11.959247,
       "pauseResumeVerified": true,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
         "min": 3584,
         "max": 14880,
-        "mean": 8067.6781609195405
+        "mean": 8141.022082018927
       },
       "mathChecks": 0,
       "pixelSamples": 5
     },
     "assets": {
-      "fields": 1784,
-      "renders": 881,
-      "starts": 882,
-      "halves": 1762,
-      "logicCalls": 1764,
-      "logic": 1764,
-      "gsuMaxMs": 8.328805,
+      "fields": 2000,
+      "renders": 957,
+      "starts": 958,
+      "halves": 1915,
+      "logicCalls": 1917,
+      "logic": 1917,
+      "gsuMaxMs": 6.996978,
       "intervals": {
-        "24": 1,
-        "2": 880
+        "87": 1,
+        "2": 956
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 11.903374,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 7.536898,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
         "min": 256,
         "max": 12160,
-        "mean": 3030.7377979568673
+        "mean": 2925.9435736677115
       },
       "mathChecks": 0,
-      "pixelSamples": 881
+      "pixelSamples": 957
     },
     "full": {
-      "fields": 120,
-      "renders": 24,
-      "starts": 25,
-      "halves": 49,
-      "logicCalls": 51,
-      "logic": 51,
-      "gsuMaxMs": 16.710316,
+      "fields": 240,
+      "renders": 38,
+      "starts": 39,
+      "halves": 78,
+      "logicCalls": 79,
+      "logic": 79,
+      "gsuMaxMs": 16.699234,
       "intervals": {
-        "3": 11,
+        "3": 18,
         "4": 1,
-        "26": 1,
-        "5": 11
+        "89": 1,
+        "5": 18
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 16.705939,
-      "renderFPS": 15.024699999999998,
-      "delayedPresents": 23,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 16.69551,
+      "renderFPS": 15.024700000000001,
+      "delayedPresents": 37,
       "dmaBytes": {
         "min": 24576,
         "max": 24576,
         "mean": 24576.0
       },
       "mathChecks": 0,
-      "pixelSamples": 24
+      "pixelSamples": 38
     },
     "play": {
       "fields": 18000,
-      "renders": 8926,
-      "starts": 8927,
-      "halves": 17853,
-      "logicCalls": 17855,
-      "logic": 17855,
-      "gsuMaxMs": 15.496661,
+      "renders": 8957,
+      "starts": 8958,
+      "halves": 17914,
+      "logicCalls": 17916,
+      "logic": 17916,
+      "gsuMaxMs": 14.576898,
       "intervals": {
-        "3": 124,
-        "25": 1,
-        "2": 8801
+        "88": 1,
+        "2": 8956
       },
       "bossSeen": true,
       "dyingSeen": true,
       "doneSeen": true,
       "restartSeen": true,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 15.492657,
-      "renderFPS": 29.842093579614996,
-      "delayedPresents": 124,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 15.373833,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
       "dmaBytes": {
         "min": 3456,
         "max": 15520,
-        "mean": 6453.334528344163
+        "mean": 6405.862677235682
       },
-      "mathChecks": 579,
-      "pixelSamples": 148
+      "mathChecks": 743,
+      "pixelSamples": 149
     },
     "players": {
       "fields": 920,
-      "renders": 449,
-      "starts": 450,
-      "halves": 898,
-      "logicCalls": 900,
-      "logic": 900,
-      "gsuMaxMs": 7.409228,
+      "renders": 417,
+      "starts": 418,
+      "halves": 835,
+      "logicCalls": 837,
+      "logic": 837,
+      "gsuMaxMs": 7.408948,
       "intervals": {
-        "24": 1,
-        "2": 448
+        "87": 1,
+        "2": 416
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
       "actualGsuMaxMs": 7.405596,
       "renderFPS": 30.0494,
       "delayedPresents": 0,
       "dmaBytes": {
         "min": 2048,
-        "max": 4096,
-        "mean": 2207.643652561247
+        "max": 3072,
+        "mean": 2197.7937649880096
       },
       "mathChecks": 0,
-      "pixelSamples": 449
+      "pixelSamples": 417
     },
     "bullets": {
-      "fields": 240,
-      "renders": 107,
-      "starts": 108,
-      "halves": 215,
-      "logicCalls": 217,
-      "logic": 217,
-      "gsuMaxMs": 14.82069,
+      "fields": 480,
+      "renders": 193,
+      "starts": 194,
+      "halves": 386,
+      "logicCalls": 388,
+      "logic": 388,
+      "gsuMaxMs": 14.980487,
       "intervals": {
-        "3": 2,
-        "25": 1,
-        "2": 104
+        "3": 6,
+        "88": 1,
+        "2": 185,
+        "4": 1
       },
       "bossSeen": false,
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-      "actualGsuMaxMs": 14.817804,
-      "renderFPS": 29.768564485981305,
-      "delayedPresents": 2,
+      "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+      "actualGsuMaxMs": 14.978625,
+      "renderFPS": 29.43614693877551,
+      "delayedPresents": 7,
       "dmaBytes": {
         "min": 9216,
-        "max": 11872,
-        "mean": 10478.953271028038
+        "max": 16064,
+        "mean": 11042.487046632124
       },
       "mathChecks": 0,
-      "pixelSamples": 107
+      "pixelSamples": 193
     }
   }
 }

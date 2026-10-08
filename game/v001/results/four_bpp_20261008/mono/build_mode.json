@@ -2,6 +2,8 @@
   "fullFramebufferTransfer": true,
   "gsuUv": true,
   "gsuClip": true,
+  "gsuColor": false,
+  "groundHorizontalCache": false,
   "cpuClipCommands": false,
   "stableGsuCache": false,
   "scaledRows": false,

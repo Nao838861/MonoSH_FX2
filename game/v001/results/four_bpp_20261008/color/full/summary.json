@@ -1,30 +1,30 @@
 {
-  "fields": 120,
-  "renders": 24,
-  "starts": 25,
-  "halves": 49,
-  "logicCalls": 51,
-  "logic": 51,
-  "gsuMaxMs": 16.710316,
+  "fields": 240,
+  "renders": 38,
+  "starts": 39,
+  "halves": 78,
+  "logicCalls": 79,
+  "logic": 79,
+  "gsuMaxMs": 16.699234,
   "intervals": {
-    "3": 11,
+    "3": 18,
     "4": 1,
-    "26": 1,
-    "5": 11
+    "89": 1,
+    "5": 18
   },
   "bossSeen": false,
   "dyingSeen": false,
   "doneSeen": false,
   "restartSeen": false,
-  "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-  "actualGsuMaxMs": 16.705939,
-  "renderFPS": 15.024699999999998,
-  "delayedPresents": 23,
+  "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+  "actualGsuMaxMs": 16.69551,
+  "renderFPS": 15.024700000000001,
+  "delayedPresents": 37,
   "dmaBytes": {
     "min": 24576,
     "max": 24576,
     "mean": 24576.0
   },
   "mathChecks": 0,
-  "pixelSamples": 24
+  "pixelSamples": 38
 }

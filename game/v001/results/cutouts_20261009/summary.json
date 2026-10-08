@@ -1,0 +1,496 @@
+{
+  "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+  "assetsVerified": 44,
+  "captureAssetsVerified": 22,
+  "sourceOpaquePixelsVerified": 27666,
+  "opaquePixelsVerified": 44388,
+  "sourceAlphaChanges": 0,
+  "packedAlphaChanges": 0,
+  "nearestPaletteChanges": 0,
+  "dither": false,
+  "totalPaletteColors": 16,
+  "opaquePaletteColors": 15,
+  "trainingBackgroundExcluded": true,
+  "legacyShapePolicyReplacedBy": "recording cutouts and uniform nearest scaling; normal bullet rotation masks retained at half size",
+  "paddingAsset": 43,
+  "paletteRgb5": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      25,
+      26,
+      28
+    ],
+    [
+      30,
+      26,
+      21
+    ],
+    [
+      27,
+      19,
+      5
+    ],
+    [
+      5,
+      27,
+      3
+    ],
+    [
+      16,
+      28,
+      11
+    ],
+    [
+      27,
+      18,
+      13
+    ],
+    [
+      20,
+      18,
+      22
+    ],
+    [
+      11,
+      16,
+      8
+    ],
+    [
+      1,
+      16,
+      1
+    ],
+    [
+      13,
+      13,
+      15
+    ],
+    [
+      18,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      23,
+      9,
+      25
+    ],
+    [
+      13,
+      11,
+      24
+    ],
+    [
+      24,
+      11,
+      11
+    ]
+  ],
+  "assets": [
+    {
+      "asset": 0,
+      "size": [
+        98,
+        53
+      ],
+      "opaquePixels": 2374,
+      "colors": 7
+    },
+    {
+      "asset": 1,
+      "size": [
+        102,
+        48
+      ],
+      "opaquePixels": 1164,
+      "colors": 8
+    },
+    {
+      "asset": 2,
+      "size": [
+        36,
+        27
+      ],
+      "opaquePixels": 647,
+      "colors": 4
+    },
+    {
+      "asset": 3,
+      "size": [
+        77,
+        42
+      ],
+      "opaquePixels": 1422,
+      "colors": 9
+    },
+    {
+      "asset": 4,
+      "size": [
+        39,
+        91
+      ],
+      "opaquePixels": 2239,
+      "colors": 10
+    },
+    {
+      "asset": 5,
+      "size": [
+        45,
+        33
+      ],
+      "opaquePixels": 1054,
+      "colors": 10
+    },
+    {
+      "asset": 6,
+      "size": [
+        41,
+        64
+      ],
+      "opaquePixels": 2073,
+      "colors": 5
+    },
+    {
+      "asset": 7,
+      "size": [
+        50,
+        64
+      ],
+      "opaquePixels": 2249,
+      "colors": 5
+    },
+    {
+      "asset": 8,
+      "size": [
+        64,
+        60
+      ],
+      "opaquePixels": 2521,
+      "colors": 5
+    },
+    {
+      "asset": 9,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 582,
+      "colors": 7
+    },
+    {
+      "asset": 10,
+      "size": [
+        56,
+        32
+      ],
+      "opaquePixels": 976,
+      "colors": 3
+    },
+    {
+      "asset": 11,
+      "size": [
+        26,
+        28
+      ],
+      "opaquePixels": 478,
+      "colors": 5
+    },
+    {
+      "asset": 12,
+      "size": [
+        58,
+        58
+      ],
+      "opaquePixels": 1781,
+      "colors": 5
+    },
+    {
+      "asset": 13,
+      "size": [
+        50,
+        33
+      ],
+      "opaquePixels": 1031,
+      "colors": 11
+    },
+    {
+      "asset": 14,
+      "size": [
+        32,
+        49
+      ],
+      "opaquePixels": 915,
+      "colors": 12
+    },
+    {
+      "asset": 15,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 479,
+      "colors": 8
+    },
+    {
+      "asset": 16,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 515,
+      "colors": 8
+    },
+    {
+      "asset": 17,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 538,
+      "colors": 8
+    },
+    {
+      "asset": 18,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 521,
+      "colors": 7
+    },
+    {
+      "asset": 19,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 570,
+      "colors": 5
+    },
+    {
+      "asset": 20,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 497,
+      "colors": 5
+    },
+    {
+      "asset": 21,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 536,
+      "colors": 5
+    },
+    {
+      "asset": 22,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 642,
+      "colors": 3
+    },
+    {
+      "asset": 23,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 559,
+      "colors": 3
+    },
+    {
+      "asset": 24,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 432,
+      "colors": 3
+    },
+    {
+      "asset": 25,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 454,
+      "colors": 3
+    },
+    {
+      "asset": 26,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 425,
+      "colors": 3
+    },
+    {
+      "asset": 27,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 626,
+      "colors": 5
+    },
+    {
+      "asset": 28,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 546,
+      "colors": 8
+    },
+    {
+      "asset": 29,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 511,
+      "colors": 8
+    },
+    {
+      "asset": 30,
+      "size": [
+        32,
+        48
+      ],
+      "opaquePixels": 448,
+      "colors": 7
+    },
+    {
+      "asset": 31,
+      "size": [
+        57,
+        55
+      ],
+      "opaquePixels": 2386,
+      "colors": 10
+    },
+    {
+      "asset": 32,
+      "size": [
+        28,
+        30
+      ],
+      "opaquePixels": 392,
+      "colors": 5
+    },
+    {
+      "asset": 33,
+      "size": [
+        33,
+        33
+      ],
+      "opaquePixels": 555,
+      "colors": 5
+    },
+    {
+      "asset": 34,
+      "size": [
+        32,
+        32
+      ],
+      "opaquePixels": 637,
+      "colors": 4
+    },
+    {
+      "asset": 35,
+      "size": [
+        45,
+        43
+      ],
+      "opaquePixels": 1205,
+      "colors": 6
+    },
+    {
+      "asset": 36,
+      "size": [
+        58,
+        63
+      ],
+      "opaquePixels": 1781,
+      "colors": 5
+    },
+    {
+      "asset": 37,
+      "size": [
+        64,
+        44
+      ],
+      "opaquePixels": 2035,
+      "colors": 5
+    },
+    {
+      "asset": 38,
+      "size": [
+        32,
+        8
+      ],
+      "opaquePixels": 164,
+      "colors": 1
+    },
+    {
+      "asset": 39,
+      "size": [
+        45,
+        33
+      ],
+      "opaquePixels": 941,
+      "colors": 10
+    },
+    {
+      "asset": 40,
+      "size": [
+        75,
+        49
+      ],
+      "opaquePixels": 1895,
+      "colors": 10
+    },
+    {
+      "asset": 41,
+      "size": [
+        80,
+        55
+      ],
+      "opaquePixels": 2225,
+      "colors": 11
+    },
+    {
+      "asset": 42,
+      "size": [
+        44,
+        19
+      ],
+      "opaquePixels": 367,
+      "colors": 2
+    },
+    {
+      "asset": 43,
+      "size": [
+        1,
+        1
+      ],
+      "opaquePixels": 0,
+      "colors": 0
+    }
+  ]
+}

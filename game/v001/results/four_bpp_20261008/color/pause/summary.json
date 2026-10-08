@@ -1,28 +1,28 @@
 {
   "fields": 720,
-  "renders": 348,
-  "starts": 349,
-  "halves": 697,
-  "logicCalls": 699,
-  "logic": 639,
-  "gsuMaxMs": 10.858642,
+  "renders": 317,
+  "starts": 318,
+  "halves": 634,
+  "logicCalls": 636,
+  "logic": 576,
+  "gsuMaxMs": 10.921871,
   "intervals": {
-    "25": 1,
-    "2": 347
+    "88": 1,
+    "2": 316
   },
   "bossSeen": false,
   "dyingSeen": false,
   "doneSeen": false,
   "restartSeen": false,
-  "romSha256": "f403f87c92be39e52bddd51127f89fc2b46db9c005771ff47db0dc585766cf06",
-  "actualGsuMaxMs": 11.676343,
+  "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+  "actualGsuMaxMs": 11.959247,
   "pauseResumeVerified": true,
   "renderFPS": 30.0494,
   "delayedPresents": 0,
   "dmaBytes": {
     "min": 3584,
     "max": 14880,
-    "mean": 8067.6781609195405
+    "mean": 8141.022082018927
   },
   "mathChecks": 0,
   "pixelSamples": 5
