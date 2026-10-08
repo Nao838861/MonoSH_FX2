@@ -42,10 +42,13 @@ python -X utf8 tools/archive_4bpp.py mono controls boss
 Check-Command
 python -X utf8 tools/build_4bpp.py --color
 Check-Command
+python -X utf8 tools/verify_4bpp_shapes.py
+Check-Command
 python -X utf8 tools/report_4bpp.py
 Check-Command
 git add game/v001/config4.json
 git add game/v001/results/four_bpp_20261008
+git add game/v001/results/legacy_shapes_20261008
 git add game/v001/RESULTS_4BPP30_20261008.md
 git add releases/MonoSHFX2_4bpp30_color.sfc
 git add releases/MonoSHFX2_4bpp30_mono.sfc

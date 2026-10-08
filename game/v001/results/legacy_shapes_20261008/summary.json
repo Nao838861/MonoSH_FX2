@@ -1,0 +1,498 @@
+{
+  "romSha256": "9c4f4e5d842afc36456f51199a2d19bc685aea5be9fea0befff349aab2b75141",
+  "assetsVerified": 35,
+  "changedAlphaPixels": 0,
+  "changedTwoTonePixels": 0,
+  "assets": [
+    {
+      "asset": 0,
+      "size": [
+        56,
+        30
+      ],
+      "referenceSha256": "23be0685bb35de2e753acd3b3fffa879b9d0bba09e5ebcee9b4f3e0980dad1d2",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 1,
+      "size": [
+        67,
+        31
+      ],
+      "referenceSha256": "08087a209c78b1709394705c48b38f83e9f289186354b04c0a654a8c93854468",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 2,
+      "size": [
+        35,
+        26
+      ],
+      "referenceSha256": "25e3d964b94477857bb1357819ba99a2443775574e9bf292d7a27e8bb0a467d2",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 3,
+      "size": [
+        55,
+        30
+      ],
+      "referenceSha256": "88411d26b8717b6e25ccd4e9e5abfb3e70ac73b5ef3f4d86d232d15a6eb1314c",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 4,
+      "size": [
+        34,
+        79
+      ],
+      "referenceSha256": "875a46cf3a7b52302f31c3588aad89a6bf71a812088a53acc51c6fed470072b2",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 5,
+      "size": [
+        128,
+        95
+      ],
+      "referenceSha256": "92c7a0ac8bbe0c97636ac1b0f999d0da463a93688cba06fbf804d771741dae07",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 6,
+      "size": [
+        82,
+        128
+      ],
+      "referenceSha256": "462a71f30cf7cf5e82e7e86dde2acef1dcc2d488a7c9f07431097cb32fc67562",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 7,
+      "size": [
+        100,
+        128
+      ],
+      "referenceSha256": "5cbdf63d778ee26f72280e51f4dd3dedfd1459ead3e1e4619b44ffad86456bf4",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 8,
+      "size": [
+        128,
+        120
+      ],
+      "referenceSha256": "9e57a03dcd5542fc365e2c0054b0a3bf21ccd79a52198dcc03937821de435e4d",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 11,
+      "size": [
+        14,
+        15
+      ],
+      "referenceSha256": "e6f1bc1a49a7debda1c7f90540a976939d383ec6bc7a6b532a225036abc3e362",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 12,
+      "size": [
+        16,
+        16
+      ],
+      "referenceSha256": "ac920c87875ac427362a042ebfbfdc6e5c123992a9fa1223e9e7e3e8234b1b58",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 13,
+      "size": [
+        128,
+        86
+      ],
+      "referenceSha256": "0f2ffb88b88e93f72f2d03648f3a41b22519f272492f6e92afe581480672633c",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 14,
+      "size": [
+        84,
+        128
+      ],
+      "referenceSha256": "91c17ef637634cf996ef5120efde2364419fcc69ca07a3f5b26550fe4828587f",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 19,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "13d4108aa1bec14338fe6b68e12a1ed473137bb4b2001a66a27a576213a17cd7",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 20,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "180e7ff049f182fbfacf8a8dd50bc035d9eb7fea5692e08317cb89fcc9c3324a",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 21,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "91d91fe19d710be5cc3e4e5304c52de6657795514f48d169890d3dec86eb354e",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 22,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "f5254ef39c7c2a0c4d1f59a213c565532f568746c8f4a33d403e5067f6adf27c",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 23,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "3c3cb906cad87a485fd046a1859c0f4e12a2822b2d2ced8fc2bb7f192ea63577",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 24,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "6a61bef116655f71d9765bab68db12fa3c0f6c6b8b9fa31edfc70f9f9d8121fe",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 25,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "dc2f64ef05e8fea876e3a61c3444e9f9f2020987c2d9f2dd4425bf197c025cf1",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 26,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "719067eb44751ae615a5db711ea73ebc0657dd2ebc8b27db4ff52d961bfb5fc6",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 27,
+      "size": [
+        32,
+        48
+      ],
+      "referenceSha256": "5a86605fb4024122bf4445a408e6753e9f7d8c192069daa69e6663b1ec61292e",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 31,
+      "size": [
+        128,
+        125
+      ],
+      "referenceSha256": "8b3929442eb76b4d88083eda9ef8975959afeb2bf57682c1a09c38271156c87f",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 32,
+      "size": [
+        120,
+        128
+      ],
+      "referenceSha256": "69a96af8b764c6c4791ca27abec5a36f2d378ef85b97fa556356aa0636a70b98",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 33,
+      "size": [
+        128,
+        127
+      ],
+      "referenceSha256": "575305a2a4830854be0474b5ed156fb87f4de2c354de916f59fa2dac29b297e9",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 34,
+      "size": [
+        128,
+        127
+      ],
+      "referenceSha256": "2598e8de0f99848e691ec2788099ec1e4acf61c1beca9fb4745688d1737d115e",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 35,
+      "size": [
+        128,
+        122
+      ],
+      "referenceSha256": "691487c4476af5cdc63a75d390fdfb39b215c305f66da9937cba3b6ef253aea7",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 36,
+      "size": [
+        119,
+        128
+      ],
+      "referenceSha256": "1fc80adfe482420257f3e008a8818c7baeec3db37f182166e30d71d24cd2ef34",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 37,
+      "size": [
+        128,
+        88
+      ],
+      "referenceSha256": "de044a84b5332107c62c863e789354ffe30cf5754c09727092fe5ea6e49aca85",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 38,
+      "size": [
+        32,
+        8
+      ],
+      "referenceSha256": "df4c38a57e79c256c3545cb2302e840fc1360d443091e22aada6b0dc6afaf2ad",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 39,
+      "size": [
+        128,
+        94
+      ],
+      "referenceSha256": "2b61fe5be99ce16158a7b4091eb433d8e025a6e2cd4a3c3105a7e3e2e596879b",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 40,
+      "size": [
+        128,
+        84
+      ],
+      "referenceSha256": "19c575dc0a5d9b6e343660e4ded24c0a1b0edbe69acf9ffe91142f8bc61ea021",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 41,
+      "size": [
+        128,
+        88
+      ],
+      "referenceSha256": "297f41a20642cad678d0d5ec6ea6c0853a7772d187d0889f273471efb95eb751",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 42,
+      "size": [
+        44,
+        19
+      ],
+      "referenceSha256": "885f47f3531da41590295be91ecbead6a2a8ea05480ef35a6a55e3ee58de2b5b",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    },
+    {
+      "asset": 43,
+      "size": [
+        1,
+        1
+      ],
+      "referenceSha256": "c2153f77e11087fcb078ae38527fa83bef29791e3700e30cc87fec4405a66d0f",
+      "alpha": 0,
+      "twoTone": 0,
+      "packedAlpha": 0,
+      "packedTwoTone": 0,
+      "grayscaleTwoTone": 0,
+      "packedGrayscaleTwoTone": 0
+    }
+  ]
+}

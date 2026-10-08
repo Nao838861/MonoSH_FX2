@@ -7,6 +7,7 @@ import subprocess
 import numpy as np
 from PIL import Image, ImageDraw
 from build_game import GAME
+from color4_legacy_shape import PALETTE, LEGACY_ASSETS, preserve_shape
 
 VIDEO=Path('D:/HomeBrew/MonoSH/tmp/スペースハリアー録画１.mp4')
 ASSETS=GAME/'assets'
@@ -95,18 +96,15 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--video',type=Path,default=VIDEO);args=p.parse_args()
     VIDEO=args.video
     OUT.mkdir(exist_ok=True)
-    images={i:Image.open(ASSETS/f'{i:02d}.png').convert('RGBA') for i in range(44)}
+    legacy={i:Image.open(ASSETS/f'{i:02d}.png').convert('RGBA') for i in range(44)}
+    images={i:im.copy() for i,im in legacy.items()}
     samples=[];manifest={}
     for i,(seconds,box,kind) in CUTS.items():
         native=frame(seconds);raw=native.crop(box);im=cut(native,box,kind)
         raw.save(OUT/f'{i:02d}_capture.png');im.save(OUT/f'{i:02d}_source.png')
         im=im.resize(images[i].size,Image.Resampling.NEAREST)
-        if i in (13,5,39,40,41):
-            # 重なった隣の胴・炎を既存素材の輪郭で除く。RGBは録画由来のまま。
-            a=np.array(im);a[:,:,3]=np.minimum(a[:,:,3],np.array(images[i])[:,:,3]);im=Image.fromarray(a)
         images[i]=im
         manifest[str(i)]={'seconds':seconds,'crop':box,'mask':kind,'size':im.size}
-        if i in (13,5,39,40,41):manifest[str(i)]['alphaMatte']='recording mask intersected with legacy silhouette after resize'
         samples.append((i,raw,im))
     images[37]=images[6].resize(images[37].size,Image.Resampling.NEAREST)
     # 自機は現在の録画版を継承する。死亡など未採取姿勢は対応する輪郭に着色する。
@@ -120,17 +118,19 @@ def main():
         rgb[src[:,:,:3].sum(axis=2)<128]=(8,8,8)
         src[:,:,:3]=rgb;images[i]=Image.fromarray(src)
     images[10]=Image.open(ASSETS/'recorded_effects/bullet.png').convert('RGBA')
+    for i in LEGACY_ASSETS:images[i]=preserve_shape(legacy[i],images[i],i)
     for i,im in images.items():im.save(OUT/f'{i:02d}.png')
     # 空と地面は別のRGB5 HDMA。物体には輪郭、肌、植物、炎、弾を残す15色。
-    palette=[[0,0,0],[1,1,1],[31,31,31],[17,17,18],[7,7,8],
-             [2,10,0],[9,23,0],[21,31,12],[10,4,1],[26,17,12],
-             [28,3,1],[31,29,3],[3,10,27],[12,25,31],[21,8,26],[31,16,1]]
-    (OUT/'palette.json').write_text(json.dumps({'rgb5':palette},indent=2)+'\n')
+    (OUT/'palette.json').write_text(json.dumps({'rgb5':PALETTE},indent=2)+'\n')
     provenance={'capturedPlayer':pose_map,'derivedPlayerDeath':list(range(19,28)),
                 'existingMonochrome':[38,42,43],'recordedBullet':10,'derivedEnemyBullet':37}
-    (OUT/'source.json').write_text(json.dumps({'video':str(VIDEO),'sha256':hashlib.sha256(VIDEO.read_bytes()).hexdigest(),'nativeCrop':[480,204,960,672],'nativeSize':[320,224],'assets':manifest,'otherAssets':provenance},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    policy={'reference':'legacy alpha and two-tone pixels',
+            'assets':sorted(LEGACY_ASSETS),'recordingUsage':'color hints only; never replace geometry',
+            'monochromeThresholdRgbSum':384,'opaqueBlackRgb5':[1,1,1]}
+    (OUT/'source.json').write_text(json.dumps({'video':str(VIDEO),'sha256':hashlib.sha256(VIDEO.read_bytes()).hexdigest(),'nativeCrop':[480,204,960,672],'nativeSize':[320,224],'assets':manifest,'otherAssets':provenance,'shapePolicy':policy},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     preview=Image.new('RGB',(640,((len(samples)+3)//4)*160),(65,65,65));draw=ImageDraw.Draw(preview)
-    for n,(i,raw,im) in enumerate(samples):
+    for n,(i,raw,_) in enumerate(samples):
+        im=images[i].copy()
         x=n%4*160;y=n//4*160;draw.text((x+4,y+2),f'{i:02d}',fill='white');raw.thumbnail((150,65));preview.paste(raw,(x+4,y+20));im.thumbnail((150,65));preview.paste(im,(x+4,y+88),im)
     preview.save(OUT/'captures.png')
 

@@ -16,6 +16,9 @@ def shot(mode,scenario,name):
 
 def main():
     manifests={m:json.loads((ROOT/f'releases/4bpp30_{m}.json').read_text()) for m in ('color','mono')}
+    shapes=json.loads((DEST.parent/'legacy_shapes_20261008/summary.json').read_text())
+    assert shapes['romSha256']==manifests['color']['sha256'],'shape verification ROM differs from release'
+    assert shapes['changedAlphaPixels']==shapes['changedTwoTonePixels']==0
     for mode,m in manifests.items():
         assert hashlib.sha256((ROOT/m['rom']).read_bytes()).hexdigest()==m['sha256']
         m['buildMode']['transferMode']='column-spans-two-pages'
@@ -91,7 +94,9 @@ DMAを使うのは強制非表示の走査線203以降と、次フィールド�
 
 ## 素材と色の範囲
 
-自機を採取した同じ `スペースハリアー録画１.mp4` から、敵・岩・植物・弾・ボス・爆発・開閉5姿勢を採取した。二層遠景と既存の自機8姿勢も合成する。胴と爆発は重なる隣の絵を除くため、録画のRGBを維持し、拡縮後の透明マスクを元の輪郭と交差させた。四角い爆発を見つけて採取コマ・矩形も選び直し、修正後のROMで全試験を再実行した。[採取一覧](assets/color4/captures.png)、[時刻・矩形・マスク・動画SHA256](assets/color4/source.json)を保存した。
+自機を採取した同じ `スペースハリアー録画１.mp4` から色の手掛かりを採取する。敵・岩・植物・弾・ボス・爆発・開閉5姿勢は、元の白黒原画の透過と黒い模様を固定して着色する。録画の別姿勢を拡縮して形ごと置換した旧方式は廃止した。二層遠景と既存60fps版の自機8姿勢・自弾も合成する。[採取一覧](assets/color4/captures.png)、[時刻・矩形・動画SHA256と形の基準](assets/color4/source.json)を保存した。
+
+35素材はPNGとROM内画素の両方で、透過と白黒化した絵が元原画に完全一致する。通常のグレースケールを128で二値化しても一致する。[原画・カラー・白黒復元の比較](results/legacy_shapes_20261008/comparison.png)と [検証値](results/legacy_shapes_20261008/summary.json)を保存し、継続同期でも再検査する。以前の全画素照合は採取画像の描画だけを確認しており、元原画との一致を検査していなかった。修正後のROMで描画試験も測り直した。
 
 **4bppは16色インデックスであり、16bppの無損失カラーではない。** 合成画像は共通15色＋透明色へ減色し、空と地面は別のRGB5 HDMAを使う。原画RGBAは保持する。録画にない転倒9姿勢は元の輪郭・陰影を録画由来の服の色で着色した派生素材。影・STAGE文字は従来素材であり、すべての姿勢を動画から直接採取したわけではない。
 

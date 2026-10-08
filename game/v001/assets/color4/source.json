@@ -164,8 +164,7 @@
       "size": [
         128,
         86
-      ],
-      "alphaMatte": "recording mask intersected with legacy silhouette after resize"
+      ]
     },
     "14": {
       "seconds": 94,
@@ -207,8 +206,7 @@
       "size": [
         128,
         95
-      ],
-      "alphaMatte": "recording mask intersected with legacy silhouette after resize"
+      ]
     },
     "39": {
       "seconds": 93.3,
@@ -222,8 +220,7 @@
       "size": [
         128,
         94
-      ],
-      "alphaMatte": "recording mask intersected with legacy silhouette after resize"
+      ]
     },
     "40": {
       "seconds": 93.45,
@@ -237,8 +234,7 @@
       "size": [
         128,
         84
-      ],
-      "alphaMatte": "recording mask intersected with legacy silhouette after resize"
+      ]
     },
     "41": {
       "seconds": 93.5,
@@ -252,8 +248,7 @@
       "size": [
         128,
         88
-      ],
-      "alphaMatte": "recording mask intersected with legacy silhouette after resize"
+      ]
     },
     "32": {
       "seconds": 32.3,
@@ -355,5 +350,52 @@
     ],
     "recordedBullet": 10,
     "derivedEnemyBullet": 37
+  },
+  "shapePolicy": {
+    "reference": "legacy alpha and two-tone pixels",
+    "assets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+    ],
+    "recordingUsage": "color hints only; never replace geometry",
+    "monochromeThresholdRgbSum": 384,
+    "opaqueBlackRgb5": [
+      1,
+      1,
+      1
+    ]
   }
 }
