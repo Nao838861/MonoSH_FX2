@@ -49,6 +49,8 @@ local nextPlayerInput=nil
 local presentPlayerInput=nil
 local nextBulletAges=nil
 local presentBulletAges=nil
+local nextEffectPhase=nil
+local presentEffectPhase=nil
 local objectBuilds=0
 if labels.player4_present then
  cb('fx_build_obj',function()
@@ -75,7 +77,30 @@ if labels.player4_present then
    end
   end
  end)
- cb('fx_latch_obj',function()presentPlayerInput=nextPlayerInput;presentBulletAges=nextBulletAges end)
+ cb('fx_latch_obj',function()presentPlayerInput=nextPlayerInput;presentBulletAges=nextBulletAges;presentEffectPhase=nextEffectPhase end)
+end
+if scenario=='effects' then
+ local function seedExplosion()
+  put('_monosh_enemy_active_count_value',0,1)
+  put('_monosh_enemy_bullet_count',0,0)
+  local data={1,2,0,48,96,144,40,0,64,48}
+  for i,v in ipairs(data)do put('_monosh_enemies',i-1,v)end
+ end
+ cb('_monosh_enemy_fast_advance',seedExplosion)
+ cb('_monosh_enemy_render_only',seedExplosion)
+ cb('_fx_enemy_render',function()
+  nextEffectPhase=((logic-1)//8)%6
+  put('_monosh_enemy_active_count_value',0,1)
+  local data={1,2,0,48-nextEffectPhase*8,96,144,40,0,64,48}
+  for i,v in ipairs(data)do put('_monosh_enemies',i-1,v)end
+ end)
+ cb('_monosh_boss_render_only',function()
+  for i=0,8 do put('_boss_part_active',i,0)end
+  put('_boss_part_active',0,2);put('_boss_part_x',0,192)
+  put('_boss_part_bottom',0,144);put('_boss_part_z',0,40)
+  put('_boss_part_timer',0,112-(((logic-1)//8)%6)*8)
+  put('_boss_render_camera_delta',0,read('_monosh_ground_screen_delta',1))
+ end)
 end
 if scenario=='bullets' then
  cb('_fx_enemy_render_bullets',function()
@@ -102,6 +127,13 @@ cb('math4_lift_result',function()
 end)
 cb('_fx_frame',function()
   logic=logic+1
+  if scenario=='effects' then
+    put('_monosh_boss_state',0,1);put('_monosh_player_invuln',0,255)
+    -- 敵描画の呼び出し自体がactive_countで省略されないよう、更新前にも枠を置く。
+    put('_monosh_enemy_active_count_value',0,1)
+    put('_monosh_enemies',0,1);put('_monosh_enemies',1,2);put('_monosh_enemies',3,0)
+    put('_monosh_enemy_bullet_count',0,0)
+  end
   if scenario=='bullets' then
     put('_monosh_enemy_bullet_count',0,4)
     for i=0,2 do
@@ -163,7 +195,7 @@ cb('render_started',function()
     cartword(0x100a,192);cartword(0x100c,1)
   end
   trace:write(string.format('{"startLine":%d,"field":%d}\n',emu.getState()['ppu.scanline'],field))
-  if starts%60==0 or starts==1 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' then
+  if starts%60==0 or starts==1 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' then
     dump(string.format('frame%05d_packet.bin',starts),emu.memType.gsuWorkRam,0,1536)
     dump(string.format('frame%05d_background.bin',starts),emu.memType.gsuWorkRam,0x1000,16)
     dump(string.format('frame%05d_prepared.bin',starts),emu.memType.gsuWorkRam,0x0600,128)
@@ -226,7 +258,7 @@ cb('dma_finished',function()
   restartSeen=restartSeen or (doneSeen and boss==0)
   trace:write(string.format('{"present":%d,"field":%d,"interval":%d,"logic":%d,"page":%d,"boss":%d,"line":%d,"paused":%d,"player":%d,"x":%d,"bottom":%d,"shots":%d}\n',finishes,field,interval,read('_monosh_runtime_frame_counter',2),read('fx4_page',2),read('_monosh_boss_state',1),state['ppu.scanline'],paused,read('_monosh_player_state',1),read('_monosh_player_x',2),read('_monosh_player_bottom',2),read('_monosh_player_bullet_count',1)))
   trace:write(string.format('{"dmaBytes":%d,"field":%d}\n',read('fx4_dma_bytes',2),field))
-  if finishes%60==0 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' then
+  if finishes%60==0 or scenario=='assets' or scenario=='full' or scenario=='players' or scenario=='bullets' or scenario=='effects' then
     dump(string.format('frame%05d_fb.bin',finishes),emu.memType.gsuWorkRam,0x2000,24576)
     dump(string.format('frame%05d_vram.bin',finishes),emu.memType.snesVideoRam,0,65536)
     dump(string.format('frame%05d_bounds.bin',finishes),emu.memType.gsuWorkRam,0x580,64)
@@ -237,11 +269,11 @@ cb('dma_finished',function()
       dump(string.format('frame%05d_obj.bin',finishes),emu.memType.snesMemory,0x7e0000+labels.fx_obj_present,136)
     end
     local f=assert(io.open(output..string.format('/frame%05d_meta.json',finishes),'w'))
-    f:write(string.format('{"page":%d,"field":%d,"playerObjSource":%d,"playerInput":%s,"bulletAges":%s}',read('fx4_page',2),field,labels.player4_present and read('player4_present',2) or 0,presentPlayerInput or 'null',presentBulletAges or 'null'));f:close()
+    f:write(string.format('{"page":%d,"field":%d,"playerObjSource":%d,"playerInput":%s,"bulletAges":%s,"effectPhase":%s}',read('fx4_page',2),field,labels.player4_present and read('player4_present',2) or 0,presentPlayerInput or 'null',presentBulletAges or 'null',presentEffectPhase and tostring(presentEffectPhase) or 'null'));f:close()
   end
 end)
 emu.addEventCallback(function()
-  local input={a=scenario~='boss_hold' and scenario~='boss'}
+  local input={a=scenario~='boss_hold' and scenario~='boss' and scenario~='effects'}
   if scenario=='controls' then
     local phase=(field//240)%4
     input.up=phase==0;input.right=phase==1;input.down=phase==2;input.left=phase==3
@@ -258,7 +290,7 @@ emu.addEventCallback(function()
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
   field=field+1
-  if scenario=='bullets' and field%2==0 then screenshot(string.format('anim%05d',field)) end
+  if (scenario=='bullets' or scenario=='effects') and field%2==0 then screenshot(string.format('anim%05d',field)) end
   if field%240==0 then screenshot(string.format('screen%05d',field)) end
   if field>=maxframe then
     finished=true

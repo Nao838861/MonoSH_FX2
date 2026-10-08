@@ -13,12 +13,32 @@ from probe_16color_composite import fill_holes, rgb5
 OUT=rec.OUT
 PLAYERS={9,*range(15,31)}
 BULLETS={6,7,8,31,37}
+EXPLOSIONS=(5,39,40,41)
+# 各矩形の物体の外周。内部の明るい葉・暗部へ色キーを適用しない。
+BOUNDARIES={
+ 0:[(6,34),(7,28),(8,24),(8,18),(13,17),(17,13),(21,13),(22,9),(25,8),(25,6),
+    (29,6),(30,4),(33,5),(35,4),(38,5),(41,4),(44,5),(46,4),(49,5),(51,4),
+    (54,5),(58,5),(60,8),(63,9),(64,14),(68,16),(72,17),(74,19),(77,20),
+    (76,22),(77,24),(76,28),(74,30),(75,32),(70,33),(66,34),(62,35),(59,36),
+    (56,38),(54,39),(50,39),(48,41),(47,43),(44,43),(42,44),(39,44),(36,43),
+    (35,42),(31,41),(29,39),(30,36),(30,34),(24,34),(23,35),(20,36),(15,36),(10,36),(8,35)],
+ 1:[(6,34),(6,27),(8,23),(11,21),(14,20),(16,18),(18,17),(20,13),(23,11),
+    (27,12),(29,9),(32,8),(35,9),(36,7),(39,6),(42,6),(44,4),(48,6),(50,4),
+    (53,5),(54,3),(57,4),(59,6),(62,3),(65,4),(67,3),(71,4),(76,4),(78,5),
+    (81,4),(85,4),(87,6),(89,5),(92,6),(95,5),(99,5),(101,7),(104,7),
+    (105,10),(108,11),(109,17),(110,19),(108,20),(111,21),(111,24),
+    (106,25),(103,26),(99,26),(97,27),(94,27),(89,28),(89,32),(87,34),
+    (84,35),(80,36),(78,37),(72,37),(70,36),(65,36),(64,38),(61,37),
+    (58,39),(56,40),(52,39),(50,40),(46,39),(44,37),(42,38),(39,37),
+    (37,38),(35,36),(28,36),(25,35),(23,36),(20,36),(18,35),(9,35)],
+ 14:[(0,0),(34,0),(34,30),(30,31),(29,35),(29,39),(25,41),
+     (20,41),(16,38),(14,34),(14,31),(0,31)],
+}
 # 小型敵は同じ位置を追跡して各開閉姿勢を採る。自機と重ならない左側を使う。
 CUTS={
- 0:(11,(163,148,265,196),'grass'),1:(41,(136,154,238,194),'grass'),
+ 0:(9,(140,150,220,196),'grass'),1:(41,(128,151,245,197),'grass'),
  2:(10,(100,108,143,136),'sky'),3:(38,(135,78,219,115),'sky'),
  4:(50,(54,96,110,184),'tree'),
- 5:(77,(148,101,198,144),'fire'),
  6:(32.133333,(180,100,215,145),'purple'),
  7:(31.75,(239,87,276,116),'blue'),8:(34,(88,105,137,142),'red'),
  11:(32.25,(152,54,181,83),'metal'),12:(32.866667,(76,95,134,150),'metal'),
@@ -29,22 +49,21 @@ CUTS={
  34:(32.6,(76,95,134,150),'metal'),
  35:(32.733333,(76,95,134,150),'metal'),
  36:(32.866667,(76,95,134,150),'metal'),
- 39:(93.3,(109,98,145,131),'fire'),
- 40:(93.45,(74,78,125,128),'fire'),41:(93.5,(67,70,121,125),'fire'),
 }
 
-def extract(rgb,kind,background=None):
+def extract(rgb,kind,background=None,boundary=None):
  a=np.array(rgb).astype(int);r,g,b=a.transpose(2,0,1)
  foreground=np.max(np.abs(a-background[:,None,:]),axis=2)>18 if background is not None else np.array(cut_sky(rgb))[:,:,3]>0
  if kind=='tree':return cut_tree(rgb)
- if kind=='grass':
-  green=(b<g*.32)&(r<g*.88)&(g>40)
-  stems=(r>g*.95)&(g>b*1.15)&(r<190)
-  muted=(g<180)&(b<r*.92)&(r<195)
-  green|=stems|muted
-  # 地面の明るい黄緑を除き、草の暗部と枝だけを残す。穴は地面なので埋めない。
-  edge=np.array(Image.fromarray(green.astype('uint8')*255).filter(ImageFilter.MaxFilter(3)))>0
-  mask=green|(edge&(r+g+b<100))
+ if kind in ('grass','face'):
+  outline=Image.new('L',rgb.size);ImageDraw.Draw(outline).polygon(boundary,fill=255)
+  mask=np.array(outline)>0
+  if kind=='face':mask&=foreground
+  if kind=='grass':
+   # 外周のすぐ外にある山の青灰色だけを落とし、草の内部は色で抜かない。
+   y=np.indices(mask.shape)[0]
+   mountain=(y<12)&(b>g*.85)&(b>r*.95)
+   mask=fill_holes(mask&~mountain)
   return mask_image(rgb,mask)
  if kind in ('purple','blue','red'):
   hue={'purple':(r>g*1.15)&(b>g+20),
@@ -107,7 +126,7 @@ def main():
   frame_array=np.array(frames[t])
   # 岩のコマでは画面左端にも敵がいる。空は画面全体の走査線中央値で測る。
   background=np.median(frame_array if kind=='sky' else frame_array[:,:20],axis=1)[box[1]:box[3]]
-  im=extract(raw,kind,background)
+  im=extract(raw,kind,background,BOUNDARIES.get(i))
   if kind=='body':
    # 録画では隣の胴が右端に重なる。既存の同じ正面姿勢の外形を採取境界にする。
    template=np.array(legacy[i].resize(raw.size,Image.Resampling.NEAREST))[:,:,3]>0
@@ -116,6 +135,14 @@ def main():
   assert np.array_equal(np.array(im)[:,:,:3],np.array(raw))
   images[i]=native_canvas(im,legacy[i])
   manifest[str(i)]={'seconds':t,'crop':box,'mask':kind,'size':images[i].size,'resize':'nearest; uniform; transparent padding'}
+  if i in BOUNDARIES:manifest[str(i)]['boundary']=BOUNDARIES[i]
+ # 白黒版の四枚と同一輪郭・模様を持つ、火球置換前の素材へ戻す。
+ for i in EXPLOSIONS:
+  images[i]=Image.open(OUT/f'{i:02d}_legacy.png').convert('RGBA')
+  assert images[i].size==legacy[i].size
+  assert np.array_equal(np.array(images[i])[:,:,3],np.array(legacy[i])[:,:,3])
+  legacy[i].convert('RGB').save(OUT/f'{i:02d}_capture.png')
+  images[i].save(OUT/f'{i:02d}_source.png')
  # 第4回転姿勢は水平の原画。各姿勢の主軸を既存原画から保持する。
  references=[images[i] for i in (6,7,8)]
  variants={}
@@ -161,10 +188,15 @@ def main():
   'bulletShading':'legacy rotation axes; white center; continuous single-hue gradient without dither',
   'bulletCycleTicks':32,'bulletCycle':['purple']*16+['red']*8+['blue']*8,
   'playerRendering':'dedicated original OBJ palette including upstream alpha repairs',
+  'grassAlpha':'traced perimeter; bright leaves and dark interior retained; no internal color key',
+  'bossFace':'jaw outline only; adjacent body removed',
+  'explosions':'original four binary silhouettes and patterns restored; original animation sequence',
   'resize':'uniform nearest-neighbor; transparent padding to existing projected aspect'}
  (OUT/'source.json').write_text(json.dumps({'video':str(args.video),'sha256':hashlib.sha256(args.video.read_bytes()).hexdigest(),
   'nativeCrop':[480,204,960,672],'nativeSize':[320,224],'assets':manifest,'shapePolicy':policy,
-  'otherAssets':{'capturedPlayer':sorted(PLAYERS),'legacyRotationMasks':[6,7,8,37],'recordedBullet':10,'existingMonochrome':[38,42,43]}},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+  'otherAssets':{'capturedPlayer':sorted(PLAYERS),'legacyRotationMasks':[6,7,8,37],'recordedBullet':10,'existingMonochrome':[38,42,43],
+   'legacyExplosionPatterns':list(EXPLOSIONS),'legacyExplosionColorCommit':'aba0c20332a45fdaf1a23a6359aef637f5a13a09',
+   'explosionSequence':[5,39,40,41,40,39]}},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  sheet=Image.new('RGB',(1024,6*190),(24,24,24));d=ImageDraw.Draw(sheet)
  for n,i in enumerate(CUTS):
   x=n%4*256;y=n//4*190;d.text((x+4,y+4),f'{i:02d} recording / ROM texture',fill='white')

@@ -1,12 +1,12 @@
 {
-  "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+  "romSha256": "b577eda316b187bd2c379452e642aaf49b1fb1896dfd14f5f98b6c3c91dbdc04",
   "dither": false,
   "palette": "one shared 15 colors + transparent; player has dedicated palette",
   "bulletCycleTicks": 32,
   "rotationTicks": 64,
   "bulletAgesVerified": 64,
   "playerCasesVerified": 408,
-  "capturedAssetsVerified": 22,
-  "recordingOpaquePixelsVerified": 27666,
+  "capturedAssetsVerified": 18,
+  "recordingOpaquePixelsVerified": 22627,
   "bossShot": "original recording orange flames; no normal-bullet hue remapping"
 }

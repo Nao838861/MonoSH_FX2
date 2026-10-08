@@ -1,9 +1,9 @@
 {
-  "romSha256": "e8ddb798acad34efd10da32771d898178c9efa3200a3fbca3a383bcc244a93aa",
+  "romSha256": "b577eda316b187bd2c379452e642aaf49b1fb1896dfd14f5f98b6c3c91dbdc04",
   "assetsVerified": 44,
-  "captureAssetsVerified": 22,
-  "sourceOpaquePixelsVerified": 27666,
-  "opaquePixelsVerified": 44388,
+  "captureAssetsVerified": 18,
+  "sourceOpaquePixelsVerified": 22627,
+  "opaquePixelsVerified": 68367,
   "sourceAlphaChanges": 0,
   "packedAlphaChanges": 0,
   "nearestPaletteChanges": 0,
@@ -20,19 +20,19 @@
       0
     ],
     [
-      25,
       26,
-      28
+      28,
+      29
     ],
     [
       30,
-      26,
-      21
+      23,
+      20
     ],
     [
-      27,
-      19,
-      5
+      30,
+      18,
+      2
     ],
     [
       5,
@@ -40,42 +40,42 @@
       3
     ],
     [
-      16,
-      28,
-      11
-    ],
-    [
+      17,
       27,
-      18,
       13
     ],
     [
-      20,
+      19,
       18,
       22
     ],
     [
-      11,
-      16,
-      8
-    ],
-    [
-      1,
-      16,
-      1
-    ],
-    [
       13,
-      13,
+      12,
       15
     ],
     [
-      18,
       1,
+      16,
       1
     ],
     [
+      10,
+      18,
+      9
+    ],
+    [
+      12,
+      2,
+      2
+    ],
+    [
+      21,
       1,
+      0
+    ],
+    [
+      0,
       0,
       1
     ],
@@ -99,20 +99,20 @@
     {
       "asset": 0,
       "size": [
-        98,
-        53
+        75,
+        40
       ],
-      "opaquePixels": 2374,
-      "colors": 7
+      "opaquePixels": 1947,
+      "colors": 8
     },
     {
       "asset": 1,
       "size": [
-        102,
-        48
+        106,
+        50
       ],
-      "opaquePixels": 1164,
-      "colors": 8
+      "opaquePixels": 2825,
+      "colors": 9
     },
     {
       "asset": 2,
@@ -139,16 +139,16 @@
         91
       ],
       "opaquePixels": 2239,
-      "colors": 10
+      "colors": 12
     },
     {
       "asset": 5,
       "size": [
-        45,
-        33
+        128,
+        95
       ],
-      "opaquePixels": 1054,
-      "colors": 10
+      "opaquePixels": 6549,
+      "colors": 4
     },
     {
       "asset": 6,
@@ -211,7 +211,7 @@
         58
       ],
       "opaquePixels": 1781,
-      "colors": 5
+      "colors": 6
     },
     {
       "asset": 13,
@@ -225,10 +225,10 @@
     {
       "asset": 14,
       "size": [
-        32,
-        49
+        27,
+        40
       ],
-      "opaquePixels": 915,
+      "opaquePixels": 757,
       "colors": 12
     },
     {
@@ -382,7 +382,7 @@
         55
       ],
       "opaquePixels": 2386,
-      "colors": 10
+      "colors": 11
     },
     {
       "asset": 32,
@@ -427,7 +427,7 @@
         63
       ],
       "opaquePixels": 1781,
-      "colors": 5
+      "colors": 6
     },
     {
       "asset": 37,
@@ -450,29 +450,29 @@
     {
       "asset": 39,
       "size": [
-        45,
-        33
+        128,
+        94
       ],
-      "opaquePixels": 941,
-      "colors": 10
+      "opaquePixels": 7863,
+      "colors": 4
     },
     {
       "asset": 40,
       "size": [
-        75,
-        49
+        128,
+        84
       ],
-      "opaquePixels": 1895,
-      "colors": 10
+      "opaquePixels": 7074,
+      "colors": 4
     },
     {
       "asset": 41,
       "size": [
-        80,
-        55
+        128,
+        88
       ],
-      "opaquePixels": 2225,
-      "colors": 11
+      "opaquePixels": 7532,
+      "colors": 4
     },
     {
       "asset": 42,
@@ -492,5 +492,12 @@
       "opaquePixels": 0,
       "colors": 0
     }
+  ],
+  "grassInternalAlphaHoles": 0,
+  "legacyExplosionPatternsVerified": [
+    5,
+    39,
+    40,
+    41
   ]
 }

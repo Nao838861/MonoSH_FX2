@@ -26,13 +26,13 @@ python -X utf8 tools/import_4bpp_cutouts.py
 Check-Command
 python -X utf8 tools/build_4bpp.py --color
 Check-Command
-foreach ($case in ([ordered]@{'controls'=2400; 'boss'=2600; 'boss_hold'=3600; 'death'=720; 'pause'=720; 'assets'=2000; 'players'=920; 'bullets'=480; 'full'=240; 'play'=18000}).GetEnumerator()) {
+foreach ($case in ([ordered]@{'controls'=2400; 'boss'=2600; 'boss_hold'=3600; 'death'=720; 'pause'=720; 'assets'=2000; 'players'=920; 'bullets'=480; 'effects'=480; 'full'=240; 'play'=18000}).GetEnumerator()) {
     python -X utf8 tools/test_4bpp.py --scenario $case.Key --frames $case.Value
     Check-Command
     python -X utf8 tools/verify_4bpp.py $case.Key
     Check-Command
 }
-python -X utf8 tools/archive_4bpp.py color controls boss boss_hold death pause assets full play players bullets
+python -X utf8 tools/archive_4bpp.py color controls boss boss_hold death pause assets full play players bullets effects
 Check-Command
 python -X utf8 tools/build_4bpp.py
 Check-Command
@@ -50,6 +50,8 @@ python -X utf8 tools/verify_4bpp_shapes.py
 Check-Command
 python -X utf8 tools/report_4bpp_colors.py
 Check-Command
+python -X utf8 tools/report_4bpp_material_repair.py
+Check-Command
 python -X utf8 tools/report_4bpp.py
 Check-Command
 git add game/v001/config4.json
@@ -58,6 +60,7 @@ git add game/v001/results/legacy_shapes_20261008
 git add game/v001/results/color_review_20261008
 git add game/v001/results/cutouts_20261009
 git add game/v001/results/color_review_20261009
+git add game/v001/results/material_repair_20261009
 git add game/v001/assets/color4
 git add game/v001/RESULTS_4BPP30_20261008.md
 git add releases/MonoSHFX2_4bpp30_color.sfc

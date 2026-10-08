@@ -33,7 +33,7 @@ def main():
   panel.paste(shot(mode,'controls','screen00480.png').resize((512,448),Image.Resampling.NEAREST),(n*512,24))
  panel.save(DEST/'comparison.png')
  labels={'controls':'移動と連射','boss':'ボス撃破・次周','boss_hold':'ボス継続','death':'死亡と復帰','pause':'ポーズ',
-  'assets':'全素材・四反転・clip','players':'自機17姿勢','bullets':'弾の色周期・回転','full':'全量転送','play':'通常進行'}
+  'assets':'全素材・四反転・clip','players':'自機17姿勢','bullets':'弾の色周期・回転','effects':'敵・ボスの爆発6位相','full':'全量転送','play':'通常進行'}
  rows=[];total=0
  for mode,m in manifests.items():
   for key,s in m['scenarios'].items():
@@ -45,9 +45,9 @@ def main():
  dma=[r for r in records if 'dmaMs' in r];dma_ms=max(r['dmaMs'] for r in dma)
  limitation='通常進行でも表示の遅延が残る。常時30fpsの達成とはしない。' if long['delayedPresents'] else '今回の通常進行では遅延0回。人工的な全画面拡大など任意の物量まで保証するものではない。'
  default=json.loads((GAME/'results/cutouts_20261009/default_build.json').read_text())
- result=f'''# 4bpp・30fps版：録画切り抜き素材への切り替え（2026年10月9日）
+ result=f'''# 4bpp・30fps版：草の透過・爆発パターン・顎の修正（2026年10月9日）
 
-ユーザーが承認した物体だけの黒背景・16色実験を、実際の4bppカラーROMへ反映した。採取後の二色塗り直しと固定ディザを外し、録画の色画素と陰影を減色の入力にする。木、草、岩、飛行敵、小型敵の開閉、ボス、爆発、炎形のボス弾が対象。自機は専用OBJ色とmainの服の透明穴修正を継承する。
+ユーザーが承認した物体だけの黒背景・16色実験を、実際の4bppカラーROMへ反映した。草二種類の色キーによる大量の透過を廃止し、明るい葉と暗部を保持した。爆発を火球で置き換えていた誤りを直し、白黒版と同じ四枚の輪郭・内部模様へ戻した。ボスの顎に混入した隣の胴も除去。自機は専用OBJ色とmainの服の透明穴修正を継承する。
 
 ![実ROMの画面](results/four_bpp_20261008/overview.png)
 
@@ -63,11 +63,13 @@ def main():
 
 共通パレットは15色＋透明のindex 0。不透明物体から12色を学習し、通常弾の紫・青・赤は録画由来の代表色を各1色確保する。空・地面・山・自機を色選びの学習対象へ混ぜない。山と森のGSU画像も同じパレットで表示するが、学習には使わない。空と地面は別のRGB5 HDMA、自機は専用15色。画面全体が16色という制約ではない。
 
-木は承認済みの葉・幹・暗い輪郭の分離を使う。小型敵は位置を追跡して開閉姿勢を取り直した。隣の胴が重なるボス胴の端だけ、同じ姿勢の旧原画を採取境界に使用する。拡縮は最近傍で縦横を一緒に変え、投影比率の違いは透明余白で調整する。元の二値マスクによる塗り直しはしない。
+木は承認済みの葉・幹・暗い輪郭の分離を使う。草は対象の全体が収まる矩形を採り直し、外周を指定して内部の色・暗部を残す。上端に触れる山の青灰色だけを除き、内側に透明な穴を作らない。顎は隣の胴が入らない外周へ制限する。小型敵は位置を追跡して開閉姿勢を取り直した。隣の胴が重なるボス胴の端だけ、同じ姿勢の旧原画を採取境界に使用する。拡縮は最近傍で縦横を一緒に変え、投影比率の違いは透明余白で調整する。録画採取素材を二色へ塗り直す工程は使わない。
+
+爆発5・39・40・41は、白黒版の四パターンと同じ寸法・透過・二値模様を持つ火球置換前のカラー素材へ復元した。通常敵とボスの描画処理が5→39→40→41→40→39の順に選ぶことを実ROMのpacketと画素で検査。炎形のボス弾31とは別の画像を使う。[草・顔の修正前後](results/material_repair_20261009/comparison.png)、[爆発四枚と白黒原画](results/material_repair_20261009/explosion_patterns.png)、[実PPUの爆発アニメ](results/material_repair_20261009/explosion_cycle.gif)。
 
 通常弾は旧四姿勢の主軸と輪郭を半分の原画寸法で保持し、録画の短軸方向の階調を移す。別の撮影姿勢の傾きは移さない。白い中心と単色の両側の陰影、32更新周期（紫16→赤8→青8）、64更新の回転を維持。色周期別の原画と縮小行を事前生成し、パレット番号の加算を廃止した。炎形のボス弾は録画どおり橙色で描く。通常弾の周期は録画から推定したもので原作ROMからの抽出ではない。
 
-[切り抜きと減色の比較](results/cutouts_20261009/materials.png)、[素材一覧](assets/color4/captures.png)、[実PPUの弾アニメ](results/color_review_20261009/bullet_cycle.gif)、[時刻・矩形・動画SHA256](assets/color4/source.json)。{proof['captureAssetsVerified']}採取素材の不透明{proof['sourceOpaquePixelsVerified']:,}画素について元RGBの不変を検査し、全44素材の透明・最近傍による減色・ROM配置が一致した。ディザは使わない。旧35素材の二値一致は今回の採用で置き換わり、過去の証跡は旧ROMの記録として保持する。自機17姿勢、影、STAGE文字など全素材を新規に動画採取したわけではない。
+[切り抜きと減色の比較](results/cutouts_20261009/materials.png)、[素材一覧](assets/color4/captures.png)、[実PPUの弾アニメ](results/color_review_20261009/bullet_cycle.gif)、[時刻・矩形・動画SHA256](assets/color4/source.json)。{proof['captureAssetsVerified']}採取素材の不透明{proof['sourceOpaquePixelsVerified']:,}画素について元RGBの不変を検査し、全44素材の透明・最近傍による減色・ROM配置が一致した。草内部の透明穴0と爆発四枚の白黒原画との一致も検査。ディザは使わない。全35素材の二値一致は過去版の基準で、今回の爆発四枚の復元とは区別する。自機17姿勢、影、STAGE文字など全素材を新規に動画採取したわけではない。
 
 ## 転送・容量・速度
 
@@ -85,7 +87,7 @@ ROMは2MiB、原画{packing['rawSpriteBytes']:,}bytes、事前縮小行{packing[
 
 合計{total:,}標本で全49,152画素と表示中VRAMの24KiBを独立合成へ照合した。自機は実OAM・CHR・CGRAMから408条件を合成し、専用色・透明を元画像と照合。通常弾三発とボス炎弾で64位相を検査。地面CHR・mapの不変、DMAの非表示期間、通常の移動・連射、ポーズ、死亡と復帰、ボス撃破と次周も検査した。実機では未検証。
 
-既定2bppビルドはmainの配布ROMと全2MiBが一致し、SHA256 `{default['sha256']}`。今回の共通ソース変更が2bppの機械語を変えないことを確認した。
+素材修正前に確認した既定2bppビルドはmainの配布ROMと全2MiBが一致し、SHA256 `{default['sha256']}`。今回は4bpp用の素材・生成・検査を変更し、共通のゲーム描画コードは変更していない。
 
 - カラーROM SHA256: `{manifests['color']['sha256']}`
 - 白黒ROM SHA256: `{manifests['mono']['sha256']}`

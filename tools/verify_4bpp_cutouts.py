@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw
 from build_game import ROOT,BUILD,GAME
+from probe_16color_composite import fill_holes
 
 DEST=GAME/'results/cutouts_20261009'
 
@@ -38,13 +39,23 @@ def main():
    original=np.array(Image.open(assets/f'{i:02d}_capture.png').convert('RGB'))
    cut=np.array(Image.open(assets/f'{i:02d}_source.png').convert('RGBA'));opaque=cut[:,:,3]>0
    assert np.array_equal(original[opaque],cut[:,:,:3][opaque]),f'{i}: recording RGB changed'
+   if i in (0,1):
+    assert np.array_equal(fill_holes(opaque),opaque),f'{i}: grass contains artificial alpha holes'
+    x,y=(50,22) if i==0 else (50,8)
+    assert opaque[y,x] and original[y,x,1]>180,f'{i}: bright leaf was removed'
    source_pixels+=int(opaque.sum())
+  if i in (5,39,40,41):
+   legacy=np.array(Image.open(GAME/f'assets/{i:02d}.png').convert('RGBA'))
+   assert native.shape==legacy.shape and np.array_equal(mask,legacy[:,:,3]>0),f'{i}: explosion outline changed'
+   reduced=np.array(im.convert('RGBA'))
+   assert np.array_equal(reduced[:,:,:3].mean(2)[mask]>=128,legacy[:,:,:3].mean(2)[mask]>=128),f'{i}: explosion pattern changed'
   total+=int(mask.sum());records.append({'asset':i,'size':im.size,'opaquePixels':int(mask.sum()),'colors':len(np.unique(index[mask]))})
  DEST.mkdir(parents=True,exist_ok=True)
  examples=[0,1,2,3,4,11,12,13,14,5,39,40,41,31]
  sheet=Image.new('RGB',(1024,((len(examples)+3)//4)*220),(20,20,20));d=ImageDraw.Draw(sheet)
  for n,i in enumerate(examples):
-  x=n%4*256;y=n//4*220;d.text((x+4,y+4),f'{i:02d}: cutout / shared 16 colors',fill='white')
+  x=n%4*256;y=n//4*220;label='legacy pattern' if i in (5,39,40,41) else 'cutout'
+  d.text((x+4,y+4),f'{i:02d}: {label} / 16 colors',fill='white')
   for col,name in enumerate((f'{i:02d}_source.png',f'{i:02d}.png')):
    im=Image.open(assets/name).convert('RGBA');scale=min(120/im.width,185/im.height)
    im=im.resize((max(1,int(im.width*scale)),max(1,int(im.height*scale))),Image.Resampling.NEAREST)
@@ -55,6 +66,7 @@ def main():
   'nearestPaletteChanges':0,'dither':False,'totalPaletteColors':16,'opaquePaletteColors':15,
   'trainingBackgroundExcluded':True,'legacyShapePolicyReplacedBy':'recording cutouts and uniform nearest scaling; normal bullet rotation masks retained at half size',
   'paddingAsset':43,'paletteRgb5':json.loads((assets/'palette.json').read_text())['rgb5'],'assets':records}
+ summary.update(grassInternalAlphaHoles=0,legacyExplosionPatternsVerified=[5,39,40,41])
  (DEST/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
  print(f'Cutouts: 44 assets; {source_pixels} recording pixels unchanged; alpha, nearest-color mapping and ROM match; no dither')
 
