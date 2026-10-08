@@ -1,0 +1,29 @@
+{
+  "fields": 720,
+  "renders": 348,
+  "starts": 349,
+  "halves": 697,
+  "logicCalls": 699,
+  "logic": 699,
+  "gsuMaxMs": 11.386362,
+  "intervals": {
+    "25": 1,
+    "2": 347
+  },
+  "bossSeen": false,
+  "dyingSeen": false,
+  "doneSeen": false,
+  "restartSeen": false,
+  "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+  "actualGsuMaxMs": 11.38422,
+  "deathRespawnVerified": true,
+  "renderFPS": 30.0494,
+  "delayedPresents": 0,
+  "dmaBytes": {
+    "min": 3680,
+    "max": 14176,
+    "mean": 7877.517241379311
+  },
+  "mathChecks": 0,
+  "pixelSamples": 5
+}

@@ -1,0 +1,13 @@
+-----------------------------
+File: MonoSHFX2_v001.sfc
+Game: MONOSH FX2 4BPP 30FPS
+Game code: FX2G
+Type: LoROM
+Coprocessor: Super FX (GSU1/2)
+Map Mode: $20
+Rom Type: $15
+File size: 2048 KB
+ROM size: 2048 KB
+Coprocessor RAM size: 64 KB
+Battery: yes
+-----------------------------

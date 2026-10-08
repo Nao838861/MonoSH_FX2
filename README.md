@@ -1,5 +1,7 @@
 # MonoSH Super FX2 開発プロジェクト
 
+**このブランチは独立した[4bpp・30fps実験](README_4BPP30.md)です。** 起動は [play_4bpp30.cmd](play_4bpp30.cmd)、カラーROMは [MonoSHFX2_4bpp30_color.sfc](releases/MonoSHFX2_4bpp30_color.sfc)。mainの更新は一方向に取り込み、元の作業フォルダーには変更を加えません。以下の2bppの記述はmainから引き継いだ開発履歴です。
+
 最新ROMは [2bppの敵・障害物のカラー化試作](game/v001/RESULTS_20261008_BG_COLOR.md)。指定録画から原画を取り込み、透明＋3色×8組を8×8単位で割り当てる。CPUが奥から属性を上書きし、SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。[比較画像](game/v001/results/bg_color_20261008/comparison.png)。
 
 **カラー版は通常操作で平均31.62fps、ボス撃破から次周を含む試験で33.96fps。60fpsは未達。** 色属性のCPU処理が重く、表示とゲーム進行が遅くなる。変更前の60Hz検証済みROMも [比較用](releases/MonoSHFX2_pre_color_20261008.sfc) として残す。起動は [play.cmd](play.cmd)。

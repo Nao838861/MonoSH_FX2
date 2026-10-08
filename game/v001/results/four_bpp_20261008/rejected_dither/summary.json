@@ -1,0 +1,22 @@
+{
+  "fields": 3600,
+  "renders": 1788,
+  "starts": 1789,
+  "halves": 3577,
+  "logicCalls": 3579,
+  "logic": 3579,
+  "gsuMaxMs": 14.62858,
+  "intervals": {
+    "25": 1,
+    "2": 1787
+  },
+  "bossSeen": true,
+  "dyingSeen": false,
+  "doneSeen": false,
+  "restartSeen": false,
+  "romSha256": "8774a3dc5281b3e050358ea0e3184052f562d460f83965c428e9ae8f66e9fc0c",
+  "actualGsuMaxMs": 14.625973,
+  "pixelSamplesVerified": 29,
+  "adopted": false,
+  "reason": "Run metadata overhead increased GSU time versus byte rows"
+}

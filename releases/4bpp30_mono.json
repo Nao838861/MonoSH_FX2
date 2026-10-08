@@ -1,0 +1,108 @@
+{
+  "rom": "releases/MonoSHFX2_4bpp30_mono.sfc",
+  "sha256": "007d1cb84fb04c80f4764a992f170645ff843eece4d277d5634a609ab13dc499",
+  "buildMode": {
+    "fullFramebufferTransfer": true,
+    "gsuUv": true,
+    "gsuClip": true,
+    "cpuClipCommands": false,
+    "stableGsuCache": false,
+    "scaledRows": false,
+    "scaledAssetWidths": {},
+    "scaledClip": false,
+    "fastUv": false,
+    "genericPipeline": false,
+    "rowMargins": false,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true,
+    "bitsPerPixel": 4,
+    "renderRateDivisor": 2,
+    "color": false,
+    "transferMode": "column-spans-two-pages"
+  },
+  "packing": {
+    "rawSpriteBytes": 249538,
+    "prescaledBytes": 595258,
+    "freeAssetBankBytes": 259631,
+    "prescaledAssets": [
+      13,
+      14,
+      5,
+      39,
+      40,
+      41,
+      31
+    ],
+    "unpackedPrescaledAssets": [
+      13,
+      14
+    ]
+  },
+  "upstream": "4c5ec389e67737837a09980069374267d24e7c20",
+  "scenarios": {
+    "controls": {
+      "fields": 2400,
+      "renders": 1188,
+      "starts": 1189,
+      "halves": 2377,
+      "logicCalls": 2379,
+      "logic": 2379,
+      "gsuMaxMs": 10.313414,
+      "intervals": {
+        "25": 1,
+        "2": 1187
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "007d1cb84fb04c80f4764a992f170645ff843eece4d277d5634a609ab13dc499",
+      "actualGsuMaxMs": 12.954345,
+      "controlsFireVerified": true,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 3584,
+        "max": 15296,
+        "mean": 6868.47138047138
+      },
+      "mathChecks": 0,
+      "pixelSamples": 19
+    },
+    "boss": {
+      "fields": 2600,
+      "renders": 1288,
+      "starts": 1289,
+      "halves": 2576,
+      "logicCalls": 2578,
+      "logic": 2578,
+      "gsuMaxMs": 13.937711,
+      "intervals": {
+        "3": 1,
+        "25": 1,
+        "2": 1286
+      },
+      "bossSeen": true,
+      "dyingSeen": true,
+      "doneSeen": true,
+      "restartSeen": true,
+      "romSha256": "007d1cb84fb04c80f4764a992f170645ff843eece4d277d5634a609ab13dc499",
+      "actualGsuMaxMs": 15.428868,
+      "renderFPS": 30.037730330097087,
+      "delayedPresents": 1,
+      "dmaBytes": {
+        "min": 3968,
+        "max": 15168,
+        "mean": 6961.142857142857
+      },
+      "mathChecks": 583,
+      "pixelSamples": 21
+    }
+  }
+}

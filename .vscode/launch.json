@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "4bpp30 カラー版をビルドしてMesenで起動",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "python -X utf8 tools/play_4bpp.py --build",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

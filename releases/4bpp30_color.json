@@ -1,0 +1,278 @@
+{
+  "rom": "releases/MonoSHFX2_4bpp30_color.sfc",
+  "sha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+  "buildMode": {
+    "fullFramebufferTransfer": true,
+    "gsuUv": true,
+    "gsuClip": true,
+    "cpuClipCommands": false,
+    "stableGsuCache": false,
+    "scaledRows": false,
+    "scaledAssetWidths": {},
+    "scaledClip": false,
+    "fastUv": false,
+    "genericPipeline": false,
+    "rowMargins": false,
+    "dynamicDmaDeadline": true,
+    "fineDmaDeadline": true,
+    "dmaDeadlineProbe": false,
+    "fastObj": true,
+    "descriptorDma": true,
+    "dmaAdmissionBytes": 9984,
+    "bucketSort": false,
+    "smoothDepthSizes": true,
+    "bitsPerPixel": 4,
+    "renderRateDivisor": 2,
+    "color": true,
+    "transferMode": "column-spans-two-pages"
+  },
+  "packing": {
+    "rawSpriteBytes": 251074,
+    "prescaledBytes": 587059,
+    "freeAssetBankBytes": 266294,
+    "prescaledAssets": [
+      13,
+      14,
+      5,
+      39,
+      40,
+      41,
+      31
+    ],
+    "unpackedPrescaledAssets": [
+      13,
+      14
+    ]
+  },
+  "upstream": "4c5ec389e67737837a09980069374267d24e7c20",
+  "scenarios": {
+    "controls": {
+      "fields": 2400,
+      "renders": 1188,
+      "starts": 1189,
+      "halves": 2377,
+      "logicCalls": 2379,
+      "logic": 2379,
+      "gsuMaxMs": 10.744661,
+      "intervals": {
+        "25": 1,
+        "2": 1187
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 13.433084,
+      "controlsFireVerified": true,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 3584,
+        "max": 15488,
+        "mean": 7001.8855218855215
+      },
+      "mathChecks": 0,
+      "pixelSamples": 19
+    },
+    "boss": {
+      "fields": 2600,
+      "renders": 1288,
+      "starts": 1289,
+      "halves": 2577,
+      "logicCalls": 2579,
+      "logic": 2579,
+      "gsuMaxMs": 13.481694,
+      "intervals": {
+        "25": 1,
+        "2": 1287
+      },
+      "bossSeen": true,
+      "dyingSeen": true,
+      "doneSeen": true,
+      "restartSeen": true,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 14.265778,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 3968,
+        "max": 15168,
+        "mean": 6963.329192546584
+      },
+      "mathChecks": 583,
+      "pixelSamples": 21
+    },
+    "boss_hold": {
+      "fields": 3600,
+      "renders": 1788,
+      "starts": 1789,
+      "halves": 3577,
+      "logicCalls": 3579,
+      "logic": 3579,
+      "gsuMaxMs": 13.481694,
+      "intervals": {
+        "25": 1,
+        "2": 1787
+      },
+      "bossSeen": true,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 13.476479,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 4000,
+        "max": 11680,
+        "mean": 6537.52125279642
+      },
+      "mathChecks": 0,
+      "pixelSamples": 29
+    },
+    "death": {
+      "fields": 720,
+      "renders": 348,
+      "starts": 349,
+      "halves": 697,
+      "logicCalls": 699,
+      "logic": 699,
+      "gsuMaxMs": 11.386362,
+      "intervals": {
+        "25": 1,
+        "2": 347
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 11.38422,
+      "deathRespawnVerified": true,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 3680,
+        "max": 14176,
+        "mean": 7877.517241379311
+      },
+      "mathChecks": 0,
+      "pixelSamples": 5
+    },
+    "pause": {
+      "fields": 720,
+      "renders": 348,
+      "starts": 349,
+      "halves": 697,
+      "logicCalls": 699,
+      "logic": 639,
+      "gsuMaxMs": 11.386362,
+      "intervals": {
+        "25": 1,
+        "2": 347
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 12.163649,
+      "pauseResumeVerified": true,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 4224,
+        "max": 14880,
+        "mean": 8181.241379310345
+      },
+      "mathChecks": 0,
+      "pixelSamples": 5
+    },
+    "assets": {
+      "fields": 1784,
+      "renders": 881,
+      "starts": 882,
+      "halves": 1762,
+      "logicCalls": 1764,
+      "logic": 1764,
+      "gsuMaxMs": 7.665871,
+      "intervals": {
+        "24": 1,
+        "2": 880
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 7.379708,
+      "renderFPS": 30.0494,
+      "delayedPresents": 0,
+      "dmaBytes": {
+        "min": 256,
+        "max": 12160,
+        "mean": 3030.7377979568673
+      },
+      "mathChecks": 0,
+      "pixelSamples": 881
+    },
+    "full": {
+      "fields": 120,
+      "renders": 24,
+      "starts": 25,
+      "halves": 49,
+      "logicCalls": 51,
+      "logic": 51,
+      "gsuMaxMs": 16.60453,
+      "intervals": {
+        "25": 1,
+        "4": 23
+      },
+      "bossSeen": false,
+      "dyingSeen": false,
+      "doneSeen": false,
+      "restartSeen": false,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 16.600432,
+      "renderFPS": 15.024699999999998,
+      "delayedPresents": 23,
+      "dmaBytes": {
+        "min": 24576,
+        "max": 24576,
+        "mean": 24576.0
+      },
+      "mathChecks": 0,
+      "pixelSamples": 24
+    },
+    "play": {
+      "fields": 18000,
+      "renders": 8975,
+      "starts": 8976,
+      "halves": 17950,
+      "logicCalls": 17952,
+      "logic": 17952,
+      "gsuMaxMs": 15.236106,
+      "intervals": {
+        "3": 27,
+        "25": 1,
+        "2": 8947
+      },
+      "bossSeen": true,
+      "dyingSeen": true,
+      "doneSeen": true,
+      "restartSeen": true,
+      "romSha256": "157a38a0b5f48c20e83ae499cf2e447dce02b7f9c7c9967d64f48c98c080c3ad",
+      "actualGsuMaxMs": 15.230892,
+      "renderFPS": 30.004263210013907,
+      "delayedPresents": 27,
+      "dmaBytes": {
+        "min": 3584,
+        "max": 15520,
+        "mean": 6562.955766016713
+      },
+      "mathChecks": 553,
+      "pixelSamples": 149
+    }
+  }
+}
