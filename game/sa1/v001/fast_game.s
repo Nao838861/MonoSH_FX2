@@ -119,12 +119,21 @@ fast_tiles:
 fast_base_ready:
   lda $c4
   bne fast_chunks
-  lda ffirst
-  bne fast_chunks
   lda flast
   cmp $36
   bne fast_chunks
-  lda $24                    ; rows = entire native row call chain
+  ; 上にはみ出す場合も、見える最初の行から末尾のRTLまで直接呼べる。
+  ; 行の座標は元のdyを含むのでspriteBaseを補正する必要はない。
+  lda ffirst
+  asl
+  sta foffset
+  asl
+  asl
+  clc
+  adc foffset
+  adc ffirst
+  clc
+  adc $24
   sta $07f1
   sep #$20
   lda $26

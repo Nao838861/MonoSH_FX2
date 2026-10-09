@@ -4,7 +4,7 @@ def replace(text,old,new):
     assert text.count(old)==1,old
     return text.replace(old,new)
 
-def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=False,padded=False,large_edge=False,triple_bw=False):
+def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=False,padded=False,large_edge=False,triple_bw=False,cpu_copy=False,cpu_fill=False,cpu_far=False):
     if direct:text=direct_source(name,text)
     if triple_bw and name=='dirty':
         text=replace(text,'dirty_return:\n  ldx #0', 'dirty_return:\n  lda $0116\n  cmp #1\n  bne triple_initialized\n  ldx #0\ntriple_init_history:\n  lda #128\n  sta f:$430400,x\n  sta f:$430460,x\n  lda #0\n  sta f:$430402,x\n  sta f:$430462,x\n  inx\n  inx\n  inx\n  inx\n  cpx #96\n  bne triple_init_history\ntriple_initialized:\n  ldx #0')
@@ -64,6 +64,18 @@ def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=Fals
         text=replace(text,'  sta $2235\n  jsr edge_next', '  sta $2235\n  jsl sa1_dma_end\n  jsr edge_next')
         text=replace(text,'edge_restore_line:\n', 'edge_restore_line:\n  jsl sa1_dma_begin\n')
         text=replace(text,'  sta $2237\n  rep #$20\n  jsr edge_next', '  sta $2237\n  jsl sa1_dma_end\n  rep #$20\n  jsr edge_next')
+    if cpu_fill and name=='renderer':
+        text='.import sa1_cpu_clear_line: far\n'+text
+        text=replace(text,'  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\nclear_scanline:', 'clear_scanline:')
+        text=replace(text,'clear_scanline:\n  lda bgfirst', 'clear_scanline:\n  lda $011e\n  bne clear_using_cpu\n  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\n  lda bgfirst')
+        text=replace(text,'  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128','  sta $2237\n  rep #$20\n  jsl sa1_dma_end\n  bra clear_cpu_advance\nclear_using_cpu:\n  jsl sa1_cpu_clear_line\nclear_cpu_advance:\n  lda bgdest\n  clc\n  adc #128')
+        text=replace(text,'clear_tile_next:\n  jsl sa1_dma_end', 'clear_tile_next:')
+    if cpu_far and name=='renderer':
+        text='.import sa1_cpu_far_line: far\n'+text
+        text=text.replace('  beq bg_far_next', '  jeq bg_far_next').replace('  bmi bg_far_next', '  jmi bg_far_next')
+        text=replace(text,'  sta bgwidth\n  jsl sa1_dma_begin', '  sta bgwidth\n  lda $011e\n  beq bg_far_using_dma\n  jsl sa1_cpu_far_line\n  jmp bg_far_cpu_done\nbg_far_using_dma:\n  jsl sa1_dma_begin')
+        text=replace(text,'bg_far_next:\n  jsl sa1_dma_end', 'bg_far_next:\n  jsl sa1_dma_end\nbg_far_cpu_done:')
+    if cpu_copy:text=cpu_copy_source(name,text)
     if padded:text=padded_source(name,text)
     if large_edge:text=large_edge_source(name,text)
     return '.setcpu "65816"\n'+text
@@ -133,4 +145,22 @@ def large_edge_source(name,text):
         text=replace(text,'edge_restore_line:\n  jsl sa1_dma_begin','  jsl sa1_dma_begin\nedge_restore_line:')
         text=replace(text,'  sta $2237\n  jsl sa1_dma_end\n  rep #$20', '  sta $2237\n  rep #$20')
         text=replace(text,'  bne edge_restore_line\n  rtl','  bne edge_restore_line\n  jsl sa1_dma_end\n  rtl')
+    return text
+
+
+def cpu_copy_source(name,text):
+    def code(source,bank,length):
+        return '  sep #$20\n  lda #$54\n  sta $07ec\n  lda #0\n  sta $07ed\n  lda '+bank+'\n  sta $07ee\n  lda #$6b\n  sta $07ef\n  rep #$30\n  ldx '+source+'\n  ldy #$0700\n  lda '+length+'\n  dec\n  jsl $0007ec\n  lda #$0700\n  sta $07f1\n  sep #$20\n  stz $07f3\n  rep #$20\n'
+    if name=='fast':
+        a=text.index('  jsl sa1_dma_begin\n  sta $2238');b=text.index('  ldx fbytes',a)
+        old=text[a:b]
+        text=text[:a]+'  lda $011e\n  beq fast_code_dma\n'+code('fsrc','fsrc+2','fbytes')+'  jmp fast_code_ready\nfast_code_dma:\n  lda fbytes\n'+old+'fast_code_ready:\n'+text[b:]
+    elif name=='near':
+        a=text.index('  jsl sa1_dma_begin\n  sta $2238');b=text.index('  ldx nlength',a)
+        old=text[a:b]
+        text=text[:a]+'  lda $011e\n  beq near_code_dma\n  lda ncode\n  clc\n  adc nstart\n  sta $9a\n'+code('$9a','#$fe','nlength')+'  jmp near_code_ready\nnear_code_dma:\n  lda nlength\n'+old+'near_code_ready:\n'+text[b:]
+    elif name=='renderer':
+        a=text.index('  jsl sa1_dma_begin\n  sep #$20\n  lda #$80');b=text.index('  lda codelen\n  sec\n  sbc #4',a)
+        old=text[a:b]
+        text=text[:a]+'  lda $011e\n  beq row_code_dma\n'+code('codeptr','codeptr+2','codelen')+'  jmp row_code_ready\nrow_code_dma:\n'+old+'row_code_ready:\n'+text[b:]
     return text

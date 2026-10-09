@@ -9,6 +9,7 @@ SA1_CC_BUFFER = $05c0
 .export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
 .export pipe_render_slot
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
+.export pipe_irq_exit
 .export pipe_dma_measured_end
 .segment "COLORBSS"
 pipe_records: .res 512*SA1_PIPELINE_DEPTH

@@ -88,6 +88,10 @@ sa1_entry:
   sta $07f0
   lda #$60
   sta $07f4
+.ifdef SA1_SHAPE_CACHE
+  .import sa1_shape_cache_init: far
+  jsl sa1_shape_cache_init
+.endif
 wait_job:
   rep #$30
   lda $0100

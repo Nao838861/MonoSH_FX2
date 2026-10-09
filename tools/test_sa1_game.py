@@ -96,6 +96,16 @@ local function cb(name,fn,cpu)
  local a=labels[name]+(cpu==emu.cpuType.snes and 0x7f0000 or 0)
  emu.addMemoryCallback(function()local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
+local packetClock,irqTicks,irqClock=0,0,0
+local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
+if pipeline then
+ cb('pipe_irq',function()irqClock=emu.getState().masterClock end)
+ cb('pipe_irq_exit',function()irqTicks=irqTicks+emu.getState().masterClock-irqClock;irqClock=0 end)
+end
+cb('_fx_build_packet',function()packetClock=activeClock() end)
+for _,name in ipairs({'initialized','sorted','packet_done'})do
+ cb(name,function()local c=activeClock();cpuParts['packet_'..name]=(c-packetClock)/21477.272;packetClock=c end)
+end
 if pipeline then
  cb('dma_started',function()
   local state=emu.getState();dmaClock=state.masterClock;dmaLine=state['ppu.scanline'];dmaLength=emu.read16(0x4305,emu.memType.snesMemory)
@@ -130,8 +140,8 @@ if pipeline then
   queueSamples[#queueSamples+1]=string.format('{\"field\":%d,\"line\":%d,\"ready\":%d,\"rendering\":%d,\"complete\":%d,\"flipped\":%d,\"target\":%d}',field,line,ready,rendering,emu.read16(0x7e0000+labels.pipe_complete,mt),emu.read16(0x7e0000+labels.pipe_presented_irq,mt),emu.read16(0x7e0000+labels.pipe_target_slot,mt))
  end)
 end
-if labels.sa1_sort_packet then
- cb('sa1_sort_packet',function()
+if labels.sa1_sort_packet or labels.sa1_temporal_prepare then
+ cb(labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare',function()
   local mt=emu.memType.snesMemory;local n=emu.read16(0x7e0000+labels.packet_work+8,mt)
   sortReference={}
   for i=0,n-2,2 do sortReference[#sortReference+1]={key=emu.read16(0x7e0000+labels.keys+i,mt),value=emu.read16(0x7e0000+labels.order+i,mt),index=i}end
