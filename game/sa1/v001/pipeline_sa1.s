@@ -82,6 +82,7 @@ sremaining=$a2
 swidth=$a4
 ssource=$a6
 slines=$a8
+sdest=$aa
 sa1_snapshot:
   rep #$30
   stz sdesc
@@ -106,7 +107,18 @@ snapshot_descriptor:
   and #$fc00
   clc
   adc ssource
+  sta sdest
+  .ifdef SA1_PIPELINE_PADDED
+  lda f:$430802,x
+  and #$fc00
+  asl
+  clc
+  adc ssource
+  adc #64
   sta ssource
+  .else
+  sta ssource
+  .endif
   lda #8
   sta slines
 snapshot_line:
@@ -131,7 +143,7 @@ snapshot_line:
   sta $2238
   lda #$0600
   sta $2232
-  lda ssource
+  lda sdest
   sta $2235
   sep #$20
   lda $0102
@@ -140,8 +152,16 @@ snapshot_line:
   rep #$20
   lda ssource
   clc
+  .ifdef SA1_PIPELINE_PADDED
+  adc #256
+  .else
   adc #128
+  .endif
   sta ssource
+  lda sdest
+  clc
+  adc #128
+  sta sdest
   dec slines
   bne snapshot_line
   lda sdesc

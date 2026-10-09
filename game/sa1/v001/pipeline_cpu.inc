@@ -1,3 +1,6 @@
+.ifndef SA1_CC_BUFFER
+SA1_CC_BUFFER = $05c0
+.endif
 ; 表示より最大二画像先まで処理する。metadataの三枠は地面の三重bufferと対応する。
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
 .export pipe_irq, irq_game, prefetch_finished
@@ -6,6 +9,7 @@
 .export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
 .export pipe_render_slot
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
+.export pipe_dma_measured_end
 .segment "COLORBSS"
 pipe_records: .res 512*SA1_PIPELINE_DEPTH
 .segment "BSS"
@@ -18,7 +22,11 @@ pipe_target_slot: .res 2
 pipe_pending: .res 2
 pipe_complete: .res 2
 pipe_next_bw: .res 2
+.ifdef SA1_TRIPLE_BW
+pipe_bw_busy: .res 6
+.else
 pipe_bw_busy: .res 4
+.endif
 pipe_status: .res 2*SA1_PIPELINE_DEPTH
 pipe_submitted: .res 2
 pipe_missed: .res 2
@@ -35,6 +43,8 @@ pipe_line: .res 2
 pipe_obj_pointer: .res 2
 pipe_desc_offset: .res 2
 pipe_dma_chunk: .res 2
+pipe_fast_end: .res 2
+pipe_fast_page: .res 2
 .segment "BOOT"
 irq_game:
   php
@@ -199,7 +209,16 @@ pipe_no_packet:
   lda #1
   sta pipe_bw_busy,x
   lda pipe_next_bw
+  .ifdef SA1_TRIPLE_BW
+  inc
+  inc
+  cmp #6
+  bcc :+
+  lda #0
+:
+  .else
   eor #2
+  .endif
   sta pipe_next_bw
   lda pipe_write_slot
   sta pipe_render_slot
@@ -281,6 +300,8 @@ pipe_collect:
     asl
   .endrepeat
   tax
+  lda f:$003118
+  sta pipe_records+34,x
   lda f:$00311a
   asl
   sta pipe_collect_length
@@ -413,7 +434,7 @@ pipe_setup_transfer:
   lda pipe_records,x
   sta f:$002234
   rep #$20
-  lda #$05c0
+  lda #SA1_CC_BUFFER
   sta f:$002235
   lda #$1801
   sta f:$004300
@@ -423,6 +444,10 @@ pipe_setup_transfer:
   rep #$30
 transfer_chunk:
 dma_chunk_ready:
+  .ifdef SA1_FAST_DMA
+  jsr pipe_try_fast_dma
+  jcs pipe_transfer_complete
+  .endif
 pipe_descriptor:
   ldx pipe_record_offset
   lda pipe_records+4,x
@@ -466,8 +491,14 @@ dma_started:
   sta f:$00420b
 half_dma_finished:
   rep #$30
+  ldx pipe_record_offset
+  lda pipe_records+34,x
+  sec
+  sbc pipe_dma_chunk
+  sta pipe_records+34,x
   ldx pipe_desc_offset
   lda pipe_records+208,x
+pipe_dma_measured_end:
   sec
   sbc pipe_dma_chunk
   beq pipe_descriptor_complete
@@ -592,6 +623,81 @@ pipe_reserved:
 pipe_no_time:
   stz pipe_available
   rts
+
+.ifdef SA1_FAST_DMA
+pipe_try_fast_dma:
+  rep #$30
+  ldx pipe_record_offset
+  lda pipe_records+6,x
+  sta pipe_fast_page
+  lda pipe_records+2,x
+  sec
+  sbc pipe_records+4,x
+  beq pipe_fast_empty
+  asl
+  asl
+  asl
+  asl
+  sta pipe_dma_chunk
+  lda pipe_records+34,x
+  lsr
+  lsr
+  lsr
+  lsr
+  lsr
+  clc
+  adc pipe_records+34,x
+  adc pipe_dma_chunk
+  sta pipe_dma_chunk
+  jsr pipe_time_left
+  lda pipe_dma_chunk
+  cmp pipe_available
+  bcs pipe_fast_unavailable
+  lda pipe_records+34,x
+  clc
+  adc fx4_dma_bytes
+  sta fx4_dma_bytes
+  lda pipe_records+2,x
+  clc
+  adc pipe_record_offset
+  adc #208
+  sta pipe_fast_end
+  lda pipe_records+4,x
+  clc
+  adc pipe_record_offset
+  adc #208
+  tax
+pipe_fast_loop:
+  lda pipe_records,x
+  sta f:$004305
+  lda pipe_records+2,x
+  sta f:$004302
+  lda pipe_records+4,x
+  clc
+  adc pipe_fast_page
+  sta f:$002116
+  sep #$20
+  lda #1
+  sta f:$00420b
+  rep #$20
+  inx
+  inx
+  inx
+  inx
+  inx
+  inx
+  cpx pipe_fast_end
+  bcc pipe_fast_loop
+  ldx pipe_record_offset
+  lda pipe_records+2,x
+  sta pipe_records+4,x
+pipe_fast_empty:
+  sec
+  rts
+pipe_fast_unavailable:
+  clc
+  rts
+.endif
 
 pipe_flip:
   rep #$30

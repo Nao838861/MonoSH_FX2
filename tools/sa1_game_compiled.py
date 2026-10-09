@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False):
+def build(variants,dest,macros=False,stride=128):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0
     def alloc(raw):
         nonlocal cursor
@@ -70,7 +70,7 @@ def build(variants,dest,macros=False):
                             program=bytearray()
                             for dy,y in enumerate(ys):
                                 row=row_entry(source[int(y)],parity)
-                                program+=b'\xa9'+struct.pack('<H',dy*128+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
+                                program+=b'\xa9'+struct.pack('<H',dy*stride+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
                             program+=b'\x6b';rows=alloc(program)
                         else:rows=alloc(b''.join(row_entry(source[int(y)],parity) for y in ys))
                         desc+=rows.to_bytes(3,'little')
@@ -85,7 +85,7 @@ def build(variants,dest,macros=False):
                     entries+=bytes(bounds)
             struct.pack_into('<H',index,asset*512+w*2,idx(bytes([len(heights)])+entries))
     rom[0x7f0000:]=index
-    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used}
+    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     return rom
 

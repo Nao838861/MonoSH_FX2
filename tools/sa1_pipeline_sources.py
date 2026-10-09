@@ -4,14 +4,23 @@ def replace(text,old,new):
     assert text.count(old)==1,old
     return text.replace(old,new)
 
-def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=False):
+def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=False,padded=False,large_edge=False,triple_bw=False):
     if direct:text=direct_source(name,text)
+    if triple_bw and name=='dirty':
+        text=replace(text,'dirty_return:\n  ldx #0', 'dirty_return:\n  lda $0116\n  cmp #1\n  bne triple_initialized\n  ldx #0\ntriple_init_history:\n  lda #128\n  sta f:$430400,x\n  sta f:$430460,x\n  lda #0\n  sta f:$430402,x\n  sta f:$430462,x\n  inx\n  inx\n  inx\n  inx\n  cpx #96\n  bne triple_init_history\ntriple_initialized:\n  ldx #0')
+        text=text.replace('  cmp #3\n  bcs dirty_return', '  cmp #4\n  bcs dirty_return').replace('  cmp #2\n  bcs dirty_return','  cmp #3\n  bcs dirty_return')
+        text=replace(text,'  sta $0120,x\n  tya\n  sta f:$430400,x','  sta f:$4304c0,x\n  cmp f:$430460,x\n  bcc :+\n  lda f:$430460,x\n:\n  sta $0120,x\n  lda f:$430400,x\n  sta f:$430460,x\n  tya\n  sta f:$430400,x')
+        text=replace(text,'  sta $0122,x\n  tya\n  sta f:$430402,x','  sta f:$4304c2,x\n  cmp f:$430462,x\n  bcs :+\n  lda f:$430462,x\n:\n  sta $0122,x\n  lda f:$430402,x\n  sta f:$430462,x\n  tya\n  sta f:$430402,x')
+    if triple_bw and name=='dirty':
+        text=replace(text,'transfer_row:\n  lda $0120,x\n  sta dirty_left\n  lda $0122,x\n  sta dirty_right', 'transfer_row:\n  lda f:$4304c0,x\n  sta dirty_left\n  lda f:$4304c2,x\n  sta dirty_right')
     if name=='cpu':
         if irq:
             text=text.replace('.import sa1_entry','.import sa1_entry, sa1_dma_irq')
             text=replace(text,'  lda #sa1_entry', '  lda #sa1_dma_irq\n  sta $2207\n  lda #sa1_entry')
         a=text.index('; SA-1の線形4bpp出力');b=text.index('wait_blank:',a)
-        return text[:a]+'.include "pipeline_cpu.inc"\n'+text[b:]
+        text=text[:a]+'.include "pipeline_cpu.inc"\n'+text[b:]
+        if large_edge:text='SA1_CC_BUFFER = $02e0\n'+text
+        return text
     if name=='dirty' and transfer_tiles:
         text=replace(text,'  jml sa1_tiles_transfer', '  jsl sa1_tiles_transfer\n  lda #$2000\n  sta $14\n  lda $011a\n  cmp #51\n  bcs transfer_band_fallback\n  rtl\ntransfer_band_fallback:\n  lda #$0800\n  sta $14')
     if name not in ('renderer','fast','near','edge'):return text
@@ -55,6 +64,8 @@ def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=Fals
         text=replace(text,'  sta $2235\n  jsr edge_next', '  sta $2235\n  jsl sa1_dma_end\n  jsr edge_next')
         text=replace(text,'edge_restore_line:\n', 'edge_restore_line:\n  jsl sa1_dma_begin\n')
         text=replace(text,'  sta $2237\n  rep #$20\n  jsr edge_next', '  sta $2237\n  jsl sa1_dma_end\n  rep #$20\n  jsr edge_next')
+    if padded:text=padded_source(name,text)
+    if large_edge:text=large_edge_source(name,text)
     return '.setcpu "65816"\n'+text
 
 
@@ -88,4 +99,38 @@ def ground_buffers(text,depth):
         for table,size in [('color1_pointers',150),('color3_pointers',150),('horizontal_pointers',270),('far_pointers',10)]:
             text+='pipeline_'+table+'_'+str(i)+': .res '+str(size)+'\n'
     text+='pipe_ground_extra_end:\n'
+    return text
+
+
+def padded_source(name,text):
+    if name=='renderer':
+        text=text.replace('.repeat 7\n    asl','.repeat 8\n    asl')
+        text=text.replace('.repeat 8\n    lsr','.repeat 9\n    lsr')
+        text=text.replace('  adc #128\n  sta bgdest','  adc #256\n  sta bgdest')
+        text=text.replace('  .endrepeat\n  sta rowbase','  .endrepeat\n  clc\n  adc #64\n  sta rowbase')
+        text=text.replace('  .endrepeat\n  sta bgdest','  .endrepeat\n  clc\n  adc #64\n  sta bgdest')
+        text=replace(text,'  lda bgrow\n  xba\n  asl\n  asl\n  clc\n  adc $0120,x', '  lda bgrow\n  xba\n  asl\n  asl\n  asl\n  clc\n  adc #64\n  clc\n  adc $0120,x')
+        text=replace(text,'  lda $0120,x\n  sta dirtyL\n  lda $0122,x\n  sta dirtyR\n  cmp dirtyL', '  lda #0\n  sta dirtyL\n  lda #128\n  sta dirtyR\n  cmp dirtyL')
+        text=replace(text,'  lda dirtyL\n  cmp $b4','  jmp row_partial\n  lda dirtyL\n  cmp $b4')
+    elif name=='fast':
+        text=replace(text,'  .repeat 7\n    asl', '  .repeat 8\n    asl')
+        text=replace(text,'  adc $48\n  sta spriteBase', '  adc $48\n  clc\n  adc #64\n  sta spriteBase')
+        text=replace(text,'  jsl sa1_edge_prepare', '  lda $c0\n  and #255\n  clc\n  adc $38\n  bpl padded_left_safe\n  cmp #$ff80\n  jcc fast_fail\npadded_left_safe:\n  lda $c2\n  and #255\n  clc\n  adc $38\n  bmi padded_x_safe\n  cmp #385\n  jcs fast_fail\npadded_x_safe:\n  stz $c4')
+    return text
+
+
+def large_edge_source(name,text):
+    if name=='renderer':
+        text=replace(text,'  jmp next\n.segment "BOOT"', '  jmp next\n.assert * <= $02e0, error, "SA1 worker overlaps CC buffer"\n.segment "BOOT"')
+        text=replace(text,'.segment "SA1"\nrow:', '.segment "BOOT"\nrow:')
+        text=text.replace('.assert * <= $0700, error, "SA-1 shared worker overlaps edge JIT"','')
+        text=text.replace('.assert * <= $05c0, error, "SA-1 worker overlaps guard cache"','')
+    elif name=='edge':
+        text=text.replace('lda #256','lda #1024').replace('lda #$0600','lda #$0300')
+        text=replace(text,'edge_save_line:\n  jsl sa1_dma_begin', '  jsl sa1_dma_begin\nedge_save_line:')
+        text=replace(text,'  sta $2235\n  jsl sa1_dma_end\n  jsr edge_next', '  sta $2235\n  jsr edge_next')
+        text=replace(text,'  bne edge_save_line\n  rtl', '  bne edge_save_line\n  jsl sa1_dma_end\n  rtl')
+        text=replace(text,'edge_restore_line:\n  jsl sa1_dma_begin','  jsl sa1_dma_begin\nedge_restore_line:')
+        text=replace(text,'  sta $2237\n  jsl sa1_dma_end\n  rep #$20', '  sta $2237\n  rep #$20')
+        text=replace(text,'  bne edge_restore_line\n  rtl','  bne edge_restore_line\n  jsl sa1_dma_end\n  rtl')
     return text

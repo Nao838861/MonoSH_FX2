@@ -15,7 +15,11 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--fast-dma',action='store_true');ap.add_argument('--triple-bw',action='store_true');ap.add_argument('--large-edge-cache',action='store_true');ap.add_argument('--padded-pipeline',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    assert not args.fast_dma or args.pipeline
+    assert not args.triple_bw or (args.pipeline_direct and args.redraw_all)
+    assert not args.large_edge_cache or (args.pipeline and args.pipeline_direct and not args.clip_edges)
+    assert not args.padded_pipeline or (args.pipeline and args.redraw_all and not args.pipeline_direct and not args.merge_dma and not args.transfer_tiles and not args.clip_edges)
     assert not args.clip_edges or (args.pipeline and args.redraw_all)
     assert not args.merge_dma or (args.pipeline and args.pipeline_direct and not args.transfer_tiles)
     assert not args.redraw_all or args.renderer=='macros'
@@ -42,9 +46,14 @@ def main():
     if args.tile_dma:defines+=['-D','SA1_TILE_DMA=1']
     if args.transfer_tiles:defines+=['-D','SA1_TRANSFER_TILES=1']
     if args.pipeline:defines+=['-D','SA1_PIPELINE=1','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}']
+    if args.fast_dma:defines+=['-D','SA1_FAST_DMA=1']
+    if args.triple_bw:defines+=['-D','SA1_TRIPLE_BW=1']
     if args.pipeline_direct:defines+=['-D','SA1_PIPELINE_DIRECT=1']
     if args.pipeline_irq:defines+=['-D','SA1_PIPELINE_IRQ=1']
-    if args.renderer=='macros':defines+=['-D','SA1_PADDED=1','-D','SA1_DIRECT=1']
+    if args.renderer=='macros':
+        defines+=['-D','SA1_PADDED=1']
+        if not args.padded_pipeline:defines+=['-D','SA1_DIRECT=1']
+    if args.padded_pipeline:defines+=['-D','SA1_PIPELINE_PADDED=1']
     objs=[]
     renderer=SA1/('renderer_game_'+args.renderer+'.s' if args.renderer!='dma' else 'renderer_game.s')
     for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('tiles',SA1/'tiles_game.s'),('shape',SA1/'shape_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('edge',SA1/'edge_cached_game.s'),('compact',SA1/'compact_game.s'),('near',SA1/'near_game.s'),('sort',SA1/'sort_game.s'),('packet',GAME/'packet.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
@@ -62,7 +71,7 @@ def main():
             src=BUILD/(name+'.s');src.write_text(text,encoding='utf-8')
         elif args.pipeline:
             from sa1_pipeline_sources import prepare
-            generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct,irq=args.pipeline_irq,transfer_tiles=args.transfer_tiles,merge_dma=args.merge_dma)
+            generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct,irq=args.pipeline_irq,transfer_tiles=args.transfer_tiles,merge_dma=args.merge_dma,padded=args.padded_pipeline,large_edge=args.large_edge_cache,triple_bw=args.triple_bw)
             src=BUILD/(name+'_pipeline.s');src.write_text(generated,encoding='utf-8')
         if name=='renderer' and args.clip_edges:
             text=src.read_text(encoding='utf-8').replace('  lda $0120,x\n  sta dirtyL\n  lda $0122,x\n  sta dirtyR', '  lda #0\n  sta dirtyL\n  lda #128\n  sta dirtyR')
@@ -94,13 +103,15 @@ def main():
             fingerprint.update(path.read_bytes())
         for key,value in sorted(variants.items()):
             fingerprint.update(str(key).encode());fingerprint.update(value[1].tobytes());fingerprint.update(str(value[1].shape).encode())
-        key=fingerprint.hexdigest()+args.renderer
-        cache=BUILD/'compiled_cache.bin';metadata=BUILD/'compiled_cache.json'
+        stride=256 if args.padded_pipeline else 128
+        key=fingerprint.hexdigest()+args.renderer+str(stride)
+        suffix='_256' if args.padded_pipeline else ''
+        cache=BUILD/('compiled_cache'+suffix+'.bin');metadata=BUILD/('compiled_cache'+suffix+'.json')
         if cache.exists() and metadata.exists() and json.loads(metadata.read_text()).get('key')==key:
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros')
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -136,7 +147,7 @@ def main():
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'fastDma':args.fast_dma,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
