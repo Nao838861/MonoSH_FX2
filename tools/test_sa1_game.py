@@ -40,6 +40,8 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');args=ap.parse_args()
     dest=BUILD/args.scenario;dest.mkdir(exist_ok=True)
     for path in dest.glob('present*'):path.unlink()
+    for path in dest.glob('frame*'):
+        if re.fullmatch(r'frame\d+\.(png|rgb)',path.name):path.unlink()
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
     config=json.loads((BUILD/'manifest.json').read_text())
     assert hashlib.sha256((BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()).hexdigest()==config['romSha256']

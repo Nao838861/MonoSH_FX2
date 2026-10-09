@@ -8,12 +8,15 @@ def main():
     rom=BUILD/'MonoSHSA1_4bpp_game.sfc'
     assert hashlib.sha256(rom.read_bytes()).hexdigest()==manifest['romSha256']
     summaries={}
+    for old in dest.glob('*_frame*.png'):old.unlink()
     for scene in ('play','boss'):
         path=BUILD/scene/'summary.json';s=json.loads(path.read_text())
         assert s['romSha256']==manifest['romSha256'],f'{scene}: stale result'
         assert s['pixelMatchedPresents']>=120
         summaries[scene]=s;shutil.copy2(path,dest/(scene+'.json'))
-        for p in (BUILD/scene).glob('frame*.png'):shutil.copy2(p,dest/(scene+'_'+p.name))
+        for frame in (120,s['fields']):
+            p=BUILD/scene/f'frame{frame}.png'
+            shutil.copy2(p,dest/(scene+'_'+p.name))
     for name in ('manifest.json','compiled_game_packing.json','game.lbl'):
         shutil.copy2(BUILD/name,dest/name)
     with zipfile.ZipFile(dest/'pixel_evidence.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
