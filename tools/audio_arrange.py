@@ -170,6 +170,7 @@ VOICES = {
 DRUM_VOLUME = {'F': (196, 64), 'B': (176, 60)}
 
 
+# S-DSPの主音量102は、ゲームの音の大きさを原作サントラ（約-15.6LUFS）に合わせた値。
 # 曲全体の音量。効果音（主音量だけが効く）との釣り合いを前版と同じにするため、曲の声だけ約2.2dB下げる
 MUSIC_GAIN = 0.776
 
@@ -178,7 +179,7 @@ def song(tracks, beats=640, tempo=154, title='Space Harrier - native SFC arrange
     end = beats * TPB
     lines = ['; 音符参照: JK150 / SixtyTunes (VGMusic)。パートの役割ごとに8声へ割り振ったSFC編曲。',
              f'#Title {title}', '#Composer Hiroshi Kawaguchi',
-             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 96'] + ECHO
+             '#ZenLen 192', f'#Tempo {tempo}', '#MainVolume 102'] + ECHO
     insts = sorted({v['inst'] for v in VOICES.values()} | {i for v in VOICES.values() for _, i in v.get('ranges', [])}
                    | {m[1] for m in DRUM_MAP.values()})
     lines += [f'@{name} {name}' for name in insts]

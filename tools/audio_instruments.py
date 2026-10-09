@@ -37,7 +37,7 @@ def emphasize(values, loop):
     return np.concatenate([head, body])
 
 
-def write_wav(path, values, rate=RATE, level=0.70):
+def write_wav(path, values, rate=RATE, level=0.87):
     values = np.asarray(values, dtype=np.float64)
     values = np.concatenate([values, np.zeros(-len(values) % 16)])
     peak = np.max(np.abs(values)) or 1.0
@@ -254,7 +254,7 @@ DRUMS = {
 }
 
 # 決めの1打の明るさは原作サントラに合わせて、クラッシュだけ約5dB下げる
-DRUM_LEVEL = {'crash': 0.45}
+DRUM_LEVEL = {'crash': 0.56}
 
 
 def write_all(folder):
@@ -267,6 +267,6 @@ def write_all(folder):
         write_wav(folder / f'{name}.wav', emphasize(y, loop))
         info[name] = dict(loop=loop, period=period)
     for name, (make, rate) in DRUMS.items():
-        write_wav(folder / f'{name}.wav', emphasize(make(), None), rate=rate, level=DRUM_LEVEL.get(name, 0.8))
+        write_wav(folder / f'{name}.wav', emphasize(make(), None), rate=rate, level=DRUM_LEVEL.get(name, 0.99))
         info[name] = dict(rate=rate)
     return info

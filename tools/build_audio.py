@@ -40,7 +40,7 @@ def write_wav(name, values, rate=32000):
     with wave.open(str(AUDIO / 'samples' / (name + '.wav')), 'wb') as out:
         out.setparams((1, 2, rate, 0, 'NONE', 'not compressed'))
         out.writeframes(struct.pack('<' + 'h' * len(values),
-                                   *[round(x / peak * 23000) for x in values]))
+                                   *[round(x / peak * 28600) for x in values]))
 
 
 def se_samples():
@@ -82,7 +82,7 @@ def main():
     project = {'_about': {'file_type': 'Terrific Audio Driver project file', 'version': VERSION},
         'brr_samples': music + se_samples(), 'default_sfx_flags': {'one_channel': True, 'interruptible': True},
         'high_priority_sound_effects': ['death', 'boss_explosion'],
-        'sound_effects': ['stumble', 'explosion', 'reflect'],
+        'sound_effects': ['stumble', 'explosion', 'ground_explosion', 'reflect'],
         'low_priority_sound_effects': ['shot'], 'sound_effect_file': 'effects.txt',
         'songs': [{'name': 'theme', 'source': 'theme.mml'}]}
     (AUDIO / 'theme.mml').write_text(audio_arrange.song(audio_arrange.midi_notes(midi)), encoding='utf-8')

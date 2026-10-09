@@ -8,6 +8,7 @@
 .import _monosh_stage_need_hitboxes, _monosh_player_state
 .import _monosh_player_bullets, _monosh_player_bullet_count
 .import _monosh_player_x, _monosh_player_bottom
+.import _fx_audio_events
 .segment "ZEROPAGE"
 op: .res 2
 gp: .res 2
@@ -283,6 +284,9 @@ test_x:
   bne next_bullet
 hit:
   sep #$20
+  lda _fx_audio_events
+  ora #8                    ; 地形OBJの破壊音（audio.s が描画後に送る）
+  sta _fx_audio_events
   stz _monosh_player_bullets,x
   dec _monosh_player_bullet_count
   lda #2

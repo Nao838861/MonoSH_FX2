@@ -1,6 +1,6 @@
 {
   "rom": "releases/MonoSHFX2_4bpp30_mono.sfc",
-  "sha256": "f01189c17ca4ec13155736fa9f06bef92482108340f6f906c8864b069b8372ef",
+  "sha256": "52a197c5b79f3905360961a962c114d892052123ff2856243c2422ab8054e0f1",
   "buildMode": {
     "fullFramebufferTransfer": true,
     "gsuUv": true,
@@ -57,7 +57,7 @@
       "halves": 2314,
       "logicCalls": 2316,
       "logic": 2316,
-      "gsuMaxMs": 10.323192,
+      "gsuMaxMs": 10.321143,
       "intervals": {
         "88": 1,
         "2": 1156
@@ -66,7 +66,7 @@
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f01189c17ca4ec13155736fa9f06bef92482108340f6f906c8864b069b8372ef",
+      "romSha256": "52a197c5b79f3905360961a962c114d892052123ff2856243c2422ab8054e0f1",
       "actualGsuMaxMs": 10.318536,
       "controlsFireVerified": true,
       "renderFPS": 30.0494,
@@ -86,7 +86,7 @@
       "halves": 2513,
       "logicCalls": 2515,
       "logic": 2515,
-      "gsuMaxMs": 14.247247,
+      "gsuMaxMs": 14.247899,
       "intervals": {
         "3": 1,
         "88": 1,
@@ -96,7 +96,7 @@
       "dyingSeen": true,
       "doneSeen": true,
       "restartSeen": true,
-      "romSha256": "f01189c17ca4ec13155736fa9f06bef92482108340f6f906c8864b069b8372ef",
+      "romSha256": "52a197c5b79f3905360961a962c114d892052123ff2856243c2422ab8054e0f1",
       "actualGsuMaxMs": 15.877901,
       "renderFPS": 30.03743289526085,
       "delayedPresents": 1,
@@ -115,7 +115,7 @@
       "halves": 394,
       "logicCalls": 396,
       "logic": 396,
-      "gsuMaxMs": 9.585854,
+      "gsuMaxMs": 9.587251,
       "intervals": {
         "88": 1,
         "2": 196
@@ -124,7 +124,7 @@
       "dyingSeen": false,
       "doneSeen": false,
       "restartSeen": false,
-      "romSha256": "f01189c17ca4ec13155736fa9f06bef92482108340f6f906c8864b069b8372ef",
+      "romSha256": "52a197c5b79f3905360961a962c114d892052123ff2856243c2422ab8054e0f1",
       "actualGsuMaxMs": 9.582409,
       "renderFPS": 30.0494,
       "delayedPresents": 0,

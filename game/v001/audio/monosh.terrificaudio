@@ -311,6 +311,7 @@
   "sound_effects": [
     "stumble",
     "explosion",
+    "ground_explosion",
     "reflect"
   ],
   "low_priority_sound_effects": [

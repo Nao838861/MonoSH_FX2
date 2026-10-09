@@ -2,7 +2,9 @@
 
 **このブランチは独立した[4bpp・30fps実験](README_4BPP30.md)です。** 起動は [play_4bpp30.cmd](play_4bpp30.cmd)、カラーROMは [MonoSHFX2_4bpp30_color.sfc](releases/MonoSHFX2_4bpp30_color.sfc)。mainの更新は一方向に取り込み、元の作業フォルダーには変更を加えません。以下の2bppの記述はmainから引き継いだ開発履歴です。
 
-4bpp版の最新は、地上物体の爆発先頭で影38を選び真っ黒になる条件判定の修正。草二種類の透過・爆発四枚・顎の修正も維持する。共通16色・ディザなし、自機の専用色、BGM第2版とSEを維持。[実ROMの結果](game/v001/RESULTS_4BPP30_20261008.md)、[黒い先頭コマの修正前後](game/v001/results/stage_explosion_20261009/comparison.png)、[草・顎の比較](game/v001/results/material_repair_20261009/comparison.png)。
+4bpp版の最新は、音源をmainの最新（189a40b）と同じにした版。曲を起動直後から鳴らし、音量を原作サントラに合わせ、敵の爆発音に余韻を付け、自弾で木・草・岩を壊した時の爆発音を追加した。カラーROM `248a7dde`、白黒ROM `52a197c5`。描画・転送・30fpsの表示間隔は全試験で取り込み前と同一。
+
+その前は、地上物体の爆発先頭で影38を選び真っ黒になる条件判定の修正。草二種類の透過・爆発四枚・顎の修正も維持する。共通16色・ディザなし、自機の専用色、BGM第2版とSEを維持。[実ROMの結果](game/v001/RESULTS_4BPP30_20261008.md)、[黒い先頭コマの修正前後](game/v001/results/stage_explosion_20261009/comparison.png)、[草・顎の比較](game/v001/results/material_repair_20261009/comparison.png)。
 
 最新ROMは [2bppの敵・障害物のカラー化試作](game/v001/RESULTS_20261008_BG_COLOR.md)。指定録画から原画を取り込み、透明＋3色×8組を8×8単位で割り当てる。CPUが奥から属性を上書きし、SELECT（専用ランチャーはSpace）で敵・障害物だけモノクロへ切り替える。[比較画像](game/v001/results/bg_color_20261008/comparison.png)。
 

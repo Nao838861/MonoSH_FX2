@@ -5,7 +5,7 @@
   "halves": 1915,
   "logicCalls": 1917,
   "logic": 1917,
-  "gsuMaxMs": 7.05192,
+  "gsuMaxMs": 7.050802,
   "intervals": {
     "87": 1,
     "2": 956
@@ -14,7 +14,7 @@
   "dyingSeen": false,
   "doneSeen": false,
   "restartSeen": false,
-  "romSha256": "7200889f76edfaabab9c0ad9435ddd77fd9c3cb76b09c4ad1bf5bf8861049ed0",
+  "romSha256": "248a7ddee7ca0c299f4ff99cd60d6b5935b0c41831d9282dd08f6255e5e0f07f",
   "actualGsuMaxMs": 7.047357,
   "renderFPS": 30.0494,
   "delayedPresents": 0,

@@ -43,10 +43,10 @@ cpu_asm.o:
 audio_asm.o:
     ZEROPAGE          Offs=000000  Size=000002  Align=00001  Fill=0000
     AUDIOBSS          Offs=000000  Size=000018  Align=00001  Fill=0000
-    BOOT              Offs=000268  Size=0003D6  Align=00001  Fill=0000
+    BOOT              Offs=000268  Size=0003EB  Align=00001  Fill=0000
 data_asm.o:
-    BOOT              Offs=00063E  Size=00001E  Align=00001  Fill=0000
-    AUDIO59           Offs=000000  Size=00D090  Align=00001  Fill=0000
+    BOOT              Offs=000653  Size=00001E  Align=00001  Fill=0000
+    AUDIO59           Offs=000000  Size=00D0C2  Align=00001  Fill=0000
 gsu_asm.o:
     GSU               Offs=000000  Size=00092D  Align=00010  Fill=0000
     ASSET44           Offs=000000  Size=010000  Align=00001  Fill=0000
@@ -94,138 +94,138 @@ objects_asm.o:
 projection_asm.o:
     CODE              Offs=006045  Size=007097  Align=00001  Fill=0000
 stage_asm.o:
-    CODE              Offs=00D0DC  Size=000409  Align=00001  Fill=0000
+    CODE              Offs=00D0DC  Size=000411  Align=00001  Fill=0000
     ZEROPAGE          Offs=00002E  Size=000006  Align=00001  Fill=0000
 stage_update_asm.o:
-    CODE              Offs=00D4E5  Size=000161  Align=00001  Fill=0000
+    CODE              Offs=00D4ED  Size=000161  Align=00001  Fill=0000
 enemy_render_asm.o:
-    CODE              Offs=00D646  Size=0002A1  Align=00001  Fill=0000
+    CODE              Offs=00D64E  Size=0002A1  Align=00001  Fill=0000
     ZEROPAGE          Offs=000034  Size=000004  Align=00001  Fill=0000
 enemy_collision_asm.o:
-    CODE              Offs=00D8E7  Size=000215  Align=00001  Fill=0000
+    CODE              Offs=00D8EF  Size=000215  Align=00001  Fill=0000
     ZEROPAGE          Offs=000038  Size=000002  Align=00001  Fill=0000
 enemy_geometry_asm.o:
-    CODE              Offs=00DAFC  Size=00008A  Align=00001  Fill=0000
+    CODE              Offs=00DB04  Size=00008A  Align=00001  Fill=0000
     ZEROPAGE          Offs=00003A  Size=000004  Align=00001  Fill=0000
 enemy_bullet_asm.o:
-    CODE              Offs=00DB86  Size=00014A  Align=00001  Fill=0000
+    CODE              Offs=00DB8E  Size=00014A  Align=00001  Fill=0000
 enemy_update_asm.o:
-    CODE              Offs=00DCD0  Size=0002BE  Align=00001  Fill=0000
+    CODE              Offs=00DCD8  Size=0002BE  Align=00001  Fill=0000
     ZEROPAGE          Offs=00003E  Size=000002  Align=00001  Fill=0000
 player_asm.o:
-    CODE              Offs=00DF8E  Size=000262  Align=00001  Fill=0000
+    CODE              Offs=00DF96  Size=000262  Align=00001  Fill=0000
 frame_asm.o:
-    CODE              Offs=00E1F0  Size=0002FB  Align=00001  Fill=0000
+    CODE              Offs=00E1F8  Size=0002FB  Align=00001  Fill=0000
 boss_render_asm.o:
-    CODE              Offs=00E4EB  Size=00019F  Align=00001  Fill=0000
+    CODE              Offs=00E4F3  Size=00019F  Align=00001  Fill=0000
 boss_collision_asm.o:
-    CODE              Offs=00E68A  Size=000162  Align=00001  Fill=0000
+    CODE              Offs=00E692  Size=000162  Align=00001  Fill=0000
 combat_asm.o:
-    CODE              Offs=00E7EC  Size=0001AD  Align=00001  Fill=0000
+    CODE              Offs=00E7F4  Size=0001AD  Align=00001  Fill=0000
 dma_asm.o:
-    CODE              Offs=00E999  Size=00004B  Align=00001  Fill=0000
+    CODE              Offs=00E9A1  Size=00004B  Align=00001  Fill=0000
     BSS               Offs=00152D  Size=000146  Align=00001  Fill=0000
     ZEROPAGE          Offs=000040  Size=000002  Align=00001  Fill=0000
 submit_asm.o:
-    CODE              Offs=00E9E4  Size=0000D4  Align=00001  Fill=0000
+    CODE              Offs=00E9EC  Size=0000D4  Align=00001  Fill=0000
 smooth_depth_asm.o:
-    CODE              Offs=00EAB8  Size=000481  Align=00001  Fill=0000
+    CODE              Offs=00EAC0  Size=000481  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(add.o):
-    CODE              Offs=00EF39  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00EF41  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addeqsp.o):
-    CODE              Offs=00EF55  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00EF5D  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(addysp.o):
-    CODE              Offs=00EF66  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00EF6E  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax2.o):
-    CODE              Offs=00EF74  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00EF7C  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax3.o):
-    CODE              Offs=00EF7F  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00EF87  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(aslax4.o):
-    CODE              Offs=00EF8D  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00EF95  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax1.o):
-    CODE              Offs=00EF9E  Size=00000A  Align=00001  Fill=0000
+    CODE              Offs=00EFA6  Size=00000A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax2.o):
-    CODE              Offs=00EFA8  Size=00000F  Align=00001  Fill=0000
+    CODE              Offs=00EFB0  Size=00000F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(asrax3.o):
-    CODE              Offs=00EFB7  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00EFBF  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp1.o):
-    CODE              Offs=00EFCB  Size=000009  Align=00001  Fill=0000
+    CODE              Offs=00EFD3  Size=000009  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp2.o):
-    CODE              Offs=00EFD4  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFDC  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp3.o):
-    CODE              Offs=00EFE1  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFE9  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp4.o):
-    CODE              Offs=00EFEE  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00EFF6  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(decsp5.o):
-    CODE              Offs=00EFFB  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F003  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(div.o):
-    CODE              Offs=00F008  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00F010  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(icmp.o):
-    CODE              Offs=00F01D  Size=00002E  Align=00001  Fill=0000
+    CODE              Offs=00F025  Size=00002E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp1.o):
-    CODE              Offs=00F04B  Size=000007  Align=00001  Fill=0000
+    CODE              Offs=00F053  Size=000007  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp2.o):
-    CODE              Offs=00F052  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F05A  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp3.o):
-    CODE              Offs=00F068  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F070  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp4.o):
-    CODE              Offs=00F06D  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F075  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp5.o):
-    CODE              Offs=00F072  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F07A  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp6.o):
-    CODE              Offs=00F077  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F07F  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp7.o):
-    CODE              Offs=00F07C  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F084  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(incsp8.o):
-    CODE              Offs=00F081  Size=000005  Align=00001  Fill=0000
+    CODE              Offs=00F089  Size=000005  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(ldai.o):
-    CODE              Offs=00F086  Size=00000C  Align=00001  Fill=0000
+    CODE              Offs=00F08E  Size=00000C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(makebool.o):
-    CODE              Offs=00F092  Size=00002C  Align=00001  Fill=0000
+    CODE              Offs=00F09A  Size=00002C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(memcpy.o):
-    CODE              Offs=00F0BE  Size=00003C  Align=00001  Fill=0000
+    CODE              Offs=00F0C6  Size=00003C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax10.o):
-    CODE              Offs=00F0FA  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F102  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax3.o):
-    CODE              Offs=00F113  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F11B  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax5.o):
-    CODE              Offs=00F124  Size=000014  Align=00001  Fill=0000
+    CODE              Offs=00F12C  Size=000014  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax6.o):
-    CODE              Offs=00F138  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F140  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(mulax7.o):
-    CODE              Offs=00F14E  Size=000019  Align=00001  Fill=0000
+    CODE              Offs=00F156  Size=000019  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(negabs.o):
-    CODE              Offs=00F167  Size=000012  Align=00001  Fill=0000
+    CODE              Offs=00F16F  Size=000012  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(popptr1.o):
-    CODE              Offs=00F179  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F181  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pusha.o):
-    CODE              Offs=00F187  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F18F  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushax.o):
-    CODE              Offs=00F19D  Size=00001A  Align=00001  Fill=0000
+    CODE              Offs=00F1A5  Size=00001A  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(pushwsp.o):
-    CODE              Offs=00F1B7  Size=00001C  Align=00001  Fill=0000
+    CODE              Offs=00F1BF  Size=00001C  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shelp.o):
-    CODE              Offs=00F1D3  Size=000020  Align=00001  Fill=0000
+    CODE              Offs=00F1DB  Size=000020  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax1.o):
-    CODE              Offs=00F1F3  Size=000008  Align=00001  Fill=0000
+    CODE              Offs=00F1FB  Size=000008  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax3.o):
-    CODE              Offs=00F1FB  Size=00000E  Align=00001  Fill=0000
+    CODE              Offs=00F203  Size=00000E  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(shrax4.o):
-    CODE              Offs=00F209  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F211  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staspidx.o):
-    CODE              Offs=00F21A  Size=000016  Align=00001  Fill=0000
+    CODE              Offs=00F222  Size=000016  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxsp.o):
-    CODE              Offs=00F230  Size=00000B  Align=00001  Fill=0000
+    CODE              Offs=00F238  Size=00000B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(staxspi.o):
-    CODE              Offs=00F23B  Size=00001B  Align=00001  Fill=0000
+    CODE              Offs=00F243  Size=00001B  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(sub.o):
-    CODE              Offs=00F256  Size=000015  Align=00001  Fill=0000
+    CODE              Offs=00F25E  Size=000015  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(subysp.o):
-    CODE              Offs=00F26B  Size=00000D  Align=00001  Fill=0000
+    CODE              Offs=00F273  Size=00000D  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(udiv.o):
-    CODE              Offs=00F278  Size=00004F  Align=00001  Fill=0000
+    CODE              Offs=00F280  Size=00004F  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(umod.o):
-    CODE              Offs=00F2C7  Size=000011  Align=00001  Fill=0000
+    CODE              Offs=00F2CF  Size=000011  Align=00001  Fill=0000
 D:\HomeBrew\CC65\lib\none.lib(zeropage.o):
     ZEROPAGE          Offs=000042  Size=00001A  Align=00001  Fill=0000
 
@@ -234,11 +234,11 @@ Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-CODE                  000000  00F2D7  00F2D8  00001
+CODE                  000000  00F2DF  00F2E0  00001
 ZEROPAGE              000000  00005B  00005C  00001
 AUDIOBSS              001600  001617  000018  00001
 RODATA                002000  00E3FA  00C3FB  00001
-BOOT                  008000  00865B  00065C  00001
+BOOT                  008000  008670  000671  00001
 DATA                  00E3FB  00E3FD  000003  00001
 BSS                   00E3FE  00FA70  001673  00001
 HEADER                00FFB0  00FFFF  000050  00001
@@ -266,7 +266,7 @@ ASSET56               560000  56FFFF  010000  00001
 ASSET57               570000  57FFFF  010000  00001
 ASSET58               580000  58FFFF  010000  00001
 ASSET59               590000  5912FF  001300  00001
-AUDIO59               591300  59E38F  00D090  00001
+AUDIO59               591300  59E3C1  00D0C2  00001
 PAL5A                 5A0000  5AFFFF  010000  00001
 PAL5B                 5B0000  5BFFFF  010000  00001
 PAL5C                 5C0000  5CFFFF  010000  00001
@@ -277,7 +277,7 @@ SPAN5F                5F0000  5FFFFF  010000  00001
 
 Exports list by name:
 ---------------------
-LoadAudioData             00863E RLF    TAD_IO_VERSION            000014 REA
+LoadAudioData             008653 RLF    TAD_IO_VERSION            000014 REA
 Tad_AudioDriver_Bin       591374 RLA    Tad_AudioDriver_SIZE      000C95 REA
 Tad_Loader_Bin            591300 RLA    Tad_Loader_SIZE           000074 REZ
 __STARTUP__               000001 REA    _boss_age                 00E665 RLA
@@ -289,16 +289,16 @@ _boss_part_active         00E41C RLA    _boss_part_bottom         00E40A RLA
 _boss_part_timer          00E425 RLA    _boss_part_x              00E401 RLA
 _boss_part_z              00E413 RLA    _boss_render_camera_delta 00E663 RLA
 _fx4_explosion_lift       00339C RLA    _fx_audio_events          001610 RLA
-_fx_boss_hits             00E68A RLA    _fx_boss_project          00E5C7 RLA
+_fx_boss_hits             00E692 RLA    _fx_boss_project          00E5CF RLA
 _fx_build_ground          0033F2 RLA    _fx_build_packet          005CB7 RLA
 _fx_buttons               00EFD7 RLA    _fx_draw                  00E853 RLA
-_fx_draw_count            00EAD3 RLA    _fx_em0_geometry          00DAFC RLA
-_fx_enemy_collisions      00D8E7 RLA    _fx_enemy_em1_update      00DE68 RLA
+_fx_draw_count            00EAD3 RLA    _fx_em0_geometry          00DB04 RLA
+_fx_enemy_collisions      00D8EF RLA    _fx_enemy_em1_update      00DE70 RLA
 _fx_enemy_em1_update_reference 001D8C RLA    _fx_enemy_fire_em1        001D4E RLA
-_fx_enemy_remove          001D43 RLA    _fx_enemy_render          00D646 RLA
-_fx_enemy_render_bullets  00D75D RLA    _fx_far_d_acc             00EFE3 RLA
+_fx_enemy_remove          001D43 RLA    _fx_enemy_render          00D64E RLA
+_fx_enemy_render_bullets  00D765 RLA    _fx_far_d_acc             00EFE3 RLA
 _fx_far_u_acc             00EFE1 RLA    _fx_fire_actions          00EFDA RLA
-_fx_frame                 00E1F0 RLA    _fx_ground_c1ptr          00F6BF RLA
+_fx_frame                 00E1F8 RLA    _fx_ground_c1ptr          00F6BF RLA
 _fx_ground_c3ptr          00F6C1 RLA    _fx_ground_camera         00833C RLA
 _fx_ground_color1         00EFEA RLA    _fx_ground_color3         00F1AC RLA
 _fx_ground_depth_rows     0083CD RLA    _fx_ground_far_x          00F69D RLA
@@ -307,14 +307,14 @@ _fx_ground_horizon        00F6C3 RLA    _fx_ground_horizontal     00F36E RLA
 _fx_ground_hptr           00F698 RLA    _fx_ground_palette_record 00F69B RLA
 _fx_ground_phase          00EFD6 RLA    _fx_ground_vptr           00F6BD RLA
 _fx_ground_world_phase    00F69A RLA    _fx_input                 00EFD9 RLA
-_fx_open_size             00EAB8 RLA    _fx_packet                00EAD6 RLA
+_fx_open_size             00EAC0 RLA    _fx_packet                00EAD6 RLA
 _fx_packet_count          00EAD4 RLA    _fx_present               00307B RLA
 _fx_read_input            002F73 RLA    _fx_sky_color             0098B7 RLA
-_fx_stage_contact         00D39A RLA    _fx_stage_render          00D0DC RLA
-_fx_stage_update          00D4E5 RLA    _fx_submit                00E9E4 RLA
+_fx_stage_contact         00D3A2 RLA    _fx_stage_render          00D0DC RLA
+_fx_stage_update          00D4ED RLA    _fx_submit                00E9EC RLA
 _ground_irq_vblank_count  00EFDE RLA    _history_head             00E664 RLA
 _hit_pending              00EFE5 RLA    _intro_timer              00E762 RLA
-_main                     002DBB RLA    _memcpy                   00F0BE RLA
+_main                     002DBB RLA    _memcpy                   00F0C6 RLA
 _monosh_bom_geometry      0047FF RLA    _monosh_boss_body_geometry 00375E RLA
 _monosh_boss_bom_depth_by_size 00391A RLA    _monosh_boss_bom_geometry 00383C RLA
 _monosh_boss_bullet_velocity 003A08 RLA    _monosh_boss_explosion_ground_bottom 003999 RLA
@@ -324,18 +324,18 @@ _monosh_boss_init         000015 RLA    _monosh_boss_path_center_y 0021E0 RLA
 _monosh_boss_path_center_y_mid 0024B0 RLA    _monosh_boss_path_x       0020F0 RLA
 _monosh_boss_path_x_mid   0023C0 RLA    _monosh_boss_path_z       002000 RLA
 _monosh_boss_path_z_mid   0022D0 RLA    _monosh_boss_prepare_render 0000D6 RLA
-_monosh_boss_render_only  00E4EB RLA    _monosh_boss_should_restart 000000 RLA
+_monosh_boss_render_only  00E4F3 RLA    _monosh_boss_should_restart 000000 RLA
 _monosh_boss_state        00E3FE RLA    _monosh_bullet_reflect_rng 00E69D RLA
-_monosh_combat_fast_cache_reset 002F29 RLA    _monosh_combat_fast_frame 00E7EC RLA
-_monosh_combat_fast_render 00E86E RLA    _monosh_combat_fire_cooldown 00E69E RLA
+_monosh_combat_fast_cache_reset 002F29 RLA    _monosh_combat_fast_frame 00E7F4 RLA
+_monosh_combat_fast_render 00E876 RLA    _monosh_combat_fire_cooldown 00E69E RLA
 _monosh_combat_init       000837 RLA    _monosh_combat_reflect_bullet 002DC6 RLA
 _monosh_combat_render     0008D0 RLA    _monosh_ebullet_animation_geometry 004A48 RLA
 _monosh_ebullet_geometry  004C04 RLA    _monosh_ebullet_velocity  004C0E RLA
 _monosh_em1_closed_geometry 0048DD RLA    _monosh_enemies           00E6A3 RLA
 _monosh_enemy_active_count_value 00E6A1 RLA    _monosh_enemy_bullet_count 00E6A0 RLA
 _monosh_enemy_bullets     00E6F3 RLA    _monosh_enemy_em1_count   00E739 RLA
-_monosh_enemy_em1_phase   00E720 RLA    _monosh_enemy_fast_advance 00DCD0 RLA
-_monosh_enemy_fast_update_bullets 00DB86 RLA    _monosh_enemy_fire_boss_at 000BF4 RLA
+_monosh_enemy_em1_phase   00E720 RLA    _monosh_enemy_fast_advance 00DCD8 RLA
+_monosh_enemy_fast_update_bullets 00DB8E RLA    _monosh_enemy_fire_boss_at 000BF4 RLA
 _monosh_enemy_fire_em0_fast 00195E RLA    _monosh_enemy_frame       000B06 RLA
 _monosh_enemy_geometry    004721 RLA    _monosh_enemy_ground_bottom 0049D9 RLA
 _monosh_enemy_init        000A71 RLA    _monosh_enemy_paths       00706F RLA
@@ -348,7 +348,7 @@ _monosh_player_bullets    00E675 RLA    _monosh_player_draw_asset 00247A RLA
 _monosh_player_draw_flags 002440 RLA    _monosh_player_init       002401 RLA
 _monosh_player_invuln     00E758 RLA    _monosh_player_pose       00E75A RLA
 _monosh_player_state      00E757 RLA    _monosh_player_stumble    00E759 RLA
-_monosh_player_update     00DF8E RLA    _monosh_player_update_reference 002933 RLA
+_monosh_player_update     00DF96 RLA    _monosh_player_update_reference 002933 RLA
 _monosh_player_x          00E753 RLA    _monosh_project_x         006045 RLA
 _monosh_reflected_bullet_count 00E694 RLA    _monosh_reflected_bullets 00E685 RLA
 _monosh_runtime_fire_actions 00EFDB RLA    _monosh_runtime_frame_counter 00EFDC RLA
@@ -365,50 +365,50 @@ _movement_fraction        00E760 RLA    _old_buttons              00EFE6 RLA
 _player_flip              00E763 RLA    _player_fy                00E75C RLA
 _player_run_phase         00E764 RLA    _pose_x_01                007135 RLA
 _pose_x_12                007148 RLA    _pose_x_23                00715B RLA
-addeq0sp                  00EF55 RLA    addeqysp                  00EF57 RLA
-addysp                    00EF67 RLA    addysp1                   00EF66 RLA
-aslax2                    00EF74 RLA    aslax4                    00EF8D RLA
-asrax1                    00EF9E RLA    asrax2                    00EFA8 RLA
-asrax3                    00EFB7 RLA    booleq                    00F098 RLA
-boolne                    00F092 RLA    boolult                   00F0B1 RLA
-c_sp                      000042 RLZ    decsp1                    00EFCB RLA
-decsp2                    00EFD4 RLA    decsp3                    00EFE1 RLA
-decsp4                    00EFEE RLA    decsp5                    00EFFB RLA
+addeq0sp                  00EF5D RLA    addeqysp                  00EF5F RLA
+addysp                    00EF6F RLA    addysp1                   00EF6E RLA
+aslax2                    00EF7C RLA    aslax4                    00EF95 RLA
+asrax1                    00EFA6 RLA    asrax2                    00EFB0 RLA
+asrax3                    00EFBF RLA    booleq                    00F0A0 RLA
+boolne                    00F09A RLA    boolult                   00F0B9 RLA
+c_sp                      000042 RLZ    decsp1                    00EFD3 RLA
+decsp2                    00EFDC RLA    decsp3                    00EFE9 RLA
+decsp4                    00EFF6 RLA    decsp5                    00F003 RLA
 fx4_build_skip            00F6C9 RLA    fx4_wait_obj_blank        00332C RLA
-fx_audio_init             00855D RLF    fx_audio_process          008587 RLF
-fx_build_obj              005E1A RLA    fx_em1_open_sizes         00EAE3 RLA
-fx_emit_native            00D85E RLA    fx_is_obj                 005DEA RLA
+fx_audio_init             00855D RLF    fx_audio_process          008590 RLF
+fx_build_obj              005E1A RLA    fx_em1_open_sizes         00EAEB RLA
+fx_emit_native            00D866 RLA    fx_is_obj                 005DEA RLA
 fx_latch_obj              005F76 RLA    fx_project16              006063 RLA
-fx_reset_next_bounds      00E9E3 RLA    fx_sky_pointer            00F6DD RLA
+fx_reset_next_bounds      00E9EB RLA    fx_sky_pointer            00F6DD RLA
 fx_upload_ground          00356C RLA    fx_upload_obj             005FA4 RLA
-ground_empty              0035CA RLA    incsp1                    00F04B RLA
-incsp2                    00F05A RLA    incsp3                    00F068 RLA
-incsp4                    00F06D RLA    incsp5                    00F072 RLA
-incsp6                    00F077 RLA    incsp7                    00F07C RLA
-incsp8                    00F081 RLA    ldaidx                    00F086 RLA
-mulax10                   00F0FA RLA    mulax3                    00F113 RLA
-mulax5                    00F124 RLA    mulax6                    00F138 RLA
-mulax7                    00F14E RLA    negax                     00F16B RLA
-player4_upload_bytes      00F91B RLA    popax                     00F052 RLA
-popptr1                   00F179 RLA    popsargsudiv16            00F1D3 RLA
+ground_empty              0035CA RLA    incsp1                    00F053 RLA
+incsp2                    00F062 RLA    incsp3                    00F070 RLA
+incsp4                    00F075 RLA    incsp5                    00F07A RLA
+incsp6                    00F07F RLA    incsp7                    00F084 RLA
+incsp8                    00F089 RLA    ldaidx                    00F08E RLA
+mulax10                   00F102 RLA    mulax3                    00F11B RLA
+mulax5                    00F12C RLA    mulax6                    00F140 RLA
+mulax7                    00F156 RLA    negax                     00F173 RLA
+player4_upload_bytes      00F91B RLA    popax                     00F05A RLA
+popptr1                   00F181 RLA    popsargsudiv16            00F1DB RLA
 ptr1                      00004A RLZ    ptr2                      00004C RLZ
 ptr3                      00004E RLZ    ptr4                      000050 RLZ
-push0                     00F19D RLA    pusha                     00F18B RLA
-pusha0                    00F19F RLA    pushax                    00F1A1 RLA
-pushw0sp                  00F1B7 RLA    pushwysp                  00F1B9 RLA
-regsave                   000046 RLZ    shlax2                    00EF74 RLA
-shlax3                    00EF7F RLA    shlax4                    00EF8D RLA
-shrax1                    00F1F3 RLA    shrax3                    00F1FB RLA
-shrax4                    00F209 RLA    sreg                      000044 RLZ
-staspidx                  00F21A RLA    stax0sp                   00F230 RLA
-staxspidx                 00F23B RLA    staxysp                   00F232 RLA
-subysp                    00F26B RLA    tmp1                      000052 RLZ
-tmp2                      000053 RLZ    tosaddax                  00EF3B RLA
-tosdiva0                  00F008 RLA    tosicmp                   00F01F RLA
-tosicmp0                  00F01D RLA    tossuba0                  00F256 RLA
-tossubax                  00F258 RLA    tosudiva0                 00F278 RLA
-tosudivax                 00F27A RLA    tosumoda0                 00F2C7 RLA
-udiv16                    00F289 RLA
+push0                     00F1A5 RLA    pusha                     00F193 RLA
+pusha0                    00F1A7 RLA    pushax                    00F1A9 RLA
+pushw0sp                  00F1BF RLA    pushwysp                  00F1C1 RLA
+regsave                   000046 RLZ    shlax2                    00EF7C RLA
+shlax3                    00EF87 RLA    shlax4                    00EF95 RLA
+shrax1                    00F1FB RLA    shrax3                    00F203 RLA
+shrax4                    00F211 RLA    sreg                      000044 RLZ
+staspidx                  00F222 RLA    stax0sp                   00F238 RLA
+staxspidx                 00F243 RLA    staxysp                   00F23A RLA
+subysp                    00F273 RLA    tmp1                      000052 RLZ
+tmp2                      000053 RLZ    tosaddax                  00EF43 RLA
+tosdiva0                  00F010 RLA    tosicmp                   00F027 RLA
+tosicmp0                  00F025 RLA    tossuba0                  00F25E RLA
+tossubax                  00F260 RLA    tosudiva0                 00F280 RLA
+tosudivax                 00F282 RLA    tosumoda0                 00F2CF RLA
+udiv16                    00F291 RLA
 
 
 Exports list by value:
@@ -456,26 +456,26 @@ _pose_x_23                00715B RLA    _monosh_stage1_spawns     007173 RLA
 _monosh_stage1_spawn_count 00751B RLA    _monosh_stage_geometry    007F85 RLA
 _monosh_stage_lift        00829A RLA    _fx_ground_camera         00833C RLA
 _fx_ground_depth_rows     0083CD RLA    fx_audio_init             00855D RLF
-fx_audio_process          008587 RLF    LoadAudioData             00863E RLF
+fx_audio_process          008590 RLF    LoadAudioData             008653 RLF
 _fx_sky_color             0098B7 RLA    _fx_stage_render          00D0DC RLA
-_fx_stage_contact         00D39A RLA    _fx_stage_update          00D4E5 RLA
-_fx_enemy_render          00D646 RLA    _fx_enemy_render_bullets  00D75D RLA
-fx_emit_native            00D85E RLA    _fx_enemy_collisions      00D8E7 RLA
-_fx_em0_geometry          00DAFC RLA    _monosh_enemy_fast_update_bullets 00DB86 RLA
-_monosh_enemy_fast_advance 00DCD0 RLA    _fx_enemy_em1_update      00DE68 RLA
-_monosh_player_update     00DF8E RLA    _fx_frame                 00E1F0 RLA
+_fx_stage_contact         00D3A2 RLA    _fx_stage_update          00D4ED RLA
+_fx_enemy_render          00D64E RLA    _fx_enemy_render_bullets  00D765 RLA
+fx_emit_native            00D866 RLA    _fx_enemy_collisions      00D8EF RLA
+_fx_em0_geometry          00DB04 RLA    _monosh_enemy_fast_update_bullets 00DB8E RLA
+_monosh_enemy_fast_advance 00DCD8 RLA    _fx_enemy_em1_update      00DE70 RLA
+_monosh_player_update     00DF96 RLA    _fx_frame                 00E1F8 RLA
 _monosh_ground_offset     00E3FB RLA    _monosh_ground_screen_delta 00E3FC RLA
 _monosh_title_visible     00E3FD RLA    _monosh_boss_state        00E3FE RLA
 _monosh_boss_hp           00E3FF RLA    _boss_part_x              00E401 RLA
 _boss_part_bottom         00E40A RLA    _boss_part_z              00E413 RLA
 _boss_part_active         00E41C RLA    _boss_part_timer          00E425 RLA
 _boss_history_x           00E440 RLA    _boss_history_y           00E4C0 RLA
-_monosh_boss_render_only  00E4EB RLA    _boss_history_z           00E540 RLA
-_fx_boss_project          00E5C7 RLA    _boss_render_camera_delta 00E663 RLA
+_monosh_boss_render_only  00E4F3 RLA    _boss_history_z           00E540 RLA
+_fx_boss_project          00E5CF RLA    _boss_render_camera_delta 00E663 RLA
 _history_head             00E664 RLA    _boss_age                 00E665 RLA
 _boss_death_timer         00E666 RLA    _boss_death_parts         00E667 RLA
 _monosh_player_bullets    00E675 RLA    _monosh_player_bullet_count 00E684 RLA
-_monosh_reflected_bullets 00E685 RLA    _fx_boss_hits             00E68A RLA
+_monosh_reflected_bullets 00E685 RLA    _fx_boss_hits             00E692 RLA
 _monosh_reflected_bullet_count 00E694 RLA    _monosh_bullet_reflect_rng 00E69D RLA
 _monosh_combat_fire_cooldown 00E69E RLA    _monosh_enemy_bullet_count 00E6A0 RLA
 _monosh_enemy_active_count_value 00E6A1 RLA    _monosh_enemy_stage_complete_flag 00E6A2 RLA
@@ -492,51 +492,51 @@ _player_flip              00E763 RLA    _player_run_phase         00E764 RLA
 _monosh_stage_objects     00E765 RLA    _monosh_stage_object_count 00E7C5 RLA
 _monosh_stage_spawn_index 00E7C6 RLA    _monosh_stage_frame_counter 00E7C7 RLA
 _monosh_stage_half_frame  00E7CB RLA    _monosh_stage_near_count  00E7CC RLA
-_monosh_combat_fast_frame 00E7EC RLA    _monosh_stage_need_hitboxes 00E84E RLA
-_fx_draw                  00E853 RLA    _monosh_combat_fast_render 00E86E RLA
-fx_reset_next_bounds      00E9E3 RLA    _fx_submit                00E9E4 RLA
-_fx_open_size             00EAB8 RLA    _fx_draw_count            00EAD3 RLA
+_monosh_combat_fast_frame 00E7F4 RLA    _monosh_stage_need_hitboxes 00E84E RLA
+_fx_draw                  00E853 RLA    _monosh_combat_fast_render 00E876 RLA
+fx_reset_next_bounds      00E9EB RLA    _fx_submit                00E9EC RLA
+_fx_open_size             00EAC0 RLA    _fx_draw_count            00EAD3 RLA
 _fx_packet_count          00EAD4 RLA    _fx_packet                00EAD6 RLA
-fx_em1_open_sizes         00EAE3 RLA    tosaddax                  00EF3B RLA
-addeq0sp                  00EF55 RLA    addeqysp                  00EF57 RLA
-addysp1                   00EF66 RLA    addysp                    00EF67 RLA
-aslax2                    00EF74 RLA    shlax2                    00EF74 RLA
-shlax3                    00EF7F RLA    aslax4                    00EF8D RLA
-shlax4                    00EF8D RLA    asrax1                    00EF9E RLA
-asrax2                    00EFA8 RLA    asrax3                    00EFB7 RLA
-decsp1                    00EFCB RLA    decsp2                    00EFD4 RLA
-_fx_ground_phase          00EFD6 RLA    _fx_buttons               00EFD7 RLA
-_fx_input                 00EFD9 RLA    _fx_fire_actions          00EFDA RLA
-_monosh_runtime_fire_actions 00EFDB RLA    _monosh_runtime_frame_counter 00EFDC RLA
+fx_em1_open_sizes         00EAEB RLA    tosaddax                  00EF43 RLA
+addeq0sp                  00EF5D RLA    addeqysp                  00EF5F RLA
+addysp1                   00EF6E RLA    addysp                    00EF6F RLA
+aslax2                    00EF7C RLA    shlax2                    00EF7C RLA
+shlax3                    00EF87 RLA    aslax4                    00EF95 RLA
+shlax4                    00EF95 RLA    asrax1                    00EFA6 RLA
+asrax2                    00EFB0 RLA    asrax3                    00EFBF RLA
+decsp1                    00EFD3 RLA    _fx_ground_phase          00EFD6 RLA
+_fx_buttons               00EFD7 RLA    _fx_input                 00EFD9 RLA
+_fx_fire_actions          00EFDA RLA    _monosh_runtime_fire_actions 00EFDB RLA
+decsp2                    00EFDC RLA    _monosh_runtime_frame_counter 00EFDC RLA
 _ground_irq_vblank_count  00EFDE RLA    _monosh_runtime_paused    00EFE0 RLA
-decsp3                    00EFE1 RLA    _fx_far_u_acc             00EFE1 RLA
-_fx_far_d_acc             00EFE3 RLA    _hit_pending              00EFE5 RLA
-_old_buttons              00EFE6 RLA    _monosh_ground_depth_pointer 00EFE8 RLA
-_fx_ground_color1         00EFEA RLA    decsp4                    00EFEE RLA
-decsp5                    00EFFB RLA    tosdiva0                  00F008 RLA
-tosicmp0                  00F01D RLA    tosicmp                   00F01F RLA
-incsp1                    00F04B RLA    popax                     00F052 RLA
-incsp2                    00F05A RLA    incsp3                    00F068 RLA
-incsp4                    00F06D RLA    incsp5                    00F072 RLA
-incsp6                    00F077 RLA    incsp7                    00F07C RLA
-incsp8                    00F081 RLA    ldaidx                    00F086 RLA
-boolne                    00F092 RLA    booleq                    00F098 RLA
-boolult                   00F0B1 RLA    _memcpy                   00F0BE RLA
-mulax10                   00F0FA RLA    mulax3                    00F113 RLA
-mulax5                    00F124 RLA    mulax6                    00F138 RLA
-mulax7                    00F14E RLA    negax                     00F16B RLA
-popptr1                   00F179 RLA    pusha                     00F18B RLA
-push0                     00F19D RLA    pusha0                    00F19F RLA
-pushax                    00F1A1 RLA    _fx_ground_color3         00F1AC RLA
-pushw0sp                  00F1B7 RLA    pushwysp                  00F1B9 RLA
-popsargsudiv16            00F1D3 RLA    shrax1                    00F1F3 RLA
-shrax3                    00F1FB RLA    shrax4                    00F209 RLA
-staspidx                  00F21A RLA    stax0sp                   00F230 RLA
-staxysp                   00F232 RLA    staxspidx                 00F23B RLA
-tossuba0                  00F256 RLA    tossubax                  00F258 RLA
-subysp                    00F26B RLA    tosudiva0                 00F278 RLA
-tosudivax                 00F27A RLA    udiv16                    00F289 RLA
-tosumoda0                 00F2C7 RLA    _fx_ground_horizontal     00F36E RLA
+_fx_far_u_acc             00EFE1 RLA    _fx_far_d_acc             00EFE3 RLA
+_hit_pending              00EFE5 RLA    _old_buttons              00EFE6 RLA
+_monosh_ground_depth_pointer 00EFE8 RLA    decsp3                    00EFE9 RLA
+_fx_ground_color1         00EFEA RLA    decsp4                    00EFF6 RLA
+decsp5                    00F003 RLA    tosdiva0                  00F010 RLA
+tosicmp0                  00F025 RLA    tosicmp                   00F027 RLA
+incsp1                    00F053 RLA    popax                     00F05A RLA
+incsp2                    00F062 RLA    incsp3                    00F070 RLA
+incsp4                    00F075 RLA    incsp5                    00F07A RLA
+incsp6                    00F07F RLA    incsp7                    00F084 RLA
+incsp8                    00F089 RLA    ldaidx                    00F08E RLA
+boolne                    00F09A RLA    booleq                    00F0A0 RLA
+boolult                   00F0B9 RLA    _memcpy                   00F0C6 RLA
+mulax10                   00F102 RLA    mulax3                    00F11B RLA
+mulax5                    00F12C RLA    mulax6                    00F140 RLA
+mulax7                    00F156 RLA    negax                     00F173 RLA
+popptr1                   00F181 RLA    pusha                     00F193 RLA
+push0                     00F1A5 RLA    pusha0                    00F1A7 RLA
+pushax                    00F1A9 RLA    _fx_ground_color3         00F1AC RLA
+pushw0sp                  00F1BF RLA    pushwysp                  00F1C1 RLA
+popsargsudiv16            00F1DB RLA    shrax1                    00F1FB RLA
+shrax3                    00F203 RLA    shrax4                    00F211 RLA
+staspidx                  00F222 RLA    stax0sp                   00F238 RLA
+staxysp                   00F23A RLA    staxspidx                 00F243 RLA
+tossuba0                  00F25E RLA    tossubax                  00F260 RLA
+subysp                    00F273 RLA    tosudiva0                 00F280 RLA
+tosudivax                 00F282 RLA    udiv16                    00F291 RLA
+tosumoda0                 00F2CF RLA    _fx_ground_horizontal     00F36E RLA
 _fx_ground_hptr           00F698 RLA    _fx_ground_world_phase    00F69A RLA
 _fx_ground_palette_record 00F69B RLA    _fx_ground_far_x          00F69D RLA
 _fx_ground_far_xptr       00F6BB RLA    _fx_ground_vptr           00F6BD RLA
@@ -550,488 +550,489 @@ Tad_AudioDriver_Bin       591374 RLA
 Imports list:
 -------------
 LoadAudioData (data_asm.o):
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/audio/vendor/tad-audio.s:146
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/audio/vendor/tad-audio.s:146
 TAD_IO_VERSION (audio_asm.o):
-    data_asm.o                D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\audio\data.s:9
+    data_asm.o                D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\audio\data.s:9
 Tad_AudioDriver_Bin (data_asm.o):
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/audio/vendor/tad-audio.s:118
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/audio/vendor/tad-audio.s:118
 Tad_AudioDriver_SIZE (data_asm.o):
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/audio/vendor/tad-audio.s:118
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/audio/vendor/tad-audio.s:118
 Tad_Loader_Bin (data_asm.o):
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/audio/vendor/tad-audio.s:114
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/audio/vendor/tad-audio.s:114
 Tad_Loader_SIZE (data_asm.o):
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/audio/vendor/tad-audio.s:115
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/audio/vendor/tad-audio.s:115
 __STARTUP__ (cpu_asm.o):
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:13
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:13
 _boss_age (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:10
 _boss_dda_phase (monosh_enemy.o):
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:7
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:7
 _boss_dda_x (monosh_enemy.o):
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:7
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:7
 _boss_dda_y (monosh_enemy.o):
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:7
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:7
 _boss_death_parts (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:9
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:9
 _boss_death_timer (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:9
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:9
 _boss_history_x (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:10
 _boss_history_y (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:10
 _boss_history_z (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:10
 _boss_part_active (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:7
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:6
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:6
 _boss_part_bottom (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:7
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:6
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:6
 _boss_part_timer (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:6
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:6
 _boss_part_x (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:7
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:6
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:6
 _boss_part_z (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:7
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:6
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:7
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:6
 _boss_render_camera_delta (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:7
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:16
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:16
 _fx4_explosion_lift (cpu_asm.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:15
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:15
 _fx_audio_events (audio_asm.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:11
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:12
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:20
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:11
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:12
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:11
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:20
 _fx_boss_hits (boss_collision_asm.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:14
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:14
 _fx_boss_project (boss_render_asm.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:13
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:13
 _fx_build_ground (ground_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:20
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:20
 _fx_build_packet (packet_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:20
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:20
 _fx_buttons (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:4
 _fx_draw (game.o):
-    submit_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\submit.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\submit.s:5
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:16
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:7
+    objects_asm.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\objects4.s:11
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:10
 _fx_draw_count (game.o):
-    submit_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\submit.s:5
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:13
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\submit.s:5
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:13
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:16
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:7
+    objects_asm.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\objects4.s:11
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:10
 _fx_em0_geometry (enemy_geometry_asm.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:10
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:10
 _fx_enemy_collisions (enemy_collision_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:14
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:14
 _fx_enemy_em1_update (enemy_update_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:13
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:13
 _fx_enemy_em1_update_reference (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:11
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:11
 _fx_enemy_fire_em1 (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:11
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:11
 _fx_enemy_remove (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:10
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:10
 _fx_enemy_render (enemy_render_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:15
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:15
 _fx_enemy_render_bullets (enemy_render_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:16
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:16
 _fx_far_d_acc (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:12
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:8
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:12
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:8
 _fx_far_u_acc (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:12
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:9
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:8
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:12
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:9
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:8
 _fx_fire_actions (game.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:6
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
 _fx_frame (frame_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:26
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:4
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:26
 _fx_ground_c1ptr (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:7
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:6
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:7
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:6
 _fx_ground_c3ptr (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:7
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:6
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:7
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:6
 _fx_ground_camera (asset_tables.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:12
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:12
 _fx_ground_color1 (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:11
 _fx_ground_color3 (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:11
 _fx_ground_depth_rows (asset_tables.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:12
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:41
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:12
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:41
 _fx_ground_far_x (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:11
 _fx_ground_far_xptr (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:9
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:17
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:9
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:17
 _fx_ground_far_y (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:12
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:7
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:12
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:7
 _fx_ground_horizon (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:8
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:8
 _fx_ground_horizontal (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:11
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:11
 _fx_ground_hptr (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:10
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:14
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:10
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:14
 _fx_ground_palette_record (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:10
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:10
 _fx_ground_phase (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:8
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:8
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:8
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:8
 _fx_ground_vptr (ground.o):
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:7
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:6
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:7
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:6
 _fx_ground_world_phase (ground.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:8
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:10
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:8
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:10
 _fx_input (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
 _fx_open_size (smooth_depth_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:62
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:62
 _fx_packet (game.o):
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:10
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:4
 _fx_packet_count (game.o):
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:10
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:10
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:4
 _fx_present (cpu_asm.o):
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:27
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:27
 _fx_read_input (cpu_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
 _fx_sky_color (asset_tables.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:18
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:18
 _fx_stage_contact (stage_asm.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:16
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:16
 _fx_stage_render (stage_asm.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:14
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:14
 _fx_stage_update (stage_update_asm.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:15
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:15
 _fx_submit (submit_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:63
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:63
 _ground_irq_vblank_count (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:8
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:40
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:8
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:40
 _history_head (monosh_boss.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:10
 _hit_pending (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
 _intro_timer (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:8
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:8
 _main (game.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:4
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:4
 _memcpy (memcpy.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 _monosh_bom_geometry (monosh_enemy_data.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:7
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:7
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:33
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:7
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:7
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:33
 _monosh_boss_body_geometry (monosh_boss_data.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:8
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:8
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:30
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:8
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:8
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:30
 _monosh_boss_bom_depth_by_size (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:32
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:32
 _monosh_boss_bom_geometry (monosh_boss_data.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:8
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:31
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:8
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:31
 _monosh_boss_bullet_velocity (monosh_boss_data.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:64
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:64
 _monosh_boss_explosion_ground_bottom (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:34
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:34
 _monosh_boss_explosion_scale_low (monosh_boss_data.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001/math4.inc:3
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:33
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001/math4.inc:3
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:33
 _monosh_boss_face_geometry (monosh_boss_data.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:8
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:8
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:29
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:8
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:8
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:29
 _monosh_boss_frame (monosh_boss.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:14
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:14
 _monosh_boss_hp (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:9
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:9
 _monosh_boss_init (monosh_boss.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:19
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:31
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:19
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:31
 _monosh_boss_path_center_y (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:25
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:25
 _monosh_boss_path_center_y_mid (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:28
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:28
 _monosh_boss_path_x (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:24
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:24
 _monosh_boss_path_x_mid (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:27
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:27
 _monosh_boss_path_z (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:23
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:23
 _monosh_boss_path_z_mid (monosh_boss_data.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:26
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:26
 _monosh_boss_prepare_render (monosh_boss.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:16
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:16
 _monosh_boss_render_only (boss_render_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:15
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:15
 _monosh_boss_should_restart (monosh_boss.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:19
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:19
 _monosh_boss_state (monosh_boss.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:9
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:16
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\audio.s:8
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:9
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:16
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\audio.s:8
 _monosh_bullet_reflect_rng (monosh_combat.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:19
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:19
 _monosh_combat_fast_cache_reset (combat_port.o):
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:29
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:29
 _monosh_combat_fast_frame (combat_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:13
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:13
 _monosh_combat_fast_render (combat_asm.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:21
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:28
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:21
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:28
 _monosh_combat_fire_cooldown (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:6
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:6
 _monosh_combat_init (monosh_combat.o):
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:32
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:32
 _monosh_combat_reflect_bullet (combat_port.o):
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:6
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:11
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:19
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:11
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:19
 _monosh_combat_render (monosh_combat.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:13
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:13
 _monosh_ebullet_animation_geometry (monosh_enemy_data.o):
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:15
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:65
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:15
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:65
 _monosh_ebullet_geometry (monosh_enemy_data.o):
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:15
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:35
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:15
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:35
 _monosh_ebullet_velocity (monosh_enemy_data.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:36
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:36
 _monosh_em1_closed_geometry (monosh_enemy_data.o):
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:7
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:14
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:34
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:7
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:14
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:34
 _monosh_enemies (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:6
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:12
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:6
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:5
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:12
 _monosh_enemy_active_count_value (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:17
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:6
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:12
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:17
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:6
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:5
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:12
 _monosh_enemy_bullet_count (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:18
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:6
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:13
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:38
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:18
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:6
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:13
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:38
 _monosh_enemy_bullets (monosh_enemy.o):
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:6
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:13
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:6
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:13
 _monosh_enemy_em1_count (monosh_enemy.o):
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:5
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:5
 _monosh_enemy_em1_phase (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:7
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:7
 _monosh_enemy_fast_advance (enemy_update_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:56
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:56
 _monosh_enemy_fast_update_bullets (enemy_bullet_asm.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:55
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:55
 _monosh_enemy_fire_boss_at (monosh_enemy.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:39
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:39
 _monosh_enemy_fire_em0_fast (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:10
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:10
 _monosh_enemy_frame (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:14
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:14
 _monosh_enemy_geometry (monosh_enemy_data.o):
-    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_geometry.s:4
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:32
+    enemy_geometry_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_geometry.s:4
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:32
 _monosh_enemy_ground_bottom (monosh_enemy_data.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:7
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:7
 _monosh_enemy_init (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:19
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:30
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:19
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:30
 _monosh_enemy_paths (monosh_enemy_data.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:6
-    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_geometry.s:4
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:30
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:6
+    enemy_geometry_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_geometry.s:4
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:30
 _monosh_enemy_player_hit (monosh_enemy.o):
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:8
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:6
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:8
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:6
 _monosh_enemy_render_only (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:15
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:15
 _monosh_enemy_spawns (monosh_enemy_data.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:31
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:31
 _monosh_enemy_stage_complete_flag (monosh_enemy.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:17
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:17
 _monosh_ground_depth_pointer (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:11
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:6
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:19
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:11
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:19
 _monosh_ground_offset (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:11
-    ground_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\ground.s:8
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:8
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:11
+    ground_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\ground.s:8
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:8
 _monosh_ground_screen_delta (game.o):
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:7
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:11
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:8
-    enemy_geometry_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_geometry.s:4
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:11
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:16
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:53
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:41
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:11
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:8
+    enemy_geometry_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_geometry.s:4
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:11
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:16
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:53
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:41
 _monosh_player_bottom (monosh_player.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:7
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:9
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:6
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:9
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:8
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:10
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:38
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:6
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:9
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:8
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:38
 _monosh_player_bullet_count (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:8
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:6
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:6
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:9
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:14
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:18
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:18
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:8
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:6
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:14
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:18
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:18
 _monosh_player_bullet_sizes (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:8
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:8
 _monosh_player_bullets (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:8
-    boss_collision_asm.o      D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_collision.s:6
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:6
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:9
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:13
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:17
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:8
+    boss_collision_asm.o      D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_collision.s:6
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:6
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:13
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:17
 _monosh_player_draw_asset (monosh_player.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:10
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:10
 _monosh_player_draw_flags (monosh_player.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:10
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:10
 _monosh_player_init (monosh_player.o):
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:28
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:28
 _monosh_player_invuln (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:7
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:7
 _monosh_player_pose (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:7
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:7
 _monosh_player_state (monosh_player.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:7
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:9
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:7
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:8
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\audio.s:8
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:7
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:8
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\audio.s:8
 _monosh_player_stumble (monosh_player.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:9
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:7
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\audio.s:8
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:7
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\audio.s:8
 _monosh_player_update (player_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:10
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:10
 _monosh_player_update_reference (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:6
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:6
 _monosh_player_x (monosh_player.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:7
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:9
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:6
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:9
-    enemy_bullet_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_bullet.s:8
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:7
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:10
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:37
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:6
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:9
+    enemy_bullet_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_bullet.s:8
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:7
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:37
 _monosh_project_x (projection_asm.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:20
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:20
 _monosh_reflected_bullet_count (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:9
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:16
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:16
 _monosh_reflected_bullets (monosh_combat.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:9
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:15
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:9
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:15
 _monosh_runtime_fire_actions (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:7
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:7
 _monosh_runtime_frame_counter (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:7
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:7
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:11
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:12
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:18
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:21
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:39
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:22
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:7
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:7
+    objects_asm.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\objects4.s:11
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:12
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:18
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:21
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:39
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:22
 _monosh_runtime_paused (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:7
-    audio_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\audio.s:9
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:7
+    audio_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\audio.s:9
 _monosh_stage1_spawn_count (monosh_stage_data.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:7
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:7
 _monosh_stage1_spawns (monosh_stage_data.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:7
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:7
 _monosh_stage_frame (monosh_stage.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:14
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:14
 _monosh_stage_frame_counter (monosh_stage.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:6
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:6
 _monosh_stage_geometry (monosh_stage_data.o):
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:6
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:28
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:28
 _monosh_stage_half_frame (monosh_stage.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:6
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:6
 _monosh_stage_init (monosh_stage.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:19
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:29
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:19
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:29
 _monosh_stage_lift (monosh_stage_data.o):
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:6
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:29
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:6
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:29
 _monosh_stage_near_count (monosh_stage.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:6
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:6
 _monosh_stage_need_hitboxes (monosh_stage.o):
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:8
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:8
 _monosh_stage_object_count (monosh_stage.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:18
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:5
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:5
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:18
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:5
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:5
 _monosh_stage_objects (monosh_stage.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:5
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:5
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:5
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:5
 _monosh_stage_render_only (monosh_stage.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:15
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:15
 _monosh_stage_spawn_index (monosh_stage.o):
-    stage_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage_update.s:5
+    stage_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage_update.s:5
 _monosh_stage_title_timer (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:8
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:8
 _monosh_title_draw (game.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:13
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:13
 _monosh_title_visible (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:18
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:18
 _movement_fraction (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:8
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:8
 _old_buttons (game.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:6
 _player_flip (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 _player_fy (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 _player_run_phase (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 _pose_x_01 (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 _pose_x_12 (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 _pose_x_23 (monosh_player.o):
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:9
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:9
 addeq0sp (addeqsp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 addeqysp (addeqsp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 addysp (addysp.o):
     incsp8.o                  runtime/incsp8.s:8
     incsp7.o                  runtime/incsp7.s:8
@@ -1039,39 +1040,39 @@ addysp (addysp.o):
     incsp5.o                  runtime/incsp5.s:8
     incsp4.o                  runtime/incsp4.s:8
     incsp3.o                  runtime/incsp3.s:8
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 addysp1 (addysp.o):
     sub.o                     runtime/sub.s:8
 aslax2 (aslax2.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 aslax4 (aslax4.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
 asrax1 (asrax1.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 asrax2 (asrax2.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 asrax3 (asrax3.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 booleq (makebool.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
 boolne (makebool.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
 boolult (makebool.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 c_sp (zeropage.o):
     subysp.o                  runtime/subysp.s:9
     sub.o                     runtime/sub.s:9
@@ -1094,200 +1095,200 @@ c_sp (zeropage.o):
     addysp.o                  runtime/addysp.s:8
     addeqsp.o                 runtime/addeqsp.s:8
     add.o                     runtime/add.s:12
-    submit_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\submit.s:6
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:21
-    player_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\player.s:10
-    enemy_update_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_update.s:12
-    projection_asm.o          D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\projection.s:4
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:24
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:10
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:10
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:10
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:10
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:10
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:10
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:10
+    submit_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\submit.s:6
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:21
+    player_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\player.s:10
+    enemy_update_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_update.s:12
+    projection_asm.o          D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\projection.s:4
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:24
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:10
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:10
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:10
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:10
 decsp1 (decsp1.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 decsp2 (decsp2.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 decsp3 (decsp3.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
 decsp4 (decsp4.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 decsp5 (decsp5.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 fx4_build_skip (cpu_asm.o):
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:330
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:330
 fx4_wait_obj_blank (cpu_asm.o):
-    objects_asm.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\objects4.s:12
+    objects_asm.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\objects4.s:12
 fx_audio_init (audio_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:5
 fx_audio_process (audio_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:5
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:5
 fx_build_obj (objects_asm.o):
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:14
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:14
 fx_em1_open_sizes (smooth_depth_asm.o):
-    enemy_collision_asm.o     D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_collision.s:9
-    enemy_render_asm.o        D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\enemy_render.s:18
+    enemy_collision_asm.o     D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_collision.s:9
+    enemy_render_asm.o        D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\enemy_render.s:18
 fx_emit_native (enemy_render_asm.o):
-    combat_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\combat.s:10
-    boss_render_asm.o         D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\boss_render.s:9
-    frame_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\frame.s:20
+    combat_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\combat.s:10
+    boss_render_asm.o         D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\boss_render.s:9
+    frame_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\frame.s:20
 fx_is_obj (objects_asm.o):
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:14
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:14
 fx_latch_obj (objects_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:18
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:18
 fx_project16 (projection_asm.o):
-    stage_asm.o               D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\stage.s:7
+    stage_asm.o               D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\stage.s:7
 fx_reset_next_bounds (dma_asm.o):
-    packet_asm.o              D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\packet.s:13
+    packet_asm.o              D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\packet.s:13
 fx_sky_pointer (ground_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:8
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:8
 fx_upload_ground (ground_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:16
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:16
 fx_upload_obj (objects_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:18
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:18
 ground_empty (ground_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:15
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:15
 incsp1 (incsp1.o):
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:148
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:148
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp2 (incsp2.o):
     staxspi.o                 runtime/staxspi.s:9
     staspidx.o                runtime/staspidx.s:8
     popptr1.o                 runtime/popptr1.s:8
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp3 (incsp3.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp4 (incsp4.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp5 (incsp5.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp6 (incsp6.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp7 (incsp7.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 incsp8 (incsp8.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 ldaidx (ldai.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
 mulax10 (mulax10.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 mulax3 (mulax3.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 mulax5 (mulax5.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
 mulax6 (mulax6.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
 mulax7 (mulax7.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 negax (negabs.o):
     shelp.o                   runtime/shelp.s:11
     div.o                     runtime/div.s:11
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 player4_upload_bytes (objects_asm.o):
-    cpu_asm.o                 D:\HomeBrew\MonoSHFX2_4bpp30_20261008\game\v001\cpu4.s:12
+    cpu_asm.o                 D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\game\v001\cpu4.s:12
 popax (incsp2.o):
     shelp.o                   runtime/shelp.s:11
     memcpy.o                  common/memcpy.s:14
@@ -1311,12 +1312,12 @@ ptr1 (zeropage.o):
     memcpy.o                  common/memcpy.s:15
     ldai.o                    runtime/ldai.s:8
     div.o                     runtime/div.s:12
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:11
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:11
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:11
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:11
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:11
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:11
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:11
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:11
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:11
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:11
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:11
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:11
 ptr2 (zeropage.o):
     memcpy.o                  common/memcpy.s:15
 ptr3 (zeropage.o):
@@ -1326,158 +1327,158 @@ ptr4 (zeropage.o):
     udiv.o                    runtime/udiv.s:10
     shelp.o                   runtime/shelp.s:12
 push0 (pushax.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 pusha (pusha.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    game.o                    D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\game.s:148
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    game.o                    D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\game.s:148
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 pusha0 (pushax.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 pushax (pushax.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 pushw0sp (pushwsp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 pushwysp (pushwsp.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 regsave (zeropage.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:10
 shlax2 (aslax2.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 shlax3 (aslax3.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 shlax4 (aslax4.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 shrax1 (shrax1.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 shrax3 (shrax3.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
 shrax4 (shrax4.o):
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:439
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:439
 sreg (zeropage.o):
     umod.o                    runtime/umod.s:9
     udiv.o                    runtime/udiv.s:10
     icmp.o                    runtime/icmp.s:9
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:10
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:10
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:10
-    monosh_combat.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_combat.s:10
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:10
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:10
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:10
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:10
+    monosh_combat.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_combat.s:10
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:10
 staspidx (staspidx.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 stax0sp (staxsp.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 staxspidx (staxspi.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
 staxysp (staxsp.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 subysp (subysp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 tmp1 (zeropage.o):
     staxspi.o                 runtime/staxspi.s:10
     staspidx.o                runtime/staspidx.s:9
@@ -1493,38 +1494,38 @@ tmp1 (zeropage.o):
     aslax3.o                  runtime/aslax3.s:8
     aslax2.o                  runtime/aslax2.s:8
     add.o                     runtime/add.s:12
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:11
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:11
 tmp2 (zeropage.o):
     shelp.o                   runtime/shelp.s:12
     div.o                     runtime/div.s:12
 tosaddax (add.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
 tosdiva0 (div.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 tosicmp (icmp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 tosicmp0 (icmp.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 tossuba0 (sub.o):
-    monosh_stage.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_stage.s:631
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_stage.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_stage.s:631
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 tossubax (sub.o):
-    monosh_player.o           D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_player.s:1007
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_player.o           D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_player.s:1007
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 tosudiva0 (udiv.o):
-    monosh_enemy.o            D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_enemy.s:3844
+    monosh_enemy.o            D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_enemy.s:3844
 tosudivax (udiv.o):
-    monosh_boss.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\monosh_boss.s:1349
+    monosh_boss.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\monosh_boss.s:1349
 tosumoda0 (umod.o):
-    combat_port.o             D:\HomeBrew\MonoSHFX2_4bpp30_20261008\build\game_v001\combat_port.s:283
+    combat_port.o             D:\AI\Nao_u_BOT\GPT\projects\monosh_fx2\.cache\fx2_4bpp_audio\build\game_v001\combat_port.s:283
 udiv16 (udiv.o):
     umod.o                    runtime/umod.s:8
     shelp.o                   runtime/shelp.s:11

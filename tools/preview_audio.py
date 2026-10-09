@@ -12,7 +12,7 @@ import numpy as np
 
 from build_game import BUILD, GAME
 
-SE = [('shot', 5), ('reflect', 4), ('explosion', 3), ('stumble', 2), ('death', 0), ('boss_explosion', 1)]
+SE = [('shot', 6), ('reflect', 5), ('explosion', 3), ('ground_explosion', 4), ('stumble', 2), ('death', 0), ('boss_explosion', 1)]
 
 
 def render(spc, wav, seconds):
