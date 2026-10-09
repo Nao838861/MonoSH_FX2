@@ -1,0 +1,10 @@
+{
+  "geometryPatterns": 1492,
+  "allGamePatterns": true,
+  "cachedRows": 217504,
+  "rowRuns": 388302,
+  "payloadEnd": 7533608,
+  "lookupBytes": 52881,
+  "romBytes": 8388608,
+  "opaqueRunDmaThresholdBytes": 8
+}

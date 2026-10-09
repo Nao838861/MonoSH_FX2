@@ -1,0 +1,12 @@
+{
+  "fx2SourceCommit": "957eeee3d413fd91a538e53213539da5fdf4fc29",
+  "mesenBinarySha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+  "mesen2ReferenceSourceCommit": "b9fa69ddc6d0a331fb103fdb5eef6904305703c2",
+  "masterClockHz": 21477272,
+  "gsuClockPercent": 100,
+  "sa1Overclock": false,
+  "backgroundDrawing": false,
+  "ppuTransferIncluded": false,
+  "cpuGameLogicIncluded": false,
+  "note": "Mesen2ソースは仕様調査用。使用バイナリと同一リビジョンであるとは主張しない。"
+}

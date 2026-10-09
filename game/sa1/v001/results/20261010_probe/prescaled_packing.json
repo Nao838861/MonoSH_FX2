@@ -1,0 +1,10 @@
+{
+  "geometryPatterns": 1492,
+  "bitmapEnd": 6746060,
+  "lookupBytes": 52881,
+  "romBytes": 8388608,
+  "bwRamBytes": 262144,
+  "allPatternsIn": "ROM",
+  "allFlips": true,
+  "allBulletPhases": true
+}

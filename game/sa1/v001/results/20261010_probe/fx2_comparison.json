@@ -1,0 +1,280 @@
+{
+  "pixelMatchedJobs": 55,
+  "timings": [
+    {
+      "name": "asset0_flip0",
+      "totalClocks": 164252,
+      "totalMs": 7.6477124282823254
+    },
+    {
+      "name": "asset0_flip16",
+      "totalClocks": 41216,
+      "totalMs": 1.9190519168356204
+    },
+    {
+      "name": "asset0_flip32",
+      "totalClocks": 44140,
+      "totalMs": 2.0551958367897
+    },
+    {
+      "name": "asset0_flip48",
+      "totalClocks": 41596,
+      "totalMs": 1.9367450391278742
+    },
+    {
+      "name": "asset1_flip0",
+      "totalClocks": 49776,
+      "totalMs": 2.3176127768927075
+    },
+    {
+      "name": "asset1_flip16",
+      "totalClocks": 51738,
+      "totalMs": 2.4089651609385028
+    },
+    {
+      "name": "asset1_flip32",
+      "totalClocks": 52296,
+      "totalMs": 2.4349461141992332
+    },
+    {
+      "name": "asset1_flip48",
+      "totalClocks": 51998,
+      "totalMs": 2.4210709814542555
+    },
+    {
+      "name": "asset4_flip0",
+      "totalClocks": 138572,
+      "totalMs": 6.452029848111064
+    },
+    {
+      "name": "asset4_flip16",
+      "totalClocks": 160038,
+      "totalMs": 7.451505014230857
+    },
+    {
+      "name": "asset4_flip32",
+      "totalClocks": 159438,
+      "totalMs": 7.423568505348351
+    },
+    {
+      "name": "asset4_flip48",
+      "totalClocks": 159438,
+      "totalMs": 7.423568505348351
+    },
+    {
+      "name": "asset5_flip0",
+      "totalClocks": 98540,
+      "totalMs": 4.588105975470255
+    },
+    {
+      "name": "asset5_flip16",
+      "totalClocks": 78980,
+      "totalMs": 3.6773757859005554
+    },
+    {
+      "name": "asset5_flip32",
+      "totalClocks": 78886,
+      "totalMs": 3.6729990661756298
+    },
+    {
+      "name": "asset5_flip48",
+      "totalClocks": 79010,
+      "totalMs": 3.678772611344681
+    },
+    {
+      "name": "asset13_flip0",
+      "totalClocks": 129622,
+      "totalMs": 6.035310257280347
+    },
+    {
+      "name": "asset13_flip16",
+      "totalClocks": 141194,
+      "totalMs": 6.574112391927615
+    },
+    {
+      "name": "asset13_flip32",
+      "totalClocks": 141640,
+      "totalMs": 6.594878530196945
+    },
+    {
+      "name": "asset13_flip48",
+      "totalClocks": 141464,
+      "totalMs": 6.586683820924743
+    },
+    {
+      "name": "asset14_flip0",
+      "totalClocks": 143628,
+      "totalMs": 6.687441496294315
+    },
+    {
+      "name": "asset14_flip16",
+      "totalClocks": 142602,
+      "totalMs": 6.6396700661052295
+    },
+    {
+      "name": "asset14_flip32",
+      "totalClocks": 141848,
+      "totalMs": 6.604563186609547
+    },
+    {
+      "name": "asset14_flip48",
+      "totalClocks": 142872,
+      "totalMs": 6.652241495102357
+    },
+    {
+      "name": "asset31_flip0",
+      "totalClocks": 64556,
+      "totalMs": 3.0057821123651083
+    },
+    {
+      "name": "asset31_flip16",
+      "totalClocks": 35786,
+      "totalMs": 1.66622651144894
+    },
+    {
+      "name": "asset31_flip32",
+      "totalClocks": 35288,
+      "totalMs": 1.6430392090764598
+    },
+    {
+      "name": "asset31_flip48",
+      "totalClocks": 35232,
+      "totalMs": 1.6404318015807593
+    },
+    {
+      "name": "edge_top_left",
+      "totalClocks": 26598,
+      "totalMs": 1.2384254387614964
+    },
+    {
+      "name": "edge_bottom_right",
+      "totalClocks": 72424,
+      "totalMs": 3.372122865511039
+    },
+    {
+      "name": "overlap",
+      "totalClocks": 301206,
+      "totalMs": 14.024406824106897
+    },
+    {
+      "name": "play_frame00060",
+      "totalClocks": 202098,
+      "totalMs": 9.409854286894536
+    },
+    {
+      "name": "play_frame01500",
+      "totalClocks": 395496,
+      "totalMs": 18.414629194992735
+    },
+    {
+      "name": "play_frame02940",
+      "totalClocks": 173880,
+      "totalMs": 8.096000274150274
+    },
+    {
+      "name": "play_frame04380",
+      "totalClocks": 313094,
+      "totalMs": 14.577922186765619
+    },
+    {
+      "name": "play_frame05820",
+      "totalClocks": 228016,
+      "totalMs": 10.616618348922525
+    },
+    {
+      "name": "play_frame07260",
+      "totalClocks": 124496,
+      "totalMs": 5.79663934972747
+    },
+    {
+      "name": "boss_frame00060",
+      "totalClocks": 465182,
+      "totalMs": 21.65926845830327
+    },
+    {
+      "name": "boss_frame00240",
+      "totalClocks": 134204,
+      "totalMs": 6.248652063446419
+    },
+    {
+      "name": "boss_frame00420",
+      "totalClocks": 36672,
+      "totalMs": 1.707479422898774
+    },
+    {
+      "name": "boss_frame00600",
+      "totalClocks": 140452,
+      "totalMs": 6.539564242609583
+    },
+    {
+      "name": "boss_frame00780",
+      "totalClocks": 172848,
+      "totalMs": 8.047949478872363
+    },
+    {
+      "name": "boss_frame00960",
+      "totalClocks": 268000,
+      "totalMs": 12.478307300852734
+    },
+    {
+      "name": "boss_hold_frame00060",
+      "totalClocks": 510300,
+      "totalMs": 23.760000804571455
+    },
+    {
+      "name": "boss_hold_frame00300",
+      "totalClocks": 438822,
+      "totalMs": 20.431924501398502
+    },
+    {
+      "name": "boss_hold_frame00540",
+      "totalClocks": 439554,
+      "totalMs": 20.46600704223516
+    },
+    {
+      "name": "boss_hold_frame00780",
+      "totalClocks": 439586,
+      "totalMs": 20.467496989375558
+    },
+    {
+      "name": "boss_hold_frame01020",
+      "totalClocks": 439580,
+      "totalMs": 20.467217624286732
+    },
+    {
+      "name": "boss_hold_frame01260",
+      "totalClocks": 439586,
+      "totalMs": 20.467496989375558
+    },
+    {
+      "name": "stage_effects_frame00001",
+      "totalClocks": 111240,
+      "totalMs": 5.179428746816635
+    },
+    {
+      "name": "stage_effects_frame00033",
+      "totalClocks": 101852,
+      "totalMs": 4.742315504501689
+    },
+    {
+      "name": "stage_effects_frame00065",
+      "totalClocks": 61850,
+      "totalMs": 2.879788457305006
+    },
+    {
+      "name": "stage_effects_frame00097",
+      "totalClocks": 53208,
+      "totalMs": 2.477409607700643
+    },
+    {
+      "name": "stage_effects_frame00129",
+      "totalClocks": 53010,
+      "totalMs": 2.4681905597694156
+    },
+    {
+      "name": "stage_effects_frame00161",
+      "totalClocks": 60216,
+      "totalMs": 2.803708031448314
+    }
+  ]
+}

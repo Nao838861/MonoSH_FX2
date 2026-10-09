@@ -1,0 +1,508 @@
+{
+  "mode": {
+    "mode": "compiled",
+    "dma_clear": true,
+    "romSha256": "f7d697d39328dea70caa7fab200d2f8ede52520785476f8d54fd6f5a6c180060",
+    "labelsSha256": "1850cc0c17341ea2f0dfaa48c8b9201cc28e878ec9470bbcf32f4b173d366073"
+  },
+  "pixelMatchedJobs": 55,
+  "maxDrawMs": 16.785465118661254,
+  "maxTotalMs": 21.370963686635807,
+  "timings": [
+    {
+      "name": "asset0_flip0",
+      "clearClocks": 98436,
+      "drawClocks": 15974,
+      "totalClocks": 114460,
+      "clearMs": 4.583263647263954,
+      "drawMs": 0.7437629881485879,
+      "totalMs": 5.329354677819418
+    },
+    {
+      "name": "asset0_flip16",
+      "clearClocks": 98440,
+      "drawClocks": 16128,
+      "totalClocks": 114618,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.7509333587617645,
+      "totalMs": 5.336711291825144
+    },
+    {
+      "name": "asset0_flip32",
+      "clearClocks": 98432,
+      "drawClocks": 15984,
+      "totalClocks": 114466,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.744228596629963,
+      "totalMs": 5.329634042908243
+    },
+    {
+      "name": "asset0_flip48",
+      "clearClocks": 98424,
+      "drawClocks": 15892,
+      "totalClocks": 114366,
+      "clearMs": 4.5827049170863035,
+      "drawMs": 0.7399449986013121,
+      "totalMs": 5.324977958094491
+    },
+    {
+      "name": "asset1_flip0",
+      "clearClocks": 98424,
+      "drawClocks": 20954,
+      "totalClocks": 119428,
+      "clearMs": 4.5827049170863035,
+      "drawMs": 0.9756360118733888,
+      "totalMs": 5.560668971366568
+    },
+    {
+      "name": "asset1_flip16",
+      "clearClocks": 98440,
+      "drawClocks": 20898,
+      "totalClocks": 119388,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.9730286043776881,
+      "totalMs": 5.558806537441067
+    },
+    {
+      "name": "asset1_flip32",
+      "clearClocks": 98440,
+      "drawClocks": 20992,
+      "totalClocks": 119482,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.9774053241026142,
+      "totalMs": 5.563183257165994
+    },
+    {
+      "name": "asset1_flip48",
+      "clearClocks": 98440,
+      "drawClocks": 20936,
+      "totalClocks": 119426,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.9747979166069135,
+      "totalMs": 5.560575849670293
+    },
+    {
+      "name": "asset4_flip0",
+      "clearClocks": 98424,
+      "drawClocks": 102306,
+      "totalClocks": 200780,
+      "clearMs": 4.5827049170863035,
+      "drawMs": 4.763454129556118,
+      "totalMs": 9.348487089049298
+    },
+    {
+      "name": "asset4_flip16",
+      "clearClocks": 98438,
+      "drawClocks": 106648,
+      "totalClocks": 205136,
+      "clearMs": 4.583356768960229,
+      "drawMs": 4.965621332169188,
+      "totalMs": 9.551306143536292
+    },
+    {
+      "name": "asset4_flip32",
+      "clearClocks": 98432,
+      "drawClocks": 101086,
+      "totalClocks": 199568,
+      "clearMs": 4.583077403871404,
+      "drawMs": 4.706649894828356,
+      "totalMs": 9.292055341106636
+    },
+    {
+      "name": "asset4_flip48",
+      "clearClocks": 98440,
+      "drawClocks": 105762,
+      "totalClocks": 204252,
+      "clearMs": 4.583449890656504,
+      "drawMs": 4.924368420719354,
+      "totalMs": 9.510146353782734
+    },
+    {
+      "name": "asset5_flip0",
+      "clearClocks": 98432,
+      "drawClocks": 42034,
+      "totalClocks": 140516,
+      "clearMs": 4.583077403871404,
+      "drawMs": 1.9571386906121038,
+      "totalMs": 6.542544136890383
+    },
+    {
+      "name": "asset5_flip16",
+      "clearClocks": 98440,
+      "drawClocks": 42670,
+      "totalClocks": 141160,
+      "clearMs": 4.583449890656504,
+      "drawMs": 1.9867513900275602,
+      "totalMs": 6.57252932309094
+    },
+    {
+      "name": "asset5_flip32",
+      "clearClocks": 98432,
+      "drawClocks": 42034,
+      "totalClocks": 140516,
+      "clearMs": 4.583077403871404,
+      "drawMs": 1.9571386906121038,
+      "totalMs": 6.542544136890383
+    },
+    {
+      "name": "asset5_flip48",
+      "clearClocks": 98440,
+      "drawClocks": 42714,
+      "totalClocks": 141204,
+      "clearMs": 4.583449890656504,
+      "drawMs": 1.9888000673456108,
+      "totalMs": 6.57457800040899
+    },
+    {
+      "name": "asset13_flip0",
+      "clearClocks": 98432,
+      "drawClocks": 76712,
+      "totalClocks": 175194,
+      "clearMs": 4.583077403871404,
+      "drawMs": 3.5717757823246825,
+      "totalMs": 8.157181228602962
+    },
+    {
+      "name": "asset13_flip16",
+      "clearClocks": 98432,
+      "drawClocks": 76878,
+      "totalClocks": 175360,
+      "clearMs": 4.583077403871404,
+      "drawMs": 3.579504883115509,
+      "totalMs": 8.16491032939379
+    },
+    {
+      "name": "asset13_flip32",
+      "clearClocks": 98440,
+      "drawClocks": 76696,
+      "totalClocks": 175186,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.5710308087544824,
+      "totalMs": 8.156808741817862
+    },
+    {
+      "name": "asset13_flip48",
+      "clearClocks": 98440,
+      "drawClocks": 76878,
+      "totalClocks": 175368,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.579504883115509,
+      "totalMs": 8.16528281617889
+    },
+    {
+      "name": "asset14_flip0",
+      "clearClocks": 98432,
+      "drawClocks": 79378,
+      "totalClocks": 177860,
+      "clearMs": 4.583077403871404,
+      "drawMs": 3.6959070034592845,
+      "totalMs": 8.281312449737564
+    },
+    {
+      "name": "asset14_flip16",
+      "clearClocks": 98440,
+      "drawClocks": 80140,
+      "totalClocks": 178630,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.7313863697400675,
+      "totalMs": 8.317164302803446
+    },
+    {
+      "name": "asset14_flip32",
+      "clearClocks": 98440,
+      "drawClocks": 79684,
+      "totalClocks": 178174,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.710154622989363,
+      "totalMs": 8.295932556052742
+    },
+    {
+      "name": "asset14_flip48",
+      "clearClocks": 98440,
+      "drawClocks": 80348,
+      "totalClocks": 178838,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.7410710261526696,
+      "totalMs": 8.326848959216049
+    },
+    {
+      "name": "asset31_flip0",
+      "clearClocks": 98432,
+      "drawClocks": 14646,
+      "totalClocks": 113128,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.6819301818219744,
+      "totalMs": 5.267335628100254
+    },
+    {
+      "name": "asset31_flip16",
+      "clearClocks": 98440,
+      "drawClocks": 14338,
+      "totalClocks": 112828,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.6675894405956212,
+      "totalMs": 5.2533673736590005
+    },
+    {
+      "name": "asset31_flip32",
+      "clearClocks": 98432,
+      "drawClocks": 14580,
+      "totalClocks": 113062,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.6788571658448987,
+      "totalMs": 5.264262612123178
+    },
+    {
+      "name": "asset31_flip48",
+      "clearClocks": 98432,
+      "drawClocks": 14294,
+      "totalClocks": 112776,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.6655407632775708,
+      "totalMs": 5.25094620955585
+    },
+    {
+      "name": "edge_top_left",
+      "clearClocks": 98440,
+      "drawClocks": 6672,
+      "totalClocks": 105162,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.31065397877346806,
+      "totalMs": 4.896431911836848
+    },
+    {
+      "name": "edge_bottom_right",
+      "clearClocks": 98440,
+      "drawClocks": 136068,
+      "totalClocks": 234558,
+      "clearMs": 4.583449890656504,
+      "drawMs": 6.335441484374738,
+      "totalMs": 10.921219417438117
+    },
+    {
+      "name": "overlap",
+      "clearClocks": 98438,
+      "drawClocks": 230776,
+      "totalClocks": 329264,
+      "clearMs": 4.583356768960229,
+      "drawMs": 10.745126289782053,
+      "totalMs": 15.330811101149159
+    },
+    {
+      "name": "play_frame00060",
+      "clearClocks": 98432,
+      "drawClocks": 111092,
+      "totalClocks": 209574,
+      "clearMs": 4.583077403871404,
+      "drawMs": 5.172537741292283,
+      "totalMs": 9.757943187570563
+    },
+    {
+      "name": "play_frame01500",
+      "clearClocks": 98432,
+      "drawClocks": 330612,
+      "totalClocks": 429094,
+      "clearMs": 4.583077403871404,
+      "drawMs": 15.393575124438522,
+      "totalMs": 19.9789805707168
+    },
+    {
+      "name": "play_frame02940",
+      "clearClocks": 98440,
+      "drawClocks": 75618,
+      "totalClocks": 174108,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.520838214462246,
+      "totalMs": 8.106616147525626
+    },
+    {
+      "name": "play_frame04380",
+      "clearClocks": 98432,
+      "drawClocks": 217004,
+      "totalClocks": 315486,
+      "clearMs": 4.583077403871404,
+      "drawMs": 10.103890289232263,
+      "totalMs": 14.689295735510543
+    },
+    {
+      "name": "play_frame05820",
+      "clearClocks": 98432,
+      "drawClocks": 164708,
+      "totalClocks": 263190,
+      "clearMs": 4.583077403871404,
+      "drawMs": 7.66894417503303,
+      "totalMs": 12.25434962131131
+    },
+    {
+      "name": "play_frame07260",
+      "clearClocks": 98438,
+      "drawClocks": 61782,
+      "totalClocks": 160270,
+      "clearMs": 4.583356768960229,
+      "drawMs": 2.876622319631655,
+      "totalMs": 7.462307130998759
+    },
+    {
+      "name": "boss_frame00060",
+      "clearClocks": 98438,
+      "drawClocks": 360502,
+      "totalClocks": 458990,
+      "clearMs": 4.583356768960229,
+      "drawMs": 16.785278875268702,
+      "totalMs": 21.370963686635807
+    },
+    {
+      "name": "boss_frame00240",
+      "clearClocks": 98440,
+      "drawClocks": 74994,
+      "totalClocks": 173484,
+      "clearMs": 4.583449890656504,
+      "drawMs": 3.49178424522444,
+      "totalMs": 8.077562178287819
+    },
+    {
+      "name": "boss_frame00420",
+      "clearClocks": 98432,
+      "drawClocks": 5144,
+      "totalClocks": 103626,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.23950900281935247,
+      "totalMs": 4.824914449097632
+    },
+    {
+      "name": "boss_frame00600",
+      "clearClocks": 98432,
+      "drawClocks": 75192,
+      "totalClocks": 173674,
+      "clearMs": 4.583077403871404,
+      "drawMs": 3.5010032931556667,
+      "totalMs": 8.086408739433946
+    },
+    {
+      "name": "boss_frame00780",
+      "clearClocks": 98424,
+      "drawClocks": 86092,
+      "totalClocks": 184566,
+      "clearMs": 4.5827049170863035,
+      "drawMs": 4.008516537854528,
+      "totalMs": 8.593549497347707
+    },
+    {
+      "name": "boss_frame00960",
+      "clearClocks": 98440,
+      "drawClocks": 215366,
+      "totalClocks": 313856,
+      "clearMs": 4.583449890656504,
+      "drawMs": 10.027623619983022,
+      "totalMs": 14.613401553046401
+    },
+    {
+      "name": "boss_hold_frame00060",
+      "clearClocks": 98432,
+      "drawClocks": 360506,
+      "totalClocks": 458988,
+      "clearMs": 4.583077403871404,
+      "drawMs": 16.785465118661254,
+      "totalMs": 21.37087056493953
+    },
+    {
+      "name": "boss_hold_frame00300",
+      "clearClocks": 98432,
+      "drawClocks": 335834,
+      "totalClocks": 434316,
+      "clearMs": 4.583077403871404,
+      "drawMs": 15.6367158734126,
+      "totalMs": 20.22212131969088
+    },
+    {
+      "name": "boss_hold_frame00540",
+      "clearClocks": 98432,
+      "drawClocks": 335834,
+      "totalClocks": 434316,
+      "clearMs": 4.583077403871404,
+      "drawMs": 15.6367158734126,
+      "totalMs": 20.22212131969088
+    },
+    {
+      "name": "boss_hold_frame00780",
+      "clearClocks": 98440,
+      "drawClocks": 335822,
+      "totalClocks": 434312,
+      "clearMs": 4.583449890656504,
+      "drawMs": 15.63615714323495,
+      "totalMs": 20.22193507629833
+    },
+    {
+      "name": "boss_hold_frame01020",
+      "clearClocks": 98432,
+      "drawClocks": 335834,
+      "totalClocks": 434316,
+      "clearMs": 4.583077403871404,
+      "drawMs": 15.6367158734126,
+      "totalMs": 20.22212131969088
+    },
+    {
+      "name": "boss_hold_frame01260",
+      "clearClocks": 98432,
+      "drawClocks": 335834,
+      "totalClocks": 434316,
+      "clearMs": 4.583077403871404,
+      "drawMs": 15.6367158734126,
+      "totalMs": 20.22212131969088
+    },
+    {
+      "name": "stage_effects_frame00001",
+      "clearClocks": 98432,
+      "drawClocks": 38510,
+      "totalClocks": 136992,
+      "clearMs": 4.583077403871404,
+      "drawMs": 1.7930582617755177,
+      "totalMs": 6.378463708053797
+    },
+    {
+      "name": "stage_effects_frame00033",
+      "clearClocks": 98440,
+      "drawClocks": 38586,
+      "totalClocks": 137076,
+      "clearMs": 4.583449890656504,
+      "drawMs": 1.7965968862339685,
+      "totalMs": 6.382374819297348
+    },
+    {
+      "name": "stage_effects_frame00065",
+      "clearClocks": 98432,
+      "drawClocks": 13914,
+      "totalClocks": 112396,
+      "clearMs": 4.583077403871404,
+      "drawMs": 0.6478476409853169,
+      "totalMs": 5.233253087263597
+    },
+    {
+      "name": "stage_effects_frame00097",
+      "clearClocks": 98440,
+      "drawClocks": 13838,
+      "totalClocks": 112328,
+      "clearMs": 4.583449890656504,
+      "drawMs": 0.6443090165268661,
+      "totalMs": 5.230086949590246
+    },
+    {
+      "name": "stage_effects_frame00129",
+      "clearClocks": 98438,
+      "drawClocks": 13914,
+      "totalClocks": 112402,
+      "clearMs": 4.583356768960229,
+      "drawMs": 0.6478476409853169,
+      "totalMs": 5.233532452352422
+    },
+    {
+      "name": "stage_effects_frame00161",
+      "clearClocks": 98440,
+      "drawClocks": 22008,
+      "totalClocks": 120498,
+      "clearMs": 4.583449890656504,
+      "drawMs": 1.0247111458103244,
+      "totalMs": 5.610489078873704
+    }
+  ]
+}
