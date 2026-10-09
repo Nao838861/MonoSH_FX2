@@ -15,8 +15,10 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');args=ap.parse_args()
     assert not (args.tile_dma and args.bucket_sort),'experimental bucket storage overlaps large tile descriptor lists'
+    assert not args.pipeline_direct or args.pipeline
+    assert not args.pipeline or (args.renderer=='macros' and not args.tile_dma and not args.bucket_sort)
     BUILD.mkdir(parents=True,exist_ok=True)
     ASSET_BUILD.mkdir(parents=True,exist_ok=True)
     variants=assets()
@@ -33,16 +35,28 @@ def main():
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     if args.bucket_sort:defines+=['-D','SA1_SORT=1']
     if args.tile_dma:defines+=['-D','SA1_TILE_DMA=1']
+    if args.pipeline:defines+=['-D','SA1_PIPELINE=1']
+    if args.pipeline_direct:defines+=['-D','SA1_PIPELINE_DIRECT=1']
     if args.renderer=='macros':defines+=['-D','SA1_PADDED=1','-D','SA1_DIRECT=1']
     objs=[]
     renderer=SA1/('renderer_game_'+args.renderer+'.s' if args.renderer!='dma' else 'renderer_game.s')
     for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('tiles',SA1/'tiles_game.s'),('shape',SA1/'shape_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('edge',SA1/'edge_cached_game.s'),('compact',SA1/'compact_game.s'),('near',SA1/'near_game.s'),('sort',SA1/'sort_game.s'),('packet',GAME/'packet.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
+        if args.pipeline and name=='sort':continue
         if name in ('objects','ground'):
             text=src.read_text(encoding='utf-8').replace('lda #$5f','lda #$df').replace('adc #$5a','adc #$da')
             if name=='objects':text=text.replace('  jsr fx4_wait_obj_blank','  nop\n  nop\n  nop')
+            if name=='objects' and args.pipeline:text+='\n.export player4_next\n'
+            if name=='ground' and args.pipeline:text='.import pipe_ground_wait\n'+text.replace('_fx_build_ground:\n','_fx_build_ground:\n  jsr pipe_ground_wait\n')
             src=BUILD/(name+'.s');src.write_text(text,encoding='utf-8')
+        elif args.pipeline:
+            from sa1_pipeline_sources import prepare
+            generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct)
+            src=BUILD/(name+'_pipeline.s');src.write_text(generated,encoding='utf-8')
         obj=BUILD/(name+'_asm.o')
-        run([CC/'ca65.exe',*defines,'-I',GAME,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
+        run([CC/'ca65.exe',*defines,'-I',GAME,'-I',SA1,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
+    if args.pipeline:
+        obj=BUILD/'pipeline_asm.o'
+        run([CC/'ca65.exe',*defines,'-I',SA1,'-o',obj,SA1/'pipeline_sa1.s']);objs.append(obj)
     objs+=sorted(p for p in BASE.rglob('*.o') if p.name not in ('cpu_asm.o','ground_asm.o','objects_asm.o','packet_asm.o'))
     linked=BUILD/'linked.sfc'
     run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
@@ -94,10 +108,13 @@ def main():
     struct.pack_into('<H',rom,0x7ffc,labels['reset'])
     struct.pack_into('<H',rom,0x7fea,labels['nmi_game'])
     struct.pack_into('<H',rom,0x7ffa,labels['nmi_game'])
+    if args.pipeline:
+        struct.pack_into('<H',rom,0x7fee,labels['irq_game'])
+        struct.pack_into('<H',rom,0x7ffe,labels['irq_game'])
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
