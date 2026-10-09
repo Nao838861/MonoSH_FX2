@@ -1,0 +1,15 @@
+{
+  "geometryPatterns": 1492,
+  "currentGamePatterns": true,
+  "horizontalFlipSupported": false,
+  "verticalFlipSupported": false,
+  "pixelParities": 2,
+  "rowDescriptorBytes": 11,
+  "nativeRowCallChains": true,
+  "uniqueRows": 101978,
+  "uniqueCodeKernels": 93374,
+  "nativeCodeBytes": 5731667,
+  "maxKernelBytes": 211,
+  "payloadEnd": 8201045,
+  "lookupBytes": 40533
+}

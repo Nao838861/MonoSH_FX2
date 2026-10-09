@@ -54,7 +54,7 @@ def assets():
     return variants
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--mode',choices=['baseline','prescaled','compiled','dma_rows'],default='baseline');ap.add_argument('--dma-clear',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--mode',choices=['baseline','prescaled','compiled','dma_rows','shared'],default='baseline');ap.add_argument('--dma-clear',action='store_true');args=ap.parse_args()
     BUILD.mkdir(parents=True,exist_ok=True);variants=assets()
     cfg='MEMORY {\n BOOT: start=$008000, size=$7fb0, file=%O, fill=yes, fillval=$ea;\n HEADER: start=$00ffb0, size=$50, file=%O, fill=yes;\n PAD0: start=$018000, size=$8000, file=%O, fill=yes;\n IRAM: start=$0200, size=$0600, file="";\n'
     bank_count=128 if args.mode!='baseline' else 32
@@ -74,6 +74,7 @@ def main():
     for name,source in [('probe',GAME/'probe.s'),('renderer',GAME/'renderer.s'),('data',BUILD/'data.s')]:
         if name=='renderer' and args.mode=='compiled':source=GAME/'renderer_compiled.s'
         if name=='renderer' and args.mode=='dma_rows':source=GAME/'renderer_dma.s'
+        if name=='renderer' and args.mode=='shared':source=GAME/'renderer_shared.s'
         obj=BUILD/f'{name}.o'
         subprocess.run([str(CC/'ca65.exe'),*(['-D','SA1_DMA_CLEAR=1'] if args.dma_clear else []),*(['-D','SA1_PRESCALED=1'] if args.mode!='baseline' else []),'-I',str(BUILD),'-o',str(obj),str(source)],cwd=BUILD,check=True);objs.append(str(obj))
     rom=BUILD/f'MonoSHSA1_{args.mode}_probe.sfc'
@@ -83,8 +84,10 @@ def main():
     if args.mode!='baseline':
         if args.mode=='prescaled':from sa1_prescaled import build
         elif args.mode=='compiled':from sa1_compiled_rows import build
-        else:from sa1_dma_rows import build
-        cache=build(variants,BUILD);raw[0x10000:]=cache[0x10000:]
+        elif args.mode=='dma_rows':from sa1_dma_rows import build
+        else:from sa1_shared_kernels import build
+        cache=build(variants,BUILD,helper=labels['sa1_dma_span']) if args.mode=='shared' else build(variants,BUILD)
+        raw[0x10000:]=cache[0x10000:]
     struct.pack_into('<H',raw,0x7ffc,labels['reset']);raw[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(raw)&65535;struct.pack_into('<HH',raw,0x7fdc,checksum^65535,checksum);rom.write_bytes(raw)
     mode=vars(args)|{'romSha256':hashlib.sha256(raw).hexdigest(),'labelsSha256':hashlib.sha256((BUILD/'probe.lbl').read_bytes()).hexdigest()}

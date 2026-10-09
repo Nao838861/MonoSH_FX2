@@ -1,0 +1,15 @@
+{
+  "geometryPatterns": 1492,
+  "allGamePatterns": true,
+  "cachedRows": 217504,
+  "sharedCodeKernels": 21541,
+  "sharedCodeBytes": 1704410,
+  "colorDataBytes": 3550166,
+  "rowListsBytes": 1546686,
+  "substringSavedBytes": 81754,
+  "maxKernelBytes": 215,
+  "payloadEnd": 8296091,
+  "lookupBytes": 52881,
+  "romBytes": 8388608,
+  "estimateOnly": false
+}

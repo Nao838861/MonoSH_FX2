@@ -5,14 +5,18 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest):
+def build(variants,dest,game=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};runs=0
     def alloc(raw):
         nonlocal cursor
         raw=bytes(raw)
         if raw in pool:return pool[raw]
-        boundary=0x8000 if cursor<0x400000 else 0x10000
-        if cursor%boundary+len(raw)>boundary:cursor=(cursor+boundary-1)//boundary*boundary
+        while True:
+            boundary=0x8000 if cursor<0x400000 else 0x10000
+            if cursor%boundary+len(raw)>boundary:cursor=(cursor+boundary-1)//boundary*boundary
+            blocked=next(((a,b) for a,b in ((0x400000,0x440000),(0x591300,0x600000)) if game and cursor<b and cursor+len(raw)>a),None)
+            if blocked:cursor=blocked[1]
+            else:break
         if cursor+len(raw)>0x7f0000:raise ValueError('DMA row ROM exhausted')
         a=address(cursor);rom[cursor:cursor+len(raw)]=raw;cursor+=len(raw);pool[raw]=a
         return a
@@ -44,11 +48,11 @@ def build(variants,dest):
                 val=sum((packed[xx+i] if first<=xx+i<last else 0)<<(8*i) for i in range(2))
                 mask=sum((0 if (val>>(i*4))&15 else 15)<<(i*4) for i in range(4))
                 words+=struct.pack('<HH',mask,val)
-            records.append(bytes((begin,0x80|((end-begin)//2)))+alloc(words).to_bytes(3,'little')+b'\0')
+            records.append(bytes((begin,0x80|((end-begin)//2)))+alloc(words).to_bytes(3,'little')+(b'' if game else b'\0'))
         position=0
         for first,last in long:
             mixed(position,first)
-            records.append(bytes((first,last-first))+alloc(packed[first:last]).to_bytes(3,'little')+b'\0')
+            records.append(bytes((first,last-first))+alloc(packed[first:last]).to_bytes(3,'little')+(b'' if game else b'\0'))
             position=last
         mixed(position,len(packed))
         raw=struct.pack('<H',len(records))+b''.join(records)

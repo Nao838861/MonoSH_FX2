@@ -2,7 +2,7 @@
 
 独立分岐: `experiment/sa1-4bpp-60fps-20261010`。分岐元 `957eeee`。元の4bpp/30fps作業フォルダとGit分岐は変更しない。
 
-現在は実SA-1を使う描画計測ROMが動く。ゲーム統合と60fps表示は作業中。素材は `game/v001/assets/color4/` をそのまま参照する。
+現在は実SA-1を使うゲーム統合ROMが動く。60fps表示は未達で作業中。素材は `game/v001/assets/color4/` をそのまま参照する。試遊はリポジトリ直下の `play_sa1.cmd`。統合ROMの測定と制約は [ゲーム統合の記録](results/20261010_game/report.md) を参照。
 
 実装前の3回の設計比較と依頼原文は [design_log.md](design_log.md)、同一packetを用いたFX2・SA-1・事前縮小・コンパイルドの比較は [結果](results/20261010_probe/report.md) を参照。
 

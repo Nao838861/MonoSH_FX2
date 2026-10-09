@@ -1,0 +1,8 @@
+{
+  "romSha256": "948686b3d1c3fbc389453d016923c0c2d188e32beec1b74bd486b060193dd12f",
+  "sa1CodeBytes": 1015,
+  "renderer": "macros",
+  "paddedFramebuffer": true,
+  "stage": "dirty-tiles-two-pages",
+  "goal60fpsAchieved": false
+}
