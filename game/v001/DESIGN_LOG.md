@@ -502,6 +502,19 @@ build_ground.pyで指定RGBを暗い順に保持し、RGB5の展開値に最も�
 Recorded crop masks and animation poses are not geometry authorities. Preserve the frozen asset alpha and dark/light structure; transfer hue and only spatially compatible highlight variation. The former SELECT test used new artwork in both modes and could not detect silhouette regressions. Add an independent old-asset invariant and six real-emulator pre-color/before/fixed/mono fixture captures. See RESULTS_20261008_VISUAL_FIDELITY.md.
 
 
+## 2026-10-09 地面四色の指定RGB更新
+
+依頼原文：
+
+> 地面の色を暗い方から、
+> 112 191 111
+> 129 208 128
+> 145 223 145
+> 159 240 161
+> になるようにして。
+
+指定を生成元とmanifestへ反映し、RGB5展開値へ最も近く丸める。暗列1/2・明列4/3の配置を維持。三カメラの最終PPU183,552画素と全1,820色HDMA表を確認し、ROM差分は地面色とchecksumだけだった。詳細は [地面四色の検証](RESULTS_20261009_GROUND_PALETTE.md)。
+
 ## 2026-10-08 木・敵の目・ボスの配色整理
 
 ユーザー指定により木を暗い緑・緑・茶色へ統一し、小型敵の赤いレンズを47画素の確認済み範囲へ限定。追加指定で金属を灰色へ、ボスの頭は緑2色＋象牙色の目と角、胴は緑2色＋茶色にする。一素材一パレットと元画像矩形の属性補完で、縮小時に初期パレットへ落ちる葉先・角も修正。実PPUの全64 XY相・反転・3サイズを含む1,696場面で色と輪郭を確認した。描画・ゲーム・音声コードは変更せず、重なった物体間の8×8パレット共有は残す。詳細は RESULTS_20261008_PALETTE_REGIONS.md。

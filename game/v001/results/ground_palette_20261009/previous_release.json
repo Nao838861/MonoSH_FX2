@@ -49,14 +49,14 @@
   "groundPalette": {
     "requestedRgb": [
       [
-        112,
-        191,
-        111
+        114,
+        193,
+        112
       ],
       [
         129,
         208,
-        128
+        127
       ],
       [
         145,
@@ -64,21 +64,21 @@
         145
       ],
       [
-        159,
-        240,
-        161
+        160,
+        241,
+        162
       ]
     ],
     "rgb5": [
       [
         14,
         23,
-        13
+        14
       ],
       [
         16,
         25,
-        16
+        15
       ],
       [
         18,
@@ -95,12 +95,12 @@
       [
         115,
         189,
-        107
+        115
       ],
       [
         132,
         206,
-        132
+        123
       ],
       [
         148,
@@ -122,8 +122,7 @@
         2,
         3
       ]
-    ],
-    "quantization": "nearest expanded RGB5 component; equal distance chooses lower RGB5 value"
+    ]
   },
   "objColor": {
     "rgb5": [
@@ -634,7 +633,7 @@
   },
   "playerImageSource": "game/v001/assets/player_recording/source.json",
   "recordedEffectsSource": "game/v001/assets/recorded_effects/source.json",
-  "romSha256": "38d2fccd3f125c413d019b83073294e5eb47beb2dcda1ebbce8371b002ce560d",
+  "romSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
   "romBytes": 2097152,
   "buildMode": {
     "fullFramebufferTransfer": false,
@@ -663,12 +662,19 @@
     "bucketSort": false,
     "smoothDepthSizes": true
   },
-  "verificationKind": "地面四色の指定RGBを更新。三カメラの最終PPU全画素、全色HDMA表、地面色とchecksumだけのROM差分を検証。",
-  "verificationResults": "game/v001/results/ground_palette_20261009",
+  "verificationKind": "影を草の最暗色へ。影単独と草2種類・両描画順・8タイル位置の実PPU33場面、二値切替と原画輪郭を検証。",
+  "verificationResults": "game/v001/results/shadow_grass_20261009",
   "scenarioFrames": {
-    "display": 720
+    "color": 360,
+    "display": 720,
+    "pause": 360,
+    "audio": 16000,
+    "naturalProfile": 18000,
+    "sustainedBossProfile": 18000,
+    "objects": 360,
+    "held": 900
   },
-  "previousRomSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
+  "previousRomSha256": "f56ac290f592d6c8c0878d1fb4fd268d60f9eec4dbd85f085e863387968ac475",
   "bgColor": {
     "source": "game/v001/assets/bg_color/source.json",
     "paletteGroups": 8,
@@ -880,94 +886,17 @@
     "longProfileRequiredForThisRelease": false,
     "note": "This release verifies exact visual output, controls and audio; no new long-duration performance claim."
   },
-  "verificationReport": "game/v001/RESULTS_20261009_GROUND_PALETTE.md",
+  "verificationReport": "game/v001/RESULTS_20261009_SHADOW_GRASS.md",
   "validation": {
-    "previousRomSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
-    "romSha256": "38d2fccd3f125c413d019b83073294e5eb47beb2dcda1ebbce8371b002ce560d",
-    "requestedRgb": [
-      [
-        112,
-        191,
-        111
-      ],
-      [
-        129,
-        208,
-        128
-      ],
-      [
-        145,
-        223,
-        145
-      ],
-      [
-        159,
-        240,
-        161
-      ]
-    ],
-    "rgb5": [
-      [
-        14,
-        23,
-        13
-      ],
-      [
-        16,
-        25,
-        16
-      ],
-      [
-        18,
-        27,
-        18
-      ],
-      [
-        19,
-        29,
-        20
-      ]
-    ],
-    "displayRgb": [
-      [
-        115,
-        189,
-        107
-      ],
-      [
-        132,
-        206,
-        132
-      ],
-      [
-        148,
-        222,
-        148
-      ],
-      [
-        156,
-        239,
-        165
-      ]
-    ],
-    "quantization": "nearest expanded RGB5 component; equal distance chooses lower RGB5 value",
-    "cameraOffsets": [
-      0,
-      32,
-      64
-    ],
-    "displayFields": 720,
-    "finalPpuScreens": 3,
-    "finalPpuRgbPixels": 183552,
-    "finalPpuMismatches": 0,
-    "hdmaTablesVerified": 1820,
-    "hdmaColorEntriesVerified": 22452,
-    "changedRomBytes": 11228,
-    "onlyGroundColorsAndChecksumChanged": true,
-    "cpuCodeByteIdentical": true,
-    "allLabelsIdentical": true,
-    "newLong60HzTest": false,
-    "physicalHardwareTested": false
+    "baseCommit": "f780e8b",
+    "shadowGrassPpuScenes": 33,
+    "shadowGrassPpuPixels": 31396,
+    "shadowGrassPpuErrorsBefore": 8475,
+    "shadowGrassPpuErrorsAfter": 0,
+    "bitmapErrors": 0,
+    "colorToggleSamples": 219,
+    "hardwareTested": false,
+    "historicalResults": "game/v001/results/shadow_grass_20261009/previous_release.json"
   },
   "nativeAudio": {
     "driver": "TAD v0.4.2",
@@ -1039,6 +968,5 @@
     ]
   },
   "audioVolumeFix": "S-DSP主音量102（原作サントラ約-15.6LUFSに合わせる）。曲とSEの釣り合いは不変。",
-  "soundEffectsUpdate": "敵爆発を約0.6秒響く地鳴りへ作り直し（鳴り直しで連続撃破が刻まれる）。地形OBJ破壊の爆発音を追加。",
-  "presentationRatesSourceRomSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27"
+  "soundEffectsUpdate": "敵爆発を約0.6秒響く地鳴りへ作り直し（鳴り直しで連続撃破が刻まれる）。地形OBJ破壊の爆発音を追加。"
 }

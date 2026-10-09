@@ -1,0 +1,88 @@
+{
+  "previousRomSha256": "01a4c6d63bcf458b0c28d16f58906872376b7d501a4a5b2901ad69e0ee8f3f27",
+  "romSha256": "38d2fccd3f125c413d019b83073294e5eb47beb2dcda1ebbce8371b002ce560d",
+  "requestedRgb": [
+    [
+      112,
+      191,
+      111
+    ],
+    [
+      129,
+      208,
+      128
+    ],
+    [
+      145,
+      223,
+      145
+    ],
+    [
+      159,
+      240,
+      161
+    ]
+  ],
+  "rgb5": [
+    [
+      14,
+      23,
+      13
+    ],
+    [
+      16,
+      25,
+      16
+    ],
+    [
+      18,
+      27,
+      18
+    ],
+    [
+      19,
+      29,
+      20
+    ]
+  ],
+  "displayRgb": [
+    [
+      115,
+      189,
+      107
+    ],
+    [
+      132,
+      206,
+      132
+    ],
+    [
+      148,
+      222,
+      148
+    ],
+    [
+      156,
+      239,
+      165
+    ]
+  ],
+  "quantization": "nearest expanded RGB5 component; equal distance chooses lower RGB5 value",
+  "cameraOffsets": [
+    0,
+    32,
+    64
+  ],
+  "displayFields": 720,
+  "finalPpuScreens": 3,
+  "finalPpuRgbPixels": 183552,
+  "finalPpuMismatches": 0,
+  "hdmaTablesVerified": 1820,
+  "hdmaColorEntriesVerified": 22452,
+  "changedRomBytes": 11228,
+  "onlyGroundColorsAndChecksumChanged": true,
+  "cpuCodeByteIdentical": true,
+  "allLabelsIdentical": true,
+  "newLong60HzTest": false,
+  "physicalHardwareTested": false
+}

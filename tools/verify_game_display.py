@@ -101,7 +101,7 @@ def verify(directory):
         greens={image.getpixel((x,y)) for y in range(image.height) for x in range(image.width)
                 if image.getpixel((x,y))[1]>max(image.getpixel((x,y))[0],image.getpixel((x,y))[2])}
         # ユーザー指定の四つのRGBに最も近いRGB5。明度順。
-        words=[r+(g<<5)+(b<<10) for r,g,b in [(14,23,14),(16,25,15),(18,27,18),(19,29,20)]]
+        words=[r+(g<<5)+(b<<10) for r,g,b in [(14,23,13),(16,25,16),(18,27,18),(19,29,20)]]
         assert {rgb(word) for word in words}.issubset(greens),'ground colors missing'
         pairs=set()
         for y in range(horizon+1,203):

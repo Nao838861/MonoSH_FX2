@@ -31,7 +31,7 @@ def build():
             if 0<edge<=80:edges.append(math.ceil(edge))
         bands.extend(initial^(sum(e<=y for e in edges)%2) for y in range(81))
     # 指定RGBを明度順で保存し、RGB5の展開値で最も近い色を選ぶ。
-    requested=[(114,193,112),(129,208,127),(145,223,145),(160,241,162)]
+    requested=[(112,191,111),(129,208,128),(145,223,145),(159,240,161)]
     green=[tuple(min(range(32),key=lambda v:abs(v*8+(v>>2)-c)) for c in color)
            for color in requested]
     colors=[r+(g<<5)+(b<<10) for r,g,b in green]
