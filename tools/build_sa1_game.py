@@ -15,7 +15,8 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');args=ap.parse_args()
+    assert not (args.tile_dma and args.bucket_sort),'experimental bucket storage overlaps large tile descriptor lists'
     BUILD.mkdir(parents=True,exist_ok=True)
     ASSET_BUILD.mkdir(parents=True,exist_ok=True)
     variants=assets()
@@ -31,10 +32,11 @@ def main():
     definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     if args.bucket_sort:defines+=['-D','SA1_SORT=1']
+    if args.tile_dma:defines+=['-D','SA1_TILE_DMA=1']
     if args.renderer=='macros':defines+=['-D','SA1_PADDED=1','-D','SA1_DIRECT=1']
     objs=[]
     renderer=SA1/('renderer_game_'+args.renderer+'.s' if args.renderer!='dma' else 'renderer_game.s')
-    for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('shape',SA1/'shape_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('edge',SA1/'edge_cached_game.s'),('compact',SA1/'compact_game.s'),('near',SA1/'near_game.s'),('sort',SA1/'sort_game.s'),('packet',GAME/'packet.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
+    for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('tiles',SA1/'tiles_game.s'),('shape',SA1/'shape_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('edge',SA1/'edge_cached_game.s'),('compact',SA1/'compact_game.s'),('near',SA1/'near_game.s'),('sort',SA1/'sort_game.s'),('packet',GAME/'packet.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
         if name in ('objects','ground'):
             text=src.read_text(encoding='utf-8').replace('lda #$5f','lda #$df').replace('adc #$5a','adc #$da')
             if name=='objects':text=text.replace('  jsr fx4_wait_obj_blank','  nop\n  nop\n  nop')
@@ -95,7 +97,7 @@ def main():
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

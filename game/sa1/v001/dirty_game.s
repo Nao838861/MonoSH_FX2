@@ -5,6 +5,10 @@
 .macpack longbranch
 .export sa1_plan_dirty: far, sa1_prepare_transfer: far
 .import sa1_find_shape: far
+.ifdef SA1_TILE_DMA
+.import sa1_tile_masks
+.import sa1_tiles_transfer: far
+.endif
 .segment "BOOT"
 dirty_count=$a0
 dirty_i=$a2
@@ -24,6 +28,11 @@ dirty_init:
   lda #128
   sta $0120,x
   stz $0122,x
+  .ifdef SA1_TILE_DMA
+  lda #0
+  sta f:$431800,x
+  sta f:$431802,x
+  .endif
   inx
   inx
   inx
@@ -164,6 +173,11 @@ dirty_full:
   stz $0120,x
   lda #128
   sta $0122,x
+  .ifdef SA1_TILE_DMA
+  lda #$ffff
+  sta f:$431800,x
+  sta f:$431802,x
+  .endif
   inx
   inx
   inx
@@ -285,10 +299,36 @@ dirty_rect:
   asl
   asl
   tay
+  .ifdef SA1_TILE_DMA
+  phx
+  lda dirty_right
+  tax
+  lda sa1_tile_masks,x
+  sta $bc
+  lda sa1_tile_masks+2,x
+  sta $be
+  lda dirty_left
+  tax
+  lda sa1_tile_masks,x
+  eor $bc
+  sta $bc
+  lda sa1_tile_masks+2,x
+  eor $be
+  sta $be
+  plx
+  .endif
 dirty_rect_row:
   cpx #96
   bcs dirty_mark_done
   cpx #0
+  .ifdef SA1_TILE_DMA
+  lda f:$431800,x
+  ora $bc
+  sta f:$431800,x
+  lda f:$431802,x
+  ora $be
+  sta f:$431802,x
+  .endif
   lda dirty_left
   cmp $0120,x
   bcs :+
@@ -312,6 +352,9 @@ dirty_mark_done:
   rts
 
 sa1_prepare_transfer:
+  .ifdef SA1_TILE_DMA
+  jml sa1_tiles_transfer
+  .endif
   rep #$30
   stz $0118
   stz $011a

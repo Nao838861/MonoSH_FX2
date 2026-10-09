@@ -7,6 +7,7 @@
 .import sa1_compact: far
 .import sa1_near_row: far
 .import sa1_find_shape: far
+.import sa1_tiles_clear: far
 .export sa1_entry, sa1_clear_start, sa1_clear_done, sa1_draw_start, sa1_draw_done
 .export invoke_row, row_done, clip_left_found
 .export sa1_dirty_done, sa1_native_done
@@ -94,6 +95,9 @@ wait_job:
 sa1_clear_start:
   jsl sa1_plan_dirty
 sa1_dirty_done:
+  .ifdef SA1_TILE_DMA
+  jsl sa1_tiles_clear
+  .else
   sep #$20
   lda #$84
   sta $2230
@@ -143,6 +147,7 @@ clear_tile_next:
   lda bgrow
   cmp #24
   bne clear_tile_row
+  .endif
 sa1_clear_done:
   jsl background
   stz index
@@ -735,4 +740,3 @@ bg_bounds:
 
 native_heights:
 .byte 40,50,27,42,91,95,64,64,60,48,32,28,58,33,40,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,55,30,33,32,43,63,44,8,94,84,88,19,1
-

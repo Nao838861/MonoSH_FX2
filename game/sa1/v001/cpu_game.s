@@ -463,7 +463,11 @@ audio4_second_done:
   sta fx4_desc_count
   beq no_descriptors
   dec
+  .ifdef SA1_TILE_DMA
+  ldx #$2000
+  .else
   ldx #$0800
+  .endif
   ldy #fx4_descriptors
   mvn #$43,#$7e
   pea $7e7e

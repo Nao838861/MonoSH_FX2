@@ -37,7 +37,7 @@ def verify_pixels(dest,labels):
     return checked
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);args=ap.parse_args()
     dest=BUILD/args.scenario;dest.mkdir(exist_ok=True)
     for path in dest.glob('present*'):path.unlink()
     for path in dest.glob('frame*'):
@@ -55,6 +55,7 @@ def main():
     script='''local labels=LABELS
 local output=OUTDIR
 local maxframe=MAXFRAME
+local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local padded=PADDED
 local field,logic,presents=0,0,0
@@ -67,6 +68,7 @@ local readyLine,startClock,waitMs=0,0,0
 local cpuParts,cpuEntries={},{}
 local cpuJobs={}
 local sortReference=nil
+local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
 local function word(name,value)
  emu.write16(0x7e0000+labels[name],value,emu.memType.snesMemory)
 end
@@ -157,6 +159,10 @@ end
 cb('sa1_draw_start',function()drawbegin=emu.getState().masterClock;bgMs=(drawbegin-clearDone)/21477.272 end,emu.cpuType.sa1)
 cb('sa1_draw_done',function()
  local now=emu.getState().masterClock
+ local mt=emu.memType.sa1Memory;local n=emu.read16(0x106,mt);local trace={}
+ for _,a in ipairs({0x108,0x10a,0x10c,0x106})do local v=emu.read16(a,mt);trace[#trace+1]=string.char(v&255,v>>8)end
+ for i=0,n*10-1 do trace[#trace+1]=string.char(emu.read(0x430000+i,mt))end
+ packetTrace:write(table.concat(trace))
  local dirtyBytes=0
  for r=0,23 do local a=0x120+r*4;dirtyBytes=dirtyBytes+math.max(0,emu.read16(a+2,emu.memType.sa1Memory)-emu.read16(a,emu.memType.sa1Memory))*8 end
  if presents==0 then
@@ -193,19 +199,21 @@ end)
 emu.addEventCallback(function()emu.setInput({a=true},0)end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
  field=field+1
- if field==120 or field==maxframe then
+ local finished=field==maxframe or (targetPresents>0 and presents>=targetPresents)
+ if field==120 or finished then
   local f=assert(io.open(output..'/frame'..field..'.rgb','wb'));local t={}
   for _,v in ipairs(emu.getScreenBuffer())do t[#t+1]=string.char((v>>16)&255,(v>>8)&255,v&255)end
   f:write(table.concat(t));f:close()
  end
- if field==maxframe then
+ if finished then
+  packetTrace:close()
   local f=assert(io.open(output..'/summary.json','w'))
   f:write(string.format('{"fields":%d,"logic":%d,"presents":%d,"presentationTimes":[%s],"sa1Jobs":[%s],"cpuJobs":[%s]}',field,logic,presents,table.concat(presentationTimes,','),table.concat(times,','),table.concat(cpuJobs,',')));f:close()
   dump('iram.bin',emu.memType.sa1InternalRam,0,2048)
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false')
+'''.replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
