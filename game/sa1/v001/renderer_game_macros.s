@@ -3,9 +3,13 @@
 .macpack longbranch
 .import sa1_plan_dirty: far, sa1_prepare_transfer: far
 .import sa1_try_fast: far
+.import sa1_draw_rows: far
 .import sa1_compact: far
+.import sa1_near_row: far
+.import sa1_find_shape: far
 .export sa1_entry, sa1_clear_start, sa1_clear_done, sa1_draw_start, sa1_draw_done
 .export invoke_row, row_done, clip_left_found
+.export sa1_dirty_done, sa1_native_done
 rd=$20
 rows=$24
 packet=$28
@@ -89,6 +93,7 @@ wait_job:
   beq wait_job
 sa1_clear_start:
   jsl sa1_plan_dirty
+sa1_dirty_done:
   sep #$20
   lda #$84
   sta $2230
@@ -109,9 +114,7 @@ clear_tile_row:
   xba
   asl
   asl
-  asl
   clc
-  adc #64
   adc $0120,x
   sta bgdest
   lda #8
@@ -131,7 +134,7 @@ clear_scanline:
   rep #$20
   lda bgdest
   clc
-  adc #256
+  adc #128
   sta bgdest
   dec bgscroll
   bne clear_scanline
@@ -152,6 +155,7 @@ sa1_clear_done:
 sa1_draw_start:
   rep #$30
 next:
+  stz $c4
   lda index
   cmp count
   jcs finished
@@ -227,34 +231,16 @@ unsupported_hflip:
   beq phase_valid
   stz phase
 phase_valid:
-  lda asset
+  lda height
   xba
-  asl
-  sta tmp
-  lda width
-  asl
-  clc
-  adc tmp
-  tax
-  lda f:$ff0000,x
-  tax
-  sep #$20
-  lda f:$ff0000,x
-  sta table
-  inx
-find_height:
-  lda f:$ff0000,x
-  cmp height
-  beq found_height
-  inx
-  inx
-  inx
-  dec table
-  bne find_height
-missing_pattern:
-  bra missing_pattern
-found_height:
+  ora width
+  ldx asset
+  jsl sa1_find_shape
   rep #$20
+  lda f:$ff0003,x
+  sta $c0
+  lda f:$ff0005,x
+  sta $c2
   lda f:$ff0001,x
   sta table
   lda phase
@@ -287,11 +273,11 @@ row:
   adc dy
   cmp #192
   jcs row_done
-  xba
-  clc
-  adc #64
+  .repeat 7
+    asl
+  .endrepeat
   sta rowbase
-  .repeat 9
+  .repeat 8
     lsr
   .endrepeat
   and #$fffc
@@ -303,6 +289,36 @@ row:
   cmp dirtyL
   jcc row_done
   jeq row_done
+  lda dirtyL
+  cmp $b4                    ; visible opaque left, prepared by sa1_try_fast
+  bcc :+
+  beq :+
+  bra row_partial
+:
+  lda dirtyR
+  cmp $b0                    ; visible opaque right
+  bcc row_partial
+  lda top
+  clc
+  adc dy
+  and #7
+  eor #7
+  inc
+  clc
+  adc dy
+  cmp height
+  bcc :+
+  lda height
+:
+  sta $9a
+  tax
+  lda dy
+  jsl sa1_draw_rows
+  lda $9a
+  dec
+  sta dy
+  jmp row_done
+row_partial:
   lda dy
   asl
   sta tmp
@@ -548,7 +564,7 @@ skip:
   inc index
   jmp next
 finished:
-  jsl sa1_compact
+sa1_native_done:
 sa1_draw_done:
   jsl sa1_prepare_transfer
   sep #$20
@@ -566,6 +582,7 @@ wait_release:
 ; shared native kernelから呼ぶ。DBR=$40、DP=$0000、X=行原点、Y=色データ。
 ; $80=原点からのbyte offset、A=byte数。Xを保存しYを元のbyte数だけ進める。
 .assert * <= $0700, error, "SA-1 shared worker overlaps edge JIT"
+.assert * <= $0600, error, "SA-1 worker overlaps guard cache"
 
 .include "assets4/background4.inc"
 .segment "BOOT"
@@ -585,9 +602,9 @@ background:
   lda $010c
   clc
   adc #FX_BG_0_TOP
-  xba
-  clc
-  adc #64
+  .repeat 7
+    asl
+  .endrepeat
   sta bgdest
   lda #0
   sta bgrow
@@ -651,7 +668,7 @@ bg_far_row:
 bg_far_next:
   lda bgdest
   clc
-  adc #256
+  adc #128
   sta bgdest
   inc bgrow
   lda bgrow
@@ -676,9 +693,9 @@ bg_far_next:
   lda $010c
   clc
   adc #FX_BG_1_TOP
-  xba
-  clc
-  adc #64
+  .repeat 7
+    asl
+  .endrepeat
   sta bgdest
   stz bgrow
 bg_near_row:
@@ -688,23 +705,11 @@ bg_near_row:
   sbc dirtyL
   beq bg_near_next
   bmi bg_near_next
-  lsr
-  sta bgfirst
-  lda bgdest
-  clc
-  adc dirtyL
-  tax
-  lda dirtyL
-  asl
-  clc
-  adc bgscroll
-  and #511
-  tay
-  jsr bg_near_word
+  jsl sa1_near_row
 bg_near_next:
   lda bgdest
   clc
-  adc #256
+  adc #128
   sta bgdest
   lda bgptr
   clc
@@ -717,7 +722,7 @@ bg_near_next:
   rtl
 bg_bounds:
   lda bgdest
-  .repeat 9
+  .repeat 8
     lsr
   .endrepeat
   and #$fffc
@@ -731,26 +736,3 @@ bg_bounds:
 native_heights:
 .byte 40,50,27,42,91,95,64,64,60,48,32,28,58,33,40,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,55,30,33,32,43,63,44,8,94,84,88,19,1
 
-.segment "SA1"
-bg_near_word:
-  lda [bgptr],y
-  sta mask
-  iny
-  iny
-  lda [bgptr],y
-  sta value
-  lda f:$400000,x
-  and mask
-  ora value
-  sta f:$400000,x
-  inx
-  inx
-  iny
-  iny
-  tya
-  and #511
-  tay
-  dec bgfirst
-  bne bg_near_word
-  rts
-.assert * <= $0700, error, "SA-1 near loop overlaps JIT"

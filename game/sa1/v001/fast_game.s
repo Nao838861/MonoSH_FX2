@@ -2,6 +2,9 @@
 .smart
 .macpack longbranch
 .export sa1_try_fast: far
+.export sa1_draw_rows: far
+.export fast_tiles, fast_fail, fast_base_ready
+.import sa1_edge_prepare: far, sa1_edge_save: far, sa1_edge_restore: far
 .segment "BOOT"
 ffirst=$a0
 flast=$a2
@@ -16,16 +19,23 @@ fleft=$b4
 spriteBase=$f8
 sa1_try_fast:
   rep #$30
-  lda $48                    ; rowx = floor(left / 2)
+  stz $c4
+  lda $c0
+  and #255
+  clc
+  adc $38
+  cmp #$8000
+  ror                        ; floor((left + opaque left) / 2)
   bpl :+
   lda #0
 :
   cmp #128
   jcs fast_empty
   sta fleft
-  lda $38
+  lda $c2
+  and #255
   clc
-  adc $34                    ; left + width
+  adc $38                    ; left + opaque right
   jmi fast_empty
   cmp #257
   bcc :+
@@ -53,6 +63,20 @@ sa1_try_fast:
   cmp ffirst
   jcc fast_empty
   jeq fast_empty
+  lda $3a
+  .repeat 7
+    asl
+  .endrepeat
+  clc
+  adc $48
+  sta spriteBase
+  jsl sa1_edge_prepare
+  lda $c3
+  and #255
+  cmp flast
+  bcc :+
+  lda flast
+:
   clc
   adc $3a
   clc
@@ -63,7 +87,12 @@ sa1_try_fast:
   asl
   asl
   sta ftileEnd
+  lda $c1
+  and #255
+  cmp ffirst
+  bcs :+
   lda ffirst
+:
   clc
   adc $3a
   .repeat 3
@@ -87,15 +116,9 @@ fast_tiles:
   inx
   cpx ftileEnd
   bcc fast_tiles
-  lda $3a
-  .repeat 8
-    asl
-  .endrepeat
-  clc
-  adc $48
-  clc
-  adc #64
-  sta spriteBase
+fast_base_ready:
+  lda $c4
+  bne fast_chunks
   lda ffirst
   bne fast_chunks
   lda flast
@@ -114,6 +137,10 @@ fast_empty:
 fast_fail:
   clc
   rtl
+sa1_draw_rows:
+  rep #$30
+  sta ffirst
+  stx flast
 fast_chunks:
   lda flast
   sec
@@ -140,7 +167,15 @@ fast_chunk:
   bcc :+
   lda #20
 :
+  ldx $c4
+  beq :+
+  cmp $da
+  bcc :+
+  lda $da
+:
   sta fchunk
+  jsl sa1_edge_save
+  lda fchunk
   asl
   sta fbytes
   asl
@@ -171,6 +206,7 @@ fast_chunk:
   lda #$6b
   sta $0700,x
   jsr fast_invoke
+  jsl sa1_edge_restore
   rep #$20
   lda fsrc
   clc
@@ -180,6 +216,11 @@ fast_chunk:
   sec
   sbc fchunk
   sta fremaining
+  lda ffirst
+  clc
+  adc fchunk
+  sta ffirst
+  lda fremaining
   jne fast_chunk
   sec
   rtl

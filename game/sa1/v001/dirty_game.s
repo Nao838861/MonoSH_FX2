@@ -4,6 +4,7 @@
 .smart
 .macpack longbranch
 .export sa1_plan_dirty: far, sa1_prepare_transfer: far
+.import sa1_find_shape: far
 .segment "BOOT"
 dirty_count=$a0
 dirty_i=$a2
@@ -58,9 +59,9 @@ dirty_compare:
   lda f:$430006,x
   cmp f:$431006,x
   bne dirty_changed
-  lda f:$430008,x
-  cmp f:$431008,x
-  beq dirty_next
+  ; 並べ替え済みの同じ位置なので、Z/priorityだけの変更は画素を変えない。
+  ; 順序が変われば先頭8byteの相違として旧・新両方を再描画する。
+  bra dirty_next
 dirty_changed:
   phx
   lda dirty_i
@@ -198,6 +199,39 @@ dirty_mark:
   sec
   sbc dirty_height
   sta dirty_top
+  .ifdef SA1_PADDED
+  lda f:$430004,x
+  sta dirty_width
+  lda f:$430006,x
+  and #255
+  tax
+  lda dirty_width
+  jsl sa1_find_shape
+  lda f:$ff0003,x
+  and #255
+  clc
+  adc dirty_left
+  sta dirty_width
+  lda f:$ff0005,x
+  and #255
+  clc
+  adc dirty_left
+  sta dirty_right
+  lda dirty_width
+  sta dirty_left
+  lda f:$ff0004,x
+  and #255
+  clc
+  adc dirty_top
+  sta dirty_height
+  lda f:$ff0006,x
+  and #255
+  clc
+  adc dirty_top
+  sta dirty_bottom
+  lda dirty_height
+  sta dirty_top
+  .endif
   lda dirty_left
   bpl :+
   lda #0

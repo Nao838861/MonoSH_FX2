@@ -30,6 +30,8 @@ FX_DMA_ADMISSION_BYTES = 9984
 .export render_second_started, render_second_finished
 .export audio4_first_done, audio4_second_done
 .export half_dma_finished
+.export transfer_chunk, dma_chunk_ready
+.export logic_finished
 .if FX4_COLOR
 .export fx4_wait_obj_blank
 .endif
@@ -50,6 +52,11 @@ fx4_descriptors = $0400
 fx4_desc_count: .res 2
 fx4_desc_pos: .res 2
 fx4_latest: .res 2
+fx4_field: .res 2
+fx4_lastblank: .res 2
+fx4_chunk_end: .res 2
+fx4_blank_cost: .res 2
+fx4_deadline: .res 2
 .segment "BOOT"
 reset:
   sei
@@ -86,6 +93,12 @@ reset:
   pea $0000
   plb
   plb
+  rep #$20
+  lda #0
+  sta f:$7e0000+fx4_field
+  sep #$20
+  lda #$ff
+  sta f:$7e0000+fx4_lastblank
   jsl fx_audio_init
   sep #$20
   lda #1
@@ -265,6 +278,8 @@ wait_initial_vblank:
   beq wait_initial_vblank   ; 新規HDMAは次field先頭で初期化させる。
   lda #$7e
   sta f:$00420c
+  lda #$81
+  sta f:$004200
   plp
   jsr _main
   bra game_started
@@ -368,7 +383,8 @@ update_ground_pointers:
   rts
 
 ; SA-1の線形4bpp出力をキャラクタ変換DMAでPPUへ送る最初の統合版。
-; 全画面転送は二つの非表示期間に分割する。60fps達成版ではない。
+; 二つのCHR面へ差分を送り、転送量から非表示期間の開始期限を求める。
+; 起動時の全面初期化を含め、必要なら複数の非表示期間に分割する。60fps未達。
 _fx_present:
   php
   rep #$30
@@ -426,6 +442,7 @@ render_started:
   sta f:$003100
   sep #$30
   jsr _fx_frame
+logic_finished:
   sep #$20
 wait_sa1:
   lda f:$003104
@@ -465,7 +482,7 @@ no_descriptors:
   lda #0
   sta f:$002232
   sep #$20
-  .ifdef SA1_PADDED
+  .if .defined(SA1_PADDED) .and .not .defined(SA1_DIRECT)
   lda #$41
   .else
   lda #$40
@@ -475,14 +492,55 @@ no_descriptors:
   lda #$07c0
   sta f:$002235
 transfer_chunk:
+  rep #$30
+  ldx fx4_desc_pos
+  lda #2000               ; master clock / 8: OBJ転送と準備の余裕
+  sta fx4_blank_cost
+plan_chunk:
+  cpx fx4_desc_count
+  bcs plan_done
+  lda fx4_descriptors,x
+  clc
+  adc fx4_blank_cost
+  adc #96                 ; descriptorごとの設定時間を保守的に見積もる
+  cmp #13601
+  bcs plan_done
+  sta fx4_blank_cost
+  txa
+  clc
+  adc #6
+  tax
+  bra plan_chunk
+plan_done:
+  stx fx4_chunk_end
+  lda fx4_blank_cost
+  clc
+  adc #169
+  sta f:$004204
+  sep #$20
+  lda #170
+  sta f:$004206
+  .repeat 8
+    nop
+  .endrepeat
+  rep #$20
+  lda #284
+  sec
+  sbc f:$004214
+  cmp #251
+  bcc :+
+  lda #251
+:
+  sta fx4_deadline
   sep #$20
   jsr wait_blank
+dma_chunk_ready:
   rep #$30
   stz fx4_half_bytes
   lda #$1801
   sta f:$004300
   sep #$20
-  .ifdef SA1_PADDED
+  .if .defined(SA1_PADDED) .and .not .defined(SA1_DIRECT)
   lda #$41
   .else
   lda #$40
@@ -493,11 +551,11 @@ transfer_descriptor:
   ldx fx4_desc_pos
   cpx fx4_desc_count
   bcs transfer_complete
+  cpx fx4_chunk_end
+  jcs transfer_chunk
   lda fx4_descriptors,x
   clc
   adc fx4_half_bytes
-  cmp #10001
-  bcs transfer_chunk
   sta fx4_half_bytes
   lda fx4_descriptors,x
   sta f:$004305
@@ -546,7 +604,7 @@ wait_ack:
   bne wait_ack
 dma_finished:
   sep #$20
-  lda #1
+  lda #$81
   sta f:$004200
   plp
   rts
@@ -557,7 +615,7 @@ wait_blank:
   lda f:$00213d
   cmp #203
   bcc wait_blank
-  cmp #205
+  cmp fx4_deadline
   bcs wait_blank
 wait_hblank:
   lda f:$004212
@@ -575,6 +633,21 @@ fx4_wait_obj_blank:
 blank_table:
   .byte 21,$80,1,$00,127,$0f,53,$0f,22,$80,1,$80,0
 .include "math4.inc"
+.segment "BOOT"
+.export nmi_game
+nmi_game:
+  php
+  rep #$20
+  pha
+  sep #$20
+  lda f:$004210
+  rep #$20
+  lda f:$7e0000+fx4_field
+  inc
+  sta f:$7e0000+fx4_field
+  pla
+  plp
+  rti
 .segment "GFX"
 .incbin "ppu_sa1.bin"
 .segment "HEADER"

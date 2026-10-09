@@ -17,7 +17,7 @@ def main():
         for frame in (120,s['fields']):
             p=BUILD/scene/f'frame{frame}.png'
             shutil.copy2(p,dest/(scene+'_'+p.name))
-    for name in ('manifest.json','compiled_game_packing.json','game.lbl'):
+    for name in ('manifest.json','compiled_game_packing.json','compiled_background_packing.json','game.lbl'):
         shutil.copy2(BUILD/name,dest/name)
     with zipfile.ZipFile(dest/'pixel_evidence.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         for scene in summaries:
@@ -31,7 +31,9 @@ def main():
 
 現行4bppの画像・パレット、ゲーム処理、地面と空のHDMA、既存の自機OBJ、音声を維持した独立分岐。ソフトウェア描画をSA-1へ移し、全1,492寸法の現在使用する向き・色位相・画素位相を65816コードにして8MiB ROM内に保持する。現在のゲームがソフトウェア描画で使わない左右・上下反転は、汎用比較probeと分けて明示的に検出する。自機OBJの反転は既存通り。
 
-差分タイルだけを消去・合成し、PPUの二つのCHR面には直近2フレーム分の差分を送る。連続行の呼び出しコードで行ごとの準備を省く。描画用BW-RAMは左右に余白を持つ512px幅。キャラクタ変換DMAの最大幅256pxに合わせ、変わった行だけを別の256px幅BW-RAMへ集めてから通常のPPU DMAで送る。
+差分タイルだけを消去・合成し、PPUの二つのCHR面には直近2フレーム分の差分を送る。連続行の呼び出しコードで行ごとの準備を省く。描画用BW-RAMは256px幅とし、転送前に別バッファへ集める処理を省いた。画面端を越える描画が隣の行へ書く部分だけをI-RAMへ一時保存し、生成コードの実行後に復元する。近景も生成コードで合成する。素材は変更していない。
+
+S-CPUでは同じ地面HDMA表の再生成を省く。転送開始の期限は転送量とdescriptor数から保守的に計算し、非表示期間の途中で準備できた場合も間に合う量を送る。並べ替えのbucket方式も実装して順序を照合したが、実ゲームでは速くならず既定の挿入ソートを維持した。
 
 独立した画像合成で完成画像を検証し、さらにその画像をSNESのタイル形式へ変換した結果と転送済みVRAMを比較した。エミュレータの通常クロックを使用。起動直後の二面初期化は全面処理のため別扱いとする。
 
@@ -42,7 +44,7 @@ def main():
         worst=max(x['totalSa1Ms'] for x in s['sa1Jobs'][3:])
         text+=f'|{scene}|{s["fields"]}|{s["presents"]}|{s["pixelMatchedPresents"]}|{worst:.3f}|{s["presentationFieldIntervals"]}|\n'
     text+='''
-表示間隔0は同じfield内での複数回の完了であり、60fps達成の証拠には数えない。1以外の間隔が残っているため60fps未達と判定する。全画面の完成表示を毎field維持することが合格条件であり、平均SA-1時間やゲームロジック更新回数で代用しない。
+MesenのendFrame通知は走査線225で発生する。203..224で完了した更新だけ次の通知fieldへ補正し、225以後と翌field冒頭の非表示期間は現在の通知fieldに数える。以前の「203以後をすべて+1」では225をまたぐ完成を同field内の重複と誤認したため、旧0fieldの分布は撤回する。実際の表示間隔に1以外が残っているため60fps未達と判定する。全画面の完成表示を毎field維持することが合格条件であり、平均SA-1時間やゲームロジック更新回数で代用しない。ページ切り替えが非表示期間内であることも検査する。
 
 再現手順:
 
@@ -57,7 +59,7 @@ python tools/report_sa1_game.py
 
 試遊: リポジトリ直下の `play_sa1.cmd`。ROMは `releases/MonoSHSA1_4bpp_experimental.sfc`。ソース分岐は `experiment/sa1-4bpp-60fps-20261010`。元のFX2/4bpp30分岐は変更していない。
 
-次の作業は消去・背景・連続行描画・バッファ整理の時間を分けた測定、透明な余白を除いた差分矩形、同fieldでの重複完了の抑制、重いボス場面の隠れた画素の省略。全ゲーム経路の検証は引き続き必要。
+次は離れた変更箇所の間まで含む横帯を、変更タイルの記録へ置き換える。CPU処理とSA-1処理の各内訳、転送準備時の走査線、待ち時間はJSONへ記録した。全ゲーム経路の検証は引き続き必要。
 '''
     (dest/'report.md').write_text(text,encoding='utf-8')
     print(dest)

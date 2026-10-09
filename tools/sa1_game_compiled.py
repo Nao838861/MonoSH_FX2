@@ -70,11 +70,19 @@ def build(variants,dest,macros=False):
                             program=bytearray()
                             for dy,y in enumerate(ys):
                                 row=row_entry(source[int(y)],parity)
-                                program+=b'\xa9'+struct.pack('<H',dy*256+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
+                                program+=b'\xa9'+struct.pack('<H',dy*128+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
                             program+=b'\x6b';rows=alloc(program)
                         else:rows=alloc(b''.join(row_entry(source[int(y)],parity) for y in ys))
                         desc+=rows.to_bytes(3,'little')
                 entries+=bytes([h])+struct.pack('<H',idx(desc))
+                if macros:
+                    occupied=np.zeros((h,w),dtype=bool)
+                    for phase in range(3 if (asset,1) in variants else 1):
+                        pixels=variants[asset,phase][1]
+                        occupied|=pixels[ys[:,None],((np.arange(w)*(aw*256//w))>>8)[None,:]]!=0
+                    yy,xx=np.nonzero(occupied)
+                    bounds=(int(xx.min()),int(yy.min()),int(xx.max())+1,int(yy.max())+1) if len(xx) else (0,0,0,0)
+                    entries+=bytes(bounds)
             struct.pack_into('<H',index,asset*512+w*2,idx(bytes([len(heights)])+entries))
     rom[0x7f0000:]=index
     info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used}

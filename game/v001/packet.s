@@ -16,6 +16,7 @@
 .import fx_build_color
 .endif
 .export order, packet_work
+.export keys
 .segment "ZEROPAGE"
 dp: .res 2
 pp: .res 2
@@ -79,6 +80,14 @@ omit_obj:
   bra initialize_order
 initialized:
   sty packet_work+8                ; FXへ送る分だけをソート。論理draw自体は保存。
+.ifdef SA1_SORT
+  .import sa1_sort_packet
+  cpy #24
+  bcc :+
+  jsr sa1_sort_packet
+  jcs sorted
+:
+.endif
 .ifdef FX_BUCKET_SORT
   cpy #24                  ; 12体以上で比較・移動の二乗費用を避ける。
   bcc insertion_sort

@@ -15,7 +15,7 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');args=ap.parse_args()
     BUILD.mkdir(parents=True,exist_ok=True)
     ASSET_BUILD.mkdir(parents=True,exist_ok=True)
     variants=assets()
@@ -28,19 +28,20 @@ def main():
     for y in range(24):
         for x in range(32):struct.pack_into('<H',ppu,0xc000+2*(y*32+x),(y*32+x)|0x2400)
     (BUILD/'ppu_sa1.bin').write_bytes(ppu)
-    definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA']
+    definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
-    if args.renderer=='macros':defines+=['-D','SA1_PADDED=1']
+    if args.bucket_sort:defines+=['-D','SA1_SORT=1']
+    if args.renderer=='macros':defines+=['-D','SA1_PADDED=1','-D','SA1_DIRECT=1']
     objs=[]
     renderer=SA1/('renderer_game_'+args.renderer+'.s' if args.renderer!='dma' else 'renderer_game.s')
-    for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('compact',SA1/'compact_game.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
+    for name,src in [('cpu',SA1/'cpu_game.s'),('renderer',renderer),('dirty',SA1/'dirty_game.s'),('shape',SA1/'shape_game.s'),('cover',SA1/'cover_game.s'),('fast',SA1/'fast_game.s'),('edge',SA1/'edge_cached_game.s'),('compact',SA1/'compact_game.s'),('near',SA1/'near_game.s'),('sort',SA1/'sort_game.s'),('packet',GAME/'packet.s'),('objects',GAME/'objects4.s'),('ground',GAME/'ground.s')]:
         if name in ('objects','ground'):
             text=src.read_text(encoding='utf-8').replace('lda #$5f','lda #$df').replace('adc #$5a','adc #$da')
             if name=='objects':text=text.replace('  jsr fx4_wait_obj_blank','  nop\n  nop\n  nop')
             src=BUILD/(name+'.s');src.write_text(text,encoding='utf-8')
         obj=BUILD/(name+'_asm.o')
         run([CC/'ca65.exe',*defines,'-I',GAME,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
-    objs+=sorted(p for p in BASE.rglob('*.o') if p.name not in ('cpu_asm.o','ground_asm.o','objects_asm.o'))
+    objs+=sorted(p for p in BASE.rglob('*.o') if p.name not in ('cpu_asm.o','ground_asm.o','objects_asm.o','packet_asm.o'))
     linked=BUILD/'linked.sfc'
     run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
@@ -50,7 +51,20 @@ def main():
         rom=shared_cache(variants,BUILD,helper=labels['sa1_dma_span'],game=True)
     elif args.renderer in ('compiled','macros'):
         from sa1_game_compiled import build as compiled_cache
-        rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros')
+        fingerprint=hashlib.sha256()
+        for path in [ROOT/'tools'/name for name in ('sa1_game_compiled.py','sa1_patterns.py','smooth_depth.py','test_sa1_probe.py','sa1_prescaled.py')]+[GAME/'packet.s']+sorted((GAME/'upstream').glob('*.c')):
+            fingerprint.update(path.read_bytes())
+        for key,value in sorted(variants.items()):
+            fingerprint.update(str(key).encode());fingerprint.update(value[1].tobytes());fingerprint.update(str(value[1].shape).encode())
+        key=fingerprint.hexdigest()+args.renderer
+        cache=BUILD/'compiled_cache.bin';metadata=BUILD/'compiled_cache.json'
+        if cache.exists() and metadata.exists() and json.loads(metadata.read_text()).get('key')==key:
+            rom=bytearray(cache.read_bytes())
+            (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
+        else:
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros')
+            cache.write_bytes(rom)
+            metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
     rom[:0x10000]=legacy[:0x10000]
     rom[0x400000:0x440000]=legacy[:0x40000]
@@ -71,11 +85,17 @@ def main():
                 mask=sum((0 if pixels[x+i] else 15)<<(i*4) for i in range(4))
                 struct.pack_into('<HH',bg,0x2000+phase*0x2000+y*512+x,mask,val)
     rom[0x5e0000:0x5f0000]=bg
+    if args.renderer=='macros':
+        from sa1_background_compiled import build as compiled_background
+        assert json.loads((BUILD/'compiled_game_packing.json').read_text())['payloadEnd']<=0x7e0000
+        rom[0x7e0000:0x7f0000]=compiled_background(raw,BUILD)
     struct.pack_into('<H',rom,0x7ffc,labels['reset'])
+    struct.pack_into('<H',rom,0x7fea,labels['nmi_game'])
+    struct.pack_into('<H',rom,0x7ffa,labels['nmi_game'])
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':args.renderer=='macros','stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
