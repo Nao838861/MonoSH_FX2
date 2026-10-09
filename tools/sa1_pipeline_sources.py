@@ -183,3 +183,12 @@ def skip_far_clear(text):
     text=text.replace('  lda bgdest\n  clc\n  adc #128\n  sta bgdest', 'clear_far_skip:\n  lda bgdest\n  clc\n  adc #128\n  sta bgdest',1)
     text+='\n.segment "BOOT"\nsa1_clear_far_setup:\n  lda $010c\n  clc\n  adc #77\n  .repeat 7\n    asl\n  .endrepeat\n  sta $f2\n  clc\n  adc #14*128\n  sta $f4\n  rtl\n'
     return text
+
+
+def packet_shapes(name,text):
+    if name=='dirty':
+        text=replace(text,'  plx\ndirty_next:', '  plx\n  phx\n  lda dirty_i\n  cmp dirty_count\n  bcs dirty_shape_saved\n  asl\n  tax\n  lda $ba\n  sta f:$433000,x\ndirty_shape_saved:\n  plx\ndirty_next:')
+        text=replace(text,'  lda dirty_width\n  jsl sa1_find_shape', '  lda dirty_ptr\n  beq dirty_shape_new\n  lda dirty_i\n  asl\n  tax\n  lda f:$433000,x\n  tax\n  bra dirty_shape_ready\ndirty_shape_new:\n  lda dirty_width\n  jsl sa1_find_shape\n  stx $ba\ndirty_shape_ready:')
+    elif name=='renderer':
+        text=replace(text,'  lda height\n  xba\n  ora width\n  ldx asset\n  jsl sa1_find_shape', '  lda index\n  asl\n  tax\n  lda f:$433000,x\n  tax')
+    return text

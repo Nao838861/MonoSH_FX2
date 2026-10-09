@@ -4,7 +4,7 @@ SA1_CC_BUFFER = $05c0
 ; 表示より最大二画像先まで処理する。metadataの三枠は地面の三重bufferと対応する。
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
 .export pipe_irq, irq_game, prefetch_finished
-.export pipe_flip
+.export pipe_flip, pipe_collect
 .export pipe_front_slot, pipe_target_slot, pipe_records, pipe_missed, pipe_pending
 .export pipe_obj_pointer
 .export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
@@ -413,6 +413,29 @@ pipe_wait_dma:
 pipe_choose_target:
   .ifndef SA1_STAGED
   jsr pipe_collect
+  .endif
+  .ifdef SA1_PREFILL
+  lda fx4_generation
+  bne pipe_prefilled
+  lda pipe_target_slot
+  cmp #$ffff
+  bne pipe_prefilled
+  stz pipe_dma_chunk
+  ldx #0
+pipe_prefill_scan:
+  lda pipe_status,x
+  cmp #2
+  bne :+
+  inc pipe_dma_chunk
+:
+  inx
+  inx
+  cpx #SA1_PIPELINE_DEPTH*2
+  bcc pipe_prefill_scan
+  lda pipe_dma_chunk
+  cmp #3
+  jcc pipe_irq_done
+pipe_prefilled:
   .endif
   lda pipe_target_slot
   cmp #$ffff

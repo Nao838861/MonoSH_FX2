@@ -15,7 +15,11 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--skip-far-clear',action='store_true');ap.add_argument('--linear-shape',action='store_true');ap.add_argument('--fast-left-clip',action='store_true');ap.add_argument('--staged-conversion',action='store_true');ap.add_argument('--temporal-sort',action='store_true');ap.add_argument('--shape-cache',action='store_true');ap.add_argument('--cpu-far',action='store_true');ap.add_argument('--cpu-fill',action='store_true');ap.add_argument('--cpu-code-copy',action='store_true');ap.add_argument('--fast-dma',action='store_true');ap.add_argument('--triple-bw',action='store_true');ap.add_argument('--large-edge-cache',action='store_true');ap.add_argument('--padded-pipeline',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--offload-sort',action='store_true');ap.add_argument('--fastrom-cpu',action='store_true');ap.add_argument('--packet-shapes',action='store_true');ap.add_argument('--prefill-pipeline',action='store_true');ap.add_argument('--cpu-edge-copy',action='store_true');ap.add_argument('--skip-far-clear',action='store_true');ap.add_argument('--linear-shape',action='store_true');ap.add_argument('--fast-left-clip',action='store_true');ap.add_argument('--staged-conversion',action='store_true');ap.add_argument('--temporal-sort',action='store_true');ap.add_argument('--shape-cache',action='store_true');ap.add_argument('--cpu-far',action='store_true');ap.add_argument('--cpu-fill',action='store_true');ap.add_argument('--cpu-code-copy',action='store_true');ap.add_argument('--fast-dma',action='store_true');ap.add_argument('--triple-bw',action='store_true');ap.add_argument('--large-edge-cache',action='store_true');ap.add_argument('--padded-pipeline',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    assert not args.offload_sort or (args.pipeline_irq and args.large_edge_cache and not args.staged_conversion and not args.fastrom_cpu and not args.temporal_sort)
+    assert not args.packet_shapes or (args.pipeline and args.renderer=='macros')
+    assert not args.prefill_pipeline or (args.triple_bw and args.pipeline_depth==5)
+    assert not args.cpu_edge_copy or (args.large_edge_cache and args.cpu_code_copy)
     assert not args.fast_left_clip or args.clip_edges
     assert not args.staged_conversion or (args.pipeline_direct and args.pipeline_irq and args.large_edge_cache)
     assert not args.temporal_sort or args.pipeline
@@ -42,6 +46,9 @@ def main():
     cfg=cfg.replace('  CPUCODE:', '  IRAM: start=$0200, size=$05C0, file="";\n  CPUCODE:')
     cfg=cfg.replace('  BOOT: load=BOOT, type=ro;', '  BOOT: load=BOOT, type=ro;\n  SA1: load=BOOT, run=IRAM, type=ro, define=yes;')
     if args.staged_conversion:cfg=cfg.replace('CPUDATA: start=$2000, size=$DE00','CPUDATA: start=$2000, size=$8000')
+    if args.offload_sort:
+        cfg=cfg.replace('  IRAM:','  SA1JIT: start=$0700, size=$00F0, file="";\n  IRAM:')
+        cfg=cfg.replace('  SA1: load=BOOT, run=IRAM, type=ro, define=yes;', '  SA1: load=BOOT, run=IRAM, type=ro, define=yes;\n  SA1SORT: load=BOOT, run=SA1JIT, type=ro, define=yes;')
     (BUILD/'game.cfg').write_text(cfg)
     ppu=bytearray((BASE/'assets4/ppu.bin').read_bytes())
     for y in range(24):
@@ -50,6 +57,7 @@ def main():
     definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     if args.staged_conversion:defines+=['-D','SA1_STAGED=1']
+    if args.prefill_pipeline:defines+=['-D','SA1_PREFILL=1']
     if args.skip_far_clear:defines+=['-D','SA1_SKIP_FAR_CLEAR=1']
     if args.linear_shape:defines+=['-D','SA1_LINEAR_SHAPE=1']
     if args.shape_cache:defines+=['-D','SA1_SHAPE_CACHE=1']
@@ -87,6 +95,19 @@ def main():
             from sa1_pipeline_sources import prepare
             generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct,irq=args.pipeline_irq,transfer_tiles=args.transfer_tiles,merge_dma=args.merge_dma,padded=args.padded_pipeline,large_edge=args.large_edge_cache,triple_bw=args.triple_bw,cpu_copy=args.cpu_code_copy,cpu_fill=args.cpu_fill,cpu_far=args.cpu_far)
             src=BUILD/(name+'_pipeline.s');src.write_text(generated,encoding='utf-8')
+        if name=='renderer' and args.offload_sort:
+            text=src.read_text(encoding='utf-8')
+            text='.setcpu "65816"\n.import sa1_sort_job: far\n'+text
+            text=text.replace('  lda $0100\n  beq wait_job','  lda $0100\n  beq wait_job\n  cmp #2\n  bne sa1_clear_start\n  jsl sa1_sort_job\n  jmp wait_job')
+            src=BUILD/'renderer_sort_job.s';src.write_text(text,encoding='utf-8')
+        if name=='packet' and args.offload_sort:
+            text=src.read_text(encoding='utf-8')
+            text='.import sa1_try_packet_sort\n'+text
+            text=text.replace('  sty packet_work+8                ; FX', '  sty packet_work+8\n  jsr sa1_try_packet_sort\n  jcs sorted\n  ; FX')
+            src=BUILD/'packet_sort_job.s';src.write_text(text,encoding='utf-8')
+        if name=='cpu' and args.fastrom_cpu:
+            text=src.read_text(encoding='utf-8').replace('  jml $7f0000 + game_started','  lda #1\n  sta f:$00420d\n  jml $c10000 + game_started')
+            src=BUILD/'cpu_fastrom.s';src.write_text(text,encoding='utf-8')
         if name=='packet' and args.temporal_sort:
             text=src.read_text(encoding='utf-8')
             text='.import sa1_temporal_prepare, sa1_temporal_save\n'+text
@@ -94,6 +115,16 @@ def main():
             text=text.replace('  beq insert\n  sta keys+2,y', '  bne temporal_move\n  lda order,y\n  cmp packet_work+26\n  bcc insert\n  beq insert\n  lda keys,y\ntemporal_move:\n  sta keys+2,y')
             text=text.replace('sorted:\n', 'sorted:\n  jsr sa1_temporal_save\n')
             src=BUILD/'packet_temporal.s';src.write_text(text,encoding='utf-8')
+        if name in ('dirty','renderer') and args.packet_shapes:
+            from sa1_pipeline_sources import packet_shapes
+            text=packet_shapes(name,src.read_text(encoding='utf-8'))
+            src=BUILD/(name+'_packet_shapes.s');src.write_text(text,encoding='utf-8')
+        if name=='edge' and args.cpu_edge_copy:
+            text=src.read_text(encoding='utf-8')
+            text='.setcpu "65816"\n.import sa1_edge_cpu_save: far, sa1_edge_cpu_restore: far\n'+text
+            text=text.replace('  jsl sa1_dma_begin\nedge_save_line:', '  lda $011e\n  beq edge_save_dma\n  jsl sa1_edge_cpu_save\n  rtl\nedge_save_dma:\n  jsl sa1_dma_begin\nedge_save_line:')
+            text=text.replace('  jsl sa1_dma_begin\nedge_restore_line:', '  lda $011e\n  beq edge_restore_dma\n  jsl sa1_edge_cpu_restore\n  rtl\nedge_restore_dma:\n  jsl sa1_dma_begin\nedge_restore_line:')
+            src=BUILD/'edge_cpu.s';src.write_text(text,encoding='utf-8')
         if name=='renderer' and args.clip_edges:
             text=src.read_text(encoding='utf-8').replace('  lda $0120,x\n  sta dirtyL\n  lda $0122,x\n  sta dirtyR', '  lda #0\n  sta dirtyL\n  lda #128\n  sta dirtyR')
             text=text.replace('  lda dirtyL\n  cmp $b4', '  lda edge\n  jne row_partial\n  lda dirtyL\n  cmp $b4')
@@ -116,6 +147,10 @@ def main():
     if args.pipeline:
         obj=BUILD/'pipeline_asm.o'
         run([CC/'ca65.exe',*defines,'-I',SA1,'-o',obj,SA1/'pipeline_sa1.s']);objs.append(obj)
+    if args.offload_sort:
+        obj=BUILD/'sort_job.o';run([CC/'ca65.exe','-o',obj,SA1/'packet_sort_job.s']);objs.append(obj)
+    if args.cpu_edge_copy:
+        obj=BUILD/'edge_cpu.o';run([CC/'ca65.exe','-o',obj,SA1/'edge_cpu_game.s']);objs.append(obj)
     if args.fast_left_clip:
         obj=BUILD/'clip_left.o';run([CC/'ca65.exe','-o',obj,SA1/'clip_left_game.s']);objs.append(obj)
     if args.temporal_sort:
@@ -188,7 +223,7 @@ def main():
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

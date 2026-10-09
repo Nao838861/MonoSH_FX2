@@ -1,0 +1,9 @@
+{
+  "uniqueRows": 407912,
+  "uniqueKernels": 358569,
+  "nativeCodeBytes": 30305262,
+  "maxKernelBytes": 286,
+  "rowDescriptorsUpperBytes": 2303800,
+  "heightRowMapsBytes": 49565,
+  "geometryPatterns": 1492
+}

@@ -60,6 +60,7 @@ local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local padded=PADDED
 local pipeline=PIPELINE
+local cpuCodeBase=CPUCODEBASE
 local field,logic,presents=0,0,0
 local begin,sa1begin,drawbegin=0,0,0
 local flipBegin=0
@@ -85,8 +86,8 @@ local function word(name,value)
 end
 for name,sites in pairs(CALLS)do
  for _,site in ipairs(sites)do
-  emu.addMemoryCallback(function()cpuEntries[name]=emu.getState().masterClock end,emu.callbackType.exec,0x7f0000+site,0x7f0000+site)
-  emu.addMemoryCallback(function()cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272 end,emu.callbackType.exec,0x7f0000+site+3,0x7f0000+site+3)
+  emu.addMemoryCallback(function()cpuEntries[name]=emu.getState().masterClock end,emu.callbackType.exec,cpuCodeBase+site,cpuCodeBase+site)
+  emu.addMemoryCallback(function()cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272 end,emu.callbackType.exec,cpuCodeBase+site+3,cpuCodeBase+site+3)
  end
 end
 local function byte(name,value)
@@ -94,7 +95,8 @@ local function byte(name,value)
 end
 local function cb(name,fn,cpu)
  cpu=cpu or emu.cpuType.snes
- local a=labels[name]+(cpu==emu.cpuType.snes and 0x7f0000 or 0)
+ local irqName=name:match('^pipe_') or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
+ local a=labels[name]+(cpu==emu.cpuType.snes and (irqName and 0x7f0000 or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
 local packetClock,irqTicks,irqClock=0,0,0
@@ -300,7 +302,7 @@ emu.addEventCallback(function()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+'''.replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
