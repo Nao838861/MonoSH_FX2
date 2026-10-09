@@ -72,7 +72,11 @@ local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
 local completedFrames={}
+local completedPackets={}
 local outputJobs={}
+local queueSamples={}
+local objectJobs={}
+local objectBegin=0
 local function word(name,value)
  emu.write16(0x7e0000+labels[name],value,emu.memType.snesMemory)
 end
@@ -111,7 +115,12 @@ if pipeline then
    completedFrames[gen]=table.concat(t)
   end
  end)
- cb('pipe_irq_done',function()local line=emu.getState()['ppu.scanline'];assert(line<=22 or line>=203,'PPU transfer exceeded blank period line='..line..' field='..field..' presents='..presents)end)
+ cb('pipe_irq_done',function()
+  local line=emu.getState()['ppu.scanline'];assert(line<=22 or line>=203,'PPU transfer exceeded blank period line='..line..' field='..field..' presents='..presents)
+  local mt=emu.memType.snesMemory;local ready=0;local rendering=0
+  for i=0,DEPTH-1 do local s=emu.read16(0x7e0000+labels.pipe_status+i*2,mt);if s==2 then ready=ready+1 elseif s==1 then rendering=rendering+1 end end
+  queueSamples[#queueSamples+1]=string.format('{\"field\":%d,\"line\":%d,\"ready\":%d,\"rendering\":%d,\"complete\":%d,\"flipped\":%d,\"target\":%d}',field,line,ready,rendering,emu.read16(0x7e0000+labels.pipe_complete,mt),emu.read16(0x7e0000+labels.pipe_presented_irq,mt),emu.read16(0x7e0000+labels.pipe_target_slot,mt))
+ end)
 end
 if labels.sa1_sort_packet then
  cb('sa1_sort_packet',function()
@@ -160,7 +169,7 @@ end
 cb('_fx_frame',function()
  logic=logic+1
  begin=emu.getState().masterClock
- if scenario=='boss' then
+ if scenario:match('^boss') then
   byte('_monosh_player_invuln',255)
   if field>=90 then
    byte('_monosh_enemy_stage_complete_flag',1)
@@ -179,6 +188,13 @@ end)
 cb('transfer_chunk',function()local s=emu.getState();readyLine=s['ppu.scanline'];startClock=s.masterClock end)
 cb('dma_chunk_ready',function()waitMs=(emu.getState().masterClock-startClock)/21477.272;startClock=emu.getState().masterClock end)
 cb('sa1_clear_start',function()sa1begin=emu.getState().masterClock end,emu.cpuType.sa1)
+if labels.sa1_sprite_begin then
+ cb('sa1_sprite_begin',function()objectBegin=emu.getState().masterClock end,emu.cpuType.sa1)
+ cb('sa1_sprite_done',function()
+  local mt=emu.memType.sa1Memory;local i=emu.read16(0x2c,mt);local a=0x430000+i*10;local ms=(emu.getState().masterClock-objectBegin)/21477.272
+  if ms>0.5 then objectJobs[#objectJobs+1]=string.format('{\"field\":%d,\"job\":%d,\"index\":%d,\"asset\":%d,\"width\":%d,\"height\":%d,\"x\":%d,\"bottom\":%d,\"ms\":%.6f}',field,#times+1,i,emu.read(a+6,mt),emu.read(a+4,mt),emu.read(a+5,mt),emu.read16(a,mt),emu.read16(a+2,mt),ms)end
+ end,emu.cpuType.sa1)
+end
 if labels.sa1_output_done then cb('sa1_output_done',function()outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f}',field,(emu.getState().masterClock-sa1begin)/21477.272)end,emu.cpuType.sa1)end
 if labels.sa1_dirty_done then
  cb('sa1_dirty_done',function()dirtyDone=emu.getState().masterClock;dirtyMs=(dirtyDone-sa1begin)/21477.272 end,emu.cpuType.sa1)
@@ -192,6 +208,11 @@ cb('sa1_draw_done',function()
  for _,a in ipairs({0x108,0x10a,0x10c,0x106})do local v=emu.read16(a,mt);trace[#trace+1]=string.char(v&255,v>>8)end
  for i=0,n*10-1 do trace[#trace+1]=string.char(emu.read(0x430000+i,mt))end
  packetTrace:write(table.concat(trace))
+ if pipeline then
+  local cpuMt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_render_slot,cpuMt)
+  local gen=emu.read16(0x7e0000+labels.pipe_records+slot*512+8,cpuMt)
+  if gen<=120 or gen%60==0 then local t={};for i=0,n*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,mt))end;completedPackets[gen]=table.concat(t)end
+ end
  local dirtyBytes=0
  for r=0,23 do local a=0x120+r*4;dirtyBytes=dirtyBytes+math.max(0,emu.read16(a+2,emu.memType.sa1Memory)-emu.read16(a,emu.memType.sa1Memory))*8 end
  if presents==0 then
@@ -215,6 +236,8 @@ cb('dma_finished',function()
    local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt)
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
+   for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs')end
+   for i=0,7 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==emu.read(record+192+i,mt),'pipeline high OAM differs')end
    local f=assert(io.open(output..'/'..n..'_fb.bin','wb'));f:write((assert(completedFrames[gen],'missing completed snapshot')));f:close();completedFrames[gen]=nil
   elseif padded then
    local f=assert(io.open(output..'/'..n..'_fb.bin','wb'));local t={}
@@ -229,9 +252,12 @@ cb('dma_finished',function()
   for _,a in ipairs(addresses)do
    local v=emu.read16(a,emu.memType.snesMemory);t[#t+1]=string.char(v&255,v>>8)
   end
-  local packetAddress=0x430000
-  if pipeline then packetAddress=0x434000+emu.read16(0x7e0000+labels.pipe_front_slot,emu.memType.snesMemory)*1024 end
-  for i=0,count*10-1 do t[#t+1]=string.char(emu.read(packetAddress+i,emu.memType.snesMemory))end
+  if pipeline then
+   local gen=emu.read16(record+8,emu.memType.snesMemory)
+   t[#t+1]=assert(completedPackets[gen],'missing completed packet');completedPackets[gen]=nil
+  else
+   for i=0,count*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,emu.memType.snesMemory))end
+  end
   f:write(table.concat(t));f:close()
  end
 end)
@@ -249,12 +275,12 @@ emu.addEventCallback(function()
   dump('end_wram.bin',emu.memType.snesWorkRam,0,131072)
   packetTrace:close()
   local f=assert(io.open(output..'/summary.json','w'))
-  f:write(string.format('{"fields":%d,"logic":%d,"presents":%d,"presentationTimes":[%s],"sa1Jobs":[%s],"cpuJobs":[%s],"outputJobs":[%s]}',field,logic,presents,table.concat(presentationTimes,','),table.concat(times,','),table.concat(cpuJobs,','),table.concat(outputJobs,',')));f:close()
+  f:write(string.format('{"fields":%d,"logic":%d,"presents":%d,"presentationTimes":[%s],"sa1Jobs":[%s],"cpuJobs":[%s],"outputJobs":[%s],"queueSamples":[%s],"objectJobs":[%s]}',field,logic,presents,table.concat(presentationTimes,','),table.concat(times,','),table.concat(cpuJobs,','),table.concat(outputJobs,','),table.concat(queueSamples,','),table.concat(objectJobs,',')));f:close()
   dump('iram.bin',emu.memType.sa1InternalRam,0,2048)
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+'''.replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
@@ -265,7 +291,7 @@ end,emu.eventType.endFrame)
     for f in dest.glob('*.rgb'):
         raw=f.read_bytes();Image.frombytes('RGB',(256,len(raw)//768),raw).save(f.with_suffix('.png'))
     summary=json.loads((dest/'summary.json').read_text())
-    print(json.dumps({k:v for k,v in summary.items() if k not in ('sa1Jobs','presentationTimes','cpuJobs','outputJobs')}))
+    print(json.dumps({k:v for k,v in summary.items() if k not in ('sa1Jobs','presentationTimes','cpuJobs','outputJobs','queueSamples','objectJobs')}))
     assert summary['presents']>0,'SA-1 game never presented an image'
     print('SA-1 max ms:',max(x['totalSa1Ms'] for x in summary['sa1Jobs']))
     summary['pixelMatchedPresents']=verify_pixels(dest,labels)

@@ -6,9 +6,22 @@
 .segment "BOOT"
 sa1_dma_begin:
   php
+  .ifdef SA1_PIPELINE_IRQ
+  sei
+  .endif
   rep #$20
   pha
+  .ifdef SA1_PIPELINE_IRQ
+  sep #$20
+  lda 3,s
+  ora #4
+  sta 3,s
+  rep #$20
+  .endif
 dma_retry:
+  .ifdef SA1_PIPELINE_IRQ
+  sei
+  .endif
   lda #1
   sta $011c
   lda $011e
@@ -18,6 +31,9 @@ dma_retry:
 dma_entered:
   pla
   plp
+  .ifdef SA1_PIPELINE_IRQ
+  sei
+  .endif
   rtl
 sa1_dma_end:
   php
@@ -26,6 +42,9 @@ sa1_dma_end:
   stz $011c
   pla
   plp
+  .ifdef SA1_PIPELINE_IRQ
+  cli
+  .endif
   rtl
 sa1_dma_poll:
   php
@@ -149,3 +168,38 @@ sa1_fb_write:
   sta [$10],y
   ply
   rtl
+
+.export sa1_dma_irq
+sa1_dma_irq:
+  php
+  rep #$30
+  pha
+  phx
+  phy
+  phd
+  phb
+  lda #0
+  tcd
+  sep #$20
+  pha
+  plb
+  lda #$80
+  sta $220b
+  rep #$20
+  lda $011e
+  beq irq_no_dma
+  sep #$20
+  lda #$b1
+  sta $2230
+  rep #$20
+  lda #2
+  sta $011c
+irq_no_dma:
+  rep #$30
+  plb
+  pld
+  ply
+  plx
+  pla
+  plp
+  rti

@@ -1,0 +1,19 @@
+{
+  "romSha256": "d880ab4d23e177cf259f353be9659fb15cd6268cc9225823865b78dea051226e",
+  "sa1CodeBytes": 823,
+  "renderer": "macros",
+  "paddedFramebuffer": false,
+  "directFramebuffer": true,
+  "tileDma": false,
+  "bucketSort": false,
+  "pipeline": true,
+  "pipelineDirect": true,
+  "pipelineIrq": true,
+  "pipelineDepth": 5,
+  "transferTiles": false,
+  "redrawAll": true,
+  "mergeDma": true,
+  "clipEdges": false,
+  "stage": "dirty-tiles-two-pages",
+  "goal60fpsAchieved": false
+}

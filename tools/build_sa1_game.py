@@ -15,9 +15,14 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    assert not args.clip_edges or (args.pipeline and args.redraw_all)
+    assert not args.merge_dma or (args.pipeline and args.pipeline_direct and not args.transfer_tiles)
+    assert not args.redraw_all or args.renderer=='macros'
     assert not (args.tile_dma and args.bucket_sort),'experimental bucket storage overlaps large tile descriptor lists'
     assert not args.pipeline_direct or args.pipeline
+    assert not args.pipeline_irq or args.pipeline
+    assert not args.transfer_tiles or (args.pipeline and args.pipeline_direct)
     assert not args.pipeline or (args.renderer=='macros' and not args.tile_dma and not args.bucket_sort)
     BUILD.mkdir(parents=True,exist_ok=True)
     ASSET_BUILD.mkdir(parents=True,exist_ok=True)
@@ -35,8 +40,10 @@ def main():
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     if args.bucket_sort:defines+=['-D','SA1_SORT=1']
     if args.tile_dma:defines+=['-D','SA1_TILE_DMA=1']
-    if args.pipeline:defines+=['-D','SA1_PIPELINE=1']
+    if args.transfer_tiles:defines+=['-D','SA1_TRANSFER_TILES=1']
+    if args.pipeline:defines+=['-D','SA1_PIPELINE=1','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}']
     if args.pipeline_direct:defines+=['-D','SA1_PIPELINE_DIRECT=1']
+    if args.pipeline_irq:defines+=['-D','SA1_PIPELINE_IRQ=1']
     if args.renderer=='macros':defines+=['-D','SA1_PADDED=1','-D','SA1_DIRECT=1']
     objs=[]
     renderer=SA1/('renderer_game_'+args.renderer+'.s' if args.renderer!='dma' else 'renderer_game.s')
@@ -45,18 +52,33 @@ def main():
         if name in ('objects','ground'):
             text=src.read_text(encoding='utf-8').replace('lda #$5f','lda #$df').replace('adc #$5a','adc #$da')
             if name=='objects':text=text.replace('  jsr fx4_wait_obj_blank','  nop\n  nop\n  nop')
-            if name=='objects' and args.pipeline:text+='\n.export player4_next\n'
+            if name=='objects' and args.pipeline:
+                text+='\n.export player4_next\n.import pipe_obj_pointer\n'
+                text=text.replace('lda #fx_obj_present+128','lda pipe_obj_pointer\n  clc\n  adc #128').replace('lda #fx_obj_present','lda pipe_obj_pointer')
             if name=='ground' and args.pipeline:text='.import pipe_ground_wait\n'+text.replace('_fx_build_ground:\n','_fx_build_ground:\n  jsr pipe_ground_wait\n')
+            if name=='ground' and args.pipeline:
+                from sa1_pipeline_sources import ground_buffers
+                text=ground_buffers(text,args.pipeline_depth)
             src=BUILD/(name+'.s');src.write_text(text,encoding='utf-8')
         elif args.pipeline:
             from sa1_pipeline_sources import prepare
-            generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct)
+            generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct,irq=args.pipeline_irq,transfer_tiles=args.transfer_tiles,merge_dma=args.merge_dma)
             src=BUILD/(name+'_pipeline.s');src.write_text(generated,encoding='utf-8')
+        if name=='renderer' and args.clip_edges:
+            text=src.read_text(encoding='utf-8').replace('  lda $0120,x\n  sta dirtyL\n  lda $0122,x\n  sta dirtyR', '  lda #0\n  sta dirtyL\n  lda #128\n  sta dirtyR')
+            text=text.replace('  lda dirtyL\n  cmp $b4', '  lda edge\n  jne row_partial\n  lda dirtyL\n  cmp $b4')
+            src=BUILD/'renderer_clip_edges.s';src.write_text(text,encoding='utf-8')
+        if name=='fast' and args.redraw_all:
+            text=src.read_text(encoding='utf-8').replace('fast_tiles:\n','fast_tiles:\n  jmp fast_base_ready\n')
+            if args.clip_edges:text=text.replace('  jsl sa1_edge_prepare\n','  jsl sa1_edge_prepare\n  lda $c4\n  jne fast_fail\n')
+            src=BUILD/'fast_redraw_all.s';src.write_text(text,encoding='utf-8')
         obj=BUILD/(name+'_asm.o')
-        run([CC/'ca65.exe',*defines,'-I',GAME,'-I',SA1,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
+        run([CC/'ca65.exe',*defines,*(['-D','SA1_TILE_DMA=1'] if args.transfer_tiles and name=='dirty' else []),'-I',GAME,'-I',SA1,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
     if args.pipeline:
         obj=BUILD/'pipeline_asm.o'
         run([CC/'ca65.exe',*defines,'-I',SA1,'-o',obj,SA1/'pipeline_sa1.s']);objs.append(obj)
+    if args.merge_dma:
+        obj=BUILD/'merge_dma.o';run([CC/'ca65.exe','-o',obj,SA1/'merge_dma.s']);objs.append(obj)
     objs+=sorted(p for p in BASE.rglob('*.o') if p.name not in ('cpu_asm.o','ground_asm.o','objects_asm.o','packet_asm.o'))
     linked=BUILD/'linked.sfc'
     run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
@@ -114,7 +136,7 @@ def main():
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

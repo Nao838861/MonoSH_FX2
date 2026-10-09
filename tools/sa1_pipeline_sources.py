@@ -4,33 +4,47 @@ def replace(text,old,new):
     assert text.count(old)==1,old
     return text.replace(old,new)
 
-def prepare(name,text,direct=False):
+def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=False):
     if direct:text=direct_source(name,text)
     if name=='cpu':
+        if irq:
+            text=text.replace('.import sa1_entry','.import sa1_entry, sa1_dma_irq')
+            text=replace(text,'  lda #sa1_entry', '  lda #sa1_dma_irq\n  sta $2207\n  lda #sa1_entry')
         a=text.index('; SA-1の線形4bpp出力');b=text.index('wait_blank:',a)
         return text[:a]+'.include "pipeline_cpu.inc"\n'+text[b:]
+    if name=='dirty' and transfer_tiles:
+        text=replace(text,'  jml sa1_tiles_transfer', '  jsl sa1_tiles_transfer\n  lda #$2000\n  sta $14\n  lda $011a\n  cmp #51\n  bcs transfer_band_fallback\n  rtl\ntransfer_band_fallback:\n  lda #$0800\n  sta $14')
     if name not in ('renderer','fast','near','edge'):return text
     text='.import sa1_dma_begin: far, sa1_dma_end: far\n'+text
     if name=='renderer':
-        text='.import sa1_snapshot: far, sa1_dma_poll: far\n.export sa1_output_done\n'+text
+        text='.import sa1_snapshot: far, sa1_dma_poll: far\n.export sa1_output_done, sa1_sprite_begin, sa1_sprite_done\n'+text
+        text=replace(text,'\nnext:\n','\nnext:\nsa1_sprite_begin:\n')
+        text=replace(text,'\nskip:\n','\nskip:\nsa1_sprite_done:\n')
+        if irq:text=replace(text,'wait_job:\n', '  sep #$20\n  lda #$80\n  sta $220a\n  rep #$30\n  cli\nwait_job:\n')
         text=replace(text,'wait_job:\n  rep #$30', 'wait_job:\n  jsl sa1_dma_poll\n  rep #$30')
         text=replace(text,'wait_release:\n  lda $0100', 'wait_release:\n  jsl sa1_dma_poll\n  lda $1e\n  bne released_by_dma\n  lda $0100')
         text=replace(text,'  stz $0104\n  jmp wait_job', 'released_by_dma:\n  stz $1e\n  stz $0104\n  jmp wait_job')
         text=replace(text,'  rep #$30\nnext:', '  rep #$30\n  jmp next\n.segment "BOOT"\nnext:')
         text=replace(text,'  stz dy\nrow:', '  stz dy\n  jmp row\n.segment "SA1"\nrow:')
         text=replace(text,'  sep #$20\n  lda #$84\n  sta $2230\n  rep #$30\n  stz bgrow', '  rep #$30\n  stz bgrow')
-        text=replace(text,'clear_scanline:\n', 'clear_scanline:\n  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\n')
-        text=replace(text,'  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128', '  sta $2237\n  jsl sa1_dma_end\n  rep #$20\n  lda bgdest\n  clc\n  adc #128')
+        text=replace(text,'clear_scanline:\n', '  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\nclear_scanline:\n')
+        text=replace(text,'  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128', '  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128')
+        text=replace(text,'clear_tile_next:\n','clear_tile_next:\n  jsl sa1_dma_end\n')
         text=replace(text,'  sta bgwidth\n  lda bgscroll', '  sta bgwidth\n  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\n  lda bgscroll')
         text=replace(text,'bg_far_next:\n', 'bg_far_next:\n  jsl sa1_dma_end\n')
         text=replace(text,'  jeq invoke_row\n  sep #$20', '  jeq invoke_row\n  jsl sa1_dma_begin\n  sep #$20')
         text=replace(text,'  rep #$20\n  lda codelen\n  sec\n  sbc #4', '  rep #$20\n  jsl sa1_dma_end\n  lda codelen\n  sec\n  sbc #4')
         text=replace(text,'  jsl sa1_prepare_transfer\n  sep #$20\n  lda #$b1\n  sta $2230\n  rep #$20', '  jsl sa1_prepare_transfer\n  jsl sa1_snapshot\nsa1_output_done:\n  rep #$20')
+        if irq:text=replace(text,'  sta $0104\nwait_release:', '  sta $0104\n  sep #$20\n  lda #$80\n  sta $2209\n  rep #$20\nwait_release:')
         text=text.replace('.assert * <= $0600','.assert * <= $05c0')
         if direct:text=text.replace('  jsl sa1_snapshot\n','')
+        if merge_dma:
+            text='.import sa1_merge_dma: far\n'+text
+            text=replace(text,'  jsl sa1_prepare_transfer\n','  jsl sa1_prepare_transfer\n  jsl sa1_merge_dma\n')
     elif name=='fast':
-        text=replace(text,'fast_base_ready:\n', 'fast_base_ready:\n  jmp fast_chunks\n')
-        text=text.replace('cmp #21','cmp #9').replace('lda #20','lda #8')
+        if not irq:
+            text=replace(text,'fast_base_ready:\n', 'fast_base_ready:\n  jmp fast_chunks\n')
+            text=text.replace('cmp #21','cmp #9').replace('lda #20','lda #8')
         text=replace(text,'  sta fbytes\n  sta $2238', '  sta fbytes\n  jsl sa1_dma_begin\n  sta $2238')
         text=replace(text,'  rep #$20\n  ldx fbytes', '  rep #$20\n  jsl sa1_dma_end\n  ldx fbytes')
     elif name=='near':
@@ -56,4 +70,22 @@ def direct_source(name,text):
         text=replace(text,'dirty_return:\n  rtl', 'dirty_return:\n  ldx #0\npipeline_merge:\n  lda $0120,x\n  tay\n  cmp f:$430400,x\n  bcc :+\n  lda f:$430400,x\n:\n  sta $0120,x\n  tya\n  sta f:$430400,x\n  lda $0122,x\n  tay\n  cmp f:$430402,x\n  bcs :+\n  lda f:$430402,x\n:\n  sta $0122,x\n  tya\n  sta f:$430402,x\n  inx\n  inx\n  inx\n  inx\n  cpx #96\n  bne pipeline_merge\n  rtl')
         a=text.index('transfer_row:\n');b=text.index('  lda dirty_right\n',a)
         text=text[:a]+'transfer_row:\n  lda $0120,x\n  sta dirty_left\n  lda $0122,x\n  sta dirty_right\n'+text[b:]
+    return text
+
+
+def ground_buffers(text,depth):
+    if depth==3:return text
+    text=replace(text,'  cmp #3\n','  cmp #'+str(depth)+'\n')
+    text=replace(text,'sky_tables: .res 30','sky_tables: .res '+str(depth*10))
+    text=replace(text,'ground_horizontal_keys: .res 6','ground_horizontal_keys: .res '+str(depth*2))
+    text=replace(text,'sky_tables+20\n','sky_tables+20'+''.join(', sky_tables+'+str(i*10) for i in range(3,depth))+'\n')
+    for table,label,size in [('color1_pointers','_fx_ground_color1',150),('color3_pointers','_fx_ground_color3',150),('horizontal_pointers','_fx_ground_horizontal',270),('far_pointers','_fx_ground_far_x',10)]:
+        prefix=table+': .word '
+        a=text.index(prefix);b=text.index('\n',a)
+        text=text[:b]+''.join(', pipeline_'+table+'_'+str(i) for i in range(3,depth))+text[b:]
+    text+='\n.segment "COLORBSS"\n.export pipe_ground_extra, pipe_ground_extra_end\npipe_ground_extra:\n'
+    for i in range(3,depth):
+        for table,size in [('color1_pointers',150),('color3_pointers',150),('horizontal_pointers',270),('far_pointers',10)]:
+            text+='pipeline_'+table+'_'+str(i)+': .res '+str(size)+'\n'
+    text+='pipe_ground_extra_end:\n'
     return text

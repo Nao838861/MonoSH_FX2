@@ -2,9 +2,12 @@
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
 .export pipe_irq, irq_game, prefetch_finished
 .export pipe_front_slot, pipe_target_slot, pipe_records, pipe_missed, pipe_pending
+.export pipe_obj_pointer
+.export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
+.export pipe_render_slot
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
 .segment "COLORBSS"
-pipe_records: .res 512*3
+pipe_records: .res 512*SA1_PIPELINE_DEPTH
 .segment "BSS"
 pipe_initialized: .res 2
 pipe_write_slot: .res 2
@@ -16,7 +19,7 @@ pipe_pending: .res 2
 pipe_complete: .res 2
 pipe_next_bw: .res 2
 pipe_bw_busy: .res 4
-pipe_status: .res 6
+pipe_status: .res 2*SA1_PIPELINE_DEPTH
 pipe_submitted: .res 2
 pipe_missed: .res 2
 pipe_irq_phase: .res 2
@@ -29,6 +32,9 @@ pipe_copy_length: .res 2
 pipe_collect_length: .res 2
 pipe_available: .res 2
 pipe_line: .res 2
+pipe_obj_pointer: .res 2
+pipe_desc_offset: .res 2
+pipe_dma_chunk: .res 2
 .segment "BOOT"
 irq_game:
   php
@@ -54,12 +60,25 @@ _fx_present:
   lda pipe_initialized
   bne pipe_main
   inc pipe_initialized
+  .if SA1_PIPELINE_DEPTH > 3
+  .import pipe_ground_extra, pipe_ground_extra_end
+  ldx #pipe_ground_extra_end-pipe_ground_extra-2
+pipe_clear_ground:
+  stz pipe_ground_extra,x
+  dex
+  dex
+  bpl pipe_clear_ground
+  .endif
   lda #$ffff
   sta pipe_front_slot
   sta pipe_target_slot
   lda #203
   sta f:$004209
   sep #$20
+  .ifdef SA1_PIPELINE_IRQ
+  lda #$80
+  sta f:$002201
+  .endif
   lda #$a1
   sta f:$004200
   rep #$30
@@ -154,25 +173,27 @@ pipe_wait_bw:
   asl
   sta pipe_copy_length
   beq pipe_no_packet
-  dec
-  ldx #_fx_packet
-  ldy #0
-  mvn #$7e,#$43
-  pea $7e7e
-  plb
-  plb
-  lda pipe_main_offset
-  asl
-  clc
-  adc #$4000
-  tay
-  ldx #_fx_packet
+  ; WRAM port????DMA??????packet?BW-RAM????
+  php
+  sei
+  lda #_fx_packet
+  sta f:$002181
+  lda #$8080
+  sta f:$004300
+  lda #0
+  sta f:$004302
+  sep #$20
+  sta f:$002183
+  lda #$43
+  sta f:$004304
+  rep #$20
   lda pipe_copy_length
-  dec
-  mvn #$7e,#$43
-  pea $7e7e
-  plb
-  plb
+  sta f:$004305
+  sep #$20
+  lda #1
+  sta f:$00420b
+  rep #$20
+  plp
 pipe_no_packet:
   ldx pipe_next_bw
   lda #1
@@ -188,7 +209,7 @@ render_started:
   sta f:$003100
   lda pipe_write_slot
   inc
-  cmp #3
+  cmp #SA1_PIPELINE_DEPTH
   bcc :+
   lda #0
 :
@@ -198,9 +219,19 @@ render_started:
 logic_finished:
   rep #$30
 pipe_wait_render:
+  .ifdef SA1_PIPELINE_IRQ
+  sei
+  .endif
   jsr pipe_collect
   lda pipe_pending
-  bne pipe_wait_render
+  beq pipe_render_ready
+  .ifdef SA1_PIPELINE_IRQ
+  wai
+  cli
+  .endif
+  bra pipe_wait_render
+pipe_render_ready:
+  cli
 render_finished:
 render_second_started:
 render_second_finished:
@@ -259,15 +290,27 @@ pipe_collect:
   sta pipe_records+2,x
   stz pipe_records+4,x
   beq pipe_collect_publish
-  pha
+  sta f:$004305
   txa
   clc
   adc #pipe_records+208
-  tay
-  ldx #$0800
-  pla
-  dec
-  mvn #$43,#$7e
+  sta f:$002181
+  .ifdef SA1_TRANSFER_TILES
+  lda f:$003014
+  .else
+  lda #$0800
+  .endif
+  sta f:$004302
+  lda #$8000
+  sta f:$004300
+  sep #$20
+  lda #0
+  sta f:$002183
+  lda #$43
+  sta f:$004304
+  lda #1
+  sta f:$00420b
+  rep #$20
 pipe_collect_publish:
   lda pipe_render_slot
   asl
@@ -291,14 +334,33 @@ pipe_collect_end:
 pipe_irq:
   .a8
   lda f:$004211
+  .ifdef SA1_PIPELINE_IRQ
+  bmi pipe_vertical_irq
+  lda #$80
+  sta f:$002202
+  rep #$30
+  jsr pipe_collect
+  jmp pipe_irq_exit
+pipe_vertical_irq:
+  .endif
   rep #$30
 pipe_irq_transfer:
   stz pipe_presented_irq
   lda #3000
   sta pipe_budget
   jsr pipe_collect
+  .ifdef SA1_PIPELINE_IRQ
+  lda #0
+  sta f:$00311c
+  .endif
   lda #1
   sta f:$00311e
+  .ifdef SA1_PIPELINE_IRQ
+  sep #$20
+  lda #$80
+  sta f:$002200
+  rep #$20
+  .endif
 pipe_wait_dma:
   lda f:$00311c
   cmp #2
@@ -368,14 +430,25 @@ pipe_descriptor:
   jcs pipe_transfer_complete
   clc
   adc pipe_record_offset
+  sta pipe_desc_offset
   tax
   jsr pipe_time_left
   lda pipe_records+208,x
   clc
   adc #192
   cmp pipe_available
-  jcs pipe_transfer_pause
+  bcc pipe_full_descriptor
+  lda pipe_available
+  cmp #224
+  jcc pipe_transfer_pause
+  sec
+  sbc #192
+  and #$ffe0
+  bra pipe_set_chunk
+pipe_full_descriptor:
   lda pipe_records+208,x
+pipe_set_chunk:
+  sta pipe_dma_chunk
   sta f:$004305
   clc
   adc fx4_dma_bytes
@@ -393,6 +466,24 @@ dma_started:
   sta f:$00420b
 half_dma_finished:
   rep #$30
+  ldx pipe_desc_offset
+  lda pipe_records+208,x
+  sec
+  sbc pipe_dma_chunk
+  beq pipe_descriptor_complete
+  sta pipe_records+208,x
+  lda pipe_records+210,x
+  clc
+  adc pipe_dma_chunk
+  sta pipe_records+210,x
+  lda pipe_dma_chunk
+  lsr
+  clc
+  adc pipe_records+212,x
+  sta pipe_records+212,x
+  jmp pipe_descriptor
+pipe_descriptor_complete:
+  ldx pipe_record_offset
   lda pipe_records+4,x
   clc
   adc #6
@@ -432,6 +523,11 @@ pipe_irq_done:
   inc pipe_missed
 :
   lda #0
+  .ifdef SA1_PIPELINE_IRQ
+  sep #$20
+  sta f:$002200
+  rep #$20
+  .endif
   sta f:$00311e
 pipe_irq_exit:
   rep #$30
@@ -478,8 +574,18 @@ pipe_time_left:
   clc
   adc pipe_available
   asl
+  sta pipe_available
+  lda pipe_presented_irq
+  beq pipe_reserve_flip
+  lda pipe_available
   sec
-  sbc #2800
+  sbc #700
+  bra pipe_reserved
+pipe_reserve_flip:
+  lda pipe_available
+  sec
+  sbc #2200
+pipe_reserved:
   bmi pipe_no_time
   sta pipe_available
   rts
@@ -516,10 +622,7 @@ pipe_flip:
   txa
   clc
   adc #pipe_records+64
-  tax
-  ldy #fx_obj_present
-  lda #135
-  mvn #$7e,#$7e
+  sta pipe_obj_pointer
   jsr update_ground_pointers
   sep #$20
   lda f:$7e1d0a
@@ -553,7 +656,7 @@ pipe_flip:
   inc fx4_generation
   lda pipe_read_slot
   inc
-  cmp #3
+  cmp #SA1_PIPELINE_DEPTH
   bcc :+
   lda #0
 :
