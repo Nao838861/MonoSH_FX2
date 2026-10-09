@@ -1,0 +1,204 @@
+{
+  "romSha256": "003f820676f1acb5d3ee189c26f4c15cb265f1d2e2542f370486d7c17aef4a4b",
+  "baseline": false,
+  "cases": [
+    {
+      "phase": 0,
+      "mode": "color",
+      "asset": 5,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        5,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 156
+    },
+    {
+      "phase": 1,
+      "mode": "color",
+      "asset": 39,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        39,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 188
+    },
+    {
+      "phase": 2,
+      "mode": "color",
+      "asset": 40,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        40,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 182
+    },
+    {
+      "phase": 3,
+      "mode": "color",
+      "asset": 41,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        41,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 190
+    },
+    {
+      "phase": 4,
+      "mode": "color",
+      "asset": 40,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        40,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 182
+    },
+    {
+      "phase": 5,
+      "mode": "color",
+      "asset": 39,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        39,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 188
+    },
+    {
+      "phase": 0,
+      "mode": "mono",
+      "asset": 5,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        5,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 156
+    },
+    {
+      "phase": 1,
+      "mode": "mono",
+      "asset": 39,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        39,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 188
+    },
+    {
+      "phase": 2,
+      "mode": "mono",
+      "asset": 40,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        40,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 182
+    },
+    {
+      "phase": 3,
+      "mode": "mono",
+      "asset": 41,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        41,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 190
+    },
+    {
+      "phase": 4,
+      "mode": "mono",
+      "asset": 40,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        40,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 182
+    },
+    {
+      "phase": 5,
+      "mode": "mono",
+      "asset": 39,
+      "draw": [
+        128,
+        132,
+        19,
+        15,
+        39,
+        0,
+        60,
+        0
+      ],
+      "opaquePpuPixels": 188
+    }
+  ],
+  "scenes": 12,
+  "framebufferPixels": 589824,
+  "opaquePpuPixels": 2172,
+  "bitmapErrors": 0,
+  "ppuColorErrors": 0,
+  "physicalHardwareTested": false
+}

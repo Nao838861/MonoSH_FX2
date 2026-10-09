@@ -216,6 +216,7 @@ world_x:
   sec
   sbc $01a6
 :
+  cmp #0                  ; cmp #4のZではなく、折り返した爆発位相が0かを判定する。
   beq ordinary_asset
   clc
   adc #38

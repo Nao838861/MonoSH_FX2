@@ -502,6 +502,10 @@ build_ground.pyで指定RGBを暗い順に保持し、RGB5の展開値に最も�
 Recorded crop masks and animation poses are not geometry authorities. Preserve the frozen asset alpha and dark/light structure; transfer hue and only spatially compatible highlight variation. The former SELECT test used new artwork in both modes and could not detect silhouette regressions. Add an independent old-asset invariant and six real-emulator pre-color/before/fixed/mono fixture captures. See RESULTS_20261008_VISUAL_FIDELITY.md.
 
 
+## 2026-10-09 地上爆発先頭の画像選択修正
+
+依頼原文：「爆発も修正して。」前回の「60fps版、爆発の1パターンめに真っ黒の絵が入ってる？」の調査に続く修正。爆発の位相0が影38を誤選択する条件分岐へ `cmp #0` を追加し、爆発5を選ぶようにした。原画ではなく選択処理が原因。実ゲームの描画入口からカラー・白黒各六位相を検査し、全FB・不透明PPU画素が一致。詳細は [地上爆発の検証](RESULTS_20261009_STAGE_EXPLOSION.md)。
+
 ## 2026-10-09 地面四色の指定RGB更新
 
 依頼原文：

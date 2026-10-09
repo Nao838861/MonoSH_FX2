@@ -1,0 +1,67 @@
+{
+  "romSha256": "003f820676f1acb5d3ee189c26f4c15cb265f1d2e2542f370486d7c17aef4a4b",
+  "emulatorSha256": "d2eb03c2590c648bf329f127ebcfefd70130e7690a9e2ccdba8616faea1fe96b",
+  "fieldsRequested": 6000,
+  "presentations": 5998,
+  "extraWritesInSameBlank": 0,
+  "presentationIntervals": {
+    "1": 5997
+  },
+  "presentationFps": 60.098811862348406,
+  "intervalBasis": "DMA start physical field, startup excluded",
+  "fullFramebufferTransfers": 1,
+  "sections": {
+    "all": {
+      "images": 5998,
+      "intervals": {
+        "1": 5997
+      },
+      "cpuMeanMs": 8.147510451949692,
+      "cpuMaxMs": 14.051691481115478,
+      "gsuMeanMs": 6.1494251361205166,
+      "gsuMaxMs": 14.744516901401632
+    },
+    "road": {
+      "images": 5371,
+      "intervals": {
+        "1": 5369
+      },
+      "cpuMeanMs": 8.1433568264637,
+      "cpuMaxMs": 13.992652325677115,
+      "gsuMeanMs": 6.147531211727587,
+      "gsuMaxMs": 13.231754945413924
+    },
+    "bossAlive": {
+      "images": 344,
+      "intervals": {
+        "1": 343
+      },
+      "cpuMeanMs": 10.003307758448418,
+      "cpuMaxMs": 14.051691481115478,
+      "gsuMeanMs": 8.402257771908618,
+      "gsuMaxMs": 11.388783454434996
+    },
+    "bossDying": {
+      "images": 103,
+      "intervals": {
+        "1": 102
+      },
+      "cpuMeanMs": 9.144337207990295,
+      "cpuMaxMs": 12.530455450766746,
+      "gsuMeanMs": 7.387515943383701,
+      "gsuMaxMs": 14.744516901401632
+    },
+    "bossDone": {
+      "images": 180,
+      "intervals": {
+        "1": 179
+      },
+      "cpuMeanMs": 4.154408747380331,
+      "cpuMaxMs": 8.53311351646522,
+      "gsuMeanMs": 1.192061180871678,
+      "gsuMaxMs": 1.8724910686981104
+    }
+  },
+  "physicalHardware": false,
+  "steady60Hz": true
+}

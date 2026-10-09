@@ -1,0 +1,120 @@
+{
+  "previousRomSha256": "38d2fccd3f125c413d019b83073294e5eb47beb2dcda1ebbce8371b002ce560d",
+  "romSha256": "003f820676f1acb5d3ee189c26f4c15cb265f1d2e2542f370486d7c17aef4a4b",
+  "expectedExplosionAssets": [
+    5,
+    39,
+    40,
+    41,
+    40,
+    39
+  ],
+  "baselineExplosionAssets": [
+    38,
+    39,
+    40,
+    41,
+    40,
+    39
+  ],
+  "firstPhaseBlackShadowFixed": true,
+  "focusedScenes": 12,
+  "framebufferPixels": 589824,
+  "opaquePpuPixels": 2172,
+  "bitmapErrors": 0,
+  "ppuColorErrors": 0,
+  "displayCameraOffsets": [
+    0,
+    32,
+    64
+  ],
+  "displayFields": 720,
+  "naturalFields": 6000,
+  "naturalPresentations": 5998,
+  "naturalPresentationFps": 60.098811862348406,
+  "latePresentationIntervals": 0,
+  "groundPaletteRetained": {
+    "requestedRgb": [
+      [
+        112,
+        191,
+        111
+      ],
+      [
+        129,
+        208,
+        128
+      ],
+      [
+        145,
+        223,
+        145
+      ],
+      [
+        159,
+        240,
+        161
+      ]
+    ],
+    "rgb5": [
+      [
+        14,
+        23,
+        13
+      ],
+      [
+        16,
+        25,
+        16
+      ],
+      [
+        18,
+        27,
+        18
+      ],
+      [
+        19,
+        29,
+        20
+      ]
+    ],
+    "displayRgb": [
+      [
+        115,
+        189,
+        107
+      ],
+      [
+        132,
+        206,
+        132
+      ],
+      [
+        148,
+        222,
+        148
+      ],
+      [
+        156,
+        239,
+        165
+      ]
+    ],
+    "colorRankPattern": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "quantization": "nearest expanded RGB5 component; equal distance chooses lower RGB5 value"
+  },
+  "unchangedRomRange": [
+    131072,
+    2097152
+  ],
+  "physicalHardwareTested": false
+}
