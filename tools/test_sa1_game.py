@@ -62,6 +62,7 @@ local padded=PADDED
 local pipeline=PIPELINE
 local field,logic,presents=0,0,0
 local begin,sa1begin,drawbegin=0,0,0
+local flipBegin=0
 local dirtyDone,clearDone,nativeDone=0,0,0
 local dirtyMs,clearMs,bgMs,nativeMs,logicMs=0,0,0,0,0
 local times={}
@@ -240,13 +241,14 @@ cb('sa1_draw_done',function()
  local parts={};for name,v in pairs(cpuParts)do parts[#parts+1]=string.format('"%s":%.6f',name,v)end
  times[#times+1]=string.format('{"field":%d,"clearAndBgMs":%.6f,"drawMs":%.6f,"totalSa1Ms":%.6f,"dirtyMs":%.6f,"clearMs":%.6f,"bgMs":%.6f,"nativeMs":%.6f,"compactMs":%.6f,"logicMs":%.6f,"dirtyBytes":%d,"cpuParts":{%s}}',field,(drawbegin-sa1begin)/21477.272,(now-drawbegin)/21477.272,(now-sa1begin)/21477.272,dirtyMs,clearMs,bgMs,nativeMs,(now-nativeDone)/21477.272,logicMs,dirtyBytes,table.concat(parts,','))
 end,emu.cpuType.sa1)
+if labels.pipe_flip then cb('pipe_flip',function()flipBegin=emu.getState().masterClock end)end
 cb('dma_finished',function()
  presents=presents+1
  if pipeline then local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt);assert(emu.read16(0x7e0000+labels.pipe_records+slot*512+8,mt)==presents,'pipeline skipped or reordered a frame')end
  local state=emu.getState();local line=state['ppu.scanline']
  local visibleField=field+(line>=203 and line<225 and 1 or 0)
  assert(line<=22 or line>=203,'page flip occurred during visible lines')
- presentationTimes[#presentationTimes+1]=string.format('{"field":%d,"visibleField":%d,"line":%d,"clock":%d,"dmaBytes":%d,"readyLine":%d,"waitMs":%.6f,"transferMs":%.6f}',field,visibleField,line,state.masterClock,emu.read16(0x7e0000+labels.fx4_dma_bytes,emu.memType.snesMemory),readyLine,waitMs,(state.masterClock-startClock)/21477.272)
+ presentationTimes[#presentationTimes+1]=string.format('{"field":%d,"visibleField":%d,"line":%d,"clock":%d,"dmaBytes":%d,"readyLine":%d,"waitMs":%.6f,"transferMs":%.6f,"flipMs":%.6f}',field,visibleField,line,state.masterClock,emu.read16(0x7e0000+labels.fx4_dma_bytes,emu.memType.snesMemory),readyLine,waitMs,(state.masterClock-startClock)/21477.272,(state.masterClock-flipBegin)/21477.272)
  if presents<=120 or presents%60==0 then
   local n=string.format('present%05d',presents)
   local record=nil

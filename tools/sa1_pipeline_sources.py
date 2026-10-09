@@ -164,3 +164,22 @@ def cpu_copy_source(name,text):
         old=text[a:b]
         text=text[:a]+'  lda $011e\n  beq row_code_dma\n'+code('codeptr','codeptr+2','codelen')+'  jmp row_code_ready\nrow_code_dma:\n'+old+'row_code_ready:\n'+text[b:]
     return text
+
+
+def rom_ground(text):
+    text=replace(text,'hv: .res 2','hv: .res 3')
+    text=replace(text,'_fx_ground_native:\n  php\n  rep #$30','_fx_ground_native:\n  php\n  rep #$30\n  sep #$20\n  stz hv+2\n  rep #$20')
+    text=replace(text,'  lda (hv),y','  lda [hv],y')
+    text=replace(text,'  lda f:$7e0000,x','  lda f:$000000,x')
+    text=replace(text,'  lda f:$7e0001,x','  lda f:$000001,x')
+    text=replace(text,'.segment "RODATA"\nground_horizontal_runs:', '.segment "BOOT"\nground_horizontal_runs:')
+    text=replace(text,'ground_horizontal_values: .incbin', '.segment "BOOT"\nground_horizontal_values: .incbin')
+    return text
+
+
+def skip_far_clear(text):
+    text=replace(text,'  stz bgrow\nclear_tile_row:', '  jsl sa1_clear_far_setup\n  stz bgrow\nclear_tile_row:')
+    text=replace(text,'clear_scanline:\n', 'clear_scanline:\n  lda bgdest\n  cmp $f2\n  bcc clear_far_needed\n  cmp $f4\n  bcc clear_far_skip\nclear_far_needed:\n')
+    text=text.replace('  lda bgdest\n  clc\n  adc #128\n  sta bgdest', 'clear_far_skip:\n  lda bgdest\n  clc\n  adc #128\n  sta bgdest',1)
+    text+='\n.segment "BOOT"\nsa1_clear_far_setup:\n  lda $010c\n  clc\n  adc #77\n  .repeat 7\n    asl\n  .endrepeat\n  sta $f2\n  clc\n  adc #14*128\n  sta $f4\n  rtl\n'
+    return text

@@ -4,6 +4,7 @@ SA1_CC_BUFFER = $05c0
 ; 表示より最大二画像先まで処理する。metadataの三枠は地面の三重bufferと対応する。
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
 .export pipe_irq, irq_game, prefetch_finished
+.export pipe_flip
 .export pipe_front_slot, pipe_target_slot, pipe_records, pipe_missed, pipe_pending
 .export pipe_obj_pointer
 .export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
@@ -114,6 +115,9 @@ pipe_wait_bw:
   .endrepeat
   sta pipe_main_offset
   tax
+  .ifdef SA1_STAGED
+  stz pipe_records+38,x
+  .endif
   lda pipe_next_bw
   lsr
   clc
@@ -346,6 +350,9 @@ pipe_ack:
   lda f:$003104
   bne pipe_ack
 pipe_collect_end:
+  .ifdef SA1_STAGED
+  jsr pipe_stage_convert
+  .endif
   plb
   ply
   plx
@@ -370,7 +377,15 @@ pipe_irq_transfer:
   stz pipe_presented_irq
   lda #3000
   sta pipe_budget
+  .ifndef SA1_STAGED
   jsr pipe_collect
+  .endif
+  .ifdef SA1_STAGED
+pipe_wait_dma:
+  jsr pipe_time_left
+  lda pipe_available
+  jeq pipe_irq_exit
+  .else
   .ifdef SA1_PIPELINE_IRQ
   lda #0
   sta f:$00311c
@@ -387,6 +402,7 @@ pipe_wait_dma:
   lda f:$00311c
   cmp #2
   bne pipe_wait_dma
+  .endif
   sep #$20
   lda #$80
   sta f:$002100
@@ -395,7 +411,9 @@ pipe_wait_dma:
   beq pipe_choose_target
   jsr pipe_flip
 pipe_choose_target:
+  .ifndef SA1_STAGED
   jsr pipe_collect
+  .endif
   lda pipe_target_slot
   cmp #$ffff
   bne pipe_setup_transfer
@@ -405,6 +423,18 @@ pipe_choose_target:
   lda pipe_status,x
   cmp #2
   jne pipe_irq_done
+  .ifdef SA1_STAGED
+  txa
+  .repeat 8
+    asl
+  .endrepeat
+  tax
+  lda pipe_records+38,x
+  jeq pipe_irq_done
+  lda pipe_read_slot
+  asl
+  tax
+  .endif
   lda #3
   sta pipe_status,x
   lda pipe_read_slot
@@ -425,6 +455,7 @@ pipe_setup_transfer:
   .endrepeat
   sta pipe_record_offset
   tax
+  .ifndef SA1_STAGED
   sep #$20
   lda #$15
   sta f:$002231
@@ -437,10 +468,16 @@ pipe_setup_transfer:
   rep #$20
   lda #SA1_CC_BUFFER
   sta f:$002235
+  .endif
+  rep #$20
   lda #$1801
   sta f:$004300
   sep #$20
+  .ifdef SA1_STAGED
+  lda #$7e
+  .else
   lda pipe_records,x
+  .endif
   sta f:$004304
   rep #$30
 transfer_chunk:
@@ -460,6 +497,17 @@ pipe_descriptor:
   tax
   jsr pipe_time_left
   lda pipe_records+208,x
+  .ifdef SA1_STAGED
+  lsr
+  lsr
+  lsr
+  lsr
+  lsr
+  sta pipe_dma_chunk
+  lda pipe_records+208,x
+  clc
+  adc pipe_dma_chunk
+  .endif
   clc
   adc #192
   cmp pipe_available
@@ -469,6 +517,18 @@ pipe_descriptor:
   jcc pipe_transfer_pause
   sec
   sbc #192
+  .ifdef SA1_STAGED
+  sta pipe_dma_chunk
+  lsr
+  lsr
+  lsr
+  lsr
+  lsr
+  eor #$ffff
+  inc
+  clc
+  adc pipe_dma_chunk
+  .endif
   and #$ffe0
   bra pipe_set_chunk
 pipe_full_descriptor:
@@ -522,9 +582,14 @@ pipe_descriptor_complete:
   sta pipe_records+4,x
   jmp pipe_descriptor
 pipe_transfer_complete:
+  .ifdef SA1_STAGED
+  stz stage_busy
+  .endif
+  .ifndef SA1_STAGED
   sep #$20
   lda #$95
   sta f:$002231
+  .endif
   rep #$30
   ldx pipe_record_offset
   lda pipe_records,x
@@ -540,14 +605,20 @@ pipe_transfer_complete:
   lda #1
   sta pipe_complete
 prefetch_finished:
+  .ifdef SA1_STAGED
+  jmp pipe_irq_done
+  .else
   lda pipe_presented_irq
   bne pipe_irq_done
   jsr pipe_flip
   jmp pipe_choose_target
+  .endif
 pipe_transfer_pause:
+  .ifndef SA1_STAGED
   sep #$20
   lda #$95
   sta f:$002231
+  .endif
   rep #$30
 pipe_irq_done:
   lda pipe_presented_irq
@@ -555,12 +626,14 @@ pipe_irq_done:
   inc pipe_missed
 :
   lda #0
+  .ifndef SA1_STAGED
   .ifdef SA1_PIPELINE_IRQ
   sep #$20
   sta f:$002200
   rep #$20
   .endif
   sta f:$00311e
+  .endif
 pipe_irq_exit:
   rep #$30
   plb
@@ -607,8 +680,12 @@ pipe_time_left:
   adc pipe_available
   asl
   sta pipe_available
+  .ifdef SA1_STAGED
+  bra pipe_after_flip_reserve
+  .endif
   lda pipe_presented_irq
   beq pipe_reserve_flip
+pipe_after_flip_reserve:
   lda pipe_available
   sec
   sbc #700
@@ -770,3 +847,7 @@ pipe_flip:
   sta pipe_read_slot
 dma_finished:
   rts
+
+.ifdef SA1_STAGED
+.include "pipeline_stage.inc"
+.endif

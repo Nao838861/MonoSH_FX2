@@ -56,6 +56,20 @@ shape_cache_miss:
   tax
   lda f:$ff0000,x
   tax
+  .ifdef SA1_LINEAR_SHAPE
+  inx
+shape_linear_search:
+  sep #$20
+  lda f:$ff0000,x
+  cmp shapeSize+1
+  beq shape_found
+  rep #$20
+  txa
+  clc
+  adc #7
+  tax
+  bra shape_linear_search
+  .endif
   inc
   sta shapeBase
   lda f:$ff0000,x

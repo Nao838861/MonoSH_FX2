@@ -1,0 +1,20 @@
+{
+  "fields": 1200,
+  "logic": 1014,
+  "presents": 1010,
+  "pixelMatchedPresents": 134,
+  "romSha256": "c15be8e07bdebe42945ebd2f88641bf201aec3b12f9d1d794a02557d8dacd89b",
+  "labelsSha256": "5e24e5ed8303d864bd74d4e8b392fe17b6ed1319107b4b872938bab5a293e318",
+  "presentationFieldIntervals": {
+    "1": 912,
+    "2": 95
+  },
+  "goal60fpsAchieved": false,
+  "meanSa1Ms": {
+    "dirtyMs": 2.3277651641938673,
+    "clearMs": 1.8988497428288822,
+    "bgMs": 1.8527513560830862,
+    "nativeMs": 5.165808212660732,
+    "totalSa1Ms": 11.245174524233432
+  }
+}
