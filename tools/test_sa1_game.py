@@ -38,15 +38,17 @@ def verify_pixels(dest,labels,config):
         planar=np.zeros((768,32),dtype=np.uint8)
         for plane in range(4):planar[:,plane//2*16+plane%2+np.arange(8)*2]=(((tiles>>plane)&1)*np.array([128,64,32,16,8,4,2,1])).sum(axis=2)
         vram=(dest/(prefix+'_vram.bin')).read_bytes()[page*2:page*2+24576]
+        state_path=dest/(prefix+'_ppu.json')
+        ppu_state=json.loads(state_path.read_text()) if state_path.exists() else None
         start=1024 if config.get('visibleMask') else 0
         if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')):
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
             converted=bytearray()
             for tile in range(32,768):
-                map_base=0xbc00 if config.get('fixedMap') else 0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
+                map_base=0xc000 if config.get('fixedMap') else 0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
                 entry=struct.unpack_from('<H',whole,map_base+tile*2)[0]
                 assert entry&0xfc00==0x2400,f'{prefix}: dense tile attributes differ'
-                address=page*2+(entry&1023)*32
+                address=(ppu_state['bg1Chr'] if ppu_state else page*2)+(entry&1023)*32
                 converted+=whole[address:address+32]
             assert converted==planar.tobytes()[1024:],f'{prefix}: dense converted visible VRAM differs'
         else:
@@ -58,9 +60,9 @@ def verify_pixels(dest,labels,config):
             bg=np.zeros((16,width),dtype=np.uint8)
             for row in range(2):
                 for col in range(width//8):
-                    address=(0xbc00 if config.get('fixedMap') else 0xc000)+(col//32)*0x800+(24+row)*64+(col%32)*2
+                    address=(0xc000 if config.get('fixedMap') else 0xc000)+(col//32)*0x800+(24+row)*64+(col%32)*2
                     entry=struct.unpack_from('<H',whole,address)[0]
-                    tile=(0xc000 if config.get('fixedMap') else 0x8000 if config.get('vramFourShared') else 0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
+                    tile=(ppu_state['bg2Chr'] if ppu_state else 0xa000 if config.get('fixedMap') else 0x8000 if config.get('vramFourShared') else 0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
                     a=decode(whole[tile:tile+32],4)
                     if entry&0x4000:a=a[:,::-1]
                     if entry&0x8000:a=a[::-1]
@@ -312,8 +314,8 @@ emu.addMemoryCallback(function(address,value)
     local fixedOverlap=(first<1024 and last>0) or (first<0x4400 and last>0x4000)
     if vramFourShared then fixedOverlap=(first<0x9000 and last>0x8c00) or (first<0xc000 and last>0xbc00) end
     if fixedMap then
-     local playerUpload=first==0xc400 and last==0xc780 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
-     local mapUpload=fixedMapDelta and first==0xbc40 and last==0xc200 and emu.read(0x4304,emu.memType.snesMemory)==0x7e
+     local playerUpload=first==0xc800 and last==0xcb80 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
+     local mapUpload=fixedMapDelta and first==0xc040 and last==0xc600 and emu.read(0x4304,emu.memType.snesMemory)==0x7e
      if fixedMapDeltaDma and first>=0xbc40 and last<=0xc200 and emu.read(0x4304,emu.memType.snesMemory)==1 then mapUpload=true end
      fixedOverlap=not (playerUpload or mapUpload or (first>=0x20 and last<=0x5c20) or (first>=0x6020 and last<=0xbc20))
     end
@@ -676,6 +678,17 @@ cb('dma_finished',function()
    local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt)
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
+   local page=emu.read16(record+6,mt)*2
+   local bg1Chr=state['ppu.layers[0].chrAddress']*2
+   local bg1Map=state['ppu.layers[0].tilemapAddress']*2
+   local bg2Chr=state['ppu.layers[1].chrAddress']*2
+   local bg2Map=state['ppu.layers[1].tilemapAddress']*2
+   assert(bg1Chr==math.floor(page/8192)*8192,'PPU BG1 CHR base differs from the rendered page')
+   assert(bg1Map==(fixedMap and 0xc000 or vramFourShared and 0xc000 or vramPrefetch3 and page+0x800 or 0xc000),'PPU BG1 map base differs')
+   assert(bg2Chr==(fixedMap and 0xa000 or vramFourShared and 0x8000 or NATIVENEAR and 0 or 0xc000),'PPU BG2 CHR base differs')
+   assert(bg2Map==0xc000,'PPU BG2 map base differs')
+   local p=assert(io.open(output..'/'..n..'_ppu.json','w'))
+   p:write(string.format('{"bg1Chr":%d,"bg1Map":%d,"bg2Chr":%d,"bg2Map":%d}',bg1Chr,bg1Map,bg2Chr,bg2Map));p:close()
    if NATIVEBACKGROUND then dump(n..'_record.bin',emu.memType.snesMemory,record,512)end
    if fixedMapDelta then dump(n..'_map_delta.bin',emu.memType.snesMemory,0x7e0000+labels.fdStorage+slot*1472,1472)end
    if COMPILEDGROUND then dump(n..'_ground_h.bin',emu.memType.snesMemory,0x7e0000+emu.read16(record+26,mt),270)end
@@ -789,6 +802,8 @@ end,emu.eventType.endFrame)
     assert summary['presents']>0,'SA-1 game never presented an image'
     print('SA-1 max ms:',max(x['totalSa1Ms'] for x in summary['sa1Jobs']))
     summary['pixelMatchedPresents']=verify_pixels(dest,labels,config)
+    ppu_files=list(dest.glob('present*_ppu.json'))
+    summary['hardwarePpuReferencesVerified']=bool(config.get('pipeline') and len(ppu_files)==summary['pixelMatchedPresents'])
     summary['romSha256']=config['romSha256']
     summary['irqMathRegistersVerified']=bool(config.get('pipeline'))
     summary['labelsSha256']=hashlib.sha256((BUILD/'game.lbl').read_bytes()).hexdigest()

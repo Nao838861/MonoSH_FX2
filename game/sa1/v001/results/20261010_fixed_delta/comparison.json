@@ -15,7 +15,9 @@
       "scenario": "movestress_detinput_captureburst_fixedmap_resident_v1_tracepalette",
       "logicMatchedGenerations": 650,
       "firstVisibleField": 150,
-      "maxSa1Ms": 22.127019
+      "maxSa1Ms": 22.127019,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 800,
@@ -34,7 +36,9 @@
       "firstVisibleField": 151,
       "maxSa1Ms": 22.783434,
       "fullMapTransfers": 29,
-      "mapUpdateMsTotal": 169.56595399999998
+      "mapUpdateMsTotal": 169.56595399999998,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 270,
@@ -52,7 +56,9 @@
       "firstVisibleField": 151,
       "maxSa1Ms": 7.257998,
       "fullMapTransfers": 0,
-      "mapUpdateMsTotal": 22.086510000000004
+      "mapUpdateMsTotal": 22.086510000000004,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 800,
@@ -72,7 +78,9 @@
       "firstVisibleField": 151,
       "maxSa1Ms": 22.386363,
       "fullMapTransfers": 0,
-      "mapUpdateMsTotal": 181.44659399999998
+      "mapUpdateMsTotal": 181.44659399999998,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     }
   ],
   "excludedFailures": [
@@ -99,5 +107,7 @@
   ],
   "goal60fpsAchieved": false,
   "adopted": false,
-  "evidenceSha256": "2079c78d1710f3163d91c76661885598eb45039d59934208bc7ee838bb180b10"
+  "evidenceSha256": "2079c78d1710f3163d91c76661885598eb45039d59934208bc7ee838bb180b10",
+  "displayVerificationComplete": false,
+  "validationCorrection": "The legacy verifier did not validate actual PPU register addresses. Fixed-map CHR/map alignment was subsequently found invalid; these cases do not establish correct displayed images."
 }

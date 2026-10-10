@@ -34,7 +34,9 @@
       "firstVisibleField": 150,
       "maxSa1Ms": 22.640399,
       "maxOutputMs": 24.596792,
-      "logicMatchedGenerations": 650
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -52,7 +54,9 @@
       "firstVisibleField": 150,
       "maxSa1Ms": 23.366375,
       "maxOutputMs": 24.897669,
-      "logicMatchedGenerations": 1748
+      "logicMatchedGenerations": 1748,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -69,7 +73,9 @@
       "scenario": "bossmovestress_detinput_fixedmap_v1_tracepalette",
       "firstVisibleField": 151,
       "maxSa1Ms": 20.763903,
-      "maxOutputMs": 22.614883
+      "maxOutputMs": 22.614883,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 470,
@@ -86,7 +92,9 @@
       "scenario": "leftfixture_fixedmap_leftscan_v1_tracepalette",
       "firstVisibleField": 150,
       "maxSa1Ms": 37.249982,
-      "maxOutputMs": 38.216213
+      "maxOutputMs": 38.216213,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -104,7 +112,9 @@
       "firstVisibleField": 150,
       "maxSa1Ms": 22.393812,
       "maxOutputMs": 23.84707,
-      "logicMatchedGenerations": 1748
+      "logicMatchedGenerations": 1748,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -122,7 +132,9 @@
       "firstVisibleField": 150,
       "maxSa1Ms": 22.113237,
       "maxOutputMs": 24.626405,
-      "logicMatchedGenerations": 1749
+      "logicMatchedGenerations": 1749,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -140,7 +152,9 @@
       "firstVisibleField": 150,
       "maxSa1Ms": 22.127019,
       "maxOutputMs": 24.64177,
-      "logicMatchedGenerations": 1749
+      "logicMatchedGenerations": 1749,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 1900,
@@ -157,7 +171,9 @@
       "scenario": "bossmovestress_detinput_fixedmap_resident_v1_tracepalette",
       "firstVisibleField": 151,
       "maxSa1Ms": 19.670189,
-      "maxOutputMs": 21.094299
+      "maxOutputMs": 21.094299,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     },
     {
       "fields": 270,
@@ -173,7 +189,9 @@
       "scenario": "flipfixture_fixedmap_resident_v1_tracepalette",
       "firstVisibleField": 150,
       "maxSa1Ms": 23.037004,
-      "maxOutputMs": 24.379819
+      "maxOutputMs": 24.379819,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false
     }
   ],
   "goal60fpsAchieved": false,
@@ -182,5 +200,7 @@
     "reason": "VRAM/OAM DMA started outside actual blank field=669 line=22",
     "performanceComparisonEligible": false
   },
-  "evidenceSha256": "a351758ad1c263e79e5d5995ae7886b2a82ca904ab36139929779ac7800a621a"
+  "evidenceSha256": "a351758ad1c263e79e5d5995ae7886b2a82ca904ab36139929779ac7800a621a",
+  "displayVerificationComplete": false,
+  "validationCorrection": "The legacy verifier did not validate actual PPU register addresses. Fixed-map CHR/map alignment was subsequently found invalid; these cases do not establish correct displayed images."
 }

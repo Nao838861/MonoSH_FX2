@@ -81,7 +81,7 @@ fd_flip_item:
   pha
   and #$7fff
   clc
-  adc #$5e00
+  adc #$6000
   sta f:$002116
   pla
   bpl fd_flip_hide
@@ -114,7 +114,7 @@ fd_flip_full:
   sta fx4_dma_bytes
   lda #$1801
   sta f:$004300
-  lda #$5e20
+  lda #$6020
   sta f:$002116
   sep #$20
   lda #$80

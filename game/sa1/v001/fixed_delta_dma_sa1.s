@@ -102,7 +102,7 @@ fd_changed:
   sta f:$434002,x
   lda fdPos
   clc
-  adc #$5e00
+  adc #$6000
   sta f:$434004,x
   lda fdCost
   clc

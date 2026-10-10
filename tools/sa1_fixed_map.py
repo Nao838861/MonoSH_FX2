@@ -10,9 +10,8 @@ def change(text,old,new):
 def ppu_layout(ppu,build):
     path=build/'native_near_packing.json'
     d=json.loads(path.read_text())
-    free=list(range(0xc280,0xc400,32))+list(range(0xc780,0xca00,32))+list(range(0xca80,0xd000,32))
-    far=free[:8]+list(range(0xe900,0xf000,32))
-    near=free[8:70]
+    far=list(range(0xbc20,0xc000,32))+list(range(0xe900,0xed20,32))
+    near=list(range(0xc680,0xc800,32))+list(range(0xcb80,0xce00,32))+list(range(0xce80,0xd000,32))+list(range(0xed20,0xef60,32))
     assert len(far)==64 and len(near)==62
     remap=dict(zip(d['farChrAddresses'],far))
     near_remap=dict(zip(d['nearChrAddresses'],near))
@@ -22,16 +21,16 @@ def ppu_layout(ppu,build):
         data=bytearray(ppu[address:address+128])
         for i in range(64):
             entry=struct.unpack_from('<H',data,i*2)[0]
-            struct.pack_into('<H',data,i*2,(entry&~1023)|((remap[(entry&1023)*32]-0xc000)//32))
+            struct.pack_into('<H',data,i*2,(entry&~1023)|((remap[(entry&1023)*32]-0xa000)//32))
         maps.append(data)
     new=bytearray(65536)
     ground_end=int(json.loads((build/'native_far_packing.json').read_text())['groundEnd'],16)
     new[0xd000:ground_end]=ppu[0xd000:ground_end]
     new[0xf000:]=ppu[0xf000:]
-    new[0xc400:0xc780]=ppu[0xc800:0xcb80]
+    new[0xc800:0xcb80]=ppu[0xc800:0xcb80]
     for address,data in saved.items():new[address:address+32]=data
-    for tile in range(32,768):struct.pack_into('<H',new,0xbc00+tile*2,0x2400|tile-31)
-    for address,data in zip((0xc200,0xca00),maps):new[address:address+128]=data
+    for tile in range(32,768):struct.pack_into('<H',new,0xc000+tile*2,0x2400|tile-31)
+    for address,data in zip((0xc600,0xce00),maps):new[address:address+128]=data
     def obj_entry(entry):
         old=0xc000+(entry&255)*32+(0x2000 if entry&0x100 else 0)
         tile=(near_remap[old]-0xc000)//32
@@ -45,24 +44,22 @@ def ppu_layout(ppu,build):
             i=frame*256+obj*4+2
             struct.pack_into('<H',oam,i,obj_entry(struct.unpack_from('<H',oam,i)[0]))
     (build/'native_near_oam.bin').write_bytes(oam)
-    d.update(farChrAddresses=far,nearChrAddresses=near,farChrBase=0xc000)
+    d.update(farChrAddresses=far,nearChrAddresses=near,farChrBase=0xa000)
     path.write_text(json.dumps(d,indent=2)+'\n')
     (build/'fixed_map_layout.json').write_text(json.dumps({
-        'pages':[0,0x6000],'map':0xbc00,'mapValidStart':0xbc40,'mapValidEnd':0xc200,
-        'farMapAddresses':[0xc200,0xca00],'playerChr':0xc400,
+        'pages':[0,0x6000],'map':0xc000,'mapValidStart':0xc040,'mapValidEnd':0xc600,
+        'farMapAddresses':[0xc600,0xce00],'playerChr':0xc800,
         'farChrAddresses':far,'nearChrAddresses':near},indent=2)+'\n')
     return new
 
 
 def cpu(text):
-    text=change(text,'  lda #4\n  sta $2107','  lda #$5e\n  sta $2107')
-    text=change(text,'  lda #$61\n  sta $2108','  lda #$5f\n  sta $2108')
-    return change(text,'  lda #0\n  sta $210b','  lda #$c0\n  sta $210b')
+    text=change(text,'  lda #4\n  sta $2107','  lda #$60\n  sta $2107')
+    return change(text,'  lda #0\n  sta $210b','  lda #$50\n  sta $210b')
 
 
 def objects(text):
-    text=change(text,'  adc #64\n  ora player4_attr','  adc #32\n  ora player4_attr')
-    return change(text,'  lda #$6400 ', '  lda #$6200 ')
+    return text
 
 
 def transfer_mask(text):
@@ -162,8 +159,8 @@ def pipeline(text,build,sa1):
   adc pfDesc
   sta pipe_records+4,x
 '''+text[end:]
-    text=change(text,'  sta f:$00210b\n','  ora #$c0\n  sta f:$00210b\n')
-    text=change(text,'  lda fx4_page+1\n  ora #4\n  sta f:$002107','  lda #$5e\n  sta f:$002107')
+    text=change(text,'  sta f:$00210b\n','  ora #$50\n  sta f:$00210b\n')
+    text=change(text,'  lda fx4_page+1\n  ora #4\n  sta f:$002107','  lda #$60\n  sta f:$002107')
     ring=(sa1/'vram_prefetch_cpu.inc').read_text(encoding='utf-8')
     begin=ring.index('  lda p3NextPage\n')
     end=ring.index('  sta p3NextPage\n',begin)

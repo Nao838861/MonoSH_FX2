@@ -1,0 +1,150 @@
+{
+  "cases": [
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fixedmap_resident_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.127019,
+      "maxPrefixPlanMs": 1.633448
+    },
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "4b861c6ef85e69bdaa0ed0fb2674efdc03469d2399e8cede9cd8141ca18f9429",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fourshapes_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 21.634126,
+      "maxPrefixPlanMs": 1.661384
+    },
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "eac1ff3eb83500b817c03d44fcd50211d52ac7d3485ec331c90e6414ca0a4576",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fourshapes_budget_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.276665,
+      "maxPrefixPlanMs": 1.661384
+    },
+    {
+      "fields": 800,
+      "logic": 648,
+      "presents": 641,
+      "pixelMatchedPresents": 168,
+      "romSha256": "cce6f7bead84ecff1c5b77c7802a17e205c47b6510d1e78d9999a3441e4853a5",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 629,
+        "2": 9
+      },
+      "scenario": "movestress_detinput_captureburst_fourshapes_cputable_v1_tracepalette",
+      "logicMatchedGenerations": 647,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 22.399213,
+      "maxPrefixPlanMs": 0.343898
+    },
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "932b3fbaf558ea068f2f25bc6351ff394c1c0e0ad1149972d09b489e8425c7fc",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fourshapes_sa1table_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 21.694375,
+      "maxPrefixPlanMs": 0.344457
+    },
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "fc6d14c9e31ce5cd6aa22b86159581fd5caa8ea6c307e5c82da621cb2105ca34",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fourshapes_partialtable_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 24.141241,
+      "maxPrefixPlanMs": 0.365875
+    },
+    {
+      "fields": 800,
+      "logic": 639,
+      "presents": 631,
+      "pixelMatchedPresents": 168,
+      "romSha256": "5168517cce7fb7c38aa50782841ee9e36ae08782bea242feaabe84056ce34ef1",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 611,
+        "2": 16,
+        "3": 1
+      },
+      "scenario": "movestress_detinput_captureburst_cpupackshapes_v1_tracepalette",
+      "logicMatchedGenerations": 638,
+      "hardwarePpuReferencesVerified": false,
+      "displayVerificationComplete": false,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 21.924665,
+      "maxPrefixPlanMs": 0
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "adopted": false,
+  "displayVerificationComplete": false,
+  "limitation": "Legacy tests decoded assumed VRAM addresses without checking actual PPU CHR/map bases. Fixed-map and four-page layouts were subsequently found invalid. These cases do not establish correct displayed images.",
+  "evidenceSha256": "8a940a685001b15b7222c88f4fa923aa9b26f559b1edb2f0a3c53964b4fa2955"
+}

@@ -31,7 +31,22 @@ def ppu_layout(ppu,build):
 
 
 def sparse_map(text):
-    return text.replace('$2480','$2400').replace('$2481','$2401')
+    text=text.replace('$2480','$2400').replace('$2481','$2401')
+    # 12KiB単位の奇数面は8KiB境界から4KiBずれるためtile番号へ128を足す。
+    text=change(text,'  lda #.loword(sm_empty_map)\n', '''  lda $0188
+  and #1
+  beq :+
+  lda #.loword(sm_empty_map_odd)
+  bra :++
+:
+  lda #.loword(sm_empty_map)
+:
+''')
+    for value in ('$2400','$2401'):
+        text=change(text,'  lda #'+value+'\n','  lda $0188\n  and #1\n  .repeat 7\n    asl\n  .endrepeat\n  ora #'+value+'\n')
+    text+='\nsm_empty_map_odd:\n.repeat 736\n  .word $2480\n.endrepeat\n'
+    text+='\n.assert ^sm_empty_map=^sm_empty_map_odd,error,"map parity templates crossed banks"\n'
+    return text
 
 
 def direct(text):
@@ -40,6 +55,10 @@ def direct(text):
 
 
 def prefix(text):
+    if 'pfHigh' in text:
+        # collectはfour_map_collectより先なので旧末尾mapを除外する。
+        # plan時にはmap除去済みのCHR記述子数をそのまま使う。
+        return change(text,'  and #255\n  dec\n  sta pfHigh','  and #255\n  sta pfHigh')
     return change(text,'  lda pipe_records+2,x\n  sec\n  sbc #6\n','  lda pipe_records+2,x\n')
 
 
@@ -105,10 +124,10 @@ def pipeline(text,build,sa1):
     lsr
   .endrepeat'''
     new='''  lda fx4_page+1
-  .repeat 3
+  .repeat 4
     lsr
   .endrepeat
-  ora #$80'''
+  ora #$40'''
     text=change(text,old,new)
     text=change(text,'  lda fx4_page+1\n  ora #4\n  sta f:$002107','  lda #$60\n  sta f:$002107')
     ring=(sa1/'vram_prefetch_cpu.inc').read_text(encoding='utf-8')

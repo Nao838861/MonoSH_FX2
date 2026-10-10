@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_detinput_captureburst_fixedmap_ppubase_v2_tracepalette",
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "goal60fpsAchieved": false
+    },
+    {
+      "scenario": "movestress_detinput_fixedmap_ppubase_v2_tracepalette",
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "pixelMatchedPresents": 147,
+      "romSha256": "7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 1732,
+        "2": 8
+      },
+      "goal60fpsAchieved": false
+    },
+    {
+      "scenario": "bossmovestress_detinput_fixedmap_ppubase_v2_tracepalette",
+      "fields": 1900,
+      "logic": 1748,
+      "presents": 1741,
+      "pixelMatchedPresents": 147,
+      "romSha256": "7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 1729,
+        "2": 9
+      },
+      "goal60fpsAchieved": false
+    },
+    {
+      "scenario": "flipfixture_fixedmap_ppubase_v2_tracepalette",
+      "fields": 270,
+      "logic": 123,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 117
+      },
+      "goal60fpsAchieved": false
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "hardwarePpuReferencesVerified": true,
+  "evidenceSha256": "0dda205298f2f0a2f977581a09fddff1043f54a76c2e5ef8f0abc229b90fba29"
+}

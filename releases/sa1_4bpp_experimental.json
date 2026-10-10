@@ -1,5 +1,5 @@
 {
-  "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+  "romSha256": "7459afffd844ab008959d7183a374aa1f037673f68a0a3ab39fb48e70acaa48d",
   "sa1CodeBytes": 214,
   "renderer": "macros",
   "paddedFramebuffer": false,
@@ -44,7 +44,11 @@
   "splitMapMvn": false,
   "vramFourShared": false,
   "fixedMap": true,
+  "fixedMapDelta": false,
+  "fixedMapDeltaDma": false,
   "dmaGuardLines": 0,
+  "flipSmallReserve": 0,
+  "flipPlayerReserve": 0,
   "packetOffload": false,
   "packetIram": false,
   "packetIramArrays": false,
@@ -65,6 +69,7 @@
   "bulletResident": true,
   "contiguousChrDma": false,
   "prefixCpuTable": false,
+  "prefixTablePartial": false,
   "wideClearMin": 104,
   "pipelineDepth": 8,
   "transferTiles": false,
@@ -115,7 +120,8 @@
   "stackFill": false,
   "stackBand": true,
   "cpuCodeBank": 127,
-  "stage": "fixed-map-two-pages",
+  "stage": "fixed-map-two-pages-ppu-aligned",
   "goal60fpsAchieved": false,
-  "validation": "game/sa1/v001/results/20261010_fixed_map/comparison.json"
+  "hardwarePpuReferencesVerified": true,
+  "validation": "game/sa1/v001/results/20261010_ppu_layout/comparison.json"
 }

@@ -105,5 +105,7 @@
     }
   ],
   "goal60fpsAchieved": false,
-  "evidenceSha256": "cdf4897fceb2840ed219658afc7d932b182e6ae6bbade9c5567cfd69db05590e"
+  "evidenceSha256": "cdf4897fceb2840ed219658afc7d932b182e6ae6bbade9c5567cfd69db05590e",
+  "displayVerificationComplete": false,
+  "validationCorrection": "Actual PPU CHR base selection was incorrect, and odd 12KiB pages lacked tile-index compensation. Legacy pixel checks assumed the intended layout and do not prove correct display."
 }
