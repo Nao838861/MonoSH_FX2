@@ -587,6 +587,15 @@ dirtyDone=emu.getState().masterClock;dirtyMs=(dirtyDone-sa1begin)/21477.272 end,
  cb('sa1_clear_done',function()clearDone=emu.getState().masterClock;clearMs=(clearDone-dirtyDone)/21477.272 end,emu.cpuType.sa1)
  cb('sa1_native_done',function()nativeDone=emu.getState().masterClock;nativeMs=(nativeDone-drawbegin)/21477.272 end,emu.cpuType.sa1)
 end
+if labels.sa1_mask_clear then
+ local f=assert(io.open(output..'/mask_clear.jsonl','w'))
+ cb('sa1_clear_done',function()
+  local mt=emu.memType.sa1Memory
+  local bytes=emu.read16(0x1ac,mt);local bounds=0
+  for r=0,23 do local a=0x120+r*4;bounds=bounds+math.max(0,emu.read16(a+2,mt)-emu.read16(a,mt))*8 end
+  f:write(string.format('{"generation":%d,"bytes":%d,"boundsBytes":%d,"ms":%.6f}\\n',emu.read16(0x198,mt),bytes,bounds,clearMs));f:flush()
+ end,emu.cpuType.sa1)
+end
 cb('sa1_draw_start',function()drawbegin=emu.getState().masterClock;bgMs=(drawbegin-clearDone)/21477.272 end,emu.cpuType.sa1)
 cb('sa1_draw_done',function()
  local now=emu.getState().masterClock
