@@ -202,7 +202,7 @@ local dmaClock,dmaLength,dmaLine=0,0,0
 local objectBegin=0
 local function word(name,value)
  emu.write16(0x7e0000+labels[name],value,emu.memType.snesMemory)
- if GAMEOFFLOAD and name:match('^_monosh') then emu.write16(0x400000+labels[name],value,emu.memType.snesMemory)end
+ if GAMEOFFLOAD and name:match('^_monosh') then emu.write16(GAMEBWBASE+labels[name],value,emu.memType.snesMemory)end
 end
 for name,sites in pairs(CALLS)do
  for _,site in ipairs(sites)do
@@ -212,7 +212,7 @@ for name,sites in pairs(CALLS)do
 end
 local function byte(name,value)
  emu.write(0x7e0000+labels[name],value,emu.memType.snesMemory)
- if GAMEOFFLOAD and name:match('^_monosh') then emu.write(0x400000+labels[name],value,emu.memType.snesMemory)end
+ if GAMEOFFLOAD and name:match('^_monosh') then emu.write(GAMEBWBASE+labels[name],value,emu.memType.snesMemory)end
 end
 local function cb(name,fn,cpu)
  cpu=cpu or emu.cpuType.snes
@@ -221,6 +221,24 @@ local function cb(name,fn,cpu)
  local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+end
+if COMPACTGAME then
+ local log=assert(io.open(output..'/game_offload.jsonl','w'))
+ local active=false;local begin=0
+ cb('sa1_game_begin',function()active=true;begin=emu.getState().masterClock end,emu.cpuType.sa1)
+ cb('sa1_game_end',function()
+  active=false
+  local mt=emu.memType.sa1Memory
+  assert(emu.read16(0x435100+labels.c_sp,mt)==0x7c00,'game software stack did not balance')
+  for i=0,62,2 do
+   assert(emu.read16(0x437b00+i,mt)==0xa55a,'game software stack crossed scratch boundary')
+   assert(emu.read16(0x437e00+i,mt)==0xa55a,'game hardware stack crossed software stack boundary')
+  end
+  log:write(string.format('{"field":%d,"logic":%d,"ms":%.6f}\\n',field,logic,(emu.getState().masterClock-begin)/21477.272));log:flush()
+ end,emu.cpuType.sa1)
+ emu.addMemoryCallback(function()
+  if active then local f=assert(io.open(output..'/failure.txt','w'));f:write('SA-1 game accessed S-CPU arithmetic registers');f:close();emu.stop(1)end
+ end,emu.callbackType.write,0x4202,0x4206,emu.cpuType.sa1,emu.memType.sa1Memory)
 end
 if labels.fallback_publish and scenario:match('tracefallback') then
  local f=assert(io.open(output..'/fallback_debug.jsonl','w'))
@@ -344,7 +362,7 @@ if pipeline then
 end
 if labels.sa1_list_sort or labels.sa1_sort_packet or labels.sa1_temporal_prepare or labels.sa1_radix_sort or labels.sa1_key_buckets then
  cb(labels.sa1_list_sort and 'sa1_list_sort' or labels.sa1_key_buckets and 'sa1_key_buckets' or labels.sa1_radix_sort and 'sa1_radix_sort' or (labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare'),function()
-  local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory;local base=GAMEOFFLOAD and 0x400000 or 0x7e0000
+  local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory;local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
   local n=GAMEOFFLOAD and emu.read16(labels.packet_work+8,emu.memType.sa1Memory) or emu.read16(base+labels.packet_work+8,mt)
   sortReference={}
   for i=0,n-2,2 do sortReference[#sortReference+1]={key=emu.read16(base+labels.keys+i,mt),value=emu.read16(base+labels.order+i,mt),index=i}end
@@ -352,7 +370,7 @@ if labels.sa1_list_sort or labels.sa1_sort_packet or labels.sa1_temporal_prepare
  end)
  cb('sorted',function()
   if sortReference then
-   local base=GAMEOFFLOAD and 0x400000 or 0x7e0000
+   local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
    local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory
    for i,v in ipairs(sortReference)do assert(emu.read16(base+labels.order+(i-1)*2,mt)==v.value,'packet sort changed depth/priority/stability field='..field..' index='..i..' expected='..v.value..' key='..v.key..' actual='..emu.read16(base+labels.order+(i-1)*2,mt))end
    sortReference=nil
@@ -640,7 +658,7 @@ emu.addEventCallback(function()
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
  field=field+1
- if NATIVENEAR and field>90 then
+ if NATIVENEAR and presents>0 then
   for i=0,31 do
    local fx=emu.read(32+i,emu.memType.snesCgRam)
    local near=emu.read(480+i,emu.memType.snesCgRam)
@@ -670,8 +688,8 @@ emu.addEventCallback(function()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('GAMEOFFLOAD','true' if config.get('sa1Game') else 'false').replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
-    script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') else 0x7f0000))
+'''.replace('COMPACTGAME','true' if config.get('sa1GameCompact') else 'false').replace('GAMEBWBASE',str(0x430000 if config.get('sa1GameCompact') else 0x400000)).replace('GAMEOFFLOAD','true' if config.get('sa1Game') else 'false').replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+    script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') and not config.get('gameIrqWram') else 0x7f0000))
     from sa1_patterns import dimensions
     patterns=dimensions()
     left_geometries=[]

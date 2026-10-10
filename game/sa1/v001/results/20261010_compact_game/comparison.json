@@ -1,0 +1,204 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_compactmemory_tracepalette",
+      "fields": 800,
+      "logic": 648,
+      "presents": 641,
+      "firstVisibleField": 154,
+      "maxSa1Ms": 21.736746,
+      "failure": "pixel reference mismatch: present00008_expected.bin",
+      "verifiedRun": false
+    },
+    {
+      "scenario": "movestress_compactmemory_zero_tracepalette",
+      "fields": 800,
+      "logic": 648,
+      "presents": 641,
+      "pixelMatchedPresents": 128,
+      "romSha256": "2a402d412ab7687aef1819f3a8cbc38f0c40c1b6b941dd9da32d973f0865523e",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 632,
+        "2": 6
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 154,
+      "maxSa1Ms": 21.736746,
+      "verifiedRun": true
+    },
+    {
+      "scenario": "movestress_compactgame_tracepalette",
+      "failure": "...ld\\sa1_game\\movestress_compactgame_tracepalette\\test.lua:456: page flip occurred during visible lines",
+      "verifiedRun": false
+    },
+    {
+      "scenario": "movestress_compactgame_margin_tracepalette",
+      "fields": 800,
+      "logic": 623,
+      "presents": 616,
+      "pixelMatchedPresents": 128,
+      "romSha256": "d7fed60079a5bc47485cadd8372b7a20cab210887eceb933d16ba64d56568b82",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 588,
+        "2": 21,
+        "3": 4
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 23.839713,
+      "verifiedRun": true,
+      "logicComparedGenerations": 622,
+      "firstLogicMismatch": null
+    },
+    {
+      "scenario": "movestress_compactgame_cputable_tracepalette",
+      "fields": 800,
+      "logic": 615,
+      "presents": 608,
+      "pixelMatchedPresents": 128,
+      "romSha256": "8a343f148ab73668794f9473c2593ecc7c5a109aae9b24652a04be8f607c153e",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 574,
+        "2": 25,
+        "3": 6
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 26.057406,
+      "verifiedRun": true,
+      "logicComparedGenerations": 614,
+      "firstLogicMismatch": null,
+      "gameJobs": 615,
+      "meanGameMs": 3.1981005219512215,
+      "maxGameMs": 4.599374
+    },
+    {
+      "scenario": "bossmovestress_compactgame_cputable_tracepalette",
+      "failure": "...ossmovestress_compactgame_cputable_tracepalette\\test.lua:474: page flip occurred during visible lines",
+      "verifiedRun": false,
+      "gameJobs": 1029,
+      "meanGameMs": 4.0555140330417885,
+      "maxGameMs": 7.641473,
+      "capturedPixels": {
+        "pixelMatchedPresents": 135,
+        "wholeRunPassed": false,
+        "reason": "page flip outside blank before field limit"
+      }
+    },
+    {
+      "scenario": "bossmovestress_compactgame_wram_tracepalette",
+      "fields": 1800,
+      "logic": 1320,
+      "presents": 1317,
+      "pixelMatchedPresents": 139,
+      "romSha256": "095dad74d54b1639312307e2fba0941e45dd24b9f6bf6fdf2105cc62c4a62d63",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1002,
+        "2": 301,
+        "3": 10,
+        "5": 1
+      },
+      "stalledTailFields": 2,
+      "firstVisibleField": 157,
+      "maxSa1Ms": 23.546007,
+      "verifiedRun": true,
+      "gameJobs": 1320,
+      "meanGameMs": 3.8865350181818177,
+      "maxGameMs": 7.641473
+    },
+    {
+      "scenario": "movestress_compactgame_wram_tracepalette",
+      "fields": 800,
+      "logic": 616,
+      "presents": 609,
+      "pixelMatchedPresents": 128,
+      "romSha256": "095dad74d54b1639312307e2fba0941e45dd24b9f6bf6fdf2105cc62c4a62d63",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 573,
+        "2": 30,
+        "3": 3
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 25.198545,
+      "verifiedRun": true,
+      "logicComparedGenerations": 615,
+      "firstLogicMismatch": null,
+      "gameJobs": 616,
+      "meanGameMs": 3.129545076298702,
+      "maxGameMs": 4.601795
+    },
+    {
+      "scenario": "movestress_compactgame_wai_tracepalette",
+      "fields": 800,
+      "logic": 627,
+      "presents": 620,
+      "pixelMatchedPresents": 128,
+      "romSha256": "df8a32666241be15eaa261bb4a83437bb52f65d0e9ebbbd85fccb42374c395bb",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 594,
+        "2": 21,
+        "3": 2
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 22.745626,
+      "verifiedRun": true,
+      "logicComparedGenerations": 626,
+      "firstLogicMismatch": null,
+      "gameJobs": 627,
+      "meanGameMs": 2.320706885167462,
+      "maxGameMs": 3.334222
+    },
+    {
+      "scenario": "bossmovestress_compactgame_wai_tracepalette",
+      "fields": 1800,
+      "logic": 1409,
+      "presents": 1406,
+      "pixelMatchedPresents": 141,
+      "romSha256": "df8a32666241be15eaa261bb4a83437bb52f65d0e9ebbbd85fccb42374c395bb",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1172,
+        "2": 225,
+        "3": 6
+      },
+      "stalledTailFields": 1,
+      "firstVisibleField": 157,
+      "maxSa1Ms": 22.013038,
+      "verifiedRun": true,
+      "gameJobs": 1409,
+      "meanGameMs": 2.9348763988644473,
+      "maxGameMs": 5.384483
+    },
+    {
+      "scenario": "flipfixture_compactgame_wai_tracepalette",
+      "fields": 313,
+      "logic": 123,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "df8a32666241be15eaa261bb4a83437bb52f65d0e9ebbbd85fccb42374c395bb",
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 86,
+        "2": 25,
+        "3": 6
+      },
+      "stalledTailFields": 1,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 34.671536,
+      "verifiedRun": true,
+      "gameJobs": 123,
+      "meanGameMs": 1.8273194308943095,
+      "maxGameMs": 2.116377
+    }
+  ],
+  "evidenceSha256": "c7174c73374520a1dcbb800982bf4303c351ed594afe1286b7dbb891de95e744",
+  "goal60fpsAchieved": false
+}
