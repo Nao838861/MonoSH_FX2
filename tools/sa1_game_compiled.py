@@ -4,8 +4,10 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
+    from sa1_bullet_shapes import Shapes
+    shapes=Shapes() if bullet_shapes else None
     def alloc(raw):
         nonlocal cursor
         raw=bytes(raw)
@@ -44,6 +46,8 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             if bullet_opacity:
                 opaque=sum(1<<i for i,offset in enumerate(range(origin,end,2)) if i<16 and values.get(offset,(65535,0))[0]==0)
                 encoded[:2]=struct.pack('<H',opaque)
+            if shapes is not None:
+                encoded[:2]=struct.pack('<H',shapes.add([values.get(offset,(65535,0))[0] for offset in range(origin,end,2)]))
             for offset in range(origin,end,2):encoded+=struct.pack('<H',values.get(offset,(65535,0))[1])
             rowcache[key]=alloc(encoded).to_bytes(3,'little')
             return rowcache[key]
@@ -143,6 +147,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
     rom[0x7f0000:]=index
     info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
+    if shapes is not None:shapes.save(dest)
     return rom
 
 if __name__=='__main__':

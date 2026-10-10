@@ -109,7 +109,7 @@ def verify_pixels(dest,labels,config):
     return checked
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);ap.add_argument('--timeout',type=int,default=180);args=ap.parse_args()
     dest=BUILD/args.scenario;dest.mkdir(exist_ok=True)
     (dest/'failure.txt').unlink(missing_ok=True)
     (dest/'summary.json').unlink(missing_ok=True)
@@ -215,7 +215,18 @@ end
 for name,sites in pairs(CALLS)do
  for _,site in ipairs(sites)do
   emu.addMemoryCallback(function()cpuEntries[name]=emu.getState().masterClock;cpuActiveEntries[name]=activeClock() end,emu.callbackType.exec,cpuCodeBase+site,cpuCodeBase+site)
-  emu.addMemoryCallback(function()cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272;cpuActiveParts[name]=(cpuActiveParts[name] or 0)+(activeClock()-cpuActiveEntries[name])/21477.272 end,emu.callbackType.exec,cpuCodeBase+site+3,cpuCodeBase+site+3)
+  emu.addMemoryCallback(function()
+   cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272
+   cpuActiveParts[name]=(cpuActiveParts[name] or 0)+(activeClock()-cpuActiveEntries[name])/21477.272
+   if name=='_fx_read_input' and scenario:match('detinput') then
+    local phase=logic%240
+    local value=0x80
+    if scenario:match('move') then
+     value=value+(phase<60 and 0x100 or phase<120 and 0x800 or phase<180 and 0x200 or 0x400)
+    end
+    emu.write16(0x7e0000+labels._fx_buttons,value,emu.memType.snesMemory)
+   end
+  end,emu.callbackType.exec,cpuCodeBase+site+3,cpuCodeBase+site+3)
  end
 end
 local function byte(name,value)
@@ -275,7 +286,8 @@ end
 emu.addMemoryCallback(function(address,value)
  local line=emu.getState()['ppu.scanline']
  if field>85 and (line>=203 or line<21) and line<225 and (value&0x80)==0 then
-  local f=assert(io.open(output..'/failure.txt','w'));f:write('HDMA unblanked reserved DMA lines field='..field..' line='..line);f:close();emu.stop(1)
+  local f=assert(io.open(output..'/failure.txt','w'));f:write('HDMA unblanked reserved DMA lines field='..field..' line='..line..' value='..value);f:close()
+  local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)
  end
 end,emu.callbackType.write,0x2100,0x2100,emu.cpuType.snes,emu.memType.snesMemory)
 -- VRAM/OAM DMAは実際のforced blankまたはVBLANK中に開始する。
@@ -734,7 +746,7 @@ end,emu.eventType.endFrame)
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
-    result=subprocess.run([str(exe),'--testRunner','--timeout=180','--doNotSaveSettings','--enableStdout',str(BUILD/'MonoSHSA1_4bpp_game.sfc'),str(path)],cwd=exe.parent,capture_output=True,timeout=190,creationflags=subprocess.CREATE_NO_WINDOW)
+    result=subprocess.run([str(exe),'--testRunner',f'--timeout={args.timeout}','--doNotSaveSettings','--enableStdout',str(BUILD/'MonoSHSA1_4bpp_game.sfc'),str(path)],cwd=exe.parent,capture_output=True,timeout=args.timeout+10,creationflags=subprocess.CREATE_NO_WINDOW)
     (dest/'emulator.log').write_bytes(result.stdout+result.stderr)
     if (dest/'failure.txt').exists():raise AssertionError((dest/'failure.txt').read_text())
     if result.returncode:print((result.stdout+result.stderr).decode(errors='replace'));raise RuntimeError('Mesen failed')
