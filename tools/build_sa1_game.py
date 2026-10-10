@@ -109,7 +109,7 @@ def main():
     assert not args.mask_clear or (args.deep_bw and args.occupancy and args.redraw_no_history and args.stack_band and not args.packet_offload and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma)
     assert not (args.mask_clear_dma or args.mask_clear_gap or args.mask_clear_table) or args.mask_clear
     assert not args.vram_fifo_map_archive or args.vram_fifo
-    assert not args.vram_fifo or (args.vram_four_shared and args.pipeline_depth==12 and args.prefix_table and args.projection_rom and not args.contiguous_chr_dma and not args.fixed_map and not args.sa1_game and not args.sa1_game_compact)
+    assert not args.vram_fifo or (args.vram_four_shared and args.pipeline_depth==12 and args.prefix_table and (args.projection_rom or args.vram_fifo_map_bw) and not args.contiguous_chr_dma and not args.fixed_map and not args.sa1_game and not args.sa1_game_compact)
     assert not args.dma_word_start or (args.direct_sparse and args.prefix_fastrom and args.unroll_ppu_dma and args.irq_fastrom and args.native_near)
     assert not args.projection_rom or (args.native_near and not args.sa1_game and not args.sa1_game_compact)
     assert args.vram_prefill_count<= (args.pipeline_depth-1 if args.vram_fifo else 3 if args.vram_four_shared or args.vram_four_owned else 1 if args.fixed_map else 2)
@@ -1100,6 +1100,8 @@ right_jit_unavailable:'''
         assert labels['__CODE_SIZE__']<=0xc000,'double stage overlaps CPU code'
     if args.vram_fifo_map_archive:
         assert labels['__CODE_SIZE__']<=0xa000,'FIFO map archive overlaps CPU code'
+    if args.vram_fifo_map_bw and not args.projection_rom:
+        assert labels['__CODE_RUN__']==0 and labels['__CODE_SIZE__']<=0x10000,'BW map with WRAM projection exceeds CPU code bank'
     if args.fixed_map_delta:
         assert labels['fx4_wait_obj_blank']<0x10000,'fixed delta helpers leaked the GSU segment into the CPU include'
     legacy=linked.read_bytes();assert len(legacy)==0x200000

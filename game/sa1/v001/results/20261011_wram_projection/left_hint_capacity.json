@@ -1,0 +1,34 @@
+{
+  "oldKernels": 4998,
+  "oldHintBytes": 50079,
+  "availableProjectionBytes": 28638,
+  "rows": [
+    {
+      "asset": 39,
+      "kernels": 2219,
+      "totalKernels": 7202,
+      "extraHintBytes": 36666,
+      "hashSlots": 8192,
+      "hashLoad": 0.879150390625,
+      "fitsHash": true
+    },
+    {
+      "asset": 40,
+      "kernels": 2148,
+      "totalKernels": 9334,
+      "extraHintBytes": 61560,
+      "hashSlots": 8192,
+      "hashLoad": 1.139404296875,
+      "fitsHash": false
+    },
+    {
+      "asset": 41,
+      "kernels": 2273,
+      "totalKernels": 11599,
+      "extraHintBytes": 88415,
+      "hashSlots": 8192,
+      "hashLoad": 1.4158935546875,
+      "fitsHash": false
+    }
+  ]
+}
