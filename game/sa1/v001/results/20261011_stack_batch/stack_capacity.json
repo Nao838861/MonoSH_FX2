@@ -1,0 +1,115 @@
+[
+  {
+    "minWidth": 94,
+    "maxWidth": 94,
+    "perAsset": [
+      {
+        "asset": 39,
+        "kernels": 169
+      },
+      {
+        "asset": 40,
+        "kernels": 158
+      },
+      {
+        "asset": 41,
+        "kernels": 172
+      }
+    ],
+    "uniqueStackKernels": 499,
+    "stackCodeBytes": 37036,
+    "rightHintBytes": 6832,
+    "geometryEntries": 12,
+    "rowUses": 882,
+    "rowDescriptorBytes": 7056,
+    "gameIntegrated": false
+  },
+  {
+    "minWidth": 94,
+    "maxWidth": 94,
+    "perAsset": [
+      {
+        "asset": 40,
+        "kernels": 158
+      },
+      {
+        "asset": 41,
+        "kernels": 172
+      }
+    ],
+    "uniqueStackKernels": 330,
+    "stackCodeBytes": 23215,
+    "rightHintBytes": 3644,
+    "geometryEntries": 8,
+    "rowUses": 588,
+    "rowDescriptorBytes": 4704,
+    "gameIntegrated": false
+  },
+  {
+    "minWidth": 94,
+    "maxWidth": 94,
+    "perAsset": [
+      {
+        "asset": 40,
+        "kernels": 158
+      }
+    ],
+    "uniqueStackKernels": 158,
+    "stackCodeBytes": 10889,
+    "rightHintBytes": 1622,
+    "geometryEntries": 4,
+    "rowUses": 294,
+    "rowDescriptorBytes": 2352,
+    "gameIntegrated": false
+  },
+  {
+    "minWidth": 90,
+    "maxWidth": 255,
+    "perAsset": [
+      {
+        "asset": 39,
+        "kernels": 753
+      },
+      {
+        "asset": 40,
+        "kernels": 763
+      },
+      {
+        "asset": 41,
+        "kernels": 794
+      }
+    ],
+    "uniqueStackKernels": 2305,
+    "stackCodeBytes": 181888,
+    "rightHintBytes": 29960,
+    "geometryEntries": 36,
+    "rowUses": 2764,
+    "rowDescriptorBytes": 22112,
+    "gameIntegrated": false
+  },
+  {
+    "minWidth": 80,
+    "maxWidth": 255,
+    "perAsset": [
+      {
+        "asset": 39,
+        "kernels": 1184
+      },
+      {
+        "asset": 40,
+        "kernels": 1187
+      },
+      {
+        "asset": 41,
+        "kernels": 1243
+      }
+    ],
+    "uniqueStackKernels": 3606,
+    "stackCodeBytes": 273253,
+    "rightHintBytes": 39838,
+    "geometryEntries": 66,
+    "rowUses": 4768,
+    "rowDescriptorBytes": 38144,
+    "gameIntegrated": false
+  }
+]

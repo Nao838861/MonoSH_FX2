@@ -8,8 +8,12 @@ from analyze_sa1_planar_data import groups
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--native',action='store_true');ap.add_argument('--bitplanes',action='store_true');ap.add_argument('--packed-native',action='store_true');ap.add_argument('--packed-stack',action='store_true');ap.add_argument('--row-calls',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--native',action='store_true');ap.add_argument('--bitplanes',action='store_true');ap.add_argument('--packed-native',action='store_true');ap.add_argument('--packed-stack',action='store_true');ap.add_argument('--row-calls',action='store_true')
+    ap.add_argument('--stack-batch',type=int,choices=range(1,17),default=1)
+    # 既存の一行ごとのmap/stack設定費を、8KiB境界を越えない複数行で共有する。
+    args=ap.parse_args()
     if args.packed_stack:args.packed_native=True
+    assert args.stack_batch==1 or (args.packed_stack and args.row_calls)
     variants=assets();fixtures=jobs();mode='packed_stack' if args.packed_stack else 'packed_native' if args.packed_native else 'planar_bits' if args.bitplanes else 'planar_native' if args.native else 'planar_data'
     assert not args.row_calls or args.packed_native
     if args.row_calls:mode+='_rows'
@@ -74,6 +78,14 @@ def main():
             for dest,value in commands:
                 if not rows or dest<=rows[-1][-1][0] or dest//128!=rows[-1][-1][0]//128:rows.append([])
                 rows[-1].append((dest,value))
+            if args.stack_batch>1:
+                batches=[];batch=[];row_count=0
+                for row in rows:
+                    if batch and (row_count==args.stack_batch or row[0][0]<=batch[-1][0] or row[0][0]//8192!=batch[0][0]//8192 or row[-1][0]//8192!=batch[0][0]//8192):
+                        batches.append(batch);batch=[];row_count=0
+                    batch+=row;row_count+=1
+                if batch:batches.append(batch)
+                rows=batches
             body=bytearray();parts=[]
             for row in rows:
                 first=row[0][0];end=row[-1][0]+1;code=bytearray()
@@ -177,7 +189,7 @@ def main():
     rom[:65536]=output.read_bytes()[:65536]
     struct.pack_into('<H',rom,0x7ffc,labels['reset']);rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum);output.write_bytes(rom)
-    config=dict(mode=mode,planar=not args.packed_native,fixturePrograms=True,runtimePlacementExcluded=True,gameIntegrated=False,
+    config=dict(mode=mode,planar=not args.packed_native,fixturePrograms=True,runtimePlacementExcluded=True,gameIntegrated=False,stackBatchRows=args.stack_batch,
                 interruptsDisabledForFixture=args.packed_stack and not args.row_calls,
                 runtimeStackMapping=args.packed_stack and args.row_calls,
                 fixtureCount=len(fixtures),dictionaryGroups=len(dictionary),fixturePayloadEnd=cursor,
