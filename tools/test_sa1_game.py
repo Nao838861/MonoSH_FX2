@@ -292,6 +292,13 @@ if pipeline then
  cb('pipe_irq',irqEntry)
  if labels.p3PumpBlank then cb('p3PumpBlank',irqEntry)end
  cb('pipe_irq_exit',function()irqDepth=irqDepth-1;assert(irqDepth>=0,'IRQ accounting underflow');if irqDepth==0 then irqTicks=irqTicks+emu.getState().masterClock-irqClock;irqClock=0 end end)
+ emu.addMemoryCallback(function(address,value)
+  if irqDepth>0 then
+   local f=assert(io.open(output..'/failure.txt','w'))
+   f:write(string.format('IRQ modified game math register $%04x at field %d',address,field));f:close()
+   emu.stop(1)
+  end
+ end,emu.callbackType.write,0x4202,0x4206,emu.cpuType.snes,emu.memType.snesMemory)
 end
 cb('_fx_build_packet',function()packetClock=activeClock() end)
 for _,name in ipairs({'initialized','sorted','packet_done'})do
@@ -305,13 +312,15 @@ if pipeline then
   local state=emu.getState();dmaJobs[#dmaJobs+1]=string.format('{"field":%d,"line":%d,"endLine":%d,"length":%d,"ms":%.6f}',field,dmaLine,state['ppu.scanline'],dmaLength,(state.masterClock-dmaClock)/21477.272)
  end)
  local diag=assert(io.open(output..'/pipeline_trace.jsonl','w'))
- for _,name in ipairs({'pipe_irq','pipe_irq_transfer','pipe_wait_dma','dma_started','half_dma_finished','prefetch_finished','pipe_irq_done'})do
+ for _,name in ipairs({'pipe_irq','pipe_irq_transfer','pipe_wait_dma','dma_started','half_dma_finished','prefetch_finished','pipe_irq_done','pipe_prefix_plan','pipe_fast_begin','pipe_fast_partial_done','pipe_collect','pipe_flip'})do
+ if labels[name] then
   cb(name,function()
-   if presents<10 then
+   if presents<10 or (scenario:match('timing') and field>=620 and field<=650) then
     local s=emu.getState();local mt=emu.memType.snesMemory
     diag:write(string.format('{\"label\":\"%s\",\"field\":%d,\"present\":%d,\"line\":%d,\"clock\":%d,\"src\":%d,\"len\":%d,\"grant\":%d}\\n',name,field,presents,s['ppu.scanline'],s.masterClock,emu.read16(0x4302,mt)+65536*emu.read(0x4304,mt),emu.read16(0x4305,mt),emu.read16(0x311c,mt)));diag:flush()
    end
   end)
+ end
  end
  cb('prefetch_finished',function()
   if DENSE_TILES then return end
@@ -356,12 +365,29 @@ local function dump(name,mem,a,n)
  f:write(table.concat(t));f:close()
 end
 if labels.sparse_direct_overflow then cb('sparse_direct_overflow',function()error('direct sparse VRAM capacity exceeded field='..field)end,emu.cpuType.sa1)end
+if labels.idle_clear_dma then
+ local f=assert(io.open(output..'/idle_clear.jsonl','w'));local started,slot,band=0,0,0
+ cb('idle_clear_dma',function()
+  started=emu.getState().masterClock
+  slot=emu.read16(0xa0,emu.memType.sa1InternalRam)//2
+  band=emu.read16(0xac,emu.memType.sa1InternalRam)
+ end,emu.cpuType.sa1)
+ cb('idle_clear_done',function()
+  f:write(string.format('{"field":%d,"slot":%d,"band":%d,"ms":%.6f}\\n',field,slot,band,(emu.getState().masterClock-started)/21477.272));f:flush()
+ end,emu.cpuType.sa1)
+end
 if labels.pipe_fast_partial_done then
  local f=assert(io.open(output..'/prefix_dma.jsonl','w'));local started=0
- cb('pipe_fast_begin',function()started=emu.getState().masterClock end)
+ local planClock,planMs=0,0
+ cb('pipe_prefix_plan',function()planClock=emu.getState().masterClock end)
+ cb('pipe_fast_begin',function()
+  started=emu.getState().masterClock
+  planMs=planClock>0 and (started-planClock)/21477.272 or 0
+  planClock=0
+ end)
  cb('pipe_fast_partial_done',function()
   local st=emu.getState();local mt=emu.memType.snesMemory;local base=0x7e0000
-  f:write(string.format('{"field":%d,"line":%d,"bytes":%d,"descriptors":%d,"ms":%.6f}\\n',field,st['ppu.scanline'],emu.read16(base+labels.pfBytes,mt),emu.read16(base+labels.pfDesc,mt)//6,(st.masterClock-started)/21477.272));f:flush()
+  f:write(string.format('{"field":%d,"line":%d,"bytes":%d,"descriptors":%d,"ms":%.6f,"planMs":%.6f}\\n',field,st['ppu.scanline'],emu.read16(base+labels.pfBytes,mt),emu.read16(base+labels.pfDesc,mt)//6,(st.masterClock-started)/21477.272,planMs));f:flush()
  end)
 end
 if labels.stage_too_large then cb('stage_too_large',function()error('compact WRAM staging capacity exceeded field='..field)end)end
@@ -673,6 +699,7 @@ end,emu.eventType.endFrame)
     print('SA-1 max ms:',max(x['totalSa1Ms'] for x in summary['sa1Jobs']))
     summary['pixelMatchedPresents']=verify_pixels(dest,labels,config)
     summary['romSha256']=config['romSha256']
+    summary['irqMathRegistersVerified']=bool(config.get('pipeline'))
     summary['labelsSha256']=hashlib.sha256((BUILD/'game.lbl').read_bytes()).hexdigest()
     intervals=np.diff([p['visibleField'] for p in summary['presentationTimes'][2:]])
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}

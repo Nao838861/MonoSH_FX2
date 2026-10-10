@@ -3,6 +3,9 @@
 .smart
 .macpack longbranch
 .export sa1_sparse_direct_finish: far, sparse_direct_overflow: far
+.ifndef SA1_PREFIX_DESC_COST
+SA1_PREFIX_DESC_COST=64
+.endif
 .segment "GSU"
 .a16
 .i16
@@ -60,7 +63,7 @@ direct_descriptor:
   clc
   adc $be
   adc $bc
-  adc #64
+  adc #SA1_PREFIX_DESC_COST
   adc $b6
   sta $b6
   sta [$b8],y

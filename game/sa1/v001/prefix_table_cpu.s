@@ -26,6 +26,59 @@ sd_collect_costs:
   phx
   phy
   rep #$30
+  .ifdef SA1_PREFIX_CPU_TABLE
+  ; 収集済みのWRAM記述子から作る。SA-1の描画と追加のBW転送を増やさない。
+  txa
+  lsr
+  clc
+  adc #pfTables
+  tay
+  lda pipe_records+2,x
+  sec
+  sbc #6
+  sta pfLimit
+  txa
+  clc
+  adc #208
+  tax
+  clc
+  adc pfLimit
+  sta pfLimit
+  stz pfBeforeBytes
+  stz pfBeforeCost
+pf_collect_next:
+  cpx pfLimit
+  bcs pf_collect_done
+  lda pipe_records,x
+  sta pfMid
+  clc
+  adc pfBeforeBytes
+  sta pfBeforeBytes
+  sta a:0,y
+  lda pfMid
+  .repeat 5
+    lsr
+  .endrepeat
+  sta pfStart
+  lsr
+  lsr
+  clc
+  adc pfStart
+  adc pfMid
+  adc #SA1_PREFIX_DESC_COST
+  adc pfBeforeCost
+  sta pfBeforeCost
+  sta a:2,y
+  txa
+  clc
+  adc #6
+  tax
+  iny
+  iny
+  iny
+  iny
+  bra pf_collect_next
+  .else
   lda f:$00311a
   dec
   beq pf_collect_done
@@ -51,6 +104,7 @@ sd_collect_costs:
   sta f:$002231
   lda #1
   sta f:$00420b
+  .endif
 pf_collect_done:
   rep #$30
   ply
@@ -72,27 +126,18 @@ pipe_prefix_plan:
   adc #pfTables
   sta pfBase
   lda pipe_records+4,x
-  sta f:$004204
-  sep #$20
-  lda #6
-  sta f:$004206
-  rep #$20
-  .repeat 8
-    nop
-  .endrepeat
-  lda f:$004214
+  lsr
+  tax
+  lda f:pf_div6,x
+  and #255
   sta pfStart
   sta pfLow
+  ldx pipe_record_offset
   lda pipe_records+2,x
-  sta f:$004204
-  sep #$20
-  lda #6
-  sta f:$004206
-  rep #$20
-  .repeat 8
-    nop
-  .endrepeat
-  lda f:$004214
+  lsr
+  tax
+  lda f:pf_div6,x
+  and #255
   dec
   sta pfHigh
   stz pfBeforeBytes
@@ -173,3 +218,9 @@ pf_found:
 pf_empty:
   clc
   rtl
+.segment "GSU"
+; IRQではゲーム側が使用中かもしれない本体の除算器を触らない。
+pf_div6:
+  .repeat 152, I
+    .byte I/3
+  .endrepeat

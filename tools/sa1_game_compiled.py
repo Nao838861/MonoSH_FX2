@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     def alloc(raw):
         nonlocal cursor
@@ -41,6 +41,9 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             assert length<=255
             encoded=bytearray((length,end-origin,origin,(end-origin)//2))
             values={offset:(mask,value) for offset,mask,value in words}
+            if bullet_opacity:
+                opaque=sum(1<<i for i,offset in enumerate(range(origin,end,2)) if i<16 and values.get(offset,(65535,0))[0]==0)
+                encoded[:2]=struct.pack('<H',opaque)
             for offset in range(origin,end,2):encoded+=struct.pack('<H',values.get(offset,(65535,0))[1])
             rowcache[key]=alloc(encoded).to_bytes(3,'little')
             return rowcache[key]

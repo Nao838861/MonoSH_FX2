@@ -18,6 +18,7 @@ cCount=$d6
 cValue=$d2
 cMask=$d0
 cBase=$ae
+cOpaque=$b0
 sa1_bullet_cache_init:
   rtl
 sa1_bullet_cache_prepare:
@@ -179,6 +180,10 @@ words_row:
   lda [cRows],y
   sta cRecord+2
   rep #$20
+  .ifdef SA1_BULLET_OPACITY
+  lda [cRecord]
+  sta cOpaque
+  .endif
   ldy #2
   lda [cRecord],y
   and #255
@@ -205,8 +210,14 @@ words_row:
   tax
   ldy #4
 words_interior:
+  .ifdef SA1_BULLET_OPACITY
+  lsr cOpaque
+  .endif
   lda [cRecord],y
   beq words_interior_next
+  .ifdef SA1_BULLET_OPACITY
+  bcc words_interior_masked
+  .else
   bit #$000f
   beq words_interior_masked
   bit #$00f0
@@ -215,6 +226,7 @@ words_interior:
   beq words_interior_masked
   bit #$f000
   beq words_interior_masked
+  .endif
   sta a:$0000,x
   bra words_interior_next
 words_interior_masked:
@@ -246,6 +258,9 @@ words_interior_next:
   bne words_interior
   jmp words_next_row
 words_word:
+  .ifdef SA1_BULLET_OPACITY
+  lsr cOpaque
+  .endif
   lda cCount
   jeq words_next_row
   lda cOrigin
@@ -309,6 +324,26 @@ words_next_word:
   inc cOrigin
   inc cOrigin
   dec cCount
+  .ifdef SA1_BULLET_LEFT_FAST
+  ; 左端の不完全なwordを抜けたら、残りは画面内の高速ループへ戻す。
+  jeq words_next_row
+  lda cOrigin
+  jmi words_word
+  cmp #128
+  jcs words_next_row
+  lda cCount
+  asl
+  clc
+  adc cOrigin
+  cmp #129
+  jcs words_word
+  lda cOrigin
+  clc
+  adc cStart
+  tax
+  ldy cRead
+  jmp words_interior
+  .endif
   jmp words_word
 words_next_row:
   lda cV

@@ -8,7 +8,7 @@ def replace(text,old,new):
     return text.replace(old,new,1)
 
 
-def pipeline(text,prefix=False,prefix_fastrom=False,map_overlap=False):
+def pipeline(text,prefix=False,prefix_fastrom=False,map_overlap=False,contiguous=False):
     text=vram_pipeline(dense_pipeline(text))
     text=replace(text,'  lda #$01\n  sta f:$002231','  lda #$15\n  sta f:$002231')
     # 最後の記述子だけが生のmap。それ以前は256px幅のCC type1。
@@ -49,7 +49,44 @@ def pipeline(text,prefix=False,prefix_fastrom=False,map_overlap=False):
   .else''')
     if prefix:text=prefix_pipeline(text,fastrom=prefix_fastrom)
     if map_overlap:text=overlap_pipeline(text)
+    if contiguous:text=contiguous_pipeline(text)
     return text
+
+
+def contiguous_pipeline(text):
+    # CHRの転送先は全記述子で連続する。まとまりの先頭だけVMADDRを設定する。
+    start=text.index('pipe_fast_unroll_start:\n');end=text.index('pipe_fast_unroll_end:\n',start)
+    block=text[start:end]
+    old='''  lda pipe_records-68+I*6,x
+  ; 全destinationは$8000未満。各ADC後もcarry=0を維持する。
+  adc pipe_fast_page
+  sta f:$002116
+'''
+    assert block.count(old)==1
+    text=text[:start]+block.replace(old,'',1)+text[end:]
+    text=replace(text,'pipe_fast_begin:\n  nop\n','''pipe_fast_begin:
+  ldx pipe_desc_offset
+  lda pipe_records+4,x
+  clc
+  adc pipe_fast_page
+  sta f:$002116
+''')
+    text=text.replace('=12*34','=12*24').replace('.min(I,12)*34','.min(I,12)*24')
+    old='''  lda pipe_dma_chunk
+  asl
+  asl
+  clc
+  adc pipe_dma_chunk
+  asl
+  clc
+  adc pipe_cost_bytes'''
+    new='''  lda pipe_dma_chunk
+  asl
+  asl
+  asl
+  clc
+  adc pipe_cost_bytes'''
+    return replace(text,old,new)
 
 
 def overlap_pipeline(text):
