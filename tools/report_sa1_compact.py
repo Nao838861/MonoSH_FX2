@@ -25,6 +25,12 @@ SCENARIOS=[
     'movestress_fallbackmask_fast_tracepalette',
     'movestress_fallbackearly_tracepalette',
     'movestress_fallbackearly_long_tracepalette',
+    'movestress_fallbacksa1_fixed_tracepalette',
+    'movestress_pixeldelta_fixed_tracepalette',
+    'movestress_cpuvram3_tracepalette',
+    'movestress_cpuvram3_pump_nonzero_tracepalette',
+    'movestress_cpuvram3_defer_ground_tracepalette',
+    'movestress_cpuvram3_late_tracepalette',
 ]
 
 
@@ -49,10 +55,14 @@ def main():
             for f in sorted(folder.iterdir()):
                 if f.is_file() and f.suffix in ('.json','.jsonl','.bin','.lbl','.lua','.txt','.log'):
                     archive.write(f,Path(name)/f.name)
-        for name in ('movestress_cpupack_ppuguard_tracepalette',):
+        for name in ('movestress_cpupack_ppuguard_tracepalette',
+                     'movestress_fallbacksa1_tracepalette',
+                     'movestress_vram3_tracepalette',
+                     'movestress_vram3_fullmap_tracepalette',
+                     'movestress_cpuvram3_pump_tracepalette'):
             folder=BUILD/name
             for f in folder.iterdir():
-                if f.name in ('failure.txt','failure_state.txt','manifest.json','test.lua'):
+                if f.name in ('failure.txt','failure_state.txt','manifest.json','game.lbl','test.lua','summary.json','emulator.log','pixel_failure.txt') or (name.endswith('pump_tracepalette') and f.name.startswith('present00600_')):
                     archive.write(f,Path('failed')/name/f.name)
         for name in ('manifest.json','game.lbl','left_hints_verified.json','left_hints_packing.json','aligned_bounds_verified.json','right_clip_verified.json'):
             f=BUILD/name

@@ -771,6 +771,8 @@ pipe_descriptor:
   adc pipe_dma_chunk
   .endif
   and #$ffe0
+  ; 0指定は65536B DMAになるため、小さすぎる残時間では次の非表示期間へ送る。
+  jeq pipe_transfer_pause
   bra pipe_set_chunk
 pipe_full_descriptor:
   lda pipe_records+208,x

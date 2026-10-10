@@ -43,7 +43,8 @@ def verify_pixels(dest,labels,config):
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
             converted=bytearray()
             for tile in range(32,768):
-                entry=struct.unpack_from('<H',whole,0xc000+tile*2)[0]
+                map_base=page*2+0x800 if config.get('vramPrefetch3') else 0xc000
+                entry=struct.unpack_from('<H',whole,map_base+tile*2)[0]
                 assert entry&0xfc00==0x2400,f'{prefix}: dense tile attributes differ'
                 address=page*2+(entry&1023)*32
                 converted+=whole[address:address+32]
@@ -134,6 +135,7 @@ local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local padded=PADDED
 local pipeline=PIPELINE
+local vramPrefetch3=VRAMPREFETCH3
 local cpuCodeBase=CPUCODEBASE
 local field,logic,presents=0,0,0
 local finishedCapture=false
@@ -211,9 +213,31 @@ local function byte(name,value)
 end
 local function cb(name,fn,cpu)
  cpu=cpu or emu.cpuType.snes
- local irqName=name:match('^pipe_') or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
+ local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+end
+if labels.fallback_publish and scenario:match('tracefallback') then
+ local f=assert(io.open(output..'/fallback_debug.jsonl','w'))
+ cb('fallback_publish',function()
+  local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_target_slot,mt)
+  local record=0x7e0000+labels.pipe_records+slot*512
+  local gen=emu.read16(record+8,mt);local page=emu.read16(record+6,mt)*2
+  local outside={}
+  for tile=32,767 do
+   local mask=emu.read(0x7e0000+labels.fbMasks+slot*128+math.floor(tile/8),mt)
+   if (mask & (1<<(tile%8)))==0 then
+    for b=0,31 do
+     if emu.read(page+tile*32+b,emu.memType.snesVideoRam)~=0 then outside[#outside+1]=tile;break end
+    end
+   end
+  end
+  f:write(string.format('{"generation":%d,"page":%d,"outside":[%s]}\\n',gen,page,table.concat(outside,',')));f:flush()
+ end)
+ if labels.sa1_fallback_build then cb('sa1_fallback_build',function()
+  local s=emu.getState()
+  f:write(string.format('{"field":%d,"sa1Stack":%d}\\n',field,s['cart.coprocessor.cpu.sp'] or -1));f:flush()
+ end,emu.cpuType.sa1)end
 end
 emu.addMemoryCallback(function(address,value)
  local line=emu.getState()['ppu.scanline']
@@ -227,6 +251,18 @@ emu.addMemoryCallback(function(address,value)
   local bb=emu.read(0x4301,emu.memType.snesMemory)
   if bb==0x18 or bb==4 then
    local st=emu.getState()
+   if emu.read16(0x4305,emu.memType.snesMemory)==0 then
+    local f=assert(io.open(output..'/failure.txt','w'))
+    f:write('zero-length VRAM/OAM DMA would transfer 65536 bytes field='..field);f:close();emu.stop(1)
+   end
+   if vramPrefetch3 and bb==0x18 then
+    local first=(st['ppu.vramAddress']&0x7fff)*2
+    local last=first+emu.read16(0x4305,emu.memType.snesMemory)
+    if (first<1024 and last>0) or (first<0x4400 and last>0x4000) then
+     local f=assert(io.open(output..'/failure.txt','w'))
+     f:write('frame DMA overwrites fixed BG2 CHR field='..field..' first='..first..' last='..last);f:close();emu.stop(1)
+    end
+   end
    if not st['ppu.forcedBlank'] and st['ppu.scanline']<225 then
     local f=assert(io.open(output..'/failure.txt','w'))
     f:write('VRAM/OAM DMA started outside actual blank field='..field..' line='..st['ppu.scanline']);f:close();emu.stop(1)
@@ -244,11 +280,13 @@ emu.addMemoryCallback(function(address,value)
   pageCommit={field=field,line=st['ppu.scanline'],clock=st.masterClock}
  end
 end,emu.callbackType.write,0x210b,0x210b,emu.cpuType.snes,emu.memType.snesMemory)
-local packetClock,irqTicks,irqClock=0,0,0
+local packetClock,irqTicks,irqClock,irqDepth=0,0,0,0
 local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
 if pipeline then
- cb('pipe_irq',function()irqClock=emu.getState().masterClock end)
- cb('pipe_irq_exit',function()irqTicks=irqTicks+emu.getState().masterClock-irqClock;irqClock=0 end)
+ local function irqEntry()if irqDepth==0 then irqClock=emu.getState().masterClock end;irqDepth=irqDepth+1 end
+ cb('pipe_irq',irqEntry)
+ if labels.p3PumpBlank then cb('p3PumpBlank',irqEntry)end
+ cb('pipe_irq_exit',function()irqDepth=irqDepth-1;assert(irqDepth>=0,'IRQ accounting underflow');if irqDepth==0 then irqTicks=irqTicks+emu.getState().masterClock-irqClock;irqClock=0 end end)
 end
 cb('_fx_build_packet',function()packetClock=activeClock() end)
 for _,name in ipairs({'initialized','sorted','packet_done'})do
@@ -487,6 +525,15 @@ if labels.fx_obj_upload_done then cb('fx_obj_upload_done',function()
   assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'OAM DMA ended outside actual blank period')
  end
 end)end
+if labels.dense_vram_overflow then cb('dense_vram_overflow',function()error('packed image exceeds one VRAM page')end,emu.cpuType.sa1)end
+if vramPrefetch3 then
+ emu.addMemoryCallback(function(address,value)
+  if field>85 then
+   local st=emu.getState()
+   assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'BG1 map changed outside actual blank period')
+  end
+ end,emu.callbackType.write,0x2107,0x2107,emu.cpuType.snes,emu.memType.snesMemory)
+end
 if labels.pipe_flip then cb('pipe_flip',function()flipBegin=emu.getState().masterClock;pageCommit=nil end)end
 cb('dma_finished',function()
  presents=presents+1
@@ -591,6 +638,7 @@ end,emu.eventType.endFrame)
             left_geometries.append([asset,*sizes[min(len(sizes)-1,i*(len(sizes)-1)//5)]])
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack')) else 'false')
+    script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
     script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
     path=dest/'test.lua';path.write_text(script)

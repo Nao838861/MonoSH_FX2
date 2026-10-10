@@ -4,6 +4,7 @@
 .macpack longbranch
 .export fallback_init: far, fallback_collect: far, fallback_publish: far, fallback_prepare: far
 .export fallback_boot_clear: far
+.export fbMasks, fbPages, fbCombined
 .import __FALLBACKCPU_LOAD__, __FALLBACKCPU_SIZE__
 .import pipe_render_slot, pipe_target_slot, pipe_records, pipe_record_offset
 .import tm_first: far, tm_length: far, tm_rest: far
