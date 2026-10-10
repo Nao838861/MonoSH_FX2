@@ -1,0 +1,58 @@
+{
+  "cases": [
+    {
+      "variant": "waitclear_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 8 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --fixed-map --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --wait-clear-dma",
+      "packetMatchedGenerations": 651,
+      "fields": 800,
+      "logic": 652,
+      "presents": 645,
+      "pixelMatchedPresents": 168,
+      "hardwarePpuReferencesVerified": true,
+      "romSha256": "16e4b8b83f891b747bd6fbc76c3386527df652e7889f09108b8c5c3dff9de553",
+      "presentationFieldIntervals": {
+        "1": 636,
+        "2": 6
+      },
+      "goal60fpsAchieved": false
+    },
+    {
+      "variant": "bulletinterior_v2",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 8 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --fixed-map --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --bullet-interior",
+      "packetMatchedGenerations": 652,
+      "fields": 800,
+      "logic": 653,
+      "presents": 646,
+      "pixelMatchedPresents": 168,
+      "hardwarePpuReferencesVerified": true,
+      "romSha256": "5b4dcf35a1003b7cfa3ff7afe93458c836ca333155d0a6a75cac958ffde5fdbb",
+      "presentationFieldIntervals": {
+        "1": 638,
+        "2": 5
+      },
+      "goal60fpsAchieved": false
+    },
+    {
+      "variant": "fifointerior_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 6 --projection-rom --vram-fifo --dma-word-start --vram-fifo-map-archive --vram-fifo-fast --vram-fifo-fused-map --bullet-interior",
+      "packetMatchedGenerations": 652,
+      "fields": 800,
+      "logic": 653,
+      "presents": 642,
+      "pixelMatchedPresents": 168,
+      "hardwarePpuReferencesVerified": true,
+      "romSha256": "2aa08d1b65ba155000ebd46d2b9b65bb42420fc7c891f3d4412906b4727f7870",
+      "presentationFieldIntervals": {
+        "1": 633,
+        "2": 6
+      },
+      "goal60fpsAchieved": false
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "publicReleaseChanged": false,
+  "excludedCases": {
+    "bulletinterior_v1": "started before build finished; terminated and rerun as v2"
+  },
+  "evidenceSha256": "b7d553bd614c77f6fc9be6c2f25107297899e851c31190f5fcd0d351a77faebd"
+}

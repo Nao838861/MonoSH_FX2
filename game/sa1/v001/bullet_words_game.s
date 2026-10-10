@@ -46,6 +46,27 @@ words_other:
   clc
   rtl
 words_select:
+.ifdef SA1_BULLET_INTERIOR
+  stz $019e
+  lda $38
+  bmi :+
+  clc
+  adc $34
+  cmp #255
+  bcs :+
+  inc $019e
+:
+  lda $3a
+  bmi :+
+  clc
+  adc $36
+  cmp #193
+  bcs :+
+  lda $019e
+  ora #2
+  sta $019e
+:
+.endif
   ; phase×12 + hflip×6 + parity×3
   lda $3c
   and #3
@@ -174,6 +195,15 @@ words_enter:
   .endif
   lda $019a
   sta cBase
+.ifdef SA1_BULLET_INTERIOR
+  lda $3a
+  .repeat 7
+    asl
+  .endrepeat
+  clc
+  adc cBase
+  sta cStart
+.endif
   phb
   sep #$20
   lda $0102
@@ -181,6 +211,11 @@ words_enter:
   plb
 words_row:
   rep #$30
+.ifdef SA1_BULLET_INTERIOR
+  lda $019e
+  bit #2
+  bne words_row_visible
+.endif
   lda cDy
   clc
   adc $3a
@@ -192,6 +227,9 @@ words_row:
   clc
   adc cBase
   sta cStart
+.ifdef SA1_BULLET_INTERIOR
+words_row_visible:
+.endif
   lda cV
   xba
   and #255
@@ -231,6 +269,17 @@ words_row:
   lda cCount
   jeq words_next_row
   .ifdef SA1_BULLET_SHAPES
+.ifdef SA1_BULLET_INTERIOR
+  lda $019e
+  bit #1
+  beq words_clip_row
+  stz cFirst
+  lda cCount
+  sta cLast
+  jsl words_shape_draw
+  jmp words_next_row
+words_clip_row:
+.endif
   jsl words_shape_clipped
   jmp words_next_row
   .endif
@@ -422,6 +471,16 @@ words_next_word:
   .endif
   jmp words_word
 words_next_row:
+.ifdef SA1_BULLET_INTERIOR
+  lda $019e
+  bit #2
+  beq :+
+  lda cStart
+  clc
+  adc #128
+  sta cStart
+:
+.endif
   lda cV
   clc
   adc cStep
