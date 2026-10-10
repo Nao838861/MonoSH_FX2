@@ -44,6 +44,9 @@ def main():
                     if offset>=limit:break
                     last=i+3
             partial=background.copy()
+            reverse=next((i+3 for i in range(len(code)-4,-1,-3)
+                          if code[i]==0x9d and struct.unpack_from('<H',code,i+1)[0]<limit),0)
+            assert reverse==last,(hex(pointer),limit,'reverse prefix')
             execute(code[:last]+b'\x6b',0,0,partial,128)
             partial[128+limit]=background[128+limit]
             assert partial[128:128+limit]==expected[128:128+limit],(hex(pointer),limit)
