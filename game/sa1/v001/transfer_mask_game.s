@@ -4,6 +4,7 @@
 .macpack longbranch
 .import sa1_prepare_transfer: far, sa1_merge_dma: far
 .export sa1_transfer_mask_capture: far, sa1_transfer_mask_prepare: far
+.export tm_first: far, tm_length: far, tm_rest: far
 .segment "BOOT"
 tmMask=$e0
 tmBits=$e2

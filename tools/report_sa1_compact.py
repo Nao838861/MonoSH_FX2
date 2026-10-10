@@ -21,6 +21,10 @@ SCENARIOS=[
     'movestress_leftall_tracepalette',
     'movestress_irqfastunroll_tracepalette',
     'movestress_irqfastunroll_long_tracepalette',
+    'movestress_fallbackmask_tracepalette',
+    'movestress_fallbackmask_fast_tracepalette',
+    'movestress_fallbackearly_tracepalette',
+    'movestress_fallbackearly_long_tracepalette',
 ]
 
 

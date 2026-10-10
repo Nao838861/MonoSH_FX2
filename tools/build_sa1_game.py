@@ -23,11 +23,15 @@ def main():
     ap.add_argument('--wide-clear-min',type=int,default=104,choices=range(32,129,8))
     ap.add_argument('--left-hints',action='store_true')
     ap.add_argument('--right-clip-jit',action='store_true')
+    ap.add_argument('--fallback-mask',action='store_true')
+    ap.add_argument('--fallback-early',action='store_true')
     args=ap.parse_args()
     assert not args.cpu_pack or (args.deep_bw and args.bullet_words and args.irq_fastrom and not args.dense_tiles)
     if args.cpu_pack:args.staged_conversion=True
     assert not args.left_hints or (args.deep_bw and args.bullet_words)
     assert not args.right_clip_jit or (args.deep_bw and args.bullet_words)
+    assert not args.fallback_mask or (args.deep_bw and args.irq_fastrom and not args.cpu_pack and not args.dense_tiles)
+    assert not args.fallback_early or (args.fallback_mask and args.early_request)
     assert not args.row_dirty_exact or args.row_dirty_aligned
     assert not args.dirty_iram or (args.deep_bw and args.row_dirty_aligned)
     assert not args.irq_fastrom or args.pipeline
@@ -99,6 +103,8 @@ def main():
     cfg=cfg.replace('  BOOT: load=BOOT, type=ro;', '  BOOT: load=BOOT, type=ro;\n  SA1: load=BOOT, run=IRAM, type=ro, define=yes;')
     if args.staged_conversion or args.deep_bw:cfg=cfg.replace('CPUDATA: start=$2000, size=$DE00','CPUDATA: start=$2000, size=$8000')
     if args.deep_bw:cfg=cfg.replace('COLORRAM: start=$0400, size=$1200','COLORRAM: start=$A000, size=$5E00')
+    if args.fallback_mask:
+        cfg=cfg.replace('  SPAN5F:', '  FALLBACKCPU: load=DATALOAD, type=ro, define=yes;\n  SPAN5F:')
     assert not args.bottom_slack or (args.deep_bw and args.bullet_words)
     if args.right_clip_jit:
         cfg=cfg.replace('  IRAM:', '  RIGHTRUN: start=$0300, size=$0200, file="";\n  IRAM:')
@@ -140,8 +146,11 @@ def main():
     if args.cpu_pack:
         from sa1_cpu_pack import pipeline as cpu_pack_pipeline
         (BUILD/'pipeline_dense.inc').write_text(cpu_pack_pipeline((SA1/'pipeline_cpu.inc').read_text(encoding='utf-8')),encoding='utf-8')
+    if args.fallback_mask:
+        from sa1_fallback_mask import pipeline as fallback_pipeline
+        (BUILD/'pipeline_fallback.inc').write_text(fallback_pipeline((SA1/'pipeline_cpu.inc').read_text(encoding='utf-8'),early=args.fallback_early),encoding='utf-8')
     if args.irq_fastrom:
-        source=BUILD/'pipeline_dense.inc' if args.dense_tiles or args.cpu_pack else SA1/'pipeline_cpu.inc'
+        source=BUILD/'pipeline_fallback.inc' if args.fallback_mask else BUILD/'pipeline_dense.inc' if args.dense_tiles or args.cpu_pack else SA1/'pipeline_cpu.inc'
         text=source.read_text(encoding='utf-8').replace('jml $7f0000+pipe_irq','jml $c10000+pipe_irq')
         (BUILD/'pipeline_tuned.inc').write_text(text,encoding='utf-8')
     if args.native_near:defines+=['-D','SA1_NATIVE_NEAR=1']
@@ -438,6 +447,13 @@ right_jit_unavailable:'''
             text=text.replace('.include "pipeline_dense.inc"','.include "pipeline_tuned.inc"').replace('.include "pipeline_cpu.inc"','.include "pipeline_tuned.inc"')
             text=text.replace('  jml $7f0000 + game_started','  lda #1\n  sta f:$00420d\n  jml $7f0000 + game_started')
             src=BUILD/'cpu_irq_fastrom.s';src.write_text(text,encoding='utf-8')
+        if name=='cpu' and args.fallback_mask:
+            text=src.read_text(encoding='utf-8')
+            text='.setcpu "65816"\n.import fallback_boot_clear: far\n'+text
+            old='  mvn #$c2,#$7e'
+            assert text.count(old)==1
+            new='  mvn #$c2,#$7e\n  jsl fallback_boot_clear'
+            src=BUILD/'cpu_fallback_boot.s';src.write_text(text.replace(old,new,1),encoding='utf-8')
         obj=BUILD/(name+'_asm.o')
         run([CC/'ca65.exe',*defines,*(['-D','SA1_TILE_DMA=1'] if args.transfer_tiles and name=='dirty' else []),'-I',GAME,'-I',SA1,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
     if args.pipeline:
@@ -501,6 +517,8 @@ right_jit_unavailable:'''
         obj=BUILD/'left_hints.o';run([CC/'ca65.exe','-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
     if args.right_clip_jit:
         obj=BUILD/'right_clip.o';run([CC/'ca65.exe','-o',obj,SA1/'right_clip_game.s']);objs.append(obj)
+    if args.fallback_mask:
+        obj=BUILD/'fallback_mask.o';run([CC/'ca65.exe','-o',obj,SA1/'fallback_mask_cpu.s']);objs.append(obj)
     if args.small_edge_jit:
         obj=BUILD/'small_edge.o';run([CC/'ca65.exe','--bin-include-dir',BUILD,'-o',obj,SA1/'small_edge_game.s']);objs.append(obj)
     if args.fast_left_clip:
@@ -604,7 +622,7 @@ right_jit_unavailable:'''
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'rightClipJit':args.right_clip_jit,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'rightClipJit':args.right_clip_jit,'fallbackMask':args.fallback_mask,'fallbackEarly':args.fallback_early,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
