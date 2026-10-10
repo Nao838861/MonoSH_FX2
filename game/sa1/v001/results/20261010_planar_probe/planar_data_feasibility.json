@@ -1,0 +1,381 @@
+{
+  "uniqueRows": 366793,
+  "rowEntries": 460760,
+  "directDataBytes": 11671423,
+  "dictionaryGroups": 136826,
+  "dictionaryGroupBytes": 684130,
+  "dictionaryRowBytes": 7903213,
+  "dictionaryIdBytes": 3,
+  "rowDescriptorsUpperBytes": 1382280,
+  "heightRowMapsBytes": 49565,
+  "geometryPatterns": 1492,
+  "includesExecutableRenderer": false,
+  "includesGame": false,
+  "includesOriginalPackedFallback": false,
+  "dictionaryTotalBytes": 10019188,
+  "directTotalBytes": 13103268,
+  "perAssetDictionaryBytes": 876305,
+  "perAssetSparseRowBytes": 6467349,
+  "perAssetDenseRowBytes": 4585046,
+  "perAssetSparseTotalBytes": 8775499,
+  "perAssetDenseTotalBytes": 6893196,
+  "perAsset": [
+    {
+      "asset": 0,
+      "groups": 15581,
+      "idBytes": 2,
+      "rows": 13478,
+      "denseBytes": 183500,
+      "sparseBytes": 261436
+    },
+    {
+      "asset": 1,
+      "groups": 18398,
+      "idBytes": 2,
+      "rows": 11398,
+      "denseBytes": 194604,
+      "sparseBytes": 280481
+    },
+    {
+      "asset": 2,
+      "groups": 1965,
+      "idBytes": 2,
+      "rows": 8014,
+      "denseBytes": 95346,
+      "sparseBytes": 134978
+    },
+    {
+      "asset": 3,
+      "groups": 7665,
+      "idBytes": 2,
+      "rows": 9604,
+      "denseBytes": 117830,
+      "sparseBytes": 166232
+    },
+    {
+      "asset": 4,
+      "groups": 9709,
+      "idBytes": 2,
+      "rows": 22624,
+      "denseBytes": 246476,
+      "sparseBytes": 347090
+    },
+    {
+      "asset": 5,
+      "groups": 4590,
+      "idBytes": 2,
+      "rows": 19766,
+      "denseBytes": 272268,
+      "sparseBytes": 379465
+    },
+    {
+      "asset": 6,
+      "groups": 2182,
+      "idBytes": 2,
+      "rows": 37123,
+      "denseBytes": 454526,
+      "sparseBytes": 644666
+    },
+    {
+      "asset": 7,
+      "groups": 2534,
+      "idBytes": 2,
+      "rows": 37490,
+      "denseBytes": 428836,
+      "sparseBytes": 605764
+    },
+    {
+      "asset": 8,
+      "groups": 2476,
+      "idBytes": 2,
+      "rows": 38283,
+      "denseBytes": 424090,
+      "sparseBytes": 597852
+    },
+    {
+      "asset": 9,
+      "groups": 638,
+      "idBytes": 2,
+      "rows": 353,
+      "denseBytes": 2702,
+      "sparseBytes": 3568
+    },
+    {
+      "asset": 10,
+      "groups": 526,
+      "idBytes": 2,
+      "rows": 701,
+      "denseBytes": 6680,
+      "sparseBytes": 9154
+    },
+    {
+      "asset": 11,
+      "groups": 2482,
+      "idBytes": 2,
+      "rows": 2882,
+      "denseBytes": 21506,
+      "sparseBytes": 29377
+    },
+    {
+      "asset": 12,
+      "groups": 1085,
+      "idBytes": 2,
+      "rows": 417,
+      "denseBytes": 5330,
+      "sparseBytes": 7458
+    },
+    {
+      "asset": 13,
+      "groups": 19968,
+      "idBytes": 2,
+      "rows": 13175,
+      "denseBytes": 169048,
+      "sparseBytes": 225259
+    },
+    {
+      "asset": 14,
+      "groups": 18666,
+      "idBytes": 2,
+      "rows": 18028,
+      "denseBytes": 218710,
+      "sparseBytes": 308492
+    },
+    {
+      "asset": 15,
+      "groups": 522,
+      "idBytes": 2,
+      "rows": 345,
+      "denseBytes": 2244,
+      "sparseBytes": 3021
+    },
+    {
+      "asset": 16,
+      "groups": 563,
+      "idBytes": 2,
+      "rows": 337,
+      "denseBytes": 2270,
+      "sparseBytes": 3068
+    },
+    {
+      "asset": 17,
+      "groups": 607,
+      "idBytes": 2,
+      "rows": 329,
+      "denseBytes": 2308,
+      "sparseBytes": 3133
+    },
+    {
+      "asset": 18,
+      "groups": 533,
+      "idBytes": 2,
+      "rows": 337,
+      "denseBytes": 2292,
+      "sparseBytes": 3101
+    },
+    {
+      "asset": 19,
+      "groups": 618,
+      "idBytes": 2,
+      "rows": 329,
+      "denseBytes": 2574,
+      "sparseBytes": 3490
+    },
+    {
+      "asset": 20,
+      "groups": 553,
+      "idBytes": 2,
+      "rows": 305,
+      "denseBytes": 2190,
+      "sparseBytes": 2980
+    },
+    {
+      "asset": 21,
+      "groups": 578,
+      "idBytes": 2,
+      "rows": 289,
+      "denseBytes": 2254,
+      "sparseBytes": 3077
+    },
+    {
+      "asset": 22,
+      "groups": 573,
+      "idBytes": 2,
+      "rows": 377,
+      "denseBytes": 2790,
+      "sparseBytes": 3805
+    },
+    {
+      "asset": 23,
+      "groups": 526,
+      "idBytes": 2,
+      "rows": 377,
+      "denseBytes": 2590,
+      "sparseBytes": 3502
+    },
+    {
+      "asset": 24,
+      "groups": 387,
+      "idBytes": 2,
+      "rows": 209,
+      "denseBytes": 1760,
+      "sparseBytes": 2431
+    },
+    {
+      "asset": 25,
+      "groups": 445,
+      "idBytes": 2,
+      "rows": 209,
+      "denseBytes": 1778,
+      "sparseBytes": 2452
+    },
+    {
+      "asset": 26,
+      "groups": 414,
+      "idBytes": 2,
+      "rows": 233,
+      "denseBytes": 1744,
+      "sparseBytes": 2371
+    },
+    {
+      "asset": 27,
+      "groups": 613,
+      "idBytes": 2,
+      "rows": 338,
+      "denseBytes": 2648,
+      "sparseBytes": 3628
+    },
+    {
+      "asset": 28,
+      "groups": 594,
+      "idBytes": 2,
+      "rows": 345,
+      "denseBytes": 2514,
+      "sparseBytes": 3396
+    },
+    {
+      "asset": 29,
+      "groups": 576,
+      "idBytes": 2,
+      "rows": 361,
+      "denseBytes": 2450,
+      "sparseBytes": 3314
+    },
+    {
+      "asset": 30,
+      "groups": 526,
+      "idBytes": 2,
+      "rows": 355,
+      "denseBytes": 2208,
+      "sparseBytes": 2957
+    },
+    {
+      "asset": 31,
+      "groups": 23841,
+      "idBytes": 2,
+      "rows": 12334,
+      "denseBytes": 139476,
+      "sparseBytes": 196880
+    },
+    {
+      "asset": 32,
+      "groups": 2113,
+      "idBytes": 2,
+      "rows": 2345,
+      "denseBytes": 18904,
+      "sparseBytes": 26011
+    },
+    {
+      "asset": 33,
+      "groups": 2725,
+      "idBytes": 2,
+      "rows": 2713,
+      "denseBytes": 21940,
+      "sparseBytes": 30197
+    },
+    {
+      "asset": 34,
+      "groups": 2947,
+      "idBytes": 2,
+      "rows": 4440,
+      "denseBytes": 42178,
+      "sparseBytes": 58695
+    },
+    {
+      "asset": 35,
+      "groups": 3725,
+      "idBytes": 2,
+      "rows": 6882,
+      "denseBytes": 69038,
+      "sparseBytes": 96363
+    },
+    {
+      "asset": 36,
+      "groups": 5395,
+      "idBytes": 2,
+      "rows": 9353,
+      "denseBytes": 96900,
+      "sparseBytes": 134872
+    },
+    {
+      "asset": 37,
+      "groups": 1925,
+      "idBytes": 2,
+      "rows": 36154,
+      "denseBytes": 419736,
+      "sparseBytes": 593450
+    },
+    {
+      "asset": 38,
+      "groups": 15,
+      "idBytes": 2,
+      "rows": 25,
+      "denseBytes": 256,
+      "sparseBytes": 359
+    },
+    {
+      "asset": 39,
+      "groups": 6510,
+      "idBytes": 2,
+      "rows": 20173,
+      "denseBytes": 313246,
+      "sparseBytes": 446570
+    },
+    {
+      "asset": 40,
+      "groups": 3287,
+      "idBytes": 2,
+      "rows": 19846,
+      "denseBytes": 281634,
+      "sparseBytes": 398900
+    },
+    {
+      "asset": 41,
+      "groups": 5449,
+      "idBytes": 2,
+      "rows": 20776,
+      "denseBytes": 300332,
+      "sparseBytes": 429506
+    },
+    {
+      "asset": 42,
+      "groups": 236,
+      "idBytes": 2,
+      "rows": 209,
+      "denseBytes": 3338,
+      "sparseBytes": 4546
+    },
+    {
+      "asset": 43,
+      "groups": 0,
+      "idBytes": 2,
+      "rows": 1,
+      "denseBytes": 2,
+      "sparseBytes": 2
+    }
+  ],
+  "pairPlaneKernelBytes": 28235292,
+  "pairPlaneKernelCount": 654201,
+  "bitPlaneKernelBytes": 32029377,
+  "bitPlaneKernelCount": 857209,
+  "splitPlaneDescriptorsExcluded": true
+}

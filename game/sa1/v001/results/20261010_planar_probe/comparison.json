@@ -1,0 +1,37 @@
+{
+  "cases": [
+    {
+      "variant": "packed_native",
+      "pixelMatchedJobs": 55,
+      "maxDrawMs": 7.582992849371186,
+      "maxTotalMs": 12.171471311626542,
+      "romSha256": "855421203671b5dc098a212432b3cf21e4b1febeff1a57a9e7142c19a31262f4"
+    },
+    {
+      "variant": "planar_native",
+      "pixelMatchedJobs": 55,
+      "maxDrawMs": 8.439526211708824,
+      "maxTotalMs": 13.02800467396418,
+      "romSha256": "52838e4f6340ea9d45220d7c4c09955da831a24e29e1dfb043178b2485a111c7"
+    },
+    {
+      "variant": "planar_bits",
+      "pixelMatchedJobs": 55,
+      "maxDrawMs": 11.812766537575163,
+      "maxTotalMs": 16.401244999830517,
+      "romSha256": "85c403ad36993d34ebaecaae3c5fe06c3b60592d071efdfa39ed476f5f61ef71"
+    },
+    {
+      "variant": "planar_data",
+      "pixelMatchedJobs": 55,
+      "maxDrawMs": 20.513964715816794,
+      "maxTotalMs": 25.1022569346796,
+      "romSha256": "a3736418f15d41dfffe88e39bf758218d951b00baab0b2104328bfc02e7aba53"
+    }
+  ],
+  "fixturePrograms": true,
+  "runtimePlacementExcluded": true,
+  "gameIntegrated": false,
+  "goal60fpsAchieved": false,
+  "evidenceSha256": "7832520b0696708ad02698306b66342611d9250ce83d13e5595689d2511cb927"
+}

@@ -79,6 +79,7 @@ callback('probe_ready',emu.cpuType.snes,function()
  local j=jobs[index]
  for i,v in ipairs(j.packet) do emu.write(0x430000+i-1,v,emu.memType.snesMemory) end
  emu.write16(0x3106,#j.draws,emu.memType.snesMemory)
+ emu.write16(0x3108,index-1,emu.memType.snesMemory)
  emu.write16(0x3100,1,emu.memType.snesMemory)
  ready=true
 end)
@@ -106,6 +107,15 @@ end)
     times=json.loads((dest/'timings.json').read_text());assert len(times)==len(fixtures)
     for job,row in zip(fixtures,times):
         actual=(dest/(job['name']+'.bin')).read_bytes();expected=reference(job)
+        if config.get('planar'):
+            tiles=np.frombuffer(actual,dtype=np.uint8).reshape(768,32)
+            decoded=np.zeros((192,256),dtype=np.uint8)
+            for y in range(192):
+                for tx in range(32):
+                    tile=tiles[y//8*32+tx];dy=(y%8)*2
+                    planes=tile[[dy,dy+1,dy+16,dy+17]]
+                    for x in range(8):decoded[y,tx*8+x]=sum(((int(p)>>(7-x))&1)<<b for b,p in enumerate(planes))
+            actual=(decoded[:,::2]|decoded[:,1::2]<<4).tobytes()
         if actual!=expected:
             (dest/(job['name']+'_expected.bin')).write_bytes(expected)
             raise AssertionError(f'{job["name"]}: {sum(a!=b for a,b in zip(actual,expected))} bytes differ')
