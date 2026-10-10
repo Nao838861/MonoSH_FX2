@@ -72,6 +72,10 @@ _fx_present:
   lda pipe_initialized
   bne pipe_main
   inc pipe_initialized
+  .ifdef SA1_ADAPTIVE_VRAM
+  lda #0
+  sta f:$00318a
+  .endif
   .if SA1_PIPELINE_DEPTH > 3
   .import pipe_ground_extra, pipe_ground_extra_end
   ldx #pipe_ground_extra_end-pipe_ground_extra-2
@@ -131,6 +135,9 @@ pipe_wait_bw:
   inc pipe_submitted
   lda pipe_submitted
   sta pipe_records+8,x
+  .ifdef SA1_ADAPTIVE_VRAM
+  sta f:$003188
+  .endif
   lda _fx_far_d_acc
   .repeat 7
     lsr
@@ -297,9 +304,9 @@ pipe_collect:
   phy
   phb
   lda pipe_pending
-  beq pipe_collect_end
+  jeq pipe_collect_end
   lda f:$003104
-  beq pipe_collect_end
+  jeq pipe_collect_end
   lda pipe_render_slot
   .repeat 9
     asl
@@ -315,7 +322,7 @@ pipe_collect:
   adc pipe_collect_length
   sta pipe_records+2,x
   stz pipe_records+4,x
-  beq pipe_collect_publish
+  beq pipe_collect_adaptive
   sta f:$004305
   txa
   clc
@@ -337,6 +344,37 @@ pipe_collect:
   lda #1
   sta f:$00420b
   rep #$20
+pipe_collect_adaptive:
+  .ifdef SA1_ADAPTIVE_VRAM
+  lda f:$003190
+  sta pipe_records+38,x
+  lda f:$003192
+  asl
+  sta pipe_collect_length
+  asl
+  clc
+  adc pipe_collect_length
+  sta pipe_records+36,x
+  beq pipe_collect_adaptive_done
+  sta f:$004305
+  txa
+  clc
+  adc #pipe_records+352
+  sta f:$002181
+  lda #$0a00
+  sta f:$004302
+  lda #$8000
+  sta f:$004300
+  sep #$20
+  lda #0
+  sta f:$002183
+  lda #$43
+  sta f:$004304
+  lda #1
+  sta f:$00420b
+  rep #$20
+pipe_collect_adaptive_done:
+  .endif
 pipe_collect_publish:
   lda pipe_render_slot
   asl
@@ -459,6 +497,20 @@ pipe_prefilled:
   tax
   .endif
   lda #3
+  .ifdef SA1_ADAPTIVE_VRAM
+  lda pipe_read_slot
+  .repeat 9
+    asl
+  .endrepeat
+  sta pipe_record_offset
+  tax
+  jsr pipe_adaptive_select
+  jcc pipe_irq_done
+  lda pipe_read_slot
+  asl
+  tax
+  lda #3
+  .endif
   sta pipe_status,x
   lda pipe_read_slot
   sta pipe_target_slot
@@ -467,9 +519,11 @@ pipe_prefilled:
   .endrepeat
   sta pipe_record_offset
   tax
+  .ifndef SA1_ADAPTIVE_VRAM
   lda fx4_page
   eor #$3000
   sta pipe_records+6,x
+  .endif
   stz fx4_dma_bytes
 pipe_setup_transfer:
   lda pipe_target_slot
@@ -508,6 +562,11 @@ dma_chunk_ready:
   .ifdef SA1_FAST_DMA
   jsr pipe_try_fast_dma
   jcs pipe_transfer_complete
+  .ifdef SA1_ADAPTIVE_VRAM
+  ldx pipe_record_offset
+  lda pipe_records+44,x
+  jne pipe_transfer_pause
+  .endif
   .endif
 pipe_descriptor:
   ldx pipe_record_offset
@@ -605,6 +664,9 @@ pipe_descriptor_complete:
   sta pipe_records+4,x
   jmp pipe_descriptor
 pipe_transfer_complete:
+  .ifdef SA1_ADAPTIVE_VRAM
+  jsr pipe_adaptive_publish
+  .endif
   .ifdef SA1_STAGED
   stz stage_busy
   .endif
@@ -873,4 +935,7 @@ dma_finished:
 
 .ifdef SA1_STAGED
 .include "pipeline_stage.inc"
+.endif
+.ifdef SA1_ADAPTIVE_VRAM
+.include "adaptive_vram_cpu.inc"
 .endif

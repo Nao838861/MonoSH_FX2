@@ -143,8 +143,8 @@ if pipeline then
   queueSamples[#queueSamples+1]=string.format('{\"field\":%d,\"line\":%d,\"ready\":%d,\"rendering\":%d,\"complete\":%d,\"flipped\":%d,\"target\":%d}',field,line,ready,rendering,emu.read16(0x7e0000+labels.pipe_complete,mt),emu.read16(0x7e0000+labels.pipe_presented_irq,mt),emu.read16(0x7e0000+labels.pipe_target_slot,mt))
  end)
 end
-if labels.sa1_sort_packet or labels.sa1_temporal_prepare then
- cb(labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare',function()
+if labels.sa1_sort_packet or labels.sa1_temporal_prepare or labels.sa1_radix_sort or labels.sa1_key_buckets then
+ cb(labels.sa1_key_buckets and 'sa1_key_buckets' or labels.sa1_radix_sort and 'sa1_radix_sort' or (labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare'),function()
   local mt=emu.memType.snesMemory;local n=emu.read16(0x7e0000+labels.packet_work+8,mt)
   sortReference={}
   for i=0,n-2,2 do sortReference[#sortReference+1]={key=emu.read16(0x7e0000+labels.keys+i,mt),value=emu.read16(0x7e0000+labels.order+i,mt),index=i}end
@@ -152,7 +152,7 @@ if labels.sa1_sort_packet or labels.sa1_temporal_prepare then
  end)
  cb('sorted',function()
   if sortReference then
-   for i,v in ipairs(sortReference)do assert(emu.read16(0x7e0000+labels.order+(i-1)*2,emu.memType.snesMemory)==v.value,'packet sort changed depth/priority/stability')end
+   for i,v in ipairs(sortReference)do assert(emu.read16(0x7e0000+labels.order+(i-1)*2,emu.memType.snesMemory)==v.value,'packet sort changed depth/priority/stability field='..field..' index='..i..' expected='..v.value..' key='..v.key..' actual='..emu.read16(0x7e0000+labels.order+(i-1)*2,emu.memType.snesMemory))end
    sortReference=nil
   end
  end)
