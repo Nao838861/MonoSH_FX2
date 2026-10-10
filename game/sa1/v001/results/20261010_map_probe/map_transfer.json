@@ -1,0 +1,127 @@
+{
+  "scenario": "movestress_directsparse3_opacity_long_tracepalette",
+  "capturedMaps": 146,
+  "exactComparisons": 120,
+  "meanSavedBytes": 736.0,
+  "maxCurrentHighRange": 398,
+  "heavyCaptures": [
+    {
+      "generation": 540,
+      "pageWord": 0,
+      "nonzeroTiles": 264,
+      "currentHighRange": [
+        306,
+        704
+      ],
+      "highRangeBytes": 398,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 900,
+      "pageWord": 0,
+      "nonzeroTiles": 150,
+      "currentHighRange": [
+        614,
+        676
+      ],
+      "highRangeBytes": 62,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 1260,
+      "pageWord": 0,
+      "nonzeroTiles": 148,
+      "currentHighRange": [
+        311,
+        704
+      ],
+      "highRangeBytes": 393,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 1020,
+      "pageWord": 0,
+      "nonzeroTiles": 147,
+      "currentHighRange": [
+        395,
+        704
+      ],
+      "highRangeBytes": 309,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 780,
+      "pageWord": 0,
+      "nonzeroTiles": 143,
+      "currentHighRange": [
+        500,
+        704
+      ],
+      "highRangeBytes": 204,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 420,
+      "pageWord": 0,
+      "nonzeroTiles": 140,
+      "currentHighRange": [
+        658,
+        676
+      ],
+      "highRangeBytes": 18,
+      "previousPageKnown": false,
+      "proposedMapBytes": null,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 101,
+      "pageWord": 16384,
+      "nonzeroTiles": 124,
+      "currentHighRange": null,
+      "highRangeBytes": 0,
+      "previousPageKnown": true,
+      "proposedMapBytes": 736,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 102,
+      "pageWord": 0,
+      "nonzeroTiles": 122,
+      "currentHighRange": null,
+      "highRangeBytes": 0,
+      "previousPageKnown": true,
+      "proposedMapBytes": 736,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 105,
+      "pageWord": 0,
+      "nonzeroTiles": 122,
+      "currentHighRange": null,
+      "highRangeBytes": 0,
+      "previousPageKnown": true,
+      "proposedMapBytes": 736,
+      "oldMapBytes": 1472
+    },
+    {
+      "generation": 106,
+      "pageWord": 8192,
+      "nonzeroTiles": 122,
+      "currentHighRange": null,
+      "highRangeBytes": 0,
+      "previousPageKnown": true,
+      "proposedMapBytes": 736,
+      "oldMapBytes": 1472
+    }
+  ]
+}

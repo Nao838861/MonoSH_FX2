@@ -1,0 +1,15 @@
+{
+  "fields": 1800,
+  "logic": 1692,
+  "presents": 1685,
+  "pixelMatchedPresents": 146,
+  "romSha256": "9f53a0f0a79e75062f4615cbd69c84060a37d48c3bd453658c4c29748c430c02",
+  "presentationFieldIntervals": {
+    "1": 1656,
+    "2": 26
+  },
+  "goal60fpsAchieved": false,
+  "firstVisibleField": 90,
+  "maxSa1Ms": 25.572987,
+  "archiveSha256": "fecf6aa8645290b23ea068bece325e89eedc27fdb5a67d0c0b666dbb34e29e13"
+}
