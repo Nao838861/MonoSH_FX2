@@ -310,11 +310,20 @@ cb('_fx_frame',function()
   end
  end
 end)
+if labels.cache_miss then
+ local f=assert(io.open(output..'/bullet_cache.jsonl','w'));local start=0;local missed=false
+ cb('sa1_bullet_cache_prepare',function()start=emu.getState().masterClock;missed=false end,emu.cpuType.sa1)
+ cb('cache_miss',function()missed=true end,emu.cpuType.sa1)
+ cb('cache_ready',function()
+  local mt=emu.memType.sa1Memory
+  f:write(string.format('{"job":%d,"field":%d,"asset":%d,"width":%d,"height":%d,"flags":%d,"miss":%s,"ms":%.6f}\\n',#times+1,field,emu.read16(0x3e,mt),emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0x3c,mt),missed and 'true' or 'false',(emu.getState().masterClock-start)/21477.272));f:flush()
+ end,emu.cpuType.sa1)
+end
 cb('render_started',function()begin=emu.getState().masterClock;cpuParts={} end)
 cb('logic_finished',function()
  if scenario:match('^flipfixture') then
   local assets={6,7,8,37};local sizes={6,16,32,48,62}
-  local size=sizes[math.floor((logic-1)/48)%5+1]
+  local size=sizes[math.floor((logic-1)/12)%5+1]
   local flags=(math.floor((logic-1)/3)%4)*16+(logic-1)%3
   local centers={-2,254,128,64};local bottoms={120,200,30,160}
   word('_fx_packet_count',4)

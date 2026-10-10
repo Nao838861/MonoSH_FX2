@@ -67,17 +67,27 @@ dirty_rows_run:
   lda [rowPtr],y
   .ifdef SA1_ROW_DIRTY_ALIGNED
   sta $d4
+  .ifdef SA1_ROW_DIRTY_EXACT
+  ldy #2
+  lda [rowPtr],y
+  and #255
+  .else
   .repeat 13
     lsr
   .endrepeat
   inc
+  .endif
   sta $d6
   asl
   asl
   asl
   sta rowRun
   lda $d4
+  .ifdef SA1_ROW_DIRTY_EXACT
+  and #255
+  .else
   and #63
+  .endif
   .else
   and #255
   sta rowRun
@@ -85,8 +95,10 @@ dirty_rows_run:
   lda [rowPtr],y
   and #255
   .endif
+  .ifndef SA1_ROW_DIRTY_EXACT
   asl
   asl
+  .endif
   clc
   adc rowLeft
   bpl :+
@@ -102,18 +114,25 @@ dirty_rows_run:
   sta drLeft
   .ifdef SA1_ROW_DIRTY_ALIGNED
   lda $d4
+  .ifdef SA1_ROW_DIRTY_EXACT
+  xba
+  and #255
+  .else
   .repeat 6
     lsr
   .endrepeat
   and #127
+  .endif
   .else
   iny
   lda [rowPtr],y
   and #255
   .endif
   jeq dirty_rows_next
+  .ifndef SA1_ROW_DIRTY_EXACT
   asl
   asl
+  .endif
   clc
   adc rowLeft
   jmi dirty_rows_next
@@ -147,7 +166,11 @@ dirty_rows_next:
   lda rowPtr
   clc
   .ifdef SA1_ROW_DIRTY_ALIGNED
+  .ifdef SA1_ROW_DIRTY_EXACT
+  adc #3
+  .else
   adc #2
+  .endif
   .else
   adc #3
   .endif

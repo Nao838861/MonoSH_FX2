@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     def alloc(raw):
         nonlocal cursor
@@ -24,9 +24,9 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         a=used;index[a:a+len(raw)]=raw;used+=len(raw)
         if used>65536:raise ValueError('compiled index exhausted')
         return a
-    def row_entry(row,parity):
+    def row_entry(row,parity,compressed=False):
         nonlocal maximum
-        key=row.tobytes(),parity
+        key=row.tobytes(),parity,compressed
         if key in rowcache:return rowcache[key]
         pixels=np.pad(row,(parity,(-len(row)-parity)%4));words=[]
         for x in range(0,len(pixels),4):
@@ -35,6 +35,15 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                 mask=sum((0 if c else 15)<<(n*4) for n,c in enumerate(pixels[x:x+4]))
                 words.append((x//2,mask,val))
         origin=words[0][0] if words else 0;code=bytearray();acc=None
+        if compressed:
+            end=words[-1][0]+2 if words else 0
+            length=1+sum(12 if mask else 6 for _,mask,_ in words)
+            assert length<=255
+            encoded=bytearray((length,end-origin,origin,(end-origin)//2))
+            values={offset:(mask,value) for offset,mask,value in words}
+            for offset in range(origin,end,2):encoded+=struct.pack('<H',values.get(offset,(65535,0))[1])
+            rowcache[key]=alloc(encoded).to_bytes(3,'little')
+            return rowcache[key]
         for offset,mask,value in words:
             offset-=origin
             if mask:
@@ -65,6 +74,13 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                 ys=(np.arange(h)*(ah*256//h))>>8;desc=bytearray()
                 for phase in range(3 if (asset,1) in variants else 1):
                     pix=variants[asset,phase][1];source=pix[:,(np.arange(w)*(aw*256//w))>>8]
+                    if bullet_cache and asset in (6,7,8,37):
+                        for flip in range(2):
+                            source=pix[:,(aw-1-((np.arange(w)*(aw*256//w))>>8)) if flip else ((np.arange(w)*(aw*256//w))>>8)]
+                            for parity in range(2):
+                                rows=alloc(b''.join(row_entry(source[y],parity,compressed=True) for y in range(ah)))
+                                desc+=rows.to_bytes(3,'little')
+                        continue
                     for parity in range(2):
                         if macros:
                             program=bytearray()
@@ -91,12 +107,13 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                                     encoded=bytearray();previous=None;run=0
                                     for start in range(-yphase,h,8):
                                         _,xs=np.nonzero(occupied[max(0,start):min(h,start+8)])
-                                        pair=(int(xs.min())//4,(int(xs.max())+4)//4) if len(xs) else (0,0)
-                                        if pair==previous and run<8:run+=1
+                                        pair=((int(xs.min()),int(xs.max())+1) if row_dirty_exact else (int(xs.min())//4,(int(xs.max())+4)//4)) if len(xs) else (0,0)
+                                        assert max(pair)<256
+                                        if pair==previous and run<(255 if row_dirty_exact else 8):run+=1
                                         else:
-                                            if previous is not None:encoded+=struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
+                                            if previous is not None:encoded+=bytes((*previous,run)) if row_dirty_exact else struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
                                             previous=pair;run=1
-                                    encoded+=struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
+                                    encoded+=bytes((*previous,run)) if row_dirty_exact else struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
                                     phases.append(bytes(encoded))
                             bounds_data.append(tuple(phases));entries+=bytes(3)
                         else:
@@ -121,7 +138,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         else:pointer=alloc(encoded)
         index[location:location+3]=pointer.to_bytes(3,'little')
     rom[0x7f0000:]=index
-    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned}
+    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     return rom
 

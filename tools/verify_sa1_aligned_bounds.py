@@ -46,13 +46,17 @@ def main():
                 decoded = []
                 total = (phase+h+7)//8
                 while len(decoded) < total:
-                    value = struct.unpack_from('<H', rom, source)[0]
-                    source += 2
-                    decoded.extend([(value & 63, (value >> 6) & 127)] * ((value >> 13)+1))
+                    if config.get('rowDirtyExact'):
+                        left,right,length=rom[source:source+3];source+=3;decoded.extend([(left,right)]*length)
+                    else:
+                        value = struct.unpack_from('<H', rom, source)[0]
+                        source += 2
+                        decoded.extend([(value & 63, (value >> 6) & 127)] * ((value >> 13)+1))
                 expected = []
                 for start in range(-phase, h, 8):
                     _, xs = np.nonzero(occupied[max(0, start):min(h, start+8)])
-                    expected.append((int(xs.min())//4, (int(xs.max())+4)//4) if len(xs) else (0, 0))
+                    pair=((int(xs.min()),int(xs.max())+1) if config.get('rowDirtyExact') else (int(xs.min())//4,(int(xs.max())+4)//4)) if len(xs) else (0,0)
+                    expected.append(pair if len(xs) else (0,0))
                 assert decoded == expected, (asset, w, h, phase)
                 checked += 1
     result = {'romSha256': config['romSha256'], 'exactAlignedBoundsChecked': checked}
