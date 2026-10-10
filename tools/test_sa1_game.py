@@ -572,6 +572,14 @@ end)
 cb('transfer_chunk',function()local s=emu.getState();readyLine=s['ppu.scanline'];startClock=s.masterClock end)
 cb('dma_chunk_ready',function()waitMs=(emu.getState().masterClock-startClock)/21477.272;startClock=emu.getState().masterClock end)
 cb('sa1_clear_start',function()sa1begin=emu.getState().masterClock end,emu.cpuType.sa1)
+if labels.cpu_dirty_prepare and labels.cpu_dirty_done then
+ local f=assert(io.open(output..'/cpu_dirty.jsonl','w'))
+ local t,a=0,0
+ cb('cpu_dirty_prepare',function()t=emu.getState().masterClock;a=activeClock()end)
+ cb('cpu_dirty_done',function()
+  f:write(string.format('{"logic":%d,"field":%d,"ms":%.6f,"activeMs":%.6f}\\n',logic,field,(emu.getState().masterClock-t)/21477.272,(activeClock()-a)/21477.272));f:flush()
+ end)
+end
 if labels.sa1_sprite_begin then
  cb('sa1_sprite_begin',function()objectBegin=emu.getState().masterClock end,emu.cpuType.sa1)
  cb('sa1_sprite_done',function()
