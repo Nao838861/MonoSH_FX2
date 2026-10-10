@@ -1,0 +1,81 @@
+{
+  "cases": [
+    {
+      "variant": "packed_native",
+      "maxDrawMs": 7.582992849371186,
+      "maxTotalMs": 12.171471311626542,
+      "mode": {
+        "mode": "packed_native",
+        "planar": false,
+        "fixturePrograms": true,
+        "runtimePlacementExcluded": true,
+        "gameIntegrated": false,
+        "fixtureCount": 55,
+        "dictionaryGroups": 0,
+        "fixturePayloadEnd": 1259371,
+        "romSha256": "855421203671b5dc098a212432b3cf21e4b1febeff1a57a9e7142c19a31262f4",
+        "labelsSha256": "bf7af00af8c61924f41aee067b9367a988eccb1df5b1297724ee1adfa5465a81"
+      }
+    },
+    {
+      "variant": "packed_stack",
+      "maxDrawMs": 5.54623510844394,
+      "maxTotalMs": 10.134341083914196,
+      "mode": {
+        "mode": "packed_stack",
+        "planar": false,
+        "fixturePrograms": true,
+        "runtimePlacementExcluded": true,
+        "gameIntegrated": false,
+        "interruptsDisabledForFixture": true,
+        "fixtureCount": 55,
+        "dictionaryGroups": 0,
+        "fixturePayloadEnd": 695213,
+        "romSha256": "42b6ffefa26dc3e47105e0971b676deb88f7e7bc631d5d146aa71b7c5145d88d",
+        "labelsSha256": "bf7af00af8c61924f41aee067b9367a988eccb1df5b1297724ee1adfa5465a81"
+      }
+    },
+    {
+      "variant": "packed_native_rows",
+      "maxDrawMs": 7.085257382781202,
+      "maxTotalMs": 11.673363358251457,
+      "mode": {
+        "mode": "packed_native_rows",
+        "planar": false,
+        "fixturePrograms": true,
+        "runtimePlacementExcluded": true,
+        "gameIntegrated": false,
+        "interruptsDisabledForFixture": false,
+        "runtimeStackMapping": false,
+        "fixtureCount": 55,
+        "dictionaryGroups": 0,
+        "fixturePayloadEnd": 768675,
+        "romSha256": "b0b62a2cfa2e385884ab6e53f6efac607f6089e85c26aa568f152aa5b3ce07a5",
+        "labelsSha256": "bf7af00af8c61924f41aee067b9367a988eccb1df5b1297724ee1adfa5465a81"
+      }
+    },
+    {
+      "variant": "packed_stack_rows",
+      "maxDrawMs": 9.232829942275723,
+      "maxTotalMs": 13.821308404531077,
+      "mode": {
+        "mode": "packed_stack_rows",
+        "planar": false,
+        "fixturePrograms": true,
+        "runtimePlacementExcluded": true,
+        "gameIntegrated": false,
+        "interruptsDisabledForFixture": false,
+        "runtimeStackMapping": true,
+        "fixtureCount": 55,
+        "dictionaryGroups": 0,
+        "fixturePayloadEnd": 906099,
+        "romSha256": "9187e3914425850b161f18c88c5aeaf5d4f75b2284ba94754d6ebfc9dae0a217",
+        "labelsSha256": "bf7af00af8c61924f41aee067b9367a988eccb1df5b1297724ee1adfa5465a81"
+      }
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "gameIntegrated": false,
+  "evidenceSha256": "1860a190337aae289880a1175a5749b4a6d441a203ce6384a204ecc7c1ae6a98",
+  "correctedFailure": "stack prototype wrote 2225 through DB=40; changed to long bank-zero register write"
+}
