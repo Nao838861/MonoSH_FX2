@@ -22,13 +22,15 @@ def main():
     ap.add_argument('--cpu-pack',action='store_true')
     ap.add_argument('--wide-clear-min',type=int,default=104,choices=range(32,129,8))
     ap.add_argument('--left-hints',action='store_true')
+    ap.add_argument('--right-clip-jit',action='store_true')
     args=ap.parse_args()
     assert not args.cpu_pack or (args.deep_bw and args.bullet_words and args.irq_fastrom and not args.dense_tiles)
     if args.cpu_pack:args.staged_conversion=True
     assert not args.left_hints or (args.deep_bw and args.bullet_words)
+    assert not args.right_clip_jit or (args.deep_bw and args.bullet_words)
     assert not args.row_dirty_exact or args.row_dirty_aligned
     assert not args.dirty_iram or (args.deep_bw and args.row_dirty_aligned)
-    assert not args.irq_fastrom or (args.pipeline and not args.unroll_ppu_dma)
+    assert not args.irq_fastrom or args.pipeline
     assert not args.dense_tiles or (args.bullet_words and not args.unroll_ppu_dma)
     assert not args.bullet_words or args.bullet_cache
     assert not args.bullet_cache or (args.deep_bw and args.native_near and args.packet_shapes)
@@ -86,7 +88,7 @@ def main():
     assert not args.pipeline or (args.renderer=='macros' and not args.tile_dma and not args.bucket_sort)
     BUILD.mkdir(parents=True,exist_ok=True)
     ASSET_BUILD.mkdir(parents=True,exist_ok=True)
-    if args.left_hints:(BUILD/'left_hints.inc').write_text('LEFT_HINT_TABLE=$000000\n',encoding='utf-8')
+    if args.left_hints:(BUILD/'left_hints.inc').write_text('LEFT_HINT_TABLE=$000000\nLEFT_HINT_MASK=8191\n',encoding='utf-8')
     variants=assets()
     if args.renderer=='macros':
         from sa1_flip_bullets import build as flip_build
@@ -98,6 +100,9 @@ def main():
     if args.staged_conversion or args.deep_bw:cfg=cfg.replace('CPUDATA: start=$2000, size=$DE00','CPUDATA: start=$2000, size=$8000')
     if args.deep_bw:cfg=cfg.replace('COLORRAM: start=$0400, size=$1200','COLORRAM: start=$A000, size=$5E00')
     assert not args.bottom_slack or (args.deep_bw and args.bullet_words)
+    if args.right_clip_jit:
+        cfg=cfg.replace('  IRAM:', '  RIGHTRUN: start=$0300, size=$0200, file="";\n  IRAM:')
+        cfg=cfg.replace('  SA1: load=BOOT, run=IRAM, type=ro, define=yes;', '  SA1: load=BOOT, run=IRAM, type=ro, define=yes;\n  RIGHTJIT: load=GSU, run=RIGHTRUN, type=ro, define=yes;')
     if args.left_hints:
         cfg=cfg.replace('  IRAM:', '  LEFTRUN: start=$0300, size=$0400, file="";\n  IRAM:')
         cfg=cfg.replace('  SA1: load=BOOT, run=IRAM, type=ro, define=yes;', '  SA1: load=BOOT, run=IRAM, type=ro, define=yes;\n  LEFTJIT: load=GSU, run=LEFTRUN, type=ro, define=yes;')
@@ -127,6 +132,7 @@ def main():
     definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     defines+=['-D',f'SA1_PREFILL_COUNT={args.prefill_count}']
+    if args.irq_fastrom:defines+=['-D','SA1_IRQ_FASTROM=1']
     if args.deep_bw:defines+=['-D','SA1_DEEP_BW=1']
     if args.dense_tiles:
         from sa1_dense import pipeline as dense_pipeline
@@ -383,11 +389,15 @@ def main():
   lda $38
   bpl left_hint_unavailable
   lda $34
-  cmp #90
+  cmp #64
   bcc left_hint_unavailable
   lda $3e
   beq left_hint_available
+  cmp #2
+  beq left_hint_available
   cmp #3
+  beq left_hint_available
+  cmp #5
   bne left_hint_unavailable
 left_hint_available:
   jsl sa1_left_hint_draw
@@ -396,6 +406,21 @@ left_hint_available:
 left_hint_unavailable:'''
             assert old in text
             src=BUILD/'fast_left_hints.s';src.write_text(text.replace(old,new,1),encoding='utf-8')
+        if name=='fast' and args.right_clip_jit:
+            text=src.read_text(encoding='utf-8')
+            text='.setcpu "65816"\n.import sa1_right_clip_draw: far\n'+text
+            old='  jsl sa1_edge_prepare'
+            new='''  jsl sa1_edge_prepare
+  lda $c4
+  beq right_jit_unavailable
+  lda $38
+  bmi right_jit_unavailable
+  jsl sa1_right_clip_draw
+  sec
+  rtl
+right_jit_unavailable:'''
+            assert text.count(old)==1
+            src=BUILD/'fast_right_jit.s';src.write_text(text.replace(old,new,1),encoding='utf-8')
         if args.dirty_iram:
             from sa1_dirty_iram import transform as dirty_iram_transform
             text=dirty_iram_transform(name,src.read_text(encoding='utf-8'))
@@ -474,6 +499,8 @@ left_hint_unavailable:'''
         obj=BUILD/'sparse_map.o';run([CC/'ca65.exe','-o',obj,SA1/'sparse_map_game.s']);objs.append(obj)
     if args.left_hints:
         obj=BUILD/'left_hints.o';run([CC/'ca65.exe','-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
+    if args.right_clip_jit:
+        obj=BUILD/'right_clip.o';run([CC/'ca65.exe','-o',obj,SA1/'right_clip_game.s']);objs.append(obj)
     if args.small_edge_jit:
         obj=BUILD/'small_edge.o';run([CC/'ca65.exe','--bin-include-dir',BUILD,'-o',obj,SA1/'small_edge_game.s']);objs.append(obj)
     if args.fast_left_clip:
@@ -577,7 +604,7 @@ left_hint_unavailable:'''
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'rightClipJit':args.right_clip_jit,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

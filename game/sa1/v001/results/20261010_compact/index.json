@@ -1235,5 +1235,793 @@
         "fields": 2
       }
     ]
+  },
+  {
+    "fields": 1800,
+    "logic": 1645,
+    "presents": 1637,
+    "pixelMatchedPresents": 145,
+    "goal60fpsAchieved": false,
+    "scenario": "movestress_cpupack_sa1map_long_tracepalette",
+    "intervals": {
+      "1": 1565,
+      "2": 69,
+      "3": 2
+    },
+    "maxSa1Ms": 26.601144,
+    "meanSa1Ms": 8.596224964090078,
+    "meanOutputMs": 10.335974320146073,
+    "pauses": [
+      {
+        "generation": 428,
+        "fields": 2
+      },
+      {
+        "generation": 430,
+        "fields": 2
+      },
+      {
+        "generation": 433,
+        "fields": 2
+      },
+      {
+        "generation": 435,
+        "fields": 2
+      },
+      {
+        "generation": 537,
+        "fields": 2
+      },
+      {
+        "generation": 542,
+        "fields": 2
+      },
+      {
+        "generation": 544,
+        "fields": 2
+      },
+      {
+        "generation": 546,
+        "fields": 3
+      },
+      {
+        "generation": 547,
+        "fields": 2
+      },
+      {
+        "generation": 548,
+        "fields": 2
+      },
+      {
+        "generation": 549,
+        "fields": 2
+      },
+      {
+        "generation": 558,
+        "fields": 2
+      },
+      {
+        "generation": 561,
+        "fields": 2
+      },
+      {
+        "generation": 562,
+        "fields": 2
+      },
+      {
+        "generation": 565,
+        "fields": 2
+      },
+      {
+        "generation": 568,
+        "fields": 2
+      },
+      {
+        "generation": 572,
+        "fields": 2
+      },
+      {
+        "generation": 938,
+        "fields": 2
+      },
+      {
+        "generation": 1164,
+        "fields": 2
+      },
+      {
+        "generation": 1168,
+        "fields": 2
+      },
+      {
+        "generation": 1170,
+        "fields": 2
+      },
+      {
+        "generation": 1172,
+        "fields": 2
+      },
+      {
+        "generation": 1174,
+        "fields": 2
+      },
+      {
+        "generation": 1175,
+        "fields": 2
+      },
+      {
+        "generation": 1176,
+        "fields": 2
+      },
+      {
+        "generation": 1177,
+        "fields": 3
+      },
+      {
+        "generation": 1179,
+        "fields": 2
+      },
+      {
+        "generation": 1180,
+        "fields": 2
+      },
+      {
+        "generation": 1181,
+        "fields": 2
+      },
+      {
+        "generation": 1183,
+        "fields": 2
+      },
+      {
+        "generation": 1185,
+        "fields": 2
+      },
+      {
+        "generation": 1187,
+        "fields": 2
+      },
+      {
+        "generation": 1189,
+        "fields": 2
+      },
+      {
+        "generation": 1191,
+        "fields": 2
+      },
+      {
+        "generation": 1194,
+        "fields": 2
+      },
+      {
+        "generation": 1195,
+        "fields": 2
+      },
+      {
+        "generation": 1196,
+        "fields": 2
+      },
+      {
+        "generation": 1200,
+        "fields": 2
+      },
+      {
+        "generation": 1202,
+        "fields": 2
+      },
+      {
+        "generation": 1205,
+        "fields": 2
+      },
+      {
+        "generation": 1209,
+        "fields": 2
+      },
+      {
+        "generation": 1218,
+        "fields": 2
+      },
+      {
+        "generation": 1228,
+        "fields": 2
+      },
+      {
+        "generation": 1236,
+        "fields": 2
+      },
+      {
+        "generation": 1242,
+        "fields": 2
+      },
+      {
+        "generation": 1246,
+        "fields": 2
+      },
+      {
+        "generation": 1248,
+        "fields": 2
+      },
+      {
+        "generation": 1251,
+        "fields": 2
+      },
+      {
+        "generation": 1253,
+        "fields": 2
+      },
+      {
+        "generation": 1256,
+        "fields": 2
+      },
+      {
+        "generation": 1257,
+        "fields": 2
+      },
+      {
+        "generation": 1259,
+        "fields": 2
+      },
+      {
+        "generation": 1261,
+        "fields": 2
+      },
+      {
+        "generation": 1264,
+        "fields": 2
+      },
+      {
+        "generation": 1266,
+        "fields": 2
+      },
+      {
+        "generation": 1269,
+        "fields": 2
+      },
+      {
+        "generation": 1271,
+        "fields": 2
+      },
+      {
+        "generation": 1274,
+        "fields": 2
+      },
+      {
+        "generation": 1276,
+        "fields": 2
+      },
+      {
+        "generation": 1279,
+        "fields": 2
+      },
+      {
+        "generation": 1281,
+        "fields": 2
+      },
+      {
+        "generation": 1283,
+        "fields": 2
+      },
+      {
+        "generation": 1287,
+        "fields": 2
+      },
+      {
+        "generation": 1289,
+        "fields": 2
+      },
+      {
+        "generation": 1292,
+        "fields": 2
+      },
+      {
+        "generation": 1295,
+        "fields": 2
+      },
+      {
+        "generation": 1297,
+        "fields": 2
+      },
+      {
+        "generation": 1301,
+        "fields": 2
+      },
+      {
+        "generation": 1306,
+        "fields": 2
+      },
+      {
+        "generation": 1311,
+        "fields": 2
+      },
+      {
+        "generation": 1315,
+        "fields": 2
+      }
+    ]
+  },
+  {
+    "fields": 210,
+    "logic": 128,
+    "presents": 120,
+    "pixelMatchedPresents": 120,
+    "goal60fpsAchieved": false,
+    "scenario": "leftfixture_rightjit_tracepalette",
+    "intervals": {
+      "1": 119
+    },
+    "maxSa1Ms": 13.41567,
+    "meanSa1Ms": 7.494299984251969,
+    "meanOutputMs": 8.342806488188977,
+    "pauses": []
+  },
+  {
+    "fields": 1800,
+    "logic": 1658,
+    "presents": 1652,
+    "pixelMatchedPresents": 145,
+    "goal60fpsAchieved": false,
+    "scenario": "movestress_rightjit_tracepalette",
+    "intervals": {
+      "1": 1606,
+      "2": 32,
+      "3": 13
+    },
+    "maxSa1Ms": 41.088645,
+    "meanSa1Ms": 9.318385337560386,
+    "meanOutputMs": 10.294158666062803,
+    "pauses": [
+      {
+        "generation": 434,
+        "fields": 2
+      },
+      {
+        "generation": 435,
+        "fields": 2
+      },
+      {
+        "generation": 540,
+        "fields": 3
+      },
+      {
+        "generation": 541,
+        "fields": 3
+      },
+      {
+        "generation": 542,
+        "fields": 3
+      },
+      {
+        "generation": 543,
+        "fields": 3
+      },
+      {
+        "generation": 544,
+        "fields": 3
+      },
+      {
+        "generation": 545,
+        "fields": 3
+      },
+      {
+        "generation": 546,
+        "fields": 3
+      },
+      {
+        "generation": 547,
+        "fields": 3
+      },
+      {
+        "generation": 548,
+        "fields": 3
+      },
+      {
+        "generation": 549,
+        "fields": 3
+      },
+      {
+        "generation": 550,
+        "fields": 3
+      },
+      {
+        "generation": 560,
+        "fields": 2
+      },
+      {
+        "generation": 561,
+        "fields": 2
+      },
+      {
+        "generation": 562,
+        "fields": 2
+      },
+      {
+        "generation": 563,
+        "fields": 3
+      },
+      {
+        "generation": 564,
+        "fields": 3
+      },
+      {
+        "generation": 566,
+        "fields": 2
+      },
+      {
+        "generation": 567,
+        "fields": 2
+      },
+      {
+        "generation": 569,
+        "fields": 2
+      },
+      {
+        "generation": 570,
+        "fields": 2
+      },
+      {
+        "generation": 572,
+        "fields": 2
+      },
+      {
+        "generation": 805,
+        "fields": 2
+      },
+      {
+        "generation": 1176,
+        "fields": 2
+      },
+      {
+        "generation": 1178,
+        "fields": 2
+      },
+      {
+        "generation": 1179,
+        "fields": 2
+      },
+      {
+        "generation": 1180,
+        "fields": 2
+      },
+      {
+        "generation": 1181,
+        "fields": 2
+      },
+      {
+        "generation": 1185,
+        "fields": 2
+      },
+      {
+        "generation": 1189,
+        "fields": 2
+      },
+      {
+        "generation": 1194,
+        "fields": 2
+      },
+      {
+        "generation": 1196,
+        "fields": 2
+      },
+      {
+        "generation": 1201,
+        "fields": 2
+      },
+      {
+        "generation": 1205,
+        "fields": 2
+      },
+      {
+        "generation": 1265,
+        "fields": 2
+      },
+      {
+        "generation": 1267,
+        "fields": 2
+      },
+      {
+        "generation": 1271,
+        "fields": 2
+      },
+      {
+        "generation": 1275,
+        "fields": 2
+      },
+      {
+        "generation": 1279,
+        "fields": 2
+      },
+      {
+        "generation": 1284,
+        "fields": 2
+      },
+      {
+        "generation": 1291,
+        "fields": 2
+      },
+      {
+        "generation": 1295,
+        "fields": 2
+      },
+      {
+        "generation": 1298,
+        "fields": 2
+      },
+      {
+        "generation": 1315,
+        "fields": 2
+      }
+    ]
+  },
+  {
+    "fields": 1800,
+    "logic": 1685,
+    "presents": 1677,
+    "pixelMatchedPresents": 145,
+    "goal60fpsAchieved": false,
+    "scenario": "movestress_leftall_tracepalette",
+    "intervals": {
+      "1": 1653,
+      "3": 10,
+      "2": 13
+    },
+    "maxSa1Ms": 27.114058,
+    "meanSa1Ms": 8.376066926365796,
+    "meanOutputMs": 9.350421570071259,
+    "pauses": [
+      {
+        "generation": 541,
+        "fields": 3
+      },
+      {
+        "generation": 542,
+        "fields": 3
+      },
+      {
+        "generation": 543,
+        "fields": 3
+      },
+      {
+        "generation": 544,
+        "fields": 3
+      },
+      {
+        "generation": 545,
+        "fields": 3
+      },
+      {
+        "generation": 546,
+        "fields": 3
+      },
+      {
+        "generation": 547,
+        "fields": 3
+      },
+      {
+        "generation": 548,
+        "fields": 3
+      },
+      {
+        "generation": 549,
+        "fields": 3
+      },
+      {
+        "generation": 550,
+        "fields": 3
+      },
+      {
+        "generation": 1177,
+        "fields": 2
+      },
+      {
+        "generation": 1179,
+        "fields": 2
+      },
+      {
+        "generation": 1180,
+        "fields": 2
+      },
+      {
+        "generation": 1183,
+        "fields": 2
+      },
+      {
+        "generation": 1187,
+        "fields": 2
+      },
+      {
+        "generation": 1193,
+        "fields": 2
+      },
+      {
+        "generation": 1195,
+        "fields": 2
+      },
+      {
+        "generation": 1201,
+        "fields": 2
+      },
+      {
+        "generation": 1270,
+        "fields": 2
+      },
+      {
+        "generation": 1276,
+        "fields": 2
+      },
+      {
+        "generation": 1283,
+        "fields": 2
+      },
+      {
+        "generation": 1293,
+        "fields": 2
+      },
+      {
+        "generation": 1298,
+        "fields": 2
+      }
+    ]
+  },
+  {
+    "fields": 800,
+    "logic": 698,
+    "presents": 690,
+    "pixelMatchedPresents": 129,
+    "goal60fpsAchieved": false,
+    "scenario": "movestress_irqfastunroll_tracepalette",
+    "intervals": {
+      "1": 679,
+      "3": 10
+    },
+    "maxSa1Ms": 22.102155,
+    "meanSa1Ms": 7.395283558106169,
+    "meanOutputMs": 8.357154400286944,
+    "pauses": [
+      {
+        "generation": 541,
+        "fields": 3
+      },
+      {
+        "generation": 542,
+        "fields": 3
+      },
+      {
+        "generation": 543,
+        "fields": 3
+      },
+      {
+        "generation": 544,
+        "fields": 3
+      },
+      {
+        "generation": 545,
+        "fields": 3
+      },
+      {
+        "generation": 546,
+        "fields": 3
+      },
+      {
+        "generation": 547,
+        "fields": 3
+      },
+      {
+        "generation": 548,
+        "fields": 3
+      },
+      {
+        "generation": 549,
+        "fields": 3
+      },
+      {
+        "generation": 550,
+        "fields": 3
+      }
+    ]
+  },
+  {
+    "fields": 1800,
+    "logic": 1686,
+    "presents": 1678,
+    "pixelMatchedPresents": 145,
+    "goal60fpsAchieved": false,
+    "scenario": "movestress_irqfastunroll_long_tracepalette",
+    "intervals": {
+      "1": 1655,
+      "3": 10,
+      "2": 12
+    },
+    "maxSa1Ms": 26.844005,
+    "meanSa1Ms": 8.395106613649851,
+    "meanOutputMs": 9.378589829080118,
+    "pauses": [
+      {
+        "generation": 541,
+        "fields": 3
+      },
+      {
+        "generation": 542,
+        "fields": 3
+      },
+      {
+        "generation": 543,
+        "fields": 3
+      },
+      {
+        "generation": 544,
+        "fields": 3
+      },
+      {
+        "generation": 545,
+        "fields": 3
+      },
+      {
+        "generation": 546,
+        "fields": 3
+      },
+      {
+        "generation": 547,
+        "fields": 3
+      },
+      {
+        "generation": 548,
+        "fields": 3
+      },
+      {
+        "generation": 549,
+        "fields": 3
+      },
+      {
+        "generation": 550,
+        "fields": 3
+      },
+      {
+        "generation": 1177,
+        "fields": 2
+      },
+      {
+        "generation": 1178,
+        "fields": 2
+      },
+      {
+        "generation": 1179,
+        "fields": 2
+      },
+      {
+        "generation": 1181,
+        "fields": 2
+      },
+      {
+        "generation": 1185,
+        "fields": 2
+      },
+      {
+        "generation": 1190,
+        "fields": 2
+      },
+      {
+        "generation": 1195,
+        "fields": 2
+      },
+      {
+        "generation": 1196,
+        "fields": 2
+      },
+      {
+        "generation": 1273,
+        "fields": 2
+      },
+      {
+        "generation": 1279,
+        "fields": 2
+      },
+      {
+        "generation": 1284,
+        "fields": 2
+      },
+      {
+        "generation": 1295,
+        "fields": 2
+      }
+    ]
   }
 ]

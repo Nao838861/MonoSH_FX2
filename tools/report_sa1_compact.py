@@ -15,6 +15,12 @@ SCENARIOS=[
     'movestress_cpupack_sa1map_tracepalette',
     'movestress_cpupack_fullfastrom_tracepalette',
     'movestress_cpupack_fullfastrom_long_tracepalette',
+    'movestress_cpupack_sa1map_long_tracepalette',
+    'leftfixture_rightjit_tracepalette',
+    'movestress_rightjit_tracepalette',
+    'movestress_leftall_tracepalette',
+    'movestress_irqfastunroll_tracepalette',
+    'movestress_irqfastunroll_long_tracepalette',
 ]
 
 
@@ -44,7 +50,7 @@ def main():
             for f in folder.iterdir():
                 if f.name in ('failure.txt','failure_state.txt','manifest.json','test.lua'):
                     archive.write(f,Path('failed')/name/f.name)
-        for name in ('manifest.json','game.lbl','left_hints_verified.json','left_hints_packing.json','aligned_bounds_verified.json'):
+        for name in ('manifest.json','game.lbl','left_hints_verified.json','left_hints_packing.json','aligned_bounds_verified.json','right_clip_verified.json'):
             f=BUILD/name
             if f.exists():archive.write(f,Path('current_build')/name)
     (DEST/'index.json').write_text(json.dumps(index,indent=2)+'\n',encoding='utf-8')

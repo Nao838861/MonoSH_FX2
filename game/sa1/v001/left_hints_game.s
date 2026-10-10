@@ -135,7 +135,7 @@ hint_new_code:
   asl
   asl
   eor hintSlot
-  and #2047
+  and #LEFT_HINT_MASK
 hint_hash:
   sta hintSlot
   asl
@@ -154,7 +154,7 @@ hint_hash:
 hint_next_hash:
   lda hintSlot
   inc
-  and #2047
+  and #LEFT_HINT_MASK
   bra hint_hash
 hint_found:
   lda f:LEFT_HINT_TABLE+3,x
@@ -167,10 +167,6 @@ hint_found:
   eor #$ffff
   inc
   lsr
-  sta hintSlot
-  asl
-  clc
-  adc hintSlot
   tay
   lda [hintTable],y
   and #255
@@ -178,10 +174,25 @@ hint_found:
   asl
   clc
   adc hintSlot
+  sta hintSlot
+  clc
   adc hintCode
   sta f:$0007f1
+  ldy hintSlot
+  lda [hintCode],y
+  and #255
+  cmp #$9d
+  bne hint_remember
+hint_find_constant:
+  dey
+  dey
+  dey
+  lda [hintCode],y
+  and #255
+  cmp #$a9
+  bne hint_find_constant
   iny
-  lda [hintTable],y
+  lda [hintCode],y
   sta hintA
 hint_remember:
   lda hintCode

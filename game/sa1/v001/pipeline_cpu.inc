@@ -27,6 +27,10 @@ SA1_CC_BUFFER = $05c0
 .export pipe_fast_begin, pipe_fast_done, pipe_record_offset
 .export pipe_fast_unavailable, pipe_dma_chunk, pipe_available
 .endif
+.ifdef SA1_IRQ_FASTROM
+.segment "ZEROPAGE"
+pipe_irq_gate: .res 3
+.endif
 .segment "COLORBSS"
 pipe_records: .res 512*SA1_PIPELINE_DEPTH
 .segment "BSS"
@@ -1107,7 +1111,15 @@ pipe_fast_group:
   lsr
   tax
   lda f:$7f0000+pipe_fast_entries,x
+  .ifdef SA1_IRQ_FASTROM
+  sta pipe_irq_gate
+  sep #$20
+  lda #$c1
+  sta pipe_irq_gate+2
+  rep #$20
+  .else
   sta f:$7f0000+pipe_fast_gate+1
+  .endif
   lda pipe_desc_offset
   clc
   adc pipe_dma_chunk
@@ -1122,7 +1134,11 @@ pipe_fast_group:
   bne pipe_fast_group
   jmp pipe_fast_groups_done
 pipe_fast_gate:
+  .ifdef SA1_IRQ_FASTROM
+  jml [pipe_irq_gate]
+  .else
   jmp pipe_fast_unroll_end
+  .endif
 pipe_fast_unroll_start:
   .repeat 24, I
   lda pipe_records-144+I*6,x

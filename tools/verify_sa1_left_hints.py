@@ -22,23 +22,35 @@ def execute(code,start,initial,buffer,origin):
 def main():
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
     target=int(re.search(r'\$([0-9a-f]+)',(BUILD/'left_hints.inc').read_text())[1],16)
-    table=rom[physical(target):physical(target)+2048*6]
+    packing=json.loads((BUILD/'left_hints_packing.json').read_text())
+    slots=packing.get('hashSlots',2048)
+    entry_bytes=packing.get('hintBytesPerEntry',3)
+    table=rom[physical(target):physical(target)+slots*6]
     kernels=cases=0
-    for slot in range(2048):
+    for slot in range(slots):
         ptr=int.from_bytes(table[slot*6:slot*6+3],'little')
         if not ptr:continue
         kernels+=1
-        h=((ptr&65535)>>1 ^ ((ptr>>16)<<3))&2047
-        for _ in range(2048):
+        h=((ptr&65535)>>1 ^ ((ptr>>16)<<3))&(slots-1)
+        for _ in range(slots):
             if int.from_bytes(table[h*6:h*6+3],'little')==ptr:break
             assert table[h*6:h*6+3]!=bytes(3),'hash stopped at empty slot'
-            h=(h+1)&2047
+            h=(h+1)&(slots-1)
         assert h==slot
         hint=int.from_bytes(table[slot*6+3:slot*6+6],'little')
         p=physical(ptr);code=rom[p:p+rom[p-2]];extent=rom[p-1]
         for cur in range(-extent+1,0):
-            data=physical(hint)+(-cur//2)*3
-            start=rom[data]*3;initial=struct.unpack_from('<H',rom,data+1)[0]
+            data=physical(hint)+(-cur//2)*entry_bytes
+            start=rom[data]*3
+            if entry_bytes==3:initial=struct.unpack_from('<H',rom,data+1)[0]
+            else:
+                initial=0
+                if code[start]==0x9d:
+                    previous=start-3
+                    while code[previous]!=0xa9:
+                        previous-=3
+                        assert previous>=0
+                    initial=struct.unpack_from('<H',code,previous+1)[0]
             background=bytearray((i*71+0xa5)&255 for i in range(512))
             full=background.copy();partial=background.copy()
             execute(code,0,0,full,128+cur)
