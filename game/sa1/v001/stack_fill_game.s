@@ -4,7 +4,41 @@
 .smart
 .export sa1_stack_clear_line: far
 .export sa1_stack_clear_band: far
+.export sa1_stack_clear_prepare: far
+.export sa1_clear_wide_band: far
 .segment "BOOT"
+; 幅104byte以上の占有帯は、零である余白も含めた1KiBを一括消去する。
+; compiled-ground配置の03:F000..F3FFは零専用領域。
+sa1_clear_wide_band:
+  sep #$20
+  lda #$84
+  sta $2230
+  lda #3
+  sta $2234
+  rep #$20
+  lda #1024
+  sta $2238
+  lda #$f000
+  sta $2232
+  lda $e6
+  and #$fc00
+  sta $2235
+  sep #$20
+  lda $0102
+  sta $2237
+  rep #$20
+  rtl
+
+sa1_stack_clear_prepare:
+  rep #$30
+  phb
+  ldx #.loword(stack_band_body)
+  ldy #$0300
+  lda #67
+  mvn #$00,#$00
+  plb
+  rtl
+
 sa1_stack_clear_band:
   php
   sei
@@ -32,7 +66,7 @@ sa1_stack_clear_band:
   lda $ea
   lsr
   sta $fa
-  lda #.loword(stack_band_body)+64
+  lda #$0340
   sec
   sbc $fa
   sta $07f1
@@ -54,6 +88,8 @@ stack_band_body:
   .repeat 64
     phd
   .endrepeat
+  jml stack_band_continue
+stack_band_continue:
   dec $f6
   beq stack_band_done
   tsc

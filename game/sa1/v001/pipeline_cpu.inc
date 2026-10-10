@@ -3,6 +3,7 @@ SA1_CC_BUFFER = $05c0
 .endif
 ; 表示より最大二画像先まで処理する。metadataの三枠は地面の三重bufferと対応する。
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
+.import _fx_ground_world_phase
 .ifdef SA1_ACCURATE_DMA_BUDGET
 .import player4_uploaded
 .endif
@@ -14,13 +15,17 @@ SA1_CC_BUFFER = $05c0
 .export pipe_render_slot
 .ifdef SA1_NATIVE_NEAR
 .export pipe_main_offset
+.export pipe_next_slot, pipe_write_slot
 .import pipe_near_build
+.import pipe_near_prepare_next, pipe_near_prepared
 .endif
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
+.export pipe_irq_checked
 .export pipe_irq_exit
 .export pipe_dma_measured_end
 .ifdef SA1_FAST_DMA
 .export pipe_fast_begin, pipe_fast_done, pipe_record_offset
+.export pipe_fast_unavailable, pipe_dma_chunk, pipe_available
 .endif
 .segment "COLORBSS"
 pipe_records: .res 512*SA1_PIPELINE_DEPTH
@@ -107,7 +112,11 @@ pipe_clear_ground:
   lda #$ffff
   sta pipe_front_slot
   sta pipe_target_slot
+  .ifdef SA1_EARLY_REQUEST
+  lda #200
+  .else
   lda #203
+  .endif
   sta f:$004209
   sep #$20
   .ifdef SA1_PIPELINE_IRQ
@@ -209,6 +218,8 @@ pipe_wait_bw:
   sta pipe_records+30,x
   lda fx_sky_pointer
   sta pipe_records+32,x
+  lda _fx_ground_world_phase
+  sta pipe_records+58,x
   txa
   clc
   adc #pipe_records+64
@@ -217,6 +228,10 @@ pipe_wait_bw:
   lda #135
   mvn #$7e,#$7e
   .ifdef SA1_NATIVE_NEAR
+  lda pipe_write_slot
+  inc
+  cmp pipe_near_prepared
+  beq pipe_prepared_near
   jsr pipe_near_build
   .endif
   ; channel0の設定途中にPPU IRQを入れない。
@@ -224,6 +239,10 @@ pipe_wait_bw:
   sei
   jsr fx_upload_ground
   plp
+  .ifdef SA1_NATIVE_NEAR
+pipe_prepared_near:
+  stz pipe_near_prepared
+  .endif
   lda _fx_packet_count
   asl
   asl
@@ -290,6 +309,9 @@ render_started:
   jsr _fx_frame
 logic_finished:
   rep #$30
+  .ifdef SA1_NATIVE_NEAR
+  jsr pipe_near_prepare_next
+  .endif
 pipe_wait_render:
   .ifdef SA1_PIPELINE_IRQ
   sei
@@ -510,8 +532,10 @@ pipe_wait_dma:
   bne pipe_wait_dma
   .endif
   sep #$20
+  .ifndef SA1_EARLY_REQUEST
   lda #$80
   sta f:$002100
+  .endif
   rep #$30
   lda pipe_complete
   beq pipe_choose_target
@@ -642,6 +666,9 @@ pipe_setup_transfer:
   rep #$30
 transfer_chunk:
 dma_chunk_ready:
+  .ifdef SA1_EARLY_REQUEST
+  jsr pipe_start_blank
+  .endif
   .ifdef SA1_FAST_DMA
   jsr pipe_try_fast_dma
   jcs pipe_transfer_complete
@@ -838,6 +865,10 @@ pipe_transfer_pause:
   .endif
   rep #$30
 pipe_irq_done:
+  .ifdef SA1_EARLY_REQUEST
+  jsr pipe_start_blank
+  .endif
+pipe_irq_checked:
   lda pipe_presented_irq
   bne :+
   inc pipe_missed
@@ -860,6 +891,29 @@ pipe_irq_exit:
   pla
   plp
   rti
+
+.ifdef SA1_EARLY_REQUEST
+pipe_start_blank:
+  php
+  sep #$20
+pipe_wait_actual_blank:
+  lda f:$00213f
+  lda f:$002137
+  lda f:$00213d
+  cmp #203
+  bcs pipe_actual_blank
+  cmp #22
+  bcc pipe_actual_blank
+  cmp #200
+  bcs pipe_wait_actual_blank
+  plp
+  rts
+pipe_actual_blank:
+  lda #$80
+  sta f:$002100
+  plp
+  rts
+.endif
 
 pipe_time_left:
   sep #$20
@@ -918,7 +972,11 @@ pipe_reserve_flip:
   plx
   lda pipe_available
   sec
+  .ifdef SA1_UNROLL_PPU_DMA
+  sbc #2300
+  .else
   sbc #2500
+  .endif
   bra pipe_reserved
 pipe_reserve_small:
   plx
@@ -953,6 +1011,22 @@ pipe_try_fast_dma:
   jeq pipe_fast_empty
   .ifdef SA1_ACCURATE_DMA_BUDGET
   sta pipe_dma_chunk
+  .ifdef SA1_UNROLL_PPU_DMA
+  lsr
+  tax
+  lda f:$7f0000+pipe_fast_entries+2,x
+  and #255
+  sta pipe_cost_bytes
+  lda pipe_dma_chunk
+  asl
+  asl
+  clc
+  adc pipe_dma_chunk
+  asl
+  clc
+  adc pipe_cost_bytes
+  ldx pipe_record_offset
+  .else
   asl
   asl
   sta pipe_cost_bytes
@@ -960,6 +1034,7 @@ pipe_try_fast_dma:
   clc
   adc pipe_cost_bytes
   adc pipe_dma_chunk
+  .endif
   .else
   asl
   asl
@@ -970,7 +1045,7 @@ pipe_try_fast_dma:
   lda pipe_records+34,x
   .ifdef SA1_ACCURATE_DMA_BUDGET
   sta pipe_cost_bytes
-  .repeat 4
+  .repeat 5
     lsr
   .endrepeat
   sta pipe_line
@@ -979,12 +1054,7 @@ pipe_try_fast_dma:
   .endrepeat
   clc
   adc pipe_line
-  sta pipe_line
-  lda pipe_cost_bytes
-  xba
-  and #255
-  clc
-  adc pipe_line
+  ; bytes/32 + bytes/128。実測したrefresh分を上回る8.3125 master ticks/byte。
   .else
   lsr
   lsr
@@ -999,7 +1069,7 @@ pipe_try_fast_dma:
   jsr pipe_time_left
   lda pipe_dma_chunk
   cmp pipe_available
-  bcs pipe_fast_unavailable
+  jcs pipe_fast_unavailable
   lda pipe_records+34,x
   clc
   adc fx4_dma_bytes
@@ -1016,6 +1086,68 @@ pipe_try_fast_dma:
   tax
 pipe_fast_begin:
   nop
+  .ifdef SA1_UNROLL_PPU_DMA
+  ldx pipe_record_offset
+  lda pipe_records+2,x
+  sec
+  sbc pipe_records+4,x
+  sta pipe_fast_end
+  lda pipe_records+4,x
+  clc
+  adc pipe_record_offset
+  adc #208
+  sta pipe_desc_offset
+pipe_fast_group:
+  lda pipe_fast_end
+  cmp #145
+  bcc :+
+  lda #144
+:
+  sta pipe_dma_chunk
+  lsr
+  tax
+  lda f:$7f0000+pipe_fast_entries,x
+  sta f:$7f0000+pipe_fast_gate+1
+  lda pipe_desc_offset
+  clc
+  adc pipe_dma_chunk
+  sta pipe_desc_offset
+  tax
+  clc
+  jsr pipe_fast_gate
+  lda pipe_fast_end
+  sec
+  sbc pipe_dma_chunk
+  sta pipe_fast_end
+  bne pipe_fast_group
+  jmp pipe_fast_groups_done
+pipe_fast_gate:
+  jmp pipe_fast_unroll_end
+pipe_fast_unroll_start:
+  .repeat 24, I
+  lda pipe_records-144+I*6,x
+  sta f:$004305
+  lda pipe_records-142+I*6,x
+  sta f:$004302
+  lda pipe_records-140+I*6,x
+  ; 全destinationは$8000未満。各ADC後もcarry=0を維持する。
+  adc pipe_fast_page
+  sta f:$002116
+  sep #$20
+  lda #1
+  sta f:$00420b
+  rep #$20
+  .endrepeat
+pipe_fast_unroll_end:
+  rts
+.assert pipe_fast_unroll_end-pipe_fast_unroll_start=24*34, error, "DMA block size changed"
+pipe_fast_entries:
+  .repeat 49, I
+  .word pipe_fast_unroll_end-.min(I,24)*34
+  .byte I*4
+  .endrepeat
+pipe_fast_groups_done:
+  .else
 pipe_fast_loop:
   lda pipe_records,x
   sta f:$004305
@@ -1037,6 +1169,7 @@ pipe_fast_loop:
   inx
   cpx pipe_fast_end
   bcc pipe_fast_loop
+  .endif
   ldx pipe_record_offset
 pipe_fast_done:
   lda pipe_records+2,x
@@ -1050,6 +1183,9 @@ pipe_fast_unavailable:
 .endif
 
 pipe_flip:
+  .ifdef SA1_EARLY_REQUEST
+  jsr pipe_start_blank
+  .endif
   rep #$30
   lda pipe_target_slot
   .repeat 9

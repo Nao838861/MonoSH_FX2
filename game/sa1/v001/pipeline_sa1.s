@@ -3,7 +3,33 @@
 .smart
 .macpack longbranch
 .export sa1_dma_begin: far, sa1_dma_end: far, sa1_snapshot: far, sa1_dma_poll: far
+.export sa1_dma_try_begin: far
 .segment "BOOT"
+; 消去用。PPUが要求済みなら待たず、CPU命令による消去へ切り替える。
+sa1_dma_try_begin:
+  php
+  sei
+  rep #$20
+  pha
+  lda $011e
+  bne dma_try_busy
+  lda #1
+  sta $011c
+  sep #$20
+  lda 3,s
+  ora #4
+  sta 3,s
+  rep #$20
+  pla
+  plp
+  sec
+  rtl
+dma_try_busy:
+  pla
+  plp
+  clc
+  rtl
+
 sa1_dma_begin:
   php
   .ifdef SA1_PIPELINE_IRQ

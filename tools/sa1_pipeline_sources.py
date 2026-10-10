@@ -38,7 +38,9 @@ def prepare(name,text,direct=False,irq=False,transfer_tiles=False,merge_dma=Fals
         text=replace(text,'  sep #$20\n  lda #$84\n  sta $2230\n  rep #$30\n  stz bgrow', '  rep #$30\n  stz bgrow')
         text=replace(text,'clear_scanline:\n', '  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\nclear_scanline:\n')
         text=replace(text,'  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128', '  sta $2237\n  rep #$20\n  lda bgdest\n  clc\n  adc #128')
-        text=replace(text,'clear_tile_next:\n','clear_tile_next:\n  jsl sa1_dma_end\n')
+        # 空の帯では DMA を獲得していない。CPU に渡した grant を消さない。
+        text=text.replace('  beq clear_tile_next', '  jeq clear_row_done').replace('  bmi clear_tile_next', '  jmi clear_row_done')
+        text=replace(text,'clear_tile_next:\n','clear_tile_next:\n  jsl sa1_dma_end\nclear_row_done:\n')
         text=replace(text,'  sta bgwidth\n  lda bgscroll', '  sta bgwidth\n  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\n  lda bgscroll')
         text=replace(text,'bg_far_next:\n', 'bg_far_next:\n  jsl sa1_dma_end\n')
         text=replace(text,'  jeq invoke_row\n  sep #$20', '  jeq invoke_row\n  jsl sa1_dma_begin\n  sep #$20')

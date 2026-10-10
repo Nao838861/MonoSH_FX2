@@ -3,6 +3,9 @@
 .smart
 .macpack longbranch
 .import sa1_dirty_row_rect: far
+.ifdef SA1_ROW_DIRTY_ALIGNED
+.import sa1_tile_masks
+.endif
 .export sa1_dirty_rows: far
 .segment "BOOT"
 drLeft=$a8
@@ -131,7 +134,11 @@ dirty_rows_run:
   clc
   adc rowRun
   sta drBottom
+  .ifdef SA1_ROW_DIRTY_ALIGNED
+  jsr dirty_aligned_rect
+  .else
   jsl sa1_dirty_row_rect
+  .endif
 dirty_rows_next:
   lda rowTop
   clc
@@ -155,3 +162,78 @@ dirty_rows_next:
   sta rowRemain
   jne dirty_rows_run
   rtl
+
+.ifdef SA1_ROW_DIRTY_ALIGNED
+; この経路は上下端が既に8px単位。汎用矩形の再丸めを省く。
+dirty_aligned_rect:
+  lda drTop
+  bpl :+
+  lda #0
+:
+  cmp #192
+  bcs dirty_aligned_done
+  lsr
+  pha
+  lda drBottom
+  bmi dirty_aligned_pop
+  cmp #193
+  bcc :+
+  lda #192
+:
+  lsr
+  sta drBottom
+  lda drRight
+  tax
+  lda sa1_tile_masks,x
+  sta $bc
+  lda sa1_tile_masks+2,x
+  sta $be
+  lda drLeft
+  tax
+  lda sa1_tile_masks,x
+  eor $bc
+  sta $bc
+  lda sa1_tile_masks+2,x
+  eor $be
+  sta $be
+  plx
+  cpx drBottom
+  bcs dirty_aligned_done
+dirty_aligned_band:
+  .ifdef SA1_DEEP_BW
+  lda f:$432800,x
+  ora $bc
+  sta f:$432800,x
+  lda f:$432802,x
+  ora $be
+  sta f:$432802,x
+  .else
+  lda f:$436800,x
+  ora $bc
+  sta f:$436800,x
+  lda f:$436802,x
+  ora $be
+  sta f:$436802,x
+  .endif
+  lda drLeft
+  cmp $0120,x
+  bcs :+
+  sta $0120,x
+:
+  lda drRight
+  cmp $0122,x
+  bcc :+
+  sta $0122,x
+:
+  inx
+  inx
+  inx
+  inx
+  cpx drBottom
+  bcc dirty_aligned_band
+dirty_aligned_done:
+  rts
+dirty_aligned_pop:
+  pla
+  rts
+.endif

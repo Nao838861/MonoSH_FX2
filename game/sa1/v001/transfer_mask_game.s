@@ -57,6 +57,9 @@ tm_capture:
 
 sa1_transfer_mask_prepare:
   rep #$30
+  lda #65
+  sta tmActive
+tm_restart:
   stz tmCount
   stz tmBytes
   stz tmPosition
@@ -111,16 +114,13 @@ tm_done:
   rtl
 tm_fallback:
   .ifdef SA1_FRONT_MASK
-  ; 表示面は二世代前の帯へfallbackできない。全面として予算判定で止める。
-  lda #24576
-  sta f:$430800
-  sta $0118
-  lda #0
-  sta f:$430802
-  sta f:$430804
-  lda #1
-  sta $011a
-  rtl
+  ; 記述子が48個を超えたら小さな隙間を余分に送り、同じ世代の差分を統合する。
+  ; 全画面への拡大を避ける。1024byte未満の隙間なら最終的に必ず48個以内になる。
+  lda tmActive
+  clc
+  adc #64
+  sta tmActive
+  jmp tm_restart
   .else
   ; metadata一枠は24descriptorまで。必ず収まる既存の24帯へ戻す。
   jsl sa1_prepare_transfer
@@ -138,7 +138,7 @@ tm_flush:
   lda tmStart
   sec
   sbc tmEnd
-  cmp #65
+  cmp tmActive
   bcs tm_new
   clc
   adc tmLength

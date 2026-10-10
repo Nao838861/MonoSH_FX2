@@ -25,8 +25,9 @@ def transform(name, text):
         text = text.replace('  sta destbase\n  bra bounds_ready', '  clc\n  adc $019a\n  sta destbase\n  lda rowbase\n  clc\n  adc $019a\n  sta rowbase\n  bra bounds_ready')
         text = text.replace('  jsl sa1_transfer_mask_prepare', '  jsl sa1_transfer_mask_prepare\n  jsl sa1_deep_rebase')
         text = '.setcpu "65816"\n.import sa1_deep_rebase: far\n' + text
-        text = text.replace('clear_tile_row:\n', '  jmp clear_tile_row\n.segment "BOOT"\nclear_tile_row:\n', 1)
-        text = text.replace('sa1_clear_done:\n', '  jmp sa1_clear_done\n.segment "SA1"\nsa1_clear_done:\n', 1)
+        # 一度だけの初期化をROMへ移し、毎フレームの消去ループはI-RAMに残す。
+        text = text.replace('sa1_entry:\n', 'sa1_entry:\n  jmp sa1_boot_entry\n.segment "BOOT"\nsa1_boot_entry:\n', 1)
+        text = text.replace('wait_job:\n', '  jmp wait_job\n.segment "SA1"\nwait_job:\n', 1)
     elif name == 'fast':
         text = text.replace('  adc $48\n  sta spriteBase', '  adc $48\n  clc\n  adc $019a\n  sta spriteBase')
     elif name == 'edge':

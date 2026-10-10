@@ -75,6 +75,25 @@ def verify_pixels(dest,labels,config):
                 if palette_path.exists():
                     palette=palette_path.read_bytes()
                     assert palette[480:512]==palette[32:64]==(BASE/'assets4/palette4.bin').read_bytes(),f'{prefix}: near OBJ palette changed'
+            if config.get('compiledGround'):
+                from build_sa1_game import GAME
+                record=(dest/(prefix+'_record.bin')).read_bytes()
+                height=struct.unpack_from('<H',record,14)[0]
+                phase=struct.unpack_from('<H',record,58)[0]&127
+                assets=GAME/'assets'
+                run_offsets=struct.unpack('<65H',(assets/'ground_horizontal_run_offsets.bin').read_bytes())
+                value_offsets=struct.unpack('<128H',(assets/'ground_horizontal_offsets.bin').read_bytes())
+                runs=(assets/'ground_horizontal_runs.bin').read_bytes();values=(assets/'ground_horizontal.bin').read_bytes()
+                horizon=104+height;headers=(127,horizon-127) if horizon>=128 else (horizon,)
+                expected_ground=bytearray()
+                for length in headers:expected_ground+=bytes((length,128,0))
+                position=run_offsets[height]
+                while runs[position]:
+                    length,index=runs[position:position+2]
+                    expected_ground+=bytes((length,values[value_offsets[phase]+index],0));position+=2
+                expected_ground+=b'\x00'
+                actual_ground=(dest/(prefix+'_ground_h.bin')).read_bytes()
+                assert actual_ground[:len(expected_ground)]==expected_ground,f'{prefix}: horizontal ground HDMA differs'
         checked+=1
     return checked
 
@@ -82,11 +101,14 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);args=ap.parse_args()
     dest=BUILD/args.scenario;dest.mkdir(exist_ok=True)
     (dest/'failure.txt').unlink(missing_ok=True)
+    (dest/'summary.json').unlink(missing_ok=True)
     for path in dest.glob('present*'):path.unlink()
     for path in dest.glob('frame*'):
         if re.fullmatch(r'frame\d+\.(png|rgb)',path.name):path.unlink()
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
     config=json.loads((BUILD/'manifest.json').read_text())
+    (dest/'manifest.json').write_text(json.dumps(config,indent=2)+'\n')
+    (dest/'game.lbl').write_bytes((BUILD/'game.lbl').read_bytes())
     assert hashlib.sha256((BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()).hexdigest()==config['romSha256']
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
     frame_size=int(re.search(r'frame_asm.o:\s+CODE\s+Offs=[0-9A-F]+\s+Size=([0-9A-F]+)',(BUILD/'game.map').read_text())[1],16)
@@ -116,6 +138,16 @@ local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
 local completedFrames={}
+local expectedPalette=EXPECTEDPALETTE
+if scenario:match('tracepalette') then
+ local z=assert(io.open(output..'/palette_writes.jsonl','w'))
+ emu.addMemoryCallback(function(address,value)
+  if field>90 then
+   local s=emu.getState()
+   z:write(string.format('{"field":%d,"line":%d,"hclock":%d,"address":%d,"value":%d,"cgadd":%d,"pc":%d}\\n',field,s['ppu.scanline'],s['memoryManager.hClock'],address,value,s['ppu.cgramAddress'],s['cpu.pc']));z:flush()
+  end
+ end,emu.callbackType.write,32,63,emu.cpuType.snes,emu.memType.snesCgRam)
+end
 if scenario:match('tracedma') then
  local z=assert(io.open(output..'/sa1_dma_writes.jsonl','w'))
  local blankLog=assert(io.open(output..'/blank_writes.jsonl','w'))
@@ -213,15 +245,15 @@ if pipeline then
    completedFrames[gen]=table.concat(t)
   end
  end)
- cb('pipe_irq_done',function()
-  local line=emu.getState()['ppu.scanline'];assert(line<=22 or line>=203,'PPU transfer exceeded blank period line='..line..' field='..field..' presents='..presents)
+ cb(labels.pipe_irq_checked and 'pipe_irq_checked' or 'pipe_irq_done',function()
+  local line=emu.getState()['ppu.scanline'];assert(line<=21 or line>=203,'PPU transfer exceeded blank period line='..line..' field='..field..' presents='..presents)
   local mt=emu.memType.snesMemory;local ready=0;local rendering=0
   for i=0,DEPTH-1 do local s=emu.read16(0x7e0000+labels.pipe_status+i*2,mt);if s==2 then ready=ready+1 elseif s==1 then rendering=rendering+1 end end
   queueSamples[#queueSamples+1]=string.format('{\"field\":%d,\"line\":%d,\"ready\":%d,\"rendering\":%d,\"complete\":%d,\"flipped\":%d,\"target\":%d}',field,line,ready,rendering,emu.read16(0x7e0000+labels.pipe_complete,mt),emu.read16(0x7e0000+labels.pipe_presented_irq,mt),emu.read16(0x7e0000+labels.pipe_target_slot,mt))
  end)
 end
-if labels.sa1_sort_packet or labels.sa1_temporal_prepare or labels.sa1_radix_sort or labels.sa1_key_buckets then
- cb(labels.sa1_key_buckets and 'sa1_key_buckets' or labels.sa1_radix_sort and 'sa1_radix_sort' or (labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare'),function()
+if labels.sa1_list_sort or labels.sa1_sort_packet or labels.sa1_temporal_prepare or labels.sa1_radix_sort or labels.sa1_key_buckets then
+ cb(labels.sa1_list_sort and 'sa1_list_sort' or labels.sa1_key_buckets and 'sa1_key_buckets' or labels.sa1_radix_sort and 'sa1_radix_sort' or (labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare'),function()
   local mt=emu.memType.snesMemory;local n=emu.read16(0x7e0000+labels.packet_work+8,mt)
   sortReference={}
   for i=0,n-2,2 do sortReference[#sortReference+1]={key=emu.read16(0x7e0000+labels.keys+i,mt),value=emu.read16(0x7e0000+labels.order+i,mt),index=i}end
@@ -280,6 +312,19 @@ cb('_fx_frame',function()
 end)
 cb('render_started',function()begin=emu.getState().masterClock;cpuParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^flipfixture') then
+  local assets={6,7,8,37};local sizes={6,16,32,48,62}
+  local size=sizes[math.floor((logic-1)/48)%5+1]
+  local flags=(math.floor((logic-1)/3)%4)*16+(logic-1)%3
+  local centers={-2,254,128,64};local bottoms={120,200,30,160}
+  word('_fx_packet_count',4)
+  for i=1,4 do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,centers[i]&65535,mt);emu.write16(a+2,bottoms[i],mt)
+   emu.write(a+4,size,mt);emu.write(a+5,size,mt);emu.write(a+6,assets[i],mt);emu.write(a+7,flags,mt)
+   emu.write16(a+8,0,mt)
+  end
+ end
  logicMs=(emu.getState().masterClock-begin)/21477.272
  local parts={};for name,v in pairs(cpuParts)do parts[#parts+1]=string.format('"%s":%.6f',name,v)end
  cpuJobs[#cpuJobs+1]=string.format('{"field":%d,"logicMs":%.6f,"parts":{%s}}',field,logicMs,table.concat(parts,','))
@@ -326,6 +371,12 @@ end,emu.cpuType.sa1)
 if labels.pipe_fast_begin then
  local fastClock,fastBytes,fastCount,fastLine=0,0,0,0
  local fastLog=assert(io.open(output..'/fast_dma.jsonl','w'))
+ local rejectedLog=assert(io.open(output..'/rejected_dma.jsonl','w'))
+ cb('pipe_fast_unavailable',function()
+  local mt=emu.memType.snesMemory;local base=0x7e0000
+  local record=base+labels.pipe_records+emu.read16(base+labels.pipe_record_offset,mt)
+  rejectedLog:write(string.format('{"field":%d,"gen":%d,"bytes":%d,"count":%d,"cost":%d,"available":%d}\\n',field,emu.read16(record+8,mt),emu.read16(record+34,mt),(emu.read16(record+2,mt)-emu.read16(record+4,mt))/6,emu.read16(base+labels.pipe_dma_chunk,mt),emu.read16(base+labels.pipe_available,mt)));rejectedLog:flush()
+ end)
  cb('pipe_fast_begin',function()
   local st=emu.getState();assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'VRAM DMA began outside actual blank period')
   if scenario:match('tracedma') then
@@ -357,7 +408,7 @@ cb('dma_finished',function()
  if pipeline then local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt);assert(emu.read16(0x7e0000+labels.pipe_records+slot*512+8,mt)==presents,'pipeline skipped or reordered a frame')end
  local state=emu.getState();local line=state['ppu.scanline']
  local visibleField=field+(line>=203 and line<225 and 1 or 0)
- assert(line<=22 or line>=203,'page flip occurred during visible lines')
+ assert(line<=21 or line>=203,'page flip occurred during visible lines')
  presentationTimes[#presentationTimes+1]=string.format('{"field":%d,"visibleField":%d,"line":%d,"clock":%d,"dmaBytes":%d,"readyLine":%d,"waitMs":%.6f,"transferMs":%.6f,"flipMs":%.6f}',field,visibleField,line,state.masterClock,emu.read16(0x7e0000+labels.fx4_dma_bytes,emu.memType.snesMemory),readyLine,waitMs,(state.masterClock-startClock)/21477.272,(state.masterClock-flipBegin)/21477.272)
  if presents<=120 or presents%60==0 then
   local n=string.format('present%05d',presents)
@@ -367,6 +418,7 @@ cb('dma_finished',function()
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
    if NATIVEBACKGROUND then dump(n..'_record.bin',emu.memType.snesMemory,record,512)end
+   if COMPILEDGROUND then dump(n..'_ground_h.bin',emu.memType.snesMemory,0x7e0000+emu.read16(record+26,mt),270)end
    for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs field='..field..' gen='..presents..' byte='..i..' actual='..emu.read(i,emu.memType.snesSpriteRam)..' expected='..emu.read(record+64+i,mt))end
    if NATIVENEAR then
     local expected=emu.read16(record+192,mt)|0x0aaa
@@ -412,7 +464,20 @@ emu.addEventCallback(function()
 end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
  field=field+1
+ if NATIVENEAR and field>90 then
+  for i=0,31 do
+   local fx=emu.read(32+i,emu.memType.snesCgRam)
+   local near=emu.read(480+i,emu.memType.snesCgRam)
+   if fx~=expectedPalette[i+1] or near~=expectedPalette[i+1] then
+    local f=assert(io.open(output..'/failure.txt','w'))
+    f:write('CGRAM changed field='..field..' byte='..i..' fx='..fx..' near='..near..' expected='..expectedPalette[i+1]);f:close();emu.stop(1);return
+   end
+  end
+ end
  local finished=field==maxframe or (targetPresents>0 and presents>=targetPresents)
+ if finished then
+  local f=assert(io.open(output..'/final_state.txt','w'));for k,v in pairs(emu.getState())do f:write(tostring(k)..'='..tostring(v)..'\\n')end;f:close()
+ end
  if field==120 or finished then
   local f=assert(io.open(output..'/frame'..field..'.rgb','wb'));local t={}
   for _,v in ipairs(emu.getScreenBuffer())do t[#t+1]=string.char((v>>16)&255,(v>>8)&255,v&255)end
@@ -429,6 +494,8 @@ emu.addEventCallback(function()
  end
 end,emu.eventType.endFrame)
 '''.replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+    script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
+    script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
