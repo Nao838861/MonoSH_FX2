@@ -1,0 +1,109 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_vramfour_v1_tracepalette",
+      "fields": 800,
+      "logic": 711,
+      "presents": 704,
+      "pixelMatchedPresents": 129,
+      "romSha256": "e850106f212f5feee89a71de988be4818cb8aa66a46b261d8c08b9cc0ec82a05",
+      "labelsSha256": "890e391f1011a02958aaaae80b9ba8ea176c75ab7d282d24359bfdb61a5bcc6c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 694,
+        "2": 7
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 23.425042
+    },
+    {
+      "scenario": "movestress_vramfour_v1_long_tracepalette",
+      "fields": 1800,
+      "logic": 1695,
+      "presents": 1688,
+      "pixelMatchedPresents": 146,
+      "romSha256": "e850106f212f5feee89a71de988be4818cb8aa66a46b261d8c08b9cc0ec82a05",
+      "labelsSha256": "890e391f1011a02958aaaae80b9ba8ea176c75ab7d282d24359bfdb61a5bcc6c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1662,
+        "2": 23
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 24.431967
+    },
+    {
+      "scenario": "movestress_vramfour_v2_active_tracepalette",
+      "fields": 1800,
+      "logic": 1695,
+      "presents": 1688,
+      "pixelMatchedPresents": 146,
+      "romSha256": "b9a51f1d624a18270b2a57bfcc8c631a0c0ab02bb2cfa2ea537fa053d7a030f4",
+      "labelsSha256": "890e391f1011a02958aaaae80b9ba8ea176c75ab7d282d24359bfdb61a5bcc6c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1662,
+        "2": 23
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 24.431967,
+      "meanActiveCpuMs": 11.134797310100414,
+      "maxActiveCpuMs": 13.481135,
+      "meanActivePacketMs": 2.950893560543414,
+      "maxActivePacketMs": 4.329228
+    },
+    {
+      "scenario": "bossmovestress_vramfour_v2_active_tracepalette",
+      "fields": 1800,
+      "logic": 1679,
+      "presents": 1676,
+      "pixelMatchedPresents": 145,
+      "romSha256": "b9a51f1d624a18270b2a57bfcc8c631a0c0ab02bb2cfa2ea537fa053d7a030f4",
+      "labelsSha256": "890e391f1011a02958aaaae80b9ba8ea176c75ab7d282d24359bfdb61a5bcc6c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1638,
+        "2": 35
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 19.487019,
+      "meanActiveCpuMs": 10.390892691115086,
+      "maxActiveCpuMs": 21.843184,
+      "meanActivePacketMs": 3.6484245348837208,
+      "maxActivePacketMs": 5.96072
+    },
+    {
+      "scenario": "flipfixture_vramfour_v2_tracepalette",
+      "fields": 232,
+      "logic": 123,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "b9a51f1d624a18270b2a57bfcc8c631a0c0ab02bb2cfa2ea537fa053d7a030f4",
+      "labelsSha256": "890e391f1011a02958aaaae80b9ba8ea176c75ab7d282d24359bfdb61a5bcc6c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 101,
+        "2": 10,
+        "3": 6
+      },
+      "stalledTailFields": 1,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 28.870333,
+      "meanActiveCpuMs": 8.691924512396694,
+      "maxActiveCpuMs": 12.722752,
+      "meanActivePacketMs": 2.473232975206612,
+      "maxActivePacketMs": 2.986785
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "evidenceSha256": "cdf4897fceb2840ed219658afc7d932b182e6ae6bbade9c5567cfd69db05590e"
+}
