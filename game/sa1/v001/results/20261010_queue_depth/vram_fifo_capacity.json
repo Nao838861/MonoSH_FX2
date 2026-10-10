@@ -1,0 +1,295 @@
+{
+  "source": "build\\sa1_game\\movestress_detinput_captureburst_fourdepth12prefill_v3_tracepalette",
+  "vramEnd": 48160,
+  "layout": "fixed-map static assets; maps retained outside VRAM",
+  "scope": "capacity and tile-index bounds only; excludes rendering, map relocation/copy and DMA time",
+  "frames": [
+    {
+      "generation": 530,
+      "tiles": 151,
+      "bytes": 4864,
+      "readyIncludingFront": 8,
+      "usedBytes": 47616
+    },
+    {
+      "generation": 531,
+      "tiles": 159,
+      "bytes": 5120,
+      "readyIncludingFront": 7,
+      "usedBytes": 42752
+    },
+    {
+      "generation": 532,
+      "tiles": 171,
+      "bytes": 5504,
+      "readyIncludingFront": 7,
+      "usedBytes": 45248
+    },
+    {
+      "generation": 533,
+      "tiles": 176,
+      "bytes": 5664,
+      "readyIncludingFront": 7,
+      "usedBytes": 47872
+    },
+    {
+      "generation": 534,
+      "tiles": 192,
+      "bytes": 6176,
+      "readyIncludingFront": 6,
+      "usedBytes": 42208
+    },
+    {
+      "generation": 535,
+      "tiles": 187,
+      "bytes": 6016,
+      "readyIncludingFront": 6,
+      "usedBytes": 44448
+    },
+    {
+      "generation": 536,
+      "tiles": 217,
+      "bytes": 6976,
+      "readyIncludingFront": 6,
+      "usedBytes": 46656
+    },
+    {
+      "generation": 537,
+      "tiles": 227,
+      "bytes": 7296,
+      "readyIncludingFront": 5,
+      "usedBytes": 39680
+    },
+    {
+      "generation": 538,
+      "tiles": 237,
+      "bytes": 7616,
+      "readyIncludingFront": 5,
+      "usedBytes": 41376
+    },
+    {
+      "generation": 539,
+      "tiles": 253,
+      "bytes": 8128,
+      "readyIncludingFront": 4,
+      "usedBytes": 33760
+    },
+    {
+      "generation": 540,
+      "tiles": 262,
+      "bytes": 8416,
+      "readyIncludingFront": 4,
+      "usedBytes": 42144
+    },
+    {
+      "generation": 541,
+      "tiles": 256,
+      "bytes": 8224,
+      "readyIncludingFront": 4,
+      "usedBytes": 43392
+    },
+    {
+      "generation": 542,
+      "tiles": 280,
+      "bytes": 8992,
+      "readyIncludingFront": 4,
+      "usedBytes": 44608
+    },
+    {
+      "generation": 543,
+      "tiles": 286,
+      "bytes": 9184,
+      "readyIncludingFront": 5,
+      "usedBytes": 48160
+    },
+    {
+      "generation": 544,
+      "tiles": 301,
+      "bytes": 9664,
+      "readyIncludingFront": 4,
+      "usedBytes": 38976
+    },
+    {
+      "generation": 545,
+      "tiles": 294,
+      "bytes": 9440,
+      "readyIncludingFront": 4,
+      "usedBytes": 39392
+    },
+    {
+      "generation": 546,
+      "tiles": 308,
+      "bytes": 9888,
+      "readyIncludingFront": 4,
+      "usedBytes": 40128
+    },
+    {
+      "generation": 547,
+      "tiles": 311,
+      "bytes": 9984,
+      "readyIncludingFront": 5,
+      "usedBytes": 46656
+    },
+    {
+      "generation": 548,
+      "tiles": 314,
+      "bytes": 10080,
+      "readyIncludingFront": 5,
+      "usedBytes": 43264
+    },
+    {
+      "generation": 549,
+      "tiles": 317,
+      "bytes": 10176,
+      "readyIncludingFront": 6,
+      "usedBytes": 46688
+    },
+    {
+      "generation": 550,
+      "tiles": 262,
+      "bytes": 8416,
+      "readyIncludingFront": 6,
+      "usedBytes": 43392
+    },
+    {
+      "generation": 551,
+      "tiles": 249,
+      "bytes": 8000,
+      "readyIncludingFront": 6,
+      "usedBytes": 42016
+    },
+    {
+      "generation": 552,
+      "tiles": 205,
+      "bytes": 6592,
+      "readyIncludingFront": 7,
+      "usedBytes": 47840
+    },
+    {
+      "generation": 553,
+      "tiles": 213,
+      "bytes": 6848,
+      "readyIncludingFront": 7,
+      "usedBytes": 47104
+    },
+    {
+      "generation": 554,
+      "tiles": 207,
+      "bytes": 6656,
+      "readyIncludingFront": 7,
+      "usedBytes": 45984
+    },
+    {
+      "generation": 555,
+      "tiles": 214,
+      "bytes": 6880,
+      "readyIncludingFront": 7,
+      "usedBytes": 44992
+    },
+    {
+      "generation": 556,
+      "tiles": 219,
+      "bytes": 7040,
+      "readyIncludingFront": 7,
+      "usedBytes": 44096
+    },
+    {
+      "generation": 557,
+      "tiles": 234,
+      "bytes": 7520,
+      "readyIncludingFront": 7,
+      "usedBytes": 43040
+    },
+    {
+      "generation": 558,
+      "tiles": 196,
+      "bytes": 6304,
+      "readyIncludingFront": 8,
+      "usedBytes": 45888
+    },
+    {
+      "generation": 559,
+      "tiles": 182,
+      "bytes": 5856,
+      "readyIncludingFront": 8,
+      "usedBytes": 44064
+    },
+    {
+      "generation": 560,
+      "tiles": 178,
+      "bytes": 5728,
+      "readyIncludingFront": 9,
+      "usedBytes": 46752
+    },
+    {
+      "generation": 561,
+      "tiles": 176,
+      "bytes": 5664,
+      "readyIncludingFront": 9,
+      "usedBytes": 45248
+    },
+    {
+      "generation": 562,
+      "tiles": 186,
+      "bytes": 5984,
+      "readyIncludingFront": 9,
+      "usedBytes": 43584
+    },
+    {
+      "generation": 563,
+      "tiles": 186,
+      "bytes": 5984,
+      "readyIncludingFront": 8,
+      "usedBytes": 37600
+    },
+    {
+      "generation": 564,
+      "tiles": 179,
+      "bytes": 5760,
+      "readyIncludingFront": 7,
+      "usedBytes": 31616
+    },
+    {
+      "generation": 565,
+      "tiles": 143,
+      "bytes": 4608,
+      "readyIncludingFront": 6,
+      "usedBytes": 25856
+    },
+    {
+      "generation": 566,
+      "tiles": 139,
+      "bytes": 4480,
+      "readyIncludingFront": 5,
+      "usedBytes": 21248
+    },
+    {
+      "generation": 567,
+      "tiles": 132,
+      "bytes": 4256,
+      "readyIncludingFront": 4,
+      "usedBytes": 16768
+    },
+    {
+      "generation": 568,
+      "tiles": 133,
+      "bytes": 4288,
+      "readyIncludingFront": 3,
+      "usedBytes": 12512
+    },
+    {
+      "generation": 569,
+      "tiles": 131,
+      "bytes": 4224,
+      "readyIncludingFront": 2,
+      "usedBytes": 8224
+    },
+    {
+      "generation": 570,
+      "tiles": 124,
+      "bytes": 4000,
+      "readyIncludingFront": 1,
+      "usedBytes": 4000
+    }
+  ]
+}

@@ -59,6 +59,21 @@
         "2": 4
       },
       "goal60fpsAchieved": false
+    },
+    {
+      "variant": "fourdepth12wordtight_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --contiguous-chr-dma --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2400 --flip-player-reserve 3400 --prefetch-reserve 200 --vram-prefill-count 3 --dma-word-start",
+      "fields": 800,
+      "logic": 650,
+      "presents": 643,
+      "pixelMatchedPresents": 168,
+      "romSha256": "a8c77c88cc99b6b56f861d1c1102931adcf3fa618aadeae79b8391618dafc5c5",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 633,
+        "2": 7
+      },
+      "goal60fpsAchieved": false
     }
   ],
   "goal60fpsAchieved": false,
@@ -70,5 +85,5 @@
     "fourdepth12prefill_v2": "startup prefill repeated after first completed transfer; deadlock",
     "owneddepth12prefill_v1": "checker rejected a valid partial map transfer; map bounds narrowed correctly"
   },
-  "evidenceSha256": "878fc050d3ec849af72724cde435634dd71b3635148a23fe9aa98b28174d4880"
+  "evidenceSha256": "ce3306b16711a9d193ac47f725d6d9ab2ccc40135c4cb9deacd5c28e1a0c995c"
 }
