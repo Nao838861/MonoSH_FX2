@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_splitmap_v1_tracepalette",
+      "fields": 800,
+      "logic": 711,
+      "presents": 704,
+      "pixelMatchedPresents": 129,
+      "romSha256": "7e5873179077577646c19dc8b81de3d1975cf3bd21e043ef142c7f71610b2e4c",
+      "labelsSha256": "08d45d6c62ffc1976e603c873b40db5d3143268da33207eaf65cc2e32adc8579",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 694,
+        "2": 7
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 21.883692
+    },
+    {
+      "scenario": "movestress_splitmap_v1_long_tracepalette",
+      "fields": 1800,
+      "logic": 1693,
+      "presents": 1686,
+      "pixelMatchedPresents": 146,
+      "romSha256": "7e5873179077577646c19dc8b81de3d1975cf3bd21e043ef142c7f71610b2e4c",
+      "labelsSha256": "08d45d6c62ffc1976e603c873b40db5d3143268da33207eaf65cc2e32adc8579",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1658,
+        "2": 25
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 23.623112
+    },
+    {
+      "scenario": "movestress_splitmap_mvn_tracepalette",
+      "fields": 800,
+      "logic": 711,
+      "presents": 704,
+      "pixelMatchedPresents": 129,
+      "romSha256": "cf2dcbf7543e824a344acf8176bfe1bdb800a6cfcfa55bd4dc8917b178d00b79",
+      "labelsSha256": "4d64892956719acf95cdda77eeb216e6b542a43b61f94a295f6bff7a0d434d02",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 694,
+        "2": 7
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 21.87708
+    },
+    {
+      "scenario": "movestress_splitmap_mvn_long_tracepalette",
+      "fields": 1800,
+      "logic": 1695,
+      "presents": 1688,
+      "pixelMatchedPresents": 146,
+      "romSha256": "cf2dcbf7543e824a344acf8176bfe1bdb800a6cfcfa55bd4dc8917b178d00b79",
+      "labelsSha256": "4d64892956719acf95cdda77eeb216e6b542a43b61f94a295f6bff7a0d434d02",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1662,
+        "2": 23
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 23.970549
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "evidenceSha256": "cc0203ebe4f09554fe44a1889acd43bfc8b660c8339e117d7a7efef8d4134379"
+}
