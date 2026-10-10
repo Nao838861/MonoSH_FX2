@@ -142,6 +142,8 @@ local pipeline=PIPELINE
 local vramPrefetch3=VRAMPREFETCH3
 local vramFourShared=VRAMFOURSHARED
 local fixedMap=FIXEDMAP
+local fixedMapDelta=FIXEDMAPDELTA
+local fixedMapDeltaDma=FIXEDMAPDELTADMA
 local packetOffload=PACKETOFFLOAD
 local packetIramArrays=PACKETIRAMARRAYS
 local packetRunning=false
@@ -311,7 +313,9 @@ emu.addMemoryCallback(function(address,value)
     if vramFourShared then fixedOverlap=(first<0x9000 and last>0x8c00) or (first<0xc000 and last>0xbc00) end
     if fixedMap then
      local playerUpload=first==0xc400 and last==0xc780 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
-     fixedOverlap=not (playerUpload or (first>=0x20 and last<=0x5c20) or (first>=0x6020 and last<=0xbc20))
+     local mapUpload=fixedMapDelta and first==0xbc40 and last==0xc200 and emu.read(0x4304,emu.memType.snesMemory)==0x7e
+     if fixedMapDeltaDma and first>=0xbc40 and last<=0xc200 and emu.read(0x4304,emu.memType.snesMemory)==1 then mapUpload=true end
+     fixedOverlap=not (playerUpload or mapUpload or (first>=0x20 and last<=0x5c20) or (first>=0x6020 and last<=0xbc20))
     end
     if fixedOverlap then
      local f=assert(io.open(output..'/failure.txt','w'))
@@ -642,13 +646,28 @@ if vramPrefetch3 then
  end,emu.callbackType.write,0x2107,0x2107,emu.cpuType.snes,emu.memType.snesMemory)
 end
 if labels.pipe_flip then cb('pipe_flip',function()flipBegin=emu.getState().masterClock;pageCommit=nil end)end
+if labels.fd_flip then
+ local f=assert(io.open(output..'/map_delta.jsonl','w'))
+ local begin=0;local count=0
+ cb('fd_flip',function()
+  local st=emu.getState();begin=st.masterClock
+  local slot=emu.read16(0x7e0000+labels.pipe_target_slot,emu.memType.snesMemory)
+  count=emu.read16(0x7e0000+labels.pipe_records+slot*512+62,emu.memType.snesMemory)
+  if count>0 then assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'map update started outside actual blank')end
+ end)
+ cb('fd_flip_done',function()
+  local st=emu.getState()
+  if count>0 then assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'map update ended outside actual blank')end
+  f:write(string.format('{"field":%d,"count":%d,"ms":%.6f,"line":%d}\\n',field,count,(st.masterClock-begin)/21477.272,st['ppu.scanline']));f:flush()
+ end)
+end
 cb('dma_finished',function()
  presents=presents+1
  if pipeline then local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt);assert(emu.read16(0x7e0000+labels.pipe_records+slot*512+8,mt)==presents,'pipeline skipped or reordered a frame')end
  local state=emu.getState();local line=(pageCommit and pageCommit.line) or state['ppu.scanline']
  local commitField=(pageCommit and pageCommit.field) or field
  local visibleField=commitField+(line>=203 and line<225 and 1 or 0)
- assert(line<=21 or line>=203,'page flip occurred during visible lines')
+ assert(line<=21 or line>=203,'page flip occurred during visible lines field='..field..' line='..line)
  presentationTimes[#presentationTimes+1]=string.format('{"field":%d,"visibleField":%d,"line":%d,"clock":%d,"dmaBytes":%d,"readyLine":%d,"waitMs":%.6f,"transferMs":%.6f,"flipMs":%.6f}',field,visibleField,line,state.masterClock,emu.read16(0x7e0000+labels.fx4_dma_bytes,emu.memType.snesMemory),readyLine,waitMs,(state.masterClock-startClock)/21477.272,(state.masterClock-flipBegin)/21477.272)
  if captureGeneration(presents) then
   local n=string.format('present%05d',presents)
@@ -658,6 +677,7 @@ cb('dma_finished',function()
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
    if NATIVEBACKGROUND then dump(n..'_record.bin',emu.memType.snesMemory,record,512)end
+   if fixedMapDelta then dump(n..'_map_delta.bin',emu.memType.snesMemory,0x7e0000+labels.fdStorage+slot*1472,1472)end
    if COMPILEDGROUND then dump(n..'_ground_h.bin',emu.memType.snesMemory,0x7e0000+emu.read16(record+26,mt),270)end
    for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs field='..field..' gen='..presents..' byte='..i..' actual='..emu.read(i,emu.memType.snesSpriteRam)..' expected='..emu.read(record+64+i,mt))end
    if NATIVENEAR then
@@ -748,6 +768,8 @@ end,emu.eventType.endFrame)
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
+    script=script.replace('FIXEDMAPDELTADMA','true' if config.get('fixedMapDeltaDma') else 'false')
+    script=script.replace('FIXEDMAPDELTA','true' if config.get('fixedMapDelta') else 'false')
     script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
     script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')

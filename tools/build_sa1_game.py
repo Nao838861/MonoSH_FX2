@@ -43,6 +43,8 @@ def main():
     ap.add_argument('--split-map-mvn',action='store_true')
     ap.add_argument('--vram-four-shared',action='store_true')
     ap.add_argument('--fixed-map',action='store_true')
+    ap.add_argument('--fixed-map-delta',action='store_true')
+    ap.add_argument('--fixed-map-delta-dma',action='store_true')
     ap.add_argument('--dma-guard-lines',type=int,choices=range(0,7),default=0)
     ap.add_argument('--bullet-shapes-rom',action='store_true')
     ap.add_argument('--bullet-resident',action='store_true')
@@ -65,6 +67,8 @@ def main():
     ap.add_argument('--contiguous-chr-dma',action='store_true')
     ap.add_argument('--prefix-cpu-table',action='store_true')
     args=ap.parse_args()
+    assert not args.fixed_map_delta or args.fixed_map
+    assert not args.fixed_map_delta_dma or args.fixed_map_delta
     assert not args.packet_iram or args.packet_offload
     assert not args.left_runtime_scan or args.left_hints
     assert not args.redraw_no_history or (args.redraw_all and args.pipeline and not args.packet_offload and not args.sa1_game and not args.sa1_game_compact)
@@ -226,6 +230,8 @@ def main():
     if args.fixed_map:
         from sa1_fixed_map import ppu_layout as fixed_layout
         ppu=fixed_layout(ppu,BUILD)
+        if args.fixed_map_delta:
+            ppu[0xbc40:0xc200]=struct.pack('<H',0x2400)*736
     (BUILD/'ppu_sa1.bin').write_bytes(ppu)
     definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
@@ -281,6 +287,9 @@ def main():
         if args.fixed_map:
             from sa1_fixed_map import pipeline as fixed_pipeline
             text=fixed_pipeline(text,BUILD,SA1)
+            if args.fixed_map_delta:
+                from sa1_fixed_delta import pipeline as delta_pipeline
+                text=delta_pipeline(text,BUILD,dma=args.fixed_map_delta_dma)
         if args.packet_offload:
             from sa1_packet_offload import pipeline as offload_pipeline
             text=offload_pipeline(text)
@@ -722,6 +731,8 @@ right_jit_unavailable:'''
         if args.fixed_map:
             from sa1_fixed_map import transfer_mask as fixed_transfer
             text=fixed_transfer(source.read_text(encoding='utf-8'))
+            if args.fixed_map_delta:
+                text=text.replace('lda f:$432900,x','lda f:$432800,x')
             source=BUILD/'transfer_mask_fixed.s';source.write_text(text,encoding='utf-8')
         obj=BUILD/'transfer_mask.o';run([CC/'ca65.exe',*(['-D','SA1_OCCUPANCY=1'] if args.occupancy and (not args.front_mask or args.fixed_map) else []),*(['-D','SA1_FRONT_MASK=1'] if args.front_mask else []),*(['-D','SA1_CHANGED_MASK=1'] if args.changed_mask else []),*(['-D','SA1_VISIBLE_MASK=1'] if args.visible_mask else []),'-o',obj,source]);objs.append(obj)
     if args.deep_bw:
@@ -801,6 +812,10 @@ right_jit_unavailable:'''
         if args.fixed_map:
             from sa1_fixed_map import sparse_map as fixed_sparse
             text=fixed_sparse(src.read_text(encoding='utf-8'))
+            if args.fixed_map_delta:
+                text=(SA1/'fixed_delta_sa1.s').read_text(encoding='utf-8')
+                if args.fixed_map_delta_dma:
+                    text=(SA1/'fixed_delta_dma_sa1.s').read_text(encoding='utf-8')
             src=BUILD/'sparse_map_fixed.s';src.write_text(text,encoding='utf-8')
         obj=BUILD/'sparse_map.o';run([CC/'ca65.exe','-o',obj,src]);objs.append(obj)
     if args.split_map_dma:
@@ -891,6 +906,8 @@ right_jit_unavailable:'''
     linked=BUILD/'linked.sfc'
     run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
+    if args.fixed_map_delta:
+        assert labels['fx4_wait_obj_blank']<0x10000,'fixed delta helpers leaked the GSU segment into the CPU include'
     legacy=linked.read_bytes();assert len(legacy)==0x200000
     if args.renderer=='shared':
         from sa1_shared_kernels import build as shared_cache
@@ -980,7 +997,7 @@ right_jit_unavailable:'''
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'leftRuntimeScan':args.left_runtime_scan,'rightClipJit':args.right_clip_jit,'fallbackMask':args.fallback_mask,'fallbackEarly':args.fallback_early,'fallbackSa1':args.fallback_sa1,'pixelDelta':args.pixel_delta,'pixelDeltaMin':args.pixel_delta_min,'vramPrefetch3':args.vram_prefetch3,'vramPump':args.vram_pump,'deferStage':args.defer_stage,'lateFlip':args.late_flip,'sa1Game':args.sa1_game or args.sa1_game_compact,'sa1GameCompact':args.sa1_game_compact,'gameIrqWram':args.game_irq_wram,'gameWaitWai':args.game_wait_wai,'compactMemory':args.compact_memory,'splitMapDma':args.split_map_dma,'splitMapMvn':args.split_map_mvn,'vramFourShared':args.vram_four_shared,'fixedMap':args.fixed_map,'dmaGuardLines':args.dma_guard_lines,'packetOffload':args.packet_offload,'packetIram':args.packet_iram,'packetIramArrays':args.packet_iram_arrays,'gameStageOverlap':args.game_stage_overlap,'directSparse':args.direct_sparse,'prefixDma':args.prefix_dma,'prefixFastrom':args.prefix_fastrom,'mapDmaOverlap':args.map_dma_overlap,'prefixTable':args.prefix_table,'sparseMergeGap':args.sparse_merge_gap,'idleClear':args.idle_clear,'bulletLeftFast':args.bullet_left_fast,'bulletOpacity':args.bullet_opacity,'bulletMaskArithmetic':args.bullet_mask_arithmetic,'bulletOpaque8':args.bullet_opaque8,'bulletShapes':args.bullet_shapes,'bulletShapesRom':args.bullet_shapes_rom,'bulletResident':args.bullet_resident,'contiguousChrDma':args.contiguous_chr_dma,'prefixCpuTable':args.prefix_cpu_table,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'redrawNoHistory':args.redraw_no_history,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':5 if args.sa1_game else 7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'prefetch-three-pages' if args.vram_prefetch3 else 'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'leftHints':args.left_hints,'leftRuntimeScan':args.left_runtime_scan,'rightClipJit':args.right_clip_jit,'fallbackMask':args.fallback_mask,'fallbackEarly':args.fallback_early,'fallbackSa1':args.fallback_sa1,'pixelDelta':args.pixel_delta,'pixelDeltaMin':args.pixel_delta_min,'vramPrefetch3':args.vram_prefetch3,'vramPump':args.vram_pump,'deferStage':args.defer_stage,'lateFlip':args.late_flip,'sa1Game':args.sa1_game or args.sa1_game_compact,'sa1GameCompact':args.sa1_game_compact,'gameIrqWram':args.game_irq_wram,'gameWaitWai':args.game_wait_wai,'compactMemory':args.compact_memory,'splitMapDma':args.split_map_dma,'splitMapMvn':args.split_map_mvn,'vramFourShared':args.vram_four_shared,'fixedMap':args.fixed_map,'fixedMapDelta':args.fixed_map_delta,'fixedMapDeltaDma':args.fixed_map_delta_dma,'dmaGuardLines':args.dma_guard_lines,'packetOffload':args.packet_offload,'packetIram':args.packet_iram,'packetIramArrays':args.packet_iram_arrays,'gameStageOverlap':args.game_stage_overlap,'directSparse':args.direct_sparse,'prefixDma':args.prefix_dma,'prefixFastrom':args.prefix_fastrom,'mapDmaOverlap':args.map_dma_overlap,'prefixTable':args.prefix_table,'sparseMergeGap':args.sparse_merge_gap,'idleClear':args.idle_clear,'bulletLeftFast':args.bullet_left_fast,'bulletOpacity':args.bullet_opacity,'bulletMaskArithmetic':args.bullet_mask_arithmetic,'bulletOpaque8':args.bullet_opaque8,'bulletShapes':args.bullet_shapes,'bulletShapesRom':args.bullet_shapes_rom,'bulletResident':args.bullet_resident,'contiguousChrDma':args.contiguous_chr_dma,'prefixCpuTable':args.prefix_cpu_table,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'redrawNoHistory':args.redraw_no_history,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':5 if args.sa1_game else 7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'prefetch-three-pages' if args.vram_prefetch3 else 'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

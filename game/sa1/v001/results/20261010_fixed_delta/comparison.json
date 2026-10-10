@@ -1,0 +1,103 @@
+{
+  "cases": [
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_captureburst_fixedmap_resident_v1_tracepalette",
+      "logicMatchedGenerations": 650,
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.127019
+    },
+    {
+      "fields": 800,
+      "logic": 645,
+      "presents": 638,
+      "pixelMatchedPresents": 168,
+      "romSha256": "5528eaf62de9bf53666a3e6d5d3317ebb0a296108565783e520b363d3484207a",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 623,
+        "2": 12
+      },
+      "scenario": "movestress_detinput_captureburst_fixeddelta_v6_tracepalette",
+      "logicMatchedGenerations": 644,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 22.783434,
+      "fullMapTransfers": 29,
+      "mapUpdateMsTotal": 169.56595399999998
+    },
+    {
+      "fields": 270,
+      "logic": 127,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "570a61e971f3384987b7889df7be5a7f0d4616bf3badaa2073672d1aa78a0fdb",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 117
+      },
+      "scenario": "movestress_detinput_fixeddeltadma_v2_tracepalette",
+      "logicMatchedGenerations": 126,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 7.257998,
+      "fullMapTransfers": 0,
+      "mapUpdateMsTotal": 22.086510000000004
+    },
+    {
+      "fields": 800,
+      "logic": 641,
+      "presents": 634,
+      "pixelMatchedPresents": 168,
+      "romSha256": "570a61e971f3384987b7889df7be5a7f0d4616bf3badaa2073672d1aa78a0fdb",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 617,
+        "2": 12,
+        "3": 2
+      },
+      "scenario": "movestress_detinput_captureburst_fixeddeltadma_v3_tracepalette",
+      "logicMatchedGenerations": 640,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 22.386363,
+      "fullMapTransfers": 0,
+      "mapUpdateMsTotal": 181.44659399999998
+    }
+  ],
+  "excludedFailures": [
+    {
+      "scenario": "movestress_detinput_captureburst_fixeddelta_v1_tracepalette",
+      "performanceComparisonEligible": false,
+      "reason": "...etinput_captureburst_fixeddelta_v1_tracepalette\\test.lua:522: page flip occurred during visible lines"
+    },
+    {
+      "scenario": "movestress_detinput_captureburst_fixeddelta_v2_tracepalette",
+      "performanceComparisonEligible": false,
+      "reason": "...etinput_captureburst_fixeddelta_v2_tracepalette\\test.lua:535: page flip occurred during visible lines field=267 line=200"
+    },
+    {
+      "scenario": "movestress_detinput_captureburst_fixeddelta_v3_tracepalette",
+      "performanceComparisonEligible": false,
+      "reason": "HDMA unblanked reserved DMA lines field=145 line=217 value=47"
+    },
+    {
+      "scenario": "movestress_detinput_captureburst_fixeddelta_v4_tracepalette",
+      "performanceComparisonEligible": false,
+      "reason": "\u753b\u7d20\u4e0d\u4e00\u81f4\u30fbpresent00002"
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "adopted": false,
+  "evidenceSha256": "2079c78d1710f3163d91c76661885598eb45039d59934208bc7ee838bb180b10"
+}
