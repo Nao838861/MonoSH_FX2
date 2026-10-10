@@ -5,6 +5,9 @@
 .smart
 .macpack longbranch
 .export sa1_adaptive_bounds: far, sa1_adaptive_prepare: far
+.ifdef SA1_FRONT_DELTA
+.export sa1_front_delta_bounds: far, sa1_front_delta_prepare: far
+.endif
 .segment "BOOT"
 avPage=$a0
 avGeneration=$a2
@@ -30,10 +33,18 @@ sa1_adaptive_bounds:
   sta f:$4360c2
   ldx #0
 av_initialize:
+  .ifdef SA1_NATIVE_BACKGROUND
+  lda #128
+  .else
   lda #0
+  .endif
   sta f:$436000,x
   sta f:$436060,x
+  .ifdef SA1_NATIVE_BACKGROUND
+  lda #0
+  .else
   lda #128
+  .endif
   sta f:$436002,x
   sta f:$436062,x
   inx
@@ -298,3 +309,55 @@ av_descriptor_next:
   cmp #96
   jcc av_descriptor_band
   rts
+
+.ifdef SA1_FRONT_DELTA
+sa1_front_delta_bounds:
+  rep #$30
+  ldx #0
+front_delta_capture:
+  lda $0120,x
+  sta f:$436400,x
+  inx
+  inx
+  cpx #96
+  bcc front_delta_capture
+  rtl
+sa1_front_delta_prepare:
+  rep #$30
+  sep #$20
+  lda #$43
+  sta avSource+2
+  rep #$20
+  lda #$6400
+  sta avSource
+  lda #$0800
+  sta avOutput
+  jsr av_descriptors
+  lda avBytes
+  sta $0118
+  lda avCount
+  sta $011a
+  ; 一括更新できない場合だけ、裏面を全面更新する。
+  ldx #0
+front_delta_full:
+  lda #0
+  sta f:$436000,x
+  lda #128
+  sta f:$436002,x
+  inx
+  inx
+  inx
+  inx
+  cpx #96
+  bcc front_delta_full
+  lda #$6000
+  sta avSource
+  lda #$0a00
+  sta avOutput
+  jsr av_descriptors
+  lda avBytes
+  sta $0190
+  lda avCount
+  sta $0192
+  rtl
+.endif

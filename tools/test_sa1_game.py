@@ -7,7 +7,7 @@ from run_probe import prepare_runtime,MESEN_EXE,lua
 from test_sa1_probe import reference
 from build_sa1_game import BASE
 
-def verify_pixels(dest,labels):
+def verify_pixels(dest,labels,config):
     source=(BASE/'assets4/background4.bin').read_bytes()
     checked=0
     for path in sorted(dest.glob('present*_meta.bin')):
@@ -18,6 +18,7 @@ def verify_pixels(dest,labels):
         sprite=np.stack((sprite&15,sprite>>4),axis=2).reshape(192,256)
         pix=np.zeros((192,256),dtype=np.uint8)
         for offset,scroll,top,height in ((0,far,77+ground,14),(0x8000,near,82+ground,9)):
+            if config.get('nativeBackground') or (config.get('nativeFar') and offset==0):continue
             layer=np.frombuffer(source[offset:offset+height*512],dtype=np.uint8).reshape(height,512)[:,(np.arange(256)+scroll)&511]
             y0=max(0,top);y1=min(192,top+height)
             if y0<y1:
@@ -33,6 +34,31 @@ def verify_pixels(dest,labels):
         for plane in range(4):planar[:,plane//2*16+plane%2+np.arange(8)*2]=(((tiles>>plane)&1)*np.array([128,64,32,16,8,4,2,1])).sum(axis=2)
         vram=(dest/(prefix+'_vram.bin')).read_bytes()[page*2:page*2+24576]
         assert vram==planar.tobytes(),f'{prefix}: converted VRAM differs'
+        if config.get('nativeFar'):
+            from sa1_native_far import decode
+            whole=(dest/(prefix+'_vram.bin')).read_bytes()
+            width=256 if config.get('nativeBackground') else 512
+            bg=np.zeros((16,width),dtype=np.uint8)
+            for row in range(2):
+                for col in range(width//8):
+                    address=0xc000+(col//32)*0x800+(24+row)*64+(col%32)*2
+                    entry=struct.unpack_from('<H',whole,address)[0]
+                    tile=0xc000+(entry&1023)*32
+                    a=decode(whole[tile:tile+32],4)
+                    if entry&0x4000:a=a[:,::-1]
+                    if entry&0x8000:a=a[::-1]
+                    bg[row*8:row*8+8,col*8:col*8+8]=a
+            bg_reference=np.zeros((16,width),dtype=np.uint8)
+            indices=(np.arange(width)+(far if config.get('nativeBackground') else 0))&511
+            bg_reference[:14]=np.frombuffer(source[:14*512],dtype=np.uint8).reshape(14,512)[:,indices]
+            if config.get('nativeBackground'):
+                near_pixels=np.frombuffer(source[0x8000:0x8000+9*512],dtype=np.uint8).reshape(9,512)[:,(np.arange(width)+near)&511]
+                region=bg_reference[5:14];region[near_pixels!=0]=near_pixels[near_pixels!=0]
+            assert np.array_equal(bg,bg_reference),f'{prefix}: BG2 converted pixels differ'
+            initial=(BUILD/'ppu_sa1.bin').read_bytes()
+            ground_end=int(json.loads((BUILD/'native_far_packing.json').read_text())['groundEnd'],16)
+            assert whole[0xd000:ground_end]==initial[0xd000:ground_end],f'{prefix}: ground CHR overwritten'
+            assert whole[0xf000:]==initial[0xf000:],f'{prefix}: ground map overwritten'
         checked+=1
     return checked
 
@@ -75,6 +101,7 @@ local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
 local completedFrames={}
 local completedPackets={}
+local jobSequence=0
 local outputJobs={}
 local queueSamples={}
 local objectJobs={}
@@ -218,7 +245,9 @@ if labels.sa1_sprite_begin then
 end
 if labels.sa1_output_done then cb('sa1_output_done',function()outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f}',field,(emu.getState().masterClock-sa1begin)/21477.272)end,emu.cpuType.sa1)end
 if labels.sa1_dirty_done then
- cb('sa1_dirty_done',function()dirtyDone=emu.getState().masterClock;dirtyMs=(dirtyDone-sa1begin)/21477.272 end,emu.cpuType.sa1)
+ cb('sa1_dirty_done',function()
+ if pipeline then jobSequence=jobSequence+1;assert(emu.read16(0x198,emu.memType.sa1Memory)==jobSequence,'SA-1 job duplicated or skipped')end
+dirtyDone=emu.getState().masterClock;dirtyMs=(dirtyDone-sa1begin)/21477.272 end,emu.cpuType.sa1)
  cb('sa1_clear_done',function()clearDone=emu.getState().masterClock;clearMs=(clearDone-dirtyDone)/21477.272 end,emu.cpuType.sa1)
  cb('sa1_native_done',function()nativeDone=emu.getState().masterClock;nativeMs=(nativeDone-drawbegin)/21477.272 end,emu.cpuType.sa1)
 end
@@ -258,6 +287,7 @@ cb('dma_finished',function()
    local mt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_front_slot,mt)
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
+   if NATIVEBACKGROUND then dump(n..'_record.bin',emu.memType.snesMemory,record,512)end
    for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs')end
    for i=0,7 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==emu.read(record+192+i,mt),'pipeline high OAM differs')end
    local f=assert(io.open(output..'/'..n..'_fb.bin','wb'));f:write((assert(completedFrames[gen],'missing completed snapshot')));f:close();completedFrames[gen]=nil
@@ -266,6 +296,7 @@ cb('dma_finished',function()
    for y=0,191 do for x=0,127 do t[#t+1]=string.char(emu.read(y*256+64+x,emu.memType.snesSaveRam))end end
    f:write(table.concat(t));f:close()
   else dump(n..'_fb.bin',emu.memType.snesSaveRam,0,24576)end
+  if NATIVEBACKGROUND and record then dump(n..'_background.bin',emu.memType.snesSaveRam,0x30000+emu.read16(record+40,emu.memType.snesMemory),2048)end
   dump(n..'_vram.bin',emu.memType.snesVideoRam,0,65536)
   local count=emu.read16(pipeline and record+16 or 0x3106,emu.memType.snesMemory)
   local f=assert(io.open(output..'/'..n..'_meta.bin','wb'))
@@ -302,7 +333,7 @@ emu.addEventCallback(function()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+'''.replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
@@ -316,7 +347,7 @@ end,emu.eventType.endFrame)
     print(json.dumps({k:v for k,v in summary.items() if k not in ('sa1Jobs','presentationTimes','cpuJobs','outputJobs','queueSamples','objectJobs','dmaJobs')}))
     assert summary['presents']>0,'SA-1 game never presented an image'
     print('SA-1 max ms:',max(x['totalSa1Ms'] for x in summary['sa1Jobs']))
-    summary['pixelMatchedPresents']=verify_pixels(dest,labels)
+    summary['pixelMatchedPresents']=verify_pixels(dest,labels,config)
     summary['romSha256']=config['romSha256']
     summary['labelsSha256']=hashlib.sha256((BUILD/'game.lbl').read_bytes()).hexdigest()
     intervals=np.diff([p['visibleField'] for p in summary['presentationTimes'][2:]])

@@ -1,0 +1,13 @@
+{
+  "fields": 1200,
+  "logic": 1083,
+  "presents": 1079,
+  "pixelMatchedPresents": 135,
+  "romSha256": "c927abeb8d475e9c0bb4bedb5b19cc5588dcffa078cc9d2335e2271dd33b0350",
+  "labelsSha256": "2b40e80fa58023938c7d118d72fbb366098aeeeb1d24a92fbb4d58d306bacc91",
+  "presentationFieldIntervals": {
+    "1": 1041,
+    "2": 35
+  },
+  "goal60fpsAchieved": false
+}

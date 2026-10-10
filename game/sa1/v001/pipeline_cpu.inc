@@ -47,6 +47,10 @@ pipe_desc_offset: .res 2
 pipe_dma_chunk: .res 2
 pipe_fast_end: .res 2
 pipe_fast_page: .res 2
+.ifdef SA1_NATIVE_BACKGROUND
+pipe_background_version: .res 2
+pipe_background_source: .res 2
+.endif
 .segment "BOOT"
 irq_game:
   php
@@ -102,15 +106,19 @@ pipe_main:
   cli
   stz fx4_build_skip
 pipe_wait_bw:
+  .ifdef SA1_WAIT_SLOTS
+  sei
+  .endif
   jsr pipe_collect
   ldx pipe_next_bw
   lda pipe_bw_busy,x
-  bne pipe_wait_bw
+  jne pipe_slot_sleep
   lda pipe_write_slot
   asl
   tax
   lda pipe_status,x
-  bne pipe_wait_bw
+  jne pipe_slot_sleep
+  cli
   lda #1
   sta pipe_status,x
   lda pipe_write_slot
@@ -135,9 +143,7 @@ pipe_wait_bw:
   inc pipe_submitted
   lda pipe_submitted
   sta pipe_records+8,x
-  .ifdef SA1_ADAPTIVE_VRAM
   sta f:$003188
-  .endif
   lda _fx_far_d_acc
   .repeat 7
     lsr
@@ -276,6 +282,13 @@ audio4_second_done:
   cli
   rts
 
+pipe_slot_sleep:
+  .ifdef SA1_WAIT_SLOTS
+  wai
+  cli
+  .endif
+  jmp pipe_wait_bw
+
 .export pipe_ground_wait
 pipe_ground_wait:
   php
@@ -286,9 +299,18 @@ pipe_ground_wait:
   asl
   tax
 pipe_ground_busy:
+  .ifdef SA1_WAIT_SLOTS
+  sei
+  .endif
   jsr pipe_collect
   lda pipe_status,x
-  bne pipe_ground_busy
+  beq pipe_ground_free
+  .ifdef SA1_WAIT_SLOTS
+  wai
+  cli
+  .endif
+  bra pipe_ground_busy
+pipe_ground_free:
   plx
   pla
   plp
@@ -376,6 +398,17 @@ pipe_collect_adaptive:
 pipe_collect_adaptive_done:
   .endif
 pipe_collect_publish:
+  .ifdef SA1_NATIVE_BACKGROUND
+  lda pipe_render_slot
+  .repeat 9
+    asl
+  .endrepeat
+  tax
+  lda f:$003194
+  sta pipe_records+40,x
+  lda f:$003196
+  sta pipe_records+42,x
+  .endif
   lda pipe_render_slot
   asl
   tax
@@ -782,6 +815,9 @@ pipe_reserve_flip:
 pipe_reserved:
   bmi pipe_no_time
   sta pipe_available
+  .ifdef SA1_NATIVE_BACKGROUND
+  jsr pipe_background_reserve
+  .endif
   rts
 pipe_no_time:
   stz pipe_available
@@ -880,6 +916,9 @@ pipe_flip:
   sta f:$7e1d0e
   lda pipe_records+28,x
   sta f:$7e1d0c
+  .ifdef SA1_NATIVE_FAR
+  jsr pipe_native_far_update
+  .endif
   lda pipe_records+30,x
   sta f:$7e1d0a
   lda pipe_records+32,x
@@ -903,6 +942,9 @@ pipe_flip:
   .repeat 4
     lsr
   .endrepeat
+  .ifdef SA1_NATIVE_FAR
+  ora #$60
+  .endif
   sta f:$00210b
   rep #$30
   lda pipe_front_slot
@@ -932,6 +974,13 @@ pipe_flip:
   sta pipe_read_slot
 dma_finished:
   rts
+
+.ifdef SA1_NATIVE_FAR
+.include "native_far_cpu.inc"
+.endif
+.ifdef SA1_NATIVE_BACKGROUND
+.include "background_cache_cpu.inc"
+.endif
 
 .ifdef SA1_STAGED
 .include "pipeline_stage.inc"

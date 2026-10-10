@@ -1,6 +1,9 @@
 ; recordの二組のdescriptorから今回の面を選ぶ。
 ; X=record offset。carry=0なら次のfieldを待ち、readyは維持する。
 pipe_adaptive_select:
+  .ifdef SA1_FRONT_DELTA
+  jmp pipe_front_delta_select
+  .endif
   rep #$30
   lda fx4_page
   beq av_cpu_front_zero
@@ -75,3 +78,49 @@ av_cpu_publish_zero:
   sta f:$00318a
   rep #$20
   rts
+
+.ifdef SA1_FRONT_DELTA
+pipe_front_delta_select:
+  rep #$30
+  lda pipe_records+2,x
+  .repeat 4
+    asl
+  .endrepeat
+  sta pipe_dma_chunk
+  lda pipe_records+34,x
+  .repeat 5
+    lsr
+  .endrepeat
+  clc
+  adc pipe_records+34,x
+  adc pipe_dma_chunk
+  cmp #10501
+  bcs front_delta_back
+  lda pipe_presented_irq
+  bne front_delta_defer
+  lda #1
+  sta pipe_records+44,x
+  lda fx4_page
+  sta pipe_records+6,x
+  stz pipe_records+4,x
+  sec
+  rts
+front_delta_back:
+  stz pipe_records+44,x
+  lda fx4_page
+  eor #$3000
+  sta pipe_records+6,x
+  lda pipe_records+38,x
+  sta pipe_records+34,x
+  lda pipe_records+36,x
+  clc
+  adc #144
+  sta pipe_records+2,x
+  lda #144
+  sta pipe_records+4,x
+  sec
+  rts
+front_delta_defer:
+  clc
+  rts
+.endif

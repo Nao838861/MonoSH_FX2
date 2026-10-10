@@ -79,6 +79,7 @@ sa1_entry:
   tcs
   lda #0
   tcd
+  stz $1e
   sep #$20
   pha
   plb
@@ -97,6 +98,10 @@ wait_job:
   lda $0100
   beq wait_job
 sa1_clear_start:
+  .ifdef SA1_PIPELINE
+  lda $0188
+  sta $0198
+  .endif
   jsl sa1_plan_dirty
 sa1_dirty_done:
   .ifdef SA1_TILE_DMA

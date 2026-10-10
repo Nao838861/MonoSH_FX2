@@ -4,8 +4,8 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128):
-    rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False):
+    rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     def alloc(raw):
         nonlocal cursor
         raw=bytes(raw)
@@ -60,7 +60,7 @@ def build(variants,dest,macros=False,stride=128):
     for asset,sizes in sorted(patterns.items()):
         for w in sorted({w for w,h in sizes},reverse=True):
             pix=variants[asset,0][1];ah,aw=pix.shape;heights=sorted(h for ww,h in sizes if ww==w)
-            entries=bytearray()
+            entries=bytearray();bounds_data=[]
             for h in heights:
                 ys=(np.arange(h)*(ah*256//h))>>8;desc=bytearray()
                 for phase in range(3 if (asset,1) in variants else 1):
@@ -83,9 +83,25 @@ def build(variants,dest,macros=False,stride=128):
                     yy,xx=np.nonzero(occupied)
                     bounds=(int(xx.min()),int(yy.min()),int(xx.max())+1,int(yy.max())+1) if len(xx) else (0,0,0,0)
                     entries+=bytes(bounds)
-            struct.pack_into('<H',index,asset*512+w*2,idx(bytes([len(heights)])+entries))
+                    if row_dirty:
+                        encoded=bytearray();previous=None;run=0
+                        step=8 if row_dirty_bands else 1
+                        for start in range(0,h,step):
+                            _,xs=np.nonzero(occupied[start:start+step])
+                            pair=(int(xs.min())//4,(int(xs.max())+4)//4) if len(xs) else (0,0)
+                            length=min(step,h-start)
+                            if pair==previous and run+length<=255:run+=length
+                            else:
+                                if previous is not None:encoded+=bytes((run,*previous))
+                                previous=pair;run=length
+                        encoded+=bytes((run,*previous))
+                        bounds_data.append(bytes(encoded));entries+=bytes(3)
+            block=idx(bytes([len(heights)])+entries)
+            struct.pack_into('<H',index,asset*512+w*2,block)
+            for number,encoded in enumerate(bounds_data):deferred.append((block+1+number*10+7,encoded))
+    for location,encoded in deferred:index[location:location+3]=alloc(encoded).to_bytes(3,'little')
     rom[0x7f0000:]=index
-    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used}
+    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     return rom
 
