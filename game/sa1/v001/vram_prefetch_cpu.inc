@@ -36,6 +36,17 @@ p3Complete:
   sta p3NextPage
   rts
 p3Flip:
+  .ifdef SA1_VRAM_PREFILL_COUNT
+  .if SA1_VRAM_PREFILL_COUNT > 1
+  lda fx4_generation
+  bne :+
+  lda p3Count
+  cmp #SA1_VRAM_PREFILL_COUNT
+  bcs :+
+  rts
+:
+  .endif
+  .endif
   lda pipe_target_slot
   pha
   lda p3Head

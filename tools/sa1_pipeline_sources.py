@@ -113,6 +113,10 @@ def ground_buffers(text,depth):
         for table,size in [('color1_pointers',150),('color3_pointers',150),('horizontal_pointers',270),('far_pointers',10)]:
             text+='pipeline_'+table+'_'+str(i)+': .res '+str(size)+'\n'
     text+='pipe_ground_extra_end:\n'
+    if depth>8:
+        for name,size in [('sky_tables',depth*10),('ground_horizontal_keys',depth*2)]:
+            text=replace(text,name+': .res '+str(size),'')
+            text+=name+': .res '+str(size)+'\n'
     return text
 
 

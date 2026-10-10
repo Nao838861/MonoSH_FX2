@@ -5,7 +5,7 @@
 .import pipe_records, pipe_record_offset, pipe_available, pipe_time_left
 .export pipe_prefix_plan: far, pfPartial, pfBytes, pfDesc, sd_collect_costs: far
 .segment "COLORBSS"
-pfTables: .res 256*8
+pfTables: .res 256*SA1_PIPELINE_DEPTH
 .segment "BSS"
 pfPartial: .res 2
 pfBytes: .res 2

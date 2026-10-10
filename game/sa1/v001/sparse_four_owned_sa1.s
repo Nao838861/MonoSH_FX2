@@ -3,6 +3,9 @@
 .smart
 .macpack longbranch
 .export sa1_sparse_direct_finish: far, sparse_direct_overflow: far
+.ifndef SA1_PREFIX_DESC_COST
+SA1_PREFIX_DESC_COST=64
+.endif
 .segment "GSU"
 oInput=$a0
 oEnd=$a2
@@ -131,6 +134,51 @@ owned_copy:
   clc
   adc #1472
   sta $0118
+.ifdef SA1_PREFIX_TABLE
+  stz $b4
+  stz $b6
+  lda $019a
+  clc
+  adc #$6600
+  sta $b8
+  lda $0102
+  sta $ba
+  ldx #0
+  ldy #0
+owned_costs:
+  cpx oOutput
+  bcs owned_costs_done
+  lda f:$430800,x
+  sta $bc
+  clc
+  adc $b4
+  sta $b4
+  sta [$b8],y
+  iny
+  iny
+  lda $bc
+  .repeat 5
+    lsr
+  .endrepeat
+  sta $be
+  lsr
+  lsr
+  clc
+  adc $be
+  adc $bc
+  adc #SA1_PREFIX_DESC_COST
+  adc $b6
+  sta $b6
+  sta [$b8],y
+  iny
+  iny
+  txa
+  clc
+  adc #6
+  tax
+  bra owned_costs
+owned_costs_done:
+.endif
   rtl
 sparse_direct_overflow:
   stp

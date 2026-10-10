@@ -318,7 +318,7 @@ emu.addMemoryCallback(function(address,value)
      local base=math.floor(first/0x3000)*0x3000
      local a=first-base;local b=last-base
      local playerUpload=first==0xc800 and last==0xcb80 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
-     fixedOverlap=not (playerUpload or (base<0xc000 and ((a>=0x20 and b<=0x2800) or (a==0x2840 and b==0x2e00) or (a>=0x2e00 and b<=0x3000))))
+     fixedOverlap=not (playerUpload or (base<0xc000 and ((a>=0x20 and b<=0x2800) or (a>=0x2840 and b<=0x2e00) or (a>=0x2e00 and b<=0x3000))))
     end
     if fixedMap then
      local playerUpload=first==0xc800 and last==0xcb80 and emu.read(0x4304,emu.memType.snesMemory)==0xdf

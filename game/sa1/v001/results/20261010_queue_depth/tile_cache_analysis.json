@@ -1,0 +1,1271 @@
+{
+  "source": "build\\sa1_game\\movestress_detinput_captureburst_fixedtable_v1_tracepalette",
+  "costModel": "ideal LRU; front/queued tiles not protected; hashing/copy/DMA setup costs excluded",
+  "results": [
+    {
+      "capacity": 384,
+      "frames": [
+        {
+          "generation": 530,
+          "nonemptyTiles": 151,
+          "uniqueTiles": 146,
+          "misses": 146
+        },
+        {
+          "generation": 531,
+          "nonemptyTiles": 156,
+          "uniqueTiles": 153,
+          "misses": 145
+        },
+        {
+          "generation": 532,
+          "nonemptyTiles": 171,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 533,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 170,
+          "misses": 159
+        },
+        {
+          "generation": 534,
+          "nonemptyTiles": 191,
+          "uniqueTiles": 188,
+          "misses": 174
+        },
+        {
+          "generation": 535,
+          "nonemptyTiles": 187,
+          "uniqueTiles": 184,
+          "misses": 177
+        },
+        {
+          "generation": 536,
+          "nonemptyTiles": 216,
+          "uniqueTiles": 214,
+          "misses": 208
+        },
+        {
+          "generation": 537,
+          "nonemptyTiles": 226,
+          "uniqueTiles": 223,
+          "misses": 215
+        },
+        {
+          "generation": 538,
+          "nonemptyTiles": 235,
+          "uniqueTiles": 232,
+          "misses": 220
+        },
+        {
+          "generation": 539,
+          "nonemptyTiles": 250,
+          "uniqueTiles": 245,
+          "misses": 238
+        },
+        {
+          "generation": 540,
+          "nonemptyTiles": 257,
+          "uniqueTiles": 254,
+          "misses": 245
+        },
+        {
+          "generation": 541,
+          "nonemptyTiles": 253,
+          "uniqueTiles": 249,
+          "misses": 242
+        },
+        {
+          "generation": 542,
+          "nonemptyTiles": 276,
+          "uniqueTiles": 272,
+          "misses": 254
+        },
+        {
+          "generation": 543,
+          "nonemptyTiles": 283,
+          "uniqueTiles": 278,
+          "misses": 271
+        },
+        {
+          "generation": 544,
+          "nonemptyTiles": 297,
+          "uniqueTiles": 292,
+          "misses": 285
+        },
+        {
+          "generation": 545,
+          "nonemptyTiles": 289,
+          "uniqueTiles": 285,
+          "misses": 277
+        },
+        {
+          "generation": 546,
+          "nonemptyTiles": 308,
+          "uniqueTiles": 304,
+          "misses": 293
+        },
+        {
+          "generation": 547,
+          "nonemptyTiles": 309,
+          "uniqueTiles": 301,
+          "misses": 294
+        },
+        {
+          "generation": 548,
+          "nonemptyTiles": 311,
+          "uniqueTiles": 303,
+          "misses": 294
+        },
+        {
+          "generation": 549,
+          "nonemptyTiles": 312,
+          "uniqueTiles": 305,
+          "misses": 291
+        },
+        {
+          "generation": 550,
+          "nonemptyTiles": 259,
+          "uniqueTiles": 252,
+          "misses": 237
+        },
+        {
+          "generation": 551,
+          "nonemptyTiles": 242,
+          "uniqueTiles": 230,
+          "misses": 221
+        },
+        {
+          "generation": 552,
+          "nonemptyTiles": 197,
+          "uniqueTiles": 191,
+          "misses": 183
+        },
+        {
+          "generation": 553,
+          "nonemptyTiles": 213,
+          "uniqueTiles": 205,
+          "misses": 190
+        },
+        {
+          "generation": 554,
+          "nonemptyTiles": 207,
+          "uniqueTiles": 201,
+          "misses": 189
+        },
+        {
+          "generation": 555,
+          "nonemptyTiles": 214,
+          "uniqueTiles": 208,
+          "misses": 197
+        },
+        {
+          "generation": 556,
+          "nonemptyTiles": 215,
+          "uniqueTiles": 209,
+          "misses": 202
+        },
+        {
+          "generation": 557,
+          "nonemptyTiles": 231,
+          "uniqueTiles": 223,
+          "misses": 211
+        },
+        {
+          "generation": 558,
+          "nonemptyTiles": 195,
+          "uniqueTiles": 189,
+          "misses": 155
+        },
+        {
+          "generation": 559,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 169,
+          "misses": 160
+        },
+        {
+          "generation": 560,
+          "nonemptyTiles": 173,
+          "uniqueTiles": 167,
+          "misses": 162
+        },
+        {
+          "generation": 561,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 562,
+          "nonemptyTiles": 182,
+          "uniqueTiles": 174,
+          "misses": 152
+        },
+        {
+          "generation": 563,
+          "nonemptyTiles": 183,
+          "uniqueTiles": 179,
+          "misses": 176
+        },
+        {
+          "generation": 564,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 167
+        },
+        {
+          "generation": 565,
+          "nonemptyTiles": 142,
+          "uniqueTiles": 134,
+          "misses": 120
+        },
+        {
+          "generation": 566,
+          "nonemptyTiles": 138,
+          "uniqueTiles": 132,
+          "misses": 112
+        },
+        {
+          "generation": 567,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 122,
+          "misses": 118
+        },
+        {
+          "generation": 568,
+          "nonemptyTiles": 123,
+          "uniqueTiles": 119,
+          "misses": 117
+        },
+        {
+          "generation": 569,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 123,
+          "misses": 114
+        },
+        {
+          "generation": 570,
+          "nonemptyTiles": 121,
+          "uniqueTiles": 119,
+          "misses": 110
+        }
+      ],
+      "uniqueTileRequests": 8451,
+      "misses": 8037
+    },
+    {
+      "capacity": 512,
+      "frames": [
+        {
+          "generation": 530,
+          "nonemptyTiles": 151,
+          "uniqueTiles": 146,
+          "misses": 146
+        },
+        {
+          "generation": 531,
+          "nonemptyTiles": 156,
+          "uniqueTiles": 153,
+          "misses": 145
+        },
+        {
+          "generation": 532,
+          "nonemptyTiles": 171,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 533,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 170,
+          "misses": 155
+        },
+        {
+          "generation": 534,
+          "nonemptyTiles": 191,
+          "uniqueTiles": 188,
+          "misses": 173
+        },
+        {
+          "generation": 535,
+          "nonemptyTiles": 187,
+          "uniqueTiles": 184,
+          "misses": 177
+        },
+        {
+          "generation": 536,
+          "nonemptyTiles": 216,
+          "uniqueTiles": 214,
+          "misses": 208
+        },
+        {
+          "generation": 537,
+          "nonemptyTiles": 226,
+          "uniqueTiles": 223,
+          "misses": 214
+        },
+        {
+          "generation": 538,
+          "nonemptyTiles": 235,
+          "uniqueTiles": 232,
+          "misses": 219
+        },
+        {
+          "generation": 539,
+          "nonemptyTiles": 250,
+          "uniqueTiles": 245,
+          "misses": 237
+        },
+        {
+          "generation": 540,
+          "nonemptyTiles": 257,
+          "uniqueTiles": 254,
+          "misses": 245
+        },
+        {
+          "generation": 541,
+          "nonemptyTiles": 253,
+          "uniqueTiles": 249,
+          "misses": 242
+        },
+        {
+          "generation": 542,
+          "nonemptyTiles": 276,
+          "uniqueTiles": 272,
+          "misses": 254
+        },
+        {
+          "generation": 543,
+          "nonemptyTiles": 283,
+          "uniqueTiles": 278,
+          "misses": 270
+        },
+        {
+          "generation": 544,
+          "nonemptyTiles": 297,
+          "uniqueTiles": 292,
+          "misses": 285
+        },
+        {
+          "generation": 545,
+          "nonemptyTiles": 289,
+          "uniqueTiles": 285,
+          "misses": 276
+        },
+        {
+          "generation": 546,
+          "nonemptyTiles": 308,
+          "uniqueTiles": 304,
+          "misses": 293
+        },
+        {
+          "generation": 547,
+          "nonemptyTiles": 309,
+          "uniqueTiles": 301,
+          "misses": 294
+        },
+        {
+          "generation": 548,
+          "nonemptyTiles": 311,
+          "uniqueTiles": 303,
+          "misses": 294
+        },
+        {
+          "generation": 549,
+          "nonemptyTiles": 312,
+          "uniqueTiles": 305,
+          "misses": 290
+        },
+        {
+          "generation": 550,
+          "nonemptyTiles": 259,
+          "uniqueTiles": 252,
+          "misses": 237
+        },
+        {
+          "generation": 551,
+          "nonemptyTiles": 242,
+          "uniqueTiles": 230,
+          "misses": 221
+        },
+        {
+          "generation": 552,
+          "nonemptyTiles": 197,
+          "uniqueTiles": 191,
+          "misses": 182
+        },
+        {
+          "generation": 553,
+          "nonemptyTiles": 213,
+          "uniqueTiles": 205,
+          "misses": 190
+        },
+        {
+          "generation": 554,
+          "nonemptyTiles": 207,
+          "uniqueTiles": 201,
+          "misses": 189
+        },
+        {
+          "generation": 555,
+          "nonemptyTiles": 214,
+          "uniqueTiles": 208,
+          "misses": 193
+        },
+        {
+          "generation": 556,
+          "nonemptyTiles": 215,
+          "uniqueTiles": 209,
+          "misses": 202
+        },
+        {
+          "generation": 557,
+          "nonemptyTiles": 231,
+          "uniqueTiles": 223,
+          "misses": 211
+        },
+        {
+          "generation": 558,
+          "nonemptyTiles": 195,
+          "uniqueTiles": 189,
+          "misses": 154
+        },
+        {
+          "generation": 559,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 169,
+          "misses": 160
+        },
+        {
+          "generation": 560,
+          "nonemptyTiles": 173,
+          "uniqueTiles": 167,
+          "misses": 162
+        },
+        {
+          "generation": 561,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 157
+        },
+        {
+          "generation": 562,
+          "nonemptyTiles": 182,
+          "uniqueTiles": 174,
+          "misses": 151
+        },
+        {
+          "generation": 563,
+          "nonemptyTiles": 183,
+          "uniqueTiles": 179,
+          "misses": 176
+        },
+        {
+          "generation": 564,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 167
+        },
+        {
+          "generation": 565,
+          "nonemptyTiles": 142,
+          "uniqueTiles": 134,
+          "misses": 120
+        },
+        {
+          "generation": 566,
+          "nonemptyTiles": 138,
+          "uniqueTiles": 132,
+          "misses": 111
+        },
+        {
+          "generation": 567,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 122,
+          "misses": 117
+        },
+        {
+          "generation": 568,
+          "nonemptyTiles": 123,
+          "uniqueTiles": 119,
+          "misses": 117
+        },
+        {
+          "generation": 569,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 123,
+          "misses": 114
+        },
+        {
+          "generation": 570,
+          "nonemptyTiles": 121,
+          "uniqueTiles": 119,
+          "misses": 110
+        }
+      ],
+      "uniqueTileRequests": 8451,
+      "misses": 8016
+    },
+    {
+      "capacity": 768,
+      "frames": [
+        {
+          "generation": 530,
+          "nonemptyTiles": 151,
+          "uniqueTiles": 146,
+          "misses": 146
+        },
+        {
+          "generation": 531,
+          "nonemptyTiles": 156,
+          "uniqueTiles": 153,
+          "misses": 145
+        },
+        {
+          "generation": 532,
+          "nonemptyTiles": 171,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 533,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 170,
+          "misses": 155
+        },
+        {
+          "generation": 534,
+          "nonemptyTiles": 191,
+          "uniqueTiles": 188,
+          "misses": 173
+        },
+        {
+          "generation": 535,
+          "nonemptyTiles": 187,
+          "uniqueTiles": 184,
+          "misses": 177
+        },
+        {
+          "generation": 536,
+          "nonemptyTiles": 216,
+          "uniqueTiles": 214,
+          "misses": 203
+        },
+        {
+          "generation": 537,
+          "nonemptyTiles": 226,
+          "uniqueTiles": 223,
+          "misses": 211
+        },
+        {
+          "generation": 538,
+          "nonemptyTiles": 235,
+          "uniqueTiles": 232,
+          "misses": 219
+        },
+        {
+          "generation": 539,
+          "nonemptyTiles": 250,
+          "uniqueTiles": 245,
+          "misses": 237
+        },
+        {
+          "generation": 540,
+          "nonemptyTiles": 257,
+          "uniqueTiles": 254,
+          "misses": 244
+        },
+        {
+          "generation": 541,
+          "nonemptyTiles": 253,
+          "uniqueTiles": 249,
+          "misses": 242
+        },
+        {
+          "generation": 542,
+          "nonemptyTiles": 276,
+          "uniqueTiles": 272,
+          "misses": 252
+        },
+        {
+          "generation": 543,
+          "nonemptyTiles": 283,
+          "uniqueTiles": 278,
+          "misses": 270
+        },
+        {
+          "generation": 544,
+          "nonemptyTiles": 297,
+          "uniqueTiles": 292,
+          "misses": 283
+        },
+        {
+          "generation": 545,
+          "nonemptyTiles": 289,
+          "uniqueTiles": 285,
+          "misses": 274
+        },
+        {
+          "generation": 546,
+          "nonemptyTiles": 308,
+          "uniqueTiles": 304,
+          "misses": 291
+        },
+        {
+          "generation": 547,
+          "nonemptyTiles": 309,
+          "uniqueTiles": 301,
+          "misses": 292
+        },
+        {
+          "generation": 548,
+          "nonemptyTiles": 311,
+          "uniqueTiles": 303,
+          "misses": 292
+        },
+        {
+          "generation": 549,
+          "nonemptyTiles": 312,
+          "uniqueTiles": 305,
+          "misses": 288
+        },
+        {
+          "generation": 550,
+          "nonemptyTiles": 259,
+          "uniqueTiles": 252,
+          "misses": 237
+        },
+        {
+          "generation": 551,
+          "nonemptyTiles": 242,
+          "uniqueTiles": 230,
+          "misses": 221
+        },
+        {
+          "generation": 552,
+          "nonemptyTiles": 197,
+          "uniqueTiles": 191,
+          "misses": 181
+        },
+        {
+          "generation": 553,
+          "nonemptyTiles": 213,
+          "uniqueTiles": 205,
+          "misses": 190
+        },
+        {
+          "generation": 554,
+          "nonemptyTiles": 207,
+          "uniqueTiles": 201,
+          "misses": 185
+        },
+        {
+          "generation": 555,
+          "nonemptyTiles": 214,
+          "uniqueTiles": 208,
+          "misses": 190
+        },
+        {
+          "generation": 556,
+          "nonemptyTiles": 215,
+          "uniqueTiles": 209,
+          "misses": 200
+        },
+        {
+          "generation": 557,
+          "nonemptyTiles": 231,
+          "uniqueTiles": 223,
+          "misses": 211
+        },
+        {
+          "generation": 558,
+          "nonemptyTiles": 195,
+          "uniqueTiles": 189,
+          "misses": 154
+        },
+        {
+          "generation": 559,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 169,
+          "misses": 160
+        },
+        {
+          "generation": 560,
+          "nonemptyTiles": 173,
+          "uniqueTiles": 167,
+          "misses": 162
+        },
+        {
+          "generation": 561,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 157
+        },
+        {
+          "generation": 562,
+          "nonemptyTiles": 182,
+          "uniqueTiles": 174,
+          "misses": 150
+        },
+        {
+          "generation": 563,
+          "nonemptyTiles": 183,
+          "uniqueTiles": 179,
+          "misses": 174
+        },
+        {
+          "generation": 564,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 167
+        },
+        {
+          "generation": 565,
+          "nonemptyTiles": 142,
+          "uniqueTiles": 134,
+          "misses": 115
+        },
+        {
+          "generation": 566,
+          "nonemptyTiles": 138,
+          "uniqueTiles": 132,
+          "misses": 111
+        },
+        {
+          "generation": 567,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 122,
+          "misses": 115
+        },
+        {
+          "generation": 568,
+          "nonemptyTiles": 123,
+          "uniqueTiles": 119,
+          "misses": 116
+        },
+        {
+          "generation": 569,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 123,
+          "misses": 114
+        },
+        {
+          "generation": 570,
+          "nonemptyTiles": 121,
+          "uniqueTiles": 119,
+          "misses": 108
+        }
+      ],
+      "uniqueTileRequests": 8451,
+      "misses": 7970
+    },
+    {
+      "capacity": 1024,
+      "frames": [
+        {
+          "generation": 530,
+          "nonemptyTiles": 151,
+          "uniqueTiles": 146,
+          "misses": 146
+        },
+        {
+          "generation": 531,
+          "nonemptyTiles": 156,
+          "uniqueTiles": 153,
+          "misses": 145
+        },
+        {
+          "generation": 532,
+          "nonemptyTiles": 171,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 533,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 170,
+          "misses": 155
+        },
+        {
+          "generation": 534,
+          "nonemptyTiles": 191,
+          "uniqueTiles": 188,
+          "misses": 173
+        },
+        {
+          "generation": 535,
+          "nonemptyTiles": 187,
+          "uniqueTiles": 184,
+          "misses": 177
+        },
+        {
+          "generation": 536,
+          "nonemptyTiles": 216,
+          "uniqueTiles": 214,
+          "misses": 201
+        },
+        {
+          "generation": 537,
+          "nonemptyTiles": 226,
+          "uniqueTiles": 223,
+          "misses": 204
+        },
+        {
+          "generation": 538,
+          "nonemptyTiles": 235,
+          "uniqueTiles": 232,
+          "misses": 218
+        },
+        {
+          "generation": 539,
+          "nonemptyTiles": 250,
+          "uniqueTiles": 245,
+          "misses": 233
+        },
+        {
+          "generation": 540,
+          "nonemptyTiles": 257,
+          "uniqueTiles": 254,
+          "misses": 244
+        },
+        {
+          "generation": 541,
+          "nonemptyTiles": 253,
+          "uniqueTiles": 249,
+          "misses": 241
+        },
+        {
+          "generation": 542,
+          "nonemptyTiles": 276,
+          "uniqueTiles": 272,
+          "misses": 250
+        },
+        {
+          "generation": 543,
+          "nonemptyTiles": 283,
+          "uniqueTiles": 278,
+          "misses": 269
+        },
+        {
+          "generation": 544,
+          "nonemptyTiles": 297,
+          "uniqueTiles": 292,
+          "misses": 280
+        },
+        {
+          "generation": 545,
+          "nonemptyTiles": 289,
+          "uniqueTiles": 285,
+          "misses": 271
+        },
+        {
+          "generation": 546,
+          "nonemptyTiles": 308,
+          "uniqueTiles": 304,
+          "misses": 291
+        },
+        {
+          "generation": 547,
+          "nonemptyTiles": 309,
+          "uniqueTiles": 301,
+          "misses": 292
+        },
+        {
+          "generation": 548,
+          "nonemptyTiles": 311,
+          "uniqueTiles": 303,
+          "misses": 292
+        },
+        {
+          "generation": 549,
+          "nonemptyTiles": 312,
+          "uniqueTiles": 305,
+          "misses": 287
+        },
+        {
+          "generation": 550,
+          "nonemptyTiles": 259,
+          "uniqueTiles": 252,
+          "misses": 237
+        },
+        {
+          "generation": 551,
+          "nonemptyTiles": 242,
+          "uniqueTiles": 230,
+          "misses": 221
+        },
+        {
+          "generation": 552,
+          "nonemptyTiles": 197,
+          "uniqueTiles": 191,
+          "misses": 180
+        },
+        {
+          "generation": 553,
+          "nonemptyTiles": 213,
+          "uniqueTiles": 205,
+          "misses": 186
+        },
+        {
+          "generation": 554,
+          "nonemptyTiles": 207,
+          "uniqueTiles": 201,
+          "misses": 185
+        },
+        {
+          "generation": 555,
+          "nonemptyTiles": 214,
+          "uniqueTiles": 208,
+          "misses": 189
+        },
+        {
+          "generation": 556,
+          "nonemptyTiles": 215,
+          "uniqueTiles": 209,
+          "misses": 200
+        },
+        {
+          "generation": 557,
+          "nonemptyTiles": 231,
+          "uniqueTiles": 223,
+          "misses": 210
+        },
+        {
+          "generation": 558,
+          "nonemptyTiles": 195,
+          "uniqueTiles": 189,
+          "misses": 152
+        },
+        {
+          "generation": 559,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 169,
+          "misses": 160
+        },
+        {
+          "generation": 560,
+          "nonemptyTiles": 173,
+          "uniqueTiles": 167,
+          "misses": 162
+        },
+        {
+          "generation": 561,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 154
+        },
+        {
+          "generation": 562,
+          "nonemptyTiles": 182,
+          "uniqueTiles": 174,
+          "misses": 150
+        },
+        {
+          "generation": 563,
+          "nonemptyTiles": 183,
+          "uniqueTiles": 179,
+          "misses": 173
+        },
+        {
+          "generation": 564,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 167
+        },
+        {
+          "generation": 565,
+          "nonemptyTiles": 142,
+          "uniqueTiles": 134,
+          "misses": 114
+        },
+        {
+          "generation": 566,
+          "nonemptyTiles": 138,
+          "uniqueTiles": 132,
+          "misses": 111
+        },
+        {
+          "generation": 567,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 122,
+          "misses": 115
+        },
+        {
+          "generation": 568,
+          "nonemptyTiles": 123,
+          "uniqueTiles": 119,
+          "misses": 116
+        },
+        {
+          "generation": 569,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 123,
+          "misses": 114
+        },
+        {
+          "generation": 570,
+          "nonemptyTiles": 121,
+          "uniqueTiles": 119,
+          "misses": 108
+        }
+      ],
+      "uniqueTileRequests": 8451,
+      "misses": 7931
+    },
+    {
+      "capacity": 1536,
+      "frames": [
+        {
+          "generation": 530,
+          "nonemptyTiles": 151,
+          "uniqueTiles": 146,
+          "misses": 146
+        },
+        {
+          "generation": 531,
+          "nonemptyTiles": 156,
+          "uniqueTiles": 153,
+          "misses": 145
+        },
+        {
+          "generation": 532,
+          "nonemptyTiles": 171,
+          "uniqueTiles": 169,
+          "misses": 158
+        },
+        {
+          "generation": 533,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 170,
+          "misses": 155
+        },
+        {
+          "generation": 534,
+          "nonemptyTiles": 191,
+          "uniqueTiles": 188,
+          "misses": 173
+        },
+        {
+          "generation": 535,
+          "nonemptyTiles": 187,
+          "uniqueTiles": 184,
+          "misses": 177
+        },
+        {
+          "generation": 536,
+          "nonemptyTiles": 216,
+          "uniqueTiles": 214,
+          "misses": 201
+        },
+        {
+          "generation": 537,
+          "nonemptyTiles": 226,
+          "uniqueTiles": 223,
+          "misses": 204
+        },
+        {
+          "generation": 538,
+          "nonemptyTiles": 235,
+          "uniqueTiles": 232,
+          "misses": 217
+        },
+        {
+          "generation": 539,
+          "nonemptyTiles": 250,
+          "uniqueTiles": 245,
+          "misses": 230
+        },
+        {
+          "generation": 540,
+          "nonemptyTiles": 257,
+          "uniqueTiles": 254,
+          "misses": 242
+        },
+        {
+          "generation": 541,
+          "nonemptyTiles": 253,
+          "uniqueTiles": 249,
+          "misses": 239
+        },
+        {
+          "generation": 542,
+          "nonemptyTiles": 276,
+          "uniqueTiles": 272,
+          "misses": 247
+        },
+        {
+          "generation": 543,
+          "nonemptyTiles": 283,
+          "uniqueTiles": 278,
+          "misses": 268
+        },
+        {
+          "generation": 544,
+          "nonemptyTiles": 297,
+          "uniqueTiles": 292,
+          "misses": 280
+        },
+        {
+          "generation": 545,
+          "nonemptyTiles": 289,
+          "uniqueTiles": 285,
+          "misses": 270
+        },
+        {
+          "generation": 546,
+          "nonemptyTiles": 308,
+          "uniqueTiles": 304,
+          "misses": 289
+        },
+        {
+          "generation": 547,
+          "nonemptyTiles": 309,
+          "uniqueTiles": 301,
+          "misses": 290
+        },
+        {
+          "generation": 548,
+          "nonemptyTiles": 311,
+          "uniqueTiles": 303,
+          "misses": 289
+        },
+        {
+          "generation": 549,
+          "nonemptyTiles": 312,
+          "uniqueTiles": 305,
+          "misses": 285
+        },
+        {
+          "generation": 550,
+          "nonemptyTiles": 259,
+          "uniqueTiles": 252,
+          "misses": 236
+        },
+        {
+          "generation": 551,
+          "nonemptyTiles": 242,
+          "uniqueTiles": 230,
+          "misses": 220
+        },
+        {
+          "generation": 552,
+          "nonemptyTiles": 197,
+          "uniqueTiles": 191,
+          "misses": 179
+        },
+        {
+          "generation": 553,
+          "nonemptyTiles": 213,
+          "uniqueTiles": 205,
+          "misses": 186
+        },
+        {
+          "generation": 554,
+          "nonemptyTiles": 207,
+          "uniqueTiles": 201,
+          "misses": 184
+        },
+        {
+          "generation": 555,
+          "nonemptyTiles": 214,
+          "uniqueTiles": 208,
+          "misses": 188
+        },
+        {
+          "generation": 556,
+          "nonemptyTiles": 215,
+          "uniqueTiles": 209,
+          "misses": 198
+        },
+        {
+          "generation": 557,
+          "nonemptyTiles": 231,
+          "uniqueTiles": 223,
+          "misses": 208
+        },
+        {
+          "generation": 558,
+          "nonemptyTiles": 195,
+          "uniqueTiles": 189,
+          "misses": 151
+        },
+        {
+          "generation": 559,
+          "nonemptyTiles": 175,
+          "uniqueTiles": 169,
+          "misses": 159
+        },
+        {
+          "generation": 560,
+          "nonemptyTiles": 173,
+          "uniqueTiles": 167,
+          "misses": 162
+        },
+        {
+          "generation": 561,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 152
+        },
+        {
+          "generation": 562,
+          "nonemptyTiles": 182,
+          "uniqueTiles": 174,
+          "misses": 150
+        },
+        {
+          "generation": 563,
+          "nonemptyTiles": 183,
+          "uniqueTiles": 179,
+          "misses": 171
+        },
+        {
+          "generation": 564,
+          "nonemptyTiles": 176,
+          "uniqueTiles": 169,
+          "misses": 167
+        },
+        {
+          "generation": 565,
+          "nonemptyTiles": 142,
+          "uniqueTiles": 134,
+          "misses": 113
+        },
+        {
+          "generation": 566,
+          "nonemptyTiles": 138,
+          "uniqueTiles": 132,
+          "misses": 110
+        },
+        {
+          "generation": 567,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 122,
+          "misses": 115
+        },
+        {
+          "generation": 568,
+          "nonemptyTiles": 123,
+          "uniqueTiles": 119,
+          "misses": 115
+        },
+        {
+          "generation": 569,
+          "nonemptyTiles": 126,
+          "uniqueTiles": 123,
+          "misses": 113
+        },
+        {
+          "generation": 570,
+          "nonemptyTiles": 121,
+          "uniqueTiles": 119,
+          "misses": 107
+        }
+      ],
+      "uniqueTileRequests": 8451,
+      "misses": 7889
+    }
+  ]
+}

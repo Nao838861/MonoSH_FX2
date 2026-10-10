@@ -119,6 +119,13 @@ def pipeline(text,build,sa1):
   sta pipe_records+4,x
 '''+text[end:]
     text=change(text,'  sta fx4_page\n  txa\n','  sta fx4_page\n  jsl four_map_flip\n  txa\n')
+    # 共有mapはflip時にraw面から読む。CHR転送完了だけでは再利用しない。
+    begin=text.index('  .ifdef SA1_DEEP_BW\n',text.index('pipe_transfer_complete:\n'))
+    end=text.index('  jsr p3Complete\n',begin)
+    release=text[begin:end]
+    assert 'stz pipe_bw_busy,x' in release and '$4307a0,x' in release
+    text=text[:begin]+text[end:]
+    text=change(text,'  jsl four_map_flip\n','  jsl four_map_flip\n'+release+'  ldx pipe_record_offset\n')
     old='''  lda fx4_page+1
   .repeat 4
     lsr

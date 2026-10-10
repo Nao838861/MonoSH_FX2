@@ -8,7 +8,7 @@
 .import pipe_status, pipe_next_slot, pipe_write_slot
 .import _fx_far_u_acc, _monosh_ground_offset, fx_obj_next, fx_upload_ground
 .segment "COLORBSS"
-pipe_near_frames: .res 288*8
+pipe_near_frames: .res 288*SA1_PIPELINE_DEPTH
 .segment "ZEROPAGE"
 near_pointer: .res 2
 .segment "BSS"
