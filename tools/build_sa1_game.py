@@ -36,7 +36,7 @@ def main():
     ap.add_argument('--pixel-delta',action='store_true')
     ap.add_argument('--pixel-delta-min',type=int,default=9000)
     ap.add_argument('--vram-prefetch3',action='store_true')
-    ap.add_argument('--vram-prefill-count',type=int,choices=[1,2,3],default=1)
+    ap.add_argument('--vram-prefill-count',type=int,choices=range(1,12),default=1)
     ap.add_argument('--vram-pump',action='store_true')
     ap.add_argument('--defer-stage',action='store_true')
     ap.add_argument('--late-flip',action='store_true')
@@ -48,6 +48,10 @@ def main():
     ap.add_argument('--split-map-dma',action='store_true')
     ap.add_argument('--split-map-mvn',action='store_true')
     ap.add_argument('--vram-four-shared',action='store_true')
+    ap.add_argument('--vram-fifo',action='store_true')
+    ap.add_argument('--vram-fifo-map-archive',action='store_true')
+    ap.add_argument('--vram-fifo-fast',action='store_true')
+    ap.add_argument('--vram-fifo-fused-map',action='store_true')
     ap.add_argument('--vram-four-owned',action='store_true')
     ap.add_argument('--fixed-map',action='store_true')
     ap.add_argument('--fixed-map-delta',action='store_true')
@@ -79,9 +83,13 @@ def main():
     ap.add_argument('--prefix-cpu-table',action='store_true')
     ap.add_argument('--prefix-table-partial',action='store_true')
     args=ap.parse_args()
+    assert not args.vram_fifo_fast or (args.vram_fifo and args.front_mask)
+    assert not args.vram_fifo_fused_map or args.vram_fifo_fast
+    assert not args.vram_fifo_map_archive or args.vram_fifo
+    assert not args.vram_fifo or (args.vram_four_shared and args.pipeline_depth==12 and args.prefix_table and args.projection_rom and not args.contiguous_chr_dma and not args.fixed_map and not args.sa1_game and not args.sa1_game_compact)
     assert not args.dma_word_start or (args.direct_sparse and args.prefix_fastrom and args.unroll_ppu_dma and args.irq_fastrom and args.native_near)
     assert not args.projection_rom or (args.native_near and not args.sa1_game and not args.sa1_game_compact)
-    assert args.vram_prefill_count<= (3 if args.vram_four_shared or args.vram_four_owned else 1 if args.fixed_map else 2)
+    assert args.vram_prefill_count<= (args.pipeline_depth-1 if args.vram_fifo else 3 if args.vram_four_shared or args.vram_four_owned else 1 if args.fixed_map else 2)
     assert args.vram_prefill_count==1 or args.vram_prefetch3
     assert not args.prefix_table_partial or args.prefix_table or args.prefix_cpu_table
     assert args.prefetch_reserve==900 or args.direct_sparse
@@ -101,7 +109,7 @@ def main():
     assert not args.packet_iram_arrays or args.packet_iram
     assert not args.split_map_mvn or args.split_map_dma
     assert not args.fixed_map or (args.direct_sparse and args.prefix_fastrom and not args.contiguous_chr_dma and args.native_near and not args.vram_four_shared and not args.split_map_dma and not args.sa1_game and not args.sa1_game_compact and not args.compact_memory)
-    assert not args.vram_four_shared or (args.direct_sparse and args.prefix_fastrom and args.contiguous_chr_dma and args.native_near and not args.split_map_dma and not args.sa1_game and not args.sa1_game_compact)
+    assert not args.vram_four_shared or (args.direct_sparse and args.prefix_fastrom and (args.contiguous_chr_dma or args.vram_fifo) and args.native_near and not args.split_map_dma and not args.sa1_game and not args.sa1_game_compact)
     assert not args.packet_offload or (args.direct_sparse and args.list_sort and args.native_near and not args.compact_memory and not args.sa1_game and not args.sa1_game_compact)
     assert not args.split_map_dma or (args.direct_sparse and args.prefix_fastrom and args.contiguous_chr_dma and args.native_near and not args.sa1_game and not args.sa1_game_compact)
     if args.sa1_game_compact:args.compact_memory=True
@@ -249,9 +257,12 @@ def main():
     if args.vram_prefetch3:
         from sa1_vram_prefetch import ppu_layout
         ppu=ppu_layout(ppu,BUILD)
-    if args.vram_four_shared:
+    if args.vram_four_shared and not args.vram_fifo:
         from sa1_vram_four import ppu_layout as four_layout
         ppu=four_layout(ppu,BUILD)
+    if args.vram_fifo:
+        from sa1_fixed_map import ppu_layout as fifo_layout
+        ppu=fifo_layout(ppu,BUILD)
     if args.vram_four_owned:
         from sa1_vram_four_owned import ppu_layout as owned_layout
         ppu=owned_layout(ppu,BUILD)
@@ -330,6 +341,9 @@ def main():
         if args.vram_four_shared:
             from sa1_vram_four import pipeline as four_pipeline
             text=four_pipeline(text,BUILD,SA1)
+        if args.vram_fifo:
+            from sa1_vram_fifo import pipeline as fifo_pipeline
+            text=fifo_pipeline(text,BUILD,args.pipeline_depth,args.vram_fifo_map_archive)
         if args.vram_four_owned:
             from sa1_vram_four_owned import pipeline as owned_pipeline
             text=owned_pipeline(text,BUILD,SA1)
@@ -699,6 +713,7 @@ right_jit_unavailable:'''
             text=text.replace('  lda #4\n  sta $2107\n','  lda #$60\n  sta $2107\n')
             assert text.count('  lda #0\n  sta $210b')==1
             text=text.replace('  lda #0\n  sta $210b','  lda #$40\n  sta $210b')
+            if args.vram_fifo:text=text.replace('  lda #$40\n  sta $210b','  lda #$50\n  sta $210b')
             src=BUILD/'cpu_vram_four.s';src.write_text(text,encoding='utf-8')
         if name=='cpu' and args.vram_four_owned:
             from sa1_vram_four_owned import cpu as owned_cpu
@@ -805,6 +820,8 @@ right_jit_unavailable:'''
                 marker='sa1_transfer_mask_prepare:\n  rep #$30\n  lda #1\n'
                 assert text.count(marker)==1
                 text=text.replace(marker,marker.replace('lda #1',f'lda #{args.sparse_merge_gap+1}'),1)
+            if args.vram_fifo_fast:
+                text=text.replace('$430800','$434000').replace('$430802','$434002').replace('$430804','$434004')
             source=BUILD/'transfer_mask_cpu_pack.s';source.write_text(text,encoding='utf-8')
         if args.fixed_map:
             from sa1_fixed_map import transfer_mask as fixed_transfer
@@ -883,10 +900,14 @@ right_jit_unavailable:'''
             from sa1_split_map import source as split_source
             text=split_source(src.read_text(encoding='utf-8'),mvn=args.split_map_mvn)
             src=BUILD/'sparse_map_split.s';src.write_text(text,encoding='utf-8')
-        if args.vram_four_shared:
+        if args.vram_four_shared and not args.vram_fifo:
             from sa1_vram_four import sparse_map as four_map
             text=four_map(src.read_text(encoding='utf-8'))
             src=BUILD/'sparse_map_four.s';src.write_text(text,encoding='utf-8')
+        if args.vram_fifo:
+            from sa1_vram_fifo import sparse_map as fifo_map
+            text=fifo_map((SA1/'sparse_map_game.s').read_text(encoding='utf-8'),args.vram_fifo_fast,args.vram_fifo_fused_map)
+            src=BUILD/'sparse_map_fifo.s';src.write_text(text,encoding='utf-8')
         if args.vram_four_owned:
             from sa1_vram_four_owned import sparse_map as owned_map
             text=owned_map(src.read_text(encoding='utf-8'))
@@ -918,10 +939,15 @@ right_jit_unavailable:'''
                 text=four_direct(direct_src.read_text(encoding='utf-8'))
                 direct_src=BUILD/'sparse_direct_four.s';direct_src.write_text(text,encoding='utf-8')
                 text=four_prefix(prefix_src.read_text(encoding='utf-8'))
+                if args.vram_fifo:
+                    old='  lda f:$00311a\n  dec\n'
+                    assert text.count(old)==1
+                    text=text.replace(old,'  lda f:$00311a\n')
                 prefix_src=BUILD/'prefix_four_cpu.s';prefix_src.write_text(text,encoding='utf-8')
-                obj=BUILD/'vram_four_cpu.o';run([CC/'ca65.exe','-o',obj,SA1/'vram_four_cpu.s']);objs.append(obj)
+                obj=BUILD/'vram_four_cpu.o';run([CC/'ca65.exe',*(['-D','SA1_VRAM_FIFO=1'] if args.vram_fifo else []),*(['-D','SA1_FIFO_ARCHIVE=1'] if args.vram_fifo_map_archive else []),'-o',obj,SA1/'vram_four_cpu.s']);objs.append(obj)
             if args.vram_four_owned:direct_src=SA1/'sparse_four_owned_sa1.s'
-            obj=BUILD/'sparse_direct.o';run([CC/'ca65.exe',*(['-D','SA1_PREFIX_TABLE=1'] if args.prefix_table else []),'-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64)-(7 if args.dma_word_start else 0)}','-o',obj,direct_src]);objs.append(obj)
+            if args.vram_fifo:direct_src=SA1/'vram_fifo_sa1.s'
+            obj=BUILD/'sparse_direct.o';run([CC/'ca65.exe',*(['-D','SA1_FIFO_FAST=1'] if args.vram_fifo_fast else []),*(['-D','SA1_FIFO_FUSED_MAP=1'] if args.vram_fifo_fused_map else []),*(['-D','SA1_PREFIX_TABLE=1'] if args.prefix_table else []),'-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64)-(7 if args.dma_word_start else 0)}','-o',obj,direct_src]);objs.append(obj)
             if args.prefix_dma:
                 if args.prefix_table_partial:
                     from sa1_prefix_partial import source as partial_table
@@ -1007,6 +1033,8 @@ right_jit_unavailable:'''
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
     if args.cpu_pack_double:
         assert labels['__CODE_SIZE__']<=0xc000,'double stage overlaps CPU code'
+    if args.vram_fifo_map_archive:
+        assert labels['__CODE_SIZE__']<=0xa000,'FIFO map archive overlaps CPU code'
     if args.fixed_map_delta:
         assert labels['fx4_wait_obj_blank']<0x10000,'fixed delta helpers leaked the GSU segment into the CPU include'
     legacy=linked.read_bytes();assert len(legacy)==0x200000
@@ -1102,7 +1130,7 @@ right_jit_unavailable:'''
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'wideEdgeJit':args.wide_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'cpuPackDouble':args.cpu_pack_double,'projectionRom':args.cpu_pack_double or args.projection_rom,'dmaWordStart':args.dma_word_start,'cpuStageDrawPhase':args.cpu_stage_draw_phase,'leftHints':args.left_hints,'leftRuntimeScan':args.left_runtime_scan,'rightClipJit':args.right_clip_jit,'fallbackMask':args.fallback_mask,'fallbackEarly':args.fallback_early,'fallbackSa1':args.fallback_sa1,'pixelDelta':args.pixel_delta,'pixelDeltaMin':args.pixel_delta_min,'vramPrefetch3':args.vram_prefetch3,'vramPump':args.vram_pump,'deferStage':args.defer_stage,'lateFlip':args.late_flip,'sa1Game':args.sa1_game or args.sa1_game_compact,'sa1GameCompact':args.sa1_game_compact,'gameIrqWram':args.game_irq_wram,'gameWaitWai':args.game_wait_wai,'compactMemory':args.compact_memory,'splitMapDma':args.split_map_dma,'splitMapMvn':args.split_map_mvn,'vramFourShared':args.vram_four_shared,'vramFourOwned':args.vram_four_owned,'fixedMap':args.fixed_map,'fixedMapDelta':args.fixed_map_delta,'fixedMapFullMask':args.fixed_map_full_mask,'fixedMapDeltaDma':args.fixed_map_delta_dma,'dmaGuardLines':args.dma_guard_lines,'flipSmallReserve':args.flip_small_reserve,'flipPlayerReserve':args.flip_player_reserve,'prefetchReserve':args.prefetch_reserve,'packetOffload':args.packet_offload,'packetIram':args.packet_iram,'packetIramArrays':args.packet_iram_arrays,'gameStageOverlap':args.game_stage_overlap,'directSparse':args.direct_sparse,'prefixDma':args.prefix_dma,'prefixFastrom':args.prefix_fastrom,'mapDmaOverlap':args.map_dma_overlap,'prefixTable':args.prefix_table,'sparseMergeGap':args.sparse_merge_gap,'idleClear':args.idle_clear,'bulletLeftFast':args.bullet_left_fast,'bulletOpacity':args.bullet_opacity,'bulletMaskArithmetic':args.bullet_mask_arithmetic,'bulletOpaque8':args.bullet_opaque8,'bulletShapes':args.bullet_shapes,'bulletShapesRom':args.bullet_shapes_rom,'bulletResident':args.bullet_resident,'contiguousChrDma':args.contiguous_chr_dma,'prefixCpuTable':args.prefix_cpu_table,'prefixTablePartial':args.prefix_table_partial,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'redrawNoHistory':args.redraw_no_history,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':5 if args.sa1_game else 7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'vramPrefillCount':args.vram_prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'prefetch-three-pages' if args.vram_prefetch3 else 'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'earlyRequest':args.early_request,'bitsetSort':args.bitset_sort,'listSort':args.list_sort,'smallEdgeJit':args.small_edge_jit,'wideEdgeJit':args.wide_edge_jit,'compiledGround':args.compiled_ground,'unrollPpuDma':args.unroll_ppu_dma,'wideClear':args.wide_clear,'bulletCache':args.bullet_cache,'bulletWords':args.bullet_words,'denseTiles':args.dense_tiles,'bottomSlack':args.bottom_slack,'irqFastrom':args.irq_fastrom,'dirtyIram':args.dirty_iram,'cpuPack':args.cpu_pack,'cpuPackDouble':args.cpu_pack_double,'projectionRom':args.cpu_pack_double or args.projection_rom,'dmaWordStart':args.dma_word_start,'cpuStageDrawPhase':args.cpu_stage_draw_phase,'leftHints':args.left_hints,'leftRuntimeScan':args.left_runtime_scan,'rightClipJit':args.right_clip_jit,'fallbackMask':args.fallback_mask,'fallbackEarly':args.fallback_early,'fallbackSa1':args.fallback_sa1,'pixelDelta':args.pixel_delta,'pixelDeltaMin':args.pixel_delta_min,'vramPrefetch3':args.vram_prefetch3,'vramPump':args.vram_pump,'deferStage':args.defer_stage,'lateFlip':args.late_flip,'sa1Game':args.sa1_game or args.sa1_game_compact,'sa1GameCompact':args.sa1_game_compact,'gameIrqWram':args.game_irq_wram,'gameWaitWai':args.game_wait_wai,'compactMemory':args.compact_memory,'splitMapDma':args.split_map_dma,'splitMapMvn':args.split_map_mvn,'vramFourShared':args.vram_four_shared,'vramFifo':args.vram_fifo,'vramFifoMapArchive':args.vram_fifo_map_archive,'vramFifoFast':args.vram_fifo_fast,'vramFifoFusedMap':args.vram_fifo_fused_map,'vramFourOwned':args.vram_four_owned,'fixedMap':args.fixed_map,'fixedMapDelta':args.fixed_map_delta,'fixedMapFullMask':args.fixed_map_full_mask,'fixedMapDeltaDma':args.fixed_map_delta_dma,'dmaGuardLines':args.dma_guard_lines,'flipSmallReserve':args.flip_small_reserve,'flipPlayerReserve':args.flip_player_reserve,'prefetchReserve':args.prefetch_reserve,'packetOffload':args.packet_offload,'packetIram':args.packet_iram,'packetIramArrays':args.packet_iram_arrays,'gameStageOverlap':args.game_stage_overlap,'directSparse':args.direct_sparse,'prefixDma':args.prefix_dma,'prefixFastrom':args.prefix_fastrom,'mapDmaOverlap':args.map_dma_overlap,'prefixTable':args.prefix_table,'sparseMergeGap':args.sparse_merge_gap,'idleClear':args.idle_clear,'bulletLeftFast':args.bullet_left_fast,'bulletOpacity':args.bullet_opacity,'bulletMaskArithmetic':args.bullet_mask_arithmetic,'bulletOpaque8':args.bullet_opaque8,'bulletShapes':args.bullet_shapes,'bulletShapesRom':args.bullet_shapes_rom,'bulletResident':args.bullet_resident,'contiguousChrDma':args.contiguous_chr_dma,'prefixCpuTable':args.prefix_cpu_table,'prefixTablePartial':args.prefix_table_partial,'wideClearMin':args.wide_clear_min,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'redrawNoHistory':args.redraw_no_history,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'deepBw':args.deep_bw,'framebufferSlots':5 if args.sa1_game else 7 if args.deep_bw else 3 if args.triple_bw else 2,'prefillCount':args.prefill_count,'vramPrefillCount':args.vram_prefill_count,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'nativeNear':args.native_near,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'rowDirtyExact':args.row_dirty_exact,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'prefetch-three-pages' if args.vram_prefetch3 else 'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

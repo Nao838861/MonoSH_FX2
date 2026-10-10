@@ -1,0 +1,119 @@
+{
+  "cases": [
+    {
+      "variant": "fifo_v3",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 3600 --flip-player-reserve 4700 --prefetch-reserve 300 --vram-prefill-count 4 --projection-rom --vram-fifo",
+      "fields": 800,
+      "logic": 645,
+      "presents": 638,
+      "pixelMatchedPresents": 168,
+      "romSha256": "603f511ad36b00e9d7b3eb52f043c5159aded7baa8d3c8698dd759406f4ef2a2",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 624,
+        "2": 11
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 152,
+      "maxSa1Ms": 22.398934,
+      "packetMatchedGenerations": 644
+    },
+    {
+      "variant": "fifoarchive_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 6 --projection-rom --vram-fifo --dma-word-start --vram-fifo-map-archive",
+      "fields": 800,
+      "logic": 649,
+      "presents": 638,
+      "pixelMatchedPresents": 168,
+      "romSha256": "503ab1e44e3712bc0225b20904aab39eda3ac25732746fa014bb616da6f0f2cf",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 625,
+        "2": 10
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 153,
+      "maxSa1Ms": 22.429106,
+      "packetMatchedGenerations": 648
+    },
+    {
+      "variant": "fifofast_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 6 --projection-rom --vram-fifo --dma-word-start --vram-fifo-map-archive --vram-fifo-fast",
+      "fields": 800,
+      "logic": 652,
+      "presents": 641,
+      "pixelMatchedPresents": 168,
+      "romSha256": "fb1a853299d73a9c67c19833239916669e7f4ca66836ec8caefb22ad50af292b",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 631,
+        "2": 7
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 153,
+      "maxSa1Ms": 22.655577,
+      "packetMatchedGenerations": 651
+    },
+    {
+      "variant": "fifofused_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 6 --projection-rom --vram-fifo --dma-word-start --vram-fifo-map-archive --vram-fifo-fast --vram-fifo-fused-map",
+      "fields": 800,
+      "logic": 653,
+      "presents": 642,
+      "pixelMatchedPresents": 168,
+      "romSha256": "c64528dd7f786dc9293cde975380c18e68dcb7cf808b1ccd59c1385b59cb4f84",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 633,
+        "2": 6
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 153,
+      "maxSa1Ms": 22.226007,
+      "packetMatchedGenerations": 652
+    },
+    {
+      "variant": "fifoprefill11_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 11 --projection-rom --vram-fifo --dma-word-start --vram-fifo-map-archive --vram-fifo-fast --vram-fifo-fused-map",
+      "fields": 800,
+      "logic": 650,
+      "presents": 639,
+      "pixelMatchedPresents": 168,
+      "romSha256": "86f657eec28b6396526074fbdd4010268f656eb10fab6fef1f5abbf025c8c491",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 630,
+        "2": 6
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 156,
+      "maxSa1Ms": 22.258507,
+      "packetMatchedGenerations": 649
+    },
+    {
+      "variant": "fifofusedraw_v1",
+      "buildCommand": "python tools/build_sa1_game.py --pipeline --pipeline-direct --pipeline-irq --pipeline-depth 12 --deep-bw --prefill-pipeline --prefill-count 7 --redraw-all --merge-dma --large-edge-cache --triple-bw --fast-dma --linear-shape --cpu-code-copy --cpu-edge-copy --packet-shapes --native-background --native-near --row-dirty --row-dirty-aligned --wait-slots --occupancy --accurate-dma-budget --transfer-mask --front-mask --visible-mask --stack-band --early-request --list-sort --small-edge-jit --compiled-ground --wide-clear --bullet-cache --row-dirty-exact --bullet-words --left-hints --irq-fastrom --vram-prefetch3 --direct-sparse --unroll-ppu-dma --bottom-slack --prefix-dma --prefix-fastrom --idle-clear --bullet-left-fast --bullet-opacity --bullet-mask-arithmetic --bullet-shapes --bullet-shapes-rom --vram-four-shared --redraw-no-history --bullet-resident --prefix-table --prefix-table-partial --flip-small-reserve 2600 --flip-player-reserve 3600 --prefetch-reserve 300 --vram-prefill-count 4 --projection-rom --vram-fifo --dma-word-start --vram-fifo-fast --vram-fifo-fused-map",
+      "fields": 800,
+      "logic": 649,
+      "presents": 642,
+      "pixelMatchedPresents": 168,
+      "romSha256": "07ae2aa1fb5219c053dbc83abf4ee17645bc0bd558566a1f0d4c07cef4c74c18",
+      "hardwarePpuReferencesVerified": true,
+      "presentationFieldIntervals": {
+        "1": 631,
+        "2": 8
+      },
+      "goal60fpsAchieved": false,
+      "firstVisibleField": 151,
+      "maxSa1Ms": 22.146574,
+      "packetMatchedGenerations": 648
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "publicReleaseChanged": false,
+  "excludedCases": {
+    "fifo_v1": "map wrap limit aliased tile bit 10; corrected",
+    "fifo_v2": "checker missed real 64KiB VRAM address wrap; same ROM retested as fifo_v3"
+  },
+  "evidenceSha256": "dea7e58b6bbe3091e65da2a5998f1cf1c644d1cada63006fe68de475475010ea"
+}
