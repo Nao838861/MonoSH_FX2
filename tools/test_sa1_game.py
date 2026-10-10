@@ -43,7 +43,7 @@ def verify_pixels(dest,labels,config):
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
             converted=bytearray()
             for tile in range(32,768):
-                map_base=page*2+0x800 if config.get('vramPrefetch3') else 0xc000
+                map_base=0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
                 entry=struct.unpack_from('<H',whole,map_base+tile*2)[0]
                 assert entry&0xfc00==0x2400,f'{prefix}: dense tile attributes differ'
                 address=page*2+(entry&1023)*32
@@ -60,7 +60,7 @@ def verify_pixels(dest,labels,config):
                 for col in range(width//8):
                     address=0xc000+(col//32)*0x800+(24+row)*64+(col%32)*2
                     entry=struct.unpack_from('<H',whole,address)[0]
-                    tile=(0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
+                    tile=(0x8000 if config.get('vramFourShared') else 0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
                     a=decode(whole[tile:tile+32],4)
                     if entry&0x4000:a=a[:,::-1]
                     if entry&0x8000:a=a[::-1]
@@ -137,6 +137,7 @@ local scenario=SCENARIO
 local padded=PADDED
 local pipeline=PIPELINE
 local vramPrefetch3=VRAMPREFETCH3
+local vramFourShared=VRAMFOURSHARED
 local cpuCodeBase=CPUCODEBASE
 local field,logic,presents=0,0,0
 local finishedCapture=false
@@ -149,6 +150,10 @@ local presentationTimes={}
 local pageCommit=nil
 local readyLine,startClock,waitMs=0,0,0
 local cpuParts,cpuEntries={},{}
+local cpuActiveParts,cpuActiveEntries={},{}
+local irqTicks,irqClock,irqDepth=0,0,0
+local activeBegin=0
+local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
 local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
@@ -206,8 +211,8 @@ local function word(name,value)
 end
 for name,sites in pairs(CALLS)do
  for _,site in ipairs(sites)do
-  emu.addMemoryCallback(function()cpuEntries[name]=emu.getState().masterClock end,emu.callbackType.exec,cpuCodeBase+site,cpuCodeBase+site)
-  emu.addMemoryCallback(function()cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272 end,emu.callbackType.exec,cpuCodeBase+site+3,cpuCodeBase+site+3)
+  emu.addMemoryCallback(function()cpuEntries[name]=emu.getState().masterClock;cpuActiveEntries[name]=activeClock() end,emu.callbackType.exec,cpuCodeBase+site,cpuCodeBase+site)
+  emu.addMemoryCallback(function()cpuParts[name]=(cpuParts[name] or 0)+(emu.getState().masterClock-cpuEntries[name])/21477.272;cpuActiveParts[name]=(cpuActiveParts[name] or 0)+(activeClock()-cpuActiveEntries[name])/21477.272 end,emu.callbackType.exec,cpuCodeBase+site+3,cpuCodeBase+site+3)
  end
 end
 local function byte(name,value)
@@ -281,7 +286,9 @@ emu.addMemoryCallback(function(address,value)
    if vramPrefetch3 and bb==0x18 then
     local first=(st['ppu.vramAddress']&0x7fff)*2
     local last=first+emu.read16(0x4305,emu.memType.snesMemory)
-    if (first<1024 and last>0) or (first<0x4400 and last>0x4000) then
+    local fixedOverlap=(first<1024 and last>0) or (first<0x4400 and last>0x4000)
+    if vramFourShared then fixedOverlap=(first<0x9000 and last>0x8c00) or (first<0xc000 and last>0xbc00) end
+    if fixedOverlap then
      local f=assert(io.open(output..'/failure.txt','w'))
      f:write('frame DMA overwrites fixed BG2 CHR field='..field..' first='..first..' last='..last);f:close();emu.stop(1)
     end
@@ -303,8 +310,7 @@ emu.addMemoryCallback(function(address,value)
   pageCommit={field=field,line=st['ppu.scanline'],clock=st.masterClock}
  end
 end,emu.callbackType.write,0x210b,0x210b,emu.cpuType.snes,emu.memType.snesMemory)
-local packetClock,irqTicks,irqClock,irqDepth=0,0,0,0
-local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
+local packetClock=0
 if pipeline then
  local function irqEntry()if irqDepth==0 then irqClock=emu.getState().masterClock end;irqDepth=irqDepth+1 end
  cb('pipe_irq',irqEntry)
@@ -469,7 +475,7 @@ if labels.cache_miss then
   f:write(string.format('{"job":%d,"field":%d,"asset":%d,"width":%d,"height":%d,"flags":%d,"miss":%s,"ms":%.6f}\\n',#times+1,field,emu.read16(0x3e,mt),emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0x3c,mt),missed and 'true' or 'false',(emu.getState().masterClock-start)/21477.272));f:flush()
  end,emu.cpuType.sa1)
 end
-cb('render_started',function()begin=emu.getState().masterClock;cpuParts={} end)
+cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
  if scenario:match('^leftfixture') then
   local geometries=LEFTFIXTUREGEOMETRIES
@@ -499,7 +505,8 @@ cb('logic_finished',function()
  end
  logicMs=(emu.getState().masterClock-begin)/21477.272
  local parts={};for name,v in pairs(cpuParts)do parts[#parts+1]=string.format('"%s":%.6f',name,v)end
- cpuJobs[#cpuJobs+1]=string.format('{"field":%d,"logicMs":%.6f,"parts":{%s}}',field,logicMs,table.concat(parts,','))
+ local activeParts={};for name,v in pairs(cpuActiveParts)do activeParts[#activeParts+1]=string.format('"%s":%.6f',name,v)end
+ cpuJobs[#cpuJobs+1]=string.format('{"field":%d,"logicMs":%.6f,"activeLogicMs":%.6f,"parts":{%s},"activeParts":{%s}}',field,logicMs,(activeClock()-activeBegin)/21477.272,table.concat(parts,','),table.concat(activeParts,','))
 end)
 cb('transfer_chunk',function()local s=emu.getState();readyLine=s['ppu.scanline'];startClock=s.masterClock end)
 cb('dma_chunk_ready',function()waitMs=(emu.getState().masterClock-startClock)/21477.272;startClock=emu.getState().masterClock end)
@@ -700,6 +707,7 @@ end,emu.eventType.endFrame)
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
+    script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
     script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
     path=dest/'test.lua';path.write_text(script)
