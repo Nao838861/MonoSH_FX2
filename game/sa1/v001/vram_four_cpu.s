@@ -18,6 +18,12 @@ four_map_collect:
   sta pipe_records+38,x
   lda f:$0031a6
   sta pipe_records+36,x
+.ifdef SA1_FIFO_MAP_BW
+  lda f:$0031a8
+  sta pipe_records+60,x
+  lda f:$0031aa
+  sta pipe_records+62,x
+.endif
 .ifdef SA1_FIFO_ARCHIVE
   phx
   txa
@@ -66,7 +72,7 @@ four_map_flip:
   php
   phx
   rep #$30
-.ifdef SA1_FIFO_ARCHIVE
+.if .defined(SA1_FIFO_ARCHIVE) || .defined(SA1_FIFO_MAP_BW)
   lda pipe_records+60,x
 .else
   lda pipe_records,x
@@ -92,7 +98,11 @@ four_map_flip:
 .ifdef SA1_FIFO_ARCHIVE
   lda #$7f
 .else
+.ifdef SA1_FIFO_MAP_BW
+  lda pipe_records+62,x
+.else
   lda pipe_records,x
+.endif
 .endif
   sta f:$004304
   lda #1
@@ -106,4 +116,10 @@ fifo_map_bases:
   .repeat 12,I
     .word $a000+1472*I
   .endrepeat
+.endif
+.ifdef SA1_FIFO_MAP_BW
+.export fifo_bw_map_bases: far
+fifo_bw_map_bases:
+  .word $6c00,$40,$71c0,$40,$6c00,$41,$71c0,$41,$6c00,$42,$71c0,$42
+  .word $ec00,$40,$f1c0,$40,$ec00,$41,$f1c0,$41,$ec00,$42,$f1c0,$42
 .endif

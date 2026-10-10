@@ -205,15 +205,24 @@ oBoundary=$ae
 oMap=$d2
 oMapOffset=$d6
 oMapCount=$d8
+oMapTail=$da
+oMapValue=$dc
 sa1_sparse_direct_finish:
   rep #$30
 .if .defined(SA1_FIFO_FUSED_MAP) && !.defined(SA1_FIFO_CPU_MAP)
+.ifdef SA1_FIFO_MAP_BW
+  lda $01a8
+  sta oMap
+  lda $01aa
+  sta oMap+2
+.else
   lda $019a
   clc
   adc #$6040
   sta oMap
   lda $0102
   sta oMap+2
+.endif
 .endif
   lda $011a
   asl
@@ -334,6 +343,59 @@ fifo_piece:
   .endrepeat
   sta oMapCount
   pla
+.ifdef SA1_FIFO_FAST_FILL
+  sta oMapValue
+  lda oMapCount
+  and #7
+  sta oMapTail
+  lda oMapCount
+  lsr
+  lsr
+  lsr
+  tax
+  tya
+  clc
+  adc oMap
+  tay
+  phb
+  sep #$20
+  lda oMap+2
+  pha
+  plb
+  rep #$20
+  lda oMapValue
+  cpx #0
+  beq fifo_map_tail
+fifo_map_eight:
+  .repeat 8,I
+    sta a:I*2,y
+    inc
+  .endrepeat
+  pha
+  tya
+  clc
+  adc #16
+  tay
+  pla
+  dex
+  bne fifo_map_eight
+fifo_map_tail:
+  ldx oMapTail
+  beq fifo_map_fast_done
+fifo_map_single:
+  sta a:0,y
+  inc
+  iny
+  iny
+  dex
+  bne fifo_map_single
+fifo_map_fast_done:
+  plb
+  tya
+  sec
+  sbc oMap
+  sta oMapOffset
+.else
 fifo_map_run:
   sta [oMap],y
   inc
@@ -342,6 +404,7 @@ fifo_map_run:
   dec oMapCount
   bne fifo_map_run
   sty oMapOffset
+.endif
 .endif
   lda oTake
   clc

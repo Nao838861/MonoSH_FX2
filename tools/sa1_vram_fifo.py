@@ -2,16 +2,66 @@
 from sa1_vram_four import change
 
 
-def sparse_map(text,fast=False,fused=False,cpu=False):
+def check_map_bw_layout(rom,labels):
+    """描画余白・累積表・12配置表が独立することをリンク後の表で確認する。"""
+    import struct
+    from sa1_deep_buffers import SLOTS
+    address=labels['fifo_bw_map_bases']
+    assert address>>16==1
+    start=0x8000+(address&0x7fff)
+    words=struct.unpack_from('<24H',rom,start)
+    maps=list(zip(words[1::2],words[::2]))
+    assert len(set(maps))==12
+    for i,(bank,begin) in enumerate(maps):
+        end=begin+1472
+        assert end<=65536
+        for slot in SLOTS:
+            raw_bank=slot&255;raw_base=slot&0x8400
+            if bank==raw_bank:
+                assert end<=raw_base-1024 or begin>=raw_base+208*128
+                assert end<=raw_base+0x6600 or begin>=raw_base+0x6600+50*4
+        for other_bank,other_begin in maps[:i]:
+            assert bank!=other_bank or end<=other_begin or begin>=other_begin+1472
+
+
+def sparse_map(text,fast=False,fused=False,cpu=False,fast_fill=False,map_bw=False):
     if fast:text=text.replace('$430800','$434000').replace('$430804','$434004')
     text=text.replace('$2420','$2400').replace('$2421','$2401')
     text='.setcpu "65816"\n.import sa1_fifo_allocate: far\n'+text
     text=change(text,'sa1_sparse_map_prepare:\n  rep #$30\n',
                 'sa1_sparse_map_prepare:\n  rep #$30\n  jsl sa1_fifo_allocate\n')
+    if map_bw:
+        text=change(text,'  lda $019a\n  clc\n  adc #$6040\n','  lda $01a8\n')
+        text=change(text,'  lda $0102\n  and #255\n','  lda $01aa\n  and #255\n')
     if cpu:
         begin=text.index('sa1_sparse_map_prepare:\n')
         end=text.index('sm_empty_map:\n',begin)
         return text[:begin]+'sa1_sparse_map_prepare:\n  jsl sa1_fifo_allocate\n  rtl\n'+text[end:]
+    if fast_fill:
+        begin=text.index('sm_fill_cpu:\n');end=text.index('sm_map_ready:\n',begin)
+        text=text[:begin]+'''sm_fill_cpu:
+  phb
+  sep #$20
+  lda smBank
+  pha
+  plb
+  rep #$30
+  ldx smMap
+  ldy #23
+  lda #$2400
+sm_fill_fast:
+  .repeat 32,I
+    sta a:I*2,x
+  .endrepeat
+  txa
+  clc
+  adc #64
+  tax
+  lda #$2400
+  dey
+  bne sm_fill_fast
+  plb
+'''+text[end:]
     text=change(text,'  lda #$2401\n  sta smTile',
                 '  lda $01a0\n  sec\n  sbc $01a2\n  ora #$2400\n  sta smTile')
     if fused:
@@ -33,8 +83,8 @@ def sparse_map(text,fast=False,fused=False,cpu=False):
   dec smCount''')
 
 
-def pipeline(text,build,depth,archive=False,cpu=False):
-    if archive:
+def pipeline(text,build,depth,archive=False,cpu=False,map_bw=False):
+    if archive or map_bw:
         begin=text.index('  .ifdef SA1_DEEP_BW\n',text.index('  jsl four_map_flip\n'))
         end=text.index('  ldx pipe_record_offset\n',begin)
         release=text[begin:end]
@@ -75,6 +125,22 @@ def pipeline(text,build,depth,archive=False,cpu=False):
 :
   lda pipe_target_slot''')
     text=change(text,'  ora #$40\n','  ora #$50\n')
+    if map_bw:
+        text='.import fifo_bw_map_bases: far\n'+text
+        text=change(text,'  sta pipe_main_offset\n  tax\n', '''  sta pipe_main_offset
+  phx
+  .repeat 7
+    lsr
+  .endrepeat
+  tax
+  lda f:fifo_bw_map_bases,x
+  sta f:$0031a8
+  lda f:fifo_bw_map_bases+2,x
+  sta f:$0031aa
+  plx
+  lda pipe_main_offset
+  tax
+''')
     ring=(build/'vram_four_cpu.inc').read_text(encoding='utf-8')
     assert ring.count('  cmp #3\n')==2
     ring=ring.replace('  cmp #3\n','  cmp #'+str(depth)+'\n')
