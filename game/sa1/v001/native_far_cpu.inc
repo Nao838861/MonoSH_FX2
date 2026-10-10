@@ -6,11 +6,11 @@ pipe_native_far_update:
   clc
   adc #pipe_records+48
   sta f:$7e1d0c
-  .ifdef SA1_NATIVE_BACKGROUND
+  .if .defined(SA1_NATIVE_BACKGROUND) && !.defined(SA1_NATIVE_NEAR)
   jsr pipe_background_upload
   .endif
   sep #$20
-  .ifdef SA1_NATIVE_BACKGROUND
+  .if .defined(SA1_NATIVE_BACKGROUND) && !.defined(SA1_NATIVE_NEAR)
   lda #0
   sta f:$00210f
   sta f:$00210f

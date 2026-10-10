@@ -1,0 +1,83 @@
+[
+  {
+    "fields": 450,
+    "logic": 367,
+    "presents": 359,
+    "pixelMatchedPresents": 123,
+    "romSha256": "865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483",
+    "labelsSha256": "85e8608b5a2fcf410dbf4830de22ca4a887b968d4b416c52db7eb3dc806a41f5",
+    "presentationFieldIntervals": {
+      "1": 356
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": true,
+    "scenario": "movestress_deep7",
+    "hardwareValid": false
+  },
+  {
+    "fields": 1200,
+    "logic": 1118,
+    "presents": 1110,
+    "pixelMatchedPresents": 136,
+    "romSha256": "865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483",
+    "labelsSha256": "85e8608b5a2fcf410dbf4830de22ca4a887b968d4b416c52db7eb3dc806a41f5",
+    "presentationFieldIntervals": {
+      "1": 1107
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": true,
+    "scenario": "bossdeep7",
+    "hardwareValid": false
+  },
+  {
+    "fields": 1800,
+    "logic": 1220,
+    "presents": 1213,
+    "pixelMatchedPresents": 138,
+    "romSha256": "865af0480703ebdec942b4c406d94397e4e9246435132fd1890948a9bb4b1483",
+    "labelsSha256": "85e8608b5a2fcf410dbf4830de22ca4a887b968d4b416c52db7eb3dc806a41f5",
+    "presentationFieldIntervals": {
+      "1": 1034,
+      "2": 17,
+      "4": 157,
+      "5": 2
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false,
+    "scenario": "bossmovestress_deep7",
+    "hardwareValid": false
+  },
+  {
+    "fields": 450,
+    "logic": 363,
+    "presents": 358,
+    "pixelMatchedPresents": 123,
+    "romSha256": "c2d08109292751d72426c480ba491e7bc0b8fde99a5d3d7bb4ef025131fee3e8",
+    "labelsSha256": "a11b50c15346987d18ca38ae8bd12c8ff8e602099814a59f5520696241d68127",
+    "presentationFieldIntervals": {
+      "1": 355
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": true,
+    "scenario": "movestress_nativenear_fixedsegment",
+    "hardwareValid": true
+  },
+  {
+    "fields": 1800,
+    "logic": 1320,
+    "presents": 1317,
+    "pixelMatchedPresents": 139,
+    "romSha256": "c2d08109292751d72426c480ba491e7bc0b8fde99a5d3d7bb4ef025131fee3e8",
+    "labelsSha256": "a11b50c15346987d18ca38ae8bd12c8ff8e602099814a59f5520696241d68127",
+    "presentationFieldIntervals": {
+      "1": 977,
+      "2": 289,
+      "3": 44,
+      "4": 4
+    },
+    "stalledTailFields": 2,
+    "goal60fpsAchieved": false,
+    "scenario": "bossmovestress_nativenear_verified",
+    "hardwareValid": true
+  }
+]

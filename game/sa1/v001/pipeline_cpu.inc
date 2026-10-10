@@ -12,6 +12,10 @@ SA1_CC_BUFFER = $05c0
 .export pipe_obj_pointer
 .export pipe_status, pipe_complete, pipe_presented_irq, pipe_bw_busy
 .export pipe_render_slot
+.ifdef SA1_NATIVE_NEAR
+.export pipe_main_offset
+.import pipe_near_build
+.endif
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
 .export pipe_irq_exit
 .export pipe_dma_measured_end
@@ -30,7 +34,9 @@ pipe_target_slot: .res 2
 pipe_pending: .res 2
 pipe_complete: .res 2
 pipe_next_bw: .res 2
-.ifdef SA1_TRIPLE_BW
+.ifdef SA1_DEEP_BW
+pipe_bw_busy: .res 14
+.elseif .defined(SA1_TRIPLE_BW)
 pipe_bw_busy: .res 6
 .else
 pipe_bw_busy: .res 4
@@ -139,6 +145,18 @@ pipe_wait_bw:
   .ifdef SA1_STAGED
   stz pipe_records+38,x
   .endif
+  .ifdef SA1_DEEP_BW
+  lda pipe_next_bw
+  sta pipe_records+46,x
+  phx
+  tax
+  lda f:pipe_deep_slots,x
+  plx
+  sta pipe_records,x
+  sta f:$003102
+  and #$8400
+  sta f:$00319a
+  .else
   lda pipe_next_bw
   lsr
   clc
@@ -149,6 +167,7 @@ pipe_wait_bw:
   .endif
   sta pipe_records,x
   sta f:$003102
+  .endif
   inc pipe_submitted
   lda pipe_submitted
   sta pipe_records+8,x
@@ -197,6 +216,9 @@ pipe_wait_bw:
   ldx #fx_obj_next
   lda #135
   mvn #$7e,#$7e
+  .ifdef SA1_NATIVE_NEAR
+  jsr pipe_near_build
+  .endif
   ; channel0の設定途中にPPU IRQを入れない。
   php
   sei
@@ -239,7 +261,11 @@ pipe_no_packet:
   .ifdef SA1_TRIPLE_BW
   inc
   inc
+  .ifdef SA1_DEEP_BW
+  cmp #14
+  .else
   cmp #6
+  .endif
   bcc :+
   lda #0
 :
@@ -517,7 +543,7 @@ pipe_prefill_scan:
   cpx #SA1_PIPELINE_DEPTH*2
   bcc pipe_prefill_scan
   lda pipe_dma_chunk
-  cmp #3
+  cmp #SA1_PREFILL_COUNT
   jcc pipe_irq_done
 pipe_prefilled:
   .endif
@@ -571,6 +597,10 @@ pipe_prefilled:
   eor #$3000
   .endif
   sta pipe_records+6,x
+  .ifdef SA1_FRONT_MASK
+  lda #1
+  sta pipe_records+44,x
+  .endif
   .endif
   stz fx4_dma_bytes
 pipe_setup_transfer:
@@ -585,7 +615,12 @@ pipe_setup_transfer:
   lda #$15
   sta f:$002231
   rep #$20
+  .ifdef SA1_DEEP_BW
+  lda pipe_records,x
+  and #$8400
+  .else
   lda #0
+  .endif
   sta f:$002232
   sep #$20
   lda pipe_records,x
@@ -611,7 +646,31 @@ dma_chunk_ready:
   jsr pipe_try_fast_dma
   jcs pipe_transfer_complete
   .ifdef SA1_FRONT_MASK
-  jmp pipe_transfer_pause
+  ; 一括転送が収まらない画像は裏面へ全量転送する。表示面は部分更新しない。
+  ldx pipe_record_offset
+  lda pipe_records+44,x
+  beq pipe_descriptor
+  stz pipe_records+44,x
+  lda fx4_page
+  eor #$3000
+  sta pipe_records+6,x
+  lda #6
+  sta pipe_records+2,x
+  stz pipe_records+4,x
+  lda #23552
+  sta pipe_records+34,x
+  sta pipe_records+208,x
+  lda #1024
+  .ifdef SA1_DEEP_BW
+  sta pipe_cost_bytes
+  lda pipe_records,x
+  and #$8400
+  clc
+  adc pipe_cost_bytes
+  .endif
+  sta pipe_records+210,x
+  lda #512
+  sta pipe_records+212,x
   .endif
   .ifdef SA1_ADAPTIVE_VRAM
   ldx pipe_record_offset
@@ -746,6 +805,9 @@ pipe_transfer_complete:
   .endif
   rep #$30
   ldx pipe_record_offset
+  .ifdef SA1_DEEP_BW
+  lda pipe_records+46,x
+  .else
   lda pipe_records,x
   sec
   .ifdef SA1_PIPELINE_DIRECT
@@ -754,6 +816,7 @@ pipe_transfer_complete:
   sbc #$41
   .endif
   asl
+  .endif
   tax
   stz pipe_bw_busy,x
   lda #1
@@ -870,7 +933,7 @@ pipe_reserve_small:
 pipe_reserved:
   bmi pipe_no_time
   sta pipe_available
-  .ifdef SA1_NATIVE_BACKGROUND
+  .if .defined(SA1_NATIVE_BACKGROUND) && !.defined(SA1_NATIVE_NEAR)
   jsr pipe_background_reserve
   .endif
   rts
@@ -1031,7 +1094,9 @@ pipe_flip:
     lsr
   .endrepeat
   .ifdef SA1_NATIVE_FAR
+  .ifndef SA1_NATIVE_NEAR
   ora #$60
+  .endif
   .endif
   sta f:$00210b
   rep #$30
@@ -1075,4 +1140,11 @@ dma_finished:
 .endif
 .ifdef SA1_ADAPTIVE_VRAM
 .include "adaptive_vram_cpu.inc"
+.endif
+
+.ifdef SA1_DEEP_BW
+.segment "BOOT"
+pipe_deep_slots:
+  .word $0440,$0441,$0442,$8440,$8441,$8442,$8443
+.segment "CODE"
 .endif

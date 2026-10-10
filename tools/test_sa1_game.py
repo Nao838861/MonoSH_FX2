@@ -17,6 +17,11 @@ def verify_pixels(dest,labels,config):
         sprite=np.frombuffer(reference({'draws':draws}),dtype=np.uint8).reshape(192,128)
         sprite=np.stack((sprite&15,sprite>>4),axis=2).reshape(192,256)
         pix=np.zeros((192,256),dtype=np.uint8)
+        if config.get('nativeNear'):
+            fine=near&7;left=(112-fine)&~3;right=(163-fine)&~3
+            layer=np.frombuffer(source[0x8000:0x8000+9*512],np.uint8).reshape(9,512)[:,(np.arange(256)+near)&511]
+            top=82+ground;y0=max(0,top);y1=min(192,top+9)
+            if y0<y1:pix[y0:y1,left:right]=layer[y0-top:y1-top,left:right]
         for offset,scroll,top,height in ((0,far,77+ground,14),(0x8000,near,82+ground,9)):
             if config.get('nativeBackground') or (config.get('nativeFar') and offset==0):continue
             layer=np.frombuffer(source[offset:offset+height*512],dtype=np.uint8).reshape(height,512)[:,(np.arange(256)+scroll)&511]
@@ -38,21 +43,21 @@ def verify_pixels(dest,labels,config):
         if config.get('nativeFar'):
             from sa1_native_far import decode
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
-            width=256 if config.get('nativeBackground') else 512
+            width=256 if config.get('nativeBackground') and not config.get('nativeNear') else 512
             bg=np.zeros((16,width),dtype=np.uint8)
             for row in range(2):
                 for col in range(width//8):
                     address=0xc000+(col//32)*0x800+(24+row)*64+(col%32)*2
                     entry=struct.unpack_from('<H',whole,address)[0]
-                    tile=0xc000+(entry&1023)*32
+                    tile=(0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
                     a=decode(whole[tile:tile+32],4)
                     if entry&0x4000:a=a[:,::-1]
                     if entry&0x8000:a=a[::-1]
                     bg[row*8:row*8+8,col*8:col*8+8]=a
             bg_reference=np.zeros((16,width),dtype=np.uint8)
-            indices=(np.arange(width)+(far if config.get('nativeBackground') else 0))&511
+            indices=(np.arange(width)+(far if config.get('nativeBackground') and not config.get('nativeNear') else 0))&511
             bg_reference[:14]=np.frombuffer(source[:14*512],dtype=np.uint8).reshape(14,512)[:,indices]
-            if config.get('nativeBackground'):
+            if config.get('nativeBackground') and not config.get('nativeNear'):
                 near_pixels=np.frombuffer(source[0x8000:0x8000+9*512],dtype=np.uint8).reshape(9,512)[:,(np.arange(width)+near)&511]
                 region=bg_reference[5:14];region[near_pixels!=0]=near_pixels[near_pixels!=0]
             assert np.array_equal(bg,bg_reference),f'{prefix}: BG2 converted pixels differ'
@@ -60,6 +65,16 @@ def verify_pixels(dest,labels,config):
             ground_end=int(json.loads((BUILD/'native_far_packing.json').read_text())['groundEnd'],16)
             assert whole[0xd000:ground_end]==initial[0xd000:ground_end],f'{prefix}: ground CHR overwritten'
             assert whole[0xf000:]==initial[0xf000:],f'{prefix}: ground map overwritten'
+            if config.get('nativeNear'):
+                from sa1_native_near import verify
+                verify(dest/(prefix+'_oam.bin'),whole,source,near,ground,pix,sprite)
+                packing=json.loads((BUILD/'native_near_packing.json').read_text())
+                for address in packing['farChrAddresses']+packing['nearChrAddresses']:
+                    assert whole[address:address+32]==initial[address:address+32],f'{prefix}: static background CHR overwritten'
+                palette_path=dest/(prefix+'_palette.bin')
+                if palette_path.exists():
+                    palette=palette_path.read_bytes()
+                    assert palette[480:512]==palette[32:64]==(BASE/'assets4/palette4.bin').read_bytes(),f'{prefix}: near OBJ palette changed'
         checked+=1
     return checked
 
@@ -101,6 +116,34 @@ local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
 local completedFrames={}
+if scenario:match('tracedma') then
+ local z=assert(io.open(output..'/sa1_dma_writes.jsonl','w'))
+ local blankLog=assert(io.open(output..'/blank_writes.jsonl','w'))
+ emu.addMemoryCallback(function(address,value)
+  local st=emu.getState()
+  blankLog:write(string.format('{"field":%d,"line":%d,"value":%d,"pc":%d,"hdmaAddress":%d,"hdmaCount":%d}\\n',field,st['ppu.scanline'],value,st['cpu.pc'],st['dmaController.channel[1].hdmaTableAddress'],st['dmaController.channel[1].hdmaLineCounterAndRepeat']));blankLog:flush()
+ end,emu.callbackType.write,0x2100,0x2100,emu.cpuType.snes,emu.memType.snesMemory)
+ local reads=assert(io.open(output..'/cpu_dma_reads.jsonl','w'));local readCount=0
+ emu.addMemoryCallback(function(address,value)
+  if presents==0 and emu.read16(0x311e,emu.memType.snesMemory)==1 and readCount<800 then
+   readCount=readCount+1;local s=emu.getState()
+   reads:write(string.format('{"address":%d,"value":%d,"source":%d,"dest":%d,"active":%s,"blank":%s,"line":%d}\\n',address,value,s['cart.coprocessor.dmaSrcAddr'],s['cart.coprocessor.dmaDestAddr'],tostring(s['cart.coprocessor.charConvDmaActive']),tostring(s['ppu.forcedBlank']),s['ppu.scanline']));reads:flush()
+  end
+ end,emu.callbackType.read,0x400000,0x43ffff,emu.cpuType.snes,emu.memType.snesMemory)
+ emu.addMemoryCallback(function(address,value)
+  if emu.read16(0x11e,emu.memType.sa1Memory)==1 then
+   local s=emu.getState()
+   z:write(string.format('{"gen":%d,"address":%d,"value":%d,"pc":%d}\\n',emu.read16(0x198,emu.memType.sa1Memory),address,value,(s['cart.coprocessor.cpu.k'] or 0)*65536+(s['cart.coprocessor.cpu.pc'] or 0)));z:flush()
+  end
+ end,emu.callbackType.write,0x2230,0x2239,emu.cpuType.sa1,emu.memType.sa1Memory)
+end
+if scenario:match('tracezero') then
+ local z=assert(io.open(output..'/rowzero.jsonl','w'))
+ emu.addMemoryCallback(function(address,value)
+  local s=emu.getState();local m=emu.memType.sa1Memory
+  z:write(string.format('{"gen":%d,"address":%d,"value":%d,"pc":%d}\\n',emu.read16(0x198,m),address,value,(s['cart.coprocessor.cpu.k'] or 0)*65536+(s['cart.coprocessor.cpu.pc'] or 0)));z:flush()
+ end,emu.callbackType.write,0x420000,0x42007f,emu.cpuType.sa1,emu.memType.sa1Memory)
+end
 local completedPackets={}
 local jobSequence=0
 local outputJobs={}
@@ -127,6 +170,12 @@ local function cb(name,fn,cpu)
  local a=labels[name]+(cpu==emu.cpuType.snes and (irqName and 0x7f0000 or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
+emu.addMemoryCallback(function(address,value)
+ local line=emu.getState()['ppu.scanline']
+ if field>85 and (line>=203 or line<21) and line<225 and (value&0x80)==0 then
+  local f=assert(io.open(output..'/failure.txt','w'));f:write('HDMA unblanked reserved DMA lines field='..field..' line='..line);f:close();emu.stop(1)
+ end
+end,emu.callbackType.write,0x2100,0x2100,emu.cpuType.snes,emu.memType.snesMemory)
 local packetClock,irqTicks,irqClock=0,0,0
 local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
 if pipeline then
@@ -160,7 +209,7 @@ if pipeline then
   local gen=emu.read16(record+8,mt)
   if gen<=120 or gen%60==0 then
    local bank=emu.read16(record,mt);local t={}
-   for i=0,24575 do t[#t+1]=string.char(emu.read((bank-0x40)*65536+i,emu.memType.snesSaveRam))end
+   for i=0,24575 do t[#t+1]=string.char(emu.read(((bank&255)-0x40)*65536+(bank&0xff00)+i,emu.memType.snesSaveRam))end
    completedFrames[gen]=table.concat(t)
   end
  end)
@@ -278,12 +327,27 @@ if labels.pipe_fast_begin then
  local fastClock,fastBytes,fastCount,fastLine=0,0,0,0
  local fastLog=assert(io.open(output..'/fast_dma.jsonl','w'))
  cb('pipe_fast_begin',function()
+  local st=emu.getState();assert(st['ppu.forcedBlank'] or st['ppu.scanline']>=225,'VRAM DMA began outside actual blank period')
+  if scenario:match('tracedma') then
+   local st=emu.getState();local f=assert(io.open(output..'/cc_state.jsonl','a'))
+   f:write(string.format('{"field":%d,"source":%d,"dest":%d,"active":%s,"blank":%s,"line":%d}\\n',field,st['cart.coprocessor.dmaSrcAddr'],st['cart.coprocessor.dmaDestAddr'],tostring(st['cart.coprocessor.charConvDmaActive']),tostring(st['ppu.forcedBlank']),st['ppu.scanline']));f:close()
+   if presents==0 then
+    local f=assert(io.open(output..'/before_dma_bw.bin','wb'));local a={}
+    for i=0,24575 do a[#a+1]=string.char(emu.read(1024+i,emu.memType.snesSaveRam))end
+    f:write(table.concat(a));f:close()
+   end
+  end
   local mt=emu.memType.snesMemory;local record=0x7e0000+labels.pipe_records+emu.read16(0x7e0000+labels.pipe_record_offset,mt)
   fastClock=emu.getState().masterClock;fastLine=emu.getState()['ppu.scanline']
   fastBytes=emu.read16(record+34,mt);fastCount=(emu.read16(record+2,mt)-emu.read16(record+4,mt))/6
  end)
  cb('pipe_fast_done',function()
   local st=emu.getState()
+  if scenario:match('tracedma') and presents==0 then
+   local f=assert(io.open(output..'/beforeflip_vram.bin','wb'));local a={}
+   for i=0,65535 do a[#a+1]=string.char(emu.read(i,emu.memType.snesVideoRam))end
+   f:write(table.concat(a));f:close()
+  end
   fastLog:write(string.format('{"field":%d,"bytes":%d,"count":%d,"line":%d,"endLine":%d,"ms":%.6f}\\n',field,fastBytes,fastCount,fastLine,st['ppu.scanline'],(st.masterClock-fastClock)/21477.272));fastLog:flush()
  end)
 end
@@ -303,8 +367,16 @@ cb('dma_finished',function()
    record=0x7e0000+labels.pipe_records+slot*512
    local gen=emu.read16(record+8,mt);assert(gen==presents,'pipeline skipped or reordered a frame')
    if NATIVEBACKGROUND then dump(n..'_record.bin',emu.memType.snesMemory,record,512)end
-   for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs')end
-   for i=0,7 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==emu.read(record+192+i,mt),'pipeline high OAM differs')end
+   for i=0,23 do assert(emu.read(i,emu.memType.snesSpriteRam)==emu.read(record+64+i,mt),'pipeline OAM differs field='..field..' gen='..presents..' byte='..i..' actual='..emu.read(i,emu.memType.snesSpriteRam)..' expected='..emu.read(record+64+i,mt))end
+   if NATIVENEAR then
+    local expected=emu.read16(record+192,mt)|0x0aaa
+    local actual=emu.read16(512,emu.memType.snesSpriteRam)
+    assert((actual&0x0fff)==(expected&0x0fff),'player high OAM differs')
+    dump(n..'_oam.bin',emu.memType.snesSpriteRam,0,544)
+    dump(n..'_palette.bin',emu.memType.snesCgRam,0,512)
+   else
+    for i=0,7 do assert(emu.read(512+i,emu.memType.snesSpriteRam)==emu.read(record+192+i,mt),'pipeline high OAM differs')end
+   end
    local f=assert(io.open(output..'/'..n..'_fb.bin','wb'));f:write((assert(completedFrames[gen],'missing completed snapshot')));f:close();completedFrames[gen]=nil
   elseif padded then
    local f=assert(io.open(output..'/'..n..'_fb.bin','wb'));local t={}
@@ -356,7 +428,7 @@ emu.addEventCallback(function()
   emu.stop(0)
  end
 end,emu.eventType.endFrame)
-'''.replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+'''.replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
