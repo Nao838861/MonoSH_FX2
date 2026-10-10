@@ -18,6 +18,17 @@ sa1_sparse_direct_finish:
   lda #2064
   sta $b2
   ldx #0
+.ifdef SA1_PREFIX_TABLE
+  stz $b4
+  stz $b6
+  lda $019a
+  clc
+  adc #$6600
+  sta $b8
+  lda $0102
+  sta $ba
+  ldy #0
+.endif
 direct_descriptor:
   cpx $b0
   bcs direct_map
@@ -30,6 +41,32 @@ direct_descriptor:
   cmp #8193
   jcs sparse_direct_overflow
   sta $b2
+.ifdef SA1_PREFIX_TABLE
+  lda f:$430800,x
+  sta $bc
+  clc
+  adc $b4
+  sta $b4
+  sta [$b8],y
+  iny
+  iny
+  lda $bc
+  .repeat 5
+    lsr
+  .endrepeat
+  sta $be
+  lsr
+  lsr
+  clc
+  adc $be
+  adc $bc
+  adc #64
+  adc $b6
+  sta $b6
+  sta [$b8],y
+  iny
+  iny
+.endif
   txa
   clc
   adc #6

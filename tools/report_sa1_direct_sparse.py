@@ -11,6 +11,10 @@ SCENARIOS=(
     'movestress_sa1game_overlap_raw_tracepalette',
     'movestress_directsparse3_tracepalette',
     'movestress_directsparse3_unroll_valid_tracepalette',
+    'movestress_directsparse3_prefix_beam_tracepalette',
+    'movestress_directsparse3_prefix_c1_tracepalette',
+    'movestress_directsparse3_mapoverlap_tracepalette',
+    'movestress_directsparse3_prefixtable_fixed_tracepalette',
 )
 
 
@@ -33,6 +37,12 @@ def main():
                     archive.write(path,Path(name)/path.name)
         for name in ('manifest.json','game.lbl','aligned_bounds_verified.json','left_hints_verified.json'):
             archive.write(BUILD/name,Path('current_build')/name)
+        for name in ('movestress_directsparse3_prefix_tracepalette',
+                     'movestress_directsparse3_prefix_bank1_retry_tracepalette',
+                     'movestress_directsparse3_prefixtable_tracepalette'):
+            for path in (BUILD/name).iterdir():
+                if path.name in ('failure.txt','failure_state.txt','pixel_failure.txt','manifest.json','game.lbl','test.lua','emulator.log') or path.name.startswith('present00002_'):
+                    archive.write(path,Path('failed')/name/path.name)
     (DEST/'index.json').write_text(json.dumps(index,indent=2)+'\n',encoding='utf-8')
     for row in index:print(row['scenario'],row['presents'],row['intervals'])
 

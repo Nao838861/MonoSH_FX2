@@ -355,6 +355,15 @@ local function dump(name,mem,a,n)
  for i=0,n-1 do t[#t+1]=string.char(emu.read(a+i,mem)) end
  f:write(table.concat(t));f:close()
 end
+if labels.sparse_direct_overflow then cb('sparse_direct_overflow',function()error('direct sparse VRAM capacity exceeded field='..field)end,emu.cpuType.sa1)end
+if labels.pipe_fast_partial_done then
+ local f=assert(io.open(output..'/prefix_dma.jsonl','w'));local started=0
+ cb('pipe_fast_begin',function()started=emu.getState().masterClock end)
+ cb('pipe_fast_partial_done',function()
+  local st=emu.getState();local mt=emu.memType.snesMemory;local base=0x7e0000
+  f:write(string.format('{"field":%d,"line":%d,"bytes":%d,"descriptors":%d,"ms":%.6f}\\n',field,st['ppu.scanline'],emu.read16(base+labels.pfBytes,mt),emu.read16(base+labels.pfDesc,mt)//6,(st.masterClock-started)/21477.272));f:flush()
+ end)
+end
 if labels.stage_too_large then cb('stage_too_large',function()error('compact WRAM staging capacity exceeded field='..field)end)end
 if labels.stage_time_ok then
  local started=0;local bytes=0;local count=0;local line=0
