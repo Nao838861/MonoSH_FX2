@@ -145,6 +145,9 @@ hint_hash:
   adc hintTable
   tax
   lda f:LEFT_HINT_TABLE,x
+.ifdef SA1_LEFT_RUNTIME_SCAN
+  jeq hint_scan
+.endif
   cmp hintCode
   bne hint_next_hash
   lda f:LEFT_HINT_TABLE+2,x
@@ -156,6 +159,52 @@ hint_next_hash:
   inc
   and #LEFT_HINT_MASK
   bra hint_hash
+.ifdef SA1_LEFT_RUNTIME_SCAN
+; 事前hintのない行も、左に隠れたwordだけを読み飛ばしてROMから直接描く。
+; 同じコード・左位置が続く行は、既存の直前行cacheをそのまま使う。
+hint_scan:
+  stz hintSlot
+  ldy #0
+hint_scan_op:
+  lda [hintCode],y
+  and #255
+  cmp #$6b
+  beq hint_scan_empty
+  cmp #$a9
+  bne hint_scan_store
+  iny
+  lda [hintCode],y
+  sta hintA
+  dey
+  bra hint_scan_next
+hint_scan_store:
+  cmp #$9d
+  bne hint_scan_next
+  iny
+  lda [hintCode],y
+  dey
+  clc
+  adc hintCur
+  inc
+  bpl hint_scan_found
+  tya
+  clc
+  adc #3
+  sta hintSlot
+hint_scan_next:
+  iny
+  iny
+  iny
+  bra hint_scan_op
+hint_scan_empty:
+  sty hintSlot
+hint_scan_found:
+  lda hintSlot
+  clc
+  adc hintCode
+  sta f:$0007f1
+  jmp hint_remember
+.endif
 hint_found:
   lda f:LEFT_HINT_TABLE+3,x
   sta hintTable

@@ -4,6 +4,8 @@
 
 現在は実SA-1を使うゲーム統合ROMが動く。60fps表示は未達で作業中。素材は `game/v001/assets/color4/` をそのまま参照する。試遊はリポジトリ直下の `play_sa1.cmd`。統合ROMの測定と制約は [ゲーム統合の記録](results/20261010_game/report.md) を参照。
 
+試遊ROMは[固定配置表・旧命令コピー削除・敵弾コード再利用の検証版](results/20261010_fixed_map/report.md)へ更新した。道中・ボス各1,900fieldで147画面一致。表示が2field間隔になる箇所はそれぞれ8回・9回残る。元のゲーム統合記録は初期版の測定であり、現在の速度は固定配置表の記録を参照する。
+
 実装前の3回の設計比較と依頼原文は [design_log.md](design_log.md)、同一packetを用いたFX2・SA-1・事前縮小・コンパイルドの比較は [結果](results/20261010_probe/report.md) を参照。
 
 計測ROMは `tools/build_sa1_probe.py`、実CPU実行・画素照合は `tools/test_sa1_probe.py`、現行FX2との比較は `tools/test_sa1_fx2_comparison.py`。生成物は `build/sa1_v001/` に隔離する。各方式のROMはまだゲームを遊ぶためのものではない。

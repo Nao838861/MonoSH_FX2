@@ -40,6 +40,9 @@ sa1_bullet_cache_prepare:
   cmp #37
   beq words_select
 words_other:
+.ifdef SA1_BULLET_RESIDENT
+  stz $019c
+.endif
   clc
   rtl
 words_select:
@@ -127,6 +130,12 @@ words_select:
 :
 
   stz cDy
+.ifdef SA1_BULLET_RESIDENT
+  lda $019c
+  beq :+
+  jml words_enter
+:
+.endif
   jsl sa1_dma_try_begin
   bcc words_copy_cpu
   lda #__BULLETJIT_SIZE__
@@ -153,6 +162,11 @@ words_copy_cpu:
   jml words_enter
 .segment "BULLETJIT"
 words_enter:
+.ifdef SA1_BULLET_RESIDENT
+  rep #$30
+  lda #1
+  sta $019c
+.endif
   .ifdef SA1_BULLET_SHAPES
   rep #$30
   lda #$ffff

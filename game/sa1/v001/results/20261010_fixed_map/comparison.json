@@ -1,0 +1,186 @@
+{
+  "cases": [
+    {
+      "fields": 1900,
+      "logic": 1797,
+      "presents": 1791,
+      "pixelMatchedPresents": 147,
+      "romSha256": "b85c687aaa7e3c29dc6b46534621bf35350404a0593901f3fd76f8cb219a11c8",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1768,
+        "2": 20
+      },
+      "scenario": "movestress_detinput_bulletopaque8_guard2_tracepalette",
+      "firstVisibleField": 90,
+      "maxSa1Ms": 22.781571,
+      "maxOutputMs": 25.702147,
+      "logicMatchedGenerations": 1795
+    },
+    {
+      "fields": 800,
+      "logic": 651,
+      "presents": 644,
+      "pixelMatchedPresents": 128,
+      "romSha256": "f788189010971a48e02c989fc17d3da9043e939bb79ba173b2c2848ec0dae9bd",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 634,
+        "2": 7
+      },
+      "scenario": "movestress_detinput_fixedmap_v3_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.640399,
+      "maxOutputMs": 24.596792,
+      "logicMatchedGenerations": 650
+    },
+    {
+      "fields": 1900,
+      "logic": 1749,
+      "presents": 1742,
+      "pixelMatchedPresents": 147,
+      "romSha256": "f788189010971a48e02c989fc17d3da9043e939bb79ba173b2c2848ec0dae9bd",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1730,
+        "2": 9
+      },
+      "scenario": "movestress_detinput_fixedmap_v1_long_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 23.366375,
+      "maxOutputMs": 24.897669,
+      "logicMatchedGenerations": 1748
+    },
+    {
+      "fields": 1900,
+      "logic": 1747,
+      "presents": 1740,
+      "pixelMatchedPresents": 147,
+      "romSha256": "f788189010971a48e02c989fc17d3da9043e939bb79ba173b2c2848ec0dae9bd",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1727,
+        "2": 10
+      },
+      "scenario": "bossmovestress_detinput_fixedmap_v1_tracepalette",
+      "firstVisibleField": 151,
+      "maxSa1Ms": 20.763903,
+      "maxOutputMs": 22.614883
+    },
+    {
+      "fields": 470,
+      "logic": 327,
+      "presents": 320,
+      "pixelMatchedPresents": 123,
+      "romSha256": "77f2f7636003a361679ec1ab596e8d34af9fd99cb36de47bb56ee5df7f37fe5d",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 316,
+        "2": 1
+      },
+      "scenario": "leftfixture_fixedmap_leftscan_v1_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 37.249982,
+      "maxOutputMs": 38.216213
+    },
+    {
+      "fields": 1900,
+      "logic": 1749,
+      "presents": 1742,
+      "pixelMatchedPresents": 147,
+      "romSha256": "77f2f7636003a361679ec1ab596e8d34af9fd99cb36de47bb56ee5df7f37fe5d",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1730,
+        "2": 9
+      },
+      "scenario": "movestress_detinput_fixedmap_leftscan_v1_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.393812,
+      "maxOutputMs": 23.84707,
+      "logicMatchedGenerations": 1748
+    },
+    {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "pixelMatchedPresents": 147,
+      "romSha256": "0f5a8b84583ad1d64966927f90ad2f9c5ea5335422fef2d343e8e171c4d55c8e",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1732,
+        "2": 8
+      },
+      "scenario": "movestress_detinput_fixedmap_nohistory_v1_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.113237,
+      "maxOutputMs": 24.626405,
+      "logicMatchedGenerations": 1749
+    },
+    {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "pixelMatchedPresents": 147,
+      "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1732,
+        "2": 8
+      },
+      "scenario": "movestress_detinput_fixedmap_resident_v1_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 22.127019,
+      "maxOutputMs": 24.64177,
+      "logicMatchedGenerations": 1749
+    },
+    {
+      "fields": 1900,
+      "logic": 1748,
+      "presents": 1741,
+      "pixelMatchedPresents": 147,
+      "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1729,
+        "2": 9
+      },
+      "scenario": "bossmovestress_detinput_fixedmap_resident_v1_tracepalette",
+      "firstVisibleField": 151,
+      "maxSa1Ms": 19.670189,
+      "maxOutputMs": 21.094299
+    },
+    {
+      "fields": 270,
+      "logic": 123,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "0098322453fe5ea231e39a237bcf7b603764c70b6515b89b2b8be91594d844ad",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 117
+      },
+      "scenario": "flipfixture_fixedmap_resident_v1_tracepalette",
+      "firstVisibleField": 150,
+      "maxSa1Ms": 23.037004,
+      "maxOutputMs": 24.379819
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "excludedFailure": {
+    "scenario": "movestress_detinput_bulletopaque8_v2_tracepalette",
+    "reason": "VRAM/OAM DMA started outside actual blank field=669 line=22",
+    "performanceComparisonEligible": false
+  },
+  "evidenceSha256": "a351758ad1c263e79e5d5995ae7886b2a82ca904ab36139929779ac7800a621a"
+}

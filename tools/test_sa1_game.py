@@ -43,7 +43,7 @@ def verify_pixels(dest,labels,config):
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
             converted=bytearray()
             for tile in range(32,768):
-                map_base=0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
+                map_base=0xbc00 if config.get('fixedMap') else 0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
                 entry=struct.unpack_from('<H',whole,map_base+tile*2)[0]
                 assert entry&0xfc00==0x2400,f'{prefix}: dense tile attributes differ'
                 address=page*2+(entry&1023)*32
@@ -58,9 +58,9 @@ def verify_pixels(dest,labels,config):
             bg=np.zeros((16,width),dtype=np.uint8)
             for row in range(2):
                 for col in range(width//8):
-                    address=0xc000+(col//32)*0x800+(24+row)*64+(col%32)*2
+                    address=(0xbc00 if config.get('fixedMap') else 0xc000)+(col//32)*0x800+(24+row)*64+(col%32)*2
                     entry=struct.unpack_from('<H',whole,address)[0]
-                    tile=(0x8000 if config.get('vramFourShared') else 0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
+                    tile=(0xc000 if config.get('fixedMap') else 0x8000 if config.get('vramFourShared') else 0 if config.get('nativeNear') else 0xc000)+(entry&1023)*32
                     a=decode(whole[tile:tile+32],4)
                     if entry&0x4000:a=a[:,::-1]
                     if entry&0x8000:a=a[::-1]
@@ -134,10 +134,14 @@ local output=OUTDIR
 local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
+local function captureGeneration(g)
+ return g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+end
 local padded=PADDED
 local pipeline=PIPELINE
 local vramPrefetch3=VRAMPREFETCH3
 local vramFourShared=VRAMFOURSHARED
+local fixedMap=FIXEDMAP
 local packetOffload=PACKETOFFLOAD
 local packetIramArrays=PACKETIRAMARRAYS
 local packetRunning=false
@@ -305,6 +309,10 @@ emu.addMemoryCallback(function(address,value)
     local last=first+emu.read16(0x4305,emu.memType.snesMemory)
     local fixedOverlap=(first<1024 and last>0) or (first<0x4400 and last>0x4000)
     if vramFourShared then fixedOverlap=(first<0x9000 and last>0x8c00) or (first<0xc000 and last>0xbc00) end
+    if fixedMap then
+     local playerUpload=first==0xc400 and last==0xc780 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
+     fixedOverlap=not (playerUpload or (first>=0x20 and last<=0x5c20) or (first>=0x6020 and last<=0xbc20))
+    end
     if fixedOverlap then
      local f=assert(io.open(output..'/failure.txt','w'))
      f:write('frame DMA overwrites fixed BG2 CHR field='..field..' first='..first..' last='..last);f:close();emu.stop(1)
@@ -378,7 +386,7 @@ if pipeline then
   local slot=emu.read16(0x7e0000+labels.pipe_target_slot,mt)
   local record=0x7e0000+labels.pipe_records+slot*512
   local gen=emu.read16(record+8,mt)
-  if gen<=120 or gen%60==0 then
+  if captureGeneration(gen) then
    local bank=emu.read16(record,mt);local t={}
    for i=0,24575 do t[#t+1]=string.char(emu.read(((bank&255)-0x40)*65536+(bank&0xff00)+i,emu.memType.snesSaveRam))end
    completedFrames[gen]=table.concat(t)
@@ -567,12 +575,12 @@ cb('sa1_draw_done',function()
  if pipeline then
   local cpuMt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_render_slot,cpuMt)
   local gen=emu.read16(0x7e0000+labels.pipe_records+slot*512+8,cpuMt)
-  if DENSE_TILES and (gen<=120 or gen%60==0) then
+  if DENSE_TILES and captureGeneration(gen) then
    local bank=emu.read16(0x102,mt);local base=emu.read16(0x19a,mt);local t={}
    for i=0,24575 do t[#t+1]=string.char(emu.read((bank&255)*65536+base+i,mt))end
    completedFrames[gen]=table.concat(t)
   end
-  if gen<=120 or gen%60==0 then local t={};for i=0,n*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,mt))end;completedPackets[gen]=table.concat(t)end
+  if captureGeneration(gen) then local t={};for i=0,n*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,mt))end;completedPackets[gen]=table.concat(t)end
  end
  local dirtyBytes=0
  for r=0,23 do local a=0x120+r*4;dirtyBytes=dirtyBytes+math.max(0,emu.read16(a+2,emu.memType.sa1Memory)-emu.read16(a,emu.memType.sa1Memory))*8 end
@@ -642,7 +650,7 @@ cb('dma_finished',function()
  local visibleField=commitField+(line>=203 and line<225 and 1 or 0)
  assert(line<=21 or line>=203,'page flip occurred during visible lines')
  presentationTimes[#presentationTimes+1]=string.format('{"field":%d,"visibleField":%d,"line":%d,"clock":%d,"dmaBytes":%d,"readyLine":%d,"waitMs":%.6f,"transferMs":%.6f,"flipMs":%.6f}',field,visibleField,line,state.masterClock,emu.read16(0x7e0000+labels.fx4_dma_bytes,emu.memType.snesMemory),readyLine,waitMs,(state.masterClock-startClock)/21477.272,(state.masterClock-flipBegin)/21477.272)
- if presents<=120 or presents%60==0 then
+ if captureGeneration(presents) then
   local n=string.format('present%05d',presents)
   local record=nil
   if pipeline then
@@ -732,13 +740,15 @@ end,emu.eventType.endFrame)
     patterns=dimensions()
     left_geometries=[]
     for i in range(6):
-        for asset in (0,3):
-            sizes=sorted((w,h) for w,h in patterns[asset] if w>=90)
+        for asset in ((0,1,2,3,4,5,13,14,31,39,40,41,42) if config.get('leftRuntimeScan') else (0,3)):
+            sizes=sorted((w,h) for w,h in patterns[asset] if w>=64 if config.get('leftRuntimeScan') or w>=90)
+            if not sizes:continue
             left_geometries.append([asset,*sizes[min(len(sizes)-1,i*(len(sizes)-1)//5)]])
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
+    script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
     script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
