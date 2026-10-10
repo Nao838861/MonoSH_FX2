@@ -13,7 +13,11 @@ pipe_background_reserve:
   plx
   lda pipe_available
   sec
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  sbc #2700
+  .else
   sbc #2300
+  .endif
   bpl :+
   lda #0
 :

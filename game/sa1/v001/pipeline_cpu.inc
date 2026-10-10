@@ -3,6 +3,9 @@ SA1_CC_BUFFER = $05c0
 .endif
 ; 表示より最大二画像先まで処理する。metadataの三枠は地面の三重bufferと対応する。
 .import fx_obj_next, fx_obj_present, player4_next, player4_present
+.ifdef SA1_ACCURATE_DMA_BUDGET
+.import player4_uploaded
+.endif
 .export pipe_irq, irq_game, prefetch_finished
 .export pipe_flip, pipe_collect
 .export pipe_front_slot, pipe_target_slot, pipe_records, pipe_missed, pipe_pending
@@ -12,6 +15,9 @@ SA1_CC_BUFFER = $05c0
 .export pipe_irq_done, pipe_irq_transfer, pipe_wait_dma
 .export pipe_irq_exit
 .export pipe_dma_measured_end
+.ifdef SA1_FAST_DMA
+.export pipe_fast_begin, pipe_fast_done, pipe_record_offset
+.endif
 .segment "COLORBSS"
 pipe_records: .res 512*SA1_PIPELINE_DEPTH
 .segment "BSS"
@@ -47,6 +53,9 @@ pipe_desc_offset: .res 2
 pipe_dma_chunk: .res 2
 pipe_fast_end: .res 2
 pipe_fast_page: .res 2
+.ifdef SA1_ACCURATE_DMA_BUDGET
+pipe_cost_bytes: .res 2
+.endif
 .ifdef SA1_NATIVE_BACKGROUND
 pipe_background_version: .res 2
 pipe_background_source: .res 2
@@ -482,6 +491,10 @@ pipe_wait_dma:
   beq pipe_choose_target
   jsr pipe_flip
 pipe_choose_target:
+  .ifdef SA1_FRONT_MASK
+  lda pipe_presented_irq
+  jne pipe_irq_done
+  .endif
   .ifndef SA1_STAGED
   jsr pipe_collect
   .endif
@@ -554,7 +567,9 @@ pipe_prefilled:
   tax
   .ifndef SA1_ADAPTIVE_VRAM
   lda fx4_page
+  .ifndef SA1_FRONT_MASK
   eor #$3000
+  .endif
   sta pipe_records+6,x
   .endif
   stz fx4_dma_bytes
@@ -595,6 +610,9 @@ dma_chunk_ready:
   .ifdef SA1_FAST_DMA
   jsr pipe_try_fast_dma
   jcs pipe_transfer_complete
+  .ifdef SA1_FRONT_MASK
+  jmp pipe_transfer_pause
+  .endif
   .ifdef SA1_ADAPTIVE_VRAM
   ldx pipe_record_offset
   lda pipe_records+44,x
@@ -612,6 +630,14 @@ pipe_descriptor:
   tax
   jsr pipe_time_left
   lda pipe_records+208,x
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  sta pipe_cost_bytes
+  lsr
+  lsr
+  lsr
+  clc
+  adc pipe_cost_bytes
+  .endif
   .ifdef SA1_STAGED
   lsr
   lsr
@@ -632,6 +658,16 @@ pipe_descriptor:
   jcc pipe_transfer_pause
   sec
   sbc #192
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  sta pipe_cost_bytes
+  lsr
+  lsr
+  lsr
+  eor #$ffff
+  inc
+  clc
+  adc pipe_cost_bytes
+  .endif
   .ifdef SA1_STAGED
   sta pipe_dma_chunk
   lsr
@@ -809,9 +845,28 @@ pipe_after_flip_reserve:
   sbc #700
   bra pipe_reserved
 pipe_reserve_flip:
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  phx
+  ldx pipe_record_offset
+  lda pipe_records+18,x
+  beq pipe_reserve_small
+  cmp player4_uploaded
+  beq pipe_reserve_small
+  plx
+  lda pipe_available
+  sec
+  sbc #2500
+  bra pipe_reserved
+pipe_reserve_small:
+  plx
+  lda pipe_available
+  sec
+  sbc #1500
+  .else
   lda pipe_available
   sec
   sbc #2200
+  .endif
 pipe_reserved:
   bmi pipe_no_time
   sta pipe_available
@@ -832,18 +887,48 @@ pipe_try_fast_dma:
   lda pipe_records+2,x
   sec
   sbc pipe_records+4,x
-  beq pipe_fast_empty
+  jeq pipe_fast_empty
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  sta pipe_dma_chunk
+  asl
+  asl
+  sta pipe_cost_bytes
+  asl
+  clc
+  adc pipe_cost_bytes
+  adc pipe_dma_chunk
+  .else
   asl
   asl
   asl
   asl
+  .endif
   sta pipe_dma_chunk
   lda pipe_records+34,x
+  .ifdef SA1_ACCURATE_DMA_BUDGET
+  sta pipe_cost_bytes
+  .repeat 4
+    lsr
+  .endrepeat
+  sta pipe_line
+  .repeat 2
+    lsr
+  .endrepeat
+  clc
+  adc pipe_line
+  sta pipe_line
+  lda pipe_cost_bytes
+  xba
+  and #255
+  clc
+  adc pipe_line
+  .else
   lsr
   lsr
   lsr
   lsr
   lsr
+  .endif
   clc
   adc pipe_records+34,x
   adc pipe_dma_chunk
@@ -866,6 +951,8 @@ pipe_try_fast_dma:
   adc pipe_record_offset
   adc #208
   tax
+pipe_fast_begin:
+  nop
 pipe_fast_loop:
   lda pipe_records,x
   sta f:$004305
@@ -888,6 +975,7 @@ pipe_fast_loop:
   cpx pipe_fast_end
   bcc pipe_fast_loop
   ldx pipe_record_offset
+pipe_fast_done:
   lda pipe_records+2,x
   sta pipe_records+4,x
 pipe_fast_empty:

@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     def alloc(raw):
         nonlocal cursor
@@ -13,7 +13,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         while True:
             boundary=0x8000 if cursor<0x400000 else 0x10000
             if cursor%boundary+len(raw)>boundary:cursor=(cursor+boundary-1)//boundary*boundary
-            block=next(((a,b) for a,b in ((0x400000,0x440000),(0x591300,0x600000)) if cursor<b and cursor+len(raw)>a),None)
+            block=next(((a,b) for a,b in ((0x400000,0x440000),(0x591300,0x600000),*(([(0x7e0000,0x7eb000)]) if row_dirty_aligned else [])) if cursor<b and cursor+len(raw)>a),None)
             if block:cursor=block[1]
             else:break
         if cursor+len(raw)>0x7f0000:raise ValueError(f'compiled game ROM exhausted: {cursor:x}')
@@ -84,24 +84,44 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                     bounds=(int(xx.min()),int(yy.min()),int(xx.max())+1,int(yy.max())+1) if len(xx) else (0,0,0,0)
                     entries+=bytes(bounds)
                     if row_dirty:
-                        encoded=bytearray();previous=None;run=0
-                        step=8 if row_dirty_bands else 1
-                        for start in range(0,h,step):
-                            _,xs=np.nonzero(occupied[start:start+step])
-                            pair=(int(xs.min())//4,(int(xs.max())+4)//4) if len(xs) else (0,0)
-                            length=min(step,h-start)
-                            if pair==previous and run+length<=255:run+=length
-                            else:
-                                if previous is not None:encoded+=bytes((run,*previous))
-                                previous=pair;run=length
-                        encoded+=bytes((run,*previous))
-                        bounds_data.append(bytes(encoded));entries+=bytes(3)
+                        if row_dirty_aligned:
+                            phases=[]
+                            if w>=32 and h>=24:
+                                for yphase in range(8):
+                                    encoded=bytearray();previous=None;run=0
+                                    for start in range(-yphase,h,8):
+                                        _,xs=np.nonzero(occupied[max(0,start):min(h,start+8)])
+                                        pair=(int(xs.min())//4,(int(xs.max())+4)//4) if len(xs) else (0,0)
+                                        if pair==previous and run<8:run+=1
+                                        else:
+                                            if previous is not None:encoded+=struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
+                                            previous=pair;run=1
+                                    encoded+=struct.pack('<H',previous[0]|previous[1]<<6|(run-1)<<13)
+                                    phases.append(bytes(encoded))
+                            bounds_data.append(tuple(phases));entries+=bytes(3)
+                        else:
+                            encoded=bytearray();previous=None;run=0
+                            step=row_dirty_step if row_dirty_bands else 1
+                            for start in range(0,h,step):
+                                _,xs=np.nonzero(occupied[start:start+step])
+                                pair=(int(xs.min())//4,(int(xs.max())+4)//4) if len(xs) else (0,0)
+                                length=min(step,h-start)
+                                if pair==previous and run+length<=255:run+=length
+                                else:
+                                    if previous is not None:encoded+=bytes((run,*previous))
+                                    previous=pair;run=length
+                            encoded+=bytes((run,*previous))
+                            bounds_data.append(bytes(encoded));entries+=bytes(3)
             block=idx(bytes([len(heights)])+entries)
             struct.pack_into('<H',index,asset*512+w*2,block)
             for number,encoded in enumerate(bounds_data):deferred.append((block+1+number*10+7,encoded))
-    for location,encoded in deferred:index[location:location+3]=alloc(encoded).to_bytes(3,'little')
+    for location,encoded in deferred:
+        if isinstance(encoded,tuple):
+            pointer=alloc(b''.join(alloc(phase).to_bytes(3,'little') for phase in encoded)) if encoded else 0
+        else:pointer=alloc(encoded)
+        index[location:location+3]=pointer.to_bytes(3,'little')
     rom[0x7f0000:]=index
-    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands}
+    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':False,'verticalFlipSupported':False,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     return rom
 

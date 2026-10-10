@@ -15,7 +15,16 @@ def run(args):
     subprocess.run([str(a) for a in args],cwd=BUILD,check=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--wait-slots',action='store_true');ap.add_argument('--row-dirty-bands',action='store_true');ap.add_argument('--row-dirty',action='store_true');ap.add_argument('--front-delta',action='store_true');ap.add_argument('--native-background',action='store_true');ap.add_argument('--native-far',action='store_true');ap.add_argument('--key-buckets',action='store_true');ap.add_argument('--radix-sort',action='store_true');ap.add_argument('--adaptive-vram',action='store_true');ap.add_argument('--offload-sort',action='store_true');ap.add_argument('--fastrom-cpu',action='store_true');ap.add_argument('--packet-shapes',action='store_true');ap.add_argument('--prefill-pipeline',action='store_true');ap.add_argument('--cpu-edge-copy',action='store_true');ap.add_argument('--skip-far-clear',action='store_true');ap.add_argument('--linear-shape',action='store_true');ap.add_argument('--fast-left-clip',action='store_true');ap.add_argument('--staged-conversion',action='store_true');ap.add_argument('--temporal-sort',action='store_true');ap.add_argument('--shape-cache',action='store_true');ap.add_argument('--cpu-far',action='store_true');ap.add_argument('--cpu-fill',action='store_true');ap.add_argument('--cpu-code-copy',action='store_true');ap.add_argument('--fast-dma',action='store_true');ap.add_argument('--triple-bw',action='store_true');ap.add_argument('--large-edge-cache',action='store_true');ap.add_argument('--padded-pipeline',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--renderer',choices=['dma','shared','compiled','macros'],default='macros');ap.add_argument('--bucket-sort',action='store_true');ap.add_argument('--tile-dma',action='store_true');ap.add_argument('--pipeline',action='store_true');ap.add_argument('--pipeline-direct',action='store_true');ap.add_argument('--pipeline-irq',action='store_true');ap.add_argument('--stack-band',action='store_true');ap.add_argument('--stack-fill',action='store_true');ap.add_argument('--row-dirty-aligned',action='store_true');ap.add_argument('--visible-mask',action='store_true');ap.add_argument('--row-dirty-step',type=int,choices=[1,2,4,8,16],default=8);ap.add_argument('--changed-mask',action='store_true');ap.add_argument('--front-mask',action='store_true');ap.add_argument('--accurate-dma-budget',action='store_true');ap.add_argument('--occupancy',action='store_true');ap.add_argument('--wait-slots',action='store_true');ap.add_argument('--transfer-mask',action='store_true');ap.add_argument('--row-dirty-bands',action='store_true');ap.add_argument('--row-dirty',action='store_true');ap.add_argument('--front-delta',action='store_true');ap.add_argument('--native-background',action='store_true');ap.add_argument('--native-far',action='store_true');ap.add_argument('--key-buckets',action='store_true');ap.add_argument('--radix-sort',action='store_true');ap.add_argument('--adaptive-vram',action='store_true');ap.add_argument('--offload-sort',action='store_true');ap.add_argument('--fastrom-cpu',action='store_true');ap.add_argument('--packet-shapes',action='store_true');ap.add_argument('--prefill-pipeline',action='store_true');ap.add_argument('--cpu-edge-copy',action='store_true');ap.add_argument('--skip-far-clear',action='store_true');ap.add_argument('--linear-shape',action='store_true');ap.add_argument('--fast-left-clip',action='store_true');ap.add_argument('--staged-conversion',action='store_true');ap.add_argument('--temporal-sort',action='store_true');ap.add_argument('--shape-cache',action='store_true');ap.add_argument('--cpu-far',action='store_true');ap.add_argument('--cpu-fill',action='store_true');ap.add_argument('--cpu-code-copy',action='store_true');ap.add_argument('--fast-dma',action='store_true');ap.add_argument('--triple-bw',action='store_true');ap.add_argument('--large-edge-cache',action='store_true');ap.add_argument('--padded-pipeline',action='store_true');ap.add_argument('--clip-edges',action='store_true');ap.add_argument('--merge-dma',action='store_true');ap.add_argument('--redraw-all',action='store_true');ap.add_argument('--transfer-tiles',action='store_true');ap.add_argument('--pipeline-depth',type=int,choices=[3,4,5],default=3);args=ap.parse_args()
+    assert not args.stack_band or (args.pipeline_irq and args.native_background and not args.cpu_fill and not args.stack_fill)
+    if args.stack_fill:args.cpu_fill=True
+    assert not args.row_dirty_aligned or args.row_dirty
+    assert not args.visible_mask or args.transfer_mask
+    assert not args.changed_mask or args.front_mask
+    assert not args.front_mask or (args.transfer_mask and args.occupancy and args.accurate_dma_budget)
+    assert not args.accurate_dma_budget or (args.pipeline and args.fast_dma and not args.staged_conversion)
+    assert not args.occupancy or (args.native_background and args.triple_bw and not args.adaptive_vram and not args.front_delta)
+    assert not args.transfer_mask or (args.native_background and not args.adaptive_vram and not args.front_delta)
     assert not args.wait_slots or args.pipeline_irq
     assert not args.row_dirty_bands or args.row_dirty
     assert not args.row_dirty or (args.pipeline_direct and args.renderer=='macros' and not args.transfer_tiles)
@@ -70,6 +79,11 @@ def main():
     (BUILD/'ppu_sa1.bin').write_bytes(ppu)
     definitions=['FX_4BPP','FX_FULL_TRANSFER','FX_SMOOTH_DEPTH','FX_GSU_UV','FX_GSU_CLIP','FX_FAST_OBJ','FX_DYNAMIC_DMA','FX_FINE_DMA','FX_DESCRIPTOR_DMA','FX_GROUND_CACHE']
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
+    if args.changed_mask:defines+=['-D','SA1_CHANGED_MASK=1']
+    if args.front_mask:defines+=['-D','SA1_FRONT_MASK=1']
+    if args.accurate_dma_budget:defines+=['-D','SA1_ACCURATE_DMA_BUDGET=1']
+    if args.occupancy:defines+=['-D','SA1_OCCUPANCY=1']
+    if args.transfer_mask:defines+=['-D','SA1_TRANSFER_MASK=1']
     if args.wait_slots:defines+=['-D','SA1_WAIT_SLOTS=1']
     if args.front_delta:defines+=['-D','SA1_FRONT_DELTA=1']
     if args.native_background:defines+=['-D','SA1_NATIVE_BACKGROUND=1']
@@ -100,7 +114,7 @@ def main():
             text=src.read_text(encoding='utf-8').replace('lda #$5f','lda #$df').replace('adc #$5a','adc #$da')
             if name=='objects':text=text.replace('  jsr fx4_wait_obj_blank','  nop\n  nop\n  nop')
             if name=='objects' and args.pipeline:
-                text+='\n.export player4_next\n.import pipe_obj_pointer\n'
+                text+='\n.export player4_next, player4_uploaded\n.import pipe_obj_pointer\n'
                 text=text.replace('lda #fx_obj_present+128','lda pipe_obj_pointer\n  clc\n  adc #128').replace('lda #fx_obj_present','lda pipe_obj_pointer')
             if name=='ground' and args.pipeline:text='.import pipe_ground_wait\n'+text.replace('_fx_build_ground:\n','_fx_build_ground:\n  jsr pipe_ground_wait\n')
             if name=='ground' and args.staged_conversion:
@@ -114,6 +128,31 @@ def main():
             from sa1_pipeline_sources import prepare
             generated=prepare(name,src.read_text(encoding='utf-8'),direct=args.pipeline_direct,irq=args.pipeline_irq,transfer_tiles=args.transfer_tiles,merge_dma=args.merge_dma,padded=args.padded_pipeline,large_edge=args.large_edge_cache,triple_bw=args.triple_bw,cpu_copy=args.cpu_code_copy,cpu_fill=args.cpu_fill,cpu_far=args.cpu_far)
             src=BUILD/(name+'_pipeline.s');src.write_text(generated,encoding='utf-8')
+        if args.transfer_mask and name in ('dirty','renderer'):
+            text=src.read_text(encoding='utf-8')
+            if name=='dirty':
+                text='.setcpu "65816"\n.import sa1_tile_masks\n.import sa1_transfer_mask_capture: far\n'+text
+                text=text.replace('dirty_init:\n','dirty_init:\n  lda #0\n  sta f:$436800,x\n  sta f:$436802,x\n')
+                start=text.index('  .ifdef SA1_TILE_DMA\n  phx',text.index('dirty_rect:'))
+                end=text.index('  .endif',start)+len('  .endif')
+                text=text[:start]+text[start:end].replace('.ifdef SA1_TILE_DMA','.ifdef SA1_TRANSFER_MASK')+'\n'+text[start:]
+                mask_code='  lda f:$436800,x\n  ora $bc\n  sta f:$436800,x\n  lda f:$436802,x\n  ora $be\n  sta f:$436802,x\n'
+                if args.changed_mask:mask_code='  lda $b6\n  beq mask_mark_done\n'+mask_code+'mask_mark_done:\n'
+                text=text.replace('dirty_rect_row:\n', 'dirty_rect_row:\n'+mask_code)
+                text=text.replace('dirty_first:\n','dirty_first:\n  jsl sa1_transfer_mask_capture\n')
+            else:
+                text='.setcpu "65816"\n.import sa1_transfer_mask_prepare: far\n'+text
+                text=text.replace('  jsl sa1_prepare_transfer\n  jsl sa1_merge_dma','  jsl sa1_transfer_mask_prepare')
+            src=BUILD/(name+'_transfer_mask.s');src.write_text(text,encoding='utf-8')
+        if args.stack_band and name=='renderer':
+            text=src.read_text(encoding='utf-8')
+            text='.setcpu "65816"\n.import sa1_stack_clear_band: far\n'+text
+            text=text.replace('  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\nclear_scanline:', '  lda $011e\n  beq clear_band_dma\n  jsl sa1_stack_clear_band\n  jmp clear_band_finished\nclear_band_dma:\n  jsl sa1_dma_begin\n  sep #$20\n  lda #$84\n  sta $2230\n  rep #$20\nclear_scanline:',1)
+            text=text.replace('clear_tile_next:\n  jsl sa1_dma_end\n','clear_tile_next:\n  jsl sa1_dma_end\nclear_band_finished:\n',1)
+            src=BUILD/'renderer_stack_band.s';src.write_text(text,encoding='utf-8')
+        if args.stack_fill and name=='renderer':
+            text=src.read_text(encoding='utf-8').replace('sa1_cpu_clear_line','sa1_stack_clear_line')
+            src=BUILD/'renderer_stack_fill.s';src.write_text(text,encoding='utf-8')
         if args.row_dirty and name in ('shape','dirty'):
             text=src.read_text(encoding='utf-8')
             if name=='shape':
@@ -147,6 +186,23 @@ def main():
                     text=text.replace('dirty_bg:\n', 'dirty_bg:\n  jmp dirty_save\n')
                     text=text.replace('  inc $0116\n', '  inc $0116\n  jmp dirty_return\n',1)
             src=BUILD/(name+'_native_far.s');src.write_text(text,encoding='utf-8')
+        if args.occupancy and name in ('dirty','renderer'):
+            text=src.read_text(encoding='utf-8')
+            if name=='dirty':
+                text='.setcpu "65816"\n.import sa1_occupancy_capture: far\n'+text
+                a=text.index('dirty_compare:\n');b=text.index('dirty_bg:\n',a)
+                text=text[:a]+"dirty_compare:\n  lda dirty_i\n  cmp dirty_count\n  jcs dirty_bg\n  phx\n  stz dirty_ptr\n  jsr dirty_mark\n  plx\ndirty_next:\n  txa\n  clc\n  adc #10\n  tax\n  inc dirty_i\n  jmp dirty_compare\n"+text[b:]
+                if args.changed_mask:
+                    a=text.index('dirty_compare:\n');b=text.index('dirty_bg:\n',a)
+                    compare="dirty_compare:\n  lda dirty_i\n  cmp dirty_max\n  jcs dirty_bg\n  lda #1\n  sta $b6\n  lda dirty_i\n  cmp dirty_count\n  bcs changed_mask_mark\n  cmp $010e\n  bcs changed_mask_mark\n"
+                    for offset in (0,2,4,6):compare+=f'  lda f:${0x430000+offset:06x},x\n  cmp f:${0x431000+offset:06x},x\n  bne changed_mask_mark\n'
+                    compare+='  stz $b6\nchanged_mask_mark:\n  phx\n  lda dirty_i\n  cmp dirty_count\n  bcs changed_mask_old\n  stz dirty_ptr\n  jsr dirty_mark\nchanged_mask_old:\n  plx\n  phx\n  lda $b6\n  beq changed_mask_next\n  lda dirty_i\n  cmp $010e\n  bcs changed_mask_next\n  lda #$1000\n  sta dirty_ptr\n  jsr dirty_mark\nchanged_mask_next:\n  plx\ndirty_next:\n  txa\n  clc\n  adc #10\n  tax\n  inc dirty_i\n  jmp dirty_compare\n'
+                    text=text[:a]+compare+text[b:]
+                a=text.index('pipeline_merge:\n');b=text.index('  rtl',a)+len('  rtl')
+                text=text[:a]+'pipeline_merge:\n  jsl sa1_occupancy_capture\n  rtl'+text[b:]
+            else:
+                text=text.replace('  lda $0120,x\n  sta dirtyL\n  lda $0122,x\n  sta dirtyR','  lda #0\n  sta dirtyL\n  lda #128\n  sta dirtyR')
+            src=BUILD/(name+'_occupancy.s');src.write_text(text,encoding='utf-8')
         if args.adaptive_vram and name in ('dirty','renderer'):
             text=src.read_text(encoding='utf-8')
             text='.setcpu "65816"\n.import sa1_adaptive_bounds: far, sa1_adaptive_prepare: far\n'+text
@@ -216,8 +272,12 @@ def main():
     if args.pipeline:
         obj=BUILD/'pipeline_asm.o'
         run([CC/'ca65.exe',*defines,'-I',SA1,'-o',obj,SA1/'pipeline_sa1.s']);objs.append(obj)
+    if args.occupancy:
+        obj=BUILD/'occupancy.o';run([CC/'ca65.exe','-o',obj,SA1/'occupancy_game.s']);objs.append(obj)
+    if args.transfer_mask:
+        obj=BUILD/'transfer_mask.o';run([CC/'ca65.exe',*(['-D','SA1_OCCUPANCY=1'] if args.occupancy and not args.front_mask else []),*(['-D','SA1_FRONT_MASK=1'] if args.front_mask else []),*(['-D','SA1_CHANGED_MASK=1'] if args.changed_mask else []),*(['-D','SA1_VISIBLE_MASK=1'] if args.visible_mask else []),'-o',obj,SA1/'transfer_mask_game.s']);objs.append(obj)
     if args.row_dirty:
-        obj=BUILD/'row_dirty.o';run([CC/'ca65.exe','-o',obj,SA1/'row_dirty_game.s']);objs.append(obj)
+        obj=BUILD/'row_dirty.o';run([CC/'ca65.exe',*(['-D','SA1_ROW_DIRTY_ALIGNED=1'] if args.row_dirty_aligned else []),'-o',obj,SA1/'row_dirty_game.s']);objs.append(obj)
     if args.native_background:
         obj=BUILD/'background_cache.o';run([CC/'ca65.exe','-o',obj,SA1/'background_cache_sa1.s']);objs.append(obj)
     if args.key_buckets:
@@ -234,6 +294,8 @@ def main():
         obj=BUILD/'clip_left.o';run([CC/'ca65.exe','-o',obj,SA1/'clip_left_game.s']);objs.append(obj)
     if args.temporal_sort:
         obj=BUILD/'temporal_sort.o';run([CC/'ca65.exe','-o',obj,SA1/'temporal_sort_game.s']);objs.append(obj)
+    if args.stack_fill or args.stack_band:
+        obj=BUILD/'stack_fill.o';run([CC/'ca65.exe','-o',obj,SA1/'stack_fill_game.s']);objs.append(obj)
     if args.cpu_fill or args.cpu_far:
         obj=BUILD/'cpu_fill.o';run([CC/'ca65.exe','-o',obj,SA1/'cpu_fill_game.s']);objs.append(obj)
     if args.merge_dma:
@@ -259,14 +321,14 @@ def main():
         for key,value in sorted(variants.items()):
             fingerprint.update(str(key).encode());fingerprint.update(value[1].tobytes());fingerprint.update(str(value[1].shape).encode())
         stride=256 if args.padded_pipeline else 128
-        key=fingerprint.hexdigest()+args.renderer+str(stride)+str(args.row_dirty)+str(args.row_dirty_bands)
-        suffix=('_256' if args.padded_pipeline else '')+('_rows' if args.row_dirty else '')+('_bands' if args.row_dirty_bands else '')
+        key=fingerprint.hexdigest()+args.renderer+str(stride)+str(args.row_dirty)+str(args.row_dirty_bands)+str(args.row_dirty_step)+str(args.row_dirty_aligned)
+        suffix=('_256' if args.padded_pipeline else '')+('_rows' if args.row_dirty else '')+('_bands'+str(args.row_dirty_step) if args.row_dirty_bands else '')+('_aligned' if args.row_dirty_aligned else '')
         cache=BUILD/('compiled_cache'+suffix+'.bin');metadata=BUILD/('compiled_cache'+suffix+'.json')
         if cache.exists() and metadata.exists() and json.loads(metadata.read_text()).get('key')==key:
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands)
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -291,8 +353,11 @@ def main():
     rom[0x5e0000:0x5f0000]=bg
     if args.renderer=='macros':
         from sa1_background_compiled import build as compiled_background
-        assert json.loads((BUILD/'compiled_game_packing.json').read_text())['payloadEnd']<=0x7e0000
-        rom[0x7e0000:0x7f0000]=compiled_background(raw,BUILD)
+        near=compiled_background(raw,BUILD)
+        near_size=json.loads((BUILD/'compiled_background_packing.json').read_text())['payloadBytes']
+        assert near_size<=0xb000
+        assert args.row_dirty_aligned or json.loads((BUILD/'compiled_game_packing.json').read_text())['payloadEnd']<=0x7e0000
+        rom[0x7e0000:0x7e0000+near_size]=near[:near_size]
     struct.pack_into('<H',rom,0x7ffc,labels['reset'])
     struct.pack_into('<H',rom,0x7fea,labels['nmi_game'])
     struct.pack_into('<H',rom,0x7ffa,labels['nmi_game'])
@@ -302,7 +367,7 @@ def main():
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
-    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
+    (BUILD/'manifest.json').write_text(json.dumps({'romSha256':hashlib.sha256(rom).hexdigest(),'sa1CodeBytes':labels['__SA1_SIZE__'],'renderer':args.renderer,'paddedFramebuffer':False,'directFramebuffer':args.renderer=='macros','tileDma':args.tile_dma,'bucketSort':args.bucket_sort,'pipeline':args.pipeline,'pipelineDirect':args.pipeline_direct,'pipelineIrq':args.pipeline_irq,'pipelineDepth':args.pipeline_depth,'transferTiles':args.transfer_tiles,'redrawAll':args.redraw_all,'mergeDma':args.merge_dma,'clipEdges':args.clip_edges,'paddedPipeline':args.padded_pipeline,'workingFramebufferStride':256 if args.padded_pipeline else 128,'largeEdgeCache':args.large_edge_cache,'tripleBw':args.triple_bw,'fastDma':args.fast_dma,'cpuCodeCopy':args.cpu_code_copy,'cpuFill':args.cpu_fill,'cpuFar':args.cpu_far,'shapeCache':args.shape_cache,'temporalSort':args.temporal_sort,'stagedConversion':args.staged_conversion,'fastLeftClip':args.fast_left_clip,'skipFarClear':args.skip_far_clear,'linearShape':args.linear_shape,'cpuEdgeCopy':args.cpu_edge_copy,'prefillPipeline':args.prefill_pipeline,'packetShapes':args.packet_shapes,'offloadSort':args.offload_sort,'adaptiveVram':args.adaptive_vram,'radixSort':args.radix_sort,'keyBuckets':args.key_buckets,'nativeFar':args.native_far,'nativeBackground':args.native_background,'frontDelta':args.front_delta,'rowDirty':args.row_dirty,'rowDirtyBands':args.row_dirty_bands,'waitSlots':args.wait_slots,'transferMask':args.transfer_mask,'occupancy':args.occupancy,'accurateDmaBudget':args.accurate_dma_budget,'frontMask':args.front_mask,'changedMask':args.changed_mask,'visibleMask':args.visible_mask,'rowDirtyStep':args.row_dirty_step,'rowDirtyAligned':args.row_dirty_aligned,'stackFill':args.stack_fill,'stackBand':args.stack_band,'cpuCodeBank':0xc1 if args.fastrom_cpu else 0x7f,'stage':'dirty-tiles-two-pages','goal60fpsAchieved':False},indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

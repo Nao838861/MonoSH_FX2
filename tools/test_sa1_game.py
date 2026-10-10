@@ -33,7 +33,8 @@ def verify_pixels(dest,labels,config):
         planar=np.zeros((768,32),dtype=np.uint8)
         for plane in range(4):planar[:,plane//2*16+plane%2+np.arange(8)*2]=(((tiles>>plane)&1)*np.array([128,64,32,16,8,4,2,1])).sum(axis=2)
         vram=(dest/(prefix+'_vram.bin')).read_bytes()[page*2:page*2+24576]
-        assert vram==planar.tobytes(),f'{prefix}: converted VRAM differs'
+        start=1024 if config.get('visibleMask') else 0
+        assert vram[start:]==planar.tobytes()[start:],f'{prefix}: converted visible VRAM differs'
         if config.get('nativeFar'):
             from sa1_native_far import decode
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
@@ -217,6 +218,7 @@ end
 cb('_fx_frame',function()
  logic=logic+1
  begin=emu.getState().masterClock
+ if scenario:match('stress') then byte('_monosh_player_invuln',255)end
  if scenario:match('^boss') then
   byte('_monosh_player_invuln',255)
   if field>=90 then
@@ -272,6 +274,19 @@ cb('sa1_draw_done',function()
  local parts={};for name,v in pairs(cpuParts)do parts[#parts+1]=string.format('"%s":%.6f',name,v)end
  times[#times+1]=string.format('{"field":%d,"clearAndBgMs":%.6f,"drawMs":%.6f,"totalSa1Ms":%.6f,"dirtyMs":%.6f,"clearMs":%.6f,"bgMs":%.6f,"nativeMs":%.6f,"compactMs":%.6f,"logicMs":%.6f,"dirtyBytes":%d,"cpuParts":{%s}}',field,(drawbegin-sa1begin)/21477.272,(now-drawbegin)/21477.272,(now-sa1begin)/21477.272,dirtyMs,clearMs,bgMs,nativeMs,(now-nativeDone)/21477.272,logicMs,dirtyBytes,table.concat(parts,','))
 end,emu.cpuType.sa1)
+if labels.pipe_fast_begin then
+ local fastClock,fastBytes,fastCount,fastLine=0,0,0,0
+ local fastLog=assert(io.open(output..'/fast_dma.jsonl','w'))
+ cb('pipe_fast_begin',function()
+  local mt=emu.memType.snesMemory;local record=0x7e0000+labels.pipe_records+emu.read16(0x7e0000+labels.pipe_record_offset,mt)
+  fastClock=emu.getState().masterClock;fastLine=emu.getState()['ppu.scanline']
+  fastBytes=emu.read16(record+34,mt);fastCount=(emu.read16(record+2,mt)-emu.read16(record+4,mt))/6
+ end)
+ cb('pipe_fast_done',function()
+  local st=emu.getState()
+  fastLog:write(string.format('{"field":%d,"bytes":%d,"count":%d,"line":%d,"endLine":%d,"ms":%.6f}\\n',field,fastBytes,fastCount,fastLine,st['ppu.scanline'],(st.masterClock-fastClock)/21477.272));fastLog:flush()
+ end)
+end
 if labels.pipe_flip then cb('pipe_flip',function()flipBegin=emu.getState().masterClock end)end
 cb('dma_finished',function()
  presents=presents+1
@@ -314,7 +329,15 @@ cb('dma_finished',function()
   f:write(table.concat(t));f:close()
  end
 end)
-emu.addEventCallback(function()emu.setInput({a=true},0)end,emu.eventType.inputPolled)
+emu.addEventCallback(function()
+ local input={a=true}
+ if scenario:match('move') then
+  local phase=logic%240
+  input.right=phase<60;input.left=phase>=120 and phase<180
+  input.up=phase>=60 and phase<120;input.down=phase>=180
+ end
+ emu.setInput(input,0)
+end,emu.eventType.inputPolled)
 emu.addEventCallback(function()
  field=field+1
  local finished=field==maxframe or (targetPresents>0 and presents>=targetPresents)
@@ -352,7 +375,8 @@ end,emu.eventType.endFrame)
     summary['labelsSha256']=hashlib.sha256((BUILD/'game.lbl').read_bytes()).hexdigest()
     intervals=np.diff([p['visibleField'] for p in summary['presentationTimes'][2:]])
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
-    summary['goal60fpsAchieved']=bool(len(intervals) and np.all(intervals==1))
+    summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
+    summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
     (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 

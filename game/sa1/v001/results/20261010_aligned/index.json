@@ -1,0 +1,155 @@
+[
+  {
+    "scenario": "bossoccupancy",
+    "fields": 1200,
+    "logic": 1084,
+    "presents": 1080,
+    "pixelMatchedPresents": 136,
+    "romSha256": "4528bb8314349f856e38bfbf01df0773c4502313fcb9dcedbbc3e1cb801c29b2",
+    "labelsSha256": "75f899a00b36ee50c74421bc82462badf0bed9725418a9fbe0d8e26d630131d6",
+    "presentationFieldIntervals": {
+      "1": 1043,
+      "2": 34
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossoccupancymask",
+    "fields": 1200,
+    "logic": 1088,
+    "presents": 1084,
+    "pixelMatchedPresents": 136,
+    "romSha256": "ba3a83b5d1ac101e9616bf4acd632625f827bda677481becd9ecf871466c104b",
+    "labelsSha256": "11025625b5600e67707b0b4af80facea3120f75143a91c8397dfee87217750ba",
+    "presentationFieldIntervals": {
+      "1": 1051,
+      "2": 30
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossbudgetprofile",
+    "fields": 600,
+    "logic": 501,
+    "presents": 497,
+    "pixelMatchedPresents": 126,
+    "romSha256": "cfea072421aa74250819a7c4edf26dfb6bc7b7e8bff419bf230370294db34669",
+    "labelsSha256": "8a386170034c1239ebd4fd358dfec195826ef5d52b53697908a92d89d979b430",
+    "presentationFieldIntervals": {
+      "1": 477,
+      "2": 17
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossfrontmask",
+    "fields": 1200,
+    "logic": 295,
+    "presents": 291,
+    "pixelMatchedPresents": 122,
+    "romSha256": "10574230cf6d4fed93df6eddc219966b50139ee9a08c915edc973a17c9cccdbc",
+    "labelsSha256": "354fbc1a6ea629a11629a8c40ed0808eeaa8d6e909fc374cf360698f9a1b4f63",
+    "presentationFieldIntervals": {
+      "1": 283,
+      "2": 5
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossfrontmask48",
+    "fields": 1200,
+    "logic": 308,
+    "presents": 304,
+    "pixelMatchedPresents": 123,
+    "romSha256": "6cf4756835af867b3f053db88564253cb778b28207e6635059838d2e904aafac",
+    "labelsSha256": "bfb20b833e87cc36d4ad5a3c99b1c5d19688c7bd341042171e4c6498cd2a9346",
+    "presentationFieldIntervals": {
+      "1": 296,
+      "2": 5
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossfrontmask4visible",
+    "fields": 1200,
+    "logic": 1086,
+    "presents": 1082,
+    "pixelMatchedPresents": 136,
+    "romSha256": "6c928409cdffad893e4484c6bf6220670f6a3d66130fc5af1d04745d0b6b81b3",
+    "labelsSha256": "7eb5ef18c8b764c70d8cd0bc88670f2909a143f282e48cdca7cbae8eb4a694c7",
+    "presentationFieldIntervals": {
+      "1": 1051,
+      "2": 26,
+      "3": 1,
+      "4": 1
+    },
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossalignedfront",
+    "fields": 1200,
+    "logic": 1104,
+    "presents": 1100,
+    "pixelMatchedPresents": 136,
+    "romSha256": "5f7386196df6f6e70c1c037ad0a1ed557bd79867c176e8de21dd8035f0fbf483",
+    "labelsSha256": "7753085aafc8b14dd69e74ef7b1f4b3f7fd7be84e183d082763f2391abb88436",
+    "presentationFieldIntervals": {
+      "1": 1084,
+      "2": 13
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossalignedfill",
+    "fields": 1200,
+    "logic": 1082,
+    "presents": 1078,
+    "pixelMatchedPresents": 135,
+    "romSha256": "1c537064a1c922fbaa359d493dc4f0731b953bc8b490471419c7aca32c37166e",
+    "labelsSha256": "e2d0d0eda8aecbdd123d01f2ea86f968febae871a4e6fb4fad4a0b4564550af5",
+    "presentationFieldIntervals": {
+      "1": 1040,
+      "2": 35
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossalignedstack",
+    "fields": 600,
+    "logic": 498,
+    "presents": 494,
+    "pixelMatchedPresents": 126,
+    "romSha256": "7488087e354ca9dbb73110404e3d8ea87239cba7789d008086c1846a08229d3d",
+    "labelsSha256": "b51f57322fd2e9954aa9ed07d5539abe6104e4ff4435067fbd189cb77c284c31",
+    "presentationFieldIntervals": {
+      "1": 472,
+      "2": 19
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "bossalignedstackband",
+    "fields": 1200,
+    "logic": 1108,
+    "presents": 1104,
+    "pixelMatchedPresents": 136,
+    "romSha256": "bdeceac2dad99ccd1ad376530f57d1881f94fcea0a6372224178e4d53b18b84b",
+    "labelsSha256": "faf5084ca88e6ecc5b6316c2a172ab678005ad694cae759361a5376833de040b",
+    "presentationFieldIntervals": {
+      "1": 1093,
+      "2": 7,
+      "3": 1
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false
+  },
+  {
+    "scenario": "movestress_alignedstackband",
+    "fields": 600,
+    "logic": 514,
+    "presents": 510
+  }
+]
