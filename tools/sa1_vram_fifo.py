@@ -2,12 +2,16 @@
 from sa1_vram_four import change
 
 
-def sparse_map(text,fast=False,fused=False):
+def sparse_map(text,fast=False,fused=False,cpu=False):
     if fast:text=text.replace('$430800','$434000').replace('$430804','$434004')
     text=text.replace('$2420','$2400').replace('$2421','$2401')
     text='.setcpu "65816"\n.import sa1_fifo_allocate: far\n'+text
     text=change(text,'sa1_sparse_map_prepare:\n  rep #$30\n',
                 'sa1_sparse_map_prepare:\n  rep #$30\n  jsl sa1_fifo_allocate\n')
+    if cpu:
+        begin=text.index('sa1_sparse_map_prepare:\n')
+        end=text.index('sm_empty_map:\n',begin)
+        return text[:begin]+'sa1_sparse_map_prepare:\n  jsl sa1_fifo_allocate\n  rtl\n'+text[end:]
     text=change(text,'  lda #$2401\n  sta smTile',
                 '  lda $01a0\n  sec\n  sbc $01a2\n  ora #$2400\n  sta smTile')
     if fused:
@@ -29,7 +33,7 @@ def sparse_map(text,fast=False,fused=False):
   dec smCount''')
 
 
-def pipeline(text,build,depth,archive=False):
+def pipeline(text,build,depth,archive=False,cpu=False):
     if archive:
         begin=text.index('  .ifdef SA1_DEEP_BW\n',text.index('  jsl four_map_flip\n'))
         end=text.index('  ldx pipe_record_offset\n',begin)
@@ -76,5 +80,26 @@ def pipeline(text,build,depth,archive=False):
     ring=ring.replace('  cmp #3\n','  cmp #'+str(depth)+'\n')
     begin=ring.index('  lda p3NextPage\n');end=ring.index('  sta p3NextPage\n',begin)+len('  sta p3NextPage\n')
     ring=ring[:begin]+ring[end:]
+    if cpu:
+        text='.import fifo_map_deferred: far\n'+text
+        text=change(text,'render_started:\n  lda #1\n  sta f:$003100\n',
+                    'render_started:\n  lda #1\n  sta f:$003100\n  php\n  cli\n  jsl $7f0000+fifo_map_deferred\n  plp\n')
+        split=ring.index('p3Flip:\n')
+        ring=ring[:split]+change(ring[split:],'  lda pipe_target_slot\n  pha\n', '''  lda p3Head
+  asl
+  tax
+  lda p3Queue,x
+  .repeat 9
+    asl
+  .endrepeat
+  tax
+  lda pipe_records+62,x
+  cmp #1
+  beq :+
+  rts
+:
+  lda pipe_target_slot
+  pha
+''')
     (build/'vram_fifo_cpu.inc').write_text(ring,encoding='utf-8')
     return change(text,'.include "vram_four_cpu.inc"','.include "vram_fifo_cpu.inc"')

@@ -28,6 +28,9 @@ four_map_collect:
   lda f:fifo_map_bases,x
   plx
   sta pipe_records+60,x
+.ifdef SA1_FIFO_CPU_MAP
+  stz pipe_records+62,x
+.else
   sta f:$002181
   lda pipe_records,x
   and #$8400
@@ -46,6 +49,7 @@ four_map_collect:
   lda #1
   sta f:$00420b
   rep #$30
+.endif
 .endif
 .else
   lda pipe_records+2,x

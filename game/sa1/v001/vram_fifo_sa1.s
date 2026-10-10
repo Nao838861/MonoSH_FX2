@@ -207,7 +207,7 @@ oMapOffset=$d6
 oMapCount=$d8
 sa1_sparse_direct_finish:
   rep #$30
-.ifdef SA1_FIFO_FUSED_MAP
+.if .defined(SA1_FIFO_FUSED_MAP) && !.defined(SA1_FIFO_CPU_MAP)
   lda $019a
   clc
   adc #$6040
@@ -254,7 +254,7 @@ fifo_descriptor:
   lda f:$430802,x
 .endif
   sta oSource
-.ifdef SA1_FIFO_FUSED_MAP
+.if .defined(SA1_FIFO_FUSED_MAP) && !.defined(SA1_FIFO_CPU_MAP)
   lda f:$434004,x
   .repeat 3
     lsr
@@ -321,7 +321,7 @@ fifo_piece:
 .else
   sta f:$434004,x
 .endif
-.ifdef SA1_FIFO_FUSED_MAP
+.if .defined(SA1_FIFO_FUSED_MAP) && !.defined(SA1_FIFO_CPU_MAP)
   ldy oMapOffset
   .repeat 4
     lsr
