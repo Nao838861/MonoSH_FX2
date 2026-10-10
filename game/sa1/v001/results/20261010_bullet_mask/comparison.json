@@ -1,0 +1,83 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_bulletmask_arithmetic_v1_tracepalette",
+      "fields": 800,
+      "logic": 712,
+      "presents": 705,
+      "pixelMatchedPresents": 129,
+      "romSha256": "6987cb2834e5bc526820ca688d5302eeb6e47681bd194e85b40debd338358434",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 696,
+        "2": 6
+      },
+      "maxSa1Ms": 23.383603
+    },
+    {
+      "scenario": "movestress_bulletmask_arithmetic_v1_long_tracepalette",
+      "fields": 1800,
+      "logic": 1696,
+      "presents": 1689,
+      "pixelMatchedPresents": 146,
+      "romSha256": "6987cb2834e5bc526820ca688d5302eeb6e47681bd194e85b40debd338358434",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1664,
+        "2": 22
+      },
+      "maxSa1Ms": 24.01115
+    },
+    {
+      "scenario": "flipfixture_bulletmask_arithmetic_v1_tracepalette",
+      "fields": 230,
+      "logic": 124,
+      "presents": 121,
+      "pixelMatchedPresents": 120,
+      "romSha256": "6987cb2834e5bc526820ca688d5302eeb6e47681bd194e85b40debd338358434",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 100,
+        "2": 16,
+        "3": 2
+      },
+      "maxSa1Ms": 28.842397
+    },
+    {
+      "scenario": "flipfixture_bulletopaque8_v1_tracepalette",
+      "fields": 230,
+      "logic": 124,
+      "presents": 120,
+      "pixelMatchedPresents": 120,
+      "romSha256": "06d566a98097e71efdeb343164631eddb839fe0e5f4f961766cc212a897424f3",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 100,
+        "2": 14,
+        "3": 3
+      },
+      "maxSa1Ms": 28.876014
+    },
+    {
+      "scenario": "movestress_bulletopaque8_v1_long_tracepalette",
+      "fields": 1800,
+      "logic": 1697,
+      "presents": 1690,
+      "pixelMatchedPresents": 146,
+      "romSha256": "06d566a98097e71efdeb343164631eddb839fe0e5f4f961766cc212a897424f3",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1666,
+        "2": 21
+      },
+      "maxSa1Ms": 24.206519
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "evidenceSha256": "8cbacab0847c00785f66f0d7d8891f4b3130e17759d8d6d3f0668e57e6bca7e0"
+}

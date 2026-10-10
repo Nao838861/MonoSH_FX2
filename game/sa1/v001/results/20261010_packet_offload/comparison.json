@@ -1,0 +1,149 @@
+{
+  "cases": [
+    {
+      "scenario": "movestress_packetoffload_v1_tracepalette",
+      "fields": 800,
+      "logic": 710,
+      "presents": 703,
+      "pixelMatchedPresents": 129,
+      "romSha256": "8e8a4a460ddf128a7030d64b3ba239523e8a53b262c4feaaf0ad63e4c5a4a5c4",
+      "labelsSha256": "7c4e20e15039f14c60624312d6db014345f0e917d94b8799357b964f458a70f8",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 692,
+        "2": 8
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 24.161355,
+      "meanActiveCpuMs": 11.044205961864407
+    },
+    {
+      "scenario": "movestress_packetoffload_v1_long_tracepalette",
+      "fields": 1800,
+      "logic": 1690,
+      "presents": 1683,
+      "pixelMatchedPresents": 146,
+      "romSha256": "8e8a4a460ddf128a7030d64b3ba239523e8a53b262c4feaaf0ad63e4c5a4a5c4",
+      "labelsSha256": "7c4e20e15039f14c60624312d6db014345f0e917d94b8799357b964f458a70f8",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1652,
+        "2": 28
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 25.195192,
+      "meanActiveCpuMs": 10.69673158056872
+    },
+    {
+      "scenario": "movestress_packetiram_v1_tracepalette",
+      "fields": 800,
+      "logic": 710,
+      "presents": 703,
+      "pixelMatchedPresents": 129,
+      "romSha256": "0f7474c51800a0f71dd6a368099fcba4d019714f014ba3c66904716def459b13",
+      "labelsSha256": "e9a74e19698aa678b89125157b5030520354c80da979fca866653c85188d825c",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 692,
+        "2": 8
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 23.160018,
+      "meanActiveCpuMs": 11.028434446327683,
+      "meanPacketPrepareMs": 0.573897712270804,
+      "maxPacketPrepareMs": 0.917435
+    },
+    {
+      "scenario": "movestress_packetiram_arrays_v2_tracepalette",
+      "fields": 800,
+      "logic": 710,
+      "presents": 703,
+      "pixelMatchedPresents": 129,
+      "romSha256": "4cac4d98ba2d1d572380d1452e0c74606368fa3ae99666f09836de6fa3b2856f",
+      "labelsSha256": "91819969eee8af9e64b1b2a28d2f4740f4b0c638cd4f99d05d71815b51bb4578",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 692,
+        "2": 8
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 24.16359,
+      "meanActiveCpuMs": 11.041839758474577,
+      "meanPacketPrepareMs": 0.5760151325811002,
+      "maxPacketPrepareMs": 0.990349
+    },
+    {
+      "scenario": "movestress_packetiram_arrays_v2_long_tracepalette",
+      "fields": 1800,
+      "logic": 1690,
+      "presents": 1683,
+      "pixelMatchedPresents": 146,
+      "romSha256": "4cac4d98ba2d1d572380d1452e0c74606368fa3ae99666f09836de6fa3b2856f",
+      "labelsSha256": "91819969eee8af9e64b1b2a28d2f4740f4b0c638cd4f99d05d71815b51bb4578",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1652,
+        "2": 28
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 25.318672,
+      "meanActiveCpuMs": 10.689695973341232,
+      "meanPacketPrepareMs": 0.6004452616933097,
+      "maxPacketPrepareMs": 0.990349
+    },
+    {
+      "scenario": "bossmovestress_packetiram_arrays_v2_tracepalette",
+      "fields": 1800,
+      "logic": 1672,
+      "presents": 1669,
+      "pixelMatchedPresents": 145,
+      "romSha256": "4cac4d98ba2d1d572380d1452e0c74606368fa3ae99666f09836de6fa3b2856f",
+      "labelsSha256": "91819969eee8af9e64b1b2a28d2f4740f4b0c638cd4f99d05d71815b51bb4578",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 1625,
+        "2": 41
+      },
+      "stalledTailFields": 1,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 21.056119,
+      "meanActiveCpuMs": 8.962892102932376,
+      "meanPacketPrepareMs": 0.7770913494913225,
+      "maxPacketPrepareMs": 1.333596
+    },
+    {
+      "scenario": "flipfixture_packetiram_arrays_v2_tracepalette",
+      "fields": 232,
+      "logic": 124,
+      "presents": 121,
+      "pixelMatchedPresents": 120,
+      "romSha256": "4cac4d98ba2d1d572380d1452e0c74606368fa3ae99666f09836de6fa3b2856f",
+      "labelsSha256": "91819969eee8af9e64b1b2a28d2f4740f4b0c638cd4f99d05d71815b51bb4578",
+      "irqMathRegistersVerified": true,
+      "goal60fpsAchieved": false,
+      "presentationFieldIntervals": {
+        "1": 96,
+        "2": 22
+      },
+      "stalledTailFields": 0,
+      "firstVisibleField": 90,
+      "maxSa1Ms": 30.102799,
+      "meanActiveCpuMs": 7.882875756097561,
+      "meanPacketPrepareMs": 0.2522579918699187,
+      "maxPacketPrepareMs": 0.357401
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "evidenceSha256": "53eedf9655976804a88b6ec796a4a6084f4c01e922c3f70dd3d1b3c24073da30"
+}

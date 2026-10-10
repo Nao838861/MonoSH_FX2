@@ -209,6 +209,9 @@ words_row:
   adc cStart
   tax
   ldy #4
+  .ifdef SA1_BULLET_OPAQUE8
+  jmp words_opaque8
+  .endif
 words_interior:
   .ifdef SA1_BULLET_OPACITY
   lsr cOpaque
@@ -231,6 +234,22 @@ words_interior:
   bra words_interior_next
 words_interior_masked:
   sta cValue
+  .ifdef SA1_BULLET_MASK_ARITHMETIC
+  ; 各nibbleの0だけを$Fにする。加算はnibble間のcarryを起こさない。
+  and #$7777
+  clc
+  adc #$7777
+  ora cValue
+  eor #$ffff
+  and #$8888
+  sta cMask
+  lsr
+  ora cMask
+  sta cMask
+  lsr
+  lsr
+  ora cMask
+  .else
   phx
   and #255
   tax
@@ -246,6 +265,7 @@ words_interior_masked:
   xba
   ora cMask
   plx
+  .endif
   and a:$0000,x
   ora cValue
   sta a:$0000,x
@@ -274,6 +294,21 @@ words_visible:
   lda [cRecord],y
   sta cValue
   jeq words_next_word
+  .ifdef SA1_BULLET_MASK_ARITHMETIC
+  and #$7777
+  clc
+  adc #$7777
+  ora cValue
+  eor #$ffff
+  and #$8888
+  sta cMask
+  lsr
+  ora cMask
+  sta cMask
+  lsr
+  lsr
+  ora cMask
+  .else
   and #255
   tax
   lda f:cache_masks,x
@@ -287,6 +322,7 @@ words_visible:
   and #255
   xba
   ora cMask
+  .endif
   sta cMask
   lda cStart
   clc
@@ -357,6 +393,32 @@ words_next_row:
   plb
   sec
   rtl
+  .ifdef SA1_BULLET_OPAQUE8
+words_opaque8:
+  ; headerの8bitが全て立つ連続16byteだけを判定・反復なしで写す。
+  lda cOpaque
+  and #255
+  cmp #255
+  jne words_interior
+  .repeat 8
+    lda [cRecord],y
+    sta a:$0000,x
+    iny
+    iny
+    inx
+    inx
+  .endrepeat
+  lda cOpaque
+  xba
+  and #255
+  sta cOpaque
+  lda cCount
+  sec
+  sbc #8
+  sta cCount
+  jeq words_next_row
+  jmp words_interior
+  .endif
 .segment "GSU"
 cache_dimensions:
 .incbin "flip_dimensions.bin"

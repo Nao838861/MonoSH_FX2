@@ -138,6 +138,9 @@ local padded=PADDED
 local pipeline=PIPELINE
 local vramPrefetch3=VRAMPREFETCH3
 local vramFourShared=VRAMFOURSHARED
+local packetOffload=PACKETOFFLOAD
+local packetIramArrays=PACKETIRAMARRAYS
+local packetRunning=false
 local cpuCodeBase=CPUCODEBASE
 local field,logic,presents=0,0,0
 local finishedCapture=false
@@ -222,9 +225,11 @@ end
 local function cb(name,fn,cpu)
  cpu=cpu or emu.cpuType.snes
  local gameHook=GAMEOFFLOAD and (name=='_fx_build_packet' or name=='initialized' or name=='sorted' or name=='packet_done' or name=='sa1_list_sort')
- if gameHook then cpu=emu.cpuType.sa1 end
+ local packetHook=packetOffload and (name=='initialized' or name=='sorted' or name=='packet_done' or name=='sa1_list_sort')
+ if gameHook or packetHook then cpu=emu.cpuType.sa1 end
+ if packetHook then local run=fn;fn=function()if packetRunning then run()end end end
  local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
- local a=labels[name]+(gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
+ local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
 if COMPACTGAME then
@@ -325,9 +330,18 @@ if pipeline then
  end,emu.callbackType.write,0x4202,0x4206,emu.cpuType.snes,emu.memType.snesMemory)
 end
 cb('_fx_build_packet',function()packetClock=activeClock() end)
-for _,name in ipairs({'initialized','sorted','packet_done'})do
- cb(name,function()local c=activeClock();cpuParts['packet_'..name]=(c-packetClock)/21477.272;packetClock=c end)
+if packetOffload and labels.sa1_packet_finished then
+ local packetLog=assert(io.open(output..'/packet_prepare.jsonl','w'))
+ local packetBegin=0
+ cb('sa1_packet_prepare',function()packetRunning=true;packetBegin=emu.getState().masterClock end,emu.cpuType.sa1)
+ cb('sa1_packet_finished',function()
+  packetLog:write(string.format('{"field":%d,"ms":%.6f,"inputCount":%d,"outputCount":%d}\\n',field,(emu.getState().masterClock-packetBegin)/21477.272,emu.read16(0x431404,emu.memType.sa1Memory),emu.read16(0x431402,emu.memType.sa1Memory)));packetLog:flush()
+  packetRunning=false
+ end,emu.cpuType.sa1)
 end
+if not packetOffload then for _,name in ipairs({'initialized','sorted','packet_done'})do
+ cb(name,function()local c=activeClock();cpuParts['packet_'..name]=(c-packetClock)/21477.272;packetClock=c end)
+end end
 if pipeline then
  cb('dma_started',function()
   local state=emu.getState();dmaClock=state.masterClock;dmaLine=state['ppu.scanline'];dmaLength=emu.read16(0x4305,emu.memType.snesMemory)
@@ -368,16 +382,16 @@ if pipeline then
 end
 if labels.sa1_list_sort or labels.sa1_sort_packet or labels.sa1_temporal_prepare or labels.sa1_radix_sort or labels.sa1_key_buckets then
  cb(labels.sa1_list_sort and 'sa1_list_sort' or labels.sa1_key_buckets and 'sa1_key_buckets' or labels.sa1_radix_sort and 'sa1_radix_sort' or (labels.sa1_sort_packet and 'sa1_sort_packet' or 'sa1_temporal_prepare'),function()
-  local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory;local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
-  local n=GAMEOFFLOAD and emu.read16(labels.packet_work+8,emu.memType.sa1Memory) or emu.read16(base+labels.packet_work+8,mt)
+  local mt=(GAMEOFFLOAD or packetOffload) and emu.memType.sa1Memory or emu.memType.snesMemory;local base=packetOffload and (packetIramArrays and 0 or 0x430000) or GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
+  local n=packetOffload and emu.read16(0x700+labels.packet_work+8,mt) or GAMEOFFLOAD and emu.read16(labels.packet_work+8,emu.memType.sa1Memory) or emu.read16(base+labels.packet_work+8,mt)
   sortReference={}
   for i=0,n-2,2 do sortReference[#sortReference+1]={key=emu.read16(base+labels.keys+i,mt),value=emu.read16(base+labels.order+i,mt),index=i}end
   table.sort(sortReference,function(a,b)return a.key<b.key or (a.key==b.key and a.index<b.index)end)
  end)
  cb('sorted',function()
   if sortReference then
-   local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
-   local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory
+   local base=packetOffload and (packetIramArrays and 0 or 0x430000) or GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
+   local mt=(GAMEOFFLOAD or packetOffload) and emu.memType.sa1Memory or emu.memType.snesMemory
    for i,v in ipairs(sortReference)do assert(emu.read16(base+labels.order+(i-1)*2,mt)==v.value,'packet sort changed depth/priority/stability field='..field..' index='..i..' expected='..v.value..' key='..v.key..' actual='..emu.read16(base+labels.order+(i-1)*2,mt))end
    sortReference=nil
   end
@@ -502,6 +516,11 @@ cb('logic_finished',function()
    emu.write(a+4,size,mt);emu.write(a+5,size,mt);emu.write(a+6,assets[i],mt);emu.write(a+7,flags,mt)
    emu.write16(a+8,0,mt)
   end
+ end
+ if packetOffload and (scenario:match('^flipfixture') or scenario:match('^leftfixture')) then
+  local mt=emu.memType.snesMemory;local n=emu.read16(0x7e0000+labels._fx_packet_count,mt)
+  byte('_fx_draw_count',n)
+  for i=0,n*10-1 do emu.write(0x7e0000+labels._fx_draw+i,emu.read(0x7e0000+labels._fx_packet+i,mt),mt)end
  end
  logicMs=(emu.getState().masterClock-begin)/21477.272
  local parts={};for name,v in pairs(cpuParts)do parts[#parts+1]=string.format('"%s":%.6f',name,v)end
@@ -708,6 +727,8 @@ end,emu.eventType.endFrame)
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
+    script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
+    script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
     script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
     path=dest/'test.lua';path.write_text(script)
