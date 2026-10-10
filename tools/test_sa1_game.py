@@ -45,7 +45,7 @@ def verify_pixels(dest,labels,config):
             whole=(dest/(prefix+'_vram.bin')).read_bytes()
             converted=bytearray()
             for tile in range(32,768):
-                map_base=0xc000 if config.get('fixedMap') else 0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
+                map_base=page*2+0x2800 if config.get('vramFourOwned') else 0xc000 if config.get('fixedMap') else 0xc000 if config.get('vramFourShared') else page*2+0x800 if config.get('vramPrefetch3') else 0xc000
                 entry=struct.unpack_from('<H',whole,map_base+tile*2)[0]
                 assert entry&0xfc00==0x2400,f'{prefix}: dense tile attributes differ'
                 address=(ppu_state['bg1Chr'] if ppu_state else page*2)+(entry&1023)*32
@@ -143,6 +143,7 @@ local padded=PADDED
 local pipeline=PIPELINE
 local vramPrefetch3=VRAMPREFETCH3
 local vramFourShared=VRAMFOURSHARED
+local vramFourOwned=VRAMFOUROWNED
 local fixedMap=FIXEDMAP
 local fixedMapDelta=FIXEDMAPDELTA
 local fixedMapDeltaDma=FIXEDMAPDELTADMA
@@ -313,10 +314,16 @@ emu.addMemoryCallback(function(address,value)
     local last=first+emu.read16(0x4305,emu.memType.snesMemory)
     local fixedOverlap=(first<1024 and last>0) or (first<0x4400 and last>0x4000)
     if vramFourShared then fixedOverlap=(first<0x9000 and last>0x8c00) or (first<0xc000 and last>0xbc00) end
+    if vramFourOwned then
+     local base=math.floor(first/0x3000)*0x3000
+     local a=first-base;local b=last-base
+     local playerUpload=first==0xc800 and last==0xcb80 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
+     fixedOverlap=not (playerUpload or (base<0xc000 and ((a>=0x20 and b<=0x2800) or (a==0x2840 and b==0x2e00) or (a>=0x2e00 and b<=0x3000))))
+    end
     if fixedMap then
      local playerUpload=first==0xc800 and last==0xcb80 and emu.read(0x4304,emu.memType.snesMemory)==0xdf
      local mapUpload=fixedMapDelta and first==0xc040 and last==0xc600 and emu.read(0x4304,emu.memType.snesMemory)==0x7e
-     if fixedMapDeltaDma and first>=0xbc40 and last<=0xc200 and emu.read(0x4304,emu.memType.snesMemory)==1 then mapUpload=true end
+     if fixedMapDeltaDma and first>=0xc040 and last<=0xc600 and emu.read(0x4304,emu.memType.snesMemory)==1 then mapUpload=true end
      fixedOverlap=not (playerUpload or mapUpload or (first>=0x20 and last<=0x5c20) or (first>=0x6020 and last<=0xbc20))
     end
     if fixedOverlap then
@@ -684,8 +691,8 @@ cb('dma_finished',function()
    local bg2Chr=state['ppu.layers[1].chrAddress']*2
    local bg2Map=state['ppu.layers[1].tilemapAddress']*2
    assert(bg1Chr==math.floor(page/8192)*8192,'PPU BG1 CHR base differs from the rendered page')
-   assert(bg1Map==(fixedMap and 0xc000 or vramFourShared and 0xc000 or vramPrefetch3 and page+0x800 or 0xc000),'PPU BG1 map base differs')
-   assert(bg2Chr==(fixedMap and 0xa000 or vramFourShared and 0x8000 or NATIVENEAR and 0 or 0xc000),'PPU BG2 CHR base differs')
+   assert(bg1Map==(vramFourOwned and page+0x2800 or fixedMap and 0xc000 or vramFourShared and 0xc000 or vramPrefetch3 and page+0x800 or 0xc000),'PPU BG1 map base differs')
+   assert(bg2Chr==(vramFourOwned and 0xc000 or fixedMap and 0xa000 or vramFourShared and 0x8000 or NATIVENEAR and 0 or 0xc000),'PPU BG2 CHR base differs')
    assert(bg2Map==0xc000,'PPU BG2 map base differs')
    local p=assert(io.open(output..'/'..n..'_ppu.json','w'))
    p:write(string.format('{"bg1Chr":%d,"bg1Map":%d,"bg2Chr":%d,"bg2Map":%d}',bg1Chr,bg1Map,bg2Chr,bg2Map));p:close()
@@ -781,6 +788,7 @@ end,emu.eventType.endFrame)
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
+    script=script.replace('VRAMFOUROWNED','true' if config.get('vramFourOwned') else 'false')
     script=script.replace('FIXEDMAPDELTADMA','true' if config.get('fixedMapDeltaDma') else 'false')
     script=script.replace('FIXEDMAPDELTA','true' if config.get('fixedMapDelta') else 'false')
     script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')

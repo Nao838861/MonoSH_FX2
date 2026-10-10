@@ -75,8 +75,10 @@ def sparse_map(text):
 
 
 def direct(text):
+    table_init=text[text.index('.ifdef SA1_PREFIX_TABLE\n  stz $b4'):text.index('direct_descriptor:\n')]
+    table_step=text[text.index('.ifdef SA1_PREFIX_TABLE\n  lda f:$430800,x'):text.index('  txa\n  clc\n  adc #6\n  tax\n  bra direct_descriptor')]
     start=text.index('sa1_sparse_direct_finish:\n')
-    return text[:start]+'''sa1_sparse_direct_finish:
+    result=text[:start]+'''sa1_sparse_direct_finish:
   rep #$30
   lda $011a
   asl
@@ -103,9 +105,15 @@ fixed_done:
 sparse_direct_overflow:
   stp
 '''
+    result=change(result,'  ldx #0\nfixed_descriptor:',table_init+'  ldx #0\nfixed_descriptor:')
+    return change(result,'  sta f:$430804,x\n  txa\n','  sta f:$430804,x\n'+table_step+'  txa\n')
 
 
 def prefix(text):
+    if 'pfHigh' in text:
+        text=change(text,'  and #255\n  dec\n  sta pfHigh','  and #255\n  sta pfHigh')
+        text=change(text,'  lda pipe_records+2,x\n  sec\n  sbc #6\n','  lda pipe_records+2,x\n')
+        return change(text,'  lda f:$00311a\n  dec\n','  lda f:$00311a\n')
     return change(text,'  lda pipe_records+2,x\n  sec\n  sbc #6\n','  lda pipe_records+2,x\n')
 
 
