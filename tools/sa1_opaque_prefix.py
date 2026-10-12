@@ -5,7 +5,7 @@ from sa1_patterns import dimensions
 from analyze_sa1_hint_compression import compress,DELTAS
 
 
-def safe_hint(code,starts,extent):
+def safe_hint(code,starts,extent,raw_only=False):
     safe={};last_load=0;store_begin=0
     for pc in range(0,len(code)-1,3):
         if code[pc] in (0xa9,0xbd):last_load=pc
@@ -13,6 +13,7 @@ def safe_hint(code,starts,extent):
             safe[store_begin]=last_load;store_begin=pc+3
     raw=bytes(next((safe[pc]//3 for off,pc in starts if off>=limit),(len(code)-1)//3) for limit in range(0,extent+1,2))
     assert raw[0]<128 and all(a<=b for a,b in zip(raw,raw[1:]))
+    if raw_only:return raw
     choices=[raw]
     try:choices.append(compress(raw))
     except ValueError:pass

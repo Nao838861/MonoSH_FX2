@@ -1,0 +1,9 @@
+{
+  "romSha256": "6d72391a46d9fc9b6c5de063afa942dc85a5768d6137531a4f73b45f9b5e8580",
+  "geometryPatterns": 1492,
+  "verticalPhaseTables": 5992,
+  "smallShapesWithoutDirtyTable": 743,
+  "independentSourceAlphaVerified": true,
+  "deferredGapBytes": 12567,
+  "reservedRomUntouched": true
+}

@@ -42,8 +42,12 @@ def verify():
     formats=Counter();tables={};checks=0;retained_hidden=0
     for pointer in sorted(kernels):
         code,blocks=boundaries(rom,pointer);p=physical(pointer);extent=rom[p-1];original=execute(code)
-        hptr=physical(int.from_bytes(rom[p-5:p-2],'little'));marker=rom[hptr]
-        n=extent//2+1;size=1+3*((n+7)//8) if marker==128 else 1+5*((n+7)//8) if marker==129 else n
+        n=extent//2+1
+        if manifest.get('opaquePrefixInlineRaw'):
+            hptr=p-2-n;marker=0;size=n
+        else:
+            hptr=physical(int.from_bytes(rom[p-5:p-2],'little'));marker=rom[hptr]
+            size=1+3*((n+7)//8) if marker==128 else 1+5*((n+7)//8) if marker==129 else n
         encoded=rom[hptr:hptr+size];formats[str(marker if marker>=128 else 0)]+=1;tables[hptr]=size
         for index in range(n):
             pc=decode_hint(encoded,index);limit=index*2

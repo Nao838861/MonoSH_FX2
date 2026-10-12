@@ -593,20 +593,27 @@ cb('_fx_frame',function()
 end)
 if labels.opaque_prefix_selected and labels.opaque_prefix_patch_done then
  local f=assert(io.open(output..'/opaque_prefix.jsonl','w'))
+ local opaqueActive=false
  cb('opaque_prefix_selected',function()
+  opaqueActive=true
   local mt=emu.memType.sa1Memory
   f:write(string.format('{"kind":"select","job":%d,"index":%d,"width":%d,"height":%d,"frontAsset":%d}\\n',#times+1,emu.read16(0x2c,mt),emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0xb8,mt)));f:flush()
  end,emu.cpuType.sa1)
  cb('opaque_prefix_patch_done',function()
+  if not opaqueActive then return end
   local mt=emu.memType.sa1Memory;local slot=emu.read16(0x8c,mt)
   local bank=emu.read(0x94,mt);local old=bank*65536+emu.read16(0x92,mt)
   assert(emu.read(0x70a+slot,mt)==bank,'opaque prefix changed native bank')
   local new=bank*65536+emu.read16(0x708+slot,mt);local op=emu.read(new,mt)
   assert(new>=old and (op==0xa9 or op==0xbd or op==0x6b),'opaque prefix resumed without accumulator load')
-  local hint=emu.read(old-5,mt)+emu.read(old-4,mt)*256+emu.read(old-3,mt)*65536
-  local marker=emu.read(hint,mt);local format=marker>=128 and marker or 0
+  local format=0
+  if not OPAQUEINLINERAW then
+   local hint=emu.read(old-5,mt)+emu.read(old-4,mt)*256+emu.read(old-3,mt)*65536
+   local marker=emu.read(hint,mt);format=marker>=128 and marker or 0
+  end
   f:write(string.format('{"kind":"patch","job":%d,"row":%d,"old":%d,"new":%d,"format":%d,"allHidden":%s}\\n',#times+1,emu.read16(0x8e,mt),old,new,format,op==0x6b and 'true' or 'false'));f:flush()
  end,emu.cpuType.sa1)
+ cb('opaque_prefix_finished',function()opaqueActive=false end,emu.cpuType.sa1)
 end
 if labels.cache_miss then
  local f=assert(io.open(output..'/bullet_cache.jsonl','w'));local start=0;local missed=false
@@ -961,6 +968,7 @@ end,emu.eventType.endFrame)
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('OPAQUETARGETS',lua([[w,h] for w,h in sorted(patterns[40]) if 49<=w<=79]))
     script=script.replace('OPAQUEFRONTS',lua([[a,w,h] for a in (39,40,41) for w,h in sorted(patterns[a]) if w>=64]))
+    script=script.replace('OPAQUEINLINERAW','true' if config.get('opaquePrefixInlineRaw') else 'false')
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
@@ -1001,7 +1009,7 @@ end,emu.eventType.endFrame)
         if args.scenario.startswith('opaquefixture'):
             assert summary['pixelMatchedPresents']>=240 and summary['stalledTailFields']<=1
             assert summary['opaquePrefixCoverage']['advancedRows']>=120
-            assert set(summary['opaquePrefixCoverage']['hintFormats'])=={'0','128','129'}
+            assert set(summary['opaquePrefixCoverage']['hintFormats'])==({'0'} if config.get('opaquePrefixInlineRaw') else {'0','128','129'})
             summary['opaqueFixtureCoverage']=verify_opaque_fixture_coverage(dest)
     if args.scenario.startswith('stackfixturemin'):
         summary['minimumClipCoverage']=verify_minimum_clip_coverage(dest,config)

@@ -5,6 +5,7 @@
 .include "opaque_prefix.inc"
 .export sa1_opaque_prefix: far, opaque_prefix_selected: far, opaque_prefix_patched: far
 .export opaque_prefix_patch_done: far
+.export opaque_prefix_finished: far
 .import __OPJIT_LOAD__, __OPJIT_SIZE__
 .import sa1_dma_try_begin: far, sa1_dma_end: far
 .import hint_delta_sums: far, hint_delta_masks: far
@@ -255,9 +256,11 @@ prefix_load_cpu:
   plb
   jml prefix_entry
 opaque_nibble_sums:
+.ifndef SA1_OPAQUE_INLINE_RAW
   .repeat 256, n
     .byte (n&15)+(n>>4)
   .endrepeat
+.endif
 
 wChain=$80
 wRow=$84
@@ -425,19 +428,41 @@ prefix_patch_row:
   lda f:$000708,x
   sta wCode
   sec
+.ifdef SA1_OPAQUE_INLINE_RAW
+  sbc #2
+.else
   sbc #5
+.endif
   sta wHeader
   lda f:$00070a,x
   and #255
   sta wCode+2
   sta wHeader+2
+.ifdef SA1_OPAQUE_INLINE_RAW
+  ldy #1
+.else
   ldy #4
+.endif
   lda [wHeader],y
   and #255
   lsr
   cmp wWordIndex
   bcc prefix_hide_all
   beq prefix_hide_all
+.ifdef SA1_OPAQUE_INLINE_RAW
+  inc                         ; rawの個数はextent/2+1。headerの直前に置く。
+  sta wTemp
+  lda wHeader
+  sec
+  sbc wTemp
+  sta wHint
+  lda wCode+2
+  sta wHint+2
+  ldy wWordIndex
+  lda [wHint],y
+  and #255
+  bra prefix_decoded
+.else
   ldy #2
   lda [wHeader],y
   and #255
@@ -454,8 +479,13 @@ prefix_patch_row:
   lda [wHint],y
   and #255
   jmp prefix_decoded
+.endif
 prefix_hide_all:
+.ifdef SA1_OPAQUE_INLINE_RAW
+  ldy #0
+.else
   ldy #3
+.endif
   lda [wHeader],y
   and #255
   dec
@@ -463,6 +493,7 @@ prefix_hide_all:
   adc wCode
   ldx wSlot
   jmp opaque_prefix_patched
+.ifndef SA1_OPAQUE_INLINE_RAW
 prefix_decode_two:
   lda wWordIndex
   and #7
@@ -557,6 +588,7 @@ prefix_nibble_tail:
   sta wUnit
 prefix_nibble_done:
   lda wUnit
+.endif
 prefix_decoded:
   sta wTemp
   asl
@@ -602,5 +634,6 @@ prefix_next_row:
   sta wRemaining
   jne prefix_chunk
 prefix_finished:
+opaque_prefix_finished:
   sec
   rtl

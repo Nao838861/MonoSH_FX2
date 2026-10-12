@@ -1,0 +1,86 @@
+{
+  "cases": {
+    "active": {
+      "fields": 800,
+      "logic": 654,
+      "presents": 643,
+      "intervals": {
+        "1": 634,
+        "2": 6
+      },
+      "pixelMatchedPresents": 168,
+      "maxSa1Ms": 26.086926,
+      "coverage": {
+        "selectedObjects": 19,
+        "patchedRows": 655,
+        "advancedRows": 653,
+        "allHiddenRows": 1,
+        "hintFormats": {
+          "0": 655
+        }
+      }
+    },
+    "control": {
+      "fields": 800,
+      "logic": 654,
+      "presents": 643,
+      "intervals": {
+        "1": 634,
+        "2": 6
+      },
+      "pixelMatchedPresents": 168,
+      "maxSa1Ms": 23.184229,
+      "coverage": {
+        "selectedObjects": 0,
+        "patchedRows": 0,
+        "advancedRows": 0,
+        "allHiddenRows": 0,
+        "hintFormats": {}
+      }
+    },
+    "fixture": {
+      "fields": 481,
+      "logic": 303,
+      "presents": 301,
+      "intervals": {
+        "1": 273,
+        "2": 25
+      },
+      "pixelMatchedPresents": 301,
+      "maxSa1Ms": 22.504441,
+      "coverage": {
+        "selectedObjects": 448,
+        "patchedRows": 7091,
+        "advancedRows": 7077,
+        "allHiddenRows": 3117,
+        "hintFormats": {
+          "0": 7091
+        }
+      },
+      "fixtureCoverage": {
+        "fixturePresents": 300,
+        "targetGeometries": 27,
+        "frontGeometries": 76,
+        "centers": 8,
+        "tops": 7,
+        "everyListedComponentCovered": true,
+        "fullCartesianProductClaimed": false
+      }
+    }
+  },
+  "romSha256": {
+    "active": "6d72391a46d9fc9b6c5de063afa942dc85a5768d6137531a4f73b45f9b5e8580",
+    "control": "1a645606283649e4189254810ba61f2906344c6ffee226e23cd9800da74cd51a"
+  },
+  "sameControlCodeLayoutVerified": true,
+  "workerBytes": 467,
+  "rawHintBytes": 23807,
+  "deferredGapBytes": 12567,
+  "allOriginalPatternsRetained": true,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "decision": "no improvement in presentation intervals; not adopted",
+  "excludedInitialCallbackTriggeredByOtherIramWorker": true,
+  "evidenceBytes": 18903064,
+  "evidenceSha256": "d3725d82f2e13f8536f92bcd5eaafe48ca12ec30921f5228abc768a6ba2d34ac"
+}

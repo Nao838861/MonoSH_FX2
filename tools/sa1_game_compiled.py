@@ -4,18 +4,30 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False):
-    rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False,opaque_prefix_inline_raw=False):
+    rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[];alignment_gaps=[]
+    reserved=((0x400000,0x440000),(0x591300,0x600000))+(((0x7e0000,0x7eb000),) if row_dirty_aligned else ())
+    assert not opaque_prefix_inline_raw or opaque_prefix
     from sa1_bullet_shapes import Shapes
     shapes=Shapes() if bullet_shapes else None
-    def alloc(raw):
+    def alloc(raw,fill_gaps=False):
         nonlocal cursor
         raw=bytes(raw)
         if raw in pool:return pool[raw]
+        if fill_gaps:
+            for gap in alignment_gaps:
+                p=gap['begin']+gap['used']
+                if p+len(raw)<=gap['end']:
+                    assert not any(rom[p:p+len(raw)])
+                    rom[p:p+len(raw)]=raw;gap['used']+=len(raw);a=address(p);pool[raw]=a
+                    return a
         while True:
             boundary=0x8000 if cursor<0x400000 else 0x10000
-            if cursor%boundary+len(raw)>boundary:cursor=(cursor+boundary-1)//boundary*boundary
-            block=next(((a,b) for a,b in ((0x400000,0x440000),(0x591300,0x600000),*(([(0x7e0000,0x7eb000)]) if row_dirty_aligned else [])) if cursor<b and cursor+len(raw)>a),None)
+            if cursor%boundary+len(raw)>boundary:
+                end=(cursor+boundary-1)//boundary*boundary
+                assert all(cursor>=b or end<=a for a,b in reserved)
+                alignment_gaps.append(dict(begin=cursor,end=end,used=0));cursor=end
+            block=next(((a,b) for a,b in reserved if cursor<b and cursor+len(raw)>a),None)
             if block:cursor=block[1]
             else:break
         if cursor+len(raw)>0x7f0000:raise ValueError(f'compiled game ROM exhausted: {cursor:x}')
@@ -80,7 +92,8 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         if opaque_inline:
             from sa1_opaque_prefix import safe_hint
             assert macros and not left_inline and not reverse
-            header=alloc(safe_hint(code,starts,end-origin)).to_bytes(3,'little')+header
+            hint=safe_hint(code,starts,end-origin,raw_only=opaque_prefix_inline_raw)
+            header=(hint if opaque_prefix_inline_raw else alloc(hint).to_bytes(3,'little'))+header
         ptr=alloc(header+code)+len(header)
         rowcache[key]=ptr.to_bytes(3,'little')+bytes([len(code),origin,end])
         return rowcache[key]
@@ -153,11 +166,12 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             for number,encoded in enumerate(bounds_data):deferred.append((block+1+number*10+7,encoded))
     for location,encoded in deferred:
         if isinstance(encoded,tuple):
-            pointer=alloc(b''.join(alloc(phase).to_bytes(3,'little') for phase in encoded)) if encoded else 0
-        else:pointer=alloc(encoded)
+            pointer=alloc(b''.join(alloc(phase,fill_gaps=opaque_prefix_inline_raw).to_bytes(3,'little') for phase in encoded),fill_gaps=opaque_prefix_inline_raw) if encoded else 0
+        else:pointer=alloc(encoded,fill_gaps=opaque_prefix_inline_raw)
         index[location:location+3]=pointer.to_bytes(3,'little')
     rom[0x7f0000:]=index
     info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned,'reverseExplosionsMinWidth':reverse_explosions_min_width,'reverseInlineHints':reverse_inline_hints,'leftInlineHints':left_inline_hints,'leftExplosionHintsMinWidth':left_explosion_hints_min_width,'leftFlameHints':left_flame_hints}
+    if opaque_prefix_inline_raw:info.update(deferredGapRanges=alignment_gaps,deferredGapBytes=sum(g['used'] for g in alignment_gaps))
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     if shapes is not None:shapes.save(dest)
     return rom

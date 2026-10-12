@@ -1,0 +1,16 @@
+{
+  "romSha256": "6d72391a46d9fc9b6c5de063afa942dc85a5768d6137531a4f73b45f9b5e8580",
+  "spanGeometries": 76,
+  "spanIndexBytes": 10221,
+  "targetNativeRows": 2656,
+  "targetKernels": 1828,
+  "wordBoundaryChecks": 23807,
+  "kernelFormats": {
+    "0": 1828
+  },
+  "uniqueHintBytes": 23807,
+  "retainedHiddenWordsAcrossBoundaries": 12734,
+  "nativeEntryRequiresNoExternalAccumulator": true,
+  "allOriginalPatternsRetained": true,
+  "goal60fpsAchieved": false
+}

@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--clip-resident',action='store_true')
     ap.add_argument('--opaque-prefix',action='store_true')
     ap.add_argument('--opaque-prefix-pass-through',action='store_true')
+    ap.add_argument('--opaque-prefix-inline-raw',action='store_true')
     ap.add_argument('--left-explosion-hints',action='store_true')
     ap.add_argument('--left-explosion-hints-min-width',type=int,choices=range(64,129),default=79)
     ap.add_argument('--reverse-explosions-min-width',type=int,choices=(76,79,82,85,88,91,94),default=91)
@@ -256,6 +257,7 @@ def main():
     assert not args.reverse_explosions or (args.renderer=='macros' and args.vram_fifo_map_bw and args.native_background and args.native_near and args.compiled_ground and args.left_hints and args.left_hints_compressed and args.row_dirty_exact and not args.stack_explosions and not args.left_runtime_scan and not args.right_clip_jit and not args.cpu_dirty and not args.near_rom)
     assert not args.opaque_prefix or (args.reverse_explosions and args.left_inline_hints and not args.clip_resident and not args.dirty_iram and not args.wide_edge_jit and not args.offload_sort and not args.packet_offload and not args.sa1_game and not args.sa1_game_compact)
     assert not args.opaque_prefix_pass_through or args.opaque_prefix
+    assert not args.opaque_prefix_inline_raw or args.opaque_prefix
     assert not args.reverse_full_row_fast or args.reverse_explosions
     assert not args.reverse_inline_hints or args.reverse_explosions
     assert not args.reverse_hints_compressed or (args.reverse_explosions and not args.reverse_inline_hints)
@@ -362,6 +364,7 @@ def main():
     defines=sum((['-D',s+'=1'] for s in definitions),[])+['-D','FX_DMA_ADMISSION_BYTES=9984']
     clip_defines=['-D','SA1_CLIP_RESIDENT=1'] if args.clip_resident else []
     opaque_defines=['-D','SA1_OPAQUE_BYPASS=1'] if args.opaque_prefix_pass_through else []
+    if args.opaque_prefix_inline_raw:opaque_defines+=['-D','SA1_OPAQUE_INLINE_RAW=1']
     defines+=clip_defines
     defines+=['-D',f'SA1_PREFILL_COUNT={args.prefill_count}']
     defines+=['-D',f'SA1_VRAM_PREFILL_COUNT={args.vram_prefill_count}']
@@ -1305,12 +1308,14 @@ opaque_sprite_fallback:
         suffix+=('_flame' if args.left_flame_hints else '')
         key+=str(args.opaque_prefix)
         suffix+=('_opaqueprefix' if args.opaque_prefix else '')
+        key+=str(args.opaque_prefix_inline_raw)
+        suffix+=('_raw' if args.opaque_prefix_inline_raw else '')
         cache=BUILD/('compiled_cache'+suffix+'.bin');metadata=BUILD/('compiled_cache'+suffix+'.json')
         if cache.exists() and metadata.exists() and json.loads(metadata.read_text()).get('key')==key and (not args.bullet_shapes or ((BUILD/'bullet_shapes.bin').exists() and (BUILD/'bullet_shapes_packing.json').exists())):
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix)
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -1421,6 +1426,7 @@ opaque_sprite_fallback:
     if args.opaque_prefix:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['opaquePrefix']=True
         manifest['opaquePrefixPassThrough']=args.opaque_prefix_pass_through
+        manifest['opaquePrefixInlineRaw']=args.opaque_prefix_inline_raw
         manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
