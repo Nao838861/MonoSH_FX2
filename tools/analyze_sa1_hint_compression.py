@@ -1,7 +1,7 @@
 """左端hintを8個ごとのcheckpointと2bit差分で保持する容量を測る。"""
 import json,re,struct
 from build_sa1_game import BUILD
-from sa1_left_hints import physical
+from sa1_left_hints import physical,inline_records
 
 
 DELTAS=(0,1,2,4)
@@ -23,11 +23,12 @@ def main():
     target=int(re.search(r'\$([0-9a-f]+)',(BUILD/'left_hints.inc').read_text())[1],16)
     table=rom[physical(target):physical(target)+info['hashBytes']]
     raw_pool=set();compressed_pool=set();boundaries=0
-    for i in range(0,len(table),6):
-        ptr=int.from_bytes(table[i:i+3],'little')
+    entries=inline_records(rom,info) if info.get('inlineHeaders') else [(int.from_bytes(table[i:i+3],'little'),int.from_bytes(table[i+3:i+6],'little')) for i in range(0,len(table),6)]
+    for ptr,hint_ptr in entries:
         if not ptr:continue
         p=physical(ptr);extent=rom[p-1];n=(extent+1)//2+1
-        hint=physical(int.from_bytes(table[i+3:i+6],'little'))
+        hint=physical(hint_ptr)
+        if info.get('inlineHeaders'):assert int.from_bytes(rom[p-5:p-2],'little')==hint_ptr
         if info.get('compressed') and rom[hint]==128:
             raw=bytearray()
             for index in range(n):

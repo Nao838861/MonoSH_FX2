@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     from sa1_bullet_shapes import Shapes
     shapes=Shapes() if bullet_shapes else None
@@ -26,9 +26,9 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         a=used;index[a:a+len(raw)]=raw;used+=len(raw)
         if used>65536:raise ValueError('compiled index exhausted')
         return a
-    def row_entry(row,parity,compressed=False):
+    def row_entry(row,parity,compressed=False,reverse=False,left_inline=False):
         nonlocal maximum
-        key=row.tobytes(),parity,compressed
+        key=row.tobytes(),parity,compressed,reverse,left_inline
         if key in rowcache:return rowcache[key]
         pixels=np.pad(row,(parity,(-len(row)-parity)%4));words=[]
         for x in range(0,len(pixels),4):
@@ -36,7 +36,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             if val:
                 mask=sum((0 if c else 15)<<(n*4) for n,c in enumerate(pixels[x:x+4]))
                 words.append((x//2,mask,val))
-        origin=words[0][0] if words else 0;code=bytearray();acc=None
+        origin=words[0][0] if words else 0;code=bytearray();acc=None;starts=[]
         if compressed:
             end=words[-1][0]+2 if words else 0
             length=1+sum(12 if mask else 6 for _,mask,_ in words)
@@ -51,12 +51,13 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             for offset in range(origin,end,2):encoded+=struct.pack('<H',values.get(offset,(65535,0))[1])
             rowcache[key]=alloc(encoded).to_bytes(3,'little')
             return rowcache[key]
-        for offset,mask,value in words:
+        for offset,mask,value in (reversed(words) if reverse else words):
             offset-=origin
+            starts.append((offset,len(code)))
             if mask:
                 code+=b'\xbd'+struct.pack('<H',offset)+b'\x29'+struct.pack('<H',mask)+b'\x09'+struct.pack('<H',value)
                 acc=None
-            elif acc!=value:
+            elif reverse or acc!=value:
                 code+=b'\xa9'+struct.pack('<H',value);acc=value
             code+=b'\x9d'+struct.pack('<H',offset)
         code+=b'\x6b';maximum=max(maximum,len(code));assert len(code)<=0x1f0
@@ -69,7 +70,14 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             if n-start>best[1]-best[0]:best=(start,n)
             start=n+1
         header=bytes((len(code),end-origin)) if macros else bytes((max(0,best[0]-origin),max(0,best[1]-origin)))
-        ptr=alloc(header+code)+2
+        if reverse and reverse_inline_hints:
+            encoded=bytes(next((pc for off,pc in starts if off<limit),len(code)-1) for limit in range(0,end-origin+1,2))
+            header=alloc(encoded).to_bytes(3,'little')+header
+        if left_inline:
+            from analyze_sa1_hint_compression import compress
+            encoded=bytes(next((pc//3 for off,pc in starts if off+1>=limit),(len(code)-1)//3) for limit in range(0,end-origin+1,2))
+            header=alloc(compress(encoded)).to_bytes(3,'little')+header
+        ptr=alloc(header+code)+len(header)
         rowcache[key]=ptr.to_bytes(3,'little')+bytes([len(code),origin,end])
         return rowcache[key]
     patterns=dimensions()
@@ -92,7 +100,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                         if macros:
                             program=bytearray()
                             for dy,y in enumerate(ys):
-                                row=row_entry(source[int(y)],parity)
+                                row=row_entry(source[int(y)],parity,reverse=bool(reverse_explosions_min_width and asset in (40,41) and w>=reverse_explosions_min_width),left_inline=bool(left_inline_hints and ((asset in (0,2,3,5) and w>=64) or (asset==39 and left_explosion_hints_min_width and w>=left_explosion_hints_min_width))))
                                 program+=b'\xa9'+struct.pack('<H',dy*stride+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
                             program+=b'\x6b';rows=alloc(program)
                         else:rows=alloc(b''.join(row_entry(source[int(y)],parity) for y in ys))
@@ -145,7 +153,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         else:pointer=alloc(encoded)
         index[location:location+3]=pointer.to_bytes(3,'little')
     rom[0x7f0000:]=index
-    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned}
+    info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned,'reverseExplosionsMinWidth':reverse_explosions_min_width,'reverseInlineHints':reverse_inline_hints,'leftInlineHints':left_inline_hints,'leftExplosionHintsMinWidth':left_explosion_hints_min_width}
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     if shapes is not None:shapes.save(dest)
     return rom

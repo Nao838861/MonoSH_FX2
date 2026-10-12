@@ -135,6 +135,21 @@ hint_new_code:
   adc hintCur
   jmi hint_advance
   jeq hint_advance
+.ifdef SA1_LEFT_HINT_INLINE
+  lda hintCode
+  sec
+  sbc #5
+  sta hintTable
+  ldy #2
+  lda [hintTable],y
+  and #255
+  pha
+  lda [hintTable]
+  sta hintTable
+  pla
+  sta hintTable+2
+  jmp hint_decode
+.else
   lda hintCode
   lsr
   sta hintSlot
@@ -221,6 +236,8 @@ hint_found:
   lda f:LEFT_HINT_TABLE+5,x
   sta hintTable+2
   rep #$20
+.endif
+hint_decode:
   lda hintCur
   eor #$ffff
   inc

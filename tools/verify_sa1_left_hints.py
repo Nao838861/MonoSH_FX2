@@ -1,7 +1,7 @@
 """途中命令からの実行結果を元の全行コード＋クリップと全位置で照合する。"""
 import hashlib,json,re,struct
 from build_sa1_game import BUILD
-from sa1_left_hints import physical
+from sa1_left_hints import physical,inline_records
 
 
 def execute(code,start,initial,buffer,origin):
@@ -27,21 +27,31 @@ def main():
     entry_bytes=packing.get('hintBytesPerEntry',3)
     table=rom[physical(target):physical(target)+slots*6]
     kernels=cases=0
-    for slot in range(slots):
-        ptr=int.from_bytes(table[slot*6:slot*6+3],'little')
+    entries=inline_records(rom,packing) if packing.get('inlineHeaders') else [(int.from_bytes(table[slot*6:slot*6+3],'little'),int.from_bytes(table[slot*6+3:slot*6+6],'little'),slot) for slot in range(slots)]
+    for record in entries:
+        ptr,hint=record[:2]
         if not ptr:continue
         kernels+=1
-        h=((ptr&65535)>>1 ^ ((ptr>>16)<<3))&(slots-1)
-        for _ in range(slots):
-            if int.from_bytes(table[h*6:h*6+3],'little')==ptr:break
-            assert table[h*6:h*6+3]!=bytes(3),'hash stopped at empty slot'
-            h=(h+1)&(slots-1)
-        assert h==slot
-        hint=int.from_bytes(table[slot*6+3:slot*6+6],'little')
+        if packing.get('inlineHeaders'):
+            assert int.from_bytes(rom[physical(ptr)-5:physical(ptr)-2],'little')==hint
+        else:
+            slot=record[2]
+            h=((ptr&65535)>>1 ^ ((ptr>>16)<<3))&(slots-1)
+            for _ in range(slots):
+                if int.from_bytes(table[h*6:h*6+3],'little')==ptr:break
+                assert table[h*6:h*6+3]!=bytes(3),'hash stopped at empty slot'
+                h=(h+1)&(slots-1)
+            assert h==slot
         p=physical(ptr);code=rom[p:p+rom[p-2]];extent=rom[p-1]
         for cur in range(-extent+1,0):
-            data=physical(hint)+(-cur//2)*entry_bytes
-            start=rom[data]*3
+            base=physical(hint);index=-cur//2
+            if packing.get('compressed') and rom[base]==128:
+                from analyze_sa1_hint_compression import DELTAS
+                data=base+1+(index//8)*3;bits=rom[data+1]|rom[data+2]<<8
+                start=(rom[data]+sum(DELTAS[bits>>(j*2)&3] for j in range(index%8)))*3
+            else:
+                data=base+index*entry_bytes
+                start=rom[data]*3
             if entry_bytes==3:initial=struct.unpack_from('<H',rom,data+1)[0]
             else:
                 initial=0
