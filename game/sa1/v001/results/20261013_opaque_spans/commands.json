@@ -1,0 +1,11 @@
+{
+  "python": "C:/Users/owner/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+  "analyze": "tools/analyze_sa1_opaque_spans.py build/sa1_game/movestress_detinput_captureburst_fixedtable_v1_tracepalette --output game/sa1/v001/results/20261013_opaque_spans/feasibility.json",
+  "capacity": "tools/analyze_sa1_opaque_capacity.py build/sa1_game/MonoSHSA1_4bpp_game.sfc --output game/sa1/v001/results/20261013_opaque_spans/capacity.json",
+  "verify": "tools/verify_sa1_native_fragments.py build/sa1_game/MonoSHSA1_4bpp_game.sfc --output game/sa1/v001/results/20261013_opaque_spans/fragments_verified.json",
+  "buildProbe": "tools/probe_sa1_native_fragments.py --replay-directory build/sa1_game/movestress_detinput_captureburst_fixedtable_v1_tracepalette",
+  "testProbe": "tools/probe_sa1_native_fragments.py --test",
+  "report": "tools/report_sa1_opaque_spans.py",
+  "baselineGameCommand": "game/sa1/v001/results/20261013_reverse_native/commands.json:fiforeverseexp_v5",
+  "notes": "基準ゲームROMを変えずに別のbuild/sa1_fragment_probeへ計測ROMを作る。計測終了・全画素照合完了までROMとlabelsを書き換えない。"
+}

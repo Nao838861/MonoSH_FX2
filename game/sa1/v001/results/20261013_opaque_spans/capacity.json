@@ -1,0 +1,554 @@
+{
+  "geometries": [
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 49,
+      "raw": 98,
+      "rle": 123
+    },
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 50,
+      "raw": 100,
+      "rle": 132
+    },
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 64,
+      "raw": 128,
+      "rle": 144
+    },
+    {
+      "asset": 39,
+      "width": 66,
+      "height": 51,
+      "raw": 102,
+      "rle": 129
+    },
+    {
+      "asset": 39,
+      "width": 66,
+      "height": 52,
+      "raw": 104,
+      "rle": 135
+    },
+    {
+      "asset": 39,
+      "width": 68,
+      "height": 53,
+      "raw": 106,
+      "rle": 141
+    },
+    {
+      "asset": 39,
+      "width": 68,
+      "height": 54,
+      "raw": 108,
+      "rle": 141
+    },
+    {
+      "asset": 39,
+      "width": 71,
+      "height": 55,
+      "raw": 110,
+      "rle": 141
+    },
+    {
+      "asset": 39,
+      "width": 71,
+      "height": 56,
+      "raw": 112,
+      "rle": 141
+    },
+    {
+      "asset": 39,
+      "width": 73,
+      "height": 57,
+      "raw": 114,
+      "rle": 141
+    },
+    {
+      "asset": 39,
+      "width": 73,
+      "height": 58,
+      "raw": 116,
+      "rle": 144
+    },
+    {
+      "asset": 39,
+      "width": 76,
+      "height": 59,
+      "raw": 118,
+      "rle": 150
+    },
+    {
+      "asset": 39,
+      "width": 76,
+      "height": 60,
+      "raw": 120,
+      "rle": 150
+    },
+    {
+      "asset": 39,
+      "width": 79,
+      "height": 61,
+      "raw": 122,
+      "rle": 150
+    },
+    {
+      "asset": 39,
+      "width": 79,
+      "height": 62,
+      "raw": 124,
+      "rle": 150
+    },
+    {
+      "asset": 39,
+      "width": 82,
+      "height": 64,
+      "raw": 128,
+      "rle": 150
+    },
+    {
+      "asset": 39,
+      "width": 85,
+      "height": 66,
+      "raw": 132,
+      "rle": 165
+    },
+    {
+      "asset": 39,
+      "width": 85,
+      "height": 67,
+      "raw": 134,
+      "rle": 165
+    },
+    {
+      "asset": 39,
+      "width": 88,
+      "height": 68,
+      "raw": 136,
+      "rle": 171
+    },
+    {
+      "asset": 39,
+      "width": 88,
+      "height": 69,
+      "raw": 138,
+      "rle": 174
+    },
+    {
+      "asset": 39,
+      "width": 91,
+      "height": 71,
+      "raw": 142,
+      "rle": 180
+    },
+    {
+      "asset": 39,
+      "width": 94,
+      "height": 73,
+      "raw": 146,
+      "rle": 189
+    },
+    {
+      "asset": 39,
+      "width": 94,
+      "height": 74,
+      "raw": 148,
+      "rle": 180
+    },
+    {
+      "asset": 39,
+      "width": 97,
+      "height": 76,
+      "raw": 152,
+      "rle": 186
+    },
+    {
+      "asset": 39,
+      "width": 100,
+      "height": 78,
+      "raw": 156,
+      "rle": 186
+    },
+    {
+      "asset": 39,
+      "width": 128,
+      "height": 94,
+      "raw": 188,
+      "rle": 237
+    },
+    {
+      "asset": 40,
+      "width": 64,
+      "height": 49,
+      "raw": 98,
+      "rle": 96
+    },
+    {
+      "asset": 40,
+      "width": 64,
+      "height": 50,
+      "raw": 100,
+      "rle": 93
+    },
+    {
+      "asset": 40,
+      "width": 66,
+      "height": 51,
+      "raw": 102,
+      "rle": 108
+    },
+    {
+      "asset": 40,
+      "width": 66,
+      "height": 52,
+      "raw": 104,
+      "rle": 102
+    },
+    {
+      "asset": 40,
+      "width": 68,
+      "height": 53,
+      "raw": 106,
+      "rle": 105
+    },
+    {
+      "asset": 40,
+      "width": 68,
+      "height": 54,
+      "raw": 108,
+      "rle": 117
+    },
+    {
+      "asset": 40,
+      "width": 71,
+      "height": 55,
+      "raw": 110,
+      "rle": 108
+    },
+    {
+      "asset": 40,
+      "width": 71,
+      "height": 56,
+      "raw": 112,
+      "rle": 117
+    },
+    {
+      "asset": 40,
+      "width": 73,
+      "height": 57,
+      "raw": 114,
+      "rle": 114
+    },
+    {
+      "asset": 40,
+      "width": 73,
+      "height": 58,
+      "raw": 116,
+      "rle": 114
+    },
+    {
+      "asset": 40,
+      "width": 76,
+      "height": 59,
+      "raw": 118,
+      "rle": 108
+    },
+    {
+      "asset": 40,
+      "width": 76,
+      "height": 60,
+      "raw": 120,
+      "rle": 114
+    },
+    {
+      "asset": 40,
+      "width": 79,
+      "height": 61,
+      "raw": 122,
+      "rle": 108
+    },
+    {
+      "asset": 40,
+      "width": 79,
+      "height": 62,
+      "raw": 124,
+      "rle": 105
+    },
+    {
+      "asset": 40,
+      "width": 82,
+      "height": 64,
+      "raw": 128,
+      "rle": 126
+    },
+    {
+      "asset": 40,
+      "width": 85,
+      "height": 66,
+      "raw": 132,
+      "rle": 126
+    },
+    {
+      "asset": 40,
+      "width": 85,
+      "height": 67,
+      "raw": 134,
+      "rle": 123
+    },
+    {
+      "asset": 40,
+      "width": 88,
+      "height": 68,
+      "raw": 136,
+      "rle": 138
+    },
+    {
+      "asset": 40,
+      "width": 88,
+      "height": 69,
+      "raw": 138,
+      "rle": 147
+    },
+    {
+      "asset": 40,
+      "width": 91,
+      "height": 71,
+      "raw": 142,
+      "rle": 141
+    },
+    {
+      "asset": 40,
+      "width": 94,
+      "height": 73,
+      "raw": 146,
+      "rle": 129
+    },
+    {
+      "asset": 40,
+      "width": 94,
+      "height": 74,
+      "raw": 148,
+      "rle": 132
+    },
+    {
+      "asset": 40,
+      "width": 97,
+      "height": 76,
+      "raw": 152,
+      "rle": 150
+    },
+    {
+      "asset": 40,
+      "width": 100,
+      "height": 78,
+      "raw": 156,
+      "rle": 159
+    },
+    {
+      "asset": 40,
+      "width": 128,
+      "height": 84,
+      "raw": 168,
+      "rle": 177
+    },
+    {
+      "asset": 41,
+      "width": 64,
+      "height": 49,
+      "raw": 98,
+      "rle": 105
+    },
+    {
+      "asset": 41,
+      "width": 64,
+      "height": 50,
+      "raw": 100,
+      "rle": 114
+    },
+    {
+      "asset": 41,
+      "width": 66,
+      "height": 51,
+      "raw": 102,
+      "rle": 120
+    },
+    {
+      "asset": 41,
+      "width": 66,
+      "height": 52,
+      "raw": 104,
+      "rle": 117
+    },
+    {
+      "asset": 41,
+      "width": 68,
+      "height": 53,
+      "raw": 106,
+      "rle": 105
+    },
+    {
+      "asset": 41,
+      "width": 68,
+      "height": 54,
+      "raw": 108,
+      "rle": 117
+    },
+    {
+      "asset": 41,
+      "width": 71,
+      "height": 55,
+      "raw": 110,
+      "rle": 126
+    },
+    {
+      "asset": 41,
+      "width": 71,
+      "height": 56,
+      "raw": 112,
+      "rle": 129
+    },
+    {
+      "asset": 41,
+      "width": 73,
+      "height": 57,
+      "raw": 114,
+      "rle": 114
+    },
+    {
+      "asset": 41,
+      "width": 73,
+      "height": 58,
+      "raw": 116,
+      "rle": 111
+    },
+    {
+      "asset": 41,
+      "width": 76,
+      "height": 59,
+      "raw": 118,
+      "rle": 132
+    },
+    {
+      "asset": 41,
+      "width": 76,
+      "height": 60,
+      "raw": 120,
+      "rle": 138
+    },
+    {
+      "asset": 41,
+      "width": 79,
+      "height": 61,
+      "raw": 122,
+      "rle": 132
+    },
+    {
+      "asset": 41,
+      "width": 79,
+      "height": 62,
+      "raw": 124,
+      "rle": 141
+    },
+    {
+      "asset": 41,
+      "width": 82,
+      "height": 64,
+      "raw": 128,
+      "rle": 141
+    },
+    {
+      "asset": 41,
+      "width": 85,
+      "height": 66,
+      "raw": 132,
+      "rle": 135
+    },
+    {
+      "asset": 41,
+      "width": 85,
+      "height": 67,
+      "raw": 134,
+      "rle": 132
+    },
+    {
+      "asset": 41,
+      "width": 88,
+      "height": 68,
+      "raw": 136,
+      "rle": 132
+    },
+    {
+      "asset": 41,
+      "width": 88,
+      "height": 69,
+      "raw": 138,
+      "rle": 132
+    },
+    {
+      "asset": 41,
+      "width": 91,
+      "height": 71,
+      "raw": 142,
+      "rle": 147
+    },
+    {
+      "asset": 41,
+      "width": 94,
+      "height": 73,
+      "raw": 146,
+      "rle": 165
+    },
+    {
+      "asset": 41,
+      "width": 94,
+      "height": 74,
+      "raw": 148,
+      "rle": 171
+    },
+    {
+      "asset": 41,
+      "width": 97,
+      "height": 76,
+      "raw": 152,
+      "rle": 162
+    },
+    {
+      "asset": 41,
+      "width": 100,
+      "height": 78,
+      "raw": 156,
+      "rle": 159
+    },
+    {
+      "asset": 41,
+      "width": 128,
+      "height": 88,
+      "raw": 176,
+      "rle": 198
+    }
+  ],
+  "spanRows": 1366,
+  "uniqueRawTables": 76,
+  "uniqueRleTables": 76,
+  "spanRawBytes": 9558,
+  "spanRleBytes": 10527,
+  "forwardKernels49to79": 5665,
+  "prefixBoundaryBytes": 46452,
+  "prefixBoundaryCompressedBytes": 24675,
+  "prefixBoundaryAndAccumulatorBytes": 232218,
+  "nativeInstructionsPerWord": {
+    "1": 13620,
+    "2": 44611,
+    "4": 12352
+  },
+  "selectorBytesExcluded": true,
+  "allRequiredGeometryPatternsEnumerated": true,
+  "gameIntegrated": false,
+  "goal60fpsAchieved": false
+}

@@ -1,0 +1,20 @@
+{
+  "romSha256": "7124eab2f29ffca6904f68d1c7ee705933dd0b341bbb0082db9366468fc4a7fb",
+  "assets": [
+    39,
+    40,
+    41
+  ],
+  "minimumWidth": 49,
+  "maximumWidth": 79,
+  "nativeRows": 8096,
+  "uniqueKernels": 5665,
+  "wordBoundaryChecks": 77421,
+  "impliedIntervalPairs": 597916,
+  "suffixAccumulatorReuseBoundaries": 13663,
+  "symbolicFramebufferInputs": true,
+  "allPrefixSuffixCompositionsVerified": true,
+  "gameIntegrated": false,
+  "runtimeCostMeasured": false,
+  "goal60fpsAchieved": false
+}
