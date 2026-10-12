@@ -315,15 +315,23 @@ hint_decoded:
   and #255
   cmp #$9d
   bne hint_remember
+.ifdef SA1_LEFT_BYTE_CONSTANT_SCAN
+  sep #$20
+.endif
 hint_find_constant:
   dey
   dey
   dey
   lda [hintCode],y
+.ifndef SA1_LEFT_BYTE_CONSTANT_SCAN
   and #255
+.endif
   cmp #$a9
   bne hint_find_constant
   iny
+.ifdef SA1_LEFT_BYTE_CONSTANT_SCAN
+  rep #$20
+.endif
   lda [hintCode],y
   sta hintA
 hint_remember:

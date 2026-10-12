@@ -24,8 +24,9 @@ def decode_hint(rom,offset,index):
     return (rom[p]-sum(DELTAS[bits>>(i*2)&3] for i in range(index%8)))*3
 
 
-def build(rom,dest,minimum_width,inline=False,compressed=False,compact=False):
-    assert not (inline and (compressed or compact))
+def build(rom,dest,minimum_width,inline=False,compressed=False,compact=False,native=False):
+    assert not (inline and (compressed or compact or native))
+    assert not (compact and native)
     if inline:
         widths=set();entries=0;kernels=set()
         for asset in (40,41):
@@ -97,7 +98,9 @@ def build(rom,dest,minimum_width,inline=False,compressed=False,compact=False):
                         if compressed:hint=compress_hint(hint)
                         stored_hints.add(hint)
                         hint_ptr=alloc(hint)
-                        if compact:
+                        if native:
+                            rows+=hint_ptr.to_bytes(3,'little')
+                        elif compact:
                             bank=ptr>>16
                             if bank not in code_banks:code_banks.append(bank)
                             assert len(code_banks)<=16 and origin%2==extent%2==0 and origin//2<32 and extent//2<64
@@ -118,7 +121,7 @@ def build(rom,dest,minimum_width,inline=False,compressed=False,compact=False):
         payloadBytes=sum(c-a for c,(a,b) in zip(cursors,ranges))+len(selector)+(16 if compact else 0),
         ranges=[dict(begin=a,end=b,used=c-a) for c,(a,b) in zip(cursors,ranges)],
         compressedHints=compressed,rawHintBytes=sum(map(len,raw_hints)),storedHintBytes=sum(map(len,stored_hints)),
-        rowRecordBytes=6 if compact else 8,codeBanks=code_banks,
+        rowRecordBytes=3 if native else 6 if compact else 8,codeBanks=code_banks,
         originalNativeRowsReplaced=True,allOriginalGeometryPatternsRetained=True)
     (dest/'reverse_explosions_packing.json').write_text(json.dumps(info,indent=2)+'\n')
     return rom

@@ -23,6 +23,8 @@ rRawX=$bc
 rRowBase=$be
 rCount=$c0
 rHeader=$c2
+rChain=$c6
+rNativeOffset=$ca
 .segment "GSU"
 sa1_reverse_explosions:
   rep #$30
@@ -44,6 +46,13 @@ sa1_reverse_explosions:
   lda $3c
   and #$33
   jne reverse_no
+.ifdef SA1_REVERSE_RECORD_NATIVE
+  lda $24
+  sta rChain
+  lda $26
+  and #255
+  sta rChain+2
+.endif
 .ifdef SA1_REVERSE_INLINE_HINTS
   lda $24
   sta rRows
@@ -146,6 +155,24 @@ reverse_entry:
   sbc rFirst
   sbc rFirst
 .endif
+.ifdef SA1_REVERSE_RECORD_NATIVE
+  clc
+  adc rFirst
+  adc rFirst
+  adc rFirst
+  clc
+  adc rChain
+  sta rChain
+  lda rFirst
+  .repeat 7
+    asl
+  .endrepeat
+  sta rNativeOffset
+  lda rFirst
+  asl
+  clc
+  adc rFirst
+.endif
 .ifdef SA1_REVERSE_INLINE_HINTS
   clc
   adc rFirst
@@ -217,6 +244,38 @@ reverse_row:
   sta rHint+2
   lda rOrigin
 .else
+.ifdef SA1_REVERSE_RECORD_NATIVE
+  ldy #1
+  lda [rChain],y
+  sec
+  sbc rNativeOffset
+  sta rOrigin
+  ldy #8
+  lda [rChain],y
+  sta rCode
+  sec
+  sbc #1
+  sta rHeader
+  ldy #10
+  lda [rChain],y
+  and #255
+  sta rCode+2
+  sta rHeader+2
+  lda [rHeader]
+  and #255
+  xba
+  ora rOrigin
+  sta rOrigin
+  ldy #0
+  lda [rRows],y
+  sta rHint
+  iny
+  iny
+  lda [rRows],y
+  and #255
+  sta rHint+2
+  lda rOrigin
+.else
 .ifdef SA1_REVERSE_RECORD_COMPACT
   ldy #0
   lda [rRows],y
@@ -277,6 +336,7 @@ reverse_hint_bank_ready:
   iny
   lda [rRows],y
   sta rOrigin
+.endif
 .endif
 .endif
   and #255
@@ -407,13 +467,27 @@ reverse_advance:
 .ifdef SA1_REVERSE_INLINE_HINTS
   adc #11
 .else
+.ifdef SA1_REVERSE_RECORD_NATIVE
+  adc #3
+.else
 .ifdef SA1_REVERSE_RECORD_COMPACT
   adc #6
 .else
   adc #8
 .endif
 .endif
+.endif
   sta rRows
+.ifdef SA1_REVERSE_RECORD_NATIVE
+  lda rChain
+  clc
+  adc #11
+  sta rChain
+  lda rNativeOffset
+  clc
+  adc #128
+  sta rNativeOffset
+.endif
   lda rRowBase
   clc
   adc #128

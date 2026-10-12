@@ -69,7 +69,12 @@ def main():
                 desc=u16(rom,0x7f0000+entry+1)
                 native=physical(ptr(rom,0x7f0000+desc+parity*3))
                 for row in range(height):
-                    if config.get('reverseRecordsCompact'):
+                    if config.get('reverseRecordsNative'):
+                        q=rows+row*3;hint_ptr=ptr(rom,q)
+                        code_ptr=ptr(rom,native+row*11+8)
+                        origin=u16(rom,native+row*11+1)-row*128
+                        extent=rom[physical(code_ptr)-1]
+                    elif config.get('reverseRecordsCompact'):
                         q=rows+row*6;control=u16(rom,q+4)
                         code_ptr=u16(rom,q)|(rom[BANK_TABLE+(control>>11&15)]<<16)
                         hint_ptr=u16(rom,q+2)|((0xfe if control&0x8000 else 0xdf)<<16)
