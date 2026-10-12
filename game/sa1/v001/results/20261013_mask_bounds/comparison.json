@@ -1,0 +1,313 @@
+{
+  "cases": {
+    "base_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_base_tracepalette_tracebounds",
+      "romSha256": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 22.002049,
+      "maxOutputMs": 23.987032,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.181610830015314,
+        "dirtyMs": 1.8011090826952527,
+        "clearMs": 0.3886460658499234,
+        "bgMs": 0.7022433032159264,
+        "totalSa1Ms": 6.073608960183767
+      },
+      "burstMeans": {
+        "drawMs": 9.707632390243901,
+        "dirtyMs": 3.0465671219512194,
+        "clearMs": 2.7346321707317074,
+        "bgMs": 0.7885545609756097,
+        "totalSa1Ms": 16.277386219512195
+      }
+    },
+    "mask_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_mask_tracepalette_tracebounds",
+      "romSha256": "bcad30848b9aaff4b4b55ba4c2ffeea03079be0d0bd3841cb3b67a8c206086af",
+      "fields": 800,
+      "logic": 653,
+      "presents": 646,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 638,
+        "2": 5
+      },
+      "maxSa1Ms": 24.153347,
+      "maxOutputMs": 25.916047,
+      "maskBoundsVerified": {
+        "jobs": 652,
+        "bands": 15648,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 652,
+        "exact": true
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.193120814417178,
+        "dirtyMs": 1.974897639570552,
+        "clearMs": 0.39155590950920244,
+        "bgMs": 0.7023211610429447,
+        "totalSa1Ms": 6.261895199386503
+      },
+      "burstMeans": {
+        "drawMs": 9.835438585365853,
+        "dirtyMs": 3.1947578292682928,
+        "clearMs": 2.714077219512195,
+        "bgMs": 0.7673728048780488,
+        "totalSa1Ms": 16.511646414634146
+      },
+      "packetMatchedGenerations": 652,
+      "tileMasksMatchedGenerations": 652,
+      "fullFramebuffersMatchedGenerations": 652,
+      "reducedClearBandBounds": 12,
+      "exactBoundsMatchedGenerations": 641
+    },
+    "wide_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_wide_v2_tracepalette_tracebounds",
+      "romSha256": "f6eb2f85813078bc64c6344ee35f9c89bbd9f0eb51bb5dfc4cef04a84124adeb",
+      "fields": 800,
+      "logic": 653,
+      "presents": 646,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 638,
+        "2": 5
+      },
+      "maxSa1Ms": 22.10886,
+      "maxOutputMs": 24.114515,
+      "maskBoundsVerified": {
+        "jobs": 652,
+        "bands": 15648,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 652,
+        "exact": true
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.185517263803681,
+        "dirtyMs": 1.9300262898773006,
+        "clearMs": 0.3909573282208589,
+        "bgMs": 0.7014713573619632,
+        "totalSa1Ms": 6.207971880368098
+      },
+      "burstMeans": {
+        "drawMs": 9.68655287804878,
+        "dirtyMs": 3.146300512195122,
+        "clearMs": 2.752861243902439,
+        "bgMs": 0.7587352682926829,
+        "totalSa1Ms": 16.34444987804878
+      },
+      "packetMatchedGenerations": 652,
+      "tileMasksMatchedGenerations": 652,
+      "fullFramebuffersMatchedGenerations": 652,
+      "reducedClearBandBounds": 12,
+      "exactBoundsMatchedGenerations": 641
+    },
+    "packed_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_packed_tracepalette_tracebounds",
+      "romSha256": "fe726ee25e2cfa283e91178eb870322f7d1ea665f59e61ece26494f69562dd5c",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 22.883726,
+      "maxOutputMs": 24.738896,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 653,
+        "exact": true
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.1908602817764167,
+        "dirtyMs": 1.9319018667687595,
+        "clearMs": 0.38093094333843797,
+        "bgMs": 0.29808436753445633,
+        "totalSa1Ms": 5.801777022970903
+      },
+      "burstMeans": {
+        "drawMs": 9.733647585365853,
+        "dirtyMs": 3.1219639756097557,
+        "clearMs": 2.7525341707317073,
+        "bgMs": 0.30373126829268293,
+        "totalSa1Ms": 15.911876853658535
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 12,
+      "exactBoundsMatchedGenerations": 642
+    },
+    "round_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_round_tracepalette_tracebounds",
+      "romSha256": "2691a9a932c50a67a16c7114a39c32b73f21f67093a1546afaaa62eadd0ea310",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 21.850168,
+      "maxOutputMs": 23.923616,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.1820162679938746,
+        "dirtyMs": 1.7796604241960186,
+        "clearMs": 0.38923117304747323,
+        "bgMs": 0.7023223078101072,
+        "totalSa1Ms": 6.053229840735069
+      },
+      "burstMeans": {
+        "drawMs": 9.718337,
+        "dirtyMs": 3.0007627073170733,
+        "clearMs": 2.7365240731707314,
+        "bgMs": 0.7863492195121952,
+        "totalSa1Ms": 16.241972829268292
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "roundpacked_road": {
+      "scenario": "movestress_detinput_captureburst_maskbounds_roundpacked_tracepalette_tracebounds",
+      "romSha256": "6fdf2ba35fff0904fdc6f7f8dc7c67bf6586b1fe523d51241518018f09226d7e",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 21.789173,
+      "maxOutputMs": 24.359053,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "means": {
+        "drawMs": 3.181004033690659,
+        "dirtyMs": 1.7774326324655436,
+        "clearMs": 0.37432429862174577,
+        "bgMs": 0.2989282756508423,
+        "totalSa1Ms": 5.63168887136294
+      },
+      "burstMeans": {
+        "drawMs": 9.661603048780487,
+        "dirtyMs": 2.9562050975609755,
+        "clearMs": 2.6596782682926827,
+        "bgMs": 0.3073720975609756,
+        "totalSa1Ms": 15.58485843902439
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    }
+  },
+  "boss": {
+    "base": {
+      "scenario": "bossmovestress_detinput_fixedtable_currentbase_long_tracepalette",
+      "romSha256": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+      "presents": 1743,
+      "intervals": {
+        "0": 1,
+        "1": 1731,
+        "2": 8
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 18.954549,
+      "maxOutputMs": 20.641728,
+      "packetMatchedGenerations": 1748,
+      "goal60fpsAchieved": false
+    },
+    "nearpacked": {
+      "scenario": "bossmovestress_detinput_nearpacked_v1_long_tracepalette",
+      "romSha256": "3fb3e2e93f0a6b7332e23068f0cfcb5580c7ec9ea25c3a178b65fdf0ae7d9645",
+      "presents": 1746,
+      "intervals": {
+        "1": 1739,
+        "2": 4
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 18.662054,
+      "maxOutputMs": 20.222494,
+      "packetMatchedGenerations": 1748,
+      "goal60fpsAchieved": false
+    },
+    "roundpacked": {
+      "scenario": "bossmovestress_detinput_maskbounds_roundpacked_tracepalette_tracebounds",
+      "romSha256": "6fdf2ba35fff0904fdc6f7f8dc7c67bf6586b1fe523d51241518018f09226d7e",
+      "presents": 1747,
+      "intervals": {
+        "1": 1741,
+        "2": 3
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 18.603014,
+      "maxOutputMs": 20.163455,
+      "packetMatchedGenerations": 1748,
+      "goal60fpsAchieved": false
+    }
+  },
+  "gameIntegrated": true,
+  "allOriginalPatternsRetained": true,
+  "hostSpriteDrawingUsed": false,
+  "roadAllCommonFullFramebuffersVerified": true,
+  "roadAllCommonTileMasksVerified": true,
+  "bossAllCommonPacketsVerified": true,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "decision": "mask-derived bounds not adopted: slower dirty planning and no presentation gain; tile rounding remains opt-in pending complete game audit",
+  "evidenceBytes": 45162325,
+  "evidenceSha256": "8a95f73f9eed025bb953c9c8162ca95ad2c14e0fb4926c5f7352e575a22c04bb"
+}

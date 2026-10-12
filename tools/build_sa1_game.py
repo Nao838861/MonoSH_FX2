@@ -130,7 +130,13 @@ def main():
     ap.add_argument('--split-wide-clear-min',type=int,choices=[16,32,48,64,128],default=128)
     ap.add_argument('--split-near-packed',action='store_true')
     ap.add_argument('--near-packed',action='store_true')
+    ap.add_argument('--mask-bounds',action='store_true')
+    ap.add_argument('--mask-bounds-wide-table',action='store_true')
+    ap.add_argument('--dirty-tile-round',action='store_true')
     args=ap.parse_args()
+    assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
+    assert not args.mask_bounds_wide_table or args.mask_bounds
+    assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
     assert not args.split_near_packed or (args.split_viewports and not args.near_rom)
     assert not args.near_packed or (args.native_near and args.deep_bw and args.row_dirty_aligned and args.redraw_no_history and not args.near_rom and not args.cpu_dirty and not args.stack_explosions and not args.reverse_explosions)
     assert args.split_wide_clear_min==128 or args.split_viewports
@@ -1013,6 +1019,14 @@ opaque_sprite_fallback:
 '''
             text=text.replace(old,dispatch+old,1)
             src=BUILD/'renderer_opaque_prefix.s';src.write_text(text,encoding='utf8')
+        if args.dirty_tile_round and name=='dirty':
+            from sa1_dirty_round import transform as dirty_tile_round
+            text=dirty_tile_round('dirty',src.read_text(encoding='utf8'))
+            src=BUILD/'dirty_tile_round.s';src.write_text(text,encoding='utf8')
+        if args.mask_bounds and name=='dirty':
+            from sa1_mask_bounds import dirty as mask_bounds_dirty
+            text=mask_bounds_dirty(src.read_text(encoding='utf8'))
+            src=BUILD/'dirty_mask_bounds.s';src.write_text(text,encoding='utf8')
         if args.split_viewports and name=='renderer':
             from sa1_split_viewports import renderer as split_renderer
             text=split_renderer(src.read_text(encoding='utf8'))
@@ -1100,12 +1114,25 @@ opaque_sprite_fallback:
         obj=BUILD/'deep_rebase.o';run([CC/'ca65.exe','-o',obj,source]);objs.append(obj)
     if args.row_dirty:
         source=SA1/'row_dirty_game.s'
+        if args.dirty_tile_round:
+            from sa1_dirty_round import transform as dirty_tile_round
+            text=dirty_tile_round('row_dirty',source.read_text(encoding='utf8'))
+            source=BUILD/'row_dirty_tile_round.s';source.write_text(text,encoding='utf8')
+        if args.mask_bounds:
+            from sa1_mask_bounds import row as mask_bounds_row
+            text=mask_bounds_row(source.read_text(encoding='utf8'))
+            source=BUILD/'row_dirty_mask_bounds.s';source.write_text(text,encoding='utf8')
         if args.dirty_iram:
             from sa1_dirty_iram import transform as dirty_iram_transform
             text=dirty_iram_transform('row_dirty',source.read_text(encoding='utf-8'))
             source=BUILD/'row_dirty_iram.s';source.write_text(text,encoding='utf-8')
             obj=BUILD/'dirty_iram.o';run([CC/'ca65.exe','-o',obj,SA1/'dirty_iram_game.s']);objs.append(obj)
         obj=BUILD/'row_dirty.o';run([CC/'ca65.exe',*(['-D','SA1_ROW_DIRTY_ALIGNED=1'] if args.row_dirty_aligned else []),*(['-D','SA1_ROW_DIRTY_EXACT=1'] if args.row_dirty_exact else []),*(['-D','SA1_DEEP_BW=1'] if args.deep_bw else []),'-o',obj,source]);objs.append(obj)
+    if args.mask_bounds:
+        from sa1_mask_bounds import table as mask_bounds_table
+        source=BUILD/'mask_bounds_table.s';source.write_text('.setcpu "65816"\n'+mask_bounds_table(args.mask_bounds_wide_table),encoding='utf8')
+        obj=BUILD/'mask_bounds_table.o';run([CC/'ca65.exe','-o',obj,source]);objs.append(obj)
+        obj=BUILD/'mask_bounds.o';run([CC/'ca65.exe','-o',obj,SA1/('mask_bounds_wide_game.s' if args.mask_bounds_wide_table else 'mask_bounds_game.s')]);objs.append(obj)
     if args.native_background:
         source=SA1/'background_cache_sa1.s'
         if args.deep_bw:
@@ -1496,6 +1523,10 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(splitViewports=True,splitNearPacked=args.split_near_packed,splitWideClearMin=args.split_wide_clear_min,framebufferSlots=3,framebufferBytesPerSlot=49152,viewportBitmapBases=[0x0400,0x8400],viewportCentralByteRange=[32,96]);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.near_packed:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['nearPacked']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.mask_bounds:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(maskBounds=True,maskBoundsWideTable=args.mask_bounds_wide_table);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.dirty_tile_round:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['dirtyTileRound']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

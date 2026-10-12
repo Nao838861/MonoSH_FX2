@@ -8,6 +8,31 @@ from run_probe import prepare_runtime,MESEN_EXE,lua
 from test_sa1_probe import reference
 from build_sa1_game import BASE
 
+def verify_mask_bounds(dest,exact):
+    """各帯の左右端が転送tile集合を含むことを再確認。新方式は厳密一致。"""
+    data=(dest/'mask_bounds_trace.bin').read_bytes()
+    assert len(data)%194==0
+    count=len(data)//194
+    empty_aliases=0;conservative=0
+    for i in range(count):
+        record=data[i*194:(i+1)*194]
+        generation,=struct.unpack_from('<H',record)
+        assert generation==i+1,(i,generation)
+        for band in range(24):
+            mask,=struct.unpack_from('<I',record,2+4*band)
+            left,right=struct.unpack_from('<HH',record,98+4*band)
+            expected=((((mask&-mask).bit_length()-1)*4,mask.bit_length()*4) if mask else (128,0))
+            if not mask and left>=right:
+                empty_aliases+=int((left,right)!=(128,0))
+                if exact:assert (left,right)==(128,0)
+            else:
+                assert left<=expected[0] and right>=expected[1],(generation,band,hex(mask),(left,right),expected)
+                conservative+=int((left,right)!=expected)
+                if exact:assert (left,right)==expected
+    fb=(dest/'mask_bounds_frames.bin').stat().st_size
+    assert fb%24578==0
+    return dict(jobs=count,bands=count*24,recordBytes=194,equivalentEmptyBounds=empty_aliases,conservativeBounds=conservative,fullFramebufferJobs=fb//24578,exact=exact)
+
 def verify_clip_cache_coverage(dest):
     """上書きと再利用を実行ログから確認し、fixtureの見かけだけの合格を避ける。"""
     from collections import Counter
@@ -233,6 +258,7 @@ local output=OUTDIR
 local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
+local exactMaskBounds=EXACTMASKBOUNDS
 local splitFixtures=SPLITFIXTURES
 local function captureGeneration(g)
  return scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
@@ -269,6 +295,7 @@ local function activeClock()local c=emu.getState().masterClock;return c-irqTicks
 local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
+local boundsFrames=scenario:match('tracebounds') and assert(io.open(output..'/mask_bounds_frames.bin','wb')) or nil
 local completedFrames={}
 local expectedPalette=EXPECTEDPALETTE
 if scenario:match('tracepalette') then
@@ -351,6 +378,28 @@ local function cb(name,fn,cpu)
  local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+end
+if scenario:match('tracebounds') then
+ local f=assert(io.open(output..'/mask_bounds_trace.bin','wb'))
+ cb('sa1_occupancy_capture',function()
+  local mt=emu.memType.sa1Memory
+  local data={}
+  local function append16(v)data[#data+1]=string.char(v%256,math.floor(v/256)%256)end
+  append16(emu.read16(0x198,mt))
+  for i=0,95 do data[#data+1]=string.char(emu.read(0x432800+i,mt))end
+  for band=0,23 do
+   local first,last=128,0
+   for bit=0,31 do
+    local b=emu.read(0x432800+band*4+math.floor(bit/8),mt)
+    if math.floor(b/2^(bit%8))%2==1 then first=math.min(first,bit*4);last=(bit+1)*4 end
+   end
+   local left=emu.read16(0x120+band*4,mt);local right=emu.read16(0x122+band*4,mt)
+   local exact=left==first and right==last
+   assert(exact or (not exactMaskBounds and ((last==0 and left>=right) or (last>0 and left<=first and right>=last))),string.format('mask bounds job %d band %d: %d..%d expected %d..%d',emu.read16(0x198,mt),band,left,right,first,last))
+   append16(left);append16(right)
+  end
+  f:write(table.concat(data));f:flush()
+ end,emu.cpuType.sa1)
 end
 if labels.clip_left_cache_hit then
  local log=assert(io.open(output..'/clip_cache.jsonl','w'))
@@ -858,14 +907,16 @@ cb('sa1_draw_done',function()
  if pipeline then
   local cpuMt=emu.memType.snesMemory;local slot=emu.read16(0x7e0000+labels.pipe_render_slot,cpuMt)
   local gen=emu.read16(0x7e0000+labels.pipe_records+slot*512+8,cpuMt)
-  if DENSE_TILES and captureGeneration(gen) then
+  if DENSE_TILES and (captureGeneration(gen) or boundsFrames) then
    local bank=emu.read16(0x102,mt);local base=emu.read16(0x19a,mt);local t={}
    if splitViewports then
     bank=bank&255
     assert(base==0x400 and bank>=0x40 and bank<=0x42,'split framebuffer bank/base invalid bank='..bank..' base='..base)
     for y=0,191 do for half=0,1 do for x=32,95 do t[#t+1]=string.char(emu.read(bank*65536+base+half*0x8000+y*128+x,mt))end end end
    else for i=0,24575 do t[#t+1]=string.char(emu.read((bank&255)*65536+base+i,mt))end end
-   completedFrames[gen]=table.concat(t)
+   local fb=table.concat(t)
+   if boundsFrames then boundsFrames:write(string.char(gen&255,gen>>8)..fb);boundsFrames:flush()end
+   if captureGeneration(gen) then completedFrames[gen]=fb end
   end
   if captureGeneration(gen) then local t={};for i=0,n*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,mt))end;completedPackets[gen]=table.concat(t)end
  end
@@ -1049,6 +1100,7 @@ emu.addEventCallback(function()
  end
 end,emu.eventType.endFrame)
 '''.replace('COMPACTGAME','true' if config.get('sa1GameCompact') else 'false').replace('GAMEBWBASE',str(0x430000 if config.get('sa1GameCompact') else 0x400000)).replace('GAMEOFFLOAD','true' if config.get('sa1Game') else 'false').replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
+    script=script.replace('EXACTMASKBOUNDS','true' if config.get('maskBounds') else 'false')
     script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') and not config.get('gameIrqWram') else 0x7f0000))
     from sa1_patterns import dimensions
     patterns=dimensions()
@@ -1138,6 +1190,9 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('clipfixture'):
         assert summary['pixelMatchedPresents']>=240
         summary['clipCacheCoverage']=verify_clip_cache_coverage(dest)
+    if 'tracebounds' in args.scenario:
+        summary['maskBoundsVerified']=verify_mask_bounds(dest,config.get('maskBounds',False))
+        assert len(summary['sa1Jobs'])<=summary['maskBoundsVerified']['jobs']<=len(summary['sa1Jobs'])+1
     (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     if args.scenario.startswith('stackfixture'):
         assert summary['stalledTailFields']<=1, 'stack clipping fixture stopped presenting'
