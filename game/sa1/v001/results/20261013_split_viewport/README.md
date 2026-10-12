@@ -43,3 +43,29 @@ python tools/analyze_sa1_split_viewport.py build/sa1_game/movestress_detinput_ca
 ```text
 python tools/probe_sa1_split_cc1.py
 ```
+
+## 同じSA-1描画器による左右の再生比較
+
+`tools/test_sa1_game.py --split-fixture-source` と `sa1_split_fixture.py` で、重い41画像を一面・左面・右面として123 jobの周期で実際のSA-1へ再生した。元のnative行コード、色、寸法、painter順を維持し、左右のpacketだけ座標を±64px移す。ホストは絵を描かず、入力packetを書き替える。通常の一面ROMを使うため、二面同時の所有権や転送はまだ検査していない。
+
+500表示でPPU・VRAM・参照画像が全画素一致し、165組の左右sprite再合成も一面と一致した。41画像全てを含む。中央の近景stripはこの再生では元の位置へ描くため、再合成比較はspriteのalpha領域に限定する。各表示のstripを含む全画像は共通のPPU検査で確認している。
+
+|165組の平均（ms）|一面|左右の合計|
+|---|---:|---:|
+|描画|9.933918|6.837607|
+|dirty計算|2.956178|3.927190|
+|消去|0.977020|2.984176|
+|背景|0.712409|1.484172|
+|SA-1総計|14.579524|15.233144|
+
+描画だけは約31.17%短縮し、136/165組で速い。しかし別jobのdirty・消去・背景を二重に実行するため、総計は約4.48%増える。712 field・507 logic・500表示、表示間隔は1 field=435件/2 field=62件。これは部分画面の再生であり、ゲーム全体の60fps結果ではない。両jobは別時刻のIRQ/PPU競合を含むので、二面統合後の費用とは異なる。
+
+初回試験は起動時の最初のpacketが注入hookより先に取得される位相差をverifierが考慮せず失敗した。推測で入力をずらさず、後続499 packetの全byteから一意に位相1を特定するよう修正してMesenを再実行した。v2は終了コード0で全検査完了。fixture無効の通常道中も130表示/120全画素照合を通した。ROMは基準a9bcd247のままである。
+
+証拠は `drawing_replay_evidence.zip`（11225934B、SHA256=c821d50da594575338295daced011ef2979e2fa270e94f41fe00ab18df87c666）。入力・実画像・metadata・PPU/VRAM・timing・ROM・labels・初回失敗logも含む。集計は `drawing_replay.json`。配布版は変更していない。
+
+```text
+python tools/test_sa1_game.py --frames 1000 --presents 500 --timeout 300 --scenario splitfixture_replay_v2_tracepalette --split-fixture-source build/sa1_game/movestress_detinput_captureburst_directleft_currentbase_tracepalette
+python tools/test_sa1_game.py --frames 360 --presents 130 --scenario movestress_detinput_splitfixture_defaultsmoke_tracepalette
+python tools/report_sa1_split_replay.py
+```

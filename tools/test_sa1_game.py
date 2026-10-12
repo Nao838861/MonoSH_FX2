@@ -1,5 +1,6 @@
 """実SA-1とPPUが動く統合ROMの計測。画面・転送後のVRAMも保存する。"""
 import argparse,hashlib,json,re,subprocess,struct
+from pathlib import Path
 import numpy as np
 from PIL import Image
 from build_sa1_game import BUILD
@@ -201,7 +202,12 @@ def verify_pixels(dest,labels,config):
     return checked
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);ap.add_argument('--timeout',type=int,default=180);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--frames',type=int,default=600);ap.add_argument('--scenario',default='play');ap.add_argument('--presents',type=int,default=0);ap.add_argument('--timeout',type=int,default=180);ap.add_argument('--split-fixture-source',type=Path);args=ap.parse_args()
+    assert bool(args.split_fixture_source)==args.scenario.startswith('splitfixture')
+    split_jobs=[]
+    if args.split_fixture_source:
+        from sa1_split_fixture import load
+        split_jobs,split_sources=load(args.split_fixture_source)
     dest=BUILD/args.scenario;dest.mkdir(exist_ok=True)
     (dest/'failure.txt').unlink(missing_ok=True)
     (dest/'summary.json').unlink(missing_ok=True)
@@ -210,6 +216,7 @@ def main():
         if re.fullmatch(r'frame\d+\.(png|rgb)',path.name):path.unlink()
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
     config=json.loads((BUILD/'manifest.json').read_text())
+    if split_jobs:(dest/'split_fixture_source.json').write_text(json.dumps(dict(source=str(args.split_fixture_source),sources=split_sources,jobs=split_jobs),indent=2)+'\n')
     (dest/'manifest.json').write_text(json.dumps(config,indent=2)+'\n')
     (dest/'game.lbl').write_bytes((BUILD/'game.lbl').read_bytes())
     assert hashlib.sha256((BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()).hexdigest()==config['romSha256']
@@ -226,8 +233,9 @@ local output=OUTDIR
 local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
+local splitFixtures=SPLITFIXTURES
 local function captureGeneration(g)
- return scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -656,6 +664,15 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^splitfixture') then
+  local objects=splitFixtures[(logic-1)%#splitFixtures+1]
+  word('_fx_packet_count',#objects)
+  for i,o in ipairs(objects)do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,o[1]&65535,mt);emu.write16(a+2,o[2]&65535,mt)
+   for j=3,8 do emu.write(a+j+1,o[j],mt)end
+  end
+ end
  if scenario:match('^opaquefixture') then
   local targets=OPAQUETARGETS;local fronts=OPAQUEFRONTS
   local g=targets[(logic-1)%#targets+1];local f=fronts[(logic-1)%#fronts+1]
@@ -1033,6 +1050,7 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('leftfixtureindexed'):
         left_geometries=[[a,w,h] for a in (0,2,3,5) for w,h in sorted(patterns[a]) if w>=64]
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
+    script=script.replace('SPLITFIXTURES',lua([j['draws'] for j in split_jobs]))
     script=script.replace('OPAQUETARGETS',lua([[w,h] for w,h in sorted(patterns[40]) if 49<=w<=79]))
     script=script.replace('OPAQUEFRONTS',lua([[a,w,h] for a in (39,40,41) for w,h in sorted(patterns[a]) if w>=64]))
     script=script.replace('OPAQUEINLINERAW','true' if config.get('opaquePrefixInlineRaw') else 'false')
@@ -1071,6 +1089,11 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
+    if split_jobs:
+        from sa1_split_fixture import verify
+        summary['splitViewportFixture']=verify(dest,split_jobs,summary)
+        summary['fixturePresentationEveryField']=summary['goal60fpsAchieved']
+        summary['goal60fpsAchieved']=False
     if labels.get('flame_direct_row'):
         events=[json.loads(line) for line in (dest/'flame_direct.jsonl').read_text().splitlines()]
         summary['flameDirectCoverage']=dict(rows=len(events),jobs=len({e['job'] for e in events}))
