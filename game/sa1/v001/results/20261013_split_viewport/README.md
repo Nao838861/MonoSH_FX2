@@ -114,3 +114,22 @@ python tools/test_sa1_game.py --frames 800 --timeout 240 --scenario movestress_d
 python tools/test_sa1_game.py --frames 1900 --timeout 300 --scenario bossmovestress_detinput_nearpacked_v1_long_tracepalette
 python tools/report_sa1_split_integrated.py
 ```
+
+## 固定分割位置64/128/192pxの比較算定
+
+中央の重複を減らす候補として、描画biasは左+64/右-64のまま、可視域の境界だけ64または192pxへ移した場合を全packetで算定した。新しい二案のゲームコード・DMAは未実装、速度未測定。各案・各sceneの530..570の41画像、計246組のホスト参照再合成は原画と全画素一致した。
+
+|scene / 分割位置|物体数|native命令byte量（可視行）|左clip|右clip|
+|---|---:|---:|---:|---:|
+|道中基準|6264|5248257|239|365|
+|道中64|6661|5981064|404|0|
+|道中128|6965|6137718|15|2|
+|道中192|6638|5964063|7|374|
+|ボス基準|25076|35953050|267|222|
+|ボス64|26864|39629280|1788|0|
+|ボス128|31732|48584001|0|198|
+|ボス192|27408|42678396|0|2332|
+
+非対称な分割はボスの重複を減らすが、新しい境界で端helperを必要とする物体が大きく増える。道中の重い41画像ではnative命令量が64px案1334739B/192px案1385319Bとなり、128px案1123641Bより増える。clipも左84件/右63件（128px案は左8/右0）へ戻る。どちらも「重複が減るので速い」とは扱わず、この算定だけで採用しない。数値は可視行のnative命令・行macroだけであり、bottom slackの行、圧縮弾worker、helperの実費、IRQ、clear/dirty/転送/キューは除く。元spriteのopaque boundsによる選別で、実装の寸法全体による保守的な選別より少なくなる場合もある。
+
+全六案のpacket単位の正本は `boundary_analysis.json`。入力は上記証拠zipに含む基準ROMとbaseline road/bossのpacket_trace。`analyze_sa1_split_viewport.py --boundary 64|128|192` で算定する。ROMと配布版は変更しない。

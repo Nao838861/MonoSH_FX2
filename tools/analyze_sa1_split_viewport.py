@@ -11,7 +11,8 @@ from sa1_left_hints import physical
 from test_sa1_probe import reference
 
 
-def analyze(directory,rom_path):
+def analyze(directory,rom_path,boundary=128):
+    assert boundary in (64,128,192)
     rom=rom_path.read_bytes()
     def u16(p):return struct.unpack_from('<H',rom,p)[0]
     def pointer(p):return physical(int.from_bytes(rom[p:p+3],'little'))
@@ -57,7 +58,7 @@ def analyze(directory,rom_path):
         draws=[list(struct.unpack_from('<hh6B',raw,offset+8+i*10)) for i in range(n)]
         offset=end;index+=1
         base=[d for d in draws if selected(d,0,256,0) is not None]
-        halves=[[d for o in draws if (d:=selected(o,lo,lo+128,64-lo)) is not None] for lo in (0,128)]
+        halves=[[d for o in draws if (d:=selected(o,lo,hi,shift)) is not None] for lo,hi,shift in ((0,boundary,64),(boundary,256,-64))]
         costs=[]
         for objects in (base,halves[0]+halves[1]):
             total={k:0 for k in ('objects','nativeBytes','leftClipped','rightClipped','bullets')}
@@ -67,7 +68,7 @@ def analyze(directory,rom_path):
         checked=False
         if 530<=index<=570:
             original=np.frombuffer(reference(dict(draws=draws)),dtype=np.uint8).reshape(192,128)
-            parts=[np.frombuffer(reference(dict(draws=d)),dtype=np.uint8).reshape(192,128)[:,32:96] for d in halves]
+            parts=[np.frombuffer(reference(dict(draws=d)),dtype=np.uint8).reshape(192,128)[:,lo:hi] for d,lo,hi in zip(halves,(32,boundary//2-32),(32+boundary//2,96))]
             assert np.array_equal(original,np.concatenate(parts,axis=1)),index
             checked=True
         frames.append(dict(generation=index,baseline=costs[0],split=costs[1],hostPixelReconstructionChecked=checked))
@@ -77,13 +78,15 @@ def analyze(directory,rom_path):
         nativeByteRatio=totals['split']['nativeBytes']/totals['baseline']['nativeBytes'],
         hostPixelReconstructionChecks=41,framebufferBytesPerGameFrame=2*192*128,
         threeFramebufferPairsBytes=3*2*192*128,
-        cC1WidthPixels=256,visiblePixelsPerHalf=128,horizontalPaddingPixelsPerSide=64,
+        cC1WidthPixels=256,splitBoundary=boundary,visiblePixelsPerViewport=[boundary,256-boundary],
+        viewportBiases=[64,-64],viewportHorizontalPadding=[[64,192-boundary],[boundary-64,64]],
+        **({'visiblePixelsPerHalf':128,'horizontalPaddingPixelsPerSide':64} if boundary==128 else {}),
         estimatedTiming=False,gameIntegrated=False,hardwareTransferVerified=False,goal60fpsAchieved=False,
-        exclusions='nativeBytes excludes compressed bullet workers, dispatch/clear/dirty, CC1/PPU and queue effects; no fps inferred')
+        exclusions='nativeBytes counts visible rows only; excludes bottom slack, compressed bullet workers, dispatch/clear/dirty, CC1/PPU and queue effects; no fps inferred')
 
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('directory',type=Path);ap.add_argument('rom',type=Path);ap.add_argument('--output',type=Path,required=True);args=ap.parse_args()
-    result=analyze(args.directory,args.rom);args.output.parent.mkdir(parents=True,exist_ok=True)
+    ap=argparse.ArgumentParser();ap.add_argument('directory',type=Path);ap.add_argument('rom',type=Path);ap.add_argument('--boundary',type=int,choices=[64,128,192],default=128);ap.add_argument('--output',type=Path,required=True);args=ap.parse_args()
+    result=analyze(args.directory,args.rom,args.boundary);args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,indent=2)+'\n')
     print({k:result[k] for k in ('totals','nativeByteRatio','hostPixelReconstructionChecks')})
