@@ -74,6 +74,9 @@ sa1_edge_save:
   lda $3a
   clc
   adc $a0
+  ; 負のtop + source first rowのcarryは行数へ持ち越さない。
+  ; 余分な1行を退避すると$0300..04ffを超えてJITを壊す。
+  clc
   adc $a8                    ; source row count
   inc
   cmp #193

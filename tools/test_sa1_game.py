@@ -137,7 +137,7 @@ local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local function captureGeneration(g)
- return g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^stackfixture') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -533,6 +533,19 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^stackfixture') then
+  local centers={0,47,48,49,128,182,222,265,266,267,268,286,300}
+  local tops={-20,0,30,55,56,120,180}
+  local h=73+math.floor((logic-1)/(#centers*#tops))%2
+  local top=tops[math.floor((logic-1)/#centers)%#tops+1]
+  word('_fx_packet_count',2)
+  for i=1,2 do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,centers[(logic+i-2)%#centers+1],mt)
+   emu.write16(a+2,(top+h+20)&65535,mt)
+   emu.write(a+4,94,mt);emu.write(a+5,h,mt);emu.write(a+6,39+i,mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+  end
+ end
  if scenario:match('^leftfixture') then
   local geometries=LEFTFIXTUREGEOMETRIES
   local centers={-40,0,16,30,64,128,250}
@@ -847,6 +860,9 @@ end,emu.eventType.endFrame)
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
     (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+    if args.scenario.startswith('stackfixture'):
+        assert summary['stalledTailFields']<=1, 'stack clipping fixture stopped presenting'
+        assert summary['presents']>=2*13*7, 'stack clipping fixture did not exercise both heights'
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 
 if __name__=='__main__':main()

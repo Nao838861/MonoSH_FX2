@@ -10,7 +10,7 @@ def physical(a):
     return bank*32768+(low&32767)
 
 
-def build(rom,dest):
+def build(rom,dest,compressed=False):
     cursor=json.loads((dest/'compiled_game_packing.json').read_text())['payloadEnd']
     def alloc(raw,cross_bank=False):
         nonlocal cursor
@@ -60,7 +60,10 @@ def build(rom,dest):
                 assert struct.unpack_from('<H',code,previous+1)[0]==item[1]
             encoded+=bytes((item[0]//3,))
         key=bytes(encoded)
-        if key not in unique:unique[key]=alloc(encoded);total+=len(encoded)
+        if compressed:
+            from analyze_sa1_hint_compression import compress
+            key=compress(key)
+        if key not in unique:unique[key]=alloc(key);total+=len(key)
         records[ptr]=unique[key]
         slot=((ptr&65535)>>1 ^ ((ptr>>16)<<3))&(slots-1)
         while table[slot*6:slot*6+3]!=bytes(3):slot=(slot+1)&(slots-1)
@@ -68,7 +71,7 @@ def build(rom,dest):
     offset=physical(target)
     rom[offset:offset+len(table)]=table
     (dest/'left_hints.inc').write_text(f'LEFT_HINT_TABLE=${target:06x}\nLEFT_HINT_MASK={slots-1}\n',encoding='utf-8')
-    info={'assets':[0,2,3,5],'minimumWidth':64,'kernels':len(records),'uniqueHintTables':len(unique),'hintBytes':total,'hintBytesPerEntry':1,'hashSlots':slots,'hashBytes':len(table),'payloadEnd':cursor}
+    info={'assets':[0,2,3,5],'minimumWidth':64,'kernels':len(records),'uniqueHintTables':len(unique),'hintBytes':total,'hintBytesPerEntry':1,'hashSlots':slots,'hashBytes':len(table),'payloadEnd':cursor,'compressed':compressed}
     (dest/'left_hints_packing.json').write_text(json.dumps(info,indent=2)+'\n')
     print(info)
     return rom

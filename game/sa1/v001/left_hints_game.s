@@ -32,6 +32,15 @@ hint_load_cpu:
   mvn #^__LEFTJIT_LOAD__,#$00
   plb
   jml left_hint_entry
+.ifdef SA1_LEFT_HINT_COMPRESSED
+; 2bit差分4個の和。最後のgroupはmaskで不要な差分を0にする。
+hint_delta_sums:
+  .repeat 256, n
+    .byte ((n&3)+((n>>2)&3)+((n>>4)&3)+((n>>6)&3)) + ((n&3)=3) + (((n>>2)&3)=3) + (((n>>4)&3)=3) + (((n>>6)&3)=3)
+  .endrepeat
+hint_delta_masks:
+  .word 0,3,15,63
+.endif
 .segment "LEFTJIT"
 hintChain=$80
 hintCode=$84
@@ -217,8 +226,64 @@ hint_found:
   inc
   lsr
   tay
+.ifdef SA1_LEFT_HINT_COMPRESSED
+  lda [hintTable]
+  and #128
+  beq hint_uncompressed
+  tya
+  and #7
+  sta hintGuard
+  tya
+  lsr
+  lsr
+  lsr
+  sta hintSlot
+  asl
+  clc
+  adc hintSlot
+  inc
+  tay
   lda [hintTable],y
   and #255
+  sta hintSlot
+  iny
+  lda [hintTable],y
+  sta hintByte
+  lda hintGuard
+  cmp #4
+  bcc hint_delta_tail
+  lda hintByte
+  and #255
+  tax
+  lda f:hint_delta_sums,x
+  and #255
+  clc
+  adc hintSlot
+  sta hintSlot
+  lda hintByte
+  xba
+  sta hintByte
+  lda hintGuard
+  sec
+  sbc #4
+hint_delta_tail:
+  asl
+  tax
+  lda f:hint_delta_masks,x
+  and hintByte
+  tax
+  lda f:hint_delta_sums,x
+  and #255
+  clc
+  adc hintSlot
+  bra hint_decoded
+hint_uncompressed:
+.endif
+  lda [hintTable],y
+  and #255
+.ifdef SA1_LEFT_HINT_COMPRESSED
+hint_decoded:
+.endif
   sta hintSlot
   asl
   clc
