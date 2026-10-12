@@ -244,6 +244,7 @@ local vramFourShared=VRAMFOURSHARED
 local vramFifo=VRAMFIFO
 local vramFourOwned=VRAMFOUROWNED
 local fixedMap=FIXEDMAP
+local splitViewports=SPLITVIEWPORTS
 local fixedMapDelta=FIXEDMAPDELTA
 local fixedMapDeltaDma=FIXEDMAPDELTADMA
 local packetOffload=PACKETOFFLOAD
@@ -812,7 +813,25 @@ if labels.direct_left_row then
  end,emu.cpuType.sa1)
  cb('left_hint_finished',function()active=false end,emu.cpuType.sa1)
 end
-if labels.sa1_output_done then cb('sa1_output_done',function()outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f}',field,(emu.getState().masterClock-sa1begin)/21477.272)end,emu.cpuType.sa1)end
+if labels.sa1_output_done then cb('sa1_output_done',function()
+ local n=0
+ if splitViewports then
+  local mt=emu.memType.sa1Memory;n=emu.read16(0x11a,mt)
+  assert(n<=48,'split DMA metadata overflow')
+  assert(emu.read16(0x19a,mt)==0x400,'split base was not restored')
+  local bytes=0
+  for i=0,n-1 do
+   local a=0x430800+i*6;local len=emu.read16(a,mt);local src=emu.read16(a+2,mt);local dst=emu.read16(a+4,mt)
+   local pos=src&0x3ff
+   assert(len>0 and pos>=0x100 and pos+len<=0x300 and len%32==0,'split descriptor crosses viewport half')
+   local original=(src&0x7c00)-0x400+pos-0x100+((src&0x8000)~=0 and 0x200 or 0)
+   assert(original>=1024 and original+len<=24576 and dst*2+992==original,'split descriptor source/VRAM mismatch')
+   bytes=bytes+len
+  end
+  assert(bytes==emu.read16(0x118,mt),'split transfer bytes differ')
+ end
+ outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f,\"splitDescriptorsVerified\":%d}',field,(emu.getState().masterClock-sa1begin)/21477.272,n)
+end,emu.cpuType.sa1)end
 if labels.sa1_dirty_done then
  cb('sa1_dirty_done',function()
  if pipeline then jobSequence=jobSequence+1;assert(emu.read16(0x198,emu.memType.sa1Memory)==jobSequence,'SA-1 job duplicated or skipped')end
@@ -841,7 +860,11 @@ cb('sa1_draw_done',function()
   local gen=emu.read16(0x7e0000+labels.pipe_records+slot*512+8,cpuMt)
   if DENSE_TILES and captureGeneration(gen) then
    local bank=emu.read16(0x102,mt);local base=emu.read16(0x19a,mt);local t={}
-   for i=0,24575 do t[#t+1]=string.char(emu.read((bank&255)*65536+base+i,mt))end
+   if splitViewports then
+    bank=bank&255
+    assert(base==0x400 and bank>=0x40 and bank<=0x42,'split framebuffer bank/base invalid bank='..bank..' base='..base)
+    for y=0,191 do for half=0,1 do for x=32,95 do t[#t+1]=string.char(emu.read(bank*65536+base+half*0x8000+y*128+x,mt))end end end
+   else for i=0,24575 do t[#t+1]=string.char(emu.read((bank&255)*65536+base+i,mt))end end
    completedFrames[gen]=table.concat(t)
   end
   if captureGeneration(gen) then local t={};for i=0,n*10-1 do t[#t+1]=string.char(emu.read(0x430000+i,mt))end;completedPackets[gen]=table.concat(t)end
@@ -1062,6 +1085,7 @@ end,emu.eventType.endFrame)
     script=script.replace('FIXEDMAPDELTADMA','true' if config.get('fixedMapDeltaDma') else 'false')
     script=script.replace('FIXEDMAPDELTA','true' if config.get('fixedMapDelta') else 'false')
     script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')
+    script=script.replace('SPLITVIEWPORTS','true' if config.get('splitViewports') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
     script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))

@@ -1,6 +1,6 @@
 # 可視域を左右128pxずつの二面へ分ける容量・命令量の算定
 
-ゲームへの二面描画は未統合・速度未測定。下記の独立ROMで転送だけを検証済み。60fps達成結果ではない。既存の広幅バッファ試験は512pxから中央256pxをコピーし直す費用で遅くなった。今回の候補は通常の256px幅バッファを二つ使い、各面の中央128pxだけを文字変換DMAから直接読む。左右64pxずつの余白があるため、大きな爆発も画面端の退避なしで描ける場合が増える。原画や寸法を減らす案ではない。
+左右二面をゲームへ統合して全画素と速度を測定したが、長いボス戦で退行したため不採用。60fpsは未達。以下は算定→独立転送→描画再生→ゲーム統合の順に記録する。既存の広幅バッファ試験は512pxから中央256pxをコピーし直す費用で遅くなった。今回の候補は通常の256px幅バッファを二つ使い、各面の中央128pxだけを文字変換DMAから直接読む。左右64pxずつの余白があるため、大きな爆発も画面端の退避なしで描ける場合が増える。原画や寸法を減らす案ではない。
 
 Mesenの[SA-1実装](https://github.com/SourMesen/Mesen2/blob/b9fa69ddc6d0a331fb103fdb5eef6904305703c2/Core/SNES/Coprocessors/SA1/Sa1.cpp)では、2231hのCharConvWidthを最大5（32 character、256px）へ制限している。従って512px幅へ設定するだけで旧コピーを省く案をMesenで使えるとは扱わない。この調査は実装コードに基づくもので、実機上の未定義レジスタ値の挙動を測定したものではない。
 
@@ -68,4 +68,49 @@ python tools/probe_sa1_split_cc1.py
 python tools/test_sa1_game.py --frames 1000 --presents 500 --timeout 300 --scenario splitfixture_replay_v2_tracepalette --split-fixture-source build/sa1_game/movestress_detinput_captureburst_directleft_currentbase_tracepalette
 python tools/test_sa1_game.py --frames 360 --presents 130 --scenario movestress_detinput_splitfixture_defaultsmoke_tracepalette
 python tools/report_sa1_split_replay.py
+```
+
+## ゲームへの二面統合と一面への近景コピー移植
+
+`--split-viewports` は同一packetを順に二回走査し、各可視域に関係するspriteだけを±64px移してSA-1で描く。packet自体、素材、全寸法、色位相、painter順、ゲーム時計を保持する。rawはbank40/41/42の0400・8400を一組とする三画像へ変更。全体のdirty計算は一回、旧rawの可視dirty部分だけを左右の中央へ写して消去する。中央の近景stripも左右へ写す。0120の履歴は三画像、VRAMの履歴は従来の二面を保つ。中間画像のCPUコピーはない。
+
+転送maskはhalf/band境界を跨ぐmergeを禁止し、最大48descriptorの従来の枠内で隙間をまとめ直す。各descriptorの元global座標、写像後のsource、VRAM destination、総byte数と個数を実行時に全jobで検査する。0400をCC1 baseに維持し、右のsourceだけvirtual +8000を使う。記述子はmetadataの208..495、prefix表は各画像の6A00へ収まる。描画の余白が前景に見えたり、次の画像を上書きしたりしないことは実PPU/VRAMとの照合で確認した。二面では01B0..01B9をpass/消去・近景の一時状態に使用し、既存の参照箇所と重複しないことを検索した。
+
+道中800 fieldの比較（全て168画面を全画素照合）：
+
+|方式|表示数|2 field待ち|最大SA-1（ms）|
+|---|---:|---:|---:|
+|現行一面基準|647|4|22.002049|
+|二面・先行消去なし|645|7|20.486214|
+|二面・先行消去あり|646|6|19.571201|
+|二面・32B以上をwide消去|644|8|20.794540|
+|二面・近景packedコピー|647|5|19.094790|
+|一面・近景packedコピー|647|4|21.831450|
+
+wide消去は片面の1KiBを丸ごと消すため、余白の転送増が費用を上回った。先行消去は転送完了した三画像だけを対象とし、左右を両方消し終えてから履歴を空にする。三画像化で先行消去できる時間も減る。最大SA-1値だけを見ると二面の方が速いが、表示間隔は改善していない。
+
+`--split-near-packed` は既存の近景512px×9行を偶数/奇数pixel位相ごとにpacked化し、横のwrap用に各行を二回連結した9216BをFE0000へ置く。既存の近景compiled code用45KiB内を置き換える。0700..0703の一時MVN workerで直接BW-RAMへコピーし、各回のDBRを保存・復元する。ホストでゲーム画像を描く処理はない。全512 scroll×9行×左右、9216区間について透明0も含む元の画素への一致をbuild時に検証する。新stripはspriteの描画前に置くので、透明部分は0を書ける。実ゲームの背景・sprite合成も全画素一致した。
+
+重い530..570の41画像の平均では、一面基準draw9.707632/dirty3.046567/clear2.734632/bg0.788555/総計16.277386msに対し、二面packedは7.531129/2.996940/3.724563/0.357297/14.609929ms。ただし、これは全体の表示待ち解消を意味しない。境界を跨ぐ物体は両面へ描くため、中央付近に物体が集中するボスでは退行する。
+
+1900 fieldのボス比較：
+
+|方式|表示数|間隔0/1/2/3 field|最大SA-1（ms）|全画素照合|
+|---|---:|---|---:|---:|
+|現行一面基準|1743|1/1731/8/0|18.954549|147|
+|二面packed|1612|0/1471/137/1|23.344771|144|
+|一面packed|1746|0/1739/4/0|18.662054|147|
+
+間隔0は同じ可視fieldの二回flipであり、二枚がそれぞれ表示された証拠にはしない。一面への移植は `--near-packed` で有効化し、従来の七raw画像を維持する。ボスは少し改善するが、道中の待ちは4回のままであり60fps未達。近景の費用短縮だけを全spriteの改善と混同しない。全9scenarioで共通世代までのpacket全byteが基準と一致した。二面は不採用、近景コピーは独立したopt-in候補として残す。配布ROMは変更していない。
+
+初回二面buildはBOOTが2B不足し、消去helperをGSUへ置いて修正した。初回130表示試験はverifierがbank wordの上位byteをmaskせず誤って停止した。下位byteだけをbankとして検査する修正後にMesenを再実行し、130表示/120照合を通過。その後の800/1900 fieldも全て終了コード0で検査完了した。過去の否定試験の実ROMとlogを保持し、途中で行ったhelper改訂の前後を含むため、比較の正本は保存したROM SHAとtraceである。
+
+`integrated_comparison.json` に集計、`integrated_commands.json` に各候補のbuild引数。`integrated_evidence.zip` は39838107B、SHA256=0350d67810ff0fd34635bbb46c295626f75da4685b941c5f1d48cc488e8dc8f7。6 ROMと全9scenarioのPPU/VRAM/RGB/FB/packet、timing、Lua、labels、失敗logを収録した。一面packedのROM SHAは3fb3e2e93f0a6b7332e23068f0cfcb5580c7ec9ea25c3a178b65fdf0ae7d9645。最後に通常buildを再実行し、元の一面基準a9bcd247とROM SHAが完全一致することを確認した。新機能無効での道中130表示・120全画素照合も終了コード0で通過（279 field/137 logic、最大7.241609ms）。これら最後の通常動作確認はlocalのsplit_default_final_build.log/split_default_final_smoke.logにあり、上記archive作成後に実行した。
+
+```text
+python tools/test_sa1_game.py --frames 800 --timeout 240 --scenario movestress_detinput_captureburst_splitintegrated_packed_v1_tracepalette
+python tools/test_sa1_game.py --frames 1900 --timeout 300 --scenario bossmovestress_detinput_splitintegrated_packed_v1_long_tracepalette
+python tools/test_sa1_game.py --frames 800 --timeout 240 --scenario movestress_detinput_captureburst_nearpacked_v1_tracepalette
+python tools/test_sa1_game.py --frames 1900 --timeout 300 --scenario bossmovestress_detinput_nearpacked_v1_long_tracepalette
+python tools/report_sa1_split_integrated.py
 ```

@@ -126,7 +126,17 @@ def main():
     ap.add_argument('--contiguous-chr-dma',action='store_true')
     ap.add_argument('--prefix-cpu-table',action='store_true')
     ap.add_argument('--prefix-table-partial',action='store_true')
+    ap.add_argument('--split-viewports',action='store_true')
+    ap.add_argument('--split-wide-clear-min',type=int,choices=[16,32,48,64,128],default=128)
+    ap.add_argument('--split-near-packed',action='store_true')
+    ap.add_argument('--near-packed',action='store_true')
     args=ap.parse_args()
+    assert not args.split_near_packed or (args.split_viewports and not args.near_rom)
+    assert not args.near_packed or (args.native_near and args.deep_bw and args.row_dirty_aligned and args.redraw_no_history and not args.near_rom and not args.cpu_dirty and not args.stack_explosions and not args.reverse_explosions)
+    assert args.split_wide_clear_min==128 or args.split_viewports
+    if args.split_viewports:
+        assert args.fixed_map and args.deep_bw and args.occupancy and args.front_mask and args.redraw_all and args.redraw_no_history and args.stack_band and args.native_near and args.irq_fastrom and args.direct_sparse and args.pipeline_depth==8
+        assert args.prefill_count<=3 and not (args.mask_clear or args.cpu_dirty or args.cpu_pack or args.tile_dma or args.dense_tiles or args.sa1_game or args.sa1_game_compact or args.padded_pipeline or args.fixed_map_delta or args.opaque_prefix or args.stack_explosions or args.reverse_explosions)
     assert not args.vram_fifo_fast or (args.vram_fifo and args.front_mask)
     assert not args.vram_fifo_fused_map or args.vram_fifo_fast
     assert not args.wait_clear_dma or args.stack_band
@@ -495,6 +505,9 @@ def main():
             from sa1_cpu_dirty import pipeline as cpu_dirty_pipeline
             text=cpu_dirty_pipeline(text)
         (BUILD/'pipeline_tuned.inc').write_text(text,encoding='utf-8')
+    if args.split_viewports:
+        from sa1_split_viewports import pipeline as split_pipeline
+        path=BUILD/'pipeline_tuned.inc';path.write_text(split_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
     if args.native_near:defines+=['-D','SA1_NATIVE_NEAR=1']
     if args.changed_mask:defines+=['-D','SA1_CHANGED_MASK=1']
     if args.front_mask:defines+=['-D','SA1_FRONT_MASK=1']
@@ -1000,6 +1013,10 @@ opaque_sprite_fallback:
 '''
             text=text.replace(old,dispatch+old,1)
             src=BUILD/'renderer_opaque_prefix.s';src.write_text(text,encoding='utf8')
+        if args.split_viewports and name=='renderer':
+            from sa1_split_viewports import renderer as split_renderer
+            text=split_renderer(src.read_text(encoding='utf8'))
+            src=BUILD/'renderer_split_viewports.s';src.write_text(text,encoding='utf8')
         obj=BUILD/(name+'_asm.o')
         run([CC/'ca65.exe',*defines,*(['-D','SA1_TILE_DMA=1'] if args.transfer_tiles and name=='dirty' else []),'-I',GAME,'-I',SA1,'-I',BASE,'-I',BUILD,'--bin-include-dir',GAME,'--bin-include-dir',BASE,'-o',obj,src]);objs.append(obj)
     if args.compact_memory or args.bullet_shapes:
@@ -1038,6 +1055,10 @@ opaque_sprite_fallback:
         source=SA1/'occupancy_game.s'
         if args.deep_bw:
             source=BUILD/'occupancy_deep.s';source.write_text(transform('occupancy',(SA1/'occupancy_game.s').read_text(encoding='utf-8')),encoding='utf-8')
+        if args.split_viewports:
+            from sa1_split_viewports import occupancy as split_occupancy
+            text=split_occupancy(source.read_text(encoding='utf8'))
+            source=BUILD/'occupancy_split_viewports.s';source.write_text(text,encoding='utf8')
         if args.sa1_game:
             from sa1_game_offload import five_slots
             source.write_text(five_slots('occupancy',source.read_text(encoding='utf-8')),encoding='utf-8')
@@ -1066,9 +1087,15 @@ opaque_sprite_fallback:
             if args.fixed_map_delta:
                 text=text.replace('lda f:$432900,x','lda f:$432800,x')
             source=BUILD/'transfer_mask_fixed.s';source.write_text(text,encoding='utf-8')
+        if args.split_viewports:
+            from sa1_split_viewports import transfer_mask as split_transfer_mask
+            text=split_transfer_mask(source.read_text(encoding='utf8'))
+            source=BUILD/'transfer_mask_split_viewports.s';source.write_text(text,encoding='utf8')
         obj=BUILD/'transfer_mask.o';run([CC/'ca65.exe',*(['-D','SA1_OCCUPANCY=1'] if args.occupancy and (not args.front_mask or args.fixed_map) else []),*(['-D','SA1_FRONT_MASK=1'] if args.front_mask else []),*(['-D','SA1_CHANGED_MASK=1'] if args.changed_mask else []),*(['-D','SA1_VISIBLE_MASK=1'] if args.visible_mask else []),'-o',obj,source]);objs.append(obj)
     if args.deep_bw:
         from sa1_deep_buffers import REBASE
+        if args.split_viewports:
+            from sa1_split_viewports import REBASE
         source=BUILD/'deep_rebase.s';source.write_text(REBASE,encoding='utf-8')
         obj=BUILD/'deep_rebase.o';run([CC/'ca65.exe','-o',obj,source]);objs.append(obj)
     if args.row_dirty:
@@ -1089,7 +1116,16 @@ opaque_sprite_fallback:
         obj=BUILD/'background_cache.o';run([CC/'ca65.exe','-o',obj,source]);objs.append(obj)
     if args.native_near:
         for name in ('near_patch_game','near_obj_cpu'):
-            obj=BUILD/(name+'.o');run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','--bin-include-dir',BUILD,'-o',obj,SA1/(name+'.s')]);objs.append(obj)
+            source=SA1/(name+'.s')
+            if (args.split_viewports or args.near_packed) and name=='near_patch_game':
+                from sa1_split_viewports import near_patch as split_near_patch, near_packed as split_near_packed
+                text=source.read_text(encoding='utf8')
+                if args.split_viewports:text=split_near_patch(text)
+                if args.split_near_packed or args.near_packed:text=split_near_packed(text,split=args.split_viewports)
+                source=BUILD/'near_patch_split_viewports.s';source.write_text(text,encoding='utf8')
+            obj=BUILD/(name+'.o');run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','--bin-include-dir',BUILD,'-o',obj,source]);objs.append(obj)
+    if args.split_viewports:
+        obj=BUILD/'split_clear.o';run([CC/'ca65.exe','-D',f'SA1_SPLIT_WIDE_CLEAR_MIN={args.split_wide_clear_min}','-o',obj,SA1/'split_clear_game.s']);objs.append(obj)
     if args.key_buckets or args.bitset_sort:
         obj=BUILD/'key_buckets.o';run([CC/'ca65.exe','-o',obj,SA1/('key_bitsets_game.s' if args.bitset_sort else 'key_buckets_game.s')]);objs.append(obj)
     if args.packet_offload:
@@ -1128,6 +1164,10 @@ opaque_sprite_fallback:
         obj=BUILD/'dense.o';run([CC/'ca65.exe','-o',obj,src]);objs.append(obj)
     if args.idle_clear:
         source=SA1/'idle_clear_sa1.s'
+        if args.split_viewports:
+            from sa1_split_viewports import idle as split_idle
+            text=split_idle(source.read_text(encoding='utf8'))
+            source=BUILD/'idle_split_viewports.s';source.write_text(text,encoding='utf8')
         if args.mask_clear:
             from sa1_mask_clear import idle as mask_idle
             text=mask_idle(source.read_text(encoding='utf-8'))
@@ -1383,6 +1423,12 @@ opaque_sprite_fallback:
         assert near_size<=0xb000
         assert args.row_dirty_aligned or json.loads((BUILD/'compiled_game_packing.json').read_text())['payloadEnd']<=0x7e0000
         rom[0x7e0000:0x7e0000+near_size]=near[:near_size]
+        if args.split_near_packed or args.near_packed:
+            from sa1_split_viewports import packed_near_data
+            data=packed_near_data(raw)
+            assert len(data)<=0xb000
+            rom[0x7e0000:0x7e0000+len(data)]=data
+            (BUILD/'split_near_packed.bin').write_bytes(data)
         if args.near_rom:
             from sa1_near_patch_rom import cyclic
             assert json.loads((BUILD/'left_hints_packing.json').read_text())['payloadEnd']<=0x7ec400
@@ -1446,6 +1492,10 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(flameDirectHints=True,flameDirectHintsBypass=args.flame_direct_hints_bypass);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.direct_left_hints:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['directLeftHints']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.split_viewports:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(splitViewports=True,splitNearPacked=args.split_near_packed,splitWideClearMin=args.split_wide_clear_min,framebufferSlots=3,framebufferBytesPerSlot=49152,viewportBitmapBases=[0x0400,0x8400],viewportCentralByteRange=[32,96]);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.near_packed:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['nearPacked']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

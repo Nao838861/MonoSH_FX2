@@ -1,0 +1,257 @@
+{
+  "cases": {
+    "baseline_road": {
+      "romSha256": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 22.002049,
+      "maxOutputMs": 23.987032,
+      "means": {
+        "drawMs": 3.181610830015314,
+        "dirtyMs": 1.8011090826952527,
+        "clearMs": 0.3886460658499234,
+        "bgMs": 0.7022433032159264,
+        "totalSa1Ms": 6.073608960183767
+      },
+      "burstMeans": {
+        "drawMs": 9.707632390243901,
+        "dirtyMs": 3.0465671219512194,
+        "clearMs": 2.7346321707317074,
+        "bgMs": 0.7885545609756097,
+        "totalSa1Ms": 16.277386219512195
+      }
+    },
+    "split_noidle_road": {
+      "romSha256": "783f6ea81cc278a0d45d9c3806793d177eb59f15b649d4ec598461f2cb818863",
+      "fields": 800,
+      "logic": 649,
+      "presents": 645,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 635,
+        "2": 7
+      },
+      "maxSa1Ms": 20.486214,
+      "maxOutputMs": 23.526731,
+      "means": {
+        "drawMs": 3.010588523148148,
+        "dirtyMs": 1.7988707484567903,
+        "clearMs": 2.079142347222222,
+        "bgMs": 1.200545711419753,
+        "totalSa1Ms": 8.089147348765433
+      },
+      "burstMeans": {
+        "drawMs": 7.535984634146342,
+        "dirtyMs": 3.010410829268293,
+        "clearMs": 4.266815658536585,
+        "bgMs": 1.2788651707317074,
+        "totalSa1Ms": 16.092076341463414
+      },
+      "transferDescriptorJobsVerified": 648,
+      "maxDescriptors": 48,
+      "packetMatchedGenerations": 648
+    },
+    "split_idle_road": {
+      "romSha256": "9c56f442a13d572b9a8d4653d5666ebfb0628c2892613f4242a1ee83780133be",
+      "fields": 800,
+      "logic": 650,
+      "presents": 646,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 637,
+        "2": 6
+      },
+      "maxSa1Ms": 19.571201,
+      "maxOutputMs": 22.219023,
+      "means": {
+        "drawMs": 3.0073567241910633,
+        "dirtyMs": 1.7986297688751924,
+        "clearMs": 1.6765803867488442,
+        "bgMs": 1.1955268613251155,
+        "totalSa1Ms": 7.678093756548536
+      },
+      "burstMeans": {
+        "drawMs": 7.534805780487805,
+        "dirtyMs": 3.019727512195122,
+        "clearMs": 3.7330058048780486,
+        "bgMs": 1.2775819512195121,
+        "totalSa1Ms": 15.56512112195122
+      },
+      "transferDescriptorJobsVerified": 649,
+      "maxDescriptors": 48,
+      "packetMatchedGenerations": 649
+    },
+    "split_wide32_road": {
+      "romSha256": "f9b531e77fa2cccd04f2a2d76799d1e18ddff3816df17d6e1ca2bb3b6a6ecba4",
+      "fields": 800,
+      "logic": 648,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 633,
+        "2": 8
+      },
+      "maxSa1Ms": 20.79454,
+      "maxOutputMs": 23.802651,
+      "means": {
+        "drawMs": 2.9958127851622876,
+        "dirtyMs": 1.7993922581143742,
+        "clearMs": 2.0130232024729517,
+        "bgMs": 1.205577196290572,
+        "totalSa1Ms": 8.013805491499227
+      },
+      "burstMeans": {
+        "drawMs": 7.286334390243902,
+        "dirtyMs": 3.0133248780487802,
+        "clearMs": 4.807870926829268,
+        "bgMs": 1.3696088780487805,
+        "totalSa1Ms": 16.477139219512196
+      },
+      "transferDescriptorJobsVerified": 647,
+      "maxDescriptors": 48,
+      "packetMatchedGenerations": 647
+    },
+    "split_packed_road": {
+      "romSha256": "55b017a37290edb61c7a45c06fd8d5b882f4cf5be627c631671a2a68a0965bbf",
+      "fields": 800,
+      "logic": 651,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 639,
+        "2": 5
+      },
+      "maxSa1Ms": 19.09479,
+      "maxOutputMs": 21.742612,
+      "means": {
+        "drawMs": 2.9728933846153844,
+        "dirtyMs": 1.7973961492307693,
+        "clearMs": 1.6867648615384616,
+        "bgMs": 0.3449499492307692,
+        "totalSa1Ms": 6.802004103076923
+      },
+      "burstMeans": {
+        "drawMs": 7.531128609756098,
+        "dirtyMs": 2.996939975609756,
+        "clearMs": 3.724563463414634,
+        "bgMs": 0.35729680487804877,
+        "totalSa1Ms": 14.609928780487804
+      },
+      "transferDescriptorJobsVerified": 650,
+      "maxDescriptors": 48,
+      "packetMatchedGenerations": 650
+    },
+    "near_packed_road": {
+      "romSha256": "3fb3e2e93f0a6b7332e23068f0cfcb5580c7ec9ea25c3a178b65fdf0ae7d9645",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "maxSa1Ms": 21.83145,
+      "maxOutputMs": 24.408128,
+      "means": {
+        "drawMs": 3.183472252679939,
+        "dirtyMs": 1.7982576753445636,
+        "clearMs": 0.37517080551301685,
+        "bgMs": 0.29927666156202143,
+        "totalSa1Ms": 5.656177009188362
+      },
+      "burstMeans": {
+        "drawMs": 9.683847780487804,
+        "dirtyMs": 2.98691243902439,
+        "clearMs": 2.6779641951219513,
+        "bgMs": 0.30821473170731706,
+        "totalSa1Ms": 15.656939146341463
+      },
+      "packetMatchedGenerations": 653
+    },
+    "baseline_boss": {
+      "romSha256": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "pixelMatchedPresents": 147,
+      "intervals": {
+        "0": 1,
+        "1": 1731,
+        "2": 8
+      },
+      "maxSa1Ms": 18.954549,
+      "maxOutputMs": 20.641728,
+      "means": {
+        "drawMs": 5.406770664187643,
+        "dirtyMs": 2.7333347185354695,
+        "clearMs": 1.0690740486270023,
+        "bgMs": 0.7221132951945081,
+        "totalSa1Ms": 9.9312925291762
+      }
+    },
+    "split_packed_boss": {
+      "romSha256": "55b017a37290edb61c7a45c06fd8d5b882f4cf5be627c631671a2a68a0965bbf",
+      "fields": 1900,
+      "logic": 1614,
+      "presents": 1612,
+      "pixelMatchedPresents": 144,
+      "intervals": {
+        "1": 1471,
+        "2": 137,
+        "3": 1
+      },
+      "maxSa1Ms": 23.344771,
+      "maxOutputMs": 25.417753,
+      "means": {
+        "drawMs": 7.275881363918164,
+        "dirtyMs": 2.729014952262864,
+        "clearMs": 2.229593429634222,
+        "bgMs": 0.350440840049597,
+        "totalSa1Ms": 12.58493037197768
+      },
+      "transferDescriptorJobsVerified": 1612,
+      "maxDescriptors": 46,
+      "packetMatchedGenerations": 1613
+    },
+    "near_packed_boss": {
+      "romSha256": "3fb3e2e93f0a6b7332e23068f0cfcb5580c7ec9ea25c3a178b65fdf0ae7d9645",
+      "fields": 1900,
+      "logic": 1753,
+      "presents": 1746,
+      "pixelMatchedPresents": 147,
+      "intervals": {
+        "1": 1739,
+        "2": 4
+      },
+      "maxSa1Ms": 18.662054,
+      "maxOutputMs": 20.222494,
+      "means": {
+        "drawMs": 5.389562339805825,
+        "dirtyMs": 2.7263555385494005,
+        "clearMs": 0.9213188029697316,
+        "bgMs": 0.3013449668760708,
+        "totalSa1Ms": 9.33858141290691
+      },
+      "packetMatchedGenerations": 1748
+    }
+  },
+  "allOriginalPatternsRetained": true,
+  "gameIntegrated": true,
+  "samePacketOrderVerified": true,
+  "allTransferSourcesKeptWithinViewportHalf": true,
+  "packedNearScrollCasesVerified": 9216,
+  "packedNearRomBytes": 9216,
+  "hostSpriteDrawingUsed": false,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "decision": "split renderer not adopted: central boss objects are rendered twice and long boss presentation regresses; near copy remains opt-in pending further optimization",
+  "evidenceBytes": 39838107,
+  "evidenceSha256": "0350d67810ff0fd34635bbb46c295626f75da4685b941c5f1d48cc488e8dc8f7"
+}
