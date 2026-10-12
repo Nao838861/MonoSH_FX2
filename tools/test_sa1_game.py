@@ -7,6 +7,25 @@ from run_probe import prepare_runtime,MESEN_EXE,lua
 from test_sa1_probe import reference
 from build_sa1_game import BASE
 
+def verify_minimum_clip_coverage(dest,config):
+    """表示済みmetaから対象寸法・左右位置・上下位置の全組合せを確認する。"""
+    from sa1_patterns import dimensions
+    patterns=dimensions()
+    geometries=sorted(g for g in set(patterns[40])&set(patterns[41]) if g[0]==config['reverseExplosionsMinWidth'])
+    centers=(0,47,48,49,128,182,222,265,266,267,268,286,300)
+    tops=(-20,0,30,55,56,120,180)
+    expected={(asset,w,h,x,top) for asset in (40,41) for w,h in geometries for x in centers for top in tops}
+    actual=set()
+    for path in dest.glob('present*_meta.bin'):
+        raw=path.read_bytes();count=struct.unpack_from('<H',raw,6)[0]
+        for i in range(count):
+            x,bottom,w,h,asset,flags,z,priority=struct.unpack_from('<hh6B',raw,10+i*10)
+            if asset in (40,41):
+                assert flags==0
+                actual.add((asset,w,h,x,bottom-h-20))
+    assert actual==expected, f'minimum clipping coverage missing={len(expected-actual)} extra={len(actual-expected)}'
+    return dict(cases=len(actual),geometries=geometries,assets=[40,41],centers=len(centers),tops=len(tops))
+
 def verify_pixels(dest,labels,config):
     source=(BASE/'assets4/background4.bin').read_bytes()
     checked=0
@@ -542,6 +561,11 @@ cb('logic_finished',function()
    local g=math.floor((logic-1)/(#centers*#tops))%3
    if g==2 then w=91;h=71 else h=73+g end
   end
+  if scenario:match('^stackfixturemin') then
+   local geometries=STACKMINGEOMETRIES
+   local g=geometries[math.floor((logic-1)/(#centers*#tops))%#geometries+1]
+   w=g[1];h=g[2]
+  end
   local top=tops[math.floor((logic-1)/#centers)%#tops+1]
   word('_fx_packet_count',2)
   for i=1,2 do
@@ -826,6 +850,11 @@ end,emu.eventType.endFrame)
     script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') and not config.get('gameIrqWram') else 0x7f0000))
     from sa1_patterns import dimensions
     patterns=dimensions()
+    minimum=config.get('reverseExplosionsMinWidth',91)
+    minimum_geometries=sorted(set(patterns[40])&set(patterns[41]))
+    minimum_geometries=[list(g) for g in minimum_geometries if g[0]==minimum]
+    if args.scenario.startswith('stackfixturemin'):assert minimum_geometries
+    script=script.replace('STACKMINGEOMETRIES',lua(minimum_geometries))
     left_geometries=[]
     for i in range(6):
         for asset in ((0,1,2,3,4,5,13,14,31,39,40,41,42) if config.get('leftRuntimeScan') else (0,3,39,31) if config.get('leftFlameHints') else (0,3,39) if config.get('leftExplosionHints') else (0,3)):
@@ -875,6 +904,8 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
+    if args.scenario.startswith('stackfixturemin'):
+        summary['minimumClipCoverage']=verify_minimum_clip_coverage(dest,config)
     (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     if args.scenario.startswith('stackfixture'):
         assert summary['stalledTailFields']<=1, 'stack clipping fixture stopped presenting'

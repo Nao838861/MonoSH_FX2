@@ -33,6 +33,7 @@ hint_load_cpu:
   plb
   jml left_hint_entry
 .ifdef SA1_LEFT_HINT_COMPRESSED
+.export hint_delta_sums: far, hint_delta_masks: far
 ; 2bit差分4個の和。最後のgroupはmaskで不要な差分を0にする。
 hint_delta_sums:
   .repeat 256, n

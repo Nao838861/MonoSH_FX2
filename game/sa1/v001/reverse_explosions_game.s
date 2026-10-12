@@ -5,6 +5,9 @@
 .export sa1_reverse_explosions: far, reverse_row_invoke: far
 .import __REVJIT_LOAD__, __REVJIT_SIZE__
 .import sa1_dma_try_begin: far, sa1_dma_end: far
+.ifdef SA1_REVERSE_HINT_COMPRESSED
+.import hint_delta_sums: far, hint_delta_masks: far
+.endif
 rRows=$a0
 rFirst=$a4
 rLast=$a6
@@ -138,6 +141,11 @@ reverse_entry:
   asl
   asl
   asl
+.ifdef SA1_REVERSE_RECORD_COMPACT
+  sec
+  sbc rFirst
+  sbc rFirst
+.endif
 .ifdef SA1_REVERSE_INLINE_HINTS
   clc
   adc rFirst
@@ -209,6 +217,49 @@ reverse_row:
   sta rHint+2
   lda rOrigin
 .else
+.ifdef SA1_REVERSE_RECORD_COMPACT
+  ldy #0
+  lda [rRows],y
+  sta rCode
+  iny
+  iny
+  lda [rRows],y
+  sta rHint
+  iny
+  iny
+  lda [rRows],y
+  sta rHeader
+  and #31
+  asl
+  sta rOrigin
+  lda rHeader
+  and #$07e0
+  .repeat 4
+    lsr
+  .endrepeat
+  xba
+  ora rOrigin
+  sta rOrigin
+  lda rHeader
+  xba
+  lsr
+  lsr
+  lsr
+  and #15
+  tax
+  lda f:$df71f0,x
+  and #255
+  sta rCode+2
+  lda rHeader
+  bpl reverse_hint_bank_df
+  lda #$fe
+  bra reverse_hint_bank_ready
+reverse_hint_bank_df:
+  lda #$df
+reverse_hint_bank_ready:
+  sta rHint+2
+  lda rOrigin
+.else
   ldy #0
   lda [rRows],y
   sta rCode
@@ -227,6 +278,7 @@ reverse_row:
   lda [rRows],y
   sta rOrigin
 .endif
+.endif
   and #255
   cmp rLimit
   jcs reverse_advance
@@ -239,16 +291,93 @@ reverse_row:
   and #255
   jeq reverse_advance
   cmp rTemp
+.ifdef SA1_REVERSE_FULL_ROW_FAST
+  jcc reverse_full_row
+  jeq reverse_full_row
+  lda rTemp
+.else
   bcc :+
   lda rTemp
 :
+.endif
   inc
   lsr
   tay
+.ifdef SA1_REVERSE_HINT_COMPRESSED
+  lda [rHint]
+  and #128
+  jeq reverse_hint_raw
+  tya
+  and #7
+  sta rRawX
+  tya
+  lsr
+  lsr
+  lsr
+  sta rTemp
+  asl
+  clc
+  adc rTemp
+  inc
+  tay
   lda [rHint],y
   and #255
+  sta rTemp
+  iny
+  lda [rHint],y
+  sta rHeader
+  lda rRawX
+  cmp #4
+  bcc reverse_hint_tail
+  lda rHeader
+  and #255
+  tax
+  lda f:hint_delta_sums,x
+  and #255
+  sta rDest
+  lda rTemp
+  sec
+  sbc rDest
+  sta rTemp
+  lda rHeader
+  xba
+  sta rHeader
+  lda rRawX
+  sec
+  sbc #4
+reverse_hint_tail:
+  asl
+  tax
+  lda f:hint_delta_masks,x
+  and rHeader
+  tax
+  lda f:hint_delta_sums,x
+  and #255
+  sta rDest
+  lda rTemp
+  sec
+  sbc rDest
+  bra reverse_hint_decoded
+reverse_hint_raw:
+  lda [rHint],y
+  and #255
+reverse_hint_decoded:
+  sta rTemp
+  asl
+  clc
+  adc rTemp
+.else
+  lda [rHint],y
+  and #255
+.endif
   clc
   adc rCode
+.ifdef SA1_REVERSE_FULL_ROW_FAST
+  bra reverse_entry_ready
+reverse_full_row:
+  lda rCode
+reverse_entry_ready:
+.endif
   sta f:$000701
   sep #$20
   lda rCode+2
@@ -278,7 +407,11 @@ reverse_advance:
 .ifdef SA1_REVERSE_INLINE_HINTS
   adc #11
 .else
+.ifdef SA1_REVERSE_RECORD_COMPACT
+  adc #6
+.else
   adc #8
+.endif
 .endif
   sta rRows
   lda rRowBase

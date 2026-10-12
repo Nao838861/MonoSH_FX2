@@ -5,7 +5,7 @@ from build_sa1_game import BUILD
 from build_sa1_probe import assets
 from sa1_left_hints import physical
 from verify_sa1_stack_rows import execute_native
-from sa1_reverse_explosions import SELECTOR
+from sa1_reverse_explosions import SELECTOR,BANK_TABLE,decode_hint
 
 
 def u16(data,pos):return struct.unpack_from('<H',data,pos)[0]
@@ -66,16 +66,27 @@ def main():
             for parity in range(2):
                 entry=u16(rom,base+2+i*8);height=rom[0x7f0000+entry]
                 rows=physical(ptr(rom,base+4+i*8+parity*3))
+                desc=u16(rom,0x7f0000+entry+1)
+                native=physical(ptr(rom,0x7f0000+desc+parity*3))
                 for row in range(height):
-                    q=rows+row*8
-                    candidates.append((physical(ptr(rom,q)),physical(ptr(rom,q+3)),rom[q+7]))
+                    if config.get('reverseRecordsCompact'):
+                        q=rows+row*6;control=u16(rom,q+4)
+                        code_ptr=u16(rom,q)|(rom[BANK_TABLE+(control>>11&15)]<<16)
+                        hint_ptr=u16(rom,q+2)|((0xfe if control&0x8000 else 0xdf)<<16)
+                        origin=(control&31)*2;extent=(control>>5&63)*2
+                    else:
+                        q=rows+row*8;code_ptr=ptr(rom,q);hint_ptr=ptr(rom,q+3);origin=rom[q+6];extent=rom[q+7]
+                    assert code_ptr==ptr(rom,native+row*11+8)
+                    assert origin==u16(rom,native+row*11+1)-row*128
+                    assert extent==rom[physical(code_ptr)-1]
+                    candidates.append((physical(code_ptr),physical(hint_ptr),extent))
     checked=set();boundaries=0
     for p,hint,extent in candidates:
         code=rom[p:p+rom[p-2]];key=(p,hint)
         if key in checked:continue
         expected=execute_native(code,initial)
         for limit in range(extent+1):
-            start=rom[hint+(limit+1)//2]
+            start=decode_hint(rom,hint,(limit+1)//2) if config.get('reverseHintsCompressed') else rom[hint+(limit+1)//2]
             actual=execute_native(code[start:],initial)
             actual[limit]=initial[limit]
             assert actual[:limit]==expected[:limit] and actual[limit:]==initial[limit:]
