@@ -537,13 +537,18 @@ cb('logic_finished',function()
   local centers={0,47,48,49,128,182,222,265,266,267,268,286,300}
   local tops={-20,0,30,55,56,120,180}
   local h=73+math.floor((logic-1)/(#centers*#tops))%2
+  local w=94
+  if scenario:match('wide') then
+   local g=math.floor((logic-1)/(#centers*#tops))%3
+   if g==2 then w=91;h=71 else h=73+g end
+  end
   local top=tops[math.floor((logic-1)/#centers)%#tops+1]
   word('_fx_packet_count',2)
   for i=1,2 do
    local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
    emu.write16(a,centers[(logic+i-2)%#centers+1],mt)
    emu.write16(a+2,(top+h+20)&65535,mt)
-   emu.write(a+4,94,mt);emu.write(a+5,h,mt);emu.write(a+6,39+i,mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+   emu.write(a+4,w,mt);emu.write(a+5,h,mt);emu.write(a+6,39+i,mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
   end
  end
  if scenario:match('^leftfixture') then
@@ -863,6 +868,8 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('stackfixture'):
         assert summary['stalledTailFields']<=1, 'stack clipping fixture stopped presenting'
         assert summary['presents']>=2*13*7, 'stack clipping fixture did not exercise both heights'
+        if 'wide' in args.scenario:
+            assert summary['presents']>=3*13*7, 'stack clipping fixture did not exercise width 91'
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 
 if __name__=='__main__':main()

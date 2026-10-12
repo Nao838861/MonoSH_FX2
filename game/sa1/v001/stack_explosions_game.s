@@ -34,12 +34,23 @@ sa1_stack_explosions:
   jne sr_no
 :
   lda $34
+.ifdef SA1_STACK_EXPLOSIONS_WIDE
+  cmp #91
+  beq :+
+.endif
   cmp #94
   jne sr_no
+:
   lda $38
   jmi sr_no
   cmp #256
   jcs sr_no
+.ifdef SA1_STACK_EXPLOSIONS_RIGHT_ONLY
+  clc
+  adc $34
+  cmp #257
+  jcc sr_no
+.endif
   lda $3a
   bmi :+
   cmp #192
@@ -56,7 +67,11 @@ sa1_stack_explosions:
   ldx #0
 sr_find:
   txa
+.ifdef SA1_STACK_EXPLOSIONS_WIDE
+  cmp #48
+.else
   cmp #32
+.endif
   jcs sr_no
   lda f:$df6fe5,x
   cmp srEntry

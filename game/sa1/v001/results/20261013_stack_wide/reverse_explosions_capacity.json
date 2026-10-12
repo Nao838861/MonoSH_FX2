@@ -1,0 +1,81 @@
+[
+  {
+    "assets": [
+      40,
+      41
+    ],
+    "widths": [
+      94
+    ],
+    "entries": 4,
+    "rows": 588,
+    "codeBytes": 37968,
+    "hintBytes": 3644,
+    "recordBytes": 2640,
+    "rowMapBytes": 1176,
+    "selectorBytes": 37,
+    "maxRowCodeBytes": 157,
+    "gameIntegrated": false,
+    "totalBytes": 45465
+  },
+  {
+    "assets": [
+      40,
+      41
+    ],
+    "widths": [
+      94,
+      91
+    ],
+    "entries": 6,
+    "rows": 872,
+    "codeBytes": 69199,
+    "hintBytes": 5544,
+    "recordBytes": 4904,
+    "rowMapBytes": 1744,
+    "selectorBytes": 53,
+    "maxRowCodeBytes": 157,
+    "gameIntegrated": false,
+    "totalBytes": 81444
+  },
+  {
+    "assets": [
+      40,
+      41
+    ],
+    "widths": [
+      91,
+      88
+    ],
+    "entries": 6,
+    "rows": 832,
+    "codeBytes": 65994,
+    "hintBytes": 4890,
+    "recordBytes": 4848,
+    "rowMapBytes": 1664,
+    "selectorBytes": 53,
+    "maxRowCodeBytes": 151,
+    "gameIntegrated": false,
+    "totalBytes": 77449
+  },
+  {
+    "assets": [
+      39,
+      40,
+      41
+    ],
+    "widths": [
+      94
+    ],
+    "entries": 6,
+    "rows": 882,
+    "codeBytes": 59455,
+    "hintBytes": 6832,
+    "recordBytes": 3992,
+    "rowMapBytes": 1764,
+    "selectorBytes": 53,
+    "maxRowCodeBytes": 163,
+    "gameIntegrated": false,
+    "totalBytes": 72096
+  }
+]

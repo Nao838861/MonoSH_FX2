@@ -39,8 +39,9 @@ def execute_stack(code,pc,sp,initial):
 
 def main():
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes();ptrs=set();checked=0
-    for asset in (40,41):
-        block=struct.unpack_from('<H',rom,0x7f0000+asset*512+188)[0]
+    widths=json.loads((BUILD/'stack_explosions_packing.json').read_text()).get('widths',[94])
+    for asset,width in ((asset,width) for asset in (40,41) for width in widths):
+        block=struct.unpack_from('<H',rom,0x7f0000+asset*512+width*2)[0]
         for i in range(rom[0x7f0000+block]):
             p=0x7f0000+block+1+i*10;h=rom[p];desc=struct.unpack_from('<H',rom,p+1)[0]
             for parity in range(2):
