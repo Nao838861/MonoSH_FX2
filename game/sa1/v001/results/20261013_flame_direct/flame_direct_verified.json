@@ -1,0 +1,10 @@
+{
+  "romSha256": "dcbcb9ab7311093706e10d40e98354e3682e9122103f065266ae42634b377557",
+  "geometries": 2,
+  "nativeRowUses": 768,
+  "kernels": 220,
+  "leftByteBoundaries": 5640,
+  "repeatedStoreBoundaries": 188,
+  "uniqueHintBytes": 2490,
+  "independentNativeExecutionVerified": true
+}

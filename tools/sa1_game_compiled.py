@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False,opaque_prefix_inline_raw=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False,opaque_prefix_inline_raw=False,flame_direct_hints=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[];alignment_gaps=[]
     reserved=((0x400000,0x440000),(0x591300,0x600000))+(((0x7e0000,0x7eb000),) if row_dirty_aligned else ())
     assert not opaque_prefix_inline_raw or opaque_prefix
@@ -38,9 +38,9 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         a=used;index[a:a+len(raw)]=raw;used+=len(raw)
         if used>65536:raise ValueError('compiled index exhausted')
         return a
-    def row_entry(row,parity,compressed=False,reverse=False,left_inline=False,opaque_inline=False):
+    def row_entry(row,parity,compressed=False,reverse=False,left_inline=False,opaque_inline=False,flame_inline=False):
         nonlocal maximum
-        key=row.tobytes(),parity,compressed,reverse,left_inline,opaque_inline
+        key=row.tobytes(),parity,compressed,reverse,left_inline,opaque_inline,flame_inline
         if key in rowcache:return rowcache[key]
         pixels=np.pad(row,(parity,(-len(row)-parity)%4));words=[]
         for x in range(0,len(pixels),4):
@@ -94,6 +94,10 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             assert macros and not left_inline and not reverse
             hint=safe_hint(code,starts,end-origin,raw_only=opaque_prefix_inline_raw)
             header=(hint if opaque_prefix_inline_raw else alloc(hint).to_bytes(3,'little'))+header
+        if flame_inline:
+            from sa1_flame_direct import encode
+            assert macros and not left_inline and not reverse and not opaque_inline
+            header=alloc(encode(code,starts,end-origin),fill_gaps=True).to_bytes(3,'little')+header
         ptr=alloc(header+code)+len(header)
         rowcache[key]=ptr.to_bytes(3,'little')+bytes([len(code),origin,end])
         return rowcache[key]
@@ -117,7 +121,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                         if macros:
                             program=bytearray()
                             for dy,y in enumerate(ys):
-                                row=row_entry(source[int(y)],parity,reverse=bool(reverse_explosions_min_width and asset in (40,41) and w>=reverse_explosions_min_width),left_inline=bool(left_inline_hints and (((asset in (0,2,3,5) or (left_flame_hints and asset==31)) and w>=64) or (asset==39 and left_explosion_hints_min_width and w>=left_explosion_hints_min_width))),opaque_inline=bool(opaque_prefix and asset==40 and 49<=w<=79))
+                                row=row_entry(source[int(y)],parity,reverse=bool(reverse_explosions_min_width and asset in (40,41) and w>=reverse_explosions_min_width),left_inline=bool(left_inline_hints and (((asset in (0,2,3,5) or (left_flame_hints and asset==31)) and w>=64) or (asset==39 and left_explosion_hints_min_width and w>=left_explosion_hints_min_width))),opaque_inline=bool(opaque_prefix and asset==40 and 49<=w<=79),flame_inline=bool(flame_direct_hints and asset==31 and w>=64))
                                 program+=b'\xa9'+struct.pack('<H',dy*stride+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
                             program+=b'\x6b';rows=alloc(program)
                         else:rows=alloc(b''.join(row_entry(source[int(y)],parity) for y in ys))
@@ -166,12 +170,12 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             for number,encoded in enumerate(bounds_data):deferred.append((block+1+number*10+7,encoded))
     for location,encoded in deferred:
         if isinstance(encoded,tuple):
-            pointer=alloc(b''.join(alloc(phase,fill_gaps=opaque_prefix_inline_raw).to_bytes(3,'little') for phase in encoded),fill_gaps=opaque_prefix_inline_raw) if encoded else 0
-        else:pointer=alloc(encoded,fill_gaps=opaque_prefix_inline_raw)
+            pointer=alloc(b''.join(alloc(phase,fill_gaps=opaque_prefix_inline_raw or flame_direct_hints).to_bytes(3,'little') for phase in encoded),fill_gaps=opaque_prefix_inline_raw or flame_direct_hints) if encoded else 0
+        else:pointer=alloc(encoded,fill_gaps=opaque_prefix_inline_raw or flame_direct_hints)
         index[location:location+3]=pointer.to_bytes(3,'little')
     rom[0x7f0000:]=index
     info={'geometryPatterns':sum(map(len,patterns.values())),'currentGamePatterns':True,'horizontalFlipSupported':bullet_cache,'verticalFlipSupported':bullet_cache,'flipAssets':[6,7,8,37] if bullet_cache else [],'bulletCache':bullet_cache,'pixelParities':2,'rowDescriptorBytes':11 if macros else 6,'framebufferStride':stride,'nativeRowCallChains':macros,'uniqueRows':len(rowcache),'uniqueCodeKernels':len(codes),'nativeCodeBytes':sum(map(len,codes)),'maxKernelBytes':maximum,'payloadEnd':cursor,'lookupBytes':used,'heightDescriptorBytes':10 if row_dirty else 7,'rowDirty':row_dirty,'rowDirtyBands':row_dirty_bands,'rowDirtyStep':row_dirty_step,'rowDirtyAligned':row_dirty_aligned,'reverseExplosionsMinWidth':reverse_explosions_min_width,'reverseInlineHints':reverse_inline_hints,'leftInlineHints':left_inline_hints,'leftExplosionHintsMinWidth':left_explosion_hints_min_width,'leftFlameHints':left_flame_hints}
-    if opaque_prefix_inline_raw:info.update(deferredGapRanges=alignment_gaps,deferredGapBytes=sum(g['used'] for g in alignment_gaps))
+    if opaque_prefix_inline_raw or flame_direct_hints:info.update(deferredGapRanges=alignment_gaps,deferredGapBytes=sum(g['used'] for g in alignment_gaps))
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     if shapes is not None:shapes.save(dest)
     return rom

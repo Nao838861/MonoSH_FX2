@@ -155,6 +155,44 @@ hint_new_code:
   adc hintCur
   jmi hint_advance
   jeq hint_advance
+.ifdef SA1_FLAME_DIRECT_HINTS
+  lda $3e
+  cmp #31
+  bne hint_flame_regular
+.export flame_direct_row: far
+flame_direct_row:
+  lda hintCode
+  sec
+  sbc #5
+  sta hintTable
+  ldy #2
+  lda [hintTable],y
+  and #255
+  pha
+  lda [hintTable]
+  sta hintTable
+  pla
+  sta hintTable+2
+  lda hintCur
+  eor #$ffff
+  inc
+  lsr
+  sta hintSlot
+  asl
+  clc
+  adc hintSlot
+  tay
+  lda [hintTable],y
+  and #255
+  clc
+  adc hintCode
+  sta f:$0007f1
+  iny
+  lda [hintTable],y
+  sta hintA
+  jmp hint_remember
+hint_flame_regular:
+.endif
 .ifdef SA1_LEFT_HINT_INLINE
   lda hintCode
   sec
@@ -392,6 +430,8 @@ hint_advance:
   lda $a0
   cmp $a2
   jcc hint_row
+.export left_hint_finished: far
+left_hint_finished:
   plb
   sec
   rtl

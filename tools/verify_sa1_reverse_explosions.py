@@ -15,10 +15,11 @@ def ptr(data,pos):return int.from_bytes(data[pos:pos+3],'little')
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--reference-rom',type=Path,default=BUILD/'fifobwmap_v2_build/MonoSHSA1_4bpp_game.sfc')
+    ap.add_argument('--native-only',action='store_true')
     args=ap.parse_args()
     original=args.reference_rom.read_bytes();rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
-    config=json.loads((BUILD/'manifest.json').read_text());minimum=config['reverseExplosionsMinWidth']
-    assert config['reverseExplosions'] and hashlib.sha256(rom).hexdigest()==config['romSha256']
+    config=json.loads((BUILD/'manifest.json').read_text());minimum=config['reverseExplosionsMinWidth'] if config['reverseExplosions'] else 256
+    assert (config['reverseExplosions'] or args.native_only) and hashlib.sha256(rom).hexdigest()==config['romSha256']
     variants=assets();patterns=0;native_rows=0;bullet_rows=0;changed=set()
     initial=bytes((x*73+39)&255 for x in range(256))
     for asset in range(44):
@@ -58,7 +59,9 @@ def main():
                         native_rows+=1
     assert patterns==1492
     candidates=[]
-    if config.get('reverseInlineHints'):
+    if args.native_only:
+        pass
+    elif config.get('reverseInlineHints'):
         candidates=[(p,physical(ptr(rom,p-5)),rom[p-1]) for a,p in changed]
     else:
         base=SELECTOR;count=u16(rom,base)

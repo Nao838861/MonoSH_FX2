@@ -48,6 +48,19 @@ def verify_opaque_fixture_coverage(dest):
     return dict(fixturePresents=count,targetGeometries=len(targets),frontGeometries=len(fronts),centers=len(centers),tops=len(tops),
         everyListedComponentCovered=True,fullCartesianProductClaimed=False)
 
+
+def verify_flame_fixture_coverage(dest):
+    from sa1_patterns import dimensions
+    patterns=dimensions();actual=set()
+    for path in dest.glob('present*_meta.bin'):
+        raw=path.read_bytes();count=struct.unpack_from('<H',raw,6)[0]
+        for i in range(count):
+            x,b,w,h,a,flags,*_=struct.unpack_from('<hh6B',raw,10+i*10)
+            if a==31:actual.add((w,h,x,b,flags))
+    expected={(w,h,x,b,phase) for w,h in patterns[31] if w>=64 for x in (-40,0,16,30,64,128,250) for b in (40,120,205) for phase in range(3)}
+    assert actual==expected,(len(expected-actual),len(actual-expected))
+    return dict(cases=len(actual),fullCartesianProductVerified=True)
+
 def verify_minimum_clip_coverage(dest,config):
     """表示済みmetaから対象寸法・左右位置・上下位置の全組合せを確認する。"""
     from sa1_patterns import dimensions
@@ -730,6 +743,16 @@ if labels.sa1_sprite_begin then
   if ms>0.5 then objectJobs[#objectJobs+1]=string.format('{\"field\":%d,\"job\":%d,\"index\":%d,\"asset\":%d,\"width\":%d,\"height\":%d,\"x\":%d,\"bottom\":%d,\"ms\":%.6f}',field,#times+1,i,emu.read(a+6,mt),emu.read(a+4,mt),emu.read(a+5,mt),emu.read16(a,mt),emu.read16(a+2,mt),ms)end
  end,emu.cpuType.sa1)
 end
+if labels.flame_direct_row then
+ local active=false;local f=assert(io.open(output..'/flame_direct.jsonl','w'))
+ cb('sa1_left_hint_draw',function()active=emu.read16(0x3e,emu.memType.sa1Memory)==31 end,emu.cpuType.sa1)
+ cb('flame_direct_row',function()
+  if not active then return end
+  local mt=emu.memType.sa1Memory
+  f:write(string.format('{"job":%d,"row":%d,"width":%d,"cur":%d}\\n',#times+1,emu.read16(0xa0,mt),emu.read16(0x34,mt),emu.read16(0x90,mt)));f:flush()
+ end,emu.cpuType.sa1)
+ cb('left_hint_finished',function()active=false end,emu.cpuType.sa1)
+end
 if labels.sa1_output_done then cb('sa1_output_done',function()outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f}',field,(emu.getState().masterClock-sa1begin)/21477.272)end,emu.cpuType.sa1)end
 if labels.sa1_dirty_done then
  cb('sa1_dirty_done',function()
@@ -1004,6 +1027,11 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
+    if labels.get('flame_direct_row'):
+        events=[json.loads(line) for line in (dest/'flame_direct.jsonl').read_text().splitlines()]
+        summary['flameDirectCoverage']=dict(rows=len(events),jobs=len({e['job'] for e in events}))
+        if args.scenario.startswith('leftfixtureflame') and not config.get('flameDirectHintsBypass'):
+            assert len(events)>120
     if labels.get('opaque_prefix_patch_done'):
         summary['opaquePrefixCoverage']=opaque_prefix_coverage(dest)
         if args.scenario.startswith('opaquefixture'):
@@ -1026,6 +1054,8 @@ end,emu.eventType.endFrame)
         assert summary['stalledTailFields']<=1 and summary['presents']>=189, 'left explosion fixture did not complete its geometry/position cycle'
     if args.scenario.startswith('leftfixtureflame'):
         assert summary['stalledTailFields']<=1 and summary['presents']>=252, 'left flame fixture did not complete its geometry/position/phase cycle'
+        summary['flameFixtureCoverage']=verify_flame_fixture_coverage(dest)
+        (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 
 if __name__=='__main__':main()

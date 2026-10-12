@@ -53,6 +53,8 @@ def main():
     ap.add_argument('--left-hints-compressed',action='store_true')
     ap.add_argument('--left-inline-hints',action='store_true')
     ap.add_argument('--left-flame-hints',action='store_true')
+    ap.add_argument('--flame-direct-hints',action='store_true')
+    ap.add_argument('--flame-direct-hints-bypass',action='store_true')
     ap.add_argument('--left-runtime-scan',action='store_true')
     ap.add_argument('--redraw-no-history',action='store_true')
     ap.add_argument('--right-clip-jit',action='store_true')
@@ -155,6 +157,8 @@ def main():
     assert not args.left_hints_compressed or args.left_hints
     assert not args.left_inline_hints or (args.left_hints_compressed and args.reverse_explosions)
     assert not args.left_flame_hints or args.left_inline_hints
+    assert not args.flame_direct_hints or (args.left_hints and not args.left_inline_hints and not args.left_flame_hints and not args.reverse_explosions and not args.clip_resident and not args.dirty_iram)
+    assert not args.flame_direct_hints_bypass or args.flame_direct_hints
     assert not args.left_byte_constant_scan or args.left_hints
     assert not args.clip_resident or (args.reverse_explosions and args.left_hints and args.stack_band and args.bullet_words and args.bullet_resident and args.large_edge_cache and not args.dirty_iram and not args.cpu_pack and not args.wide_edge_jit and not args.offload_sort and not args.sa1_game and not args.sa1_game_compact)
     assert not args.redraw_no_history or (args.redraw_all and args.pipeline and not args.packet_offload and not args.sa1_game and not args.sa1_game_compact)
@@ -763,7 +767,7 @@ left_hint_available:
 left_hint_unavailable:'''
             if args.left_explosion_hints:
                 new=new.replace('  cmp #5\n  bne left_hint_unavailable',f'  cmp #5\n  beq left_hint_available\n  cmp #39\n  bne left_hint_unavailable\n  lda $34\n  cmp #{args.left_explosion_hints_min_width}\n  bcc left_hint_unavailable',1)
-            if args.left_flame_hints:
+            if args.left_flame_hints or args.flame_direct_hints:
                 old_gate='  cmp #5\n  beq left_hint_available\n'
                 if old_gate in new:
                     new=new.replace(old_gate,old_gate+'  cmp #31\n  beq left_hint_available\n',1)
@@ -771,6 +775,9 @@ left_hint_unavailable:'''
                     old_gate='  cmp #5\n  bne left_hint_unavailable'
                     assert old_gate in new
                     new=new.replace(old_gate,'  cmp #5\n  beq left_hint_available\n  cmp #31\n  bne left_hint_unavailable',1)
+                if args.flame_direct_hints_bypass:
+                    assert '  cmp #31\n  bne left_hint_unavailable' in new
+                    new=new.replace('  cmp #31\n  bne left_hint_unavailable','  cmp #31\n  bra left_hint_unavailable',1)
             if args.left_runtime_scan:
                 new=new.replace('  lda $3e\n','  jmp left_hint_available\n  lda $3e\n',1)
             assert old in text
@@ -1189,7 +1196,7 @@ opaque_sprite_fallback:
                     prefix_src=BUILD/'prefix_partial_table.s';prefix_src.write_text(text,encoding='utf-8')
                 obj=BUILD/'prefix_dma.o';run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64 if args.prefix_fastrom else 76)-(7 if args.dma_word_start else 0)}',*(['-D','SA1_PREFIX_CPU_TABLE=1'] if args.prefix_cpu_table else []),'-o',obj,prefix_src]);objs.append(obj)
     if args.left_hints:
-        obj=BUILD/'left_hints.o';run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints else []),'-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
+        obj=BUILD/'left_hints.o';run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_FLAME_DIRECT_HINTS=1'] if args.flame_direct_hints else []),*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints else []),'-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
     if args.right_clip_jit:
         src=SA1/'right_clip_game.s'
         if args.right_clip_window:
@@ -1292,7 +1299,7 @@ opaque_sprite_fallback:
     elif args.renderer in ('compiled','macros'):
         from sa1_game_compiled import build as compiled_cache
         fingerprint=hashlib.sha256()
-        for path in [ROOT/'tools'/name for name in ('sa1_game_compiled.py','sa1_patterns.py','smooth_depth.py','test_sa1_probe.py','sa1_prescaled.py','sa1_bullet_shapes.py','analyze_sa1_hint_compression.py','sa1_opaque_prefix.py')]+[GAME/'packet.s']+sorted((GAME/'upstream').glob('*.c')):
+        for path in [ROOT/'tools'/name for name in ('sa1_game_compiled.py','sa1_patterns.py','smooth_depth.py','test_sa1_probe.py','sa1_prescaled.py','sa1_bullet_shapes.py','analyze_sa1_hint_compression.py','sa1_opaque_prefix.py','sa1_flame_direct.py')]+[GAME/'packet.s']+sorted((GAME/'upstream').glob('*.c')):
             fingerprint.update(path.read_bytes())
         for key,value in sorted(variants.items()):
             fingerprint.update(str(key).encode());fingerprint.update(value[1].tobytes());fingerprint.update(str(value[1].shape).encode())
@@ -1310,12 +1317,14 @@ opaque_sprite_fallback:
         suffix+=('_opaqueprefix' if args.opaque_prefix else '')
         key+=str(args.opaque_prefix_inline_raw)
         suffix+=('_raw' if args.opaque_prefix_inline_raw else '')
+        key+=str(args.flame_direct_hints)
+        suffix+=('_flamedirect' if args.flame_direct_hints else '')
         cache=BUILD/('compiled_cache'+suffix+'.bin');metadata=BUILD/('compiled_cache'+suffix+'.json')
         if cache.exists() and metadata.exists() and json.loads(metadata.read_text()).get('key')==key and (not args.bullet_shapes or ((BUILD/'bullet_shapes.bin').exists() and (BUILD/'bullet_shapes_packing.json').exists())):
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw)
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw,flame_direct_hints=args.flame_direct_hints)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -1328,7 +1337,7 @@ opaque_sprite_fallback:
         from sa1_left_hints import build as left_hints_build
         rom=left_hints_build(rom,BUILD,compressed=args.left_hints_compressed,use_spare=args.reverse_inline_hints and not args.left_inline_hints,extra_min_width=args.left_explosion_hints_min_width if args.left_explosion_hints else 0,inline=args.left_inline_hints,flame=args.left_flame_hints)
         spare_data=[(r['begin'],bytes(rom[r['begin']:r['begin']+r['used']])) for r in json.loads((BUILD/'left_hints_packing.json').read_text()).get('spareRanges',[])]
-        run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints else []),'-I',BUILD,'-o',BUILD/'left_hints.o',SA1/'left_hints_game.s'])
+        run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_FLAME_DIRECT_HINTS=1'] if args.flame_direct_hints else []),*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints else []),'-I',BUILD,'-o',BUILD/'left_hints.o',SA1/'left_hints_game.s'])
         run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
         new_labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
         assert new_labels==labels
@@ -1428,6 +1437,8 @@ opaque_sprite_fallback:
         manifest['opaquePrefixPassThrough']=args.opaque_prefix_pass_through
         manifest['opaquePrefixInlineRaw']=args.opaque_prefix_inline_raw
         manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.flame_direct_hints:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(flameDirectHints=True,flameDirectHintsBypass=args.flame_direct_hints_bypass);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

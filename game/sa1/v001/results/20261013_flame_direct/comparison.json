@@ -1,0 +1,86 @@
+{
+  "cases": {
+    "baseline": {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "intervals": {
+        "0": 1,
+        "1": 1731,
+        "2": 8
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 18.954549,
+      "coverage": null,
+      "fixtureCoverage": null
+    },
+    "active": {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "intervals": {
+        "1": 1733,
+        "2": 7
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 22.392881,
+      "coverage": {
+        "rows": 2151,
+        "jobs": 42
+      },
+      "fixtureCoverage": null,
+      "packetMatchedGenerations": 1748
+    },
+    "control": {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "intervals": {
+        "1": 1733,
+        "2": 7
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 22.392881,
+      "coverage": {
+        "rows": 0,
+        "jobs": 0
+      },
+      "fixtureCoverage": null,
+      "packetMatchedGenerations": 1748
+    },
+    "fixture": {
+      "fields": 449,
+      "logic": 307,
+      "presents": 300,
+      "intervals": {
+        "1": 297
+      },
+      "pixelMatchedPresents": 300,
+      "maxSa1Ms": 9.348394,
+      "coverage": {
+        "rows": 7442,
+        "jobs": 131
+      },
+      "fixtureCoverage": {
+        "cases": 126,
+        "fullCartesianProductVerified": true
+      }
+    }
+  },
+  "romSha256": {
+    "baseline": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+    "active": "dcbcb9ab7311093706e10d40e98354e3682e9122103f065266ae42634b377557",
+    "control": "7a58f1c94bd5bded1c28f09815ea6d0f176a7fdc664c60f536478b12842be61d"
+  },
+  "sameActiveControlCodeLayoutVerified": true,
+  "activeControlDifferentBytes": 5,
+  "baselineIsCurrentSourceRebuild": true,
+  "baselineIsNotByteIdenticalToPublicRelease": true,
+  "allOriginalPatternsRetained": true,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "fixture60fpsIsNotGameCompletionProof": true,
+  "decision": "not adopted; no presentation improvement; test indexed initial-value tables separately",
+  "evidenceBytes": 20490896,
+  "evidenceSha256": "0d537867d289f0dc670d682bb71dcf7bbde73066e3db407c0bbe4213ba9a7b46"
+}
