@@ -1,0 +1,236 @@
+{
+  "romSha256": "6c23de6bd25d8ac19479fb7d2598934379a370db370624f2c8395f33b8374669",
+  "jobs": 42,
+  "pixelMatchedJobs": 42,
+  "sourceBanks": [
+    64,
+    65,
+    66
+  ],
+  "dmaBytesPerJob": 24576,
+  "dmaDescriptorsPerJob": 48,
+  "sourceBitmapsPreparedByHost": true,
+  "gameIntegrated": false,
+  "sa1DrawingBenchmarked": false,
+  "hardwareTransferVerified": true,
+  "forcedBlankDuringTransfer": true,
+  "visibleRasterTimingVerified": false,
+  "cC1WidthPixels": 256,
+  "conversionBaseOffset": 1024,
+  "secondBitmapOffset": 33792,
+  "noCentralBitmapCopy": true,
+  "prefixMetadataGuardBytesPerJob": 128,
+  "goal60fpsAchieved": false,
+  "timings": [
+    {
+      "name": "game530",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game531",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game532",
+      "bank": 66,
+      "clocks": 217302
+    },
+    {
+      "name": "game533",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game534",
+      "bank": 65,
+      "clocks": 217302
+    },
+    {
+      "name": "game535",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game536",
+      "bank": 64,
+      "clocks": 217302
+    },
+    {
+      "name": "game537",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game538",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game539",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game540",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game541",
+      "bank": 66,
+      "clocks": 217302
+    },
+    {
+      "name": "game542",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game543",
+      "bank": 65,
+      "clocks": 217302
+    },
+    {
+      "name": "game544",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game545",
+      "bank": 64,
+      "clocks": 217302
+    },
+    {
+      "name": "game546",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game547",
+      "bank": 66,
+      "clocks": 217302
+    },
+    {
+      "name": "game548",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game549",
+      "bank": 65,
+      "clocks": 217302
+    },
+    {
+      "name": "game550",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game551",
+      "bank": 64,
+      "clocks": 217302
+    },
+    {
+      "name": "game552",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game553",
+      "bank": 66,
+      "clocks": 217302
+    },
+    {
+      "name": "game554",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game555",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game556",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game557",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game558",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game559",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game560",
+      "bank": 64,
+      "clocks": 217302
+    },
+    {
+      "name": "game561",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game562",
+      "bank": 66,
+      "clocks": 217302
+    },
+    {
+      "name": "game563",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game564",
+      "bank": 65,
+      "clocks": 217302
+    },
+    {
+      "name": "game565",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game566",
+      "bank": 64,
+      "clocks": 217302
+    },
+    {
+      "name": "game567",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "game568",
+      "bank": 66,
+      "clocks": 217262
+    },
+    {
+      "name": "game569",
+      "bank": 64,
+      "clocks": 217262
+    },
+    {
+      "name": "game570",
+      "bank": 65,
+      "clocks": 217262
+    },
+    {
+      "name": "all_colors_pattern",
+      "bank": 66,
+      "clocks": 217302
+    }
+  ]
+}
