@@ -246,6 +246,11 @@ def main():
     (dest/'game.lbl').write_bytes((BUILD/'game.lbl').read_bytes())
     assert hashlib.sha256((BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()).hexdigest()==config['romSha256']
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
+    if config.get('dmaBudgetTable'):
+        from sa1_left_hints import physical
+        assert 'blank_table' in labels and labels['blank_table']<labels['__CODE_SIZE__']<=65536
+        table=physical(0xc10000+labels['blank_table'])
+        assert rom[table:table+13]==bytes([21,128,1,0,127,15,53,15,22,128,1,128,0]),'blank HDMA table left S-CPU CODE'
     frame_module='frame_game_rom.o' if config.get('sa1Game') else 'frame_asm.o'
     frame_size=int(re.search(re.escape(frame_module)+r':\s+CODE\s+Offs=[0-9A-F]+\s+Size=([0-9A-F]+)',(BUILD/'game.map').read_text())[1],16)
     frame_start=labels['_fx_frame'];frame_code=rom[0x410000+frame_start:0x410000+frame_start+frame_size]
@@ -261,7 +266,7 @@ local scenario=SCENARIO
 local exactMaskBounds=EXACTMASKBOUNDS
 local splitFixtures=SPLITFIXTURES
 local function captureGeneration(g)
- return scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^transferfixture') or scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -375,7 +380,7 @@ local function cb(name,fn,cpu)
  local packetHook=packetOffload and (name=='initialized' or name=='sorted' or name=='packet_done' or name=='sa1_list_sort')
  if gameHook or packetHook then cpu=emu.cpuType.sa1 end
  if packetHook then local run=fn;fn=function()if packetRunning then run()end end end
- local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
+ local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='p3Complete' or name=='p3Flip' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
@@ -655,6 +660,54 @@ if pipeline then
    completedFrames[gen]=table.concat(t)
   end
  end)
+ if scenario:match('tracedeadline') then
+  local f=assert(io.open(output..'/transfer_deadline.jsonl','w'))
+  local function log(name,extra)
+   -- 197行IRQが重い世代を転送する前後を捕捉する。
+   if field<660 or field>720 then return end
+   local s=emu.getState();local mt=emu.memType.snesMemory;local base=0x7e0000
+   local offset=emu.read16(base+labels.pipe_record_offset,mt);local r=base+labels.pipe_records+offset
+   local e={event=name,field=field,present=presents,clock=s.masterClock,line=s['ppu.scanline'],hclock=s['memoryManager.hClock'],a=s['cpu.a'],x=s['cpu.x'],d=s['cpu.d'],slot=emu.read16(base+labels.pipe_target_slot,mt),generation=emu.read16(r+8,mt),remaining=emu.read16(r+34,mt),cursor=emu.read16(r+4,mt),descriptors=emu.read16(r+2,mt),available=emu.read16(base+labels.pipe_available,mt),cost=emu.read16(base+labels.pipe_dma_chunk,mt),flipped=emu.read16(base+labels.pipe_presented_irq,mt),complete=emu.read16(base+labels.pipe_complete,mt),request=emu.read16(0x311e,mt),grant=emu.read16(0x311c,mt),blank=s['ppu.forcedBlank']}
+   if extra then for k,v in pairs(extra)do e[k]=v end end
+   local parts={};for k,v in pairs(e)do parts[#parts+1]=string.format('"%s":%s',k,type(v)=='string' and string.format('%q',v) or tostring(v))end
+   f:write('{',table.concat(parts,','),'}\\n');f:flush()
+  end
+  for _,name in ipairs({'pipe_irq_transfer','pipe_collect','pipe_wait_dma','pipe_choose_target','pipe_setup_transfer','pipe_time_left','pipe_reserved','pipe_no_time','pipe_prefix_plan','pipe_fast_begin','pipe_fast_group','pipe_fast_groups_done','pipe_fast_partial_done','pipe_fast_empty','pipe_fast_unavailable','pipe_descriptor','pipe_full_descriptor','pipe_set_chunk','pipe_transfer_complete','pipe_transfer_pause','pipe_flip','dma_finished','p3Complete','p3Flip','pipe_irq_checked'})do
+   assert(labels[name],'missing deadline trace label '..name)
+   cb(name,function()log(name)end)
+  end
+  if labels.pfTables then
+   local checked=assert(io.open(output..'/prefix_search_verified.jsonl','w'))
+   cb('pipe_fast_begin',function()
+    local mt=emu.memType.snesMemory;local b=0x7e0000
+    if not PREFIXONEPASS and emu.read16(b+labels.pfPartial,mt)==0 then return end
+    local offset=emu.read16(b+labels.pipe_record_offset,mt);local r=b+labels.pipe_records+offset
+    local start=emu.read16(r+4,mt)//6;local count=emu.read16(r+2,mt)//6
+    assert(start<count and count<=48,'invalid prefix table extent')
+    local table=b+labels.pfTables+(offset//512)*256;local beforeBytes,beforeCost=0,0
+    if start>0 then beforeBytes=emu.read16(table+(start-1)*4,mt);beforeCost=emu.read16(table+(start-1)*4+2,mt)end
+    local originalLength=emu.read16(table+start*4,mt)-beforeBytes
+    local partial=originalLength-emu.read16(r+208+start*6,mt)
+    assert(partial>=0,'prefix partial length negative')
+    beforeBytes=beforeBytes+partial;beforeCost=beforeCost+partial+partial//32+partial//128
+    local available=emu.read16(b+labels.pipe_available,mt);local limit=available-384+beforeCost
+    local last=start
+    for i=start+1,count do if emu.read16(table+(i-1)*4+2,mt)<limit then last=i else break end end
+    if PREFIXONEPASS and emu.read16(table+(count-1)*4+2,mt)<limit+384-PREFIXFULLRESERVE then last=count end
+    assert(last>start,'empty prefix executed')
+    local bytes=emu.read16(table+(last-1)*4,mt)-beforeBytes
+    assert(emu.read16(b+labels.pfDesc,mt)==(last-start)*6,'prefix search chose wrong descriptor count')
+    assert(emu.read16(b+labels.pfBytes,mt)==bytes,'prefix search chose wrong byte count')
+    checked:write(string.format('{"field":%d,"start":%d,"last":%d,"count":%d,"partial":%d,"bytes":%d,"limit":%d}\\n',field,start,last,count,partial,bytes,limit));checked:flush()
+   end)
+  end
+  emu.addMemoryCallback(function(address,value)
+   if value==1 then
+    local mt=emu.memType.snesMemory
+    log('dma_420b',{dmaBytes=emu.read16(0x4305,mt),dmaSource=emu.read16(0x4302,mt)+emu.read(0x4304,mt)*65536,dmaDestination=emu.getState()['ppu.vramAddress'],dmaMode=emu.read(0x4301,mt)})
+   end
+  end,emu.callbackType.write,0x420b,0x420b,emu.cpuType.snes,emu.memType.snesMemory)
+ end
  cb(labels.pipe_irq_checked and 'pipe_irq_checked' or 'pipe_irq_done',function()
   -- IRQ末尾のキュー管理は表示中も実行できる。PPUの実転送・切替位置を別々に検査する。
   local line=emu.getState()['ppu.scanline']
@@ -828,6 +881,15 @@ cb('logic_finished',function()
    local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
    emu.write16(a,g[1]&65535,mt);emu.write16(a+2,g[2],mt)
    emu.write(a+4,g[3],mt);emu.write(a+5,g[4],mt);emu.write(a+6,g[5],mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+  end
+ end
+ if scenario:match('^transferfixture') then
+  -- 実際のassetと縮小表を9個描き、記述子の途中分割・翌IRQ再開を通す。
+  word('_fx_packet_count',9)
+  for i=0,8 do
+   local a=0x7e0000+labels._fx_packet+i*10;local mt=emu.memType.snesMemory
+   emu.write16(a,48+(i%3)*80,mt);emu.write16(a+2,94+math.floor(i/3)*58,mt)
+   emu.write(a+4,94,mt);emu.write(a+5,74,mt);emu.write(a+6,40+(logic+i)%2,mt);emu.write(a+7,0,mt);emu.write16(a+8,i+1,mt)
   end
  end
  if scenario:match('^stackfixture') then
@@ -1234,6 +1296,8 @@ end,emu.eventType.endFrame)
     script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')
     script=script.replace('SPLITVIEWPORTS','true' if config.get('splitViewports') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
+    script=script.replace('PREFIXONEPASS','true' if config.get('prefixOnePass') else 'false')
+    script=script.replace('PREFIXFULLRESERVE',str(config.get('prefixFullReserve',384)))
     script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
     script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
@@ -1260,7 +1324,7 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
-    if args.scenario.startswith('stackfixture'):
+    if args.scenario.startswith(('stackfixture','transferfixture')):
         summary['fixturePresentationEveryField']=summary['goal60fpsAchieved']
         summary['goal60fpsAchieved']=False
     if split_jobs:

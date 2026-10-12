@@ -138,11 +138,21 @@ def main():
     ap.add_argument('--edge-lazy-jit',action='store_true')
     ap.add_argument('--edge-band-guard',action='store_true')
     ap.add_argument('--edge-jit-max',type=int,choices=[12,16,24,32],default=32)
+    ap.add_argument('--trace-transfer-deadline',action='store_true')
+    ap.add_argument('--prefix-unrolled-search',action='store_true')
+    ap.add_argument('--dma-budget-table',action='store_true')
+    ap.add_argument('--prefix-one-pass',action='store_true')
+    ap.add_argument('--prefix-full-reserve',type=int,choices=[192,384],default=384)
     args=ap.parse_args()
     assert args.edge_dma_min==33 or (args.cpu_edge_copy and args.small_edge_jit and not args.wide_edge_jit)
     assert not args.edge_lazy_jit or (args.cpu_edge_copy and args.small_edge_jit and args.deep_bw and not args.wide_edge_jit and not args.split_viewports and not args.clip_resident and not args.dirty_iram and not args.sa1_game and not args.sa1_game_compact)
     assert not args.edge_band_guard or (args.edge_lazy_jit and args.fixed_map and args.redraw_all and args.redraw_no_history and args.row_dirty_exact and not args.reverse_explosions and not args.stack_explosions and not args.right_clip_jit and not args.opaque_prefix and not args.clip_edges)
     assert args.edge_jit_max==32 or (args.edge_lazy_jit and not args.edge_band_guard)
+    assert not args.trace_transfer_deadline or (args.fixed_map and args.direct_sparse and args.irq_fastrom and not args.fixed_map_delta and not args.split_viewports)
+    assert not args.prefix_unrolled_search or (args.fixed_map and args.prefix_table and args.prefix_table_partial and args.prefix_fastrom and args.irq_fastrom and not args.fixed_map_delta and not args.split_viewports)
+    assert not args.dma_budget_table or (args.fixed_map and args.direct_sparse and args.irq_fastrom and not args.fixed_map_delta and not args.split_viewports)
+    assert not args.prefix_one_pass or (args.prefix_unrolled_search and args.dma_budget_table and args.accurate_dma_budget and args.direct_sparse)
+    assert args.prefix_full_reserve==384 or args.prefix_one_pass
     assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
     assert not args.mask_bounds_wide_table or args.mask_bounds
     assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
@@ -523,6 +533,15 @@ def main():
     if args.split_viewports:
         from sa1_split_viewports import pipeline as split_pipeline
         path=BUILD/'pipeline_tuned.inc';path.write_text(split_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.trace_transfer_deadline:
+        from sa1_transfer_deadline import trace
+        path=BUILD/'pipeline_tuned.inc';path.write_text(trace(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.dma_budget_table:
+        from sa1_transfer_deadline import budget_table
+        path=BUILD/'pipeline_tuned.inc';path.write_text(budget_table(path.read_text(encoding='utf8'),281-args.dma_guard_lines if args.bullet_shapes else 283-args.dma_guard_lines),encoding='utf8')
+    if args.prefix_one_pass:
+        from sa1_prefix_unrolled import one_pass_pipeline
+        path=BUILD/'pipeline_tuned.inc';path.write_text(one_pass_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
     if args.native_near:defines+=['-D','SA1_NATIVE_NEAR=1']
     if args.changed_mask:defines+=['-D','SA1_CHANGED_MASK=1']
     if args.front_mask:defines+=['-D','SA1_FRONT_MASK=1']
@@ -847,6 +866,9 @@ right_jit_unavailable:'''
             src=BUILD/(name+'_cpu_pack.s');src.write_text(text,encoding='utf-8')
         if name=='cpu' and args.irq_fastrom:
             text=src.read_text(encoding='utf-8')
+            if args.trace_transfer_deadline or args.dma_budget_table:
+                assert text.count('blank_table:\n')==1
+                text='.export blank_table\n'+text
             text=text.replace('.include "pipeline_dense.inc"','.include "pipeline_tuned.inc"').replace('.include "pipeline_cpu.inc"','.include "pipeline_tuned.inc"')
             text=text.replace('  jml $7f0000 + game_started','  lda #1\n  sta f:$00420d\n  jml $7f0000 + game_started')
             src=BUILD/'cpu_irq_fastrom.s';src.write_text(text,encoding='utf-8')
@@ -1289,6 +1311,17 @@ opaque_sprite_fallback:
                     from sa1_prefix_partial import source as partial_table
                     text=partial_table(prefix_src.read_text(encoding='utf-8'))
                     prefix_src=BUILD/'prefix_partial_table.s';prefix_src.write_text(text,encoding='utf-8')
+                if args.prefix_unrolled_search:
+                    from sa1_prefix_unrolled import source as unrolled_search
+                    text=unrolled_search(prefix_src.read_text(encoding='utf8'))
+                    prefix_src=BUILD/'prefix_unrolled_search.s';prefix_src.write_text(text,encoding='utf8')
+                if args.prefix_one_pass:
+                    from sa1_prefix_unrolled import one_pass_source
+                    text=one_pass_source(prefix_src.read_text(encoding='utf8'),args.prefix_full_reserve)
+                    prefix_src=BUILD/'prefix_one_pass.s';prefix_src.write_text(text,encoding='utf8')
+                if args.trace_transfer_deadline or args.prefix_unrolled_search:
+                    text='.export pfTables\n'+prefix_src.read_text(encoding='utf8')
+                    prefix_src=BUILD/'prefix_trace_search.s';prefix_src.write_text(text,encoding='utf8')
                 obj=BUILD/'prefix_dma.o';run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64 if args.prefix_fastrom else 76)-(7 if args.dma_word_start else 0)}',*(['-D','SA1_PREFIX_CPU_TABLE=1'] if args.prefix_cpu_table else []),'-o',obj,prefix_src]);objs.append(obj)
     if args.left_hints:
         obj=BUILD/'left_hints.o';run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_FLAME_DIRECT_HINTS=1'] if args.flame_direct_hints else []),*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints or args.direct_left_hints else []),*(['-D','SA1_LEFT_DIRECT=1'] if args.direct_left_hints else []),'-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
@@ -1384,6 +1417,8 @@ opaque_sprite_fallback:
     linked=BUILD/'linked.sfc'
     run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
     labels={n:int(a,16) for a,n in re.findall(r'al ([0-9A-Fa-f]+) \.([^\s]+)',(BUILD/'game.lbl').read_text())}
+    if args.trace_transfer_deadline or args.dma_budget_table:
+        assert labels['blank_table']<0x10000,'blank HDMA table must remain in copied S-CPU CODE'
     if args.cpu_pack_double:
         assert labels['__CODE_SIZE__']<=0xc000,'double stage overlaps CPU code'
     if args.vram_fifo_map_archive:
@@ -1564,6 +1599,12 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['dirtyTileRound']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.edge_dma_min!=33 or args.edge_lazy_jit:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(edgeDmaMin=args.edge_dma_min,edgeLazyJit=args.edge_lazy_jit,edgeBandGuard=args.edge_band_guard,edgeJitMax=args.edge_jit_max);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.prefix_unrolled_search:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['prefixUnrolledSearch']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.dma_budget_table:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['dmaBudgetTable']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.prefix_one_pass:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(prefixOnePass=True,prefixFullReserve=args.prefix_full_reserve);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
