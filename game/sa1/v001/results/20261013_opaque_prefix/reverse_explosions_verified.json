@@ -1,0 +1,11 @@
+{
+  "geometryPatterns": 1492,
+  "nativeRowUses": 90854,
+  "bulletRowUses": 158688,
+  "reversedKernelPairs": 1557,
+  "rightHintKernels": 1557,
+  "rightByteBoundaries": 59519,
+  "referenceRomSha256": "94c0c2e1ce42cf635ab8fc85b814f3e5a69a94c85b42fb1166ec2680720d04cb",
+  "romSha256": "296c8b81b9162702a64c11c493ad864bf25070ee5ddc2152bc5081bd681ecaea",
+  "gameIntegrated": true
+}

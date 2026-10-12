@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[]
     from sa1_bullet_shapes import Shapes
     shapes=Shapes() if bullet_shapes else None
@@ -26,9 +26,9 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         a=used;index[a:a+len(raw)]=raw;used+=len(raw)
         if used>65536:raise ValueError('compiled index exhausted')
         return a
-    def row_entry(row,parity,compressed=False,reverse=False,left_inline=False):
+    def row_entry(row,parity,compressed=False,reverse=False,left_inline=False,opaque_inline=False):
         nonlocal maximum
-        key=row.tobytes(),parity,compressed,reverse,left_inline
+        key=row.tobytes(),parity,compressed,reverse,left_inline,opaque_inline
         if key in rowcache:return rowcache[key]
         pixels=np.pad(row,(parity,(-len(row)-parity)%4));words=[]
         for x in range(0,len(pixels),4):
@@ -77,6 +77,10 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             from analyze_sa1_hint_compression import compress
             encoded=bytes(next((pc//3 for off,pc in starts if off+1>=limit),(len(code)-1)//3) for limit in range(0,end-origin+1,2))
             header=alloc(compress(encoded)).to_bytes(3,'little')+header
+        if opaque_inline:
+            from sa1_opaque_prefix import safe_hint
+            assert macros and not left_inline and not reverse
+            header=alloc(safe_hint(code,starts,end-origin)).to_bytes(3,'little')+header
         ptr=alloc(header+code)+len(header)
         rowcache[key]=ptr.to_bytes(3,'little')+bytes([len(code),origin,end])
         return rowcache[key]
@@ -100,7 +104,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
                         if macros:
                             program=bytearray()
                             for dy,y in enumerate(ys):
-                                row=row_entry(source[int(y)],parity,reverse=bool(reverse_explosions_min_width and asset in (40,41) and w>=reverse_explosions_min_width),left_inline=bool(left_inline_hints and (((asset in (0,2,3,5) or (left_flame_hints and asset==31)) and w>=64) or (asset==39 and left_explosion_hints_min_width and w>=left_explosion_hints_min_width))))
+                                row=row_entry(source[int(y)],parity,reverse=bool(reverse_explosions_min_width and asset in (40,41) and w>=reverse_explosions_min_width),left_inline=bool(left_inline_hints and (((asset in (0,2,3,5) or (left_flame_hints and asset==31)) and w>=64) or (asset==39 and left_explosion_hints_min_width and w>=left_explosion_hints_min_width))),opaque_inline=bool(opaque_prefix and asset==40 and 49<=w<=79))
                                 program+=b'\xa9'+struct.pack('<H',dy*stride+row[4])+b'\x18\x65\xf8\xaa\x22'+row[:3]
                             program+=b'\x6b';rows=alloc(program)
                         else:rows=alloc(b''.join(row_entry(source[int(y)],parity) for y in ys))

@@ -21,6 +21,33 @@ def verify_clip_cache_coverage(dest):
     assert evictions['clip_cache_edge_invalidate']>=120 and evictions['clip_cache_bullet_invalidate']>=120
     return dict(events=dict(counts),evictionsOfResidentHelper=dict(evictions))
 
+
+def opaque_prefix_coverage(dest):
+    from collections import Counter
+    events=[json.loads(line) for line in (dest/'opaque_prefix.jsonl').read_text().splitlines()]
+    selected=[e for e in events if e['kind']=='select'];patched=[e for e in events if e['kind']=='patch']
+    return dict(selectedObjects=len(selected),patchedRows=len(patched),advancedRows=sum(e['new']>e['old'] for e in patched),
+        allHiddenRows=sum(e['allHidden'] for e in patched),hintFormats=dict(Counter(str(e['format']) for e in patched)))
+
+
+def verify_opaque_fixture_coverage(dest):
+    from sa1_patterns import dimensions
+    patterns=dimensions();targets=set();fronts=set();centers=set();tops=set();count=0
+    for path in dest.glob('present*_meta.bin'):
+        raw=path.read_bytes();n=struct.unpack_from('<H',raw,6)[0]
+        if n!=5:continue  # 最初の通常ゲーム画面は全画素照合するがfixtureの組合せには数えない。
+        draws=[struct.unpack_from('<hh6B',raw,10+i*10) for i in range(n)]
+        assert draws[0][4]==39 and draws[1][4]==40 and draws[2][4]==7 and draws[3][4]==40
+        for draw in (draws[1],draws[3]):
+            x,b,w,h,a,flags,*_=draw;assert flags==0
+            targets.add((w,h));centers.add(x);tops.add(b-h-20)
+        fronts.add((draws[4][4],draws[4][2],draws[4][3]));count+=1
+    assert targets=={(w,h) for w,h in patterns[40] if 49<=w<=79}
+    assert fronts=={(a,w,h) for a in (39,40,41) for w,h in patterns[a] if w>=64}
+    assert centers=={40,41,128,129,216,217,16,250} and tops=={-20,0,30,55,120,180,191}
+    return dict(fixturePresents=count,targetGeometries=len(targets),frontGeometries=len(fronts),centers=len(centers),tops=len(tops),
+        everyListedComponentCovered=True,fullCartesianProductClaimed=False)
+
 def verify_minimum_clip_coverage(dest,config):
     """表示済みmetaから対象寸法・左右位置・上下位置の全組合せを確認する。"""
     from sa1_patterns import dimensions
@@ -170,7 +197,7 @@ local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local function captureGeneration(g)
- return scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -564,6 +591,23 @@ cb('_fx_frame',function()
   end
  end
 end)
+if labels.opaque_prefix_selected and labels.opaque_prefix_patch_done then
+ local f=assert(io.open(output..'/opaque_prefix.jsonl','w'))
+ cb('opaque_prefix_selected',function()
+  local mt=emu.memType.sa1Memory
+  f:write(string.format('{"kind":"select","job":%d,"index":%d,"width":%d,"height":%d,"frontAsset":%d}\\n',#times+1,emu.read16(0x2c,mt),emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0xb8,mt)));f:flush()
+ end,emu.cpuType.sa1)
+ cb('opaque_prefix_patch_done',function()
+  local mt=emu.memType.sa1Memory;local slot=emu.read16(0x8c,mt)
+  local bank=emu.read(0x94,mt);local old=bank*65536+emu.read16(0x92,mt)
+  assert(emu.read(0x70a+slot,mt)==bank,'opaque prefix changed native bank')
+  local new=bank*65536+emu.read16(0x708+slot,mt);local op=emu.read(new,mt)
+  assert(new>=old and (op==0xa9 or op==0xbd or op==0x6b),'opaque prefix resumed without accumulator load')
+  local hint=emu.read(old-5,mt)+emu.read(old-4,mt)*256+emu.read(old-3,mt)*65536
+  local marker=emu.read(hint,mt);local format=marker>=128 and marker or 0
+  f:write(string.format('{"kind":"patch","job":%d,"row":%d,"old":%d,"new":%d,"format":%d,"allHidden":%s}\\n',#times+1,emu.read16(0x8e,mt),old,new,format,op==0x6b and 'true' or 'false'));f:flush()
+ end,emu.cpuType.sa1)
+end
 if labels.cache_miss then
  local f=assert(io.open(output..'/bullet_cache.jsonl','w'));local start=0;local missed=false
  cb('sa1_bullet_cache_prepare',function()start=emu.getState().masterClock;missed=false end,emu.cpuType.sa1)
@@ -575,6 +619,20 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^opaquefixture') then
+  local targets=OPAQUETARGETS;local fronts=OPAQUEFRONTS
+  local g=targets[(logic-1)%#targets+1];local f=fronts[(logic-1)%#fronts+1]
+  local centers={40,41,128,129,216,217,16,250};local tops={-20,0,30,55,120,180,191}
+  local center=centers[(logic-1)%#centers+1];local top=tops[(logic-1)%#tops+1]
+  local shifts={-24,0,24};local shift=shifts[math.floor((logic-1)/#centers)%3+1]
+  local objects={{16,130,79,62,39},{center,top+g[2]+20,g[1],g[2],40},{128,120,12,12,7},{center,top+g[2]+20,g[1],g[2],40},{center+shift,top-8+f[3]+20,f[2],f[3],f[1]}}
+  word('_fx_packet_count',#objects)
+  for i,o in ipairs(objects)do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,o[1]&65535,mt);emu.write16(a+2,o[2]&65535,mt)
+   emu.write(a+4,o[3],mt);emu.write(a+5,o[4],mt);emu.write(a+6,o[5],mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+  end
+ end
  if scenario:match('^clipfixture') then
   local objects={{16,110,79,62,39},{16,150,79,62,39},{128,120,12,12,7},{16,130,79,62,39},{-10,155,88,38,42},{16,160,79,62,39},{250,165,91,71,40},{250,110,91,71,41}}
   word('_fx_packet_count',#objects)
@@ -901,6 +959,8 @@ end,emu.eventType.endFrame)
         left_geometries=[[31,w,h] for w,h in sorted(patterns[31]) if w>=64]
         assert len(left_geometries)==2
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
+    script=script.replace('OPAQUETARGETS',lua([[w,h] for w,h in sorted(patterns[40]) if 49<=w<=79]))
+    script=script.replace('OPAQUEFRONTS',lua([[a,w,h] for a in (39,40,41) for w,h in sorted(patterns[a]) if w>=64]))
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
     script=script.replace('VRAMFOURSHARED','true' if config.get('vramFourShared') else 'false')
@@ -936,6 +996,13 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
+    if labels.get('opaque_prefix_patch_done'):
+        summary['opaquePrefixCoverage']=opaque_prefix_coverage(dest)
+        if args.scenario.startswith('opaquefixture'):
+            assert summary['pixelMatchedPresents']>=240 and summary['stalledTailFields']<=1
+            assert summary['opaquePrefixCoverage']['advancedRows']>=120
+            assert set(summary['opaquePrefixCoverage']['hintFormats'])=={'0','128','129'}
+            summary['opaqueFixtureCoverage']=verify_opaque_fixture_coverage(dest)
     if args.scenario.startswith('stackfixturemin'):
         summary['minimumClipCoverage']=verify_minimum_clip_coverage(dest,config)
     if args.scenario.startswith('clipfixture'):

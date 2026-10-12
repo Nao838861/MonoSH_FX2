@@ -1,0 +1,23 @@
+{
+  "fields": 800,
+  "logic": 655,
+  "presents": 644,
+  "pixelMatchedPresents": 168,
+  "hardwarePpuReferencesVerified": true,
+  "romSha256": "d70e39070bddb7dc3690e96319880e4644cc085d54c567396a8a4c10495e41dc",
+  "irqMathRegistersVerified": true,
+  "labelsSha256": "c017d8ca97aaeb14643ad61eefa19b8f02e7f733cba1fdaffec3ce0787a33844",
+  "presentationFieldIntervals": {
+    "1": 636,
+    "2": 5
+  },
+  "stalledTailFields": 0,
+  "goal60fpsAchieved": false,
+  "opaquePrefixCoverage": {
+    "selectedObjects": 0,
+    "patchedRows": 0,
+    "advancedRows": 0,
+    "allHiddenRows": 0,
+    "hintFormats": {}
+  }
+}

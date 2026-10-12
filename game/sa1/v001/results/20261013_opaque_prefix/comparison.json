@@ -1,0 +1,97 @@
+{
+  "cases": {
+    "roadControl": {
+      "fields": 800,
+      "logic": 655,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 636,
+        "2": 5
+      },
+      "maxSa1Ms": 23.185999,
+      "coverage": {
+        "selectedObjects": 0,
+        "patchedRows": 0,
+        "advancedRows": 0,
+        "allHiddenRows": 0,
+        "hintFormats": {}
+      }
+    },
+    "roadActive": {
+      "fields": 800,
+      "logic": 653,
+      "presents": 642,
+      "pixelMatchedPresents": 168,
+      "intervals": {
+        "1": 632,
+        "2": 7
+      },
+      "maxSa1Ms": 25.3941,
+      "coverage": {
+        "selectedObjects": 19,
+        "patchedRows": 655,
+        "advancedRows": 653,
+        "allHiddenRows": 1,
+        "hintFormats": {
+          "128": 181,
+          "129": 451,
+          "0": 23
+        }
+      }
+    },
+    "bossActive": {
+      "fields": 1900,
+      "logic": 1703,
+      "presents": 1700,
+      "pixelMatchedPresents": 146,
+      "intervals": {
+        "1": 1652,
+        "2": 44,
+        "3": 1
+      },
+      "maxSa1Ms": 19.062849,
+      "coverage": {
+        "selectedObjects": 0,
+        "patchedRows": 0,
+        "advancedRows": 0,
+        "allHiddenRows": 0,
+        "hintFormats": {}
+      }
+    },
+    "fixture": {
+      "fields": 484,
+      "logic": 303,
+      "presents": 300,
+      "pixelMatchedPresents": 300,
+      "intervals": {
+        "1": 269,
+        "2": 28
+      },
+      "maxSa1Ms": 22.723463,
+      "coverage": {
+        "selectedObjects": 448,
+        "patchedRows": 7091,
+        "advancedRows": 7077,
+        "allHiddenRows": 3117,
+        "hintFormats": {
+          "129": 3575,
+          "0": 1130,
+          "128": 2386
+        }
+      }
+    }
+  },
+  "activeRomSha256": "296c8b81b9162702a64c11c493ad864bf25070ee5ddc2152bc5081bd681ecaea",
+  "controlRomSha256": "d70e39070bddb7dc3690e96319880e4644cc085d54c567396a8a4c10495e41dc",
+  "fixtureRomSha256": "19f4f61b0111e77dbb669d616b30dc6c6203284bd7f9abc7754f934e6ecd0620",
+  "sameControlCodeLayoutVerified": true,
+  "all1492GeometryPatternsRetained": true,
+  "gameIntegrated": true,
+  "goal60fpsAchieved": false,
+  "publicReleaseChanged": false,
+  "excludedV1NibbleRankZeroBug": true,
+  "decision": "correct but slower in the road comparison; keep opt-in, do not promote",
+  "evidenceBytes": 25552943,
+  "evidenceSha256": "d8e85b474c276ef1d54d4919616b5ad5c0cb7bb951e38bdaee002883e85d48fc"
+}

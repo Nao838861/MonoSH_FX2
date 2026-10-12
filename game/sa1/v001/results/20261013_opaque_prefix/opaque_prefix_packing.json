@@ -1,0 +1,474 @@
+{
+  "targetAsset": 40,
+  "targetMinimumWidth": 49,
+  "targetMaximumWidth": 79,
+  "spanAssets": [
+    39,
+    40,
+    41
+  ],
+  "spanMinimumWidth": 64,
+  "spanIndexBegin": 55081,
+  "spanIndexEnd": 65302,
+  "spanIndexBytes": 10221,
+  "spanGeometries": [
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 49,
+      "spanPointer": 16767151
+    },
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 50,
+      "spanPointer": 16767249
+    },
+    {
+      "asset": 39,
+      "width": 64,
+      "height": 64,
+      "spanPointer": 16767349
+    },
+    {
+      "asset": 39,
+      "width": 66,
+      "height": 51,
+      "spanPointer": 16767487
+    },
+    {
+      "asset": 39,
+      "width": 66,
+      "height": 52,
+      "spanPointer": 16767589
+    },
+    {
+      "asset": 39,
+      "width": 68,
+      "height": 53,
+      "spanPointer": 16767700
+    },
+    {
+      "asset": 39,
+      "width": 68,
+      "height": 54,
+      "spanPointer": 16767806
+    },
+    {
+      "asset": 39,
+      "width": 71,
+      "height": 55,
+      "spanPointer": 16767921
+    },
+    {
+      "asset": 39,
+      "width": 71,
+      "height": 56,
+      "spanPointer": 16768031
+    },
+    {
+      "asset": 39,
+      "width": 73,
+      "height": 57,
+      "spanPointer": 16768150
+    },
+    {
+      "asset": 39,
+      "width": 73,
+      "height": 58,
+      "spanPointer": 16768264
+    },
+    {
+      "asset": 39,
+      "width": 76,
+      "height": 59,
+      "spanPointer": 16768387
+    },
+    {
+      "asset": 39,
+      "width": 76,
+      "height": 60,
+      "spanPointer": 16768505
+    },
+    {
+      "asset": 39,
+      "width": 79,
+      "height": 61,
+      "spanPointer": 16768632
+    },
+    {
+      "asset": 39,
+      "width": 79,
+      "height": 62,
+      "spanPointer": 16768754
+    },
+    {
+      "asset": 39,
+      "width": 82,
+      "height": 64,
+      "spanPointer": 16768885
+    },
+    {
+      "asset": 39,
+      "width": 85,
+      "height": 66,
+      "spanPointer": 16769017
+    },
+    {
+      "asset": 39,
+      "width": 85,
+      "height": 67,
+      "spanPointer": 16769149
+    },
+    {
+      "asset": 39,
+      "width": 88,
+      "height": 68,
+      "spanPointer": 16769290
+    },
+    {
+      "asset": 39,
+      "width": 88,
+      "height": 69,
+      "spanPointer": 16769426
+    },
+    {
+      "asset": 39,
+      "width": 91,
+      "height": 71,
+      "spanPointer": 16769571
+    },
+    {
+      "asset": 39,
+      "width": 94,
+      "height": 73,
+      "spanPointer": 16769717
+    },
+    {
+      "asset": 39,
+      "width": 94,
+      "height": 74,
+      "spanPointer": 16769863
+    },
+    {
+      "asset": 39,
+      "width": 97,
+      "height": 76,
+      "spanPointer": 16770018
+    },
+    {
+      "asset": 39,
+      "width": 100,
+      "height": 78,
+      "spanPointer": 16770174
+    },
+    {
+      "asset": 39,
+      "width": 128,
+      "height": 94,
+      "spanPointer": 16770334
+    },
+    {
+      "asset": 40,
+      "width": 64,
+      "height": 49,
+      "spanPointer": 16770526
+    },
+    {
+      "asset": 40,
+      "width": 64,
+      "height": 50,
+      "spanPointer": 16770624
+    },
+    {
+      "asset": 40,
+      "width": 66,
+      "height": 51,
+      "spanPointer": 16770731
+    },
+    {
+      "asset": 40,
+      "width": 66,
+      "height": 52,
+      "spanPointer": 16770833
+    },
+    {
+      "asset": 40,
+      "width": 68,
+      "height": 53,
+      "spanPointer": 16770944
+    },
+    {
+      "asset": 40,
+      "width": 68,
+      "height": 54,
+      "spanPointer": 16771050
+    },
+    {
+      "asset": 40,
+      "width": 71,
+      "height": 55,
+      "spanPointer": 16771165
+    },
+    {
+      "asset": 40,
+      "width": 71,
+      "height": 56,
+      "spanPointer": 16771275
+    },
+    {
+      "asset": 40,
+      "width": 73,
+      "height": 57,
+      "spanPointer": 16771394
+    },
+    {
+      "asset": 40,
+      "width": 73,
+      "height": 58,
+      "spanPointer": 16771508
+    },
+    {
+      "asset": 40,
+      "width": 76,
+      "height": 59,
+      "spanPointer": 16771631
+    },
+    {
+      "asset": 40,
+      "width": 76,
+      "height": 60,
+      "spanPointer": 16771749
+    },
+    {
+      "asset": 40,
+      "width": 79,
+      "height": 61,
+      "spanPointer": 16771876
+    },
+    {
+      "asset": 40,
+      "width": 79,
+      "height": 62,
+      "spanPointer": 16771998
+    },
+    {
+      "asset": 40,
+      "width": 82,
+      "height": 64,
+      "spanPointer": 16772129
+    },
+    {
+      "asset": 40,
+      "width": 85,
+      "height": 66,
+      "spanPointer": 16772261
+    },
+    {
+      "asset": 40,
+      "width": 85,
+      "height": 67,
+      "spanPointer": 16772393
+    },
+    {
+      "asset": 40,
+      "width": 88,
+      "height": 68,
+      "spanPointer": 16772534
+    },
+    {
+      "asset": 40,
+      "width": 88,
+      "height": 69,
+      "spanPointer": 16772670
+    },
+    {
+      "asset": 40,
+      "width": 91,
+      "height": 71,
+      "spanPointer": 16772815
+    },
+    {
+      "asset": 40,
+      "width": 94,
+      "height": 73,
+      "spanPointer": 16772961
+    },
+    {
+      "asset": 40,
+      "width": 94,
+      "height": 74,
+      "spanPointer": 16773107
+    },
+    {
+      "asset": 40,
+      "width": 97,
+      "height": 76,
+      "spanPointer": 16773262
+    },
+    {
+      "asset": 40,
+      "width": 100,
+      "height": 78,
+      "spanPointer": 16773418
+    },
+    {
+      "asset": 40,
+      "width": 128,
+      "height": 84,
+      "spanPointer": 16773578
+    },
+    {
+      "asset": 41,
+      "width": 64,
+      "height": 49,
+      "spanPointer": 16773750
+    },
+    {
+      "asset": 41,
+      "width": 64,
+      "height": 50,
+      "spanPointer": 16773848
+    },
+    {
+      "asset": 41,
+      "width": 66,
+      "height": 51,
+      "spanPointer": 16773955
+    },
+    {
+      "asset": 41,
+      "width": 66,
+      "height": 52,
+      "spanPointer": 16774057
+    },
+    {
+      "asset": 41,
+      "width": 68,
+      "height": 53,
+      "spanPointer": 16774168
+    },
+    {
+      "asset": 41,
+      "width": 68,
+      "height": 54,
+      "spanPointer": 16774274
+    },
+    {
+      "asset": 41,
+      "width": 71,
+      "height": 55,
+      "spanPointer": 16774389
+    },
+    {
+      "asset": 41,
+      "width": 71,
+      "height": 56,
+      "spanPointer": 16774499
+    },
+    {
+      "asset": 41,
+      "width": 73,
+      "height": 57,
+      "spanPointer": 16774618
+    },
+    {
+      "asset": 41,
+      "width": 73,
+      "height": 58,
+      "spanPointer": 16774732
+    },
+    {
+      "asset": 41,
+      "width": 76,
+      "height": 59,
+      "spanPointer": 16774855
+    },
+    {
+      "asset": 41,
+      "width": 76,
+      "height": 60,
+      "spanPointer": 16774973
+    },
+    {
+      "asset": 41,
+      "width": 79,
+      "height": 61,
+      "spanPointer": 16775100
+    },
+    {
+      "asset": 41,
+      "width": 79,
+      "height": 62,
+      "spanPointer": 16775222
+    },
+    {
+      "asset": 41,
+      "width": 82,
+      "height": 64,
+      "spanPointer": 16775353
+    },
+    {
+      "asset": 41,
+      "width": 85,
+      "height": 66,
+      "spanPointer": 16775485
+    },
+    {
+      "asset": 41,
+      "width": 85,
+      "height": 67,
+      "spanPointer": 16775617
+    },
+    {
+      "asset": 41,
+      "width": 88,
+      "height": 68,
+      "spanPointer": 16775758
+    },
+    {
+      "asset": 41,
+      "width": 88,
+      "height": 69,
+      "spanPointer": 16775894
+    },
+    {
+      "asset": 41,
+      "width": 91,
+      "height": 71,
+      "spanPointer": 16776039
+    },
+    {
+      "asset": 41,
+      "width": 94,
+      "height": 73,
+      "spanPointer": 16776185
+    },
+    {
+      "asset": 41,
+      "width": 94,
+      "height": 74,
+      "spanPointer": 16776331
+    },
+    {
+      "asset": 41,
+      "width": 97,
+      "height": 76,
+      "spanPointer": 16776486
+    },
+    {
+      "asset": 41,
+      "width": 100,
+      "height": 78,
+      "spanPointer": 16776642
+    },
+    {
+      "asset": 41,
+      "width": 128,
+      "height": 88,
+      "spanPointer": 16776802
+    }
+  ],
+  "originalPatternsRetained": true,
+  "opaquePrefixInlineHeaders": true
+}
