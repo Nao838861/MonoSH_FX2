@@ -1,0 +1,978 @@
+{
+  "roads": {
+    "base": {
+      "romSha256": "6fdf2ba35fff0904fdc6f7f8dc7c67bf6586b1fe523d51241518018f09226d7e",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_base_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.789173,
+      "maxOutputMs": 24.359053,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 11,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.661603048780487,
+        "dirtyMs": 2.9562050975609755,
+        "clearMs": 2.6596782682926827,
+        "bgMs": 0.3073720975609756,
+        "totalSa1Ms": 15.58485843902439
+      },
+      "edgeChunks": 913,
+      "cacheBytesOneDirection": 110828,
+      "edgeSectionMs": 277.71432051519304,
+      "jitLoads": {},
+      "jitByteVerifiedUses": 0,
+      "jitBanks": [],
+      "jitWidths": [],
+      "edgeModes": {
+        "notLogged": 1826
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 4.14019061638741,
+        "cacheBytesOneDirection": 2352
+      }
+    },
+    "dma9": {
+      "romSha256": "f4583332ce38f7e96fa665488a7126284e93602e873a3bbd96c21f979d624435",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_dma9_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.789173,
+      "maxOutputMs": 24.359053,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 11,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.693766414634146,
+        "dirtyMs": 2.9562050975609755,
+        "clearMs": 2.6596782682926827,
+        "bgMs": 0.3073720975609756,
+        "totalSa1Ms": 15.617021756097563
+      },
+      "edgeChunks": 913,
+      "cacheBytesOneDirection": 110828,
+      "edgeSectionMs": 270.0611139068304,
+      "jitLoads": {},
+      "jitByteVerifiedUses": 0,
+      "jitBanks": [],
+      "jitWidths": [],
+      "edgeModes": {
+        "notLogged": 1826
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 2.77186041132224,
+        "cacheBytesOneDirection": 2352
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "lazy9": {
+      "romSha256": "f3dd525785e85b7eae274073ca15f28d601404143a9d3b97894dbe5b5e91f4ba",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_lazy9_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.582909,
+      "maxOutputMs": 23.795015,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.57942443902439,
+        "dirtyMs": 2.9384256829268294,
+        "clearMs": 2.6211690243902437,
+        "bgMs": 0.3101770731707317,
+        "totalSa1Ms": 15.449195951219513
+      },
+      "edgeChunks": 913,
+      "cacheBytesOneDirection": 110828,
+      "edgeSectionMs": 328.32531058879323,
+      "jitLoads": {
+        "dma": 388,
+        "cpu": 27
+      },
+      "jitByteVerifiedUses": 0,
+      "jitBanks": [],
+      "jitWidths": [],
+      "edgeModes": {
+        "notLogged": 1826
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 2.69047204877787,
+        "cacheBytesOneDirection": 2352
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "lazy13": {
+      "romSha256": "ff420e1b629fcc4b7d1e74267e122ebb2721fcba852456b867e7fa90bb53a94a",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_lazy13_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.582909,
+      "maxOutputMs": 23.795015,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.56711643902439,
+        "dirtyMs": 2.9384256829268294,
+        "clearMs": 2.618647926829268,
+        "bgMs": 0.3101770731707317,
+        "totalSa1Ms": 15.434366853658537
+      },
+      "edgeChunks": 913,
+      "cacheBytesOneDirection": 110828,
+      "edgeSectionMs": 332.5551773986935,
+      "jitLoads": {
+        "dma": 465,
+        "cpu": 26
+      },
+      "jitByteVerifiedUses": 1598,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20
+      ],
+      "edgeModes": {
+        "notLogged": 1826
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 2.69047204877787,
+        "cacheBytesOneDirection": 2352
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "band13": {
+      "romSha256": "8564fde8b1589459ece1ef27801e1a1cb14deb5acf43732fb0fba8a459c8d573",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_band13_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.547522,
+      "maxOutputMs": 23.843065,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.728546219512197,
+        "dirtyMs": 2.952648219512195,
+        "clearMs": 2.660341512195122,
+        "bgMs": 0.30795353658536584,
+        "totalSa1Ms": 15.649489512195121
+      },
+      "edgeChunks": 889,
+      "cacheBytesOneDirection": 105252,
+      "edgeSectionMs": 332.53450438212093,
+      "jitLoads": {
+        "dma": 490,
+        "cpu": 38
+      },
+      "jitByteVerifiedUses": 1555,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "edgeModes": {
+        "notLogged": 1778
+      },
+      "bandGuardChunks": 148,
+      "bandGuardSmallerChunks": 77,
+      "bandGuardZeroChunks": 24,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 2.61783712568337,
+        "cacheBytesOneDirection": 2064
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "band13v2": {
+      "romSha256": "398042d5413ff766b078691b383ea15ef49396ccfc8e40a68c396d9b9a37bf2e",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_band13v2_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.55162,
+      "maxOutputMs": 23.758604,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 8,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 10,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.67959156097561,
+        "dirtyMs": 2.942504878048781,
+        "clearMs": 2.657475146341463,
+        "bgMs": 0.3093004146341463,
+        "totalSa1Ms": 15.588871804878048
+      },
+      "edgeChunks": 889,
+      "cacheBytesOneDirection": 105252,
+      "edgeSectionMs": 330.320536053182,
+      "jitLoads": {
+        "dma": 494,
+        "cpu": 34
+      },
+      "jitByteVerifiedUses": 1555,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        20
+      ],
+      "edgeModes": {
+        "notLogged": 1778
+      },
+      "bandGuardChunks": 148,
+      "bandGuardSmallerChunks": 77,
+      "bandGuardZeroChunks": 24,
+      "rightExplosion429": {
+        "chunks": 5,
+        "guardMs": 2.61159797203295,
+        "cacheBytesOneDirection": 2064
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    },
+    "large12": {
+      "romSha256": "24bac32420842cb352a0c81b9446ac80ab70f54667e3591643eb0b33a04d5c46",
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "pixelMatchedPresents": 168,
+      "presentationFieldIntervals": {
+        "1": 640,
+        "2": 4
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "movestress_detinput_captureburst_edgeguard_large12_v2_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 21.56624,
+      "maxOutputMs": 23.740818,
+      "maskBoundsVerified": {
+        "jobs": 653,
+        "bands": 15672,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 12,
+        "fullFramebufferJobs": 653,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 692,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 696,
+          "line": 9,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 1
+        },
+        {
+          "field": 699,
+          "line": 11,
+          "ready": 3,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 3
+        },
+        {
+          "field": 702,
+          "line": 10,
+          "ready": 4,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 5
+        }
+      ],
+      "burstMeans": {
+        "drawMs": 9.542950170731707,
+        "dirtyMs": 2.9479354390243904,
+        "clearMs": 2.630726487804878,
+        "bgMs": 0.3105518048780488,
+        "totalSa1Ms": 15.432163780487805
+      },
+      "edgeChunks": 910,
+      "cacheBytesOneDirection": 109498,
+      "edgeSectionMs": 331.08627576165134,
+      "jitLoads": {
+        "dma": 466,
+        "cpu": 21
+      },
+      "jitByteVerifiedUses": 1584,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "edgeModes": {
+        "jit": 1584,
+        "dma": 222,
+        "mvn": 14
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "rightExplosion429": {
+        "chunks": 4,
+        "guardMs": 2.59120432054872,
+        "cacheBytesOneDirection": 2296
+      },
+      "packetMatchedGenerations": 653,
+      "tileMasksMatchedGenerations": 653,
+      "fullFramebuffersMatchedGenerations": 653,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 653
+    }
+  },
+  "bosses": {
+    "base": {
+      "romSha256": "6fdf2ba35fff0904fdc6f7f8dc7c67bf6586b1fe523d51241518018f09226d7e",
+      "fields": 1900,
+      "logic": 1754,
+      "presents": 1747,
+      "pixelMatchedPresents": 147,
+      "presentationFieldIntervals": {
+        "1": 1741,
+        "2": 3
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_maskbounds_roundpacked_tracepalette_tracebounds",
+      "maxSa1Ms": 18.603014,
+      "maxOutputMs": 20.163455,
+      "maskBoundsVerified": {
+        "jobs": 1753,
+        "bands": 42072,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 1752,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 951,
+          "line": 9,
+          "ready": 2,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        }
+      ],
+      "edgeChunks": 0,
+      "cacheBytesOneDirection": 0,
+      "edgeSectionMs": 0,
+      "jitLoads": {},
+      "jitByteVerifiedUses": 0,
+      "jitBanks": [],
+      "jitWidths": [],
+      "edgeModes": {},
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0
+    },
+    "band13": {
+      "romSha256": "8564fde8b1589459ece1ef27801e1a1cb14deb5acf43732fb0fba8a459c8d573",
+      "fields": 1900,
+      "logic": 1751,
+      "presents": 1744,
+      "pixelMatchedPresents": 147,
+      "presentationFieldIntervals": {
+        "1": 1735,
+        "2": 6
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_edgeguard_band13_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 18.749402,
+      "maxOutputMs": 20.30202,
+      "maskBoundsVerified": {
+        "jobs": 1750,
+        "bands": 42000,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 1749,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 474,
+          "line": 10,
+          "ready": 3,
+          "rendering": 0,
+          "complete": 0,
+          "flipped": 0,
+          "target": 0
+        },
+        {
+          "field": 953,
+          "line": 9,
+          "ready": 2,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        },
+        {
+          "field": 1436,
+          "line": 10,
+          "ready": 3,
+          "rendering": 0,
+          "complete": 0,
+          "flipped": 0,
+          "target": 0
+        }
+      ],
+      "edgeChunks": 1062,
+      "cacheBytesOneDirection": 83052,
+      "edgeSectionMs": 340.32981469899875,
+      "jitLoads": {
+        "dma": 413,
+        "cpu": 74
+      },
+      "jitByteVerifiedUses": 2101,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        18
+      ],
+      "edgeModes": {
+        "notLogged": 2124
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "packetMatchedGenerations": 1749,
+      "tileMasksMatchedGenerations": 1750,
+      "fullFramebuffersMatchedGenerations": 1749,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 1750
+    },
+    "candidate": {
+      "romSha256": "24bac32420842cb352a0c81b9446ac80ab70f54667e3591643eb0b33a04d5c46",
+      "fields": 1900,
+      "logic": 1754,
+      "presents": 1747,
+      "pixelMatchedPresents": 147,
+      "presentationFieldIntervals": {
+        "1": 1741,
+        "2": 3
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_edgeguard_large12_tracepalette_tracebounds_traceedge",
+      "maxSa1Ms": 18.623222,
+      "maxOutputMs": 20.183662,
+      "maskBoundsVerified": {
+        "jobs": 1753,
+        "bands": 42072,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 1752,
+        "exact": false
+      },
+      "heldFieldQueues": [
+        {
+          "field": 951,
+          "line": 9,
+          "ready": 2,
+          "rendering": 1,
+          "complete": 0,
+          "flipped": 0,
+          "target": 6
+        }
+      ],
+      "edgeChunks": 1066,
+      "cacheBytesOneDirection": 83210,
+      "edgeSectionMs": 341.7421914664019,
+      "jitLoads": {
+        "dma": 410,
+        "cpu": 78
+      },
+      "jitByteVerifiedUses": 2108,
+      "jitBanks": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "jitWidths": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "edgeModes": {
+        "jit": 2108,
+        "dma": 24
+      },
+      "bandGuardChunks": 0,
+      "bandGuardSmallerChunks": 0,
+      "bandGuardZeroChunks": 0,
+      "packetMatchedGenerations": 1752,
+      "tileMasksMatchedGenerations": 1753,
+      "fullFramebuffersMatchedGenerations": 1752,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 1753
+    }
+  },
+  "fixture": {
+    "romSha256": "24bac32420842cb352a0c81b9446ac80ab70f54667e3591643eb0b33a04d5c46",
+    "fields": 450,
+    "logic": 307,
+    "presents": 300,
+    "pixelMatchedPresents": 300,
+    "presentationFieldIntervals": {
+      "1": 297
+    },
+    "goal60fpsAchieved": false,
+    "scenario": "stackfixturewide_edgeguard_large12_tracepalette_tracebounds_traceedge",
+    "maxSa1Ms": 14.28133,
+    "maxOutputMs": 15.329601,
+    "maskBoundsVerified": {
+      "jobs": 306,
+      "bands": 7344,
+      "recordBytes": 194,
+      "equivalentEmptyBounds": 0,
+      "conservativeBounds": 0,
+      "fullFramebufferJobs": 306,
+      "exact": false
+    },
+    "heldFieldQueues": [],
+    "edgeChunks": 1174,
+    "cacheBytesOneDirection": 580444,
+    "edgeSectionMs": 712.0031817821175,
+    "jitLoads": {
+      "dma": 48
+    },
+    "jitByteVerifiedUses": 332,
+    "jitBanks": [
+      64,
+      65,
+      66,
+      67
+    ],
+    "jitWidths": [
+      4,
+      6
+    ],
+    "edgeModes": {
+      "jit": 332,
+      "dma": 1931,
+      "mvn": 85
+    },
+    "bandGuardChunks": 0,
+    "bandGuardSmallerChunks": 0,
+    "bandGuardZeroChunks": 0
+  },
+  "candidate": "large12",
+  "allOriginalPatternsRetained": true,
+  "gameIntegrated": true,
+  "hostSpriteDrawingUsed": false,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "evidenceBytes": 60570284,
+  "evidenceSha256": "ed7c4e481d44eb84b02fc7b6a9ab3334e813779273a26ae62ca8400b566bce73"
+}

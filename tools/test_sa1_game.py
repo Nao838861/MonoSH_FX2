@@ -401,6 +401,90 @@ if scenario:match('tracebounds') then
   f:write(table.concat(data));f:flush()
  end,emu.cpuType.sa1)
 end
+if scenario:match('traceedge') then
+ local f=assert(io.open(output..'/edge_cache.jsonl','w'))
+ local current=nil;local begin=0;local restoreBegin=0;local saved=0
+ cb('sa1_edge_save',function()
+  local mt=emu.memType.sa1Memory
+  begin=emu.getState().masterClock;current=nil
+  local width=emu.read16(0xc4,mt)
+  if width>0 then
+   local function s16(v)return v>=32768 and v-65536 or v end
+   current={job=emu.read16(0x198,mt),field=field,asset=emu.read16(0x3e,mt),width=emu.read16(0x34,mt),height=emu.read16(0x36,mt),left=s16(emu.read16(0x38,mt)),top=s16(emu.read16(0x3a,mt)),flags=emu.read16(0x3c,mt),first=emu.read16(0xa0,mt),count=emu.read16(0xa8,mt),cacheWidth=width,saveConversionBusy=emu.read16(0x11e,mt)}
+  end
+ end,emu.cpuType.sa1)
+ cb('edge_save_completed',function()
+  if current then
+   local mt=emu.memType.sa1Memory
+   saved=emu.getState().masterClock;current.saveMs=(saved-begin)/21477.272
+   current.cacheRows=emu.read16(0xca,mt);current.cacheFirst=emu.read16(0xc8,mt);current.cacheBytes=current.cacheWidth*current.cacheRows
+   assert(current.cacheBytes<=1024,'edge guard exceeds IRAM cache')
+   if current.cacheWidth<=EDGEJITMAX then assert(current.cacheBytes<=512,'edge guard overwrites small JIT')end
+  end
+ end,emu.cpuType.sa1)
+ cb('sa1_edge_restore',function()restoreBegin=emu.getState().masterClock;if current then current.restoreConversionBusy=emu.read16(0x11e,emu.memType.sa1Memory)end end,emu.cpuType.sa1)
+ for _,kind in ipairs({'save','restore'})do
+  for name,mode in pairs({sa1_small_edge_='jit',sa1_edge_cpu_='mvn'})do
+   cb(name..kind,function()if current then current[kind..'Mode']=mode end end,emu.cpuType.sa1)
+  end
+ end
+ cb('edge_restore_completed',function()
+  if current then
+   current.restoreMs=(emu.getState().masterClock-restoreBegin)/21477.272
+   current.chunkDrawAndCodeMs=(restoreBegin-saved)/21477.272
+   local parts={};for k,v in pairs(current)do parts[#parts+1]=string.format('"%s":%s',k,type(v)=='string' and string.format('%q',v) or tostring(v))end
+   f:write('{',table.concat(parts,','),'}\\n');f:flush();current=nil
+  end
+ end,emu.cpuType.sa1)
+ if labels.sa1_small_edge_load then
+  local jit=assert(io.open(output..'/edge_jit.jsonl','w'))
+  local start=0;local cpu=false
+  cb('sa1_small_edge_load',function()start=emu.getState().masterClock;cpu=false end,emu.cpuType.sa1)
+  cb('small_prepare_cpu',function()cpu=true end,emu.cpuType.sa1)
+  cb('small_prepare_done',function()
+   if start>0 then
+    local mt=emu.memType.sa1Memory
+    jit:write(string.format('{"job":%d,"asset":%d,"cacheWidth":%d,"cpuCopy":%s,"ms":%.6f}\\n',emu.read16(0x198,mt),emu.read16(0x3e,mt),emu.read16(0xc4,mt),tostring(cpu),(emu.getState().masterClock-start)/21477.272));jit:flush();start=0
+   end
+  end,emu.cpuType.sa1)
+  if labels.save_jit_ready then
+   local t=assert(io.open(EDGETEMPLATES,'rb'));local original=t:read('*a');t:close()
+   local uses=assert(io.open(output..'/edge_jit_uses.jsonl','w'))
+   for _,kind in ipairs({'save','restore'})do
+    cb(kind..'_jit_ready',function()
+     local mt=emu.memType.sa1Memory
+     local width=emu.read16(0xc4,mt);local bank=emu.read16(0x102,mt)&255
+     assert(width>0 and width<=32 and width%2==0,'invalid small edge width')
+     assert(emu.read16(0x1b0,mt)==(EDGEWIDTHTAG and width or 1),'edge JIT used before lazy load')
+     for i=0,511 do
+      local expect=original:byte((width//2-1)*512+i+1)
+      if (i>=7 and i<=127 and (i-7)%8==0) or (i>=266 and i<=386 and (i-266)%8==0) then expect=bank end
+      assert(emu.read(0x500+i,mt)==expect,'edge JIT code/bank differs at '..i)
+     end
+     uses:write(string.format('{"job":%d,"kind":"%s","bank":%d,"cacheWidth":%d}\\n',emu.read16(0x198,mt),kind,bank,width));uses:flush()
+    end,emu.cpuType.sa1)
+   end
+  end
+ end
+ if labels.edge_band_chunk_ready then
+  local bands=EDGEBANDS
+  local log=assert(io.open(output..'/edge_band.jsonl','w'))
+  cb('edge_band_chunk_ready',function()
+   local mt=emu.memType.sa1Memory
+   if emu.read16(0x1b4,mt)>0 then
+    local asset=emu.read16(0x3e,mt);local w=emu.read16(0x34,mt);local h=emu.read16(0x36,mt)
+    local rows=assert(bands[asset..'_'..w..'_'..h],'band guard shape missing')
+    local first=emu.read16(0xa0,mt);local count=emu.read16(0xa8,mt);local right=0
+    for b=first//8+1,(first+count+7)//8 do right=math.max(right,rows[b])end
+    local left=emu.read16(0x38,mt);local expected=right>0 and math.max(0,(right+left-255)//2) or 0
+    expected=(expected+1)&0xfffe
+    local actual=emu.read16(0xc4,mt);local old=emu.read16(0x1b2,mt)
+    assert(actual==expected and actual<=old and old<=32,'band guard width differs from ROM alpha table')
+    log:write(string.format('{"job":%d,"asset":%d,"width":%d,"height":%d,"left":%d,"top":%d,"first":%d,"count":%d,"oldWidth":%d,"newWidth":%d}\\n',emu.read16(0x198,mt),asset,w,h,left,emu.read16(0x3a,mt),first,count,old,actual));log:flush()
+   end
+  end,emu.cpuType.sa1)
+ end
+end
 if labels.clip_left_cache_hit then
  local log=assert(io.open(output..'/clip_cache.jsonl','w'))
  for _,name in ipairs({'clip_left_cache_hit','clip_left_cache_miss','clip_reverse_cache_hit','clip_reverse_cache_miss','clip_cache_edge_invalidate','clip_cache_bullet_invalidate'})do
@@ -1100,10 +1184,21 @@ emu.addEventCallback(function()
  end
 end,emu.eventType.endFrame)
 '''.replace('COMPACTGAME','true' if config.get('sa1GameCompact') else 'false').replace('GAMEBWBASE',str(0x430000 if config.get('sa1GameCompact') else 0x400000)).replace('GAMEOFFLOAD','true' if config.get('sa1Game') else 'false').replace('NATIVENEAR','true' if config.get('nativeNear',False) else 'false').replace('NATIVEBACKGROUND','true' if config.get('nativeBackground',False) else 'false').replace('CPUCODEBASE',str(config.get('cpuCodeBank',0x7f)*65536)).replace('LABELS',lua(labels)).replace('CALLS',lua(calls)).replace('OUTDIR',lua(dest.as_posix())).replace('MAXFRAME',str(args.frames)).replace('TARGETPRESENTS',str(args.presents)).replace('SCENARIO',lua(args.scenario)).replace('PADDED','true' if config.get('paddedFramebuffer',False) else 'false').replace('DEPTH',str(config.get('pipelineDepth',3))).replace('PIPELINE','true' if config.get('pipeline',False) else 'false')
-    script=script.replace('EXACTMASKBOUNDS','true' if config.get('maskBounds') else 'false')
-    script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') and not config.get('gameIrqWram') else 0x7f0000))
     from sa1_patterns import dimensions
     patterns=dimensions()
+    edge_bands={}
+    if config.get('edgeBandGuard'):
+        from analyze_sa1_edge_guard import bands
+        rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
+        for asset in (40,41):
+            for width,height in patterns[asset]:
+                if width>=32 and height>=24:edge_bands[f'{asset}_{width}_{height}']=[r for l,r in bands(rom,asset,width,height)]
+    script=script.replace('EDGEBANDS',lua(edge_bands))
+    script=script.replace('EDGEWIDTHTAG','true' if config.get('edgeBandGuard') else 'false')
+    script=script.replace('EDGEJITMAX',str(config.get('edgeJitMax',64 if config.get('wideEdgeJit') else 32) if config.get('smallEdgeJit') else 0))
+    script=script.replace('EDGETEMPLATES',lua((BUILD/'small_edge_templates.bin').as_posix()))
+    script=script.replace('EXACTMASKBOUNDS','true' if config.get('maskBounds') else 'false')
+    script=script.replace('IRQCODEBASE',str(0xc10000 if config.get('irqFastrom') and not config.get('gameIrqWram') else 0x7f0000))
     minimum=config.get('reverseExplosionsMinWidth',91)
     minimum_geometries=sorted(set(patterns[40])&set(patterns[41]))
     minimum_geometries=[list(g) for g in minimum_geometries if g[0]==minimum]
@@ -1165,6 +1260,9 @@ end,emu.eventType.endFrame)
     summary['presentationFieldIntervals']={str(int(k)):int(v) for k,v in zip(*np.unique(intervals,return_counts=True))}
     summary['stalledTailFields']=max(0,summary['fields']-summary['presentationTimes'][-1]['visibleField'])
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
+    if args.scenario.startswith('stackfixture'):
+        summary['fixturePresentationEveryField']=summary['goal60fpsAchieved']
+        summary['goal60fpsAchieved']=False
     if split_jobs:
         from sa1_split_fixture import verify
         summary['splitViewportFixture']=verify(dest,split_jobs,summary)

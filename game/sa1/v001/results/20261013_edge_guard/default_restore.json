@@ -1,0 +1,14 @@
+{
+  "fields": 279,
+  "logic": 137,
+  "presents": 130,
+  "pixelMatchedPresents": 120,
+  "romSha256": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+  "hardwarePpuReferencesVerified": true,
+  "presentationFieldIntervals": {
+    "1": 127
+  },
+  "stalledTailFields": 0,
+  "maxSa1Ms": 7.241609,
+  "publicReleaseSha256": "9934d77b85913187be8d3ebd8315f854718eb24b08492204ce8b3288f620146c"
+}

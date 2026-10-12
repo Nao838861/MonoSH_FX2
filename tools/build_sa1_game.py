@@ -133,7 +133,16 @@ def main():
     ap.add_argument('--mask-bounds',action='store_true')
     ap.add_argument('--mask-bounds-wide-table',action='store_true')
     ap.add_argument('--dirty-tile-round',action='store_true')
+    ap.add_argument('--trace-edge-cache',action='store_true')
+    ap.add_argument('--edge-dma-min',type=int,choices=[1,9,13,17,25,33],default=33)
+    ap.add_argument('--edge-lazy-jit',action='store_true')
+    ap.add_argument('--edge-band-guard',action='store_true')
+    ap.add_argument('--edge-jit-max',type=int,choices=[12,16,24,32],default=32)
     args=ap.parse_args()
+    assert args.edge_dma_min==33 or (args.cpu_edge_copy and args.small_edge_jit and not args.wide_edge_jit)
+    assert not args.edge_lazy_jit or (args.cpu_edge_copy and args.small_edge_jit and args.deep_bw and not args.wide_edge_jit and not args.split_viewports and not args.clip_resident and not args.dirty_iram and not args.sa1_game and not args.sa1_game_compact)
+    assert not args.edge_band_guard or (args.edge_lazy_jit and args.fixed_map and args.redraw_all and args.redraw_no_history and args.row_dirty_exact and not args.reverse_explosions and not args.stack_explosions and not args.right_clip_jit and not args.opaque_prefix and not args.clip_edges)
+    assert args.edge_jit_max==32 or (args.edge_lazy_jit and not args.edge_band_guard)
     assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
     assert not args.mask_bounds_wide_table or args.mask_bounds
     assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
@@ -1019,6 +1028,22 @@ opaque_sprite_fallback:
 '''
             text=text.replace(old,dispatch+old,1)
             src=BUILD/'renderer_opaque_prefix.s';src.write_text(text,encoding='utf8')
+        if args.edge_band_guard and name=='fast':
+            from sa1_edge_band_guard import band_fast
+            text=band_fast(src.read_text(encoding='utf8'))
+            src=BUILD/'fast_band_guard.s';src.write_text(text,encoding='utf8')
+        if args.trace_edge_cache and name=='fast':
+            from sa1_edge_band_guard import trace as trace_edge_cache
+            text=trace_edge_cache(src.read_text(encoding='utf8'))
+            src=BUILD/'fast_trace_edge.s';src.write_text(text,encoding='utf8')
+        if name=='edge' and args.edge_dma_min!=33:
+            from sa1_edge_band_guard import dma_min as edge_dma_min
+            text=edge_dma_min(src.read_text(encoding='utf8'),args.edge_dma_min)
+            src=BUILD/'edge_dma_min.s';src.write_text(text,encoding='utf8')
+        if name=='edge' and args.edge_jit_max!=32:
+            from sa1_edge_band_guard import jit_limit
+            text=jit_limit(src.read_text(encoding='utf8'),args.edge_jit_max)
+            src=BUILD/'edge_jit_limit.s';src.write_text(text,encoding='utf8')
         if args.dirty_tile_round and name=='dirty':
             from sa1_dirty_round import transform as dirty_tile_round
             text=dirty_tile_round('dirty',src.read_text(encoding='utf8'))
@@ -1291,7 +1316,17 @@ opaque_sprite_fallback:
         if args.wide_edge_jit:
             from sa1_small_edges import wide_source
             source=BUILD/'wide_edge_game.s';source.write_text(wide_source((SA1/'small_edge_game.s').read_text(encoding='utf-8')),encoding='utf-8')
+        if args.edge_lazy_jit:
+            from sa1_edge_band_guard import lazy_jit as lazy_edge_jit
+            text=lazy_edge_jit(source.read_text(encoding='utf8'),width_tag=args.edge_band_guard)
+            source=BUILD/'small_edge_lazy.s';source.write_text(text,encoding='utf8')
+        if args.edge_jit_max!=32:
+            from sa1_edge_band_guard import jit_limit
+            text=jit_limit(source.read_text(encoding='utf8'),args.edge_jit_max,prepare=True)
+            source=BUILD/'small_edge_limit.s';source.write_text(text,encoding='utf8')
         obj=BUILD/'small_edge.o';run([CC/'ca65.exe','--bin-include-dir',BUILD,'-o',obj,source]);objs.append(obj)
+    if args.edge_band_guard:
+        obj=BUILD/'edge_band_guard.o';run([CC/'ca65.exe','-o',obj,SA1/'edge_band_guard_game.s']);objs.append(obj)
     if args.fast_left_clip:
         obj=BUILD/'clip_left.o';run([CC/'ca65.exe','-o',obj,SA1/'clip_left_game.s']);objs.append(obj)
     if args.temporal_sort:
@@ -1527,6 +1562,8 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(maskBounds=True,maskBoundsWideTable=args.mask_bounds_wide_table);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.dirty_tile_round:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['dirtyTileRound']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.edge_dma_min!=33 or args.edge_lazy_jit:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(edgeDmaMin=args.edge_dma_min,edgeLazyJit=args.edge_lazy_jit,edgeBandGuard=args.edge_band_guard,edgeJitMax=args.edge_jit_max);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
