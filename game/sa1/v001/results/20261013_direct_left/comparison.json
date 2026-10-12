@@ -1,0 +1,109 @@
+{
+  "cases": {
+    "baseline_road": {
+      "fields": 800,
+      "logic": 654,
+      "presents": 647,
+      "intervals": {
+        "1": 640,
+        "2": 4
+      },
+      "pixelMatchedPresents": 168,
+      "maxSa1Ms": 22.002049,
+      "coverage": null,
+      "fixtureCoverage": null
+    },
+    "active_road": {
+      "fields": 800,
+      "logic": 653,
+      "presents": 646,
+      "intervals": {
+        "1": 638,
+        "2": 5
+      },
+      "pixelMatchedPresents": 168,
+      "maxSa1Ms": 22.961669,
+      "coverage": {
+        "rows": 1394,
+        "jobs": 53,
+        "assets": [
+          0,
+          3,
+          5
+        ]
+      },
+      "fixtureCoverage": null,
+      "packetMatchedGenerations": 652
+    },
+    "baseline_boss": {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "intervals": {
+        "0": 1,
+        "1": 1731,
+        "2": 8
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 18.954549,
+      "coverage": null,
+      "fixtureCoverage": null
+    },
+    "active_boss": {
+      "fields": 1900,
+      "logic": 1750,
+      "presents": 1743,
+      "intervals": {
+        "1": 1733,
+        "2": 7
+      },
+      "pixelMatchedPresents": 147,
+      "maxSa1Ms": 19.036217,
+      "coverage": {
+        "rows": 0,
+        "jobs": 0,
+        "assets": []
+      },
+      "fixtureCoverage": null,
+      "packetMatchedGenerations": 1748
+    },
+    "fixture": {
+      "fields": 1749,
+      "logic": 1607,
+      "presents": 1600,
+      "intervals": {
+        "1": 1597
+      },
+      "pixelMatchedPresents": 1600,
+      "maxSa1Ms": 15.116072,
+      "coverage": {
+        "rows": 30175,
+        "jobs": 750,
+        "assets": [
+          0,
+          2,
+          3,
+          5
+        ]
+      },
+      "fixtureCoverage": {
+        "cases": 2898,
+        "fullCartesianProductVerified": true
+      }
+    }
+  },
+  "romSha256": {
+    "baseline": "a9bcd2478e39f479b641ededc38d77abe4e693d2b958d1bd7b4f7ab20af603f7",
+    "active": "61b2a071fdcacf2303bf198ce5672fd6e3ce615f875448be1a26468f164b8973"
+  },
+  "baselineIsCurrentSourceRebuild": true,
+  "baselineIsNotByteIdenticalToPublicRelease": true,
+  "allOriginalPatternsRetained": true,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "fixture60fpsIsNotGameCompletionProof": true,
+  "fixtureInitialCoverageCheckFailedThenHostCheckRepaired": true,
+  "decision": "not adopted; road presentation regression; no grass path executed in boss comparison",
+  "evidenceBytes": 36649593,
+  "evidenceSha256": "fc6235cbd10bbcd617036b64f49892890a285885282902dd3b54d289f8a975a5"
+}

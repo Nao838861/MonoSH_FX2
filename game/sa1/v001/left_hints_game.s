@@ -301,6 +301,27 @@ hint_decode:
   inc
   lsr
   tay
+.ifdef SA1_LEFT_DIRECT
+  tya
+  asl
+  tay
+.export direct_left_row: far
+direct_left_row:
+  lda [hintTable],y
+  sta hintSlot
+  and #255
+  clc
+  adc hintCode
+  sta f:$0007f1
+  lda hintSlot
+  xba
+  and #255
+  asl
+  tax
+  lda f:LEFT_INITIAL_TABLE,x
+  sta hintA
+  jmp hint_remember
+.else
 .ifdef SA1_LEFT_HINT_COMPRESSED
   lda [hintTable]
   and #128
@@ -391,6 +412,7 @@ hint_find_constant:
 .endif
   lda [hintCode],y
   sta hintA
+.endif
 hint_remember:
   lda hintCode
   sta hintPrevious

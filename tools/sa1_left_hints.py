@@ -29,7 +29,7 @@ def inline_records(rom,packing):
     return [(ptr,int.from_bytes(rom[physical(ptr)-5:physical(ptr)-2],'little')) for ptr in sorted(pointers)]
 
 
-def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=False,flame=False):
+def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=False,flame=False,direct=False):
     cursor=json.loads((dest/'compiled_game_packing.json').read_text())['payloadEnd']
     spare_ranges=((0x5f6fe0,0x5f8000),(0x5f9200,0x5fc000)) if use_spare else ()
     spare_cursors=[a for a,b in spare_ranges]
@@ -64,6 +64,22 @@ def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=Fal
                         p=offset+y*11
                         assert rom[p]==0xa9 and rom[p+7]==0x22
                         pointers.add(int.from_bytes(rom[p+8:p+11],'little'))
+    if direct:
+        assert not (inline or compressed or use_spare or extra_min_width or flame)
+        compiled=json.loads((dest/'compiled_game_packing.json').read_text());assert compiled['directLeftHints']
+        records={ptr:int.from_bytes(rom[physical(ptr)-5:physical(ptr)-2],'little') for ptr in sorted(pointers)}
+        unique={}
+        for ptr,hint in records.items():unique[hint]=(rom[physical(ptr)-1]//2+1)*2
+        table=compiled['initialValueTable'];values=compiled['initialValues']
+        assert rom[physical(table):physical(table)+len(values)*2]==b''.join(struct.pack('<H',v) for v in values)
+        info=dict(assets=list(targets),minimumWidths=targets,minimumWidth=64,kernels=len(records),
+            uniqueHintTables=len(unique),hintBytes=sum(unique.values()),hintBytesPerEntry=2,
+            hashSlots=0,hashBytes=0,payloadEnd=cursor,compressed=False,spareRanges=[],inlineHeaders=True,
+            indexedInitialValues=True,initialValueTable=table,initialValueCount=len(values))
+        (dest/'left_hints_records.json').write_text(json.dumps(list(records.items()))+'\n')
+        (dest/'left_hints.inc').write_text(f'LEFT_HINT_TABLE=$000000\nLEFT_HINT_MASK=0\nLEFT_INITIAL_TABLE=${table:06x}\n',encoding='utf-8')
+        (dest/'left_hints_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(info)
+        return rom
     if inline:
         assert compressed
         records={ptr:int.from_bytes(rom[physical(ptr)-5:physical(ptr)-2],'little') for ptr in sorted(pointers)}

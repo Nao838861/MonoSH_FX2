@@ -61,6 +61,23 @@ def verify_flame_fixture_coverage(dest):
     assert actual==expected,(len(expected-actual),len(actual-expected))
     return dict(cases=len(actual),fullCartesianProductVerified=True)
 
+
+def verify_direct_left_fixture_coverage(dest):
+    from sa1_patterns import dimensions
+    patterns=dimensions();actual=set()
+    for path in dest.glob('present*_meta.bin'):
+        if path.name=='present00001_meta.bin':continue  # 通常の初回画面も画素照合するがfixture集合には含めない。
+        raw=path.read_bytes();count=struct.unpack_from('<H',raw,6)[0]
+        if count!=2:continue
+        for i in range(count):
+            x,b,w,h,a,flags,*_=struct.unpack_from('<hh6B',raw,10+i*10)
+            assert a in (0,2,3,5) and flags==0
+            actual.add((a,w,h,x,b-h-20))
+    expected={(a,w,h,x,top) for a in (0,2,3,5) for w,h in patterns[a] if w>=64
+        for x in (-40,-39,0,1,16,17,30,31,64,65,128,129,250,251) for top in (-20,30,180)}
+    assert actual==expected,(len(expected-actual),len(actual-expected))
+    return dict(cases=len(actual),fullCartesianProductVerified=True)
+
 def verify_minimum_clip_coverage(dest,config):
     """表示済みmetaから対象寸法・左右位置・上下位置の全組合せを確認する。"""
     from sa1_patterns import dimensions
@@ -210,7 +227,7 @@ local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local function captureGeneration(g)
- return scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -687,6 +704,20 @@ cb('logic_finished',function()
  end
  if scenario:match('^leftfixture') then
   local geometries=LEFTFIXTUREGEOMETRIES
+  if scenario:match('^leftfixtureindexed') then
+   local centers={-40,-39,0,1,16,17,30,31,64,65,128,129,250,251}
+   local tops={-20,30,180}
+   word('_fx_packet_count',2)
+   for i=1,2 do
+    local n=((logic-1)*2+i-1)%(#geometries*#centers*#tops)
+    local g=geometries[n%#geometries+1]
+    local x=centers[math.floor(n/#geometries)%#centers+1]
+    local top=tops[math.floor(n/(#geometries*#centers))%#tops+1]
+    local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+    emu.write16(a,x&65535,mt);emu.write16(a+2,(top+g[3]+20)&65535,mt)
+    emu.write(a+4,g[2],mt);emu.write(a+5,g[3],mt);emu.write(a+6,g[1],mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+   end
+  else
   local centers={-40,0,16,30,64,128,250}
   local bottoms={40,120,205}
   word('_fx_packet_count',2)
@@ -700,6 +731,7 @@ cb('logic_finished',function()
    emu.write16(a+2,bottoms[bottomIndex%#bottoms+1],mt)
    local phase=(scenario:match('^leftfixtureflame') and g[1]==31) and math.floor((logic-1)/#centers)%3 or 0
    emu.write(a+4,g[2],mt);emu.write(a+5,g[3],mt);emu.write(a+6,g[1],mt);emu.write(a+7,phase,mt);emu.write16(a+8,i,mt)
+  end
   end
  end
  if scenario:match('^flipfixture') then
@@ -750,6 +782,16 @@ if labels.flame_direct_row then
   if not active then return end
   local mt=emu.memType.sa1Memory
   f:write(string.format('{"job":%d,"row":%d,"width":%d,"cur":%d}\\n',#times+1,emu.read16(0xa0,mt),emu.read16(0x34,mt),emu.read16(0x90,mt)));f:flush()
+ end,emu.cpuType.sa1)
+ cb('left_hint_finished',function()active=false end,emu.cpuType.sa1)
+end
+if labels.direct_left_row then
+ local active=false;local f=assert(io.open(output..'/direct_left.jsonl','w'))
+ cb('sa1_left_hint_draw',function()active=true end,emu.cpuType.sa1)
+ cb('direct_left_row',function()
+  if not active then return end
+  local mt=emu.memType.sa1Memory
+  f:write(string.format('{"job":%d,"row":%d,"asset":%d,"width":%d,"cur":%d}\\n',#times+1,emu.read16(0xa0,mt),emu.read16(0x3e,mt),emu.read16(0x34,mt),emu.read16(0x90,mt)));f:flush()
  end,emu.cpuType.sa1)
  cb('left_hint_finished',function()active=false end,emu.cpuType.sa1)
 end
@@ -988,6 +1030,8 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('leftfixtureflame'):
         left_geometries=[[31,w,h] for w,h in sorted(patterns[31]) if w>=64]
         assert len(left_geometries)==2
+    if args.scenario.startswith('leftfixtureindexed'):
+        left_geometries=[[a,w,h] for a in (0,2,3,5) for w,h in sorted(patterns[a]) if w>=64]
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('OPAQUETARGETS',lua([[w,h] for w,h in sorted(patterns[40]) if 49<=w<=79]))
     script=script.replace('OPAQUEFRONTS',lua([[a,w,h] for a in (39,40,41) for w,h in sorted(patterns[a]) if w>=64]))
@@ -1032,6 +1076,9 @@ end,emu.eventType.endFrame)
         summary['flameDirectCoverage']=dict(rows=len(events),jobs=len({e['job'] for e in events}))
         if args.scenario.startswith('leftfixtureflame') and not config.get('flameDirectHintsBypass'):
             assert len(events)>120
+    if labels.get('direct_left_row'):
+        events=[json.loads(line) for line in (dest/'direct_left.jsonl').read_text().splitlines()]
+        summary['directLeftCoverage']=dict(rows=len(events),jobs=len({e['job'] for e in events}),assets=sorted({e['asset'] for e in events}))
     if labels.get('opaque_prefix_patch_done'):
         summary['opaquePrefixCoverage']=opaque_prefix_coverage(dest)
         if args.scenario.startswith('opaquefixture'):
@@ -1055,6 +1102,11 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('leftfixtureflame'):
         assert summary['stalledTailFields']<=1 and summary['presents']>=252, 'left flame fixture did not complete its geometry/position/phase cycle'
         summary['flameFixtureCoverage']=verify_flame_fixture_coverage(dest)
+        (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+    if args.scenario.startswith('leftfixtureindexed'):
+        summary['directLeftFixtureCoverage']=verify_direct_left_fixture_coverage(dest)
+        assert summary['pixelMatchedPresents']>=1450 and summary['stalledTailFields']<=1
+        assert summary['directLeftCoverage']['rows']>1000 and summary['directLeftCoverage']['assets']==[0,2,3,5]
         (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 
