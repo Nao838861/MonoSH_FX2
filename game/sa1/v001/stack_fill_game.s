@@ -31,6 +31,9 @@ sa1_clear_wide_band:
 
 sa1_stack_clear_prepare:
   rep #$30
+.ifdef SA1_CLIP_RESIDENT
+  stz $07fc
+.endif
   phb
   ldx #.loword(stack_band_body)
   ldy #$0300

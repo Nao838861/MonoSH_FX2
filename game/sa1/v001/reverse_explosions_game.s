@@ -98,6 +98,16 @@ reverse_found:
   sta rRows+2
   rep #$20
 .endif
+.ifdef SA1_CLIP_RESIDENT
+.export clip_reverse_cache_hit: far, clip_reverse_cache_miss: far
+  lda $07fc
+  cmp #2
+  bne :+
+clip_reverse_cache_hit:
+  jml reverse_entry
+:
+clip_reverse_cache_miss:
+.endif
   jsl sa1_dma_try_begin
   bcc reverse_load_cpu
   lda #__REVJIT_SIZE__
@@ -113,7 +123,11 @@ reverse_found:
   lda #$0300
   sta $2235
   jsl sa1_dma_end
+.ifdef SA1_CLIP_RESIDENT
+  bra reverse_loaded
+.else
   jml reverse_entry
+.endif
 reverse_load_cpu:
   phb
   lda #__REVJIT_SIZE__-1
@@ -121,6 +135,11 @@ reverse_load_cpu:
   ldy #$0300
   mvn #^__REVJIT_LOAD__,#$00
   plb
+reverse_loaded:
+.ifdef SA1_CLIP_RESIDENT
+  lda #2
+  sta $07fc
+.endif
   jml reverse_entry
 reverse_no:
   clc

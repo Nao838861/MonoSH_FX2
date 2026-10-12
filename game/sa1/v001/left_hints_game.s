@@ -8,6 +8,16 @@
 .segment "GSU"
 sa1_left_hint_draw:
   rep #$30
+.ifdef SA1_CLIP_RESIDENT
+.export clip_left_cache_hit: far, clip_left_cache_miss: far
+  lda $07fc
+  cmp #1
+  bne :+
+clip_left_cache_hit:
+  jml left_hint_entry
+:
+clip_left_cache_miss:
+.endif
   jsl sa1_dma_try_begin
   bcc hint_load_cpu
   lda #__LEFTJIT_SIZE__
@@ -23,7 +33,11 @@ sa1_left_hint_draw:
   lda #$0300
   sta $2235
   jsl sa1_dma_end
+.ifdef SA1_CLIP_RESIDENT
+  bra hint_loaded
+.else
   jml left_hint_entry
+.endif
 hint_load_cpu:
   phb
   lda #__LEFTJIT_SIZE__-1
@@ -31,6 +45,11 @@ hint_load_cpu:
   ldy #$0300
   mvn #^__LEFTJIT_LOAD__,#$00
   plb
+hint_loaded:
+.ifdef SA1_CLIP_RESIDENT
+  lda #1
+  sta $07fc
+.endif
   jml left_hint_entry
 .ifdef SA1_LEFT_HINT_COMPRESSED
 .export hint_delta_sums: far, hint_delta_masks: far

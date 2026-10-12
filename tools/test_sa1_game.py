@@ -7,6 +7,20 @@ from run_probe import prepare_runtime,MESEN_EXE,lua
 from test_sa1_probe import reference
 from build_sa1_game import BASE
 
+def verify_clip_cache_coverage(dest):
+    """上書きと再利用を実行ログから確認し、fixtureの見かけだけの合格を避ける。"""
+    from collections import Counter
+    events=[json.loads(line) for line in (dest/'clip_cache.jsonl').read_text().splitlines()]
+    counts=Counter(e['event'] for e in events)
+    for key in ('clip_left_cache_hit','clip_left_cache_miss','clip_reverse_cache_hit','clip_reverse_cache_miss'):
+        assert counts[key]>=120, f'clip fixture did not exercise {key}'
+    for e in events:
+        if e['event']=='clip_left_cache_hit':assert e['tag']==1
+        if e['event']=='clip_reverse_cache_hit':assert e['tag']==2
+    evictions=Counter(e['event'] for e in events if e['tag'] in (1,2) and e['event'].endswith('_invalidate'))
+    assert evictions['clip_cache_edge_invalidate']>=120 and evictions['clip_cache_bullet_invalidate']>=120
+    return dict(events=dict(counts),evictionsOfResidentHelper=dict(evictions))
+
 def verify_minimum_clip_coverage(dest,config):
     """表示済みmetaから対象寸法・左右位置・上下位置の全組合せを確認する。"""
     from sa1_patterns import dimensions
@@ -156,7 +170,7 @@ local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local function captureGeneration(g)
- return scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -271,6 +285,15 @@ local function cb(name,fn,cpu)
  local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+end
+if labels.clip_left_cache_hit then
+ local log=assert(io.open(output..'/clip_cache.jsonl','w'))
+ for _,name in ipairs({'clip_left_cache_hit','clip_left_cache_miss','clip_reverse_cache_hit','clip_reverse_cache_miss','clip_cache_edge_invalidate','clip_cache_bullet_invalidate'})do
+  cb(name,function()
+   local mt=emu.memType.sa1Memory
+   log:write(string.format('{"event":"%s","field":%d,"job":%d,"tag":%d,"asset":%d}\\n',name,field,#times+1,emu.read16(0x07fc,mt),emu.read16(0x3e,mt)));log:flush()
+  end,emu.cpuType.sa1)
+ end
 end
 if COMPACTGAME then
  local log=assert(io.open(output..'/game_offload.jsonl','w'))
@@ -552,6 +575,15 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^clipfixture') then
+  local objects={{16,110,79,62,39},{16,150,79,62,39},{128,120,12,12,7},{16,130,79,62,39},{-10,155,88,38,42},{16,160,79,62,39},{250,165,91,71,40},{250,110,91,71,41}}
+  word('_fx_packet_count',#objects)
+  for i,g in ipairs(objects)do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,g[1]&65535,mt);emu.write16(a+2,g[2],mt)
+   emu.write(a+4,g[3],mt);emu.write(a+5,g[4],mt);emu.write(a+6,g[5],mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+  end
+ end
  if scenario:match('^stackfixture') then
   local centers={0,47,48,49,128,182,222,265,266,267,268,286,300}
   local tops={-20,0,30,55,56,120,180}
@@ -906,6 +938,9 @@ end,emu.eventType.endFrame)
     summary['goal60fpsAchieved']=bool(len(intervals)>=120 and np.all(intervals==1) and summary['stalledTailFields']<=1)
     if args.scenario.startswith('stackfixturemin'):
         summary['minimumClipCoverage']=verify_minimum_clip_coverage(dest,config)
+    if args.scenario.startswith('clipfixture'):
+        assert summary['pixelMatchedPresents']>=240
+        summary['clipCacheCoverage']=verify_clip_cache_coverage(dest)
     (dest/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     if args.scenario.startswith('stackfixture'):
         assert summary['stalledTailFields']<=1, 'stack clipping fixture stopped presenting'

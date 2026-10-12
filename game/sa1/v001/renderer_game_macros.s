@@ -98,6 +98,9 @@ wait_job:
   lda $0100
   beq wait_job
 sa1_clear_start:
+.ifdef SA1_CLIP_RESIDENT
+  stz $07fc
+.endif
   .ifdef SA1_PIPELINE
   lda $0188
   sta $0198

@@ -1,0 +1,71 @@
+{
+  "cases": [
+    {
+      "fields": 706,
+      "logic": 242,
+      "presents": 240,
+      "pixelMatchedPresents": 240,
+      "hardwarePpuReferencesVerified": true,
+      "stalledTailFields": 1,
+      "romSha256": "2a194adb6075f789f1c17b5f76e32d87f362931ae96578e0151ba9d3f37886b0",
+      "presentationFieldIntervals": {
+        "1": 11,
+        "2": 151,
+        "3": 75
+      },
+      "scenario": "clipfixture_clipresident_v1_complete_tracepalette",
+      "maxSa1Ms": 36.957394,
+      "clipCacheCoverage": {
+        "events": {
+          "clip_left_cache_miss": 720,
+          "clip_left_cache_hit": 240,
+          "clip_cache_bullet_invalidate": 240,
+          "clip_cache_edge_invalidate": 720,
+          "clip_reverse_cache_miss": 240,
+          "clip_reverse_cache_hit": 239
+        },
+        "evictionsOfResidentHelper": {
+          "clip_cache_bullet_invalidate": 240,
+          "clip_cache_edge_invalidate": 240
+        }
+      }
+    },
+    {
+      "fields": 800,
+      "logic": 655,
+      "presents": 644,
+      "pixelMatchedPresents": 168,
+      "hardwarePpuReferencesVerified": true,
+      "stalledTailFields": 0,
+      "romSha256": "2a194adb6075f789f1c17b5f76e32d87f362931ae96578e0151ba9d3f37886b0",
+      "presentationFieldIntervals": {
+        "1": 636,
+        "2": 5
+      },
+      "scenario": "movestress_detinput_captureburst_clipresident_v1_tracepalette",
+      "maxSa1Ms": 23.108428,
+      "packetMatchedGenerations": 653
+    },
+    {
+      "fields": 1900,
+      "logic": 1705,
+      "presents": 1702,
+      "pixelMatchedPresents": 146,
+      "hardwarePpuReferencesVerified": true,
+      "stalledTailFields": 0,
+      "romSha256": "2a194adb6075f789f1c17b5f76e32d87f362931ae96578e0151ba9d3f37886b0",
+      "presentationFieldIntervals": {
+        "1": 1655,
+        "2": 43,
+        "3": 1
+      },
+      "scenario": "bossmovestress_detinput_clipresident_v1_long_tracepalette",
+      "maxSa1Ms": 22.375747,
+      "packetMatchedGenerations": 1704
+    }
+  ],
+  "goal60fpsAchieved": false,
+  "publicReleaseChanged": false,
+  "evidenceBytes": 14978493,
+  "evidenceSha256": "d6401e0aa287224ad474acbf9dba2c9f8739fb658dc72ef1c98878ee8a22e241"
+}

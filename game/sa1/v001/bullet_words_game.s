@@ -157,6 +157,11 @@ words_select:
   jml words_enter
 :
 .endif
+.ifdef SA1_CLIP_RESIDENT
+.export clip_cache_bullet_invalidate: far
+clip_cache_bullet_invalidate:
+  stz $07fc
+.endif
   jsl sa1_dma_try_begin
   bcc words_copy_cpu
   lda #__BULLETJIT_SIZE__

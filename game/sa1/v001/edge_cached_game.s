@@ -63,6 +63,11 @@ sa1_edge_save:
   rep #$30
   lda edgeWidth
   beq edge_return
+.ifdef SA1_CLIP_RESIDENT
+.export clip_cache_edge_invalidate: far
+clip_cache_edge_invalidate:
+  stz $07fc
+.endif
   lda $3a
   clc
   adc $a0                    ; source first row
