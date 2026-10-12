@@ -137,7 +137,7 @@ local maxframe=MAXFRAME
 local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local function captureGeneration(g)
- return scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^stackfixture') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -562,8 +562,10 @@ cb('logic_finished',function()
    emu.write16(a,centers[(logic+i-2)%#centers+1]&65535,mt)
    local bottomIndex=math.floor((logic-1)/#centers)
    if scenario:match('^leftfixtureexplosion') then bottomIndex=bottomIndex+math.floor((logic-1)/(#centers*(#geometries/2))) end
+   if scenario:match('^leftfixtureflame') then bottomIndex=math.floor((logic-1)/(#centers*3)) end
    emu.write16(a+2,bottoms[bottomIndex%#bottoms+1],mt)
-   emu.write(a+4,g[2],mt);emu.write(a+5,g[3],mt);emu.write(a+6,g[1],mt);emu.write(a+7,0,mt);emu.write16(a+8,i,mt)
+   local phase=(scenario:match('^leftfixtureflame') and g[1]==31) and math.floor((logic-1)/#centers)%3 or 0
+   emu.write(a+4,g[2],mt);emu.write(a+5,g[3],mt);emu.write(a+6,g[1],mt);emu.write(a+7,phase,mt);emu.write16(a+8,i,mt)
   end
  end
  if scenario:match('^flipfixture') then
@@ -826,12 +828,17 @@ end,emu.eventType.endFrame)
     patterns=dimensions()
     left_geometries=[]
     for i in range(6):
-        for asset in ((0,1,2,3,4,5,13,14,31,39,40,41,42) if config.get('leftRuntimeScan') else (0,3,39) if config.get('leftExplosionHints') else (0,3)):
+        for asset in ((0,1,2,3,4,5,13,14,31,39,40,41,42) if config.get('leftRuntimeScan') else (0,3,39,31) if config.get('leftFlameHints') else (0,3,39) if config.get('leftExplosionHints') else (0,3)):
             sizes=sorted((w,h) for w,h in patterns[asset] if w>=64 if config.get('leftRuntimeScan') or w>=90)
             if asset==39 and config.get('leftExplosionHints'):
                 sizes=sorted((w,h) for w,h in patterns[asset] if w>=config['leftExplosionHintsMinWidth'])
+            if asset==31 and config.get('leftFlameHints'):
+                sizes=sorted((w,h) for w,h in patterns[asset] if w>=64)
             if not sizes:continue
             left_geometries.append([asset,*sizes[min(len(sizes)-1,i*(len(sizes)-1)//5)]])
+    if args.scenario.startswith('leftfixtureflame'):
+        left_geometries=[[31,w,h] for w,h in sorted(patterns[31]) if w>=64]
+        assert len(left_geometries)==2
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
     script=script.replace('DENSE_TILES','true' if (config.get('denseTiles') or config.get('cpuPack') or config.get('directSparse')) else 'false')
     script=script.replace('VRAMPREFETCH3','true' if config.get('vramPrefetch3') else 'false')
@@ -876,6 +883,8 @@ end,emu.eventType.endFrame)
             assert summary['presents']>=3*13*7, 'stack clipping fixture did not exercise width 91'
     if args.scenario.startswith('leftfixtureexplosion'):
         assert summary['stalledTailFields']<=1 and summary['presents']>=189, 'left explosion fixture did not complete its geometry/position cycle'
+    if args.scenario.startswith('leftfixtureflame'):
+        assert summary['stalledTailFields']<=1 and summary['presents']>=252, 'left flame fixture did not complete its geometry/position/phase cycle'
     print('Pixel-matched presents:',summary['pixelMatchedPresents'])
 
 if __name__=='__main__':main()

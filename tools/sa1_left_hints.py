@@ -19,7 +19,7 @@ def inline_records(rom,packing):
             if not block:continue
             for i in range(rom[0x7f0000+block]):
                 entry=0x7f0000+block+1+i*10;desc=struct.unpack_from('<H',rom,entry+1)[0]
-                for parity in (0,1):
+                for parity in range(6 if int(asset)==31 else 2):
                     chain=physical(int.from_bytes(rom[0x7f0000+desc+parity*3:0x7f0000+desc+parity*3+3],'little'))
                     for row in range(rom[entry]):
                         p=chain+row*11
@@ -29,7 +29,7 @@ def inline_records(rom,packing):
     return [(ptr,int.from_bytes(rom[physical(ptr)-5:physical(ptr)-2],'little')) for ptr in sorted(pointers)]
 
 
-def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=False):
+def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=False,flame=False):
     cursor=json.loads((dest/'compiled_game_packing.json').read_text())['payloadEnd']
     spare_ranges=((0x5f6fe0,0x5f8000),(0x5f9200,0x5fc000)) if use_spare else ()
     spare_cursors=[a for a,b in spare_ranges]
@@ -49,6 +49,7 @@ def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=Fal
     pointers=set()
     targets={asset:64 for asset in (0,2,3,5)}
     if extra_min_width:targets[39]=extra_min_width
+    if flame:targets[31]=64
     for asset,minimum in targets.items():
         for w in range(minimum,256):
             block=struct.unpack_from('<H',rom,0x7f0000+asset*512+w*2)[0]
@@ -56,7 +57,7 @@ def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=Fal
             for i in range(rom[0x7f0000+block]):
                 entry=0x7f0000+block+1+i*10;h=rom[entry]
                 desc=struct.unpack_from('<H',rom,entry+1)[0]
-                for parity in (0,1):
+                for parity in range(6 if asset==31 else 2):
                     a=int.from_bytes(rom[0x7f0000+desc+parity*3:0x7f0000+desc+parity*3+3],'little')
                     offset=physical(a)
                     for y in range(h):
