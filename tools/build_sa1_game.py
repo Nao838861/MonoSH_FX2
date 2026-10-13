@@ -151,6 +151,10 @@ def main():
     ap.add_argument('--tail-flip-reserve',type=int,choices=[0,1400],default=0)
     ap.add_argument('--fixed-front-probe',action='store_true')
     ap.add_argument('--fixed-front-probe-generation',type=int,default=0)
+    ap.add_argument('--defer-ready-collect',action='store_true')
+    ap.add_argument('--partial-transfer-reserve',type=int,default=0)
+    ap.add_argument('--transfer-request-line',type=int,default=197)
+    ap.add_argument('--prearm-transfer-line',type=int,default=0)
     args=ap.parse_args()
     assert args.edge_dma_min==33 or (args.cpu_edge_copy and args.small_edge_jit and not args.wide_edge_jit)
     assert not args.edge_lazy_jit or (args.cpu_edge_copy and args.small_edge_jit and args.deep_bw and not args.wide_edge_jit and not args.split_viewports and not args.clip_resident and not args.dirty_iram and not args.sa1_game and not args.sa1_game_compact)
@@ -172,6 +176,10 @@ def main():
     # 毎世代実行すると切替IRQの期限を越えるため、指定世代だけの診断に限定する。
     assert not args.fixed_front_probe or 1<=args.fixed_front_probe_generation<65536
     assert not args.fixed_front_probe_generation or args.fixed_front_probe
+    assert not args.defer_ready_collect or (args.prefix_one_pass and args.fixed_map and args.pipeline_irq and not args.vram_pump and not args.fixed_front_probe)
+    assert not args.partial_transfer_reserve or (900<=args.partial_transfer_reserve<=1600 and args.prefix_one_pass and args.fixed_map and not args.vram_pump and not args.fixed_front_probe)
+    assert args.transfer_request_line==197 or (180<=args.transfer_request_line<197 and args.prefix_one_pass and args.early_request and args.pipeline_irq and not args.vram_pump and not args.fixed_front_probe)
+    assert not args.prearm_transfer_line or (180<=args.prearm_transfer_line<197 and args.prefix_one_pass and args.early_request and args.pipeline_irq and args.transfer_request_line==197 and not args.vram_pump and not args.fixed_front_probe and not args.partial_transfer_reserve)
     assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
     assert not args.mask_bounds_wide_table or args.mask_bounds
     assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
@@ -576,6 +584,18 @@ def main():
     if args.tail_flip_reserve:
         from sa1_transfer_deadline import tail_flip_reserve
         path=BUILD/'pipeline_tuned.inc';path.write_text(tail_flip_reserve(path.read_text(encoding='utf8'),args.tail_flip_reserve),encoding='utf8')
+    if args.defer_ready_collect:
+        from sa1_collect_schedule import pipeline as collect_schedule
+        path=BUILD/'pipeline_tuned.inc';path.write_text(collect_schedule(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.partial_transfer_reserve:
+        from sa1_partial_budget import pipeline as partial_budget_pipeline
+        path=BUILD/'pipeline_tuned.inc';path.write_text(partial_budget_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.transfer_request_line!=197:
+        from sa1_transfer_deadline import request_line
+        path=BUILD/'pipeline_tuned.inc';path.write_text(request_line(path.read_text(encoding='utf8'),args.transfer_request_line),encoding='utf8')
+    if args.prearm_transfer_line:
+        from sa1_prearm_transfer import pipeline as prearm_transfer
+        path=BUILD/'pipeline_tuned.inc';path.write_text(prearm_transfer(path.read_text(encoding='utf8'),args.prearm_transfer_line),encoding='utf8')
     if args.fixed_front_probe:
         path=BUILD/'pipeline_tuned.inc';text=path.read_text(encoding='utf8')
         old='  jsl sd_collect_costs\n'
@@ -1371,6 +1391,9 @@ opaque_sprite_fallback:
                 if args.prefix_one_pass:
                     from sa1_prefix_unrolled import one_pass_source
                     text=one_pass_source(prefix_src.read_text(encoding='utf8'),args.prefix_full_reserve)
+                    if args.partial_transfer_reserve:
+                        from sa1_partial_budget import prefix as partial_budget_prefix
+                        text=partial_budget_prefix(text,args.partial_transfer_reserve)
                     prefix_src=BUILD/'prefix_one_pass.s';prefix_src.write_text(text,encoding='utf8')
                 if args.trace_transfer_deadline or args.prefix_unrolled_search:
                     text='.export pfTables\n'+prefix_src.read_text(encoding='utf8')
@@ -1677,6 +1700,14 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['tailFlipReserve']=args.tail_flip_reserve;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.fixed_front_probe:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['fixedFrontProbe']=True;manifest['fixedFrontProbeGeneration']=args.fixed_front_probe_generation;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.defer_ready_collect:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['deferReadyCollect']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.partial_transfer_reserve:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['partialTransferReserve']=args.partial_transfer_reserve;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.transfer_request_line!=197:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['transferRequestLine']=args.transfer_request_line;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.prearm_transfer_line:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['prearmTransferLine']=args.prearm_transfer_line;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()

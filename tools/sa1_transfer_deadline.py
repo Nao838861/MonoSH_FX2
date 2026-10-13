@@ -3,7 +3,7 @@
 LABELS=('pipe_choose_target','pipe_setup_transfer','pipe_descriptor','pipe_full_descriptor',
     'pipe_set_chunk','pipe_transfer_pause','pipe_transfer_complete','pipe_reserved',
     'pipe_actual_blank','pipe_fast_group','pipe_fast_groups_done','p3Complete','p3Flip',
-    'pipe_no_time','pipe_fast_empty','pipe_fast_unavailable')
+    'pipe_no_time','pipe_fast_empty','pipe_fast_unavailable','pipe_fast_unroll_start','pipe_fast_unroll_end')
 
 
 def trace(text):
@@ -69,3 +69,16 @@ pipe_reserve_full_tail:
 '''
     assert text.count(old)==1
     return text.replace(old,new,1)
+
+
+def request_line(text,line):
+    """IRQと準備待ちだけを早める。PPUの非表示開始203／表示開始22は維持する。"""
+    from sa1_fixed_map import change
+    assert 180<=line<197
+    text=change(text,'  lda #197\n  .else\n  lda #203\n',
+        f'  lda #{line}\n  .else\n  lda #203\n')
+    text=change(text,'  cmp #197\n  bcs pipe_wait_actual_blank\n',
+        f'  cmp #{line}\n  bcs pipe_wait_actual_blank\n')
+    text=change(text,'  cmp #197\n  bcc dense_budget_next_field\n',
+        f'  cmp #{line}\n  bcc dense_budget_next_field\n')
+    return text

@@ -298,6 +298,18 @@ local readyLine,startClock,waitMs=0,0,0
 local cpuParts,cpuEntries={},{}
 local cpuActiveParts,cpuActiveEntries={},{}
 local irqTicks,irqClock,irqDepth=0,0,0
+local requestLine,prearmLine=TRANSFERREQUESTLINE,PREARMTRANSFERLINE
+local configuredRequestLine=nil
+local requestLog=(requestLine~=197 or prearmLine>0) and assert(io.open(output..'/transfer_request_verified.jsonl','w')) or nil
+if requestLog then
+ emu.addMemoryCallback(function(address,value)
+  if value~=requestLine and value~=prearmLine and value~=197 then
+   local f=assert(io.open(output..'/failure.txt','w'));f:write('unexpected transfer IRQ line '..value);f:close();emu.stop(1)
+  end
+  configuredRequestLine=value
+  local s=emu.getState();requestLog:write(string.format('{"event":"configure","field":%d,"line":%d,"value":%d}\\n',field,s['ppu.scanline'],value));requestLog:flush()
+ end,emu.callbackType.write,0x4209,0x4209,emu.cpuType.snes,emu.memType.snesMemory)
+end
 local activeBegin=0
 local function activeClock()local c=emu.getState().masterClock;return c-irqTicks-(irqClock>0 and c-irqClock or 0)end
 local cpuJobs={}
@@ -385,7 +397,75 @@ local function cb(name,fn,cpu)
  if packetHook then local run=fn;fn=function()if packetRunning then run()end end end
  local irqName=name:match('^pipe_') or name=='p3PumpBlank' or name=='p3Complete' or name=='p3Flip' or name=='stage_time_ok' or name=='stage_converted' or name=='stage_too_large' or name=='fx_obj_upload_done' or name=='dma_started' or name=='dma_finished' or name=='half_dma_finished' or name=='prefetch_finished' or name=='transfer_chunk' or name=='dma_chunk_ready'
  local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
- emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+ emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then finishedCapture=true;local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
+end
+if prearmLine>0 then
+ local function check(event,phase,nextLine)
+  local s=emu.getState();local m=emu.memType.snesMemory;local line=s['ppu.scanline']
+  assert(irqDepth>0 and emu.read16(0x7e0000+labels.pipe_prearm_phase,m)==phase,'prearm phase/IRQ mismatch')
+  assert(configuredRequestLine==nextLine and emu.read16(0x311e,m)==1,'prearm lost request or next IRQ')
+  if event=='issued' then assert(line>=prearmLine and line<197,'prearm issued too late')else assert(line>=197,'prearm transfer too early')end
+  requestLog:write(string.format('{"event":"%s","field":%d,"line":%d,"grant":%d}\\n',event,field,line,emu.read16(0x311c,m)));requestLog:flush()
+ end
+ cb('pipe_prearm_issued',function()check('issued',1,197)end)
+ cb('pipe_prearm_transfer',function()check('transfer',0,prearmLine)end)
+ cb('pipe_prearm_late',function()check('late',0,prearmLine)end)
+end
+if scenario:match('tracedmacost') then
+ local first,last=labels.pipe_fast_unroll_start,labels.pipe_fast_unroll_end
+ local count=DMAUNROLLCOUNT;local stride=(last-first)//count
+ assert(DMAWORDSTART and (stride==26 or stride==23),'DMA timing trace requires verified word-start block')
+ local f=assert(io.open(output..'/dma_cost_verified.jsonl','w'));local pending=nil
+ for i=0,count-1 do
+  local name='pipe_dma_cost_start_'..i;labels[name]=IRQCODEBASE+first+i*stride+stride-2
+  cb(name,function()
+   if field<660 or field>720 then return end
+   assert(not pending,'overlapping DMA timing samples')
+   local s=emu.getState();local m=emu.memType.snesMemory
+   assert(s['cpu.d']==0x4200 and emu.read(0x4301,m)==0x18,'DMA timing mode mismatch')
+   local r=0x7e0000+labels.pipe_records+emu.read16(0x7e0000+labels.pipe_record_offset,m)
+   pending={clock=s.masterClock,field=field,line=s['ppu.scanline'],hclock=s['memoryManager.hClock'],bytes=emu.read16(0x4305,m),source=emu.read16(0x4302,m)+emu.read(0x4304,m)*65536,generation=emu.read16(r+8,m)}
+  end)
+  local after=i==count-1 and last+3 or first+(i+1)*stride+(stride==23 and 4 or 3)
+  name='pipe_dma_cost_end_'..i;labels[name]=IRQCODEBASE+after
+  cb(name,function()
+   if not pending then return end
+   local s=emu.getState();local ticks=s.masterClock-pending.clock
+   assert(ticks>=pending.bytes*8,'DMA sample ended before transfer')
+   f:write(string.format('{"clock":%d,"generation":%d,"field":%d,"line":%d,"hclock":%d,"endLine":%d,"bytes":%d,"source":%d,"elapsedTicks":%d,"extraTicks":%d}\\n',pending.clock,pending.generation,pending.field,pending.line,pending.hclock,s['ppu.scanline'],pending.bytes,pending.source,ticks,ticks-pending.bytes*8));f:flush();pending=nil
+  end)
+ end
+end
+if labels.pipe_collect_skipped then
+ local f=assert(io.open(output..'/collect_scheduling.jsonl','w'))
+ local lastClock,lastGeneration=0,0
+ local function log(event,gen,duration)
+  local s=emu.getState();local m=emu.memType.snesMemory;local b=0x7e0000
+  local target=emu.read16(b+labels.pipe_target_slot,m);local read=emu.read16(b+labels.pipe_read_slot,m)
+  f:write(string.format('{"event":"%s","generation":%d,"field":%d,"line":%d,"irq":%d,"target":%d,"readStatus":%d,"pending":%d,"done":%d,"durationMs":%.6f}\\n',event,gen,field,s['ppu.scanline'],irqDepth>0 and 1 or 0,target,emu.read16(b+labels.pipe_status+read*2,m),emu.read16(b+labels.pipe_pending,m),emu.read16(0x3104,m),duration));f:flush()
+ end
+ cb('pipe_collect_skipped',function()
+  local m=emu.memType.snesMemory;local b=0x7e0000
+  local target=emu.read16(b+labels.pipe_target_slot,m);local read=emu.read16(b+labels.pipe_read_slot,m)
+  assert(irqDepth>0 and (target~=65535 or emu.read16(b+labels.pipe_status+read*2,m)==2),'collect skipped without transfer candidate')
+  log('skipped',0,0)
+ end)
+ cb('pipe_collect_urgent',function()
+  local m=emu.memType.snesMemory;local b=0x7e0000;local read=emu.read16(b+labels.pipe_read_slot,m)
+  assert(irqDepth>0 and emu.read16(b+labels.pipe_target_slot,m)==65535 and emu.read16(b+labels.pipe_status+read*2,m)~=2,'urgent collect had a transfer candidate')
+  log('urgent',0,0)
+ end)
+ local function begin()lastClock=emu.getState().masterClock end
+ local function publish()
+  local m=emu.memType.snesMemory;local b=0x7e0000;local slot=emu.read16(b+labels.pipe_render_slot,m)
+  local gen=emu.read16(b+labels.pipe_records+slot*512+8,m)
+  assert(gen==lastGeneration+1,'collect scheduling skipped or duplicated a generation')
+  assert(emu.read16(b+labels.pipe_pending,m)==1 and emu.read16(0x3104,m)==1,'collect published without pending completion')
+  assert(emu.read16(0x3198,m)==gen,'collect published another SA-1 generation')
+  log('publish',gen,(emu.getState().masterClock-lastClock)/21477.272);lastGeneration=gen
+ end
+ cb('pipe_collect',begin);cb('pipe_collect_main',begin)
+ cb('pipe_collect_publish',publish);cb('pipe_collect_main_publish',publish)
 end
 if labels.fp_probe_begin then
  local f=assert(io.open(output..'/fixed_front_probe.jsonl','w'))
@@ -615,6 +695,9 @@ if labels.fallback_publish and scenario:match('tracefallback') then
 end
 emu.addMemoryCallback(function(address,value)
  local line=emu.getState()['ppu.scanline']
+ if requestLog and field>90 and line>=22 and line<202 and (value&0x80)~=0 then
+  local f=assert(io.open(output..'/failure.txt','w'));f:write('early request shortened visible region field='..field..' line='..line);f:close();emu.stop(1)
+ end
  if field>85 and (line>=203 or line<21) and line<225 and (value&0x80)==0 then
   local f=assert(io.open(output..'/failure.txt','w'));f:write('HDMA unblanked reserved DMA lines field='..field..' line='..line..' value='..value);f:close()
   local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)
@@ -768,6 +851,17 @@ if pipeline then
     local last=start
     for i=start+1,count do if emu.read16(table+(i-1)*4+2,mt)<limit then last=i else break end end
     if PREFIXONEPASS and emu.read16(table+(count-1)*4+2,mt)<limit+384-PREFIXFULLRESERVE then last=count end
+    if PARTIALTRANSFERRESERVE>0 then
+     local hold=emu.read16(b+labels.pfHoldLast,mt)
+     if last==count then assert(hold==0,'partial budget completed a frame')
+     else
+      assert(hold==1,'partial budget flag missing')
+      limit=emu.read16(b+labels.pipe_unreserved,mt)-PARTIALTRANSFERRESERVE-384+beforeCost
+      last=start
+      for i=start+1,count-1 do if emu.read16(table+(i-1)*4+2,mt)<limit then last=i else break end end
+      assert(last<count and emu.read16(b+labels.pfPartial,mt)==1,'partial budget selected the final descriptor')
+     end
+    end
     assert(last>start,'empty prefix executed')
     local bytes=emu.read16(table+(last-1)*4,mt)-beforeBytes
     assert(emu.read16(b+labels.pfDesc,mt)==(last-start)*6,'prefix search chose wrong descriptor count')
@@ -1443,9 +1537,17 @@ end,emu.eventType.endFrame)
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
     script=script.replace('PREFIXONEPASS','true' if config.get('prefixOnePass') else 'false')
     script=script.replace('PREFIXFULLRESERVE',str(config.get('prefixFullReserve',384)))
+    script=script.replace('PARTIALTRANSFERRESERVE',str(config.get('partialTransferReserve',0)))
+    script=script.replace('TRANSFERREQUESTLINE',str(config.get('transferRequestLine',197)))
+    script=script.replace('PREARMTRANSFERLINE',str(config.get('prearmTransferLine',0)))
+    script=script.replace('DMAUNROLLCOUNT',str(config.get('dmaUnrollCount',12)))
+    script=script.replace('DMAWORDSTART','true' if config.get('dmaWordStart') else 'false')
     script=script.replace('PACKETIRAMARRAYS','true' if config.get('packetIramArrays') else 'false')
     script=script.replace('EXPECTEDPALETTE',lua(list((BASE/'assets4/palette4.bin').read_bytes())))
     script=script.replace('COMPILEDGROUND','true' if config.get('compiledGround') else 'false')
+    # stop要求後にもMesenがcallbackを進める場合がある。最初のexec異常を保持する。
+    script=script.replace('emu.addMemoryCallback(function(address,value)\n','emu.addMemoryCallback(function(address,value)\n if finishedCapture then return end\n')
+    script=script.replace('emu.stop(1)','finishedCapture=true;emu.stop(1)')
     path=dest/'test.lua';path.write_text(script)
     exe=prepare_runtime(MESEN_EXE)
     settings=exe.parent/'settings.json';cfg=json.loads(settings.read_text());cfg['Snes'].update(DisableFrameSkipping=True,Port1={'Type':'SnesController'});settings.write_text(json.dumps(cfg))
