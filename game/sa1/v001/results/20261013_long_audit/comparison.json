@@ -1,0 +1,1436 @@
+{
+  "cases": {
+    "road_base": {
+      "romSha256": "f685de707b32c4390b49cadf2ed51b05da446ed331eaa74421d499d59f4a9c4f",
+      "fields": 4000,
+      "logic": 3828,
+      "presents": 3823,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3792,
+        "2": 28
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 3826,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3827,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      },
+      "maskBoundsVerified": {
+        "jobs": 3827,
+        "bands": 91848,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 22,
+        "conservativeBounds": 51,
+        "fullFramebufferJobs": 3826,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 25.373241,
+      "maxOutputMs": 26.898481,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 146,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3362,
+          "field": 3536,
+          "playerState": 1,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3459,
+          "field": 3629,
+          "playerState": 2,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3567,
+          "field": 3737,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3695,
+          "field": 3865,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 2663,
+          "field": 2828,
+          "clearAndBgMs": 4.466489,
+          "drawMs": 20.906752,
+          "totalSa1Ms": 25.373241,
+          "dirtyMs": 2.737778,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 20.906752,
+          "compactMs": 0.0,
+          "logicMs": 13.783594,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "_monosh_stage_frame": 0.746929,
+            "_monosh_enemy_frame": 3.845088,
+            "_fx_build_packet": 7.257905,
+            "_fx_build_ground": 0.829807,
+            "_monosh_combat_render": 0.371742,
+            "packet_packet_done": 1.13832,
+            "_fx_read_input": 0.030358,
+            "_monosh_combat_fast_frame": 0.027192,
+            "packet_initialized": 1.605604,
+            "packet_sorted": 1.461731
+          }
+        },
+        {
+          "generation": 2664,
+          "field": 2830,
+          "clearAndBgMs": 4.596301,
+          "drawMs": 20.616678,
+          "totalSa1Ms": 25.212979,
+          "dirtyMs": 2.668868,
+          "clearMs": 1.625998,
+          "bgMs": 0.301435,
+          "nativeMs": 20.616678,
+          "compactMs": 0.0,
+          "logicMs": 10.28287,
+          "dirtyBytes": 5568,
+          "cpuParts": {
+            "_monosh_stage_frame": 0.915293,
+            "_monosh_enemy_frame": 3.318764,
+            "_fx_build_packet": 3.623272,
+            "_fx_build_ground": 0.901977,
+            "_monosh_combat_render": 0.471475,
+            "packet_packet_done": 1.015492,
+            "_fx_read_input": 0.322387,
+            "_monosh_combat_fast_frame": 0.07636,
+            "packet_initialized": 1.528965,
+            "packet_sorted": 1.073414
+          }
+        },
+        {
+          "generation": 2661,
+          "field": 2825,
+          "clearAndBgMs": 4.538472,
+          "drawMs": 20.156471,
+          "totalSa1Ms": 24.694943,
+          "dirtyMs": 2.809761,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 20.156471,
+          "compactMs": 0.0,
+          "logicMs": 10.889558,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "_monosh_stage_frame": 0.752237,
+            "_monosh_enemy_frame": 3.72701,
+            "_fx_build_packet": 4.344686,
+            "_fx_build_ground": 0.897786,
+            "_monosh_combat_render": 0.471475,
+            "packet_packet_done": 1.230417,
+            "_fx_read_input": 0.031475,
+            "_monosh_combat_fast_frame": 0.025702,
+            "packet_initialized": 1.590984,
+            "packet_sorted": 1.516021
+          }
+        },
+        {
+          "generation": 2662,
+          "field": 2827,
+          "clearAndBgMs": 4.674057,
+          "drawMs": 19.98941,
+          "totalSa1Ms": 24.663468,
+          "dirtyMs": 2.860419,
+          "clearMs": 1.460334,
+          "bgMs": 0.353304,
+          "nativeMs": 19.98941,
+          "compactMs": 0.0,
+          "logicMs": 13.82494,
+          "dirtyBytes": 4512,
+          "cpuParts": {
+            "_monosh_stage_frame": 0.899462,
+            "_monosh_enemy_frame": 6.793228,
+            "_fx_build_packet": 4.09959,
+            "_fx_build_ground": 0.900207,
+            "_monosh_combat_render": 0.395674,
+            "packet_packet_done": 1.104423,
+            "_fx_read_input": 0.031475,
+            "_monosh_combat_fast_frame": 0.027937,
+            "packet_initialized": 1.549359,
+            "packet_sorted": 1.440406
+          }
+        },
+        {
+          "generation": 2659,
+          "field": 2822,
+          "clearAndBgMs": 5.212301,
+          "drawMs": 18.942536,
+          "totalSa1Ms": 24.154837,
+          "dirtyMs": 3.149096,
+          "clearMs": 1.761956,
+          "bgMs": 0.301249,
+          "nativeMs": 18.942536,
+          "compactMs": 0.0,
+          "logicMs": 13.939759,
+          "dirtyBytes": 3840,
+          "cpuParts": {
+            "_monosh_stage_frame": 0.745532,
+            "_monosh_enemy_frame": 7.039069,
+            "_fx_build_packet": 4.157697,
+            "_fx_build_ground": 0.893875,
+            "_monosh_combat_render": 0.374722,
+            "packet_packet_done": 1.132546,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_fast_frame": 0.025702,
+            "packet_initialized": 1.555784,
+            "packet_sorted": 1.463966
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 0,
+        "rows": 0,
+        "assets": [],
+        "maximumCopiedPrefixBytes": 0
+      }
+    },
+    "boss_base": {
+      "romSha256": "f685de707b32c4390b49cadf2ed51b05da446ed331eaa74421d499d59f4a9c4f",
+      "fields": 4000,
+      "logic": 3850,
+      "presents": 3843,
+      "pixelMatchedPresents": 182,
+      "presentationFieldIntervals": {
+        "1": 3833,
+        "2": 7
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 3848,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3849,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0
+        ],
+        "bossStates": [
+          1
+        ],
+        "minimumBossHp": 1,
+        "maximumStageFrame": 3901,
+        "maximumEnemies": 0,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": true
+      },
+      "maskBoundsVerified": {
+        "jobs": 3849,
+        "bands": 92376,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 3849,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_auditgame_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 20.562295,
+      "maxOutputMs": 22.3669,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 147,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 2142,
+          "field": 2297,
+          "clearAndBgMs": 8.067878,
+          "drawMs": 12.494417,
+          "totalSa1Ms": 20.562295,
+          "dirtyMs": 4.284809,
+          "clearMs": 3.49523,
+          "bgMs": 0.287839,
+          "nativeMs": 12.494417,
+          "compactMs": 0.0,
+          "logicMs": 14.017423,
+          "dirtyBytes": 9280,
+          "cpuParts": {
+            "_monosh_boss_frame": 1.180318,
+            "_monosh_enemy_frame": 5.09655,
+            "packet_initialized": 1.484546,
+            "_monosh_boss_prepare_render": 0.796284,
+            "_monosh_combat_fast_frame": 0.025702,
+            "packet_sorted": 1.157689,
+            "_fx_read_input": 0.031475,
+            "_fx_build_ground": 0.887729,
+            "packet_packet_done": 0.993981,
+            "_monosh_combat_render": 0.39614,
+            "_fx_build_packet": 3.641617,
+            "_monosh_boss_render_only": 2.537287
+          }
+        },
+        {
+          "generation": 2137,
+          "field": 2290,
+          "clearAndBgMs": 8.20309,
+          "drawMs": 11.982434,
+          "totalSa1Ms": 20.185524,
+          "dirtyMs": 4.763268,
+          "clearMs": 3.151983,
+          "bgMs": 0.287839,
+          "nativeMs": 11.982434,
+          "compactMs": 0.0,
+          "logicMs": 16.421732,
+          "dirtyBytes": 9056,
+          "cpuParts": {
+            "_monosh_boss_frame": 1.651327,
+            "_monosh_enemy_frame": 1.057024,
+            "packet_initialized": 1.607187,
+            "_monosh_boss_prepare_render": 0.813604,
+            "_monosh_combat_fast_frame": 0.027192,
+            "packet_sorted": 1.425321,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.862866,
+            "packet_packet_done": 1.21291,
+            "_monosh_combat_render": 0.497922,
+            "_fx_build_packet": 4.25501,
+            "_monosh_boss_render_only": 2.552186
+          }
+        },
+        {
+          "generation": 2138,
+          "field": 2291,
+          "clearAndBgMs": 7.08833,
+          "drawMs": 12.625253,
+          "totalSa1Ms": 19.713584,
+          "dirtyMs": 4.052004,
+          "clearMs": 2.734891,
+          "bgMs": 0.301435,
+          "nativeMs": 12.625253,
+          "compactMs": 0.0,
+          "logicMs": 15.488839,
+          "dirtyBytes": 8672,
+          "cpuParts": {
+            "_monosh_boss_frame": 1.618083,
+            "_monosh_enemy_frame": 0.964741,
+            "packet_initialized": 1.60607,
+            "_monosh_boss_prepare_render": 0.814163,
+            "_monosh_combat_fast_frame": 0.023839,
+            "packet_sorted": 1.284334,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 5.519975,
+            "packet_packet_done": 1.146887,
+            "_monosh_combat_render": 0.501647,
+            "_fx_build_packet": 4.042692,
+            "_monosh_boss_render_only": 2.582358
+          }
+        },
+        {
+          "generation": 2141,
+          "field": 2295,
+          "clearAndBgMs": 6.892495,
+          "drawMs": 12.383789,
+          "totalSa1Ms": 19.276284,
+          "dirtyMs": 3.821714,
+          "clearMs": 2.769346,
+          "bgMs": 0.301435,
+          "nativeMs": 12.383789,
+          "compactMs": 0.0,
+          "logicMs": 15.349342,
+          "dirtyBytes": 8928,
+          "cpuParts": {
+            "_monosh_boss_frame": 1.562582,
+            "_monosh_enemy_frame": 0.853833,
+            "packet_initialized": 1.572825,
+            "_monosh_boss_prepare_render": 0.840051,
+            "_monosh_combat_fast_frame": 0.027192,
+            "packet_sorted": 1.319721,
+            "_fx_read_input": 0.027005,
+            "_fx_build_ground": 0.873482,
+            "packet_packet_done": 1.127704,
+            "_monosh_combat_render": 0.500902,
+            "_fx_build_packet": 8.687882,
+            "_monosh_boss_render_only": 2.579564
+          }
+        },
+        {
+          "generation": 2135,
+          "field": 2287,
+          "clearAndBgMs": 7.054713,
+          "drawMs": 12.097998,
+          "totalSa1Ms": 19.152712,
+          "dirtyMs": 4.023975,
+          "clearMs": 2.7429,
+          "bgMs": 0.287839,
+          "nativeMs": 12.097998,
+          "compactMs": 0.0,
+          "logicMs": 11.123387,
+          "dirtyBytes": 8416,
+          "cpuParts": {
+            "_monosh_boss_frame": 1.656635,
+            "_monosh_enemy_frame": 1.035513,
+            "packet_initialized": 1.617338,
+            "_monosh_boss_prepare_render": 0.812859,
+            "_monosh_combat_fast_frame": 0.027192,
+            "packet_sorted": 1.418616,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.854112,
+            "packet_packet_done": 1.219242,
+            "_monosh_combat_render": 0.501274,
+            "_fx_build_packet": 4.260597,
+            "_monosh_boss_render_only": 2.537287
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 0,
+        "rows": 0,
+        "assets": [],
+        "maximumCopiedPrefixBytes": 0
+      },
+      "first4000FieldIntervals": {
+        "1": 3833,
+        "2": 7
+      }
+    },
+    "road_v1": {
+      "romSha256": "f26835a75e6897f54384f7e5a78ba100cc2a8ab581bfbf653f889cba3c0906bc",
+      "fields": 4000,
+      "logic": 3830,
+      "presents": 3825,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3796,
+        "2": 26
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 3828,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3829,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      },
+      "maskBoundsVerified": {
+        "jobs": 3829,
+        "bands": 91896,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 22,
+        "conservativeBounds": 51,
+        "fullFramebufferJobs": 3829,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_rightnarrow_v1_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 27.694579,
+      "maxOutputMs": 29.326164,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 146,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3362,
+          "field": 3534,
+          "playerState": 1,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3459,
+          "field": 3627,
+          "playerState": 2,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3567,
+          "field": 3735,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3695,
+          "field": 3863,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 1907,
+          "field": 2060,
+          "clearAndBgMs": 4.883302,
+          "drawMs": 22.811277,
+          "totalSa1Ms": 27.694579,
+          "dirtyMs": 2.208288,
+          "clearMs": 2.319475,
+          "bgMs": 0.355539,
+          "nativeMs": 22.811277,
+          "compactMs": 0.0,
+          "logicMs": 13.352999,
+          "dirtyBytes": 6176,
+          "cpuParts": {
+            "_fx_build_packet": 3.098624,
+            "packet_sorted": 0.820775,
+            "packet_initialized": 1.430629,
+            "_monosh_stage_frame": 5.601363,
+            "packet_packet_done": 0.84182,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.378633,
+            "_monosh_combat_fast_frame": 0.023839,
+            "_monosh_enemy_frame": 2.670637,
+            "_fx_build_ground": 0.877579
+          }
+        },
+        {
+          "generation": 1889,
+          "field": 2039,
+          "clearAndBgMs": 6.654756,
+          "drawMs": 18.892809,
+          "totalSa1Ms": 25.547565,
+          "dirtyMs": 3.165858,
+          "clearMs": 3.187649,
+          "bgMs": 0.301249,
+          "nativeMs": 18.892809,
+          "compactMs": 0.0,
+          "logicMs": 15.390316,
+          "dirtyBytes": 6816,
+          "cpuParts": {
+            "_fx_build_packet": 3.696838,
+            "packet_sorted": 1.080584,
+            "packet_initialized": 1.527103,
+            "_monosh_stage_frame": 1.83906,
+            "packet_packet_done": 1.08375,
+            "_fx_read_input": 0.032965,
+            "_monosh_combat_render": 5.287916,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_monosh_enemy_frame": 3.020961,
+            "_fx_build_ground": 0.82422
+          }
+        },
+        {
+          "generation": 1890,
+          "field": 2041,
+          "clearAndBgMs": 5.390629,
+          "drawMs": 18.885266,
+          "totalSa1Ms": 24.275895,
+          "dirtyMs": 2.626591,
+          "clearMs": 2.412038,
+          "bgMs": 0.352,
+          "nativeMs": 18.885266,
+          "compactMs": 0.0,
+          "logicMs": 15.276242,
+          "dirtyBytes": 6720,
+          "cpuParts": {
+            "_fx_build_packet": 3.641896,
+            "packet_sorted": 1.046036,
+            "packet_initialized": 1.52254,
+            "_monosh_stage_frame": 7.328305,
+            "packet_packet_done": 1.06792,
+            "_fx_read_input": 0.031848,
+            "_monosh_combat_render": 0.517757,
+            "_monosh_combat_fast_frame": 0.028681,
+            "_monosh_enemy_frame": 2.251403,
+            "_fx_build_ground": 0.802709
+          }
+        },
+        {
+          "generation": 3078,
+          "field": 3247,
+          "clearAndBgMs": 7.300089,
+          "drawMs": 16.341926,
+          "totalSa1Ms": 23.642016,
+          "dirtyMs": 2.847382,
+          "clearMs": 4.151458,
+          "bgMs": 0.301249,
+          "nativeMs": 16.341926,
+          "compactMs": 0.0,
+          "logicMs": 14.648229,
+          "dirtyBytes": 9600,
+          "cpuParts": {
+            "_fx_build_packet": 3.826929,
+            "packet_sorted": 1.270366,
+            "packet_initialized": 1.517884,
+            "_monosh_stage_frame": 2.572021,
+            "packet_packet_done": 1.033278,
+            "_fx_read_input": 0.034083,
+            "_monosh_combat_render": 0.403962,
+            "_monosh_combat_fast_frame": 0.027937,
+            "_monosh_enemy_frame": 6.374087,
+            "_fx_build_ground": 0.727374
+          }
+        },
+        {
+          "generation": 1908,
+          "field": 2061,
+          "clearAndBgMs": 4.699293,
+          "drawMs": 18.362295,
+          "totalSa1Ms": 23.061588,
+          "dirtyMs": 2.10632,
+          "clearMs": 2.291539,
+          "bgMs": 0.301435,
+          "nativeMs": 18.362295,
+          "compactMs": 0.0,
+          "logicMs": 13.298616,
+          "dirtyBytes": 6432,
+          "cpuParts": {
+            "_fx_build_packet": 6.761287,
+            "packet_sorted": 0.857558,
+            "packet_initialized": 1.50047,
+            "_monosh_stage_frame": 2.615043,
+            "packet_packet_done": 0.939691,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.512728,
+            "_monosh_combat_fast_frame": 0.072169,
+            "_monosh_enemy_frame": 1.766053,
+            "_fx_build_ground": 0.879907
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 669,
+        "rows": 15362,
+        "assets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          40
+        ],
+        "maximumCopiedPrefixBytes": 72
+      },
+      "packetMatchedGenerations": 3826,
+      "tileMasksMatchedGenerations": 3827,
+      "fullFramebuffersMatchedGenerations": 3826,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3827,
+      "gameStatesMatchedCompletedUpdates": 3826
+    },
+    "boss_v1": {
+      "romSha256": "f26835a75e6897f54384f7e5a78ba100cc2a8ab581bfbf653f889cba3c0906bc",
+      "fields": 5000,
+      "logic": 4841,
+      "presents": 4834,
+      "pixelMatchedPresents": 198,
+      "presentationFieldIntervals": {
+        "1": 4815,
+        "2": 16
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 4839,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 4840,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0
+        ],
+        "bossStates": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "minimumBossHp": 0,
+        "maximumStageFrame": 3901,
+        "maximumEnemies": 0,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": true
+      },
+      "maskBoundsVerified": {
+        "jobs": 4840,
+        "bands": 116160,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 4840,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_auditgame_rightnarrow_v1_long5000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 22.340919,
+      "maxOutputMs": 24.425821,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 147,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        },
+        {
+          "logic": 3989,
+          "field": 4140,
+          "playerState": 0,
+          "bossState": 2,
+          "bossHp": 0
+        },
+        {
+          "logic": 4106,
+          "field": 4257,
+          "playerState": 0,
+          "bossState": 3,
+          "bossHp": 0
+        },
+        {
+          "logic": 4286,
+          "field": 4437,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 4288,
+          "field": 4439,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 4508,
+          "field": 4670,
+          "clearAndBgMs": 9.328187,
+          "drawMs": 13.012733,
+          "totalSa1Ms": 22.340919,
+          "dirtyMs": 4.027886,
+          "clearMs": 4.998866,
+          "bgMs": 0.301435,
+          "nativeMs": 13.012733,
+          "compactMs": 0.0,
+          "logicMs": 15.485672,
+          "dirtyBytes": 10272,
+          "cpuParts": {
+            "packet_initialized": 1.518442,
+            "_monosh_combat_render": 0.508072,
+            "packet_packet_done": 1.066802,
+            "_monosh_combat_fast_frame": 0.033524,
+            "_monosh_boss_render_only": 2.538218,
+            "_monosh_enemy_frame": 0.743204,
+            "_fx_build_packet": 3.7989,
+            "_fx_read_input": 0.031754,
+            "packet_sorted": 1.204902,
+            "_fx_build_ground": 0.67625,
+            "_monosh_boss_prepare_render": 0.798425,
+            "_monosh_boss_frame": 6.925647
+          }
+        },
+        {
+          "generation": 4510,
+          "field": 4673,
+          "clearAndBgMs": 9.055712,
+          "drawMs": 13.150087,
+          "totalSa1Ms": 22.2058,
+          "dirtyMs": 3.973782,
+          "clearMs": 4.794091,
+          "bgMs": 0.287839,
+          "nativeMs": 13.150087,
+          "compactMs": 0.0,
+          "logicMs": 14.619268,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "packet_initialized": 1.492741,
+            "_monosh_combat_render": 0.512728,
+            "packet_packet_done": 1.000965,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_monosh_boss_render_only": 2.539708,
+            "_monosh_enemy_frame": 0.492986,
+            "_fx_build_packet": 3.649253,
+            "_fx_read_input": 0.028868,
+            "packet_sorted": 1.146794,
+            "_fx_build_ground": 0.666006,
+            "_monosh_boss_prepare_render": 5.518857,
+            "_monosh_boss_frame": 1.754133
+          }
+        },
+        {
+          "generation": 4504,
+          "field": 4663,
+          "clearAndBgMs": 9.309003,
+          "drawMs": 11.957571,
+          "totalSa1Ms": 21.266574,
+          "dirtyMs": 4.469935,
+          "clearMs": 4.53782,
+          "bgMs": 0.301249,
+          "nativeMs": 11.957571,
+          "compactMs": 0.0,
+          "logicMs": 15.66875,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "packet_initialized": 1.551873,
+            "_monosh_combat_render": 0.507606,
+            "packet_packet_done": 1.128449,
+            "_monosh_combat_fast_frame": 0.06323,
+            "_monosh_boss_render_only": 2.538032,
+            "_monosh_enemy_frame": 0.988487,
+            "_fx_build_packet": 3.941283,
+            "_fx_read_input": 0.028868,
+            "packet_sorted": 1.25556,
+            "_fx_build_ground": 0.659115,
+            "_monosh_boss_prepare_render": 0.799822,
+            "_monosh_boss_frame": 6.700851
+          }
+        },
+        {
+          "generation": 4509,
+          "field": 4671,
+          "clearAndBgMs": 7.205571,
+          "drawMs": 13.570439,
+          "totalSa1Ms": 20.776009,
+          "dirtyMs": 3.610142,
+          "clearMs": 3.293994,
+          "bgMs": 0.301435,
+          "nativeMs": 13.570439,
+          "compactMs": 0.0,
+          "logicMs": 10.279238,
+          "dirtyBytes": 9920,
+          "cpuParts": {
+            "packet_initialized": 1.536229,
+            "_monosh_combat_render": 0.500529,
+            "packet_packet_done": 1.093156,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_monosh_boss_render_only": 2.538218,
+            "_monosh_enemy_frame": 0.604732,
+            "_fx_build_packet": 3.889228,
+            "_fx_read_input": 0.028868,
+            "packet_sorted": 1.25258,
+            "_fx_build_ground": 0.67746,
+            "_monosh_boss_prepare_render": 0.814629,
+            "_monosh_boss_frame": 1.778624
+          }
+        },
+        {
+          "generation": 2142,
+          "field": 2298,
+          "clearAndBgMs": 7.989097,
+          "drawMs": 12.478307,
+          "totalSa1Ms": 20.467404,
+          "dirtyMs": 4.301105,
+          "clearMs": 3.400152,
+          "bgMs": 0.287839,
+          "nativeMs": 12.478307,
+          "compactMs": 0.0,
+          "logicMs": 14.021799,
+          "dirtyBytes": 9280,
+          "cpuParts": {
+            "packet_initialized": 1.486874,
+            "_monosh_combat_render": 0.396512,
+            "packet_packet_done": 0.991746,
+            "_monosh_combat_fast_frame": 0.027937,
+            "_monosh_boss_render_only": 2.539708,
+            "_monosh_enemy_frame": 5.092174,
+            "_fx_build_packet": 3.646459,
+            "_fx_read_input": 0.027005,
+            "packet_sorted": 1.162438,
+            "_fx_build_ground": 0.890616,
+            "_monosh_boss_prepare_render": 0.798425,
+            "_monosh_boss_frame": 1.179293
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 11,
+        "rows": 86,
+        "assets": [
+          10
+        ],
+        "maximumCopiedPrefixBytes": 36
+      },
+      "first4000FieldIntervals": {
+        "1": 3831,
+        "2": 8
+      },
+      "packetMatchedGenerations": 3849,
+      "tileMasksMatchedGenerations": 3849,
+      "fullFramebuffersMatchedGenerations": 3849,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3849,
+      "gameStatesMatchedCompletedUpdates": 3848
+    },
+    "road_v2": {
+      "romSha256": "7b68b7fc0c5777eb799a53b6c24031821571e603a1d0814eb8e3d2b1ac0ab3cf",
+      "fields": 4000,
+      "logic": 3832,
+      "presents": 3827,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3800,
+        "2": 24
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 3831,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3832,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 0,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      },
+      "maskBoundsVerified": {
+        "jobs": 3831,
+        "bands": 91944,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 22,
+        "conservativeBounds": 51,
+        "fullFramebufferJobs": 3831,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_rightnarrow_v2_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 24.149901,
+      "maxOutputMs": 26.480737,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 146,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3362,
+          "field": 3532,
+          "playerState": 1,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3459,
+          "field": 3625,
+          "playerState": 2,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3567,
+          "field": 3733,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 3695,
+          "field": 3861,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 2225,
+          "field": 2384,
+          "clearAndBgMs": 7.926984,
+          "drawMs": 16.222917,
+          "totalSa1Ms": 24.149901,
+          "dirtyMs": 3.787725,
+          "clearMs": 3.852165,
+          "bgMs": 0.287094,
+          "nativeMs": 16.222917,
+          "compactMs": 0.0,
+          "logicMs": 16.81275,
+          "dirtyBytes": 7680,
+          "cpuParts": {
+            "_fx_build_packet": 4.259759,
+            "_monosh_enemy_frame": 7.548724,
+            "packet_sorted": 1.392728,
+            "_monosh_combat_fast_frame": 0.027192,
+            "_fx_build_ground": 0.890616,
+            "packet_packet_done": 1.209744,
+            "packet_initialized": 1.651886,
+            "_fx_read_input": 0.031103,
+            "_monosh_combat_render": 0.505651,
+            "_monosh_stage_frame": 2.871221
+          }
+        },
+        {
+          "generation": 2664,
+          "field": 2830,
+          "clearAndBgMs": 4.602912,
+          "drawMs": 19.389427,
+          "totalSa1Ms": 23.992339,
+          "dirtyMs": 2.676318,
+          "clearMs": 1.625998,
+          "bgMs": 0.300597,
+          "nativeMs": 19.389427,
+          "compactMs": 0.0,
+          "logicMs": 10.129964,
+          "dirtyBytes": 5568,
+          "cpuParts": {
+            "_fx_build_packet": 3.662011,
+            "_monosh_enemy_frame": 3.371285,
+            "packet_sorted": 1.07928,
+            "_monosh_combat_fast_frame": 0.090142,
+            "_fx_build_ground": 0.889964,
+            "packet_packet_done": 1.022476,
+            "packet_initialized": 1.554853,
+            "_fx_read_input": 0.028495,
+            "_monosh_combat_render": 0.501181,
+            "_monosh_stage_frame": 0.924605
+          }
+        },
+        {
+          "generation": 2654,
+          "field": 2815,
+          "clearAndBgMs": 4.746878,
+          "drawMs": 19.160255,
+          "totalSa1Ms": 23.907133,
+          "dirtyMs": 2.655738,
+          "clearMs": 1.762328,
+          "bgMs": 0.328813,
+          "nativeMs": 19.160255,
+          "compactMs": 0.0,
+          "logicMs": 14.757275,
+          "dirtyBytes": 3840,
+          "cpuParts": {
+            "_fx_build_packet": 4.364148,
+            "_monosh_enemy_frame": 6.854688,
+            "packet_sorted": 1.60905,
+            "_monosh_combat_fast_frame": 0.027937,
+            "_fx_build_ground": 0.90626,
+            "packet_packet_done": 1.172961,
+            "packet_initialized": 1.576737,
+            "_fx_read_input": 0.031103,
+            "_monosh_combat_render": 0.399865,
+            "_monosh_stage_frame": 1.498235
+          }
+        },
+        {
+          "generation": 2656,
+          "field": 2818,
+          "clearAndBgMs": 5.245173,
+          "drawMs": 18.449922,
+          "totalSa1Ms": 23.695095,
+          "dirtyMs": 3.142392,
+          "clearMs": 1.802184,
+          "bgMs": 0.300597,
+          "nativeMs": 18.449922,
+          "compactMs": 0.0,
+          "logicMs": 14.582765,
+          "dirtyBytes": 4800,
+          "cpuParts": {
+            "_fx_build_packet": 4.364707,
+            "_monosh_enemy_frame": 3.523911,
+            "packet_sorted": 1.527848,
+            "_monosh_combat_fast_frame": 0.062112,
+            "_fx_build_ground": 0.891175,
+            "packet_packet_done": 1.212165,
+            "packet_initialized": 1.617431,
+            "_fx_read_input": 0.027005,
+            "_monosh_combat_render": 3.784652,
+            "_monosh_stage_frame": 1.262823
+          }
+        },
+        {
+          "generation": 2229,
+          "field": 2390,
+          "clearAndBgMs": 8.508902,
+          "drawMs": 14.635565,
+          "totalSa1Ms": 23.144466,
+          "dirtyMs": 3.103653,
+          "clearMs": 5.062747,
+          "bgMs": 0.342502,
+          "nativeMs": 14.635565,
+          "compactMs": 0.0,
+          "logicMs": 16.343696,
+          "dirtyBytes": 10944,
+          "cpuParts": {
+            "_fx_build_packet": 4.058895,
+            "_monosh_enemy_frame": 2.326459,
+            "packet_sorted": 1.316648,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_fx_build_ground": 0.902163,
+            "packet_packet_done": 1.150425,
+            "packet_initialized": 1.586421,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.506861,
+            "_monosh_stage_frame": 7.815331
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 131,
+        "rows": 1389,
+        "assets": [
+          0,
+          2,
+          3
+        ],
+        "maximumCopiedPrefixBytes": 24
+      },
+      "packetMatchedGenerations": 3826,
+      "tileMasksMatchedGenerations": 3827,
+      "fullFramebuffersMatchedGenerations": 3826,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3827,
+      "gameStatesMatchedCompletedUpdates": 3826
+    },
+    "boss_v2": {
+      "romSha256": "7b68b7fc0c5777eb799a53b6c24031821571e603a1d0814eb8e3d2b1ac0ab3cf",
+      "fields": 5000,
+      "logic": 4841,
+      "presents": 4834,
+      "pixelMatchedPresents": 198,
+      "presentationFieldIntervals": {
+        "1": 4815,
+        "2": 16
+      },
+      "stalledTailFields": 0,
+      "gameStateAudit": {
+        "logicUpdates": 4839,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 4840,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0
+        ],
+        "bossStates": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "minimumBossHp": 0,
+        "maximumStageFrame": 3901,
+        "maximumEnemies": 0,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": true
+      },
+      "maskBoundsVerified": {
+        "jobs": 4840,
+        "bands": 116160,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 0,
+        "conservativeBounds": 0,
+        "fullFramebufferJobs": 4840,
+        "exact": false
+      },
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_auditgame_rightnarrow_v2_long5000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 22.449499,
+      "maxOutputMs": 24.531887,
+      "stateTransitions": [
+        {
+          "logic": 2,
+          "field": 147,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        },
+        {
+          "logic": 3989,
+          "field": 4140,
+          "playerState": 0,
+          "bossState": 2,
+          "bossHp": 0
+        },
+        {
+          "logic": 4106,
+          "field": 4257,
+          "playerState": 0,
+          "bossState": 3,
+          "bossHp": 0
+        },
+        {
+          "logic": 4286,
+          "field": 4437,
+          "playerState": 0,
+          "bossState": 0,
+          "bossHp": 16
+        },
+        {
+          "logic": 4288,
+          "field": 4439,
+          "playerState": 0,
+          "bossState": 1,
+          "bossHp": 16
+        }
+      ],
+      "worstSa1Jobs": [
+        {
+          "generation": 4508,
+          "field": 4670,
+          "clearAndBgMs": 9.404174,
+          "drawMs": 13.045325,
+          "totalSa1Ms": 22.449499,
+          "dirtyMs": 3.967915,
+          "clearMs": 5.135662,
+          "bgMs": 0.300597,
+          "nativeMs": 13.045325,
+          "compactMs": 0.0,
+          "logicMs": 15.495078,
+          "dirtyBytes": 10272,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.030171,
+            "packet_initialized": 1.522167,
+            "packet_packet_done": 1.06643,
+            "_fx_build_ground": 0.678671,
+            "packet_sorted": 1.203225,
+            "_monosh_boss_render_only": 2.537287,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.514684,
+            "_fx_build_packet": 3.797223,
+            "_monosh_boss_prepare_render": 5.821968,
+            "_monosh_enemy_frame": 0.736593,
+            "_monosh_boss_frame": 1.918121
+          }
+        },
+        {
+          "generation": 4510,
+          "field": 4673,
+          "clearAndBgMs": 9.081787,
+          "drawMs": 13.173088,
+          "totalSa1Ms": 22.254875,
+          "dirtyMs": 3.950502,
+          "clearMs": 4.844191,
+          "bgMs": 0.287094,
+          "nativeMs": 13.173088,
+          "compactMs": 0.0,
+          "logicMs": 14.625787,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.029054,
+            "packet_initialized": 1.490599,
+            "packet_packet_done": 1.003666,
+            "_fx_build_ground": 0.669266,
+            "packet_sorted": 1.148004,
+            "_monosh_boss_render_only": 2.541384,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.516639,
+            "_fx_build_packet": 3.64767,
+            "_monosh_boss_prepare_render": 5.521651,
+            "_monosh_enemy_frame": 0.488237,
+            "_monosh_boss_frame": 1.759162
+          }
+        },
+        {
+          "generation": 4504,
+          "field": 4663,
+          "clearAndBgMs": 9.354074,
+          "drawMs": 11.901698,
+          "totalSa1Ms": 21.255772,
+          "dirtyMs": 4.364707,
+          "clearMs": 4.688864,
+          "bgMs": 0.300504,
+          "nativeMs": 11.901698,
+          "compactMs": 0.0,
+          "logicMs": 15.670053,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.063137,
+            "packet_initialized": 1.551594,
+            "packet_packet_done": 1.131335,
+            "_fx_build_ground": 0.648313,
+            "packet_sorted": 1.259378,
+            "_monosh_boss_render_only": 2.536542,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.513846,
+            "_fx_build_packet": 3.947708,
+            "_monosh_boss_prepare_render": 0.79917,
+            "_monosh_enemy_frame": 0.979175,
+            "_monosh_boss_frame": 6.719941
+          }
+        },
+        {
+          "generation": 4509,
+          "field": 4671,
+          "clearAndBgMs": 7.209295,
+          "drawMs": 13.589156,
+          "totalSa1Ms": 20.798451,
+          "dirtyMs": 3.614705,
+          "clearMs": 3.293994,
+          "bgMs": 0.300597,
+          "nativeMs": 13.589156,
+          "compactMs": 0.0,
+          "logicMs": 10.281846,
+          "dirtyBytes": 9920,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.027192,
+            "packet_initialized": 1.533901,
+            "packet_packet_done": 1.089244,
+            "_fx_build_ground": 0.683327,
+            "packet_sorted": 1.258353,
+            "_monosh_boss_render_only": 2.537287,
+            "_fx_read_input": 0.030358,
+            "_monosh_combat_render": 0.497456,
+            "_fx_build_packet": 3.8869,
+            "_monosh_boss_prepare_render": 0.814349,
+            "_monosh_enemy_frame": 0.608085,
+            "_monosh_boss_frame": 1.778904
+          }
+        },
+        {
+          "generation": 2142,
+          "field": 2298,
+          "clearAndBgMs": 7.946167,
+          "drawMs": 12.513135,
+          "totalSa1Ms": 20.459302,
+          "dirtyMs": 4.320009,
+          "clearMs": 3.339065,
+          "bgMs": 0.287094,
+          "nativeMs": 12.513135,
+          "compactMs": 0.0,
+          "logicMs": 14.030925,
+          "dirtyBytes": 9280,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.027937,
+            "packet_initialized": 1.488085,
+            "packet_packet_done": 0.987183,
+            "_fx_build_ground": 0.897507,
+            "packet_sorted": 1.165791,
+            "_monosh_boss_render_only": 2.537287,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.398281,
+            "_fx_build_packet": 3.646459,
+            "_monosh_boss_prepare_render": 0.798146,
+            "_monosh_enemy_frame": 5.090311,
+            "_monosh_boss_frame": 1.1792
+          }
+        }
+      ],
+      "rightNarrowCoverage": {
+        "objects": 0,
+        "rows": 0,
+        "assets": [],
+        "maximumCopiedPrefixBytes": 0
+      },
+      "first4000FieldIntervals": {
+        "1": 3831,
+        "2": 8
+      },
+      "packetMatchedGenerations": 3849,
+      "tileMasksMatchedGenerations": 3849,
+      "fullFramebuffersMatchedGenerations": 3849,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3849,
+      "gameStatesMatchedCompletedUpdates": 3848
+    }
+  },
+  "evidence": [
+    {
+      "file": "road_base.zip",
+      "bytes": 7026475,
+      "sha256": "0c752d913d7a66bc3c3e093174ba400e8af118bc184e47ef9a9789ba4499c49a"
+    },
+    {
+      "file": "boss_base.zip",
+      "bytes": 9715441,
+      "sha256": "992414d7cb2acae9fccaca47d31d020c80dfbe8f6a48dbc2925bd61862249b6a"
+    },
+    {
+      "file": "road_v1.zip",
+      "bytes": 7106188,
+      "sha256": "51c7a7d0aeb928b5b6be09dd32c4240d61933678587345eab48a3c1ced5af2d7"
+    },
+    {
+      "file": "boss_v1.zip",
+      "bytes": 11311378,
+      "sha256": "3eaa9bc3019075892249947c395b994360071ec852debbb2571198ca75537615"
+    },
+    {
+      "file": "road_v2.zip",
+      "bytes": 7057572,
+      "sha256": "9ab1cc0a0c7ae76fa11113338f7d50c882a505e98252c794f169fe8fa5c5a536"
+    },
+    {
+      "file": "boss_v2.zip",
+      "bytes": 11324264,
+      "sha256": "254aa3c255df8434b030ee78e6074a76d066b139c9e22ae5c82f0e979480fdce"
+    },
+    {
+      "file": "roms_and_sources.zip",
+      "bytes": 8933029,
+      "sha256": "2b6565402349260da2e55ad04bce19ab39559be1bbb79d3e6144691b39a9b2ad"
+    }
+  ],
+  "allOriginalPatternsRetained": true,
+  "hostSpriteDrawingUsed": false,
+  "gameIntegrated": true,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "bossScenarioStageForcedAndInvulnerable": true,
+  "bossScenarioNaturalEndingNotVerified": true,
+  "hostAuditInitialFailurePreserved": true,
+  "nearRow8ProbeGameIntegrated": false
+}

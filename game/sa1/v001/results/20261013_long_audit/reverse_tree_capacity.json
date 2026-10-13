@@ -1,0 +1,22 @@
+{
+  "romSha256": "7b68b7fc0c5777eb799a53b6c24031821571e603a1d0814eb8e3d2b1ac0ab3cf",
+  "asset": 4,
+  "geometries": 76,
+  "rows": 9336,
+  "uniqueOriginalKernels": 5751,
+  "originalKernelBytes": 320664,
+  "uniqueReversedKernels": 5751,
+  "reversedCodeBytes": 335145,
+  "sumPerOriginalKernelCodeIncreaseBytes": 14481,
+  "compressedHintBytes": 1349,
+  "uniqueCompressedHints": 211,
+  "extraInlineHeaderBytes": 17253,
+  "extraBytesWithThreeBytePointers": 33083,
+  "indexedHintCountFitsOneByte": true,
+  "extraBytesWithOneByteHintIndex": 22214,
+  "sourceOnly": true,
+  "gameIntegrated": false,
+  "runtimeCostMeasured": false,
+  "allocationAndSharedOriginalKernelsNotResolved": true,
+  "goal60fpsAchieved": false
+}

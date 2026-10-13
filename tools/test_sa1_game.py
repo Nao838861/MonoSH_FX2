@@ -8,6 +8,23 @@ from run_probe import prepare_runtime,MESEN_EXE,lua
 from test_sa1_probe import reference
 from build_sa1_game import BASE
 
+def verify_game_state_audit(dest,logic,scenario):
+    audit=[json.loads(x) for x in (dest/'game_state_audit.jsonl').read_text().splitlines()]
+    first=audit[0]['logic'];assert first in (1,2)
+    # 初期packetを用意するboot内の最初の_fx_frameはlogic_finishedを通らない。
+    # 中途の欠落を許容せず、外側loopに入った後の全更新を確認する。
+    last=audit[-1]['logic'];assert last in (logic-1,logic)
+    # field終了で停止するため、最後の_fx_frameが実行途中の場合は未完了1件を区別する。
+    assert [x['logic'] for x in audit]==list(range(first,last+1))
+    assert all(a['clock']<b['clock'] for a,b in zip(audit,audit[1:]))
+    return dict(logicUpdates=len(audit),firstLogicGeneration=first,lastCompletedLogicGeneration=last,
+        initialBootUpdateNotCaptured=first-1,startedButNotCompletedAtStop=logic-last,
+        playerStates=sorted({x['playerState'] for x in audit}),bossStates=sorted({x['bossState'] for x in audit}),
+        minimumBossHp=min(x['bossHp'] for x in audit),maximumStageFrame=max(x['stageFrame'] for x in audit),
+        maximumEnemies=max(x['enemies'] for x in audit),maximumPlayerBullets=max(x['playerBullets'] for x in audit),
+        runtimeCounterResets=sum(b['runtimeFrame']<a['runtimeFrame'] for a,b in zip(audit,audit[1:])),
+        observationalOnly=True,invulnerabilityInjected='stress' in scenario)
+
 def verify_mask_bounds(dest,exact):
     """各帯の左右端が転送tile集合を含むことを再確認。新方式は厳密一致。"""
     data=(dest/'mask_bounds_trace.bin').read_bytes()
@@ -315,6 +332,7 @@ local function activeClock()local c=emu.getState().masterClock;return c-irqTicks
 local cpuJobs={}
 local sortReference=nil
 local packetTrace=assert(io.open(output..'/packet_trace.bin','wb'))
+local gameAudit=scenario:match('auditgame') and assert(io.open(output..'/game_state_audit.jsonl','w')) or nil
 local boundsFrames=scenario:match('tracebounds') and assert(io.open(output..'/mask_bounds_frames.bin','wb')) or nil
 local completedFrames={}
 local expectedPalette=EXPECTEDPALETTE
@@ -970,6 +988,16 @@ if labels.invoke_row then
   end
  end,emu.cpuType.sa1)
 end
+if labels.right_narrow_entry then
+ local f=assert(io.open(output..'/right_narrow.jsonl','w'))
+ for _,name in ipairs({'right_narrow_entry','right_narrow_ready'})do
+  cb(name,function()
+   local mt=emu.memType.sa1Memory
+   f:write(string.format('{"event":"%s","job":%d,"field":%d,"asset":%d,"width":%d,"height":%d,"left":%d,"row":%d,"length":%d}\\n',
+    name,#times+1,field,emu.read16(0x3e,mt),emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0x38,mt),emu.read16(0xa0,mt),emu.read16(0x8c,mt)));f:flush()
+  end,emu.cpuType.sa1)
+ end
+end
 cb('_fx_frame',function()
  logic=logic+1
  begin=emu.getState().masterClock
@@ -1019,6 +1047,18 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if gameAudit then
+  local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory
+  local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
+  local function read(name,wide)
+   assert(labels[name], 'missing game audit label '..name)
+   return wide and emu.read16(base+labels[name],mt) or emu.read(base+labels[name],mt)
+  end
+  gameAudit:write(string.format('{"logic":%d,"field":%d,"clock":%d,"runtimeFrame":%d,"stageFrame":%d,"playerState":%d,"playerInvuln":%d,"bossState":%d,"bossHp":%d,"enemies":%d,"playerBullets":%d}\\n',
+   logic,field,emu.getState().masterClock,read('_monosh_runtime_frame_counter',true),read('_monosh_stage_frame_counter',true),
+   read('_monosh_player_state'),read('_monosh_player_invuln'),read('_monosh_boss_state'),read('_monosh_boss_hp'),
+   read('_monosh_enemy_active_count_value'),read('_monosh_player_bullet_count')));gameAudit:flush()
+ end
  if scenario:match('^splitfixture') then
   local objects=splitFixtures[(logic-1)%#splitFixtures+1]
   word('_fx_packet_count',#objects)
@@ -1603,6 +1643,8 @@ end,emu.eventType.endFrame)
             assert summary['opaquePrefixCoverage']['advancedRows']>=120
             assert set(summary['opaquePrefixCoverage']['hintFormats'])==({'0'} if config.get('opaquePrefixInlineRaw') else {'0','128','129'})
             summary['opaqueFixtureCoverage']=verify_opaque_fixture_coverage(dest)
+    if 'auditgame' in args.scenario:
+        summary['gameStateAudit']=verify_game_state_audit(dest,summary['logic'],args.scenario)
     if args.scenario.startswith('stackfixturemin'):
         summary['minimumClipCoverage']=verify_minimum_clip_coverage(dest,config)
     if args.scenario.startswith('clipfixture'):

@@ -1,5 +1,5 @@
 """右端で打ち切る全行コードを、全byte境界で元コードと比較する。"""
-import hashlib,json,struct
+import argparse,hashlib,json,struct
 from build_sa1_game import BUILD
 from sa1_left_hints import physical
 from verify_sa1_left_hints import execute
@@ -7,6 +7,8 @@ from build_sa1_probe import assets
 
 
 def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--narrow',action='store_true');args=ap.parse_args()
+    if args.narrow:from verify_sa1_native_fragments import execute as symbolic_execute
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
     variants=assets()
     pointers=set()
@@ -35,7 +37,8 @@ def main():
         background=bytearray((i*71+0xa5)&255 for i in range(512))
         expected=background.copy()
         execute(code,0,0,expected,128)
-        for limit in range(1,extent+1):
+        if args.narrow:symbolic_full=symbolic_execute(code)
+        for limit in range(1,min(extent,16 if args.narrow else extent)+1):
             last=0
             for i in range(0,len(code)-1,3):
                 op=code[i]
@@ -51,9 +54,18 @@ def main():
             partial[128+limit]=background[128+limit]
             assert partial[128:128+limit]==expected[128:128+limit],(hex(pointer),limit)
             assert partial[128+limit:]==background[128+limit:],(hex(pointer),limit,'outside')
+            if args.narrow:
+                symbolic_partial=symbolic_execute(code[:last]+b'\x6b')
+                for off in symbolic_full.keys()|symbolic_partial.keys():
+                    visible=65535 if off+1<limit else 255 if off<limit else 0
+                    if not visible:continue
+                    a=symbolic_full.get(off,(off,65535,0));b=symbolic_partial.get(off,(off,65535,0))
+                    assert (not a[1]or a[0]==off)and(not b[1]or b[0]==off)
+                    assert a[1]&visible==b[1]&visible and a[2]&visible==b[2]&visible,(hex(pointer),limit,off)
             cases+=1
     result={'kernels':len(pointers),'rightByteLimitsVerified':cases,'romSha256':hashlib.sha256(rom).hexdigest()}
-    (BUILD/'right_clip_verified.json').write_text(json.dumps(result,indent=2)+'\n')
+    if args.narrow:result.update(maximumByteLimit=16,arbitraryFramebufferInputsVerified=True)
+    (BUILD/('right_narrow_verified.json'if args.narrow else 'right_clip_verified.json')).write_text(json.dumps(result,indent=2)+'\n')
     print(result)
 
 
