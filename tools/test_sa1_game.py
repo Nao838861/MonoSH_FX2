@@ -275,6 +275,9 @@ local vramFourShared=VRAMFOURSHARED
 local vramFifo=VRAMFIFO
 local vramFourOwned=VRAMFOUROWNED
 local fixedMap=FIXEDMAP
+local prebankDma=PREBANKDMA
+local dmaShortIo=DMASHORTIO
+local prefixRefreshSixteenth=PREFIXREFRESHSIXTEENTH
 local splitViewports=SPLITVIEWPORTS
 local fixedMapDelta=FIXEDMAPDELTA
 local fixedMapDeltaDma=FIXEDMAPDELTADMA
@@ -689,7 +692,7 @@ if pipeline then
     local originalLength=emu.read16(table+start*4,mt)-beforeBytes
     local partial=originalLength-emu.read16(r+208+start*6,mt)
     assert(partial>=0,'prefix partial length negative')
-    beforeBytes=beforeBytes+partial;beforeCost=beforeCost+partial+partial//32+partial//128
+    beforeBytes=beforeBytes+partial;beforeCost=beforeCost+partial+partial//32+partial//128+(prefixRefreshSixteenth and partial//16 or 0)
     local available=emu.read16(b+labels.pipe_available,mt);local limit=available-384+beforeCost
     local last=start
     for i=start+1,count do if emu.read16(table+(i-1)*4+2,mt)<limit then last=i else break end end
@@ -1010,6 +1013,23 @@ if labels.direct_left_row then
 end
 if labels.sa1_output_done then cb('sa1_output_done',function()
  local n=0
+ if prebankDma then
+  local mt=emu.memType.sa1Memory;local count=emu.read16(0x11a,mt)
+  local base=emu.read16(0x19a,mt);local gen=emu.read16(0x198,mt)
+  local page=gen%2==1 and 0x3000 or 0;local bytes,cost=0,0
+  local table=(emu.read16(0x102,mt)&255)*65536+base+0x6600
+  assert(count<=48,'prebank descriptor overflow')
+  for i=0,count-1 do
+   local a=0x430800+i*6;local len=emu.read16(a,mt);local src=(emu.read16(a+2,mt)-base)&65535
+   local dst=emu.read16(a+4,mt)
+   assert(len>0 and len%32==0 and src>=1024 and src+len<=24576,'prebank source extent invalid')
+   assert(dst==page+src//2-496 and dst+len//2<=page+0x3000,'prebank absolute destination invalid')
+   bytes=bytes+len
+   cost=cost+len+len//32+len//128+(prefixRefreshSixteenth and len//16 or 0)+PREFIXDESCCOST
+   assert(emu.read16(table+i*4,mt)==bytes and emu.read16(table+i*4+2,mt)==cost,'prebank cumulative cost differs from independent formula')
+  end
+  assert(bytes==emu.read16(0x118,mt),'prebank transfer bytes differ')
+ end
  if splitViewports then
   local mt=emu.memType.sa1Memory;n=emu.read16(0x11a,mt)
   assert(n<=48,'split DMA metadata overflow')
@@ -1027,6 +1047,29 @@ if labels.sa1_output_done then cb('sa1_output_done',function()
  end
  outputJobs[#outputJobs+1]=string.format('{\"field\":%d,\"totalOutputMs\":%.6f,\"splitDescriptorsVerified\":%d}',field,(emu.getState().masterClock-sa1begin)/21477.272,n)
 end,emu.cpuType.sa1)end
+if prebankDma then
+ local f=assert(io.open(output..'/prebank_dma_verified.jsonl','w'))
+ cb('pipe_setup_transfer',function()
+  local mt=emu.memType.snesMemory;local b=0x7e0000
+  local r=b+labels.pipe_records+emu.read16(b+labels.pipe_record_offset,mt)
+  local gen=emu.read16(r+8,mt);local page=gen%2==1 and 0x3000 or 0
+  assert(emu.read16(r+6,mt)==page,'prebank generation/page ownership mismatch')
+  assert(emu.read16(b+labels.fx4_page,mt)~=page,'prebank transfer targets visible page')
+  local base=emu.read16(r,mt)&0x8400;local cursor=emu.read16(r+4,mt)
+  local finish=emu.read16(r+2,mt)
+  assert(cursor<=finish and finish<=48*6,'prebank WRAM extent invalid')
+  for i=cursor,finish-1,6 do
+   local a=r+208+i;local len=emu.read16(a,mt);local src=(emu.read16(a+2,mt)-base)&65535
+   assert(emu.read16(a+4,mt)==page+src//2-496,'prebank resumed destination invalid')
+   assert(src>=1024 and src+len<=24576,'prebank resumed source invalid')
+  end
+  f:write(string.format('{"generation":%d,"page":%d,"cursor":%d,"descriptors":%d}\\n',gen,page,cursor,finish//6));f:flush()
+ end)
+ if dmaShortIo then cb('pipe_fast_groups_done',function()
+  local s=emu.getState()
+  assert(s['cpu.dbr']==0x7e and s['cpu.d']==0,'DMA short I/O did not restore DB/D')
+ end)end
+end
 if labels.sa1_dirty_done then
  cb('sa1_dirty_done',function()
  if pipeline then jobSequence=jobSequence+1;assert(emu.read16(0x198,emu.memType.sa1Memory)==jobSequence,'SA-1 job duplicated or skipped')end
@@ -1126,6 +1169,32 @@ if vramPrefetch3 then
  end,emu.callbackType.write,0x2107,0x2107,emu.cpuType.snes,emu.memType.snesMemory)
 end
 if labels.pipe_flip then cb('pipe_flip',function()flipBegin=emu.getState().masterClock;pageCommit=nil end)end
+if labels.pipe_flip_prepared then
+ local f=assert(io.open(output..'/flip_preparation.jsonl','w'))
+ local prepared=nil
+ cb('pipe_flip_prepared',function()
+  local s=emu.getState();local channels={}
+  for c=1,7 do
+   local p='dmaController.channel['..c..'].'
+   local bank=s[p..'srcBank'];local address=s[p..'hdmaTableAddress']
+   assert(type(bank)=='number' and type(address)=='number','HDMA state fields missing')
+   if bank==0x7e then assert(address<0x1c00 or address>=0x1e00,'HDMA table aliases flip metadata')end
+   if s[p..'hdmaIndirectAddressing'] then
+    local indirectBank=s[p..'hdmaBank'];local indirect=s[p..'transferSize']
+    assert(type(indirectBank)=='number' and type(indirect)=='number','indirect HDMA state fields missing')
+    if indirectBank==0x7e then assert(indirect<0x1c00 or indirect>=0x1e00,'indirect HDMA data aliases flip metadata')end
+   end
+   channels[#channels+1]=string.format('{"channel":%d,"bank":%d,"table":%d}',c,bank,address)
+  end
+  prepared={clock=s.masterClock,line=s['ppu.scanline'],field=field,channels=table.concat(channels,',')}
+ end)
+ cb('pipe_flip_ppu',function()
+  assert(prepared,'flip PPU update before preparation')
+  local s=emu.getState();local line=s['ppu.scanline']
+  assert((line>=203 or line<=21) and (s['ppu.forcedBlank'] or line>=225),'early flip PPU update outside reserved blank')
+  f:write(string.format('{"field":%d,"prepareField":%d,"prepareLine":%d,"ppuLine":%d,"waitTicks":%d,"channels":[%s]}\\n',field,prepared.field,prepared.line,line,s.masterClock-prepared.clock,prepared.channels));f:flush();prepared=nil
+ end)
+end
 if labels.fd_flip then
  local f=assert(io.open(output..'/map_delta.jsonl','w'))
  local begin=0;local count=0
@@ -1294,6 +1363,10 @@ end,emu.eventType.endFrame)
     script=script.replace('FIXEDMAPDELTADMA','true' if config.get('fixedMapDeltaDma') else 'false')
     script=script.replace('FIXEDMAPDELTA','true' if config.get('fixedMapDelta') else 'false')
     script=script.replace('FIXEDMAP','true' if config.get('fixedMap') else 'false')
+    script=script.replace('PREBANKDMA','true' if config.get('prebankDma') else 'false')
+    script=script.replace('DMASHORTIO','true' if config.get('dmaShortIo') else 'false')
+    script=script.replace('PREFIXREFRESHSIXTEENTH','true' if config.get('prefixRefreshSixteenth') else 'false')
+    script=script.replace('PREFIXDESCCOST',str(64-(7 if config.get('dmaWordStart') else 0)-config.get('prebankDescriptorCostDiscount',0)))
     script=script.replace('SPLITVIEWPORTS','true' if config.get('splitViewports') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
     script=script.replace('PREFIXONEPASS','true' if config.get('prefixOnePass') else 'false')

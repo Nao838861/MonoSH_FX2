@@ -31,3 +31,41 @@ def budget_table(text,deadline):
     text+=''.join('  .word '+str((deadline-i)*170 if i<=deadline else 65535)+'\n' for i in range(512))
     text+='.segment "CODE"\n'
     return text
+
+
+def early_flip_prepare(text):
+    """次画面のWRAM状態を先に用意し、PPU操作の直前に非表示を待つ。"""
+    old='pipe_flip:\n  .ifdef SA1_EARLY_REQUEST\n  jsr pipe_start_blank\n  .endif\n'
+    assert text.count(old)==1
+    text=text.replace(old,'pipe_flip:\n',1)
+    old='  sta pipe_obj_pointer\n  jsr update_ground_pointers\n'
+    assert text.count(old)==1
+    text=text.replace(old,'''  sta pipe_obj_pointer
+pipe_flip_prepared:
+  jsr pipe_start_blank
+pipe_flip_ppu:
+  jsr update_ground_pointers
+''',1)
+    return '.export pipe_flip_prepared, pipe_flip_ppu\n'+text
+
+
+def tail_flip_reserve(text,reserve):
+    """自機CHR更新なし・残り1024B以下だけ、切替予約を小さくする。"""
+    assert reserve==1400
+    old='pipe_reserve_small:\n  plx\n  lda pipe_available\n'
+    new='''pipe_reserve_small:
+  ; 大口DMAの見積り誤差を吸収する2200は維持する。
+  lda pipe_records+34,x
+  cmp #1025
+  bcs pipe_reserve_full_tail
+  plx
+  lda pipe_available
+  sec
+  sbc #1400
+  bra pipe_reserved
+pipe_reserve_full_tail:
+  plx
+  lda pipe_available
+'''
+    assert text.count(old)==1
+    return text.replace(old,new,1)

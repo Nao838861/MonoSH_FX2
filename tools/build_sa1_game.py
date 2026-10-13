@@ -143,6 +143,12 @@ def main():
     ap.add_argument('--dma-budget-table',action='store_true')
     ap.add_argument('--prefix-one-pass',action='store_true')
     ap.add_argument('--prefix-full-reserve',type=int,choices=[192,384],default=384)
+    ap.add_argument('--early-flip-prepare',action='store_true')
+    ap.add_argument('--prebank-dma',action='store_true')
+    ap.add_argument('--dma-short-io',action='store_true')
+    ap.add_argument('--dma-unroll-count',type=int,choices=[12,16,20],default=12)
+    ap.add_argument('--prefix-refresh-sixteenth',action='store_true')
+    ap.add_argument('--tail-flip-reserve',type=int,choices=[0,1400],default=0)
     args=ap.parse_args()
     assert args.edge_dma_min==33 or (args.cpu_edge_copy and args.small_edge_jit and not args.wide_edge_jit)
     assert not args.edge_lazy_jit or (args.cpu_edge_copy and args.small_edge_jit and args.deep_bw and not args.wide_edge_jit and not args.split_viewports and not args.clip_resident and not args.dirty_iram and not args.sa1_game and not args.sa1_game_compact)
@@ -153,6 +159,13 @@ def main():
     assert not args.dma_budget_table or (args.fixed_map and args.direct_sparse and args.irq_fastrom and not args.fixed_map_delta and not args.split_viewports)
     assert not args.prefix_one_pass or (args.prefix_unrolled_search and args.dma_budget_table and args.accurate_dma_budget and args.direct_sparse)
     assert args.prefix_full_reserve==384 or args.prefix_one_pass
+    assert not args.early_flip_prepare or (args.prefix_one_pass and args.early_request and args.native_near and not args.native_far and not args.vram_pump and not args.late_flip)
+    assert not args.prebank_dma or (args.prefix_one_pass and args.fixed_map and args.deep_bw and args.unroll_ppu_dma and args.dma_word_start and not args.adaptive_vram and not args.changed_mask and not args.fixed_map_delta and not args.vram_pump)
+    assert not args.dma_short_io or args.prebank_dma
+    assert args.dma_unroll_count==12 or args.dma_short_io
+    assert not args.prefix_refresh_sixteenth or (args.prebank_dma and args.dma_short_io and args.dma_unroll_count<=16 and not args.prefix_cpu_table)
+    assert not args.tail_flip_reserve or (args.prebank_dma and args.dma_unroll_count<=16 and not args.prefix_refresh_sixteenth and not args.flip_small_reserve and not args.flip_player_reserve)
+    prebank_cost_discount=(4 if args.prebank_dma else 0)+(2 if args.dma_short_io else 0)
     assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
     assert not args.mask_bounds_wide_table or args.mask_bounds
     assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
@@ -542,6 +555,21 @@ def main():
     if args.prefix_one_pass:
         from sa1_prefix_unrolled import one_pass_pipeline
         path=BUILD/'pipeline_tuned.inc';path.write_text(one_pass_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.early_flip_prepare:
+        from sa1_transfer_deadline import early_flip_prepare
+        path=BUILD/'pipeline_tuned.inc';path.write_text(early_flip_prepare(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.prebank_dma:
+        from sa1_prebank_dma import pipeline as prebank_pipeline
+        path=BUILD/'pipeline_tuned.inc';path.write_text(prebank_pipeline(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.dma_short_io:
+        from sa1_prebank_dma import short_io
+        path=BUILD/'pipeline_tuned.inc';path.write_text(short_io(path.read_text(encoding='utf8')),encoding='utf8')
+    if args.dma_unroll_count!=12:
+        from sa1_prebank_dma import unroll
+        path=BUILD/'pipeline_tuned.inc';path.write_text(unroll(path.read_text(encoding='utf8'),args.dma_unroll_count),encoding='utf8')
+    if args.tail_flip_reserve:
+        from sa1_transfer_deadline import tail_flip_reserve
+        path=BUILD/'pipeline_tuned.inc';path.write_text(tail_flip_reserve(path.read_text(encoding='utf8'),args.tail_flip_reserve),encoding='utf8')
     if args.native_near:defines+=['-D','SA1_NATIVE_NEAR=1']
     if args.changed_mask:defines+=['-D','SA1_CHANGED_MASK=1']
     if args.front_mask:defines+=['-D','SA1_FRONT_MASK=1']
@@ -1289,6 +1317,12 @@ opaque_sprite_fallback:
             if args.fixed_map:
                 from sa1_fixed_map import direct as fixed_direct,prefix as fixed_prefix
                 text=fixed_direct(direct_src.read_text(encoding='utf-8'))
+                if args.prebank_dma:
+                    from sa1_prebank_dma import direct as prebank_direct
+                    text=prebank_direct(text)
+                if args.prefix_refresh_sixteenth:
+                    from sa1_prefix_refresh import direct as refresh_direct
+                    text=refresh_direct(text)
                 direct_src=BUILD/'sparse_direct_fixed.s';direct_src.write_text(text,encoding='utf-8')
                 text=fixed_prefix(prefix_src.read_text(encoding='utf-8'))
                 prefix_src=BUILD/'prefix_fixed.s';prefix_src.write_text(text,encoding='utf-8')
@@ -1305,11 +1339,14 @@ opaque_sprite_fallback:
                 obj=BUILD/'vram_four_cpu.o';run([CC/'ca65.exe',*(['-D','SA1_VRAM_FIFO=1'] if args.vram_fifo else []),*(['-D','SA1_FIFO_ARCHIVE=1'] if args.vram_fifo_map_archive else []),*(['-D','SA1_FIFO_CPU_MAP=1'] if args.vram_fifo_cpu_map else []),*(['-D','SA1_FIFO_MAP_BW=1'] if args.vram_fifo_map_bw else []),'-o',obj,SA1/'vram_four_cpu.s']);objs.append(obj)
             if args.vram_four_owned:direct_src=SA1/'sparse_four_owned_sa1.s'
             if args.vram_fifo:direct_src=SA1/'vram_fifo_sa1.s'
-            obj=BUILD/'sparse_direct.o';run([CC/'ca65.exe',*(['-D','SA1_FIFO_FAST=1'] if args.vram_fifo_fast else []),*(['-D','SA1_FIFO_FAST_FILL=1'] if args.vram_fifo_fast_fill else []),*(['-D','SA1_FIFO_CPU_MAP=1'] if args.vram_fifo_cpu_map else []),*(['-D','SA1_FIFO_MAP_BW=1'] if args.vram_fifo_map_bw else []),*(['-D','SA1_FIFO_FUSED_MAP=1'] if args.vram_fifo_fused_map else []),*(['-D','SA1_PREFIX_TABLE=1'] if args.prefix_table else []),'-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64)-(7 if args.dma_word_start else 0)}','-o',obj,direct_src]);objs.append(obj)
+            obj=BUILD/'sparse_direct.o';run([CC/'ca65.exe',*(['-D','SA1_FIFO_FAST=1'] if args.vram_fifo_fast else []),*(['-D','SA1_FIFO_FAST_FILL=1'] if args.vram_fifo_fast_fill else []),*(['-D','SA1_FIFO_CPU_MAP=1'] if args.vram_fifo_cpu_map else []),*(['-D','SA1_FIFO_MAP_BW=1'] if args.vram_fifo_map_bw else []),*(['-D','SA1_FIFO_FUSED_MAP=1'] if args.vram_fifo_fused_map else []),*(['-D','SA1_PREFIX_TABLE=1'] if args.prefix_table else []),'-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64)-(7 if args.dma_word_start else 0)-prebank_cost_discount}','-o',obj,direct_src]);objs.append(obj)
             if args.prefix_dma:
                 if args.prefix_table_partial:
                     from sa1_prefix_partial import source as partial_table
                     text=partial_table(prefix_src.read_text(encoding='utf-8'))
+                    if args.prefix_refresh_sixteenth:
+                        from sa1_prefix_refresh import partial as refresh_partial
+                        text=refresh_partial(text)
                     prefix_src=BUILD/'prefix_partial_table.s';prefix_src.write_text(text,encoding='utf-8')
                 if args.prefix_unrolled_search:
                     from sa1_prefix_unrolled import source as unrolled_search
@@ -1322,7 +1359,7 @@ opaque_sprite_fallback:
                 if args.trace_transfer_deadline or args.prefix_unrolled_search:
                     text='.export pfTables\n'+prefix_src.read_text(encoding='utf8')
                     prefix_src=BUILD/'prefix_trace_search.s';prefix_src.write_text(text,encoding='utf8')
-                obj=BUILD/'prefix_dma.o';run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64 if args.prefix_fastrom else 76)-(7 if args.dma_word_start else 0)}',*(['-D','SA1_PREFIX_CPU_TABLE=1'] if args.prefix_cpu_table else []),'-o',obj,prefix_src]);objs.append(obj)
+                obj=BUILD/'prefix_dma.o';run([CC/'ca65.exe','-D',f'SA1_PIPELINE_DEPTH={args.pipeline_depth}','-D',f'SA1_PREFIX_DESC_COST={(52 if args.contiguous_chr_dma else 64 if args.prefix_fastrom else 76)-(7 if args.dma_word_start else 0)-prebank_cost_discount}',*(['-D','SA1_PREFIX_CPU_TABLE=1'] if args.prefix_cpu_table else []),'-o',obj,prefix_src]);objs.append(obj)
     if args.left_hints:
         obj=BUILD/'left_hints.o';run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_FLAME_DIRECT_HINTS=1'] if args.flame_direct_hints else []),*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints or args.direct_left_hints else []),*(['-D','SA1_LEFT_DIRECT=1'] if args.direct_left_hints else []),'-I',BUILD,'-o',obj,SA1/'left_hints_game.s']);objs.append(obj)
     if args.right_clip_jit:
@@ -1605,6 +1642,14 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['dmaBudgetTable']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.prefix_one_pass:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(prefixOnePass=True,prefixFullReserve=args.prefix_full_reserve);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.early_flip_prepare:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['earlyFlipPrepare']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.prebank_dma:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest.update(prebankDma=True,dmaShortIo=args.dma_short_io,dmaUnrollCount=args.dma_unroll_count,prebankDescriptorCostDiscount=prebank_cost_discount);manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.prefix_refresh_sixteenth:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['prefixRefreshSixteenth']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.tail_flip_reserve:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['tailFlipReserve']=args.tail_flip_reserve;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
