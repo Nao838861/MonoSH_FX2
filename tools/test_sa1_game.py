@@ -362,6 +362,23 @@ if scenario:match('tracepalette') then
   end
  end,emu.callbackType.write,32,63,emu.cpuType.snes,emu.memType.snesCgRam)
 end
+if scenario:match('tracevisiblequeue') then
+ local f=assert(io.open(output..'/visible_queue.jsonl','w'));local lastVisible,lastBlank=-1,-1
+ emu.addMemoryCallback(function(address,value)
+  if finishedCapture or field<145 then return end
+  local state=emu.getState();local line=state['ppu.scanline'];local kind=nil
+  if (value&128)==0 and line>=20 and line<=23 and lastVisible~=field then kind='visible';lastVisible=field end
+  if (value&128)~=0 and line>=202 and line<=205 and lastBlank~=field then kind='blank';lastBlank=field end
+  if not kind then return end
+  local mt=emu.memType.snesMemory;local status={};local ready,rendering=0,0
+  for i=0,DEPTH-1 do
+   local v=emu.read16(0x7e0000+labels.pipe_status+i*2,mt);status[#status+1]=v
+   if v==2 then ready=ready+1 elseif v==1 then rendering=rendering+1 end
+  end
+  f:write(string.format('{"event":"%s","field":%d,"line":%d,"clock":%d,"presents":%d,"ready":%d,"rendering":%d,"complete":%d,"target":%d,"statuses":[%s]}\\n',
+   kind,field,line,state.masterClock,presents,ready,rendering,emu.read16(0x7e0000+labels.pipe_complete,mt),emu.read16(0x7e0000+labels.pipe_target_slot,mt),table.concat(status,',')));f:flush()
+ end,emu.callbackType.write,0x2100,0x2100,emu.cpuType.snes,emu.memType.snesMemory)
+end
 if scenario:match('tracedma') then
  local z=assert(io.open(output..'/sa1_dma_writes.jsonl','w'))
  local blankLog=assert(io.open(output..'/blank_writes.jsonl','w'))
@@ -688,6 +705,44 @@ if labels.clip_left_cache_hit then
   end,emu.cpuType.sa1)
  end
 end
+if labels.dense_tree_row_begin then
+ local log=assert(io.open(output..'/dense_tree.jsonl','w'));local current=nil;local restored=nil
+ local function checkGuard()
+  if restored then
+   assert(emu.read(restored.address,emu.memType.sa1Memory)==restored.value,'dense stack row did not restore its edge byte')
+   restored=nil
+  end
+ end
+ cb('dense_tree_row_begin',function()
+  checkGuard()
+  local mt=emu.memType.sa1Memory;local s=emu.getState();local sp=s['cart.coprocessor.cpu.sp'];local code=emu.read16(0xac,mt)+emu.read(0xae,mt)*65536
+  local raw=emu.read16(0xb0,mt);local words=0;local pc=code;local op=emu.read(pc,mt)
+  assert((s['cart.coprocessor.cpu.ps']&0x34)==4,'dense stack row requires 16-bit registers and disabled IRQ')
+  assert(sp>=0x6000 and sp<=0x8000,'dense stack row did not select BW-RAM stack')
+  if code==0x500 then
+   local n=emu.read16(0x9c,mt);local source=emu.read16(0x84,mt)+emu.read(0x86,mt)*65536
+   assert(n+4<0xc0,'dense stack prefix overlaps CC1 buffer')
+   for i=0,n-1 do assert(emu.read(code+i,mt)==emu.read(source+i,mt),'dense stack prefix copy differs from ROM')end
+  end
+  while op~=0x5c do
+   if op==0xf4 then words=words+1;pc=pc+3
+   elseif op==0x48 then words=words+1;pc=pc+1
+   else assert(op==0xbd or op==0x29 or op==0x09,'invalid dense stack opcode');pc=pc+3 end
+   assert(pc-code<0xc0,'dense stack row exceeded code boundary');op=emu.read(pc,mt)
+  end
+  assert(emu.read16(pc+1,mt)==0x700 and emu.read(pc+3,mt)==0,'dense stack row return gate differs')
+  current={sp=sp,words=words,code=code,raw=raw,cur=emu.read16(0x8a,mt)}
+  if emu.read16(0xb6,mt)>0 then current.guard={address=raw*65536+emu.read16(0x98,mt)};current.guard.value=emu.read(current.guard.address,mt)end
+ end,emu.cpuType.sa1)
+ cb('dense_tree_row_done',function()
+  assert(current,'dense stack returned without row begin')
+  local st=emu.getState();assert(st['cart.coprocessor.cpu.sp']==((current.sp-current.words*2)&65535),'dense stack push count differs')
+  restored=current.guard
+  log:write(string.format('{"field":%d,"job":%d,"code":%d,"cur":%d,"words":%d,"sp":%d}\\n',field,#times+1,current.code,current.cur,current.words,current.sp));log:flush()
+  current=nil
+ end,emu.cpuType.sa1)
+ cb('sa1_sprite_done',function()checkGuard();assert(not current,'dense stack row did not finish')end,emu.cpuType.sa1)
+end
 if COMPACTGAME then
  local log=assert(io.open(output..'/game_offload.jsonl','w'))
  local active=false;local begin=0
@@ -1004,6 +1059,33 @@ if labels.invoke_row then
    dump('latest_jit.bin',emu.memType.sa1InternalRam,0x700,256)
   end
  end,emu.cpuType.sa1)
+end
+if labels.tree_left_prefix_invoke then
+ local f=assert(io.open(output..'/tree_left.jsonl','w'))
+ local guard=nil
+ for _,name in ipairs({'sa1_reverse_tree_left','tree_left_miss','tree_left_cached_ready','tree_left_copy_dma','tree_left_copy_cpu','tree_left_patch_complete','tree_left_prefix_invoke','tree_left_full_invoke','tree_left_prefix_done'})do
+  cb(name,function()
+   local mt=emu.memType.sa1Memory
+   if name=='sa1_reverse_tree_left' then
+    guard=nil
+    f:write(string.format('{"event":"%s","job":%d,"field":%d,"width":%d,"height":%d,"left":%d}\\n',name,#times+1,field,emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0x38,mt)))
+   else
+    local code=emu.read16(0x84,mt)+65536*emu.read(0x86,mt)
+    local len=emu.read16(0x9c,mt);local cur=emu.read16(0x8a,mt)
+    if name=='tree_left_prefix_invoke' then
+     assert(len>0 and len<232 and len%3==0,'left prefix overlaps call gate')
+     for i=0,len-1 do assert(emu.read(0x700+i,mt)==emu.read(code+i,mt),'left prefix cache differs from source')end
+     assert(emu.read(0x700+len,mt)==0x6b,'left prefix missing RTL')
+     if cur%2==1 then guard={address=emu.read16(0x98,mt)+65536*emu.read(0x102,mt),value=emu.read(0x9a,mt)}else guard=nil end
+    end
+    if name=='tree_left_prefix_done' and guard then
+     assert(emu.read(guard.address,mt)==guard.value,'left prefix changed previous row guard byte');guard=nil
+    end
+    f:write(string.format('{"event":"%s","job":%d,"field":%d,"width":%d,"height":%d,"cur":%d,"length":%d,"code":%d}\\n',name,#times+1,field,emu.read16(0x34,mt),emu.read16(0x36,mt),cur,len,code))
+   end
+   f:flush()
+  end,emu.cpuType.sa1)
+ end
 end
 if labels.tree_right_invoke then
  local f=assert(io.open(output..'/tree_right.jsonl','w'))

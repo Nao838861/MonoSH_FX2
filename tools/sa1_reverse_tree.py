@@ -17,7 +17,17 @@ def finish(rom,dest):
         begin=TABLE,end=TABLE+len(data),originalNativeRowsReplaced=True),indent=2)+'\n')
 
 
-def fast(text,bypass=False):
+def fast(text,bypass=False,left=False,left_bypass=False,left_min_bytes=0,dense=False):
+    if dense:
+        old='  jsl sa1_edge_prepare\n';assert text.count(old)==1
+        return '.setcpu "65816"\n.import sa1_dense_stack_tree: far\n'+text.replace(old,old+'''  lda $3e
+  cmp #4
+  bne dense_tree_other
+  jsl sa1_dense_stack_tree
+  sec
+  rtl
+dense_tree_other:
+''',1)
     text='.setcpu "65816"\n.import sa1_reverse_tree_right: far\n'+text
     old='  jsl sa1_edge_prepare\n';assert text.count(old)==1
     gate='''  lda $3e
@@ -37,4 +47,17 @@ tree_other:
     if bypass:
         gate=gate.replace('  jsl sa1_reverse_tree_right\n  sec\n  rtl\n',
             '  jmp tree_full\n  nop\n  nop\n  nop\n',1)
+    if left:
+        text='.setcpu "65816"\n.import sa1_reverse_tree_left: far\n'+text
+        gate=gate.replace('  bmi tree_full\n','''  bpl tree_right_side
+  jsl sa1_reverse_tree_left
+  sec
+  rtl
+tree_right_side:
+''',1)
+        if left_min_bytes:
+            gate=gate.replace('  jsl sa1_reverse_tree_left\n',f'  lda $c4\n  cmp #{left_min_bytes}\n  bcc tree_full\n  jsl sa1_reverse_tree_left\n',1)
+        if left_bypass:
+            gate=gate.replace('  jsl sa1_reverse_tree_left\n  sec\n  rtl\n',
+                '  jmp tree_full\n  nop\n  nop\n  nop\n',1)
     return text.replace(old,old+gate,1)

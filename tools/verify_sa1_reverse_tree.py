@@ -8,7 +8,7 @@ from verify_sa1_native_fragments import execute
 def main():
     rom=(BUILD/'MonoSHSA1_4bpp_game.sfc').read_bytes()
     original=(BUILD/'long4000_full192_build/MonoSHSA1_4bpp_game.sfc').read_bytes()
-    kernels={};geometries=rows=checks=0
+    kernels={};geometries=rows=checks=left_checks=0
     for w in range(1,256):
         a=struct.unpack_from('<H',original,0x7f0000+4*512+w*2)[0]
         b=struct.unpack_from('<H',rom,0x7f0000+4*512+w*2)[0]
@@ -40,9 +40,19 @@ def main():
             assert partial=={off:v for off,v in expected.items()if off<limit}
             for off,value in partial.items():assert value[0]in(None,off)
             checks+=1
+        for minimum in range(1,extent):
+            length=rom[hint+minimum//2]
+            assert length%3==0 and length<232
+            partial=execute(code[:length]+b'\x6b')
+            assert partial=={off:v for off,v in expected.items()if off>=minimum//2*2}
+            # 奇数位置の低byteは前行に触れる。そこだけguardで復元すれば任意下地で一致。
+            for off,value in expected.items():
+                visible=65535 if off>=minimum else 65280 if off==minimum-1 else 0
+                if visible:assert off in partial and partial[off]==value
+            left_checks+=1
     result=dict(romSha256=hashlib.sha256(rom).hexdigest(),referenceRomSha256=hashlib.sha256(original).hexdigest(),
         geometries=geometries,rows=rows,kernels=len(kernels),rightByteLimitsVerified=checks,
-        arbitraryFramebufferInputsVerified=True,allRowOriginsRetained=True)
+        arbitraryFramebufferInputsVerified=True,allRowOriginsRetained=True,leftPrefixByteLimitsVerified=left_checks)
     assert geometries==76 and rows==9336 and len(kernels)==5751
     (BUILD/'reverse_tree_verified.json').write_text(json.dumps(result,indent=2)+'\n');print(result)
 

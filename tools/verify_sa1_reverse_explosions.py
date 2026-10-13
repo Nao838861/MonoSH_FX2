@@ -53,7 +53,11 @@ def main():
                         assert original[pa-1]==rom[pb-1]
                         if (asset in (40,41) and width>=minimum)or(config.get('reverseTree')and asset==4):
                             if (pa,pb) not in changed:
-                                assert execute_native(old_code,initial)==execute_native(new_code,initial)
+                                if config.get('denseStackTree')and asset==4:
+                                    from verify_sa1_dense_tree import execute_dense,nonidentity
+                                    from verify_sa1_native_fragments import execute
+                                    assert execute(old_code)==nonidentity(execute_dense(new_code,0,rom[pb-1]-1))
+                                else:assert execute_native(old_code,initial)==execute_native(new_code,initial)
                                 changed.add((pa,pb))
                         else:assert old_code==new_code
                         native_rows+=1

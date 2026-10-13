@@ -1,0 +1,1534 @@
+{
+  "scenario": "move_detinput_auditgame_treeleft_reference_queue_long4000_tracepalette_tracebounds_tracevisiblequeue",
+  "romSha256": "34226b2622f640137b6ddb8f08dbb03ceeb2111155cbf1642f73caf66febf092",
+  "fields": 4000,
+  "pixelMatchedPresents": 181,
+  "holds": [
+    {
+      "kind": "transfer-in-progress",
+      "previousVisible": {
+        "event": "visible",
+        "field": 692,
+        "line": 21,
+        "clock": 247327048,
+        "presents": 543,
+        "ready": 3,
+        "rendering": 0,
+        "complete": 0,
+        "target": 7,
+        "statuses": [
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          4,
+          3
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 692,
+        "line": 202,
+        "clock": 247573936,
+        "presents": 543,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 7,
+        "statuses": [
+          2,
+          2,
+          2,
+          1,
+          0,
+          0,
+          4,
+          3
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 693,
+        "line": 21,
+        "clock": 247684416,
+        "presents": 543,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 7,
+        "statuses": [
+          2,
+          2,
+          2,
+          1,
+          0,
+          0,
+          4,
+          3
+        ]
+      }
+    },
+    {
+      "kind": "transfer-in-progress",
+      "previousVisible": {
+        "event": "visible",
+        "field": 696,
+        "line": 21,
+        "clock": 248756512,
+        "presents": 546,
+        "ready": 2,
+        "rendering": 1,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          2,
+          2,
+          1,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 696,
+        "line": 202,
+        "clock": 249003400,
+        "presents": 546,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          2,
+          2,
+          2,
+          1,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 697,
+        "line": 21,
+        "clock": 249113888,
+        "presents": 546,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          2,
+          2,
+          2,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "transfer-in-progress",
+      "previousVisible": {
+        "event": "visible",
+        "field": 699,
+        "line": 21,
+        "clock": 249828608,
+        "presents": 548,
+        "ready": 2,
+        "rendering": 1,
+        "complete": 0,
+        "target": 4,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          3,
+          2,
+          2,
+          1
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 699,
+        "line": 202,
+        "clock": 250075504,
+        "presents": 548,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 4,
+        "statuses": [
+          1,
+          0,
+          0,
+          4,
+          3,
+          2,
+          2,
+          2
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 700,
+        "line": 21,
+        "clock": 250185976,
+        "presents": 548,
+        "ready": 3,
+        "rendering": 1,
+        "complete": 0,
+        "target": 4,
+        "statuses": [
+          1,
+          0,
+          0,
+          4,
+          3,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 719,
+        "line": 21,
+        "clock": 256975936,
+        "presents": 567,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 719,
+        "line": 202,
+        "clock": 257222816,
+        "presents": 567,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 720,
+        "line": 21,
+        "clock": 257333304,
+        "presents": 567,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 1450,
+        "line": 21,
+        "clock": 518210480,
+        "presents": 1297,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 1450,
+        "line": 202,
+        "clock": 518457360,
+        "presents": 1297,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 1451,
+        "line": 21,
+        "clock": 518567848,
+        "presents": 1297,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2161,
+        "line": 21,
+        "clock": 772297704,
+        "presents": 2007,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2161,
+        "line": 202,
+        "clock": 772544592,
+        "presents": 2007,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2162,
+        "line": 21,
+        "clock": 772655064,
+        "presents": 2007,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2164,
+        "line": 21,
+        "clock": 773369800,
+        "presents": 2009,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2164,
+        "line": 202,
+        "clock": 773616688,
+        "presents": 2009,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2165,
+        "line": 21,
+        "clock": 773727176,
+        "presents": 2009,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2168,
+        "line": 21,
+        "clock": 774799264,
+        "presents": 2012,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2168,
+        "line": 202,
+        "clock": 775046144,
+        "presents": 2012,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2169,
+        "line": 21,
+        "clock": 775156632,
+        "presents": 2012,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          2,
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2172,
+        "line": 21,
+        "clock": 776228728,
+        "presents": 2015,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2172,
+        "line": 202,
+        "clock": 776475616,
+        "presents": 2015,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2173,
+        "line": 21,
+        "clock": 776586096,
+        "presents": 2015,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2177,
+        "line": 21,
+        "clock": 778015560,
+        "presents": 2019,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2177,
+        "line": 202,
+        "clock": 778262448,
+        "presents": 2019,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2178,
+        "line": 21,
+        "clock": 778372928,
+        "presents": 2019,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          4,
+          2,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2182,
+        "line": 21,
+        "clock": 779802392,
+        "presents": 2023,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2182,
+        "line": 202,
+        "clock": 780049272,
+        "presents": 2023,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2183,
+        "line": 21,
+        "clock": 780159760,
+        "presents": 2023,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "kind": "transfer-in-progress",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2386,
+        "line": 21,
+        "clock": 852705056,
+        "presents": 2226,
+        "ready": 0,
+        "rendering": 0,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2386,
+        "line": 202,
+        "clock": 852951936,
+        "presents": 2226,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2387,
+        "line": 21,
+        "clock": 853062424,
+        "presents": 2226,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 2,
+        "statuses": [
+          0,
+          4,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "transfer-in-progress",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2389,
+        "line": 21,
+        "clock": 853777152,
+        "presents": 2228,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2389,
+        "line": 202,
+        "clock": 854024040,
+        "presents": 2228,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 4,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          3,
+          1,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2390,
+        "line": 21,
+        "clock": 854134512,
+        "presents": 2228,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 4,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          3,
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2818,
+        "line": 21,
+        "clock": 1007087168,
+        "presents": 2656,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2818,
+        "line": 202,
+        "clock": 1007334048,
+        "presents": 2656,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2819,
+        "line": 21,
+        "clock": 1007444536,
+        "presents": 2656,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2821,
+        "line": 21,
+        "clock": 1008159264,
+        "presents": 2658,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2821,
+        "line": 202,
+        "clock": 1008406152,
+        "presents": 2658,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2822,
+        "line": 21,
+        "clock": 1008516632,
+        "presents": 2658,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2824,
+        "line": 21,
+        "clock": 1009231360,
+        "presents": 2660,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2824,
+        "line": 202,
+        "clock": 1009478240,
+        "presents": 2660,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2825,
+        "line": 21,
+        "clock": 1009588728,
+        "presents": 2660,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          4,
+          2,
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2827,
+        "line": 21,
+        "clock": 1010303464,
+        "presents": 2662,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2827,
+        "line": 202,
+        "clock": 1010550344,
+        "presents": 2662,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2828,
+        "line": 21,
+        "clock": 1010660824,
+        "presents": 2662,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2830,
+        "line": 21,
+        "clock": 1011375560,
+        "presents": 2664,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2830,
+        "line": 202,
+        "clock": 1011622440,
+        "presents": 2664,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2831,
+        "line": 21,
+        "clock": 1011732920,
+        "presents": 2664,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2833,
+        "line": 21,
+        "clock": 1012447664,
+        "presents": 2666,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2833,
+        "line": 202,
+        "clock": 1012694536,
+        "presents": 2666,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2834,
+        "line": 21,
+        "clock": 1012805024,
+        "presents": 2666,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2837,
+        "line": 21,
+        "clock": 1013877120,
+        "presents": 2669,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2837,
+        "line": 202,
+        "clock": 1014124008,
+        "presents": 2669,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          1,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2838,
+        "line": 21,
+        "clock": 1014234480,
+        "presents": 2669,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          0,
+          0,
+          0,
+          4,
+          2,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 2843,
+        "line": 21,
+        "clock": 1016021320,
+        "presents": 2674,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 2843,
+        "line": 202,
+        "clock": 1016268200,
+        "presents": 2674,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 2844,
+        "line": 21,
+        "clock": 1016378680,
+        "presents": 2674,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          0,
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 3515,
+        "line": 21,
+        "clock": 1256171264,
+        "presents": 3345,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 3515,
+        "line": 202,
+        "clock": 1256418152,
+        "presents": 3345,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 3516,
+        "line": 21,
+        "clock": 1256528632,
+        "presents": 3345,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "no-transfer-selected",
+      "previousVisible": {
+        "event": "visible",
+        "field": 3524,
+        "line": 21,
+        "clock": 1259387568,
+        "presents": 3353,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "blankStart": {
+        "event": "blank",
+        "field": 3524,
+        "line": 202,
+        "clock": 1259634448,
+        "presents": 3353,
+        "ready": 0,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "visibleDeadline": {
+        "event": "visible",
+        "field": 3525,
+        "line": 21,
+        "clock": 1259744936,
+        "presents": 3353,
+        "ready": 1,
+        "rendering": 1,
+        "complete": 0,
+        "target": 65535,
+        "statuses": [
+          4,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "transfer-in-progress": 5,
+    "no-transfer-selected": 18
+  },
+  "onlyObservedStateClassification": true,
+  "slotGenerationsNotSampled": true,
+  "totalRenderingAndTransferCausesNotUniquelySeparated": true,
+  "goal60fpsAchieved": false
+}

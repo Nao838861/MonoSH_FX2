@@ -1,0 +1,135 @@
+{
+  "normal": {
+    "romSha256": "c33bdcaf1429d4ded370e4fb5bf570f1035850b0f9514116f48fbe53ed51f28e",
+    "fields": 4000,
+    "logic": 3805,
+    "presents": 3799,
+    "pixelMatchedPresents": 181,
+    "presentationFieldIntervals": {
+      "1": 3745,
+      "2": 50,
+      "3": 1
+    },
+    "stalledTailFields": 0,
+    "goal60fpsAchieved": false,
+    "maxSa1Ms": 24.976636,
+    "runtimeStackAndCopiedPrefixVerifiedRows": 72183,
+    "runtimePrefixRows": 4027,
+    "runtimeGuardRestorationVerified": true,
+    "packetMatchedGenerations": 3803,
+    "tileMasksMatchedGenerations": 3804,
+    "fullFramebuffersMatchedGenerations": 3803,
+    "reducedClearBandBounds": 0,
+    "exactBoundsMatchedGenerations": 3804,
+    "gameStatesMatchedCompletedUpdates": 3804,
+    "gameStateAudit": {
+      "logicUpdates": 3804,
+      "firstLogicGeneration": 2,
+      "lastCompletedLogicGeneration": 3805,
+      "initialBootUpdateNotCaptured": 1,
+      "startedButNotCompletedAtStop": 0,
+      "playerStates": [
+        0,
+        1,
+        2
+      ],
+      "bossStates": [
+        0,
+        1
+      ],
+      "minimumBossHp": 16,
+      "maximumStageFrame": 3746,
+      "maximumEnemies": 8,
+      "maximumPlayerBullets": 3,
+      "runtimeCounterResets": 0,
+      "observationalOnly": true,
+      "invulnerabilityInjected": false
+    }
+  },
+  "fixture": {
+    "romSha256": "c33bdcaf1429d4ded370e4fb5bf570f1035850b0f9514116f48fbe53ed51f28e",
+    "fields": 1520,
+    "logic": 1373,
+    "presents": 1369,
+    "pixelMatchedPresents": 1369,
+    "presentationFieldIntervals": {
+      "1": 1365,
+      "2": 1
+    },
+    "stalledTailFields": 1,
+    "goal60fpsAchieved": false,
+    "maxSa1Ms": 23.533529,
+    "runtimeStackAndCopiedPrefixVerifiedRows": 62716,
+    "runtimePrefixRows": 22846,
+    "runtimeGuardRestorationVerified": true,
+    "fixtureCoverage": {
+      "cases": 2736,
+      "geometries": 76,
+      "initialNormalScreens": 1
+    }
+  },
+  "initial_smoke": {
+    "romSha256": "40094cd28d216b92de09e6f675a45f58215b46d06b80a288b0c237ec1828b6cb",
+    "fields": 800,
+    "logic": 655,
+    "presents": 648,
+    "pixelMatchedPresents": 128,
+    "presentationFieldIntervals": {
+      "1": 642,
+      "2": 3
+    },
+    "stalledTailFields": 0,
+    "goal60fpsAchieved": false,
+    "maxSa1Ms": 21.539793
+  },
+  "initial_boundary_failure": {
+    "passed": false,
+    "pixelVerificationFailure": "present00013",
+    "byteDifferences": [
+      {
+        "offset": 23552,
+        "actual": 0,
+        "expected": 132
+      }
+    ],
+    "failedRomSha256": "40094cd28d216b92de09e6f675a45f58215b46d06b80a288b0c237ec1828b6cb",
+    "excludedFromPerformanceAcceptance": true
+  },
+  "evidence": [
+    {
+      "file": "normal.zip",
+      "bytes": 7527195,
+      "sha256": "04acc0419c9aebbfb077f35c968994aa72fad343fa81fe70c2dbc860ccfe9274"
+    },
+    {
+      "file": "fixture.zip",
+      "bytes": 17335637,
+      "sha256": "6b7a0f88bf6082e63a10cddf446a657deb3c24c726bd5429506462b21fdd4a17"
+    },
+    {
+      "file": "initial_smoke.zip",
+      "bytes": 2470815,
+      "sha256": "69f92dec8506c476edd1ae8ba1218aefc1f5d13529b4a5d75fbeaa7dc3f134a8"
+    },
+    {
+      "file": "initial_boundary_failure.zip",
+      "bytes": 17331060,
+      "sha256": "2fe4b9314932bafb9a1604505f7829bced68a473b3f79568161727f8c21d8397"
+    },
+    {
+      "file": "roms_sources.zip",
+      "bytes": 6492739,
+      "sha256": "a8fba78e7de469fe769c61f9b652aec3c3572da5611bd08fd472821d030e5512"
+    }
+  ],
+  "normalClock": true,
+  "allOriginalPatternsRetained": true,
+  "gameIntegrated": true,
+  "adoptedAsDefault": false,
+  "goal60fpsAchieved": false,
+  "publicReleaseChanged": false,
+  "nativeCodeBytesBefore": 3716029,
+  "nativeCodeBytesAfter": 3607400,
+  "payloadEndBefore": 8180637,
+  "payloadEndAfter": 8071866
+}

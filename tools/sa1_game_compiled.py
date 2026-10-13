@@ -4,7 +4,7 @@ import numpy as np
 from sa1_patterns import dimensions
 from sa1_prescaled import address
 
-def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False,opaque_prefix_inline_raw=False,flame_direct_hints=False,direct_left_hints=False,reverse_tree=False):
+def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=False,row_dirty_step=8,row_dirty_aligned=False,bullet_cache=False,row_dirty_exact=False,bullet_opacity=False,bullet_shapes=False,reverse_explosions_min_width=0,reverse_inline_hints=False,left_inline_hints=False,left_explosion_hints_min_width=0,left_flame_hints=False,opaque_prefix=False,opaque_prefix_inline_raw=False,flame_direct_hints=False,direct_left_hints=False,reverse_tree=False,dense_stack_tree=False):
     rom=bytearray(0x800000);cursor=0x20000;index=bytearray(65536);used=44*512;pool={};rowcache={};codes=set();maximum=0;deferred=[];alignment_gaps=[]
     reserved=((0x400000,0x440000),(0x591300,0x600000))+(((0x7e0000,0x7eb000),) if row_dirty_aligned else ())
     assert not opaque_prefix_inline_raw or opaque_prefix
@@ -65,16 +65,28 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
             for offset in range(origin,end,2):encoded+=struct.pack('<H',values.get(offset,(65535,0))[1])
             rowcache[key]=alloc(encoded).to_bytes(3,'little')
             return rowcache[key]
-        for offset,mask,value in (reversed(words) if reverse else words):
+        dense=tree_inline and dense_stack_tree
+        values={off:(mask,value) for off,mask,value in words}
+        end=words[-1][0]+2 if words else origin
+        sequence=((off,*values.get(off,(65535,0)))for off in range(end-2,origin-1,-2)) if dense else (reversed(words) if reverse else words)
+        for offset,mask,value in sequence:
             offset-=origin
             starts.append((offset,len(code)))
+            if dense:
+                if not mask:code+=b'\xf4'+struct.pack('<H',value)
+                else:
+                    code+=b'\xbd'+struct.pack('<H',offset)
+                    if mask!=65535 or value:code+=b'\x29'+struct.pack('<H',mask)+b'\x09'+struct.pack('<H',value)
+                    code+=b'\x48'
+                continue
             if mask:
                 code+=b'\xbd'+struct.pack('<H',offset)+b'\x29'+struct.pack('<H',mask)+b'\x09'+struct.pack('<H',value)
                 acc=None
             elif reverse or acc!=value:
                 code+=b'\xa9'+struct.pack('<H',value);acc=value
             code+=b'\x9d'+struct.pack('<H',offset)
-        code+=b'\x6b';maximum=max(maximum,len(code));assert len(code)<=0x1f0
+        code+=b'\x5c\x00\x07\x00' if dense else b'\x6b';maximum=max(maximum,len(code));assert len(code)<=0x1f0
+        if dense:assert len(code)<=0xc0
         codes.add(bytes(code))
         end=words[-1][0]+2 if words else 0
         packed=pixels[::2]|pixels[1::2]<<4
@@ -86,7 +98,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
         header=bytes((len(code),end-origin)) if macros else bytes((max(0,best[0]-origin),max(0,best[1]-origin)))
         if tree_inline:
             assert reverse and macros
-            hint=bytes(next((pc for off,pc in starts if off<limit),len(code)-1) for limit in range(0,end-origin+1,2))
+            hint=bytes(next((pc for off,pc in starts if off<limit),len(code)-(4 if dense else 1)) for limit in range(0,end-origin+1,2))
             if hint not in tree_hint_indices:
                 tree_hint_indices[hint]=len(tree_hints);tree_hints.append(hint)
                 assert len(tree_hints)<=256
@@ -201,6 +213,7 @@ def build(variants,dest,macros=False,stride=128,row_dirty=False,row_dirty_bands=
     if reuse_gaps:info.update(deferredGapRanges=alignment_gaps,deferredGapBytes=sum(g['used'] for g in alignment_gaps))
     if direct_left_hints:info.update(directLeftHints=True,initialValueTable=initial_table,initialValues=initial_values)
     if reverse_tree:info.update(reverseTree=True,treeHints=[h.hex() for h in tree_hints])
+    if dense_stack_tree:info.update(denseStackTree=True)
     (dest/'compiled_game_packing.json').write_text(json.dumps(info,indent=2)+'\n');print(json.dumps(info))
     if shapes is not None:shapes.save(dest)
     return rom

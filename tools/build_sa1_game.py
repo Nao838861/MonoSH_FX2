@@ -62,7 +62,12 @@ def main():
     ap.add_argument('--right-narrow-prefix',action='store_true')
     ap.add_argument('--right-narrow-scenery',action='store_true')
     ap.add_argument('--reverse-tree',action='store_true')
+    ap.add_argument('--dense-stack-tree',action='store_true')
     ap.add_argument('--reverse-tree-bypass',action='store_true')
+    ap.add_argument('--reverse-tree-left',action='store_true')
+    ap.add_argument('--reverse-tree-left-bypass',action='store_true')
+    ap.add_argument('--reverse-tree-left-no-cache',action='store_true')
+    ap.add_argument('--reverse-tree-left-min-bytes',type=int,choices=range(0,33),default=0)
     ap.add_argument('--right-clip-fast',action='store_true')
     ap.add_argument('--right-clip-window',action='store_true')
     ap.add_argument('--right-clip-window-min',type=int,choices=range(1,65),default=17)
@@ -267,6 +272,10 @@ def main():
     assert not args.right_narrow_scenery or args.right_narrow_prefix
     assert not args.reverse_tree or (args.renderer=='macros' and args.deep_bw and args.left_hints and args.row_dirty_exact and args.redraw_no_history and not args.reverse_explosions and not args.right_clip_jit and not args.clip_resident and not args.edge_band_guard and not args.cpu_dirty and not args.sa1_game and not args.sa1_game_compact)
     assert not args.reverse_tree_bypass or args.reverse_tree
+    assert not args.dense_stack_tree or (args.reverse_tree and not args.reverse_tree_bypass and not args.reverse_tree_left)
+    assert not args.reverse_tree_left or args.reverse_tree
+    assert not (args.reverse_tree_left_bypass or args.reverse_tree_left_no_cache) or args.reverse_tree_left
+    assert not args.reverse_tree_left_min_bytes or args.reverse_tree_left
     assert not args.fallback_mask or (args.deep_bw and args.irq_fastrom and not args.cpu_pack and not args.dense_tiles)
     assert not args.fallback_early or (args.fallback_mask and args.early_request)
     assert not args.fallback_sa1 or args.fallback_mask
@@ -1128,7 +1137,7 @@ opaque_sprite_fallback:
             src=BUILD/'fast_right_narrow.s';src.write_text(src_text,encoding='utf8')
         if args.reverse_tree and name=='fast':
             from sa1_reverse_tree import fast as reverse_tree_fast
-            src_text=reverse_tree_fast(src.read_text(encoding='utf8'),bypass=args.reverse_tree_bypass)
+            src_text=reverse_tree_fast(src.read_text(encoding='utf8'),bypass=args.reverse_tree_bypass,left=args.reverse_tree_left,left_bypass=args.reverse_tree_left_bypass,left_min_bytes=args.reverse_tree_left_min_bytes,dense=args.dense_stack_tree)
             src=BUILD/'fast_reverse_tree.s';src.write_text(src_text,encoding='utf8')
         if args.edge_band_guard and name=='fast':
             from sa1_edge_band_guard import band_fast
@@ -1423,6 +1432,10 @@ opaque_sprite_fallback:
         obj=BUILD/'right_narrow_prefix.o';run([CC/'ca65.exe','-o',obj,src]);objs.append(obj)
     if args.reverse_tree:
         obj=BUILD/'reverse_tree.o';run([CC/'ca65.exe','-o',obj,SA1/'reverse_tree_game.s']);objs.append(obj)
+    if args.dense_stack_tree:
+        obj=BUILD/'dense_stack_tree.o';run([CC/'ca65.exe','-o',obj,SA1/'dense_stack_tree_game.s']);objs.append(obj)
+    if args.reverse_tree_left:
+        obj=BUILD/'reverse_tree_left.o';run([CC/'ca65.exe',*(['-D','SA1_TREE_LEFT_NO_CACHE=1']if args.reverse_tree_left_no_cache else []),'-o',obj,SA1/'reverse_tree_left_game.s']);objs.append(obj)
     if args.right_clip_jit:
         src=SA1/'right_clip_game.s'
         if args.right_clip_window:
@@ -1562,7 +1575,9 @@ opaque_sprite_fallback:
         suffix+=('_flame' if args.left_flame_hints else '')
         key+=str(args.opaque_prefix)
         key+=str(args.reverse_tree)
+        if args.dense_stack_tree:key+='denseStackTree'
         suffix+=('_reversetree' if args.reverse_tree else '')
+        suffix+=('_densestacktree' if args.dense_stack_tree else '')
         suffix+=('_opaqueprefix' if args.opaque_prefix else '')
         key+=str(args.opaque_prefix_inline_raw)
         suffix+=('_raw' if args.opaque_prefix_inline_raw else '')
@@ -1575,7 +1590,7 @@ opaque_sprite_fallback:
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw,flame_direct_hints=args.flame_direct_hints,direct_left_hints=args.direct_left_hints,reverse_tree=args.reverse_tree)
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw,flame_direct_hints=args.flame_direct_hints,direct_left_hints=args.direct_left_hints,reverse_tree=args.reverse_tree,dense_stack_tree=args.dense_stack_tree)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -1701,7 +1716,8 @@ opaque_sprite_fallback:
         manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.reverse_tree:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text())
-        manifest.update(reverseTree=True,reverseTreeBypass=args.reverse_tree_bypass)
+        manifest.update(reverseTree=True,reverseTreeBypass=args.reverse_tree_bypass,reverseTreeLeft=args.reverse_tree_left,
+            reverseTreeLeftBypass=args.reverse_tree_left_bypass,reverseTreeLeftNoCache=args.reverse_tree_left_no_cache,reverseTreeLeftMinBytes=args.reverse_tree_left_min_bytes,denseStackTree=args.dense_stack_tree)
         manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.opaque_prefix:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['opaquePrefix']=True
