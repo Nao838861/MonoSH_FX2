@@ -387,6 +387,77 @@ local function cb(name,fn,cpu)
  local a=labels[name]+(packetHook and 0 or gameHook and 0xc10000 or cpu==emu.cpuType.snes and labels[name]<65536 and (irqName and IRQCODEBASE or cpuCodeBase) or 0)
  emu.addMemoryCallback(function()if finishedCapture then return end;local ok,err=pcall(fn);if not ok then local f=assert(io.open(output..'/failure.txt','w'));f:write(tostring(err));f:close();local g=assert(io.open(output..'/failure_state.txt','w'));for k,v in pairs(emu.getState())do g:write(tostring(k)..'='..tostring(v)..'\\n')end;g:close();emu.stop(1)end end,emu.callbackType.exec,a,a,cpu,cpu==emu.cpuType.snes and emu.memType.snesMemory or emu.memType.sa1Memory)
 end
+if labels.fp_probe_begin then
+ local f=assert(io.open(output..'/fixed_front_probe.jsonl','w'))
+ local sample=FRONTPROBEGEN
+ local history={[0]={}};for i=0,95 do history[0][i]=0 end
+ if sample>0 then
+  cb('sa1_occupancy_capture',function()
+   local gen=emu.read16(0x198,emu.memType.sa1Memory);local m={}
+   for i=0,95 do m[i]=emu.read(0x432800+i,emu.memType.sa1Memory)end
+   history[gen]=m
+  end,emu.cpuType.sa1)
+ end
+ local begin,masksClock,readyClock,entry,result=nil,0,0,nil,nil
+ local previous={};for i=0,95 do previous[i]=0 end
+ local current=nil;local lastGeneration=0
+ cb('fp_probe_begin',function()
+  local s=emu.getState();assert(not begin,'nested front probe')
+  begin=s.masterClock;entry={a=s['cpu.a'],x=s['cpu.x'],y=s['cpu.y'],d=s['cpu.d'],db=s['cpu.dbr'],sp=s['cpu.sp'],line=s['ppu.scanline'],irq=irqDepth>0 and 1 or 0}
+ end)
+ cb('fp_probe_masks',function()
+  local mt=emu.memType.snesMemory;local b=0x7e0000
+  assert(begin,'front masks before begin');masksClock=emu.getState().masterClock
+  local gen=emu.read16(labels.fp_generation,mt)
+  if sample>0 then
+   assert(gen==sample and history[gen] and history[gen-1],'front sample lacks mask history')
+   previous=history[gen-1]
+  else assert(gen==lastGeneration+1,'front probe skipped or repeated a generation')end
+  current={}
+  for i=0,95 do
+   current[i]=emu.read(b+labels.fp_current+i,mt)
+   if sample>0 then assert(current[i]==history[gen][i],'front sample differs from occupancy capture')end
+   assert(current[i]==emu.read(0x432800+i,mt),string.format('front probe copied wrong current mask: gen=%d offset=%d got=%d expected=%d dma=%s',gen,i,current[i],emu.read(0x432800+i,mt),tostring(emu.getState()['dmaController.channel[0].dmaActive'])))
+   assert(emu.read(b+labels.fp_previous+i,mt)==previous[i],'front probe previous mask changed')
+  end
+ end)
+ cb('fp_probe_ready',function()
+  local mt=emu.memType.snesMemory;local b=0x7e0000;local gap=1;local runs
+  assert(begin and current,'front probe ready before mask copy')
+  readyClock=emu.getState().masterClock
+  repeat
+   runs={}
+   for tile=32,767 do
+    if ((current[tile//8]|previous[tile//8])>>(tile%8))&1~=0 then
+     local start=tile*32;local finish=start+32
+     if #runs>0 and start-runs[#runs][2]<gap then runs[#runs][2]=finish
+     else runs[#runs+1]={start,finish}end
+    end
+   end
+   if #runs>48 then gap=gap+64 end
+  until #runs<=48
+  assert(emu.read16(labels.fp_count,mt)==#runs and emu.read16(labels.fp_gap,mt)==gap,'front probe run count/gap differs')
+  local bytes,cost=0,0;local base=emu.read16(labels.fp_source_base,mt)
+  for i,r in ipairs(runs)do
+   local length=r[2]-r[1];local a=b+labels.fp_descriptors+(i-1)*6
+   assert(emu.read16(a,mt)==length and emu.read16(a+2,mt)==r[1]+base and emu.read16(a+4,mt)==r[1]//2-496,'front probe descriptor differs')
+   bytes=bytes+length;cost=cost+length+length//32+length//128+57
+   local p=b+labels.fp_prefix+(i-1)*4
+   assert(emu.read16(p,mt)==bytes and emu.read16(p+2,mt)==cost,'front probe cumulative prefix differs')
+  end
+  assert(emu.read16(labels.fp_bytes,mt)==bytes and emu.read16(labels.fp_cost,mt)==cost,'front probe totals differ')
+  result={gen=emu.read16(labels.fp_generation,mt),bytes=bytes,cost=cost,count=#runs,gap=gap}
+ end)
+ cb('fp_probe_return',function()
+  local s=emu.getState();assert(begin and result,'front probe returned before verification')
+  assert(s['cpu.a']==entry.a and s['cpu.x']==entry.x and s['cpu.y']==entry.y and s['cpu.d']==entry.d and s['cpu.dbr']==entry.db and s['cpu.sp']==entry.sp,'front probe did not restore CPU registers/stack')
+  local mt=emu.memType.snesMemory
+  for i=0,95 do assert(emu.read(0x7e0000+labels.fp_previous+i,mt)==current[i],'front probe did not remember current mask')end
+  f:write(string.format('{"generation":%d,"field":%d,"irq":%d,"bytes":%d,"cost":%d,"count":%d,"gap":%d,"beginLine":%d,"endLine":%d,"totalMs":%.6f,"copyMs":%.6f,"planningMs":%.6f,"rememberMs":%.6f}\\n',result.gen,field,entry.irq,result.bytes,result.cost,result.count,result.gap,entry.line,s['ppu.scanline'],(s.masterClock-begin)/21477.272,(masksClock-begin)/21477.272,(readyClock-masksClock)/21477.272,(s.masterClock-readyClock)/21477.272));f:flush()
+  if sample>0 then finishedCapture=true;emu.stop(0)end
+  previous=current;current=nil;lastGeneration=result.gen;result=nil;begin=nil
+ end)
+end
 if scenario:match('tracebounds') then
  local f=assert(io.open(output..'/mask_bounds_trace.bin','wb'))
  cb('sa1_occupancy_capture',function()
@@ -1366,6 +1437,7 @@ end,emu.eventType.endFrame)
     script=script.replace('PREBANKDMA','true' if config.get('prebankDma') else 'false')
     script=script.replace('DMASHORTIO','true' if config.get('dmaShortIo') else 'false')
     script=script.replace('PREFIXREFRESHSIXTEENTH','true' if config.get('prefixRefreshSixteenth') else 'false')
+    script=script.replace('FRONTPROBEGEN',str(config.get('fixedFrontProbeGeneration',0)))
     script=script.replace('PREFIXDESCCOST',str(64-(7 if config.get('dmaWordStart') else 0)-config.get('prebankDescriptorCostDiscount',0)))
     script=script.replace('SPLITVIEWPORTS','true' if config.get('splitViewports') else 'false')
     script=script.replace('PACKETOFFLOAD','true' if config.get('packetOffload') else 'false')
@@ -1381,6 +1453,15 @@ end,emu.eventType.endFrame)
     (dest/'emulator.log').write_bytes(result.stdout+result.stderr)
     if (dest/'failure.txt').exists():raise AssertionError((dest/'failure.txt').read_text())
     if result.returncode:print((result.stdout+result.stderr).decode(errors='replace'));raise RuntimeError('Mesen failed')
+    if config.get('fixedFrontProbeGeneration'):
+        rows=[json.loads(x) for x in (dest/'fixed_front_probe.jsonl').read_text().splitlines()]
+        assert len(rows)==1 and rows[0]['generation']==config['fixedFrontProbeGeneration']
+        result=dict(probe=rows[0],romSha256=config['romSha256'],goal60fpsAchieved=False,
+            runtimeMasksDescriptorsPrefixesRegistersVerified=True,
+            stoppedBeforeReturningToDisplayPath=True,pixelMatchedPresents=verify_pixels(dest,labels,config),
+            maskBoundsVerified=verify_mask_bounds(dest,False))
+        (dest/'probe_result.json').write_text(json.dumps(result,indent=2)+'\n')
+        print(json.dumps(result));return
     for f in dest.glob('*.rgb'):
         raw=f.read_bytes();Image.frombytes('RGB',(256,len(raw)//768),raw).save(f.with_suffix('.png'))
     summary=json.loads((dest/'summary.json').read_text())

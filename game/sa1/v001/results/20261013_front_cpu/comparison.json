@@ -1,0 +1,186 @@
+{
+  "cases": {
+    "543": {
+      "probe": {
+        "generation": 543,
+        "field": 687,
+        "irq": 1,
+        "bytes": 10048,
+        "cost": 12590,
+        "count": 38,
+        "gap": 1,
+        "beginLine": 125,
+        "endLine": 1,
+        "totalMs": 8.788174,
+        "copyMs": 0.152906,
+        "planningMs": 8.282337,
+        "rememberMs": 0.352931
+      },
+      "romSha256": "e5ee8147664623e27ad332f7e7089dadfd8156a7898b953114f9f1bbecacd680",
+      "goal60fpsAchieved": false,
+      "runtimeMasksDescriptorsPrefixesRegistersVerified": true,
+      "stoppedBeforeReturningToDisplayPath": true,
+      "pixelMatchedPresents": 134,
+      "maskBoundsVerified": {
+        "jobs": 543,
+        "bands": 13032,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 11,
+        "fullFramebufferJobs": 543,
+        "exact": false
+      },
+      "packetMatchedGenerations": 543,
+      "tileMasksMatchedGenerations": 543,
+      "fullFramebuffersMatchedGenerations": 543,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 543,
+      "backUnion": {
+        "bytes": 10400,
+        "descriptors": 39,
+        "mergeGap": 1,
+        "estimatedCost": 13012
+      },
+      "savedBytes": 352,
+      "savedEstimatedCost": 422,
+      "savedEstimatedDmaMs": 0.15718942331223443,
+      "probeToEstimatedSavingRatio": 55.90817635702844,
+      "staticPrefixVerification": {
+        "romSha256": "e5ee8147664623e27ad332f7e7089dadfd8156a7898b953114f9f1bbecacd680",
+        "compiledSearchCases": 59024,
+        "compiledFullShortcutCases": 58148,
+        "blankHdmaTableInCpuCodeVerified": true,
+        "budgetScanlineAndHpointCases": 262144,
+        "compiledInstructionsExecuted": true,
+        "YRestored": true,
+        "goal60fpsAchieved": false
+      }
+    },
+    "546": {
+      "probe": {
+        "generation": 546,
+        "field": 691,
+        "irq": 1,
+        "bytes": 10176,
+        "cost": 12613,
+        "count": 36,
+        "gap": 1,
+        "beginLine": 117,
+        "endLine": 251,
+        "totalMs": 8.515327,
+        "copyMs": 0.154582,
+        "planningMs": 8.022062,
+        "rememberMs": 0.338684
+      },
+      "romSha256": "a27f6e9bd0ec85a28b3a01763b1c0cc82320e4df629a5e756f7d67f14c72ab3f",
+      "goal60fpsAchieved": false,
+      "runtimeMasksDescriptorsPrefixesRegistersVerified": true,
+      "stoppedBeforeReturningToDisplayPath": true,
+      "pixelMatchedPresents": 138,
+      "maskBoundsVerified": {
+        "jobs": 546,
+        "bands": 13104,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 11,
+        "fullFramebufferJobs": 546,
+        "exact": false
+      },
+      "packetMatchedGenerations": 546,
+      "tileMasksMatchedGenerations": 546,
+      "fullFramebuffersMatchedGenerations": 546,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 546,
+      "backUnion": {
+        "bytes": 11744,
+        "descriptors": 41,
+        "mergeGap": 1,
+        "estimatedCost": 14524
+      },
+      "savedBytes": 1568,
+      "savedEstimatedCost": 1911,
+      "savedEstimatedDmaMs": 0.7118222463262559,
+      "probeToEstimatedSavingRatio": 11.962715472785453,
+      "staticPrefixVerification": {
+        "romSha256": "a27f6e9bd0ec85a28b3a01763b1c0cc82320e4df629a5e756f7d67f14c72ab3f",
+        "compiledSearchCases": 59024,
+        "compiledFullShortcutCases": 58148,
+        "blankHdmaTableInCpuCodeVerified": true,
+        "budgetScanlineAndHpointCases": 262144,
+        "compiledInstructionsExecuted": true,
+        "YRestored": true,
+        "goal60fpsAchieved": false
+      }
+    },
+    "549": {
+      "probe": {
+        "generation": 549,
+        "field": 695,
+        "irq": 1,
+        "bytes": 10944,
+        "cost": 13748,
+        "count": 42,
+        "gap": 1,
+        "beginLine": 22,
+        "endLine": 174,
+        "totalMs": 9.690337,
+        "copyMs": 0.149181,
+        "planningMs": 9.17854,
+        "rememberMs": 0.362616
+      },
+      "romSha256": "75afa4dbc903d4bd88efffa568511715a93603ec13439428b3000c7d3a8fccbf",
+      "goal60fpsAchieved": false,
+      "runtimeMasksDescriptorsPrefixesRegistersVerified": true,
+      "stoppedBeforeReturningToDisplayPath": true,
+      "pixelMatchedPresents": 142,
+      "maskBoundsVerified": {
+        "jobs": 549,
+        "bands": 13176,
+        "recordBytes": 194,
+        "equivalentEmptyBounds": 5,
+        "conservativeBounds": 11,
+        "fullFramebufferJobs": 549,
+        "exact": false
+      },
+      "packetMatchedGenerations": 549,
+      "tileMasksMatchedGenerations": 549,
+      "fullFramebuffersMatchedGenerations": 549,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 549,
+      "backUnion": {
+        "bytes": 11648,
+        "descriptors": 39,
+        "mergeGap": 1,
+        "estimatedCost": 14311
+      },
+      "savedBytes": 704,
+      "savedEstimatedCost": 563,
+      "savedEstimatedDmaMs": 0.20971006001134593,
+      "probeToEstimatedSavingRatio": 46.208260106719365,
+      "staticPrefixVerification": {
+        "romSha256": "75afa4dbc903d4bd88efffa568511715a93603ec13439428b3000c7d3a8fccbf",
+        "compiledSearchCases": 59024,
+        "compiledFullShortcutCases": 58148,
+        "blankHdmaTableInCpuCodeVerified": true,
+        "budgetScanlineAndHpointCases": 262144,
+        "compiledInstructionsExecuted": true,
+        "YRestored": true,
+        "goal60fpsAchieved": false
+      }
+    }
+  },
+  "gameIntegratedFrontUpdates": false,
+  "diagnosticOnly": true,
+  "goal60fpsAchieved": false,
+  "allOriginalPatternsRetained": true,
+  "hostSpriteDrawingUsed": false,
+  "publicReleaseChanged": false,
+  "decision": "S-CPU\u3067\u6bce\u30d5\u30ec\u30fc\u30e0\u524d\u9762\u5dee\u5206list\u3092\u69cb\u7bc9\u3059\u308b\u65b9\u5f0f\u306f\u8cbb\u7528\u904e\u5927\u306e\u305f\u3081\u4e0d\u63a1\u7528\u3002SA-1\u5074\u3078\u79fb\u305b\u3070\u6539\u5584\u3059\u308b\u304b\u306f\u672a\u691c\u8a3c\u3002",
+  "rejectedContinuous": {
+    "romSha256": "cdac4f519256f11f431bbcd48340e87e233ef573b95fbb522a9072622d4bc2d5",
+    "reason": "field384/line27\u306e\u8868\u793a\u4e2d\u306bpage flip\u3057\u3001\u65e2\u5b58harness\u304c\u505c\u6b62\u300260fps/\u6b63\u5e38\u8868\u793a\u306e\u8a3c\u62e0\u306b\u4f7f\u308f\u306a\u3044\u3002"
+  },
+  "invalidBootAttempts": "v1\u306f\u5b58\u5728\u3057\u306a\u304481:xxxx\u30df\u30e9\u30fc\u3092\u547c\u3073\u3001v2\u306fRODATA\u4f4d\u7f6e\u3001v3\u306fBSS\u30bc\u30ed\u521d\u671f\u5316\u3092\u58ca\u3057\u305f\u3002\u521d\u671f\u5931\u6557\u306f\u901f\u5ea6\u8a3c\u62e0\u304b\u3089\u9664\u5916\u3002v4\u306eDMA\u5b8c\u4e86\u524d\u89b3\u6e2c\u306fNOP\u3092\u8ffd\u52a0\u3057\u3001final3\u672c\u3067\u518d\u691c\u67fb\u3002",
+  "evidenceBytes": 17701626,
+  "evidenceSha256": "3db4a1e917fd259c13e7be79a43abddc1cdef12abee25ac29bc8305b4a626456"
+}

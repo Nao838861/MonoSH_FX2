@@ -149,6 +149,8 @@ def main():
     ap.add_argument('--dma-unroll-count',type=int,choices=[12,16,20],default=12)
     ap.add_argument('--prefix-refresh-sixteenth',action='store_true')
     ap.add_argument('--tail-flip-reserve',type=int,choices=[0,1400],default=0)
+    ap.add_argument('--fixed-front-probe',action='store_true')
+    ap.add_argument('--fixed-front-probe-generation',type=int,default=0)
     args=ap.parse_args()
     assert args.edge_dma_min==33 or (args.cpu_edge_copy and args.small_edge_jit and not args.wide_edge_jit)
     assert not args.edge_lazy_jit or (args.cpu_edge_copy and args.small_edge_jit and args.deep_bw and not args.wide_edge_jit and not args.split_viewports and not args.clip_resident and not args.dirty_iram and not args.sa1_game and not args.sa1_game_compact)
@@ -166,6 +168,10 @@ def main():
     assert not args.prefix_refresh_sixteenth or (args.prebank_dma and args.dma_short_io and args.dma_unroll_count<=16 and not args.prefix_cpu_table)
     assert not args.tail_flip_reserve or (args.prebank_dma and args.dma_unroll_count<=16 and not args.prefix_refresh_sixteenth and not args.flip_small_reserve and not args.flip_player_reserve)
     prebank_cost_discount=(4 if args.prebank_dma else 0)+(2 if args.dma_short_io else 0)
+    assert not args.fixed_front_probe or (args.prefix_one_pass and args.fixed_map and args.deep_bw and not args.prebank_dma and not args.prefix_cpu_table and not args.cpu_dirty and not args.sa1_game and not args.sa1_game_compact)
+    # 毎世代実行すると切替IRQの期限を越えるため、指定世代だけの診断に限定する。
+    assert not args.fixed_front_probe or 1<=args.fixed_front_probe_generation<65536
+    assert not args.fixed_front_probe_generation or args.fixed_front_probe
     assert not args.dirty_tile_round or (args.fixed_map and args.deep_bw and args.row_dirty_exact and args.redraw_no_history and not args.cpu_dirty and not args.dirty_iram)
     assert not args.mask_bounds_wide_table or args.mask_bounds
     assert not args.mask_bounds or (args.fixed_map and args.deep_bw and args.occupancy and args.row_dirty_aligned and args.row_dirty_exact and args.redraw_no_history and args.front_mask and not args.cpu_dirty and not args.dirty_iram and not args.mask_clear and not args.changed_mask and not args.sa1_game and not args.sa1_game_compact and not args.tile_dma and not args.transfer_tiles and not args.padded_pipeline)
@@ -570,6 +576,16 @@ def main():
     if args.tail_flip_reserve:
         from sa1_transfer_deadline import tail_flip_reserve
         path=BUILD/'pipeline_tuned.inc';path.write_text(tail_flip_reserve(path.read_text(encoding='utf8'),args.tail_flip_reserve),encoding='utf8')
+    if args.fixed_front_probe:
+        path=BUILD/'pipeline_tuned.inc';text=path.read_text(encoding='utf8')
+        old='  jsl sd_collect_costs\n'
+        assert text.count(old)==1
+        call='  jsl fp_probe_begin\n'
+        if args.fixed_front_probe_generation:
+            assert 1<=args.fixed_front_probe_generation<65536
+            call=f'  lda pipe_records+8,x\n  cmp #{args.fixed_front_probe_generation}\n  bne :+\n'+call+':\n'
+        text='.import fp_probe_begin: far\n'+text.replace(old,old+call,1)
+        path.write_text(text,encoding='utf8')
     if args.native_near:defines+=['-D','SA1_NATIVE_NEAR=1']
     if args.changed_mask:defines+=['-D','SA1_CHANGED_MASK=1']
     if args.front_mask:defines+=['-D','SA1_FRONT_MASK=1']
@@ -1401,6 +1417,12 @@ opaque_sprite_fallback:
         obj=BUILD/'clip_left.o';run([CC/'ca65.exe','-o',obj,SA1/'clip_left_game.s']);objs.append(obj)
     if args.temporal_sort:
         obj=BUILD/'temporal_sort.o';run([CC/'ca65.exe','-o',obj,SA1/'temporal_sort_game.s']);objs.append(obj)
+    if args.fixed_front_probe:
+        tables=(SA1/'transfer_mask_game.s').read_text(encoding='utf8').split('tm_first:\n',1)[1]
+        tables=('tm_first:\n'+tables).replace('tm_first','fp_first').replace('tm_length','fp_length_table').replace('tm_rest','fp_rest')
+        (BUILD/'fixed_front_tables.inc').write_text(tables,encoding='utf8')
+        extra=['-D','FP_SAMPLE=1'] if args.fixed_front_probe_generation else []
+        obj=BUILD/'fixed_front_probe.o';run([CC/'ca65.exe',*extra,'-I',BUILD,'-o',obj,SA1/'fixed_front_probe_cpu.s']);objs.append(obj)
     if args.stack_fill or args.stack_band:
         obj=BUILD/'stack_fill.o';run([CC/'ca65.exe',*clip_defines,'-o',obj,SA1/'stack_fill_game.s']);objs.append(obj)
     if args.cpu_fill or args.cpu_far:
@@ -1466,6 +1488,9 @@ opaque_sprite_fallback:
         assert labels['__COLORBSS_RUN__']+labels['__COLORBSS_SIZE__']<=0xf000,'CPU dirty work overlaps COLORBSS'
     if args.fixed_map_delta:
         assert labels['fx4_wait_obj_blank']<0x10000,'fixed delta helpers leaked the GSU segment into the CPU include'
+    if args.fixed_front_probe:
+        assert labels['fp_probe_begin']>>16==1,'front probe must use the actual bank 01 mapping'
+        assert labels['__RODATA_LOAD__']==0xc20000,'front probe shifted the boot data copy'
     legacy=linked.read_bytes();assert len(legacy)==0x200000
     if args.vram_fifo_map_bw:
         from sa1_vram_fifo import check_map_bw_layout
@@ -1650,6 +1675,8 @@ opaque_sprite_fallback:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['prefixRefreshSixteenth']=True;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.tail_flip_reserve:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['tailFlipReserve']=args.tail_flip_reserve;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.fixed_front_probe:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['fixedFrontProbe']=True;manifest['fixedFrontProbeGeneration']=args.fixed_front_probe_generation;manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     print(path)
 
 if __name__=='__main__':main()
