@@ -61,6 +61,8 @@ def main():
     ap.add_argument('--right-clip-jit',action='store_true')
     ap.add_argument('--right-narrow-prefix',action='store_true')
     ap.add_argument('--right-narrow-scenery',action='store_true')
+    ap.add_argument('--reverse-tree',action='store_true')
+    ap.add_argument('--reverse-tree-bypass',action='store_true')
     ap.add_argument('--right-clip-fast',action='store_true')
     ap.add_argument('--right-clip-window',action='store_true')
     ap.add_argument('--right-clip-window-min',type=int,choices=range(1,65),default=17)
@@ -263,6 +265,8 @@ def main():
     assert not args.right_clip_jit or (args.deep_bw and args.bullet_words)
     assert not args.right_narrow_prefix or (args.deep_bw and args.bullet_words and args.renderer=='macros' and not args.right_clip_jit and not args.reverse_explosions and not args.clip_resident)
     assert not args.right_narrow_scenery or args.right_narrow_prefix
+    assert not args.reverse_tree or (args.renderer=='macros' and args.deep_bw and args.left_hints and args.row_dirty_exact and args.redraw_no_history and not args.reverse_explosions and not args.right_clip_jit and not args.clip_resident and not args.edge_band_guard and not args.cpu_dirty and not args.sa1_game and not args.sa1_game_compact)
+    assert not args.reverse_tree_bypass or args.reverse_tree
     assert not args.fallback_mask or (args.deep_bw and args.irq_fastrom and not args.cpu_pack and not args.dense_tiles)
     assert not args.fallback_early or (args.fallback_mask and args.early_request)
     assert not args.fallback_sa1 or args.fallback_mask
@@ -1122,6 +1126,10 @@ opaque_sprite_fallback:
             from sa1_right_narrow import fast as right_narrow_fast
             src_text=right_narrow_fast(src.read_text(encoding='utf8'),scenery=args.right_narrow_scenery)
             src=BUILD/'fast_right_narrow.s';src.write_text(src_text,encoding='utf8')
+        if args.reverse_tree and name=='fast':
+            from sa1_reverse_tree import fast as reverse_tree_fast
+            src_text=reverse_tree_fast(src.read_text(encoding='utf8'),bypass=args.reverse_tree_bypass)
+            src=BUILD/'fast_reverse_tree.s';src.write_text(src_text,encoding='utf8')
         if args.edge_band_guard and name=='fast':
             from sa1_edge_band_guard import band_fast
             text=band_fast(src.read_text(encoding='utf8'))
@@ -1413,6 +1421,8 @@ opaque_sprite_fallback:
         from sa1_right_narrow import helper as right_narrow_helper
         src=BUILD/'right_narrow_prefix.s';src.write_text(right_narrow_helper((SA1/'right_clip_game.s').read_text(encoding='utf8')),encoding='utf8')
         obj=BUILD/'right_narrow_prefix.o';run([CC/'ca65.exe','-o',obj,src]);objs.append(obj)
+    if args.reverse_tree:
+        obj=BUILD/'reverse_tree.o';run([CC/'ca65.exe','-o',obj,SA1/'reverse_tree_game.s']);objs.append(obj)
     if args.right_clip_jit:
         src=SA1/'right_clip_game.s'
         if args.right_clip_window:
@@ -1551,6 +1561,8 @@ opaque_sprite_fallback:
         suffix+=(f'_leftinline{left_inline_min}' if args.left_inline_hints else '')
         suffix+=('_flame' if args.left_flame_hints else '')
         key+=str(args.opaque_prefix)
+        key+=str(args.reverse_tree)
+        suffix+=('_reversetree' if args.reverse_tree else '')
         suffix+=('_opaqueprefix' if args.opaque_prefix else '')
         key+=str(args.opaque_prefix_inline_raw)
         suffix+=('_raw' if args.opaque_prefix_inline_raw else '')
@@ -1563,7 +1575,7 @@ opaque_sprite_fallback:
             rom=bytearray(cache.read_bytes())
             (BUILD/'compiled_game_packing.json').write_text(json.dumps(json.loads(metadata.read_text())['packing'],indent=2)+'\n')
         else:
-            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw,flame_direct_hints=args.flame_direct_hints,direct_left_hints=args.direct_left_hints)
+            rom=compiled_cache(variants,BUILD,macros=args.renderer=='macros',stride=stride,row_dirty=args.row_dirty,row_dirty_bands=args.row_dirty_bands,row_dirty_step=args.row_dirty_step,row_dirty_aligned=args.row_dirty_aligned,bullet_cache=args.bullet_cache,row_dirty_exact=args.row_dirty_exact,bullet_opacity=args.bullet_opacity,bullet_shapes=args.bullet_shapes,reverse_explosions_min_width=reverse_min,reverse_inline_hints=args.reverse_inline_hints,left_inline_hints=args.left_inline_hints,left_explosion_hints_min_width=left_inline_min,left_flame_hints=args.left_flame_hints,opaque_prefix=args.opaque_prefix,opaque_prefix_inline_raw=args.opaque_prefix_inline_raw,flame_direct_hints=args.flame_direct_hints,direct_left_hints=args.direct_left_hints,reverse_tree=args.reverse_tree)
             cache.write_bytes(rom)
             metadata.write_text(json.dumps({'key':key,'packing':json.loads((BUILD/'compiled_game_packing.json').read_text())}))
     else:rom=build_cache(variants,BUILD,game=True)
@@ -1574,7 +1586,7 @@ opaque_sprite_fallback:
         run([CC/'ca65.exe',*opaque_defines,'-I',BUILD,'-o',BUILD/'opaque_prefix.o',SA1/'opaque_prefix_game.s'])
     if args.left_hints:
         from sa1_left_hints import build as left_hints_build
-        rom=left_hints_build(rom,BUILD,compressed=args.left_hints_compressed,use_spare=args.reverse_inline_hints and not args.left_inline_hints,extra_min_width=args.left_explosion_hints_min_width if args.left_explosion_hints else 0,inline=args.left_inline_hints,flame=args.left_flame_hints,direct=args.direct_left_hints)
+        rom=left_hints_build(rom,BUILD,compressed=args.left_hints_compressed,use_spare=(args.reverse_inline_hints and not args.left_inline_hints) or args.reverse_tree,extra_min_width=args.left_explosion_hints_min_width if args.left_explosion_hints else 0,inline=args.left_inline_hints,flame=args.left_flame_hints,direct=args.direct_left_hints)
         spare_data=[(r['begin'],bytes(rom[r['begin']:r['begin']+r['used']])) for r in json.loads((BUILD/'left_hints_packing.json').read_text()).get('spareRanges',[])]
         run([CC/'ca65.exe',*clip_defines,*(['-D','SA1_FLAME_DIRECT_HINTS=1'] if args.flame_direct_hints else []),*(['-D','SA1_LEFT_BYTE_CONSTANT_SCAN=1'] if args.left_byte_constant_scan else []),*(['-D','SA1_LEFT_RUNTIME_SCAN=1'] if args.left_runtime_scan else []),*(['-D','SA1_LEFT_HINT_COMPRESSED=1'] if args.left_hints_compressed else []),*(['-D','SA1_LEFT_HINT_INLINE=1'] if args.left_inline_hints or args.direct_left_hints else []),*(['-D','SA1_LEFT_DIRECT=1'] if args.direct_left_hints else []),'-I',BUILD,'-o',BUILD/'left_hints.o',SA1/'left_hints_game.s'])
         run([CC/'ld65.exe','-C',BUILD/'game.cfg','-m',BUILD/'game.map','-Ln',BUILD/'game.lbl','-o',linked,*objs,CC.parent/'lib/none.lib'])
@@ -1673,6 +1685,12 @@ opaque_sprite_fallback:
         assert labels['__SA1_RUN__']+labels['__SA1_SIZE__']<=0x0300
         from sa1_reverse_explosions import build as reverse_explosions_build
         rom=reverse_explosions_build(rom,BUILD,args.reverse_explosions_min_width,inline=args.reverse_inline_hints,compressed=args.reverse_hints_compressed,compact=args.reverse_records_compact,native=args.reverse_records_native)
+    if args.reverse_tree:
+        for begin,data in spare_data:
+            assert not any(rom[begin:begin+len(data)]),'tree left hints overlap legacy graphics'
+            rom[begin:begin+len(data)]=data
+        from sa1_reverse_tree import finish as reverse_tree_finish
+        reverse_tree_finish(rom,BUILD)
     rom[0x7fdc:0x7fe0]=b'\xff\xff\0\0'
     checksum=sum(rom)&65535;struct.pack_into('<HH',rom,0x7fdc,checksum^65535,checksum)
     path=BUILD/'MonoSHSA1_4bpp_game.sfc';path.write_bytes(rom)
@@ -1680,6 +1698,10 @@ opaque_sprite_fallback:
     if args.right_narrow_prefix:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text())
         manifest.update(rightNarrowPrefix=True,rightNarrowScenery=args.right_narrow_scenery)
+        manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
+    if args.reverse_tree:
+        manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text())
+        manifest.update(reverseTree=True,reverseTreeBypass=args.reverse_tree_bypass)
         manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
     if args.opaque_prefix:
         manifest_path=BUILD/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['opaquePrefix']=True

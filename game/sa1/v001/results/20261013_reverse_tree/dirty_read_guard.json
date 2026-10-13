@@ -1,0 +1,27 @@
+{
+  "oldRomSha256": "8f2a3888fd8ac116e28ad40ec6be2a844c0c8169d2ef9b407c8e315cbcee1594",
+  "fixedRomSha256": "a00fbfcb0ba487a78737ac0a78b42413e1b0625c0a007538c5c9b2a1c1c64f7c",
+  "oldRunPointer": 9830397,
+  "oldWordRead": 9830399,
+  "oldExtraHighByte": 9830400,
+  "oldRecordHex": "042701",
+  "examples": [
+    {
+      "asset": 0,
+      "width": 53,
+      "height": 29,
+      "phase": 1,
+      "oldData": 2818036,
+      "oldEnd": 2818048,
+      "fixedData": 3178482,
+      "fixedGuardByte": 3178494,
+      "logicalRunDataIdentical": true
+    }
+  ],
+  "sourceAndSavedRuntimeTraceAgree": true,
+  "gameIntegrated": false,
+  "performanceEvidence": false,
+  "traceField": 265,
+  "traceClock": 94739822,
+  "tracePc": 58055
+}

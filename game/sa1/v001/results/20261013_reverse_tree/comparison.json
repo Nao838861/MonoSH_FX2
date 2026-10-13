@@ -1,0 +1,1662 @@
+{
+  "cases": {
+    "fixed": {
+      "romSha256": "a00fbfcb0ba487a78737ac0a78b42413e1b0625c0a007538c5c9b2a1c1c64f7c",
+      "fields": 4000,
+      "logic": 3832,
+      "presents": 3827,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3800,
+        "2": 24
+      },
+      "stalledTailFields": 0,
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_reversetree_v2_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 25.270155,
+      "worstJobs": [
+        {
+          "generation": 2663,
+          "field": 2827,
+          "clearAndBgMs": 4.466489,
+          "drawMs": 20.803666,
+          "totalSa1Ms": 25.270155,
+          "dirtyMs": 2.737778,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 20.803666,
+          "compactMs": 0.0,
+          "logicMs": 13.770185,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.023839,
+            "_monosh_enemy_frame": 3.845833,
+            "packet_initialized": 1.609143,
+            "_monosh_combat_render": 0.369972,
+            "_fx_build_packet": 7.247103,
+            "_fx_build_ground": 0.829807,
+            "packet_packet_done": 1.124817,
+            "_fx_read_input": 0.028868,
+            "_monosh_stage_frame": 0.741994,
+            "packet_sorted": 1.460986
+          }
+        },
+        {
+          "generation": 2664,
+          "field": 2829,
+          "clearAndBgMs": 4.596301,
+          "drawMs": 20.624686,
+          "totalSa1Ms": 25.220987,
+          "dirtyMs": 2.668868,
+          "clearMs": 1.625998,
+          "bgMs": 0.301435,
+          "nativeMs": 20.624686,
+          "compactMs": 0.0,
+          "logicMs": 10.243852,
+          "dirtyBytes": 5568,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.07636,
+            "_monosh_enemy_frame": 3.316715,
+            "packet_initialized": 1.530734,
+            "_monosh_combat_render": 0.471475,
+            "_fx_build_packet": 3.626811,
+            "_fx_build_ground": 0.903094,
+            "packet_packet_done": 1.016144,
+            "_fx_read_input": 0.282531,
+            "_monosh_stage_frame": 0.915386,
+            "packet_sorted": 1.074531
+          }
+        },
+        {
+          "generation": 2661,
+          "field": 2824,
+          "clearAndBgMs": 4.538472,
+          "drawMs": 20.172767,
+          "totalSa1Ms": 24.711239,
+          "dirtyMs": 2.809761,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 20.172767,
+          "compactMs": 0.0,
+          "logicMs": 10.89319,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.023839,
+            "_monosh_enemy_frame": 3.736974,
+            "packet_initialized": 1.594337,
+            "_monosh_combat_render": 0.473338,
+            "_fx_build_packet": 4.345803,
+            "_fx_build_ground": 0.892944,
+            "packet_packet_done": 1.228555,
+            "_fx_read_input": 0.030358,
+            "_monosh_stage_frame": 0.75261,
+            "packet_sorted": 1.517511
+          }
+        },
+        {
+          "generation": 2662,
+          "field": 2826,
+          "clearAndBgMs": 4.673405,
+          "drawMs": 20.011666,
+          "totalSa1Ms": 24.685072,
+          "dirtyMs": 2.860419,
+          "clearMs": 1.465549,
+          "bgMs": 0.347437,
+          "nativeMs": 20.011666,
+          "compactMs": 0.0,
+          "logicMs": 13.962388,
+          "dirtyBytes": 4512,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.027937,
+            "_monosh_enemy_frame": 6.924902,
+            "packet_initialized": 1.549545,
+            "_monosh_combat_render": 0.395674,
+            "_fx_build_packet": 4.105642,
+            "_fx_build_ground": 0.900394,
+            "packet_packet_done": 1.109917,
+            "_fx_read_input": 0.031103,
+            "_monosh_stage_frame": 0.899183,
+            "packet_sorted": 1.440779
+          }
+        },
+        {
+          "generation": 2659,
+          "field": 2821,
+          "clearAndBgMs": 5.182967,
+          "drawMs": 19.093952,
+          "totalSa1Ms": 24.276919,
+          "dirtyMs": 3.161482,
+          "clearMs": 1.720237,
+          "bgMs": 0.301249,
+          "nativeMs": 19.093952,
+          "compactMs": 0.0,
+          "logicMs": 13.948233,
+          "dirtyBytes": 3840,
+          "cpuParts": {
+            "_monosh_combat_fast_frame": 0.027192,
+            "_monosh_enemy_frame": 7.038417,
+            "packet_initialized": 1.563606,
+            "_monosh_combat_render": 0.371556,
+            "_fx_build_packet": 4.166544,
+            "_fx_build_ground": 0.893875,
+            "packet_packet_done": 1.129939,
+            "_fx_read_input": 0.031475,
+            "_monosh_stage_frame": 0.746277,
+            "packet_sorted": 1.465735
+          }
+        }
+      ],
+      "maxActiveCpuLogicMs": 13.676597,
+      "heldGenerations": [
+        {
+          "nextGeneration": 544,
+          "previousField": 692,
+          "nextField": 694
+        },
+        {
+          "nextGeneration": 547,
+          "previousField": 696,
+          "nextField": 698
+        },
+        {
+          "nextGeneration": 549,
+          "previousField": 699,
+          "nextField": 701
+        },
+        {
+          "nextGeneration": 1298,
+          "previousField": 1449,
+          "nextField": 1451
+        },
+        {
+          "nextGeneration": 2008,
+          "previousField": 2160,
+          "nextField": 2162
+        },
+        {
+          "nextGeneration": 2011,
+          "previousField": 2164,
+          "nextField": 2166
+        },
+        {
+          "nextGeneration": 2013,
+          "previousField": 2167,
+          "nextField": 2169
+        },
+        {
+          "nextGeneration": 2016,
+          "previousField": 2171,
+          "nextField": 2173
+        },
+        {
+          "nextGeneration": 2020,
+          "previousField": 2176,
+          "nextField": 2178
+        },
+        {
+          "nextGeneration": 2024,
+          "previousField": 2181,
+          "nextField": 2183
+        },
+        {
+          "nextGeneration": 2227,
+          "previousField": 2385,
+          "nextField": 2387
+        },
+        {
+          "nextGeneration": 2229,
+          "previousField": 2388,
+          "nextField": 2390
+        },
+        {
+          "nextGeneration": 2657,
+          "previousField": 2817,
+          "nextField": 2819
+        },
+        {
+          "nextGeneration": 2659,
+          "previousField": 2820,
+          "nextField": 2822
+        },
+        {
+          "nextGeneration": 2660,
+          "previousField": 2822,
+          "nextField": 2824
+        },
+        {
+          "nextGeneration": 2662,
+          "previousField": 2825,
+          "nextField": 2827
+        },
+        {
+          "nextGeneration": 2663,
+          "previousField": 2827,
+          "nextField": 2829
+        },
+        {
+          "nextGeneration": 2665,
+          "previousField": 2830,
+          "nextField": 2832
+        },
+        {
+          "nextGeneration": 2667,
+          "previousField": 2833,
+          "nextField": 2835
+        },
+        {
+          "nextGeneration": 2670,
+          "previousField": 2837,
+          "nextField": 2839
+        },
+        {
+          "nextGeneration": 2672,
+          "previousField": 2840,
+          "nextField": 2842
+        },
+        {
+          "nextGeneration": 2676,
+          "previousField": 2845,
+          "nextField": 2847
+        },
+        {
+          "nextGeneration": 2679,
+          "previousField": 2849,
+          "nextField": 2851
+        },
+        {
+          "nextGeneration": 3352,
+          "previousField": 3523,
+          "nextField": 3525
+        }
+      ],
+      "treeCoverage": {
+        "objects": 68,
+        "rows": 4208,
+        "rowsSkippingHiddenCode": 3376
+      },
+      "packetMatchedGenerations": 3826,
+      "tileMasksMatchedGenerations": 3827,
+      "fullFramebuffersMatchedGenerations": 3826,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3827,
+      "gameStatesMatchedCompletedUpdates": 3826,
+      "gameStateAudit": {
+        "logicUpdates": 3831,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3832,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 0,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      }
+    },
+    "bypass": {
+      "romSha256": "3068a884b7fb6bee8e6b5b3192648f73fb7da1ebbc194c10f9774a8c704e72fc",
+      "fields": 4000,
+      "logic": 3829,
+      "presents": 3824,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3794,
+        "2": 27
+      },
+      "stalledTailFields": 0,
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_reversetree_bypass_v2_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 25.399781,
+      "worstJobs": [
+        {
+          "generation": 2663,
+          "field": 2828,
+          "clearAndBgMs": 4.466489,
+          "drawMs": 20.933292,
+          "totalSa1Ms": 25.399781,
+          "dirtyMs": 2.737778,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 20.933292,
+          "compactMs": 0.0,
+          "logicMs": 13.787691,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "packet_sorted": 1.459496,
+            "_monosh_combat_fast_frame": 0.027192,
+            "_fx_build_ground": 3.917257,
+            "_fx_build_packet": 4.176229,
+            "_monosh_enemy_frame": 3.839314,
+            "_fx_read_input": 0.030637,
+            "packet_initialized": 1.604114,
+            "packet_packet_done": 1.107217,
+            "_monosh_stage_frame": 0.74218,
+            "_monosh_combat_render": 0.367738
+          }
+        },
+        {
+          "generation": 2664,
+          "field": 2830,
+          "clearAndBgMs": 4.602074,
+          "drawMs": 20.619937,
+          "totalSa1Ms": 25.222011,
+          "dirtyMs": 2.674641,
+          "clearMs": 1.625998,
+          "bgMs": 0.301435,
+          "nativeMs": 20.619937,
+          "compactMs": 0.0,
+          "logicMs": 10.407746,
+          "dirtyBytes": 5568,
+          "cpuParts": {
+            "packet_sorted": 1.072948,
+            "_monosh_combat_fast_frame": 0.07636,
+            "_fx_build_ground": 0.902256,
+            "_fx_build_packet": 3.622713,
+            "_monosh_enemy_frame": 3.316622,
+            "_fx_read_input": 0.451175,
+            "packet_initialized": 1.529431,
+            "packet_packet_done": 1.007949,
+            "_monosh_stage_frame": 0.915666,
+            "_monosh_combat_render": 0.471475
+          }
+        },
+        {
+          "generation": 2662,
+          "field": 2827,
+          "clearAndBgMs": 4.655433,
+          "drawMs": 20.011108,
+          "totalSa1Ms": 24.666541,
+          "dirtyMs": 2.860419,
+          "clearMs": 1.443014,
+          "bgMs": 0.352,
+          "nativeMs": 20.011108,
+          "compactMs": 0.0,
+          "logicMs": 13.815907,
+          "dirtyBytes": 4512,
+          "cpuParts": {
+            "packet_sorted": 1.443666,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_fx_build_ground": 0.905329,
+            "_fx_build_packet": 4.096237,
+            "_monosh_enemy_frame": 6.793135,
+            "_fx_read_input": 0.031475,
+            "packet_initialized": 1.5488,
+            "packet_packet_done": 1.09837,
+            "_monosh_stage_frame": 0.892851,
+            "_monosh_combat_render": 0.402286
+          }
+        },
+        {
+          "generation": 2661,
+          "field": 2825,
+          "clearAndBgMs": 4.538472,
+          "drawMs": 19.887163,
+          "totalSa1Ms": 24.425635,
+          "dirtyMs": 2.809761,
+          "clearMs": 1.427276,
+          "bgMs": 0.301435,
+          "nativeMs": 19.887163,
+          "compactMs": 0.0,
+          "logicMs": 10.897846,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "packet_sorted": 1.519653,
+            "_monosh_combat_fast_frame": 0.023839,
+            "_fx_build_ground": 0.897134,
+            "_fx_build_packet": 4.347573,
+            "_monosh_enemy_frame": 3.736042,
+            "_fx_read_input": 0.028495,
+            "packet_initialized": 1.596758,
+            "packet_packet_done": 1.225761,
+            "_monosh_stage_frame": 0.752237,
+            "_monosh_combat_render": 0.473338
+          }
+        },
+        {
+          "generation": 2659,
+          "field": 2822,
+          "clearAndBgMs": 5.184364,
+          "drawMs": 19.093579,
+          "totalSa1Ms": 24.277944,
+          "dirtyMs": 3.162133,
+          "clearMs": 1.720982,
+          "bgMs": 0.301249,
+          "nativeMs": 19.093579,
+          "compactMs": 0.0,
+          "logicMs": 13.943763,
+          "dirtyBytes": 3840,
+          "cpuParts": {
+            "packet_sorted": 1.464339,
+            "_monosh_combat_fast_frame": 0.027192,
+            "_fx_build_ground": 0.893316,
+            "_fx_build_packet": 4.163285,
+            "_monosh_enemy_frame": 7.038231,
+            "_fx_read_input": 0.031475,
+            "packet_initialized": 1.564072,
+            "packet_packet_done": 1.125376,
+            "_monosh_stage_frame": 0.745719,
+            "_monosh_combat_render": 0.370531
+          }
+        }
+      ],
+      "maxActiveCpuLogicMs": 86.36907,
+      "heldGenerations": [
+        {
+          "nextGeneration": 544,
+          "previousField": 692,
+          "nextField": 694
+        },
+        {
+          "nextGeneration": 547,
+          "previousField": 696,
+          "nextField": 698
+        },
+        {
+          "nextGeneration": 549,
+          "previousField": 699,
+          "nextField": 701
+        },
+        {
+          "nextGeneration": 1298,
+          "previousField": 1449,
+          "nextField": 1451
+        },
+        {
+          "nextGeneration": 1910,
+          "previousField": 2062,
+          "nextField": 2064
+        },
+        {
+          "nextGeneration": 2008,
+          "previousField": 2161,
+          "nextField": 2163
+        },
+        {
+          "nextGeneration": 2011,
+          "previousField": 2165,
+          "nextField": 2167
+        },
+        {
+          "nextGeneration": 2013,
+          "previousField": 2168,
+          "nextField": 2170
+        },
+        {
+          "nextGeneration": 2016,
+          "previousField": 2172,
+          "nextField": 2174
+        },
+        {
+          "nextGeneration": 2020,
+          "previousField": 2177,
+          "nextField": 2179
+        },
+        {
+          "nextGeneration": 2024,
+          "previousField": 2182,
+          "nextField": 2184
+        },
+        {
+          "nextGeneration": 2227,
+          "previousField": 2386,
+          "nextField": 2388
+        },
+        {
+          "nextGeneration": 2229,
+          "previousField": 2389,
+          "nextField": 2391
+        },
+        {
+          "nextGeneration": 2657,
+          "previousField": 2818,
+          "nextField": 2820
+        },
+        {
+          "nextGeneration": 2659,
+          "previousField": 2821,
+          "nextField": 2823
+        },
+        {
+          "nextGeneration": 2660,
+          "previousField": 2823,
+          "nextField": 2825
+        },
+        {
+          "nextGeneration": 2662,
+          "previousField": 2826,
+          "nextField": 2828
+        },
+        {
+          "nextGeneration": 2663,
+          "previousField": 2828,
+          "nextField": 2830
+        },
+        {
+          "nextGeneration": 2665,
+          "previousField": 2831,
+          "nextField": 2833
+        },
+        {
+          "nextGeneration": 2667,
+          "previousField": 2834,
+          "nextField": 2836
+        },
+        {
+          "nextGeneration": 2670,
+          "previousField": 2838,
+          "nextField": 2840
+        },
+        {
+          "nextGeneration": 2672,
+          "previousField": 2841,
+          "nextField": 2843
+        },
+        {
+          "nextGeneration": 2676,
+          "previousField": 2846,
+          "nextField": 2848
+        },
+        {
+          "nextGeneration": 2679,
+          "previousField": 2850,
+          "nextField": 2852
+        },
+        {
+          "nextGeneration": 3076,
+          "previousField": 3248,
+          "nextField": 3250
+        },
+        {
+          "nextGeneration": 3091,
+          "previousField": 3264,
+          "nextField": 3266
+        },
+        {
+          "nextGeneration": 3352,
+          "previousField": 3526,
+          "nextField": 3528
+        }
+      ],
+      "treeCoverage": {
+        "objects": 0,
+        "rows": 0,
+        "rowsSkippingHiddenCode": 0
+      },
+      "packetMatchedGenerations": 3826,
+      "tileMasksMatchedGenerations": 3827,
+      "fullFramebuffersMatchedGenerations": 3826,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3827,
+      "gameStatesMatchedCompletedUpdates": 3826,
+      "gameStateAudit": {
+        "logicUpdates": 3827,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3828,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      }
+    },
+    "combo": {
+      "romSha256": "34226b2622f640137b6ddb8f08dbb03ceeb2111155cbf1642f73caf66febf092",
+      "fields": 4000,
+      "logic": 3833,
+      "presents": 3828,
+      "pixelMatchedPresents": 181,
+      "presentationFieldIntervals": {
+        "1": 3802,
+        "2": 23
+      },
+      "stalledTailFields": 0,
+      "goal60fpsAchieved": false,
+      "scenario": "move_detinput_auditgame_reversetree_combo_v2_long4000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 24.084716,
+      "worstJobs": [
+        {
+          "generation": 2225,
+          "field": 2383,
+          "clearAndBgMs": 7.776034,
+          "drawMs": 16.308682,
+          "totalSa1Ms": 24.084716,
+          "dirtyMs": 3.790239,
+          "clearMs": 3.698701,
+          "bgMs": 0.287094,
+          "nativeMs": 16.308682,
+          "compactMs": 0.0,
+          "logicMs": 16.6794,
+          "dirtyBytes": 7680,
+          "cpuParts": {
+            "packet_initialized": 1.650582,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.505558,
+            "packet_sorted": 1.396919,
+            "_monosh_combat_fast_frame": 0.027937,
+            "_monosh_stage_frame": 2.875039,
+            "_fx_build_ground": 0.889685,
+            "_fx_build_packet": 4.267488,
+            "packet_packet_done": 1.214586,
+            "_monosh_enemy_frame": 7.416119
+          }
+        },
+        {
+          "generation": 2663,
+          "field": 2828,
+          "clearAndBgMs": 5.729126,
+          "drawMs": 18.031806,
+          "totalSa1Ms": 23.760932,
+          "dirtyMs": 2.853621,
+          "clearMs": 2.557401,
+          "bgMs": 0.318104,
+          "nativeMs": 18.031806,
+          "compactMs": 0.0,
+          "logicMs": 13.728187,
+          "dirtyBytes": 4864,
+          "cpuParts": {
+            "packet_initialized": 1.577761,
+            "_fx_read_input": 0.032965,
+            "_monosh_combat_render": 0.370811,
+            "packet_sorted": 1.450743,
+            "_monosh_combat_fast_frame": 0.027937,
+            "_monosh_stage_frame": 0.726815,
+            "_fx_build_ground": 0.894993,
+            "_fx_build_packet": 4.156766,
+            "packet_packet_done": 1.122861,
+            "_monosh_enemy_frame": 6.830197
+          }
+        },
+        {
+          "generation": 2662,
+          "field": 2826,
+          "clearAndBgMs": 4.575162,
+          "drawMs": 19.115836,
+          "totalSa1Ms": 23.690998,
+          "dirtyMs": 2.867496,
+          "clearMs": 1.407069,
+          "bgMs": 0.300597,
+          "nativeMs": 19.115836,
+          "compactMs": 0.0,
+          "logicMs": 10.65098,
+          "dirtyBytes": 4512,
+          "cpuParts": {
+            "packet_initialized": 1.571429,
+            "_fx_read_input": 0.027005,
+            "_monosh_combat_render": 0.391577,
+            "packet_sorted": 1.476724,
+            "_monosh_combat_fast_frame": 0.027192,
+            "_monosh_stage_frame": 0.923395,
+            "_fx_build_ground": 0.888288,
+            "_fx_build_packet": 4.164775,
+            "packet_packet_done": 1.111221,
+            "_monosh_enemy_frame": 3.552406
+          }
+        },
+        {
+          "generation": 2664,
+          "field": 2829,
+          "clearAndBgMs": 4.602912,
+          "drawMs": 18.901749,
+          "totalSa1Ms": 23.504661,
+          "dirtyMs": 2.676318,
+          "clearMs": 1.625998,
+          "bgMs": 0.300597,
+          "nativeMs": 18.901749,
+          "compactMs": 0.0,
+          "logicMs": 13.20149,
+          "dirtyBytes": 5568,
+          "cpuParts": {
+            "packet_initialized": 1.548986,
+            "_fx_read_input": 0.028868,
+            "_monosh_combat_render": 0.501181,
+            "packet_sorted": 1.056559,
+            "_monosh_combat_fast_frame": 0.079992,
+            "_monosh_stage_frame": 0.92982,
+            "_fx_build_ground": 3.910087,
+            "_fx_build_packet": 3.627835,
+            "packet_packet_done": 1.016889,
+            "_monosh_enemy_frame": 3.432652
+          }
+        },
+        {
+          "generation": 2229,
+          "field": 2389,
+          "clearAndBgMs": 8.622045,
+          "drawMs": 14.841363,
+          "totalSa1Ms": 23.463408,
+          "dirtyMs": 3.103653,
+          "clearMs": 5.164716,
+          "bgMs": 0.353676,
+          "nativeMs": 14.841363,
+          "compactMs": 0.0,
+          "logicMs": 16.281025,
+          "dirtyBytes": 10944,
+          "cpuParts": {
+            "packet_initialized": 1.588191,
+            "_fx_read_input": 0.031196,
+            "_monosh_combat_render": 0.50621,
+            "packet_sorted": 1.314599,
+            "_monosh_combat_fast_frame": 0.025702,
+            "_monosh_stage_frame": 7.753778,
+            "_fx_build_ground": 0.900021,
+            "_fx_build_packet": 4.05992,
+            "packet_packet_done": 1.151729,
+            "_monosh_enemy_frame": 2.326739
+          }
+        }
+      ],
+      "maxActiveCpuLogicMs": 13.704068,
+      "heldGenerations": [
+        {
+          "nextGeneration": 544,
+          "previousField": 692,
+          "nextField": 694
+        },
+        {
+          "nextGeneration": 547,
+          "previousField": 696,
+          "nextField": 698
+        },
+        {
+          "nextGeneration": 549,
+          "previousField": 699,
+          "nextField": 701
+        },
+        {
+          "nextGeneration": 568,
+          "previousField": 719,
+          "nextField": 721
+        },
+        {
+          "nextGeneration": 1298,
+          "previousField": 1450,
+          "nextField": 1452
+        },
+        {
+          "nextGeneration": 2008,
+          "previousField": 2161,
+          "nextField": 2163
+        },
+        {
+          "nextGeneration": 2010,
+          "previousField": 2164,
+          "nextField": 2166
+        },
+        {
+          "nextGeneration": 2013,
+          "previousField": 2168,
+          "nextField": 2170
+        },
+        {
+          "nextGeneration": 2016,
+          "previousField": 2172,
+          "nextField": 2174
+        },
+        {
+          "nextGeneration": 2020,
+          "previousField": 2177,
+          "nextField": 2179
+        },
+        {
+          "nextGeneration": 2024,
+          "previousField": 2182,
+          "nextField": 2184
+        },
+        {
+          "nextGeneration": 2227,
+          "previousField": 2386,
+          "nextField": 2388
+        },
+        {
+          "nextGeneration": 2229,
+          "previousField": 2389,
+          "nextField": 2391
+        },
+        {
+          "nextGeneration": 2657,
+          "previousField": 2818,
+          "nextField": 2820
+        },
+        {
+          "nextGeneration": 2659,
+          "previousField": 2821,
+          "nextField": 2823
+        },
+        {
+          "nextGeneration": 2661,
+          "previousField": 2824,
+          "nextField": 2826
+        },
+        {
+          "nextGeneration": 2663,
+          "previousField": 2827,
+          "nextField": 2829
+        },
+        {
+          "nextGeneration": 2665,
+          "previousField": 2830,
+          "nextField": 2832
+        },
+        {
+          "nextGeneration": 2667,
+          "previousField": 2833,
+          "nextField": 2835
+        },
+        {
+          "nextGeneration": 2670,
+          "previousField": 2837,
+          "nextField": 2839
+        },
+        {
+          "nextGeneration": 2675,
+          "previousField": 2843,
+          "nextField": 2845
+        },
+        {
+          "nextGeneration": 3346,
+          "previousField": 3515,
+          "nextField": 3517
+        },
+        {
+          "nextGeneration": 3354,
+          "previousField": 3524,
+          "nextField": 3526
+        }
+      ],
+      "treeCoverage": {
+        "objects": 68,
+        "rows": 4208,
+        "rowsSkippingHiddenCode": 3376
+      },
+      "packetMatchedGenerations": 3826,
+      "tileMasksMatchedGenerations": 3827,
+      "fullFramebuffersMatchedGenerations": 3826,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 3827,
+      "gameStatesMatchedCompletedUpdates": 3826,
+      "gameStateAudit": {
+        "logicUpdates": 3832,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 3833,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 0,
+        "playerStates": [
+          0,
+          1,
+          2
+        ],
+        "bossStates": [
+          0,
+          1
+        ],
+        "minimumBossHp": 16,
+        "maximumStageFrame": 3746,
+        "maximumEnemies": 8,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": false
+      }
+    },
+    "fixture": {
+      "romSha256": "34226b2622f640137b6ddb8f08dbb03ceeb2111155cbf1642f73caf66febf092",
+      "fields": 1519,
+      "logic": 1377,
+      "presents": 1369,
+      "pixelMatchedPresents": 1369,
+      "presentationFieldIntervals": {
+        "1": 1366
+      },
+      "stalledTailFields": 1,
+      "goal60fpsAchieved": false,
+      "scenario": "treefixture_reversetree_combo_v2_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 18.506075,
+      "worstJobs": [
+        {
+          "generation": 1329,
+          "field": 1472,
+          "clearAndBgMs": 4.233126,
+          "drawMs": 14.272949,
+          "totalSa1Ms": 18.506075,
+          "dirtyMs": 2.086578,
+          "clearMs": 1.859454,
+          "bgMs": 0.287094,
+          "nativeMs": 14.272949,
+          "compactMs": 0.0,
+          "logicMs": 12.279492,
+          "dirtyBytes": 7552,
+          "cpuParts": {
+            "_monosh_enemy_frame": 0.704,
+            "_monosh_combat_fast_frame": 0.027192,
+            "_fx_read_input": 0.028868,
+            "packet_initialized": 1.522633,
+            "_monosh_boss_render_only": 383.328944,
+            "packet_packet_done": 1.041194,
+            "_fx_build_packet": 3.428461,
+            "_monosh_combat_render": 0.500902,
+            "_fx_build_ground": 4.123522,
+            "packet_sorted": 0.859234,
+            "_monosh_stage_frame": 2.88938
+          }
+        },
+        {
+          "generation": 1347,
+          "field": 1490,
+          "clearAndBgMs": 3.112593,
+          "drawMs": 15.271772,
+          "totalSa1Ms": 18.384365,
+          "dirtyMs": 2.030891,
+          "clearMs": 0.794607,
+          "bgMs": 0.287094,
+          "nativeMs": 15.271772,
+          "compactMs": 0.0,
+          "logicMs": 11.964834,
+          "dirtyBytes": 2432,
+          "cpuParts": {
+            "_monosh_enemy_frame": 0.135771,
+            "_monosh_combat_fast_frame": 0.083065,
+            "_fx_read_input": 0.028868,
+            "packet_initialized": 1.494324,
+            "_monosh_boss_render_only": 691.413416,
+            "packet_packet_done": 1.004411,
+            "_fx_build_packet": 3.357875,
+            "_monosh_combat_render": 0.513566,
+            "_fx_build_ground": 0.296965,
+            "packet_sorted": 0.85374,
+            "_monosh_stage_frame": 6.968483
+          }
+        },
+        {
+          "generation": 1368,
+          "field": 1511,
+          "clearAndBgMs": 6.633152,
+          "drawMs": 11.608178,
+          "totalSa1Ms": 18.24133,
+          "dirtyMs": 2.480855,
+          "clearMs": 3.865202,
+          "bgMs": 0.287094,
+          "nativeMs": 11.608178,
+          "compactMs": 0.0,
+          "logicMs": 10.955023,
+          "dirtyBytes": 12672,
+          "cpuParts": {
+            "_monosh_enemy_frame": 3.437587,
+            "_monosh_combat_fast_frame": 0.028309,
+            "_fx_read_input": 0.028868,
+            "packet_initialized": 1.403251,
+            "_monosh_boss_render_only": 1042.752729,
+            "packet_packet_done": 0.810904,
+            "_fx_build_packet": 3.171446,
+            "_monosh_combat_render": 0.509655,
+            "_fx_build_ground": 0.295103,
+            "packet_sorted": 0.948538,
+            "_monosh_stage_frame": 2.897668
+          }
+        },
+        {
+          "generation": 1365,
+          "field": 1508,
+          "clearAndBgMs": 3.056254,
+          "drawMs": 15.098845,
+          "totalSa1Ms": 18.155099,
+          "dirtyMs": 2.092258,
+          "clearMs": 0.616931,
+          "bgMs": 0.347065,
+          "nativeMs": 15.098845,
+          "compactMs": 0.0,
+          "logicMs": 10.535882,
+          "dirtyBytes": 1408,
+          "cpuParts": {
+            "_monosh_enemy_frame": 0.135026,
+            "_monosh_combat_fast_frame": 0.023839,
+            "_fx_read_input": 0.031848,
+            "packet_initialized": 1.400923,
+            "_monosh_boss_render_only": 990.894188,
+            "packet_packet_done": 0.779335,
+            "_fx_build_packet": 3.132614,
+            "_monosh_combat_render": 0.390646,
+            "_fx_build_ground": 0.296593,
+            "packet_sorted": 0.946955,
+            "_monosh_stage_frame": 5.94908
+          }
+        },
+        {
+          "generation": 1311,
+          "field": 1454,
+          "clearAndBgMs": 4.445909,
+          "drawMs": 13.60359,
+          "totalSa1Ms": 18.049499,
+          "dirtyMs": 2.086392,
+          "clearMs": 2.072423,
+          "bgMs": 0.287094,
+          "nativeMs": 13.60359,
+          "compactMs": 0.0,
+          "logicMs": 13.777262,
+          "dirtyBytes": 8576,
+          "cpuParts": {
+            "_monosh_enemy_frame": 0.704,
+            "_monosh_combat_fast_frame": 0.030171,
+            "_fx_read_input": 0.030358,
+            "packet_initialized": 1.401947,
+            "_monosh_boss_render_only": 81.290864,
+            "packet_packet_done": 0.822823,
+            "_fx_build_packet": 3.299022,
+            "_monosh_combat_render": 0.499039,
+            "_fx_build_ground": 6.652241,
+            "packet_sorted": 1.065498,
+            "_monosh_stage_frame": 1.984423
+          }
+        }
+      ],
+      "maxActiveCpuLogicMs": 13.887518,
+      "heldGenerations": [],
+      "treeCoverage": {
+        "objects": 680,
+        "rows": 24934,
+        "rowsSkippingHiddenCode": 23567
+      },
+      "treeFixtureCoverage": {
+        "cases": 2736,
+        "geometries": 76,
+        "initialNormalScreens": 1
+      },
+      "fixturePresentationEveryField": true
+    },
+    "boss": {
+      "romSha256": "34226b2622f640137b6ddb8f08dbb03ceeb2111155cbf1642f73caf66febf092",
+      "fields": 5000,
+      "logic": 4842,
+      "presents": 4835,
+      "pixelMatchedPresents": 198,
+      "presentationFieldIntervals": {
+        "1": 4817,
+        "2": 15
+      },
+      "stalledTailFields": 0,
+      "goal60fpsAchieved": false,
+      "scenario": "bossmovestress_detinput_auditgame_reversetree_combo_v2_long5000_tracepalette_tracebounds_tracedeadline",
+      "maxSa1Ms": 22.439815,
+      "worstJobs": [
+        {
+          "generation": 4508,
+          "field": 4669,
+          "clearAndBgMs": 9.382104,
+          "drawMs": 13.05771,
+          "totalSa1Ms": 22.439815,
+          "dirtyMs": 3.972292,
+          "clearMs": 5.109215,
+          "bgMs": 0.300597,
+          "nativeMs": 13.05771,
+          "compactMs": 0.0,
+          "logicMs": 15.486138,
+          "dirtyBytes": 10272,
+          "cpuParts": {
+            "_monosh_boss_prepare_render": 5.813494,
+            "_monosh_boss_frame": 1.923987,
+            "packet_packet_done": 1.06792,
+            "_monosh_boss_render_only": 2.537846,
+            "_fx_read_input": 0.031754,
+            "_fx_build_ground": 0.676529,
+            "_fx_build_packet": 3.797782,
+            "_monosh_combat_render": 0.513659,
+            "_monosh_combat_fast_frame": 0.0352,
+            "packet_sorted": 1.20276,
+            "_monosh_enemy_frame": 0.734358,
+            "packet_initialized": 1.518349
+          }
+        },
+        {
+          "generation": 4510,
+          "field": 4672,
+          "clearAndBgMs": 9.144551,
+          "drawMs": 13.14869,
+          "totalSa1Ms": 22.293241,
+          "dirtyMs": 3.955623,
+          "clearMs": 4.901833,
+          "bgMs": 0.287094,
+          "nativeMs": 13.14869,
+          "compactMs": 0.0,
+          "logicMs": 14.626345,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "_monosh_boss_prepare_render": 5.524165,
+            "_monosh_boss_frame": 1.75404,
+            "packet_packet_done": 1.004317,
+            "_monosh_boss_render_only": 2.539708,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.668241,
+            "_fx_build_packet": 3.650184,
+            "_monosh_combat_render": 0.514218,
+            "_monosh_combat_fast_frame": 0.025702,
+            "packet_sorted": 1.146887,
+            "_monosh_enemy_frame": 0.491869,
+            "packet_initialized": 1.493579
+          }
+        },
+        {
+          "generation": 4504,
+          "field": 4662,
+          "clearAndBgMs": 9.352584,
+          "drawMs": 11.922836,
+          "totalSa1Ms": 21.275421,
+          "dirtyMs": 4.36778,
+          "clearMs": 4.684301,
+          "bgMs": 0.300504,
+          "nativeMs": 11.922836,
+          "compactMs": 0.0,
+          "logicMs": 15.662976,
+          "dirtyBytes": 9760,
+          "cpuParts": {
+            "_monosh_boss_prepare_render": 0.798984,
+            "_monosh_boss_frame": 6.71454,
+            "packet_packet_done": 1.129007,
+            "_monosh_boss_render_only": 2.537101,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.648686,
+            "_fx_build_packet": 3.945753,
+            "_monosh_combat_render": 0.513566,
+            "_monosh_combat_fast_frame": 0.062764,
+            "packet_sorted": 1.259098,
+            "_monosh_enemy_frame": 0.978709,
+            "packet_initialized": 1.550383
+          }
+        },
+        {
+          "generation": 4509,
+          "field": 4670,
+          "clearAndBgMs": 7.209295,
+          "drawMs": 13.593998,
+          "totalSa1Ms": 20.803294,
+          "dirtyMs": 3.614705,
+          "clearMs": 3.293994,
+          "bgMs": 0.300597,
+          "nativeMs": 13.593998,
+          "compactMs": 0.0,
+          "logicMs": 10.277469,
+          "dirtyBytes": 9920,
+          "cpuParts": {
+            "_monosh_boss_prepare_render": 0.812487,
+            "_monosh_boss_frame": 1.777879,
+            "packet_packet_done": 1.092876,
+            "_monosh_boss_render_only": 2.536728,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.678764,
+            "_fx_build_packet": 3.885317,
+            "_monosh_combat_render": 0.500902,
+            "_monosh_combat_fast_frame": 0.027564,
+            "packet_sorted": 1.253418,
+            "_monosh_enemy_frame": 0.607247,
+            "packet_initialized": 1.533621
+          }
+        },
+        {
+          "generation": 2142,
+          "field": 2297,
+          "clearAndBgMs": 7.92028,
+          "drawMs": 12.382578,
+          "totalSa1Ms": 20.302858,
+          "dirtyMs": 4.331928,
+          "clearMs": 3.301257,
+          "bgMs": 0.287094,
+          "nativeMs": 12.382578,
+          "compactMs": 0.0,
+          "logicMs": 14.033719,
+          "dirtyBytes": 9280,
+          "cpuParts": {
+            "_monosh_boss_prepare_render": 0.797774,
+            "_monosh_boss_frame": 1.179479,
+            "packet_packet_done": 0.984389,
+            "_monosh_boss_render_only": 2.54157,
+            "_fx_read_input": 0.028868,
+            "_fx_build_ground": 0.906447,
+            "_fx_build_packet": 3.646832,
+            "_monosh_combat_render": 0.397816,
+            "_monosh_combat_fast_frame": 0.023839,
+            "packet_sorted": 1.169515,
+            "_monosh_enemy_frame": 5.088449,
+            "packet_initialized": 1.487526
+          }
+        }
+      ],
+      "maxActiveCpuLogicMs": 20.745558,
+      "heldGenerations": [
+        {
+          "nextGeneration": 214,
+          "previousField": 363,
+          "nextField": 365
+        },
+        {
+          "nextGeneration": 218,
+          "previousField": 368,
+          "nextField": 370
+        },
+        {
+          "nextGeneration": 2131,
+          "previousField": 2282,
+          "nextField": 2284
+        },
+        {
+          "nextGeneration": 2134,
+          "previousField": 2286,
+          "nextField": 2288
+        },
+        {
+          "nextGeneration": 2137,
+          "previousField": 2290,
+          "nextField": 2292
+        },
+        {
+          "nextGeneration": 2142,
+          "previousField": 2296,
+          "nextField": 2298
+        },
+        {
+          "nextGeneration": 2145,
+          "previousField": 2300,
+          "nextField": 2302
+        },
+        {
+          "nextGeneration": 4498,
+          "previousField": 4654,
+          "nextField": 4656
+        },
+        {
+          "nextGeneration": 4500,
+          "previousField": 4657,
+          "nextField": 4659
+        },
+        {
+          "nextGeneration": 4503,
+          "previousField": 4661,
+          "nextField": 4663
+        },
+        {
+          "nextGeneration": 4504,
+          "previousField": 4663,
+          "nextField": 4665
+        },
+        {
+          "nextGeneration": 4508,
+          "previousField": 4668,
+          "nextField": 4670
+        },
+        {
+          "nextGeneration": 4510,
+          "previousField": 4671,
+          "nextField": 4673
+        },
+        {
+          "nextGeneration": 4523,
+          "previousField": 4685,
+          "nextField": 4687
+        },
+        {
+          "nextGeneration": 4531,
+          "previousField": 4694,
+          "nextField": 4696
+        }
+      ],
+      "treeCoverage": {
+        "objects": 0,
+        "rows": 0,
+        "rowsSkippingHiddenCode": 0
+      },
+      "packetMatchedGenerations": 4840,
+      "tileMasksMatchedGenerations": 4840,
+      "fullFramebuffersMatchedGenerations": 4840,
+      "reducedClearBandBounds": 0,
+      "exactBoundsMatchedGenerations": 4840,
+      "gameStatesMatchedCompletedUpdates": 4839,
+      "gameStateAudit": {
+        "logicUpdates": 4840,
+        "firstLogicGeneration": 2,
+        "lastCompletedLogicGeneration": 4841,
+        "initialBootUpdateNotCaptured": 1,
+        "startedButNotCompletedAtStop": 1,
+        "playerStates": [
+          0
+        ],
+        "bossStates": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "minimumBossHp": 0,
+        "maximumStageFrame": 3901,
+        "maximumEnemies": 0,
+        "maximumPlayerBullets": 3,
+        "runtimeCounterResets": 0,
+        "observationalOnly": true,
+        "invulnerabilityInjected": true
+      }
+    }
+  },
+  "bypassLayout": {
+    "oldRomSha256": "a00fbfcb0ba487a78737ac0a78b42413e1b0625c0a007538c5c9b2a1c1c64f7c",
+    "romSha256": "3068a884b7fb6bee8e6b5b3192648f73fb7da1ebbc194c10f9774a8c704e72fc",
+    "allLabelsIdentical": true,
+    "changedBytes": 10,
+    "changedRanges": [
+      [
+        3955,
+        3961
+      ],
+      [
+        32732,
+        32736
+      ]
+    ],
+    "changesLimitedToSixByteDispatchAndChecksum": true,
+    "mirroredDispatchChanged": false
+  },
+  "objectTimingPairsAboveHalfMillisecond": [
+    {
+      "variant": "fixed",
+      "job": 2619,
+      "index": 9,
+      "before": {
+        "field": 2776,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 10.929135
+      },
+      "after": {
+        "field": 2774,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 4.284157
+      }
+    },
+    {
+      "variant": "fixed",
+      "job": 2617,
+      "index": 8,
+      "before": {
+        "field": 2773,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 9.139801
+      },
+      "after": {
+        "field": 2772,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 5.788445
+      }
+    },
+    {
+      "variant": "fixed",
+      "job": 2228,
+      "index": 12,
+      "before": {
+        "field": 2387,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.685029
+      },
+      "after": {
+        "field": 2386,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.592
+      }
+    },
+    {
+      "variant": "bypass",
+      "job": 2619,
+      "index": 9,
+      "before": {
+        "field": 2776,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 10.929135
+      },
+      "after": {
+        "field": 2776,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 11.094798
+      }
+    },
+    {
+      "variant": "bypass",
+      "job": 2617,
+      "index": 8,
+      "before": {
+        "field": 2773,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 9.139801
+      },
+      "after": {
+        "field": 2773,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 7.592957
+      }
+    },
+    {
+      "variant": "bypass",
+      "job": 2228,
+      "index": 12,
+      "before": {
+        "field": 2387,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.685029
+      },
+      "after": {
+        "field": 2387,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.591255
+      }
+    },
+    {
+      "variant": "combo",
+      "job": 2619,
+      "index": 9,
+      "before": {
+        "field": 2776,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 10.929135
+      },
+      "after": {
+        "field": 2775,
+        "job": 2619,
+        "index": 9,
+        "asset": 4,
+        "width": 68,
+        "height": 158,
+        "x": 281,
+        "bottom": 205,
+        "ms": 4.270189
+      }
+    },
+    {
+      "variant": "combo",
+      "job": 2617,
+      "index": 8,
+      "before": {
+        "field": 2773,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 9.139801
+      },
+      "after": {
+        "field": 2773,
+        "job": 2617,
+        "index": 8,
+        "asset": 4,
+        "width": 64,
+        "height": 148,
+        "x": 256,
+        "bottom": 200,
+        "ms": 5.791797
+      }
+    },
+    {
+      "variant": "combo",
+      "job": 2228,
+      "index": 12,
+      "before": {
+        "field": 2387,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.685029
+      },
+      "after": {
+        "field": 2387,
+        "job": 2228,
+        "index": 12,
+        "asset": 4,
+        "width": 66,
+        "height": 152,
+        "x": 65535,
+        "bottom": 202,
+        "ms": 9.605596
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "file": "fixed.zip",
+      "bytes": 7084587,
+      "sha256": "d10a1f665933f7fd28d27e9e571e97f00d628851b4bef1d923897ea7e81d3cdf"
+    },
+    {
+      "file": "bypass.zip",
+      "bytes": 7032768,
+      "sha256": "96bda88b0c7c98cd4022ad6f5c6fbb4d9e7f620a8571e17abeb98db293f040e8"
+    },
+    {
+      "file": "combo.zip",
+      "bytes": 7089689,
+      "sha256": "1e0ccb1eccfa9a7ae04069522d9bd195b656de863549d2e463718a876eb8658b"
+    },
+    {
+      "file": "fixture.zip",
+      "bytes": 17227363,
+      "sha256": "a8782c66df7fdea0e38af891cb1c9bd2b461569fd2de7f86d99d692ea5cae0c9"
+    },
+    {
+      "file": "boss.zip",
+      "bytes": 11326633,
+      "sha256": "c91e4995389349805b23374fbc3a692df37fe7944476719502d633719bcc7420"
+    },
+    {
+      "file": "roms_sources_history.zip",
+      "bytes": 36489661,
+      "sha256": "ed9e8316c658214018a314d9553c4d252953ec4fe8f0b631508faade542adac1"
+    }
+  ],
+  "allOriginalPatternsRetained": true,
+  "hostSpriteDrawingUsed": false,
+  "publicReleaseChanged": false,
+  "goal60fpsAchieved": false,
+  "initialFailureCauseNotUniquelyEstablished": true,
+  "oldRomSafeObserver600Passed": true,
+  "bankOverreadIndependentlyVerifiedAndGuarded": true,
+  "bossIsForcedStageAndInvulnerable": true
+}

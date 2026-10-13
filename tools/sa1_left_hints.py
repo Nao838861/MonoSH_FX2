@@ -32,6 +32,8 @@ def inline_records(rom,packing):
 def build(rom,dest,compressed=False,use_spare=False,extra_min_width=0,inline=False,flame=False,direct=False):
     cursor=json.loads((dest/'compiled_game_packing.json').read_text())['payloadEnd']
     spare_ranges=((0x5f6fe0,0x5f8000),(0x5f9200,0x5fc000)) if use_spare else ()
+    if json.loads((dest/'compiled_game_packing.json').read_text()).get('reverseTree'):
+        spare_ranges=((0x5f9200,0x5fc000),)if use_spare else ()
     spare_cursors=[a for a,b in spare_ranges]
     for a,b in spare_ranges:assert not any(rom[a:b])
     def alloc(raw,cross_bank=False):

@@ -25,6 +25,22 @@ def verify_game_state_audit(dest,logic,scenario):
         runtimeCounterResets=sum(b['runtimeFrame']<a['runtimeFrame'] for a,b in zip(audit,audit[1:])),
         observationalOnly=True,invulnerabilityInjected='stress' in scenario)
 
+def verify_tree_fixture(dest):
+    from sa1_patterns import dimensions
+    expected={(w,h,x,top)for w,h in dimensions()[4]for x in (-40,-39,-1,0,1,32,224,255,256,257,280,295)for top in (-20,30,180)}
+    actual=set();skipped=0
+    for p in dest.glob('present*_meta.bin'):
+        raw=p.read_bytes();count=struct.unpack_from('<H',raw,6)[0]
+        draws=[struct.unpack_from('<hh6B',raw,10+i*10)for i in range(count)]
+        if count!=2 or any(d[4]!=4 for d in draws):skipped+=1;continue
+        for x,bottom,w,h,asset,flags,z,priority in draws:
+            assert flags==0
+            actual.add((w,h,x,bottom-h-20))
+    assert actual==expected,(len(expected-actual),len(actual-expected))
+    assert skipped==1
+    return dict(cases=len(actual),geometries=len(dimensions()[4]),initialNormalScreens=skipped)
+
+
 def verify_mask_bounds(dest,exact):
     """各帯の左右端が転送tile集合を含むことを再確認。新方式は厳密一致。"""
     data=(dest/'mask_bounds_trace.bin').read_bytes()
@@ -282,8 +298,9 @@ local targetPresents=TARGETPRESENTS
 local scenario=SCENARIO
 local exactMaskBounds=EXACTMASKBOUNDS
 local splitFixtures=SPLITFIXTURES
+local treeGeometries=TREEGEOMETRIES
 local function captureGeneration(g)
- return scenario:match('^transferfixture') or scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
+ return scenario:match('^treefixture') or scenario:match('^transferfixture') or scenario:match('^splitfixture') or scenario:match('^opaquefixture') or scenario:match('^clipfixture') or scenario:match('^stackfixture') or scenario:match('^leftfixtureindexed') or scenario:match('^leftfixtureexplosion') or scenario:match('^leftfixtureflame') or g<=120 or g%60==0 or (scenario:match('captureburst') and g>=530 and g<=570)
 end
 local padded=PADDED
 local pipeline=PIPELINE
@@ -988,6 +1005,24 @@ if labels.invoke_row then
   end
  end,emu.cpuType.sa1)
 end
+if labels.tree_right_invoke then
+ local f=assert(io.open(output..'/tree_right.jsonl','w'))
+ for _,name in ipairs({'sa1_reverse_tree_right','tree_right_invoke'})do
+  cb(name,function()
+   local mt=emu.memType.sa1Memory
+   local code,entry,remaining,limit=0,0,0,0
+   if name=='tree_right_invoke' then
+    code=emu.read16(0x84,mt)+65536*emu.read(0x86,mt)
+    entry=emu.read16(0x701,mt)+65536*emu.read(0x703,mt)
+    remaining=emu.read16(0x96,mt);limit=emu.read16(0x8a,mt)
+    local len=emu.read(code-2,mt);local op=emu.read(entry,mt)
+    assert(entry>=code and entry<code+len and (op==0xa9 or op==0xbd or op==0x6b),'tree suffix entry invalid')
+   end
+   f:write(string.format('{"event":"%s","job":%d,"field":%d,"width":%d,"height":%d,"left":%d,"remaining":%d,"limit":%d,"code":%d,"entry":%d}\\n',
+    name,#times+1,field,emu.read16(0x34,mt),emu.read16(0x36,mt),emu.read16(0x38,mt),remaining,limit,code,entry));f:flush()
+  end,emu.cpuType.sa1)
+ end
+end
 if labels.right_narrow_entry then
  local f=assert(io.open(output..'/right_narrow.jsonl','w'))
  for _,name in ipairs({'right_narrow_entry','right_narrow_ready'})do
@@ -1047,6 +1082,18 @@ if labels.cache_miss then
 end
 cb('render_started',function()begin=emu.getState().masterClock;activeBegin=activeClock();cpuParts={};cpuActiveParts={} end)
 cb('logic_finished',function()
+ if scenario:match('^treefixture') then
+  local k=(logic-2)%(#treeGeometries*18)
+  local g=treeGeometries[k//18+1];local tops={-20,30,180}
+  local pairs={{-40,295},{-39,280},{-1,257},{0,256},{1,255},{32,224}}
+  local centers=pairs[(k//3)%6+1];local top=tops[k%3+1]
+  word('_fx_packet_count',2)
+  for i=1,2 do
+   local a=0x7e0000+labels._fx_packet+(i-1)*10;local mt=emu.memType.snesMemory
+   emu.write16(a,centers[i]&65535,mt);emu.write16(a+2,top+g[2]+20,mt)
+   emu.write(a+4,g[1],mt);emu.write(a+5,g[2],mt);emu.write(a+6,4,mt);emu.write(a+7,0,mt);emu.write16(a+8,0,mt)
+  end
+ end
  if gameAudit then
   local mt=GAMEOFFLOAD and emu.memType.sa1Memory or emu.memType.snesMemory
   local base=GAMEOFFLOAD and GAMEBWBASE or 0x7e0000
@@ -1556,6 +1603,7 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('leftfixtureindexed'):
         left_geometries=[[a,w,h] for a in (0,2,3,5) for w,h in sorted(patterns[a]) if w>=64]
     script=script.replace('LEFTFIXTUREGEOMETRIES',lua(left_geometries))
+    script=script.replace('TREEGEOMETRIES',lua([list(g)for g in sorted(patterns[4])]))
     script=script.replace('SPLITFIXTURES',lua([j['draws'] for j in split_jobs]))
     script=script.replace('OPAQUETARGETS',lua([[w,h] for w,h in sorted(patterns[40]) if 49<=w<=79]))
     script=script.replace('OPAQUEFRONTS',lua([[a,w,h] for a in (39,40,41) for w,h in sorted(patterns[a]) if w>=64]))
@@ -1650,6 +1698,9 @@ end,emu.eventType.endFrame)
     if args.scenario.startswith('clipfixture'):
         assert summary['pixelMatchedPresents']>=240
         summary['clipCacheCoverage']=verify_clip_cache_coverage(dest)
+    if args.scenario.startswith('treefixture'):
+        summary['fixturePresentationEveryField']=summary['goal60fpsAchieved'];summary['goal60fpsAchieved']=False
+        summary['treeFixtureCoverage']=verify_tree_fixture(dest)
     if 'tracebounds' in args.scenario:
         summary['maskBoundsVerified']=verify_mask_bounds(dest,config.get('maskBounds',False))
         assert len(summary['sa1Jobs'])<=summary['maskBoundsVerified']['jobs']<=len(summary['sa1Jobs'])+1

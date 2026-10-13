@@ -1,0 +1,16 @@
+{
+  "romSha256": "34226b2622f640137b6ddb8f08dbb03ceeb2111155cbf1642f73caf66febf092",
+  "geometry": [
+    66,
+    152
+  ],
+  "left": -34,
+  "rows": 152,
+  "prefixRows": 135,
+  "adjacentPrefixCacheHits": 54,
+  "uncachedPrefixBytes": 5910,
+  "cachedPrefixBytes": 3552,
+  "sourceOnly": true,
+  "runtimeCostMeasured": false,
+  "goal60fpsAchieved": false
+}

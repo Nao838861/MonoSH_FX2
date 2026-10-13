@@ -51,7 +51,7 @@ def main():
                         pa=physical(ptr(original,qa+8));pb=physical(ptr(rom,qb+8))
                         old_code=original[pa:pa+original[pa-2]];new_code=rom[pb:pb+rom[pb-2]]
                         assert original[pa-1]==rom[pb-1]
-                        if asset in (40,41) and width>=minimum:
+                        if (asset in (40,41) and width>=minimum)or(config.get('reverseTree')and asset==4):
                             if (pa,pb) not in changed:
                                 assert execute_native(old_code,initial)==execute_native(new_code,initial)
                                 changed.add((pa,pb))

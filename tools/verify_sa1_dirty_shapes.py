@@ -41,6 +41,10 @@ def main():
                             previous=pair;run=1
                     encoded+=bytes((*previous,run))
                     assert rom[data:data+len(encoded)]==encoded,(asset,w,h,phase)
+                    if config.get('reverseTree'):
+                        assert rom[data+len(encoded)]==0
+                        boundary=0x8000 if data<0x400000 else 0x10000
+                        assert data//boundary==(data+len(encoded))//boundary,'dirty run high byte crosses ROM bank'
                     phases+=1
     assert geometries==1492
     packing=json.loads((BUILD/'compiled_game_packing.json').read_text())
